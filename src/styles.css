@@ -1,7 +1,6 @@
 
 
-/* You can add global styles to this file, and also import other style files */
-
+  
 html, body { height: 100%;overflow-x: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -19,6 +18,17 @@ body::-webkit-scrollbar {
     /* overflow:auto; */
   }
   body::-webkit-scrollbar-thumb {
+    background:#F16257;
+    border-radius: 4px;
+  }
+
+  .p-sidebar-content::-webkit-scrollbar{
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    background: #ccc;
+  }
+
+  .p-sidebar-content::-webkit-scrollbar-thumb {
     background:#F16257;
     border-radius: 4px;
   }
@@ -42,3 +52,7 @@ body::-webkit-scrollbar {
       overflow: hidden;
       
     }
+
+    .p-sidebar-header {
+      display: none;
+   }

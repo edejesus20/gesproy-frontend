@@ -13,7 +13,8 @@ export class MenuComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setCollapse(changes.menu.currentValue);
+
+    this.setCollapse(changes['menu'].currentValue);
   }
 
   public clickHandler(event: Event, item: any): void {

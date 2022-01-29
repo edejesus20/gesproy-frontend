@@ -1,12 +1,12 @@
-<mat-card>
+<!-- <mat-card>
   <div fxLayout="row" class="titleCard">
     <mat-icon class="fondebabutton">
         credit_card
     </mat-icon>
     <mat-card-title class="fondebabutton">Registro de Usuarios</mat-card-title>
-  </div>
+  </div> -->
 
-      <form [formGroup]="form" novalidate  (ngSubmit)="onRegister($event)" class="tittleForm">
+      <!-- <form [formGroup]="form" novalidate  (ngSubmit)="onRegister($event)" class="tittleForm">
               <mat-card-content fxLayout="column wrap">
                 <div> 
                   <div fxLayout="row" fxLayoutGap="20px">
@@ -14,34 +14,14 @@
                         <mat-form-field class="Inputalgo">
                         <input  matInput type="name" placeholder="Ingrese su Nombre" formControlName="name" required>
                       </mat-form-field>
-                      <!-- <div *ngIf="nameField.errors && nameField.touched">
-                        <p *ngIf="nameField.hasError('required')">
-                          <mat-error>
-                            El Nombre es requerido !!!
-                          </mat-error>
-                        </p>
-                        <p *ngIf="nameField.hasError('name')">
-                        <mat-error>
-                          El Nombre no es valido !!!
-                        </mat-error>
-                        </p>
-                      </div> -->
+  
                     </div>
 
                      <div>   
                         <mat-form-field class="Inputalgo">
                           <input   matInput type="surname" placeholder="Ingrese sus Apellidos" formControlName="surname" required>
                         </mat-form-field>
-                        <!-- <div *ngIf="surnameField.errors && surnameField.touched">
-                          <p *ngIf="surnameField.hasError('required')">
-                            <mat-error>
-                              El Apellido es requerido !!!
-                            </mat-error>
-                          </p>
-                          <p *ngIf="surnameField.hasError('surname')">
-                              El Apellido no es valido !!!
-                          </p>
-                        </div> -->
+                      
                       </div>  
                     </div>
                     
@@ -50,40 +30,14 @@
                       <mat-form-field class="Inputalgo" >
                         <input   matInput type="date" placeholder="Fecha de Nacimiento" formControlName="birthdate" required>
                       </mat-form-field>
-                      <!-- <div *ngIf="birthdateField.errors && birthdateField.touched">
-                        <p *ngIf="birthdateField.hasError('required')">
-                          <mat-error>
-                            La Fecha requerido !!!
-                          </mat-error>
-                          
-                        </p>
-                        <p *ngIf="birthdateField.hasError('birthdate')">
-                          <mat-error>
-                            La Fecha no es valida !!!
-                          </mat-error>  
-                          
-                        </p>
-                      </div> -->
+                     
                     </div>
 
                     <div>
                         <mat-form-field class="Inputalgo">
                           <input   matInput type="phoneNumber" placeholder="Nuemro Telefonico" formControlName="phoneNumber" required >
                         </mat-form-field>
-                        <!-- <div *ngIf="phoneNumberField.errors && phoneNumberField.touched">
-                          <p *ngIf="phoneNumberField.hasError('required')">
-                            <mat-error>
-                              El Telefono requerido !!!
-                            </mat-error> 
-                            
-                          </p>
-                          <p *ngIf="phoneNumberField.hasError('phoneNumber')">
-                            <mat-error>
-                              ElTelefono no es valido !!!
-                            </mat-error> 
-                             
-                          </p>
-                        </div> -->
+                       
                     </div>
                   </div>
 
@@ -93,35 +47,14 @@
                       <mat-form-field class="Inputalgo">
                         <input   matInput type="profilePicture" placeholder="Imagen de Perfil" formControlName="profilePicture" required >
                       </mat-form-field>
-                      <!-- <div *ngIf="profilePictureField.errors && profilePictureField.touched">
-                       
-                        <p *ngIf="profilePictureField.hasError('profilePicture')">
-                          <mat-error>
-                            La imagen no es valido !!!
-                          </mat-error> 
-                          
-                        </p>
-                      </div> -->
+                     
                     </div>
 
                     <div>
                         <mat-form-field class="Inputalgo">
                           <input   matInput type="identification" placeholder="Numero de Identificacion" formControlName="identification" required>
                         </mat-form-field>
-                        <!-- <div *ngIf="identificationField.errors && identificationField.touched">
-                          <p *ngIf="identificationField.hasError('required')">
-                            <mat-error>
-                              El Email es requerido !!!
-                            </mat-error> 
-                            
-                          </p>
-                          <p *ngIf="identificationField.hasError('identification')">
-                            <mat-error>
-                              La informacion suministrada no es un Correo valido !!!
-                            </mat-error> 
-                            
-                          </p>
-                        </div> -->
+                       
                     </div>
 
                   </div>
@@ -129,20 +62,7 @@
                     <mat-form-field class="Inputalgo">
                       <input  matInput type="email" placeholder="Ingrese su Correo" formControlName="email" required >
                     </mat-form-field>
-                    <!-- <div *ngIf="emailField.errors && emailField.touched">
-                      <p *ngIf="emailField.hasError('required')">
-                        <mat-error>
-                          El Email es requerido !!!
-                        </mat-error> 
-                        
-                      </p>
-                      <p *ngIf="emailField.hasError('email')">
-                        <mat-error>
-                          La informacion suministrada no es un Correo valido !!!
-                        </mat-error> 
-                        
-                      </p>
-                    </div> -->
+                    
 
                   </div>
                
@@ -151,14 +71,7 @@
                    <mat-form-field class="Inputalgo">
                       <input matInput  type="password" placeholder="Ingrese su Password" formControlName="password" required>
                   </mat-form-field>
-                    <!-- <div *ngIf="passwordField.errors && passwordField.touched">
-                       <p *ngIf="passwordField.hasError('required')">
-                        <mat-error>
-                          El Password es requerido !!!
-                        </mat-error>     
-                        
-                      </p>
-                    </div> -->
+                 
 
                   </div>
 
@@ -166,15 +79,7 @@
                     <mat-form-field class="Inputalgo">
                       <input matInput  type="password" placeholder="Confirme su Password" formControlName="password2" required>
                   </mat-form-field>
-                    <!-- <div *ngIf="passwordField.errors && passwordField.touched">
-                       <p *ngIf="passwordField.hasError('required')">
-                        <mat-error>
-                          El Password es requerido !!!
-                        </mat-error>         
-                        
-                      </p>
-                    </div> -->
-
+                   
                 </div>
               </div> 
                </div>   
@@ -192,4 +97,6 @@
                   </ng-template>
             </mat-card-actions>
       </form>
-    </mat-card>
+    </mat-card> -->
+
+    registro

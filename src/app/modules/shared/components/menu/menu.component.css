@@ -33,12 +33,54 @@
     background-color: gray;
     border-width: 0;
   }
-
+  .hijo:hover{
+    border-left: 5px solid #f16157ea;
+    text-decoration-color: #f16157ea;
+    cursor: pointer;
+    /* color:#F16257 */
+    /* background-color: #F16257; */
+  }
+  .nieto:hover{
+    border-left: 5px solid #f16157c0;
+    text-decoration-color: #f16157c0;
+    cursor: pointer;
+    /* color:#F16257 */
+    /* background-color: #F16257; */
+  }
   .padre:hover{
     border-left: 5px solid #F16257;
     text-decoration-color: #F16257;
-    color:#F16257
+    cursor: pointer;
+    /* color:#F16257 */
     /* background-color: #F16257; */
   }
   
+  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 16px;
+    position: relative;
+    height: inherit;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-ripple, .mat-list-base .mat-list-option .mat-list-item-ripple {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.mat-list-base .mat-list-item .mat-list-icon, .mat-list-base .mat-list-option .mat-list-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  padding: 4px;
+}
   

@@ -25,6 +25,7 @@ export class AuthService {
     user:{username:'',id:0},
     token: ''
   }
+ 
   public userLoginResponse$ = new BehaviorSubject(this.userLoginResponse);
   // API path
   base_path_get = `${this.API_URI}/api/mainSesionAdmin`;
@@ -34,6 +35,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+   
   ) { 
     // this.getToken()
   }
@@ -110,6 +112,7 @@ export class AuthService {
           this.setLoginData(res);
           this.userLoginResponse$.next(res)
           this.setLogin(true);
+        
         }
       })
     );

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserI } from 'src/app/models/authorization/usr_User';
@@ -20,17 +20,17 @@ export class FormRegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService, 
-    private snackBar: MatSnackBar,
+    // private snackBar: MatSnackBar,
     private router: Router, 
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data? : datos
+    // public dialog: MatDialog,
+    // @Inject(MAT_DIALOG_DATA) public data? : datos
   ) { 
   }
 
   ngOnInit(): void {
-    if(this.data?.dato != undefined){
-      this.mostrar=true
-    }
+    // if(this.data?.dato != undefined){
+    //   this.mostrar=true
+    // }
     this.buildForm();
   }
 
@@ -52,30 +52,30 @@ export class FormRegisterComponent implements OnInit {
   onRegister(event: Event): void{
     event.preventDefault();
     if(this.form.value.password ===this.form.value.password2){
-      this.snackBar.open('Error al registrar, revise sus contraseñas !!!', 'OK', {
-        duration: 5000,
-      });
+      // this.snackBar.open('Error al registrar, revise sus contraseñas !!!', 'OK', {
+      //   duration: 5000,
+      // });
     }else{
       const formValue: UserI = this.form.value;
         this.authService.register(formValue).subscribe(
           res => {
-            this.snackBar.open('Autenticacion Exitosa !!!', 'OK', {
-              duration: 5000,
-            });
+            // this.snackBar.open('Autenticacion Exitosa !!!', 'OK', {
+            //   duration: 5000,
+            // });
             this.router.navigateByUrl('/landing');
           },
           err => {
             console.error(err)
-          this.snackBar.open('Error al registrar, revise sus datos !!!', 'OK', {
-            duration: 5000,
-          });
-          const dialogRef = this.dialog.open(FormRegisterComponent,{
-            width:'75%',height:'auto',
-            data:{dato:1}
-          });
+          // this.snackBar.open('Error al registrar, revise sus datos !!!', 'OK', {
+          //   duration: 5000,
+          // });
+          // const dialogRef = this.dialog.open(FormRegisterComponent,{
+          //   width:'75%',height:'auto',
+          //   data:{dato:1}
+          // });
       
-          dialogRef.afterClosed().subscribe(result => {
-          });
+          // dialogRef.afterClosed().subscribe(result => {
+          // });
         }
         )
     }

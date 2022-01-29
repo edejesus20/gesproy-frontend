@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'landing',
-    pathMatch: 'full',
+    redirectTo: '/landing',
+    pathMatch: 'full'
   },
+ 
 ];
 
 @NgModule({
