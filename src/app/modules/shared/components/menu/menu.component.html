@@ -17,7 +17,7 @@
     </span>
     <div *ngIf="item.menu && !item.collapsed">
       <div *ngFor="let subitem of item.menu" class="hijo">
-        <span   [routerLink]="item.link" (click)="clickHandler($event, subitem)" 
+        <span   [routerLink]="subitem.link" (click)="clickHandler($event, subitem)" 
         style="padding-left: 10px;">
           <i class="ml-2 pi pi-chevron-right"  style="font-size: 1.5rem; margin-top: 5px;"></i>
           <span class="ml-4 " style="font-size: 18px;">{{ subitem.titulo }}</span>
@@ -38,7 +38,7 @@
         </span>
         <div *ngIf="subitem.menu && !subitem.collapsed">
           <div *ngFor="let item3 of subitem.menu" class="nieto">
-            <span class="mat-list-item" [routerLink]="item.link" (click)="clickHandler($event, item3)"  
+            <span class="mat-list-item" [routerLink]="item3.link" (click)="clickHandler($event, item3)"  
             style="margin-top: 5px;padding-left: 10px;">
           <i class="ml-4 pi pi-angle-right"  style="font-size: 1.5rem; margin-top: 5px;"></i>
               

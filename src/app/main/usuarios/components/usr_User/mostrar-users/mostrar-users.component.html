@@ -1,0 +1,85 @@
+<!-- <div class="container">
+
+  <mat-form-field appearance="standard">
+    <mat-label>Busqueda</mat-label>
+    <input matInput (keyup)="Buscar($event)" #input>
+  </mat-form-field>
+
+
+<div class="table-wrapper">
+
+    <table mat-table [dataSource]="users" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="Identificacion">
+        <th mat-header-cell *matHeaderCellDef > Identificación </th>
+        <td mat-cell *matCellDef="let element"> {{element.identification}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.fullName | titlecase}}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.User.username}}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.User.email  | titlecase}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Rol">
+        <th mat-header-cell *matHeaderCellDef > Rol </th>
+        <td mat-cell *matCellDef="let element">
+            <ng-template [ngIf]="element.User.Roles.length > 1">
+                <span *ngFor="let item of element.User.Roles" >
+                    {{item.name  | titlecase}},  
+              </span>
+            </ng-template>
+            <ng-template [ngIf]="element.User.Roles.length == 1">
+              <span *ngFor="let item of element.User.Roles" >
+                  {{item.name  | titlecase}}  
+            </span>
+          </ng-template>
+            </td>
+      </ng-container>
+      <ng-template [ngIf]="mostrar==1">
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef > Acciones </th>
+          <td mat-cell *matCellDef="let element">
+              <a mat-mini-fab color="link" class="editar" aria-label="" 
+              (click)="editar(element.id)">
+                <mat-icon>edit</mat-icon>
+              </a>
+          </td>
+        </ng-container>
+      </ng-template>
+      <ng-template [ngIf]="mostrar==2">
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef > Acciones </th>
+          <td mat-cell *matCellDef="let element">
+              <a mat-mini-fab color="warn" class="delete" aria-label="" 
+              (click)="delet(element.id)">
+                <mat-icon>delete</mat-icon>
+              </a>
+          </td>
+        </ng-container>
+      </ng-template>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+            <div class="nohayregistro"> 
+              No hay registros encontrados
+            </div>
+          
+          </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+    <mat-paginator [pageSizeOptions]="[5, 10,15,20]" showFirstLastButtons></mat-paginator>
+</div>
+ -->
+algo

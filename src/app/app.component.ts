@@ -9,7 +9,7 @@ import { forkJoin } from 'rxjs';
 import { UserService } from './core/services/usuarios/user.service';
 import { Router } from '@angular/router';
 import { UserLoginI } from './models/authorization/usr_User';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
  
 interface menu{
     label:string,
@@ -252,6 +252,9 @@ private messageService: MessageService,private primengConfig: PrimeNGConfig,
     
   }
 
+  ocultarMenu(boolean: boolean){
+    this.display=boolean
+  }
   update() {
       this.messageService.add({severity:'success', summary:'Success', detail:'Data Updated'});
   }
@@ -300,11 +303,11 @@ showError() {
   //   console.log(this.token)
   // }
 
-  onSubmit() {
-      if(this.username != undefined && this.password != undefined){
+  onSubmit(f:NgForm) {
+      if(f.form.value.username != undefined && f.form.value.password != undefined){
         const formValue: UserLoginI = {
-            username:this.username,
-            password:this.password
+            username:f.form.value.username,
+            password:f.form.value.password
         };
         this.authService.login(formValue).subscribe(
             () => {
@@ -328,4 +331,5 @@ showError() {
     
     
   }
+
 }

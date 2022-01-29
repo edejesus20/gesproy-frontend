@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 export class MenuComponent implements OnChanges {
 
   @Input() menu: any[] = [];
+  @Output() funcion = new EventEmitter<boolean>();
   @Output() optionSelected = new EventEmitter<any>();
 
   constructor() { }
@@ -19,6 +20,7 @@ export class MenuComponent implements OnChanges {
 
   public clickHandler(event: Event, item: any): void {
     event.stopPropagation();
+    
     if (item.menu) {
       this.toggleItem(item);
     } else {
@@ -37,6 +39,7 @@ export class MenuComponent implements OnChanges {
 
   private selectOption(): void {
     this.optionSelected.emit();
+    this.funcion.emit(false)
   }
 
   private toggleItem(item: any): void {

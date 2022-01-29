@@ -1,0 +1,97 @@
+<!-- 
+<mat-card>
+    <div fxLayout="row" class="titleCard">
+      <mat-icon >
+        credit_card
+      </mat-icon>
+      <mat-card-title >Ingresar Recurso</mat-card-title>
+    </div>
+
+    <form [formGroup]="form" id="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
+      <mat-card-content fxLayout="column wrap" >
+          <div>
+
+                  <div fxLayout="row"  fxLayoutGap="20px">
+                    <div  class="grupo"> 
+                      <mat-form-field class="grupoinput">
+                        <input matInput type="text" placeholder="Path" formControlName="path" required>
+                      </mat-form-field>
+                        <mat-form-field class="grupoinput">
+                          <input matInput type="text" placeholder="Metodo" formControlName="method" required>
+                        </mat-form-field>
+                       
+                      </div>
+                  </div>
+
+                  <div fxLayout="row"  fxLayoutGap="20px">
+                    <div class="grupo"> 
+                        <mat-form-field class="grupoinput">
+                          <input matInput type="text" placeholder="ID Padre" formControlName="id_padre" required>
+                        </mat-form-field>
+                        <mat-form-field class="grupoinput">
+                          <input matInput type="text" placeholder="Icono" formControlName="icono" required>
+                        </mat-form-field>
+                      </div>
+                  </div>
+
+                  <div fxLayout="row"  fxLayoutGap="20px">
+                    <div class="grupo"> 
+                        <mat-form-field class="grupoinput">
+                          <input matInput type="text" placeholder="Link" formControlName="link" required>
+                        </mat-form-field>
+                        <mat-form-field class="grupoinput">
+                          <input matInput type="text" placeholder="Titulo" formControlName="titulo" required>
+                        </mat-form-field>
+                      </div>
+                  </div>
+                  
+                  
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <button mat-flat-button color="primary" (click)="addRoles($event)">Add Rol</button>
+                  </div>
+                  <br>
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <div class="table-wrapper" >
+  
+                      <table mat-table [dataSource]="algo" class="mat-elevation-z8" *ngIf="mostrar == true">
+                          <ng-container matColumnDef="roles">
+                              <th mat-header-cell *matHeaderCellDef > Roles </th>
+                              <td mat-cell *matCellDef="let element"> 
+                                <div formArrayName="Roles" > 
+                                  <div *ngFor="let item of getRoles.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                                    <div class="grupo"> 
+                                    <mat-form-field class="grupoinput1">
+                                      <mat-label>Rol</mat-label>
+                                      <mat-select formControlName="RoleId" required>
+                                        <mat-option *ngFor="let item of roles" [value]="item.id">{{ item.name }}</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                    <span class="bottomdelete">
+                                      <button  mat-flat-button color="warn" (click)="removeRoles(pointIndex,$event)">
+                                        <mat-icon>delete</mat-icon>
+                                      </button>
+                                    </span>
+                                    
+                                  </div>
+                                  </div>
+                                </div> 
+                              </td>
+                           
+                          </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                    </div>
+                  </div>
+
+            </div>
+        </mat-card-content>
+  
+        <mat-card-actions>
+          <button type="submit" [disabled]="form.invalid" mat-button color="primary">Crear Recurso</button>
+        </mat-card-actions>
+    </form>
+  </mat-card>
+  
+
+ -->

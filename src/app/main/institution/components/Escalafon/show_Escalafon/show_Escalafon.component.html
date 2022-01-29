@@ -1,0 +1,50 @@
+<!-- <br>
+<br>
+<div class="container">
+
+  <mat-form-field appearance="standard">
+    <mat-label>Busqueda</mat-label>
+    <input matInput (keyup)="Buscar($event)" #input>
+  </mat-form-field>
+
+
+<div class="table-wrapper">
+
+    <table mat-table [dataSource]="scales" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHACREAT </th>
+        <td mat-cell *matCellDef="let element"> {{element.createdAt | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHAUPD </th>
+        <td mat-cell *matCellDef="let element"> {{element.updatedAt | date }} </td>
+      </ng-container>
+
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+            <div class="nohayregistro"> 
+              No hay registros encontrados
+            </div>
+          
+          </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+    <mat-paginator [pageSizeOptions]="[5, 10,15,20]" showFirstLastButtons></mat-paginator>
+</div> -->

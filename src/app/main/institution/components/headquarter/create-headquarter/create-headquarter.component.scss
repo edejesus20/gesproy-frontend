@@ -1,0 +1,53 @@
+mat-error > span:not(:first-child) {
+    display: none;
+  }
+  
+  :host{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .mat-form-field{
+    width: 100%;
+    min-width: 400px;
+  }
+  
+  mat-card{
+    width: 70%;
+  }
+  
+  .mat-icon{
+    font-size: 30px;
+    background-color:707070
+  }
+  
+  .titleCard{
+  margin: 0 0 10px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+  }
+  .fondebabutton{
+  color:#707070;
+  }
+  mat-card-title{
+  padding-left:10px;
+  padding-top:10px;
+  }
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    /* justify-content: flex-end; */
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }
+  
