@@ -1,0 +1,50 @@
+
+<mat-card >
+  <img mat-card-image src="../../../../../assets/images/40AÑOS.jpg" width="100px" height="300px"/>
+</mat-card>
+<br>
+<mat-card>
+    <div fxLayout="row" class="titleCard">
+      <mat-icon class="fondebabutton">
+        account_circle
+      </mat-icon>
+      <mat-card-title class="fondebabutton">Inicio de sesión</mat-card-title>
+    </div>
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
+        <mat-card-content fxLayout="column wrap" >
+            <div> 
+              <div fxLayout="row"  fxLayoutGap="20px">
+                  <div> 
+                    <mat-form-field appearance="fill">
+                        <mat-label for="first-name">Usuario</mat-label>
+                        <input matInput id="username" type="text" formControlName="username" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row"  fxLayoutGap="20px">
+                <div> 
+                    <mat-form-field appearance="fill">
+                        <mat-label for="password">Contraseña</mat-label>
+                        <input matInput id="password" type="password" formControlName="password" required>
+                    </mat-form-field>
+                </div>
+            </div>
+                    
+            </div>
+        </mat-card-content>
+  
+        <mat-card-actions>
+            <ng-template [ngIf]="mostrar == true">
+              <div class="centrar">
+                <button mat-raised-button class="fondebabutton" type="submit" [disabled]="!loginForm.valid" mat-dialog-close >Continuar</button>
+              </div>
+              </ng-template>
+              <ng-template [ngIf]="mostrar == false">
+                <div class="centrar">
+                  <button mat-raised-button class="fondebabutton" type="submit" [disabled]="!loginForm.valid">Continuar</button>
+                </div>
+              </ng-template>
+        </mat-card-actions>
+    </form>
+  </mat-card>
+  

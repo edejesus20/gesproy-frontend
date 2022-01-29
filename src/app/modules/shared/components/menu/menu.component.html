@@ -1,0 +1,34 @@
+
+  <div class="logo" fxLayout="column">
+    <a routerLink="/" class="clickable">
+      <img src="assets/images/logo-uniguajira.png">
+    </a>
+    <hr>
+  </div>
+  <div *ngFor="let item of menu; let i = index" class="padre">
+    <a mat-list-item routerLink="{{ item.link }}" (click)="clickHandler($event, item)">
+      <mat-icon mat-list-icon>{{ item.icono }}</mat-icon>
+      <span>{{ item.titulo }}</span>
+      <ng-container *ngIf="item.menu">
+        <mat-icon class="menu-arrow">{{ !item.collapsed ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </ng-container>
+    </a>
+    <div *ngIf="item.menu && !item.collapsed">
+      <div *ngFor="let subitem of item.menu" class="hijo">
+        <a mat-list-item routerLink="{{subitem.link}}" (click)="clickHandler($event, subitem)">
+          <span class="deep-1">{{ subitem.titulo }}</span>
+          <ng-container *ngIf="subitem.menu">
+            <mat-icon class="menu-arrow">{{ !subitem.collapsed ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </ng-container>
+        </a>
+        <div *ngIf="subitem.menu && !subitem.collapsed">
+          <div *ngFor="let item3 of subitem.menu" class="nieto">
+            <a mat-list-item routerLink="{{item3.link}}" (click)="clickHandler($event, item3)">
+              <span class="deep-2">{{ item3.titulo }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

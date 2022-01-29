@@ -1,0 +1,54 @@
+
+  .mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-row:hover .mat-cell {
+    border-color: currentColor;
+  }
+  
+  .mat-row:focus {
+    font-weight: bold;
+  } 
+
+  table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+ 
+th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+}
+
+th{ 
+  font-weight: bold;
+  font-size: 18px;}
+td{
+  text-align:justify;
+}
+
+.nohayregistro{
+  display:flex;
+  padding: 10px;
+  justify-content:center;
+  align-items:center;
+  font-size: 25px;
+  height:40px;
+  font-weight:lighter;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.editar{
+  background:orange;
+  color:white;
+}
+.texto{
+  text-align:left;
+}

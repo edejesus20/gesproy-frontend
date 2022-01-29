@@ -1,0 +1,34 @@
+
+
+<mat-card>
+  <div fxLayout="row" class="titleCard">
+    <mat-icon class="fondebabutton">
+      credit_card
+    </mat-icon>
+    <mat-card-title class="fondebabutton">Ingresar Facultad</mat-card-title>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Nombre" formControlName="name" required>
+
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Decano</mat-label>
+      <mat-select formControlName="AdministrativeId" required>
+        <mat-option *ngFor="let de of administratives" [value]="de.id">{{ de.User?.fullName | titlecase}} - {{ de.Ocupation?.name | titlecase}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Universidad</mat-label>
+      <mat-select formControlName="UniversityId" required>
+        <mat-option *ngFor="let de of universitys" [value]="de.id">{{ de.name | titlecase}} - {{ de.nit }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Facultad</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+

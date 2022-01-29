@@ -1,0 +1,49 @@
+
+.margSup{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content:flex-end;
+    padding-right: 10%;
+    padding-top: 10px;
+
+  }
+
+.imgLogo {
+  width:auto;
+    height: 250px;
+    margin-top:40px;
+    /* margin-left: 30px; */
+    max-width: 500px;
+    max-height:700px;
+    border : 1px solid transparent;
+    border-radius: 15px;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+}
+.titleCard{
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    font-size: 45px;
+    font-weight: bold;
+    color:#F16257;
+    margin-top: 35px;
+  }
+
+
+  .margen {
+    padding: -40px;
+    /* background-color: #dcdcdc; */
+    border-radius: 5px;
+    background:transparent;
+    /* background-image: url('../../../../../assets/images/fondo1.jpg'); */
+    /* background: linear-gradient(0deg, rgba(51,102,0,1) 0%, rgba(34,193,195,0.5578606442577031) 100%); */
+    background-size: cover;
+    /* opacity: 0.7; */
+    min-height: 75vh;
+    /* min-width: 50%; */
+    box-shadow: 7px 8px 19px 0px #00000047;
+  }
+

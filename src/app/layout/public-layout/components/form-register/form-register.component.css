@@ -1,0 +1,73 @@
+:host{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+mat-form-field{
+    width: 100%;
+    min-width: 350px;
+}
+
+mat-card-tittle,
+mat-card-content{
+    display: flex;
+    justify-content: center;
+    
+}
+mat-card{
+    width: 80%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+.tittleForm{
+    margin: 30px;
+}
+
+
+mat-raised-button{
+    height:48px;
+    width:128px;
+}
+.mat-input-element {
+    caret-color: #F16257;
+}
+  
+  .mat-icon{
+      font-size: 30px;
+      background-color:707070
+  }
+  
+  .titleCard{
+    margin: 0 0 10px 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+  }
+  mat-card-title{
+    padding-left:10px;
+    padding-top:10px;
+}
+
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }
+  .centrar{
+    text-align:center
+  }
+  .fondebabutton{
+    color:#707070;
+  }

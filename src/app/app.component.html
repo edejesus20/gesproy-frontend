@@ -1,0 +1,125 @@
+<ng-template [ngIf]="isLoggedIn === true">
+  <div class="grid-container">
+    <aside class="sidenav">
+      <mat-nav-list>
+      <app-menu [menu]="menu"></app-menu>
+      <div class="menu-item clickable padre">
+        <a mat-list-item (click)="cerrarSesion()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </a>
+      </div>
+    </mat-nav-list>
+    </aside>
+    <article class="subtitle centered-content">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="hijo">
+        <span>hola</span>
+        <span>/</span>
+        <span>welcom</span>
+      </div>
+      <div fxLayoutAlign="end center" class="hijo1"> 
+        <mat-icon role="img" 
+        class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true">
+        account_circle</mat-icon>
+        <span>{{nombre}}</span>
+      </div>
+      <!-- <app-subtitle [menuSubitem]="menuSubitem" [menuCategoryLabel]="menuCategoryLabel"></app-subtitle> -->
+    </article>
+
+    <main class="main centered-content">
+      <router-outlet></router-outlet>
+    </main>
+    <footer class="footer">
+          
+      <div class="footer__copyright">
+        <p>&copy; 2020</p>
+        <p>Desarrollo Universidad de la Guajira - Programa Ing de Sistemas</p>
+      </div>
+  
+      <div class="image"> 
+        <img src="../../../assets/images//logoGrupoSem2.png" alt="">
+      </div>
+    </footer>
+  </div>
+
+
+</ng-template>
+
+
+
+
+<ng-template [ngIf]="isLoggedIn === false">
+   <mat-toolbar>
+        <div class="menuimagen">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="wrapper">
+            <div >
+              <a routerLink="/landing" class="logo">
+                <!-- <span>UNIGUAJIRA</span> -->
+                <!-- <img src="assets/images/uniguajira32.png" alt=""> -->
+                <img src="assets/images/logo-uniguajira.png">
+              </a>
+            </div>
+        </div>
+      </div>
+
+    
+      <div fxlayout="row"
+      ng-reflect-fx-layout="row"class="padre-container">
+      <div class="buttons-container">
+        <a routerlink="/register" routerlinkactive="active" style="display:flex"
+        ng-reflect-router-link-active="active"  href="" (click)="openDialogResgister($event)">
+         <mat-icon role="img" 
+         class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true">
+         credit_card</mat-icon>
+         <span class="text">Register</span>
+       </a>
+      </div>
+      <div class="buttons-container" >
+          <a routerlink="/login" routerlinkactive="active"  style="display:flex"
+          ng-reflect-router-link-active="active"  href=""
+          (click)="openDialogLogin($event)">
+            <mat-icon role="img" 
+            class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true">
+            account_circle</mat-icon>
+            <span class="text">Login</span>
+        </a>
+      </div>
+   </div>
+   <!-- <div>
+      <button mat-raised-button  class="fondebabutton" *ngIf="!isLoggedIn" 
+      (click)="openDialogLogin($event)"><mat-icon>account_circle</mat-icon>
+      <span>Login</span></button>
+      <button mat-button color="primary" *ngIf="!isLoggedIn" routerLink="../register">Registro</button>
+     </div> -->
+      
+    </mat-toolbar>
+
+      <div class="content">
+        <router-outlet></router-outlet>
+        <section class="redes_sociales container-fluid">
+          <div class="container">
+            <div class="row">
+                <div class="span12">
+                  
+                <ul class="nav " id="redes_sociales">
+                <li class="item-616">	
+                  <a class="twitter" href="https://twitter.com/UniLaGuajira" 
+                  target="_blank" title="Síguenos en Twitter">Twitter</a>
+                </li>
+                  <li class="item-617">	
+                    <a class="facebook" href="https://www.facebook.com/Universidad-de-La-Guajira-422758191075433/" target="_blank" title="Síguenos en Facebook">Facebook</a>
+                  </li>
+                    <li class="item-618">	
+                      <a class="instagram" href="https://www.instagram.com/uniguajira_/" target="_blank" title="Síguenos en Instagram">Instagram</a>
+                    </li>
+                      <li class="item-619">	
+                        <a class="youtube" href="https://www.youtube.com/user/UniLaGuajira" target="_blank" title="Síguenos en YouTube">YouTube</a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+          </div>    
+        </section>
+      </div>
+    
+</ng-template>

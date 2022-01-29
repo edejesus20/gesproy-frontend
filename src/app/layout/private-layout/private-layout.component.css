@@ -1,0 +1,11 @@
+.margen {
+  margin: 20px;
+}
+
+.profile-card-container {
+  margin: 20px 30px;
+}
+
+mat-sidenav {
+  width: 250px;
+}
