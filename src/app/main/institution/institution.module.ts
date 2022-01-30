@@ -52,6 +52,33 @@ import { Create_capacitacionComponent } from './components/Capacitacion/create_c
 import { Edit_capacitacionComponent } from './components/Capacitacion/edit_capacitacion/edit_capacitacion.component';
 import { Delete_capacitacionComponent } from './components/Capacitacion/delete_capacitacion/delete_capacitacion.component';
 import { InstitutionComponent } from './institution.component';
+import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SplitterModule } from 'primeng/splitter';
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { AvatarModule } from 'primeng/avatar';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { ChartModule } from 'primeng/chart';
+import { ToolbarModule } from 'primeng/toolbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToastModule } from 'primeng/toast';
+import { TreeModule } from 'primeng/tree';
+import { SharedModule } from 'primeng/api';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -115,10 +142,43 @@ import { InstitutionComponent } from './institution.component';
   ],
   imports: [
     CommonModule,
-    InstitutionRoutingModule,
     HttpClientModule,
     FormsModule,
+    // BrowserModule,
+    // BrowserAnimationsModule,
+    InstitutionRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
+   
+    
+    DividerModule,
+    ButtonModule,
+    CheckboxModule,
+    RadioButtonModule,
+    RippleModule,
+    InputTextModule,
+  
+    CardModule,
+    MenuModule,
+    MessagesModule,
+    MessageModule,
+
+    SplitterModule,
+    MenubarModule,
+    AvatarGroupModule,
+    AvatarModule,
+    SidebarModule,
+    PanelMenuModule,
+    ChartModule,
+    ToolbarModule,
+    SplitButtonModule,
+    DialogModule,
+    ConfirmPopupModule,
+    ToastModule,
+    TreeModule,
+    SharedModule,
+    // VirtualScrollerModule,
+    TableModule
 
 
   ],

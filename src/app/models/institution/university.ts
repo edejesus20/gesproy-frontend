@@ -3,4 +3,5 @@ export interface UniversityI {
     name: string;
     nit: string;
     addres: string;
+    createdAt?:string
 }

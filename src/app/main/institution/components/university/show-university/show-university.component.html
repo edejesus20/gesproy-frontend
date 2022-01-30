@@ -1,55 +1,61 @@
-<!-- <br>
-<br>
-<div class="container">
 
-  <mat-form-field appearance="standard">
-    <mat-label>Busqueda</mat-label>
-    <input matInput (keyup)="Buscar($event)" #input>
-  </mat-form-field>
+<p-table  #dt1 [value]="universitys" responsiveLayout="scroll" dataKey="id" id="todo"
+[paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+   [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+    [globalFilterFields]="['id','name','nit','addres','createdAt']"
+    [columns]="cols"
+   ><!-- styleClass="p-datatable-gridlines" -->
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h3>Universidades</h3>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" (input)="Buscar($event, dt1)" placeholder="Search keyword" />
+        </span> 
+        
+       
+          <div class="mb-3 ml-3 mt-3">
 
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
 
-<div class="table-wrapper">
+          <!-- <p-button icon="pi pi-refresh"></p-button> -->
+      </div>
 
-    <table mat-table [dataSource]="universitys" class="mat-elevation-z8" matSort>
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="nit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> NIT </th>
-        <td mat-cell *matCellDef="let element"> {{element.nit}} </td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> DIRECCION </th>
-        <td mat-cell *matCellDef="let element"> {{element.addres }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="updatedAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHACREAT </th>
-        <td mat-cell *matCellDef="let element"> {{element.createdAt | date }} </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-            <div class="nohayregistro"> 
-              No hay registros encontrados
-            </div>
-          
-          </td>
+      
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="nit">NIT<p-sortIcon field="nit"></p-sortIcon></th>
+          <th pSortableColumn="addres">DIRECCION<p-sortIcon field="addres"></p-sortIcon></th>
+          <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
       </tr>
-    </table>
-  </div>
-  <br>
-    <mat-paginator [pageSizeOptions]="[5, 10,15,20]" showFirstLastButtons></mat-paginator>
-</div> -->aja
+  </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-item>
+        <tr [pSelectableRow]="rowData">
+       
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.nit}}</td>
+          <td>{{item.addres}}</td>
+          <td>{{item.createdAt | date:'fullDate'}}</td>
+       
+       
+      </tr>
+    </ng-template>
+
+
+  <!-- <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total hay {{ universitys ? universitys.length : 0 }} universidades.
+    </div>
+</ng-template> -->
+</p-table>

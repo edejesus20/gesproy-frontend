@@ -1,4 +1,9 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+
+import localEs from '@angular/common/locales/es'
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localEs,'es')
+
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,18 +42,23 @@ import { ToastModule } from "primeng/toast";
 import {TreeModule} from 'primeng/tree';
 // import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-
+import {TableModule} from 'primeng/table'
 import { SharedModule } from './modules/shared/shared.module';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
       
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     AppRoutingModule,
     PublicLayoutModule,
     PrivateLayoutModule, 
+    HttpClientModule,
+    FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
 
     DividerModule,
     ButtonModule,
@@ -56,13 +66,12 @@ import { SharedModule } from './modules/shared/shared.module';
     RadioButtonModule,
     RippleModule,
     InputTextModule,
-    HttpClientModule,
-    FormsModule,
+  
     CardModule,
     MenuModule,
     MessagesModule,
     MessageModule,
-    BrowserAnimationsModule,
+   
     SplitterModule,
     MenubarModule,
     AvatarGroupModule,
@@ -76,13 +85,14 @@ import { SharedModule } from './modules/shared/shared.module';
     ConfirmPopupModule,
     ToastModule,
     TreeModule,
-    SharedModule
+    SharedModule,
     // VirtualScrollerModule,
-    
+    TableModule
     
     
   ],
-  providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport],
+  providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport,
+  {provide:LOCALE_ID, useValue:'es'}],
  
   bootstrap: [AppComponent]
 })
