@@ -4,7 +4,8 @@ import { OcupationI } from './ocupation';
 export interface AdministrativeI {
     id?:number
     UserId: number;
-    occupation: string;
+    OcupationId: string;
+    HeadquarterId:string
     Ocupation?:OcupationI
     User?:UserI,
     Headquarter?:HeadquarterI

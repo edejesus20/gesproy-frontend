@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
-import { InstitutionService } from 'src/app/core/services/institution/institution.service';
-import { REGEXP_ALPHANUMERIC } from 'src/app/main/institution/components/program/create-program/create-program.component';
+import { Component, OnInit} from '@angular/core';
+
 import { Router } from '@angular/router';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-import { InstitutionI } from 'src/app/models/desk/institution';
-import { UserService } from 'src/app/core/services/usuarios/user.service';
+
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { AdministrativeI } from 'src/app/models/user/administrative';
-import { UniversityService } from 'src/app/core/services/institution/university.service';
-import { UniversityI } from 'src/app/models/institution/university';
 
+import { MessageService } from 'primeng/api';
+import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { NgForm } from '@angular/forms';
+const translate = require('translate');
 @Component({
   selector: 'app-create-facultie',
   templateUrl: './create-faculty.component.html',
@@ -20,18 +19,43 @@ import { UniversityI } from 'src/app/models/institution/university';
 })
 export class CreateFacultyComponent implements OnInit {
 
-  public form: FormGroup = this.formBuilder.group({});
-  @Input() isEmbedded = false;
   public administratives: AdministrativeI[]=[];
-  public universitys: UniversityI[]=[];
-  
+  public Headquarter: HeadquarterI[]=[];
+  selectedAdministrativeI: AdministrativeI={
+      UserId:0,
+      HeadquarterId:'',
+      User: { 
+        username:'',
+        fullName:'',
+        email:'',
+        Person:{
+          name:'',
+          identification:''
+        }
+      },
+      OcupationId:''
+  };
+  selectedHeadquarterI: HeadquarterI={
+    name: '',
+    cordinatorInvestigation: '',
+    UniversityId:0
+    // University: { 
+    //   name: '',
+    //   nit: '',
+    //   addres: '',
+    // },
+};
+
+  // selectedCountry:string=''
+
+  displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
   constructor(
-    private universityService: UniversityService,
     private administrativeService: AdministrativeService,
     private facultyService: FacultyService,
-    private formBuilder: FormBuilder,
-
     private router: Router,
+    private messageService:MessageService,
+    private headquarterService: HeadquarterService
     // private snackBar: MatSnackBar,
   ) { }
 
@@ -39,59 +63,78 @@ export class CreateFacultyComponent implements OnInit {
     this.buildForm();
     this.getAlladministrative()
     this.getAlluniversidades()
+  
   }
 
   private buildForm() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      AdministrativeId: ['', [Validators.required]],
-      UniversityId:['', [Validators.required]]
-    });
+    let form = {
+      name: '',
+      AdministrativeId: '',
+      HeadquarterId:'',
+    }
   }
 
-  public onSubmit(): void {
-    const formValue: FacultyI = this.form.value;
+
+  public onSubmit(f:NgForm) {
+    console.log(f)
+
+    const formValue: FacultyI = {
+      name:f.form.value.name,
+      AdministrativeId:f.form.value.AdministrativeId.id,
+      HeadquarterId:f.form.value.HeadquarterId.id
+    };
+    console.log(formValue)
+
+    if(formValue.name != ("" || null || undefined) && 
+    formValue.AdministrativeId != ('' || 0 || null || undefined) &&
+    formValue.HeadquarterId != ("" || 0 || null || undefined)){
+
     this.facultyService.createItem(formValue).subscribe(
-      (newFaculty) => {
-
-          // this.snackBar.open('Facultad creada exitosamente', 'Ok', {
-          //   duration: 5000,
-          // });
-          this.router.navigateByUrl('/institution/mostrar_facultys');
-        
-      }, () => {
-
-          // this.snackBar.open('Error. La facultad no pudo ser creada', 'Ok', {
-          //   duration: 5000,
-          // });
-      }
-    );
+      () => {
+              var date = new Date('2020-01-01 00:00:03');
+                function padLeft(n:any){ 
+                   return n ="00".substring(0, "00".length - n.length) + n;
+                }
+                var interval = setInterval(() => {
+                var minutes = padLeft(date.getMinutes() + "");
+                var seconds = padLeft(date.getSeconds() + "");
+                // console.log(minutes, seconds);
+                if( seconds == '03') {
+                this.messageService.add({severity:'success', summary: 'Success', 
+                detail: 'Registro de Facultad Creado con exitoso'});
+                }
+                date = new Date(date.getTime() - 1000);
+                if( minutes == '00' && seconds == '01' ) {
+                  this.router.navigateByUrl('/institution/mostrar_facultys');
+                  clearInterval(interval); 
+                 }
+          }, 1000);
+      },async error => {
+        if(error != undefined) {
+          const text = await translate(error.error.message, "es");
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
+      });
+  }else{
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
+}
+
 
   private getAlladministrative(selectId?: number) {
     this.administrativeService.getList().subscribe(
       (AdministrativeFromApi) => {
+        // console.log(AdministrativeFromApi.administratives)
         this.administratives = AdministrativeFromApi.administratives;
-        console.log(this.administratives)
-        if (selectId !== undefined) {
-          this.form.controls['AdministrativeId'].setValue(selectId);
-        }
       }, error => console.error(error));
   }
 
   private getAlluniversidades(selectId?: number) {
-    this.universityService.getList().subscribe(
+    this.headquarterService.getList().subscribe(
       (AdministrativeFromApi) => {
-        this.universitys = AdministrativeFromApi.universitys;
-        if (selectId !== undefined) {
-          this.form.controls['UniversityId'].setValue(selectId);
-        }
+        this.Headquarter = AdministrativeFromApi.headquarters;
+
       }, error => console.error(error));
   }
-
-  get name() { return this.form.get('name'); }
-
-  get AdministrativeId() { return this.form.get('AdministrativeId'); }
-  get UniversityId() { return this.form.get('UniversityId'); }
 
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
-import { UniversityI } from 'src/app/models/institution/university';
 const translate = require('translate');
 @Component({
   selector: 'app-show-one-university',
@@ -20,8 +18,6 @@ export class ShowOneUniversityComponent implements OnInit {
   constructor(
     private universityService: UniversityService,
     private primengConfig: PrimeNGConfig,
-    private router: Router,
-    private messageService:MessageService
   ) { }
 
   ngOnInit() {
@@ -48,7 +44,7 @@ export class ShowOneUniversityComponent implements OnInit {
     this.displayMaximizable2 = false
   }
   actualizar(id: number){
-    console.log(id)
+    // console.log(id)
     this.getOneCntAccount(id)
   }
 }

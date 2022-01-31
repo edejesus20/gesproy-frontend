@@ -12,13 +12,13 @@ export interface UserI {
   ]
   Person?:{
     name: string;
-    surname: string;
-    DocumentTypeId: string;
+    surname?: string;
+    DocumentTypeId?: string;
     identification: string;
-    GenderId: string;
-    UserId: number;
-    address: string;
-    phone: string;
+    GenderId?: string;
+    UserId?: number;
+    address?: string;
+    phone?: string;
   }
 }
 

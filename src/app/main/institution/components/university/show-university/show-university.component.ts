@@ -1,27 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { InstitutionService } from 'src/app/core/services/institution/institution.service';
-import { Observable } from 'rxjs';
-import { InstitutionI } from 'src/app/models/desk/institution';
 
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
+
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import * as FileSaver from 'file-saver';
-import 'jspdf-autotable'
-import jsPDF from 'jspdf'
-import { Table } from 'jspdf-autotable';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { Router } from '@angular/router';
-
-interface Dato{
-  name: string;
-  nit: string;
-  addres: string;
-  createdAt: string;
-}
-
 @Component({
   selector: 'app-show-university',
   templateUrl: './show-university.component.html',
@@ -38,14 +25,12 @@ export class ShowUniversityComponent implements OnInit {
   rows = 1;
   cols: any[]=[];
 
-  private rows2:Dato[] = []
+  private rows2:UniversityI[] = []
 
   exportColumns: any[]=[];
   selectedProducts: UniversityI[]=[];
   constructor(
     private universityService: UniversityService,
-    private router: Router,
-    private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
     ) { 
       (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs
@@ -63,12 +48,12 @@ export class ShowUniversityComponent implements OnInit {
   ];
 
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
-    this.getOneInstitution()
+    this.getUniversitys()
   }
 
  
 
-  getOneInstitution() {
+  getUniversitys() {
     this.universityService.getList().subscribe((instititionsFromApi) => {
       this.universitys =instititionsFromApi.universitys;
       this.rows2=[]
@@ -122,9 +107,9 @@ async gerenratePdf(){
   var headers = [{
     fila_0:{
         col_1:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
-        col_2:{ text: 'CONCEPTO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-        col_3:{ text: 'NIT', style: 'tableHeader',fontSize: 12 ,bold: true, },
-        col_4:{ text: 'DIRECCION', style: 'tableHeader',fontSize: 12 ,bold: true, }
+        col_2:{ text: 'NIT', style: 'tableHeader',fontSize: 12 ,bold: true, },
+        col_3:{ text: 'DIRECCION', style: 'tableHeader',fontSize: 12 ,bold: true, },
+        col_4:{ text: 'FECHA', style: 'tableHeader',fontSize: 12 ,bold: true, }
     }
   }]
 
@@ -141,7 +126,7 @@ async gerenratePdf(){
       if (this.rows2.hasOwnProperty(key))
       {
           var data = this.rows2[key];
-          var row:any[] = [data.name.toString(),data.nit.toString(),data.addres.toString(),data.createdAt.toString()]
+          var row:any[] = [data.name.toString(),data.nit.toString(),data.addres.toString(),data.createdAt?.toString()]
 
           body.push(row);
       }

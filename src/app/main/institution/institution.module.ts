@@ -80,7 +80,7 @@ import { TreeModule } from 'primeng/tree';
 import { SharedModule } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import {KeyFilterModule} from 'primeng/keyfilter';
-
+import {DropdownModule} from 'primeng/dropdown';
 @NgModule({
   declarations: [
     InstitutionComponent,
@@ -179,7 +179,8 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     SharedModule,
     // VirtualScrollerModule,
     TableModule
-,KeyFilterModule
+,KeyFilterModule,
+DropdownModule
 
   ],
   entryComponents: [

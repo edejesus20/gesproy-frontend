@@ -1,34 +1,54 @@
-<!-- 
 
-<mat-card>
-  <div fxLayout="row" class="titleCard">
-    <mat-icon class="fondebabutton">
-      credit_card
-    </mat-icon>
-    <mat-card-title class="fondebabutton">Ingresar Facultad</mat-card-title>
-  </div>
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
+      >
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Facultad</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required>         
+          </div>
+            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+            [options]="administratives" [filter]="true"
+              name="AdministrativeId" ngModel 
+              #AdministrativeId="ngModel" label="SELECCIONE AL DECANO" 
+              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedAdministrativeI" 
+              optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
+              [required]="true" placeholder="SELECCIONE AL DECANO">
+              <ng-template let-option pTemplate="item">
+                <span >{{option.User.fullName }} - {{option.User?.Person?.identification}}</span>
+            </ng-template>
+            </p-dropdown>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column">
-    <mat-form-field>
-      <input matInput type="text" placeholder="Nombre" formControlName="name" required>
+      
+          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+          [options]="Headquarter" [filter]="true"
+            name="HeadquarterId" ngModel 
+            #HeadquarterId="ngModel" label="SELECCIONE LA SEDE" 
+            [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedHeadquarterI" 
+            optionLabel="name"optionvalue="id" filterBy="name"
+            [required]="true" placeholder="SELECCIONE  LA SEDE">
+            <ng-template let-option pTemplate="item">
+              <span >{{option.name }} - {{option.University?.name}}</span>
+          </ng-template>
+          </p-dropdown>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
 
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Decano</mat-label>
-      <mat-select formControlName="AdministrativeId" required>
-        <mat-option *ngFor="let de of administratives" [value]="de.id">{{ de.User?.fullName | titlecase}} - {{ de.Ocupation?.name | titlecase}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Universidad</mat-label>
-      <mat-select formControlName="UniversityId" required>
-        <mat-option *ngFor="let de of universitys" [value]="de.id">{{ de.name | titlecase}} - {{ de.nit }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
-      <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Facultad</button>
-    </mat-card-actions>
-  </form>
-</mat-card>
- -->
+<p-confirmPopup></p-confirmPopup>
