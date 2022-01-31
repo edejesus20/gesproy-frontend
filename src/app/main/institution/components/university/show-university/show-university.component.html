@@ -32,19 +32,28 @@
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
+        <ng-template [ngIf]="mostrar==3">
+          <th style="width: 3rem"></th>
+        </ng-template> 
+      
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="nit">NIT<p-sortIcon field="nit"></p-sortIcon></th>
           <th pSortableColumn="addres">DIRECCION<p-sortIcon field="addres"></p-sortIcon></th>
           <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
-          <ng-template [ngIf]="mostrar != 0">
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
       </tr>
   </ng-template>
 
-    <ng-template pTemplate="body" let-rowData let-item>
-        <tr [pSelectableRow]="rowData">
+    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+      <tr [pSelectableRow]="rowData">
+        <ng-template [ngIf]="mostrar==3">
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+        </ng-template> 
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
@@ -67,21 +76,48 @@
               </td>
           
           </ng-template>
-          <ng-template [ngIf]="mostrar==3">
-            <ng-container matColumnDef="acciones">
-              
-              <!-- <td >
-                  <a mat-mini-fab color="warn" class="editar" title="Detalle"
-                  (click)="detalle(item.id)">
-                    <mat-icon>visibility</mat-icon>
-                  </a>
-              </td> -->
-            </ng-container>
-          </ng-template>
-       
-       
       </tr>
     </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="6" style="text-align: center;">
+            <h3>No hay registros encontrados</h3>
+          </td>
+      </tr>
+  </ng-template>
+
+  
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+          <td colspan="7">
+              <div >
+                  <p-table [value]="item.Faculties" >
+                      <ng-template pTemplate="header">
+                          <tr>
+                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="AdministrativeId">Decano <p-sortIcon field="AdministrativeId"></p-sortIcon></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-order>
+                          <tr>
+                              <td>{{order.id}}</td>
+                              <td>{{order.name}}</td>
+                              <td>{{order.Administrative?.User?.fullName}}</td>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="6" style="text-align: center;">
+                            <h3>No hay registros encontrados</h3>
+                          </td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+  </ng-template>
 
 
   <!-- <ng-template pTemplate="summary">
