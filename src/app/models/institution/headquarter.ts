@@ -1,3 +1,4 @@
+import { FacultyI } from "./faculty";
 import { UniversityI } from "./university";
 
 export interface HeadquarterI {
@@ -6,6 +7,7 @@ export interface HeadquarterI {
    cordinatorInvestigation: string;
    UniversityId:number;
    University?:UniversityI
+   Faculties?:FacultyI
 }
 
 export interface HeadquarterProgramI {

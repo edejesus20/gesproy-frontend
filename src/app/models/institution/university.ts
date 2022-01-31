@@ -1,4 +1,5 @@
 import { FacultyI } from "./faculty";
+import { HeadquarterI } from "./headquarter";
 
 export interface UniversityI {
     id?: number;
@@ -6,5 +7,5 @@ export interface UniversityI {
     nit: string;
     addres: string;
     createdAt?:string
-    Faculties?:FacultyI[]
+    Headquarters?:HeadquarterI[]
 }

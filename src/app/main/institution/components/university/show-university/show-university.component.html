@@ -91,21 +91,66 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Faculties" >
-                      <ng-template pTemplate="header">
-                          <tr>
+                  <p-table [value]="item.Headquarters"  dataKey="id" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                   >
+                      <ng-template pTemplate="header" >
+                          <tr style="background: rgba(0, 255, 255, 0.849);">
+                            <ng-template [ngIf]="mostrar==3">
+                              <th style="width: 3rem"></th>
+                            </ng-template> 
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                              <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                              <th pSortableColumn="AdministrativeId">Decano <p-sortIcon field="AdministrativeId"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre de Sedes <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="cordinatorInvestigation">Coordinador investigador <p-sortIcon field="cordinatorInvestigation"></p-sortIcon></th>
                           </tr>
                       </ng-template>
-                      <ng-template pTemplate="body" let-order>
-                          <tr>
+                      <ng-template pTemplate="body" let-order let-expanded="expanded">
+                        <tr>
+                          <ng-template [ngIf]="mostrar==3">
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            </td>
+                          </ng-template> 
                               <td>{{order.id}}</td>
                               <td>{{order.name}}</td>
-                              <td>{{order.Administrative?.User?.fullName}}</td>
+                              <td>{{order.cordinatorInvestigation}}</td>
                           </tr>
                       </ng-template>
+
+                      <ng-template pTemplate="rowexpansion" let-order>
+                        <tr>
+                            <td colspan="7">
+                                <div >
+                                    <p-table [value]="order.Faculties"  dataKey="AdministrativeId" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+                                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                                     >
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                                                <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
+                                                <th pSortableColumn="AdministrativeId">Decano<p-sortIcon field="AdministrativeId"></p-sortIcon></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-ok>
+                                          <tr>
+                                                <td>{{ok.id}}</td>
+                                                <td>{{ok.name}}</td>
+                                                <td>{{ok.Administrative?.User?.fullName}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        
+                                        <ng-template pTemplate="emptymessage">
+                                          <tr>
+                                            <td colspan="6" style="text-align: center;">
+                                              <h3>No hay registros encontrados</h3>
+                                            </td>
+                                        </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
                       <ng-template pTemplate="emptymessage">
                         <tr>
                           <td colspan="6" style="text-align: center;">
