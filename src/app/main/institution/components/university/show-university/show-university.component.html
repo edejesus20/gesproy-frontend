@@ -12,7 +12,8 @@
         <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Universidades</h2>
           <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" (input)="Buscar($event, dt1)" placeholder="Search keyword" />
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+            (input)="Buscar($event, dt1)" placeholder="Buscar la palabra clave.." />
         </span> 
         
        
@@ -36,6 +37,9 @@
           <th pSortableColumn="nit">NIT<p-sortIcon field="nit"></p-sortIcon></th>
           <th pSortableColumn="addres">DIRECCION<p-sortIcon field="addres"></p-sortIcon></th>
           <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
+          <ng-template [ngIf]="mostrar != 0">
+            <th > ACCIONES </th>
+          </ng-template>
       </tr>
   </ng-template>
 
@@ -43,10 +47,37 @@
         <tr [pSelectableRow]="rowData">
        
           <td>{{item.id}}</td>
-          <td>{{item.name}}</td>
+          <td>{{item.name | titlecase}}</td>
           <td>{{item.nit}}</td>
-          <td>{{item.addres}}</td>
-          <td>{{item.createdAt | date:'fullDate'}}</td>
+          <td>{{item.addres | titlecase}}</td>
+          <td>{{item.createdAt | date:'fullDate' | titlecase}}</td>
+          <ng-template [ngIf]="mostrar==1">
+              
+              <td >
+                <button pButton pRipple  type="button"class="editar" title="Editar" 
+                  icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(item.id)"></button>
+              </td>
+          
+          </ng-template>
+          <ng-template [ngIf]="mostrar==2">
+            
+              <td >
+                <button pButton pRipple  type="button" title="Eliminar" 
+                  icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(item.id)"></button>
+              </td>
+          
+          </ng-template>
+          <ng-template [ngIf]="mostrar==3">
+            <ng-container matColumnDef="acciones">
+              
+              <!-- <td >
+                  <a mat-mini-fab color="warn" class="editar" title="Detalle"
+                  (click)="detalle(item.id)">
+                    <mat-icon>visibility</mat-icon>
+                  </a>
+              </td> -->
+            </ng-container>
+          </ng-template>
        
        
       </tr>

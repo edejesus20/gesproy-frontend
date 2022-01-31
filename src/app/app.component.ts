@@ -10,7 +10,7 @@ import { UserService } from './core/services/usuarios/user.service';
 import { Router } from '@angular/router';
 import { UserLoginI } from './models/authorization/usr_User';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
- 
+const translate = require('translate');
 interface menu{
     label:string,
     data?:string
@@ -281,13 +281,6 @@ showSuccess() {
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Ingreso exitoso'});
 }
 
-showWarn() {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-}
-
-showError() {
-    this.messageService.add({severity:'error', summary: 'Error', detail: 'Credenciales Incorrectas'});
-}
   openDialogLogin(event: Event){
     event.preventDefault();
     this.displayMaximizable=true
@@ -305,7 +298,7 @@ showError() {
   // }
 
   onSubmit(f:NgForm) {
-      if(f.form.value.username != undefined && f.form.value.password != undefined){
+      if(f.form.value.username != "" && f.form.value.password != ""){
         const formValue: UserLoginI = {
             username:f.form.value.username,
             password:f.form.value.password
@@ -321,16 +314,19 @@ showError() {
                
               // }
              
-            },
-            err => {
-                this.showError()
             }
-          );
+            ,async error => {
+              if(error != undefined) {
+                const text = await translate(error.error.message, "es");
+                this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+              }
+            });
       }else{
-        this.showWarn()
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
       }
     
     
   }
 
 }
+

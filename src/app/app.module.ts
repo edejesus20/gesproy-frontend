@@ -45,6 +45,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {TableModule} from 'primeng/table'
 import { SharedModule } from './modules/shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { KeyFilterModule } from 'primeng/keyfilter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +89,7 @@ import { CommonModule } from '@angular/common';
     SharedModule,
     // VirtualScrollerModule,
     TableModule
+    ,KeyFilterModule
     
     
   ],

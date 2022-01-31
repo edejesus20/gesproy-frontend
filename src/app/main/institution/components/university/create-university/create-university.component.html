@@ -1,30 +1,41 @@
-<!-- 
-<mat-card>
-  <div fxLayout="row" class="titleCard">
-    <mat-icon class="fondebabutton">
-      credit_card
-    </mat-icon>
-    <mat-card-title class="fondebabutton">Ingresar Universidad</mat-card-title>
-  </div>
-    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
-      <mat-card-content fxLayout="column wrap" >
-          
-            <mat-form-field>
-              <input matInput type="text" placeholder="Nombre" formControlName="name" required>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput type="text" placeholder="Nit" formControlName="nit" required>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput type="text" placeholder="Direccion" formControlName="addres" required>
-            </mat-form-field>
-                
-                  
-        </mat-card-content>
-  
-        <mat-card-actions>
-          <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Universidad</button>
-        </mat-card-actions>
-    </form>
 
-</mat-card> -->
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
+      >
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Universidad</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required>         
+          </div>
+          <div class="p-inputgroup" style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <!-- <p-inputNumber inputId="inputnumber" name="nit" placeholder="NIT" ngModel #nit="ngModel" required ></p-inputNumber> -->
+              <input  type="text" pKeyFilter="int" class="p-inputtext-lg"  pInputText name="nit" placeholder="NIT" ngModel #nit="ngModel" required>         
+          </div>
+
+          <div class="p-inputgroup" >
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" pInputText [pKeyFilter]="blockSpecial" class="p-inputtext-lg"  name="addres" placeholder="DIRECCION" ngModel #addres="ngModel" required  >         
+        </div>
+
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

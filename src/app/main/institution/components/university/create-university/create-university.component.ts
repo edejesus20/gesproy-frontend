@@ -1,50 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
 import { REGEXP_ALPHANUMERIC } from '../../program/create-program/create-program.component';
-
+const translate = require('translate');
 @Component({
   selector: 'app-create-university',
   templateUrl: './create-university.component.html',
   styleUrls: ['./create-university.component.css']
 })
 export class CreateUniversityComponent implements OnInit {
-  public form: FormGroup=this.formBuilder.group({});
+  displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
   constructor(
-    private formBuilder: FormBuilder,
     private universityService: UniversityService,
     private router: Router,
-    // private snackBar: MatSnackBar,
+    private messageService:MessageService
     ) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required,]], //Validators.pattern(REGEXP_ALPHANUMERIC)]],
-      nit: ['', Validators.required],
-      addres: ['', Validators.required],
-    });
+    
   }
-  public onSubmit(): void {
-    const formValue: UniversityI = this.form.value;
+  public onSubmit(f:NgForm) {
+    // console.log(f)
+    if(f.form.value.name != "" && f.form.value.nit != "" && f.form.value.addres != ""){
+      const formValue: UniversityI = {
+        name:f.form.value.name,
+        nit:f.form.value.nit,
+        addres:f.form.value.addres
+      };
     this.universityService.createItem(formValue).subscribe(
       () => {
-        // this.snackBar.open('Universidad creado exitosamente', 'Ok', {
-        //   duration: 5000,
-        // });
-        this.router.navigateByUrl('/institution/mostrar_universitys');
-      },
-      err => {
-        // this.snackBar.open('Error. El Universidad no pudo ser creado', 'Ok', {
-        //   duration: 5000,
-        // });
-        console.error(err);
-      }
-    );
+              var date = new Date('2020-01-01 00:00:03');
+                function padLeft(n:any){ 
+                   return n ="00".substring(0, "00".length - n.length) + n;
+                }
+                var interval = setInterval(() => {
+                var minutes = padLeft(date.getMinutes() + "");
+                var seconds = padLeft(date.getSeconds() + "");
+                // console.log(minutes, seconds);
+                if( seconds == '03') {
+                this.messageService.add({severity:'success', summary: 'Success', 
+                detail: 'Registro de Universidad Creado con exitoso'});
+                }
+                date = new Date(date.getTime() - 1000);
+                if( minutes == '00' && seconds == '01' ) {
+                  this.router.navigateByUrl('/institution/mostrar_universitys');
+                  clearInterval(interval); 
+                 }
+          }, 1000);
+      },async error => {
+        if(error != undefined) {
+          const text = await translate(error.error.message, "es");
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
+      });
+  }else{
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
+}
 
-  get name() { return this.form.get('name'); }
-  get nit() { return this.form.get('nit'); }
-  get addres() { return this.form.get('addres'); }
 }

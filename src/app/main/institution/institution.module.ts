@@ -79,7 +79,7 @@ import { ToastModule } from 'primeng/toast';
 import { TreeModule } from 'primeng/tree';
 import { SharedModule } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 @NgModule({
   declarations: [
@@ -179,7 +179,7 @@ import { BrowserModule } from '@angular/platform-browser';
     SharedModule,
     // VirtualScrollerModule,
     TableModule
-
+,KeyFilterModule
 
   ],
   entryComponents: [

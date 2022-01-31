@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { Observable } from 'rxjs';
 import { InstitutionI } from 'src/app/models/desk/institution';
 
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import * as FileSaver from 'file-saver';
 import 'jspdf-autotable'
 import jsPDF from 'jspdf'
@@ -13,6 +13,7 @@ import { Table } from 'jspdf-autotable';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
+import { Router } from '@angular/router';
 
 interface Dato{
   name: string;
@@ -27,12 +28,13 @@ interface Dato{
   styleUrls: ['./show-university.component.scss']
 })
 export class ShowUniversityComponent implements OnInit {
-  // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  // @ViewChild(MatSort, {static: true}) sort!: MatSort;
+
+  @Input() mostrar:number=0;
+  @Output() modificar= new EventEmitter<number>();
   public universitys:UniversityI[]=[];
   first = 0;
   loading: boolean = true;
-
+ 
   rows = 1;
   cols: any[]=[];
 
@@ -40,7 +42,10 @@ export class ShowUniversityComponent implements OnInit {
 
   exportColumns: any[]=[];
   selectedProducts: UniversityI[]=[];
-  constructor(private universityService: UniversityService,
+  constructor(
+    private universityService: UniversityService,
+    private router: Router,
+    private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
     ) { 
       (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs
@@ -60,6 +65,8 @@ export class ShowUniversityComponent implements OnInit {
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getOneInstitution()
   }
+
+ 
 
   getOneInstitution() {
     this.universityService.getList().subscribe((instititionsFromApi) => {
@@ -167,7 +174,7 @@ async gerenratePdf(){
         style: 'tableExample',
         table: {
           headerRows: 1,
-            widths: [ '25%', '25%','25%','25%'],
+            widths: [ '35%', '15%','25%','25%'],
 
             body: body
         },
@@ -196,4 +203,20 @@ async gerenratePdf(){
   const pdf = pdfMake.createPdf(pdfDefinition);
   pdf.open();
 }
+
+
+editar(id: number){
+  this.modificar.emit(id)
+  // this.router.navigateByUrl(`/contabilidad/account_modificar/${id}`);
+}
+
+delet(id: number){
+  this.modificar.emit(id)
+  // this.router.navigateByUrl(`/contabilidad/account_eliminar/${id}`);
+}
+detalle(id: number){
+  this.modificar.emit(id)
+  // this.router.navigateByUrl(`/contabilidad/account/${id}`);
+}
+
 }

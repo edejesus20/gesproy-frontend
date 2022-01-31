@@ -1,3 +1,4 @@
+
 export function getBase64ImageFromURL(url:any) {
     return new Promise((resolve, reject) => {
     var img = new Image();
