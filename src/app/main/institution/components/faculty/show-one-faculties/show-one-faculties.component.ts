@@ -12,7 +12,6 @@ export class ShowOneFacultiesComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  private id:number=0
   constructor(
     private facultyService: FacultyService,
     private primengConfig: PrimeNGConfig,

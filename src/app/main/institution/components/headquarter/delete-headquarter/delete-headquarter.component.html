@@ -1,3 +1,48 @@
-<p>
-  delete-headquarter works!
-</p>
+<ng-template [ngIf]="tabla == true">
+  <app-show-headquarter [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show-headquarter>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+  <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}" 
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+        
+        <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+            <i class="pi pi-trash" style="font-size: 2rem;margin-right: 10px;"></i>
+          <h2 class="fondebabutton" style="margin-top: -1px;">¿Seguro de eliminar esta Sede?</h2>
+        </div>
+  
+
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" [(ngModel)]="form.name" disabled>         
+            </div>
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
+            
+              <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"  ngModel #cordinatorInvestigation="ngModel"
+              [value]="form.cordinatorInvestigation"   disabled>
+              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORDINADOR DE INVESTIGACIÓN</h3></label>
+            </span>
+
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
+            
+              <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"
+              [value]="form.University?.name"  disabled>
+              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD ACTUAL</h3></label>
+            </span>
+        </div>
+                
+            <ng-template pTemplate="footer">
+                <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                  <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-danger p-button-raised p-button-rounded" label="Eliminar Registro" styleClass="mr-2"></button>
+                <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            </div>
+            </ng-template>
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>

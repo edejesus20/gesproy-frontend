@@ -6,6 +6,7 @@ export interface HeadquarterI {
    name: string;
    cordinatorInvestigation: string;
    UniversityId:number;
+   createdAt?:string;
    University?:UniversityI
    Faculties?:FacultyI
 }

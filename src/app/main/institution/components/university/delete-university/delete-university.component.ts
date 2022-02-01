@@ -60,7 +60,7 @@ export class DeleteUniversityComponent implements OnInit {
   }
 
   public onSubmit(f:NgForm) {
-    console.log(f)
+    // console.log(f)
     if(f.form.value.name != ("" || null) && f.form.value.nit != ("" || null) && f.form.value.addres != ("" || null)){
       const formValue: UniversityI = {
         name:f.form.value.name,

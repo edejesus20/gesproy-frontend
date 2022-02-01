@@ -51,9 +51,9 @@ export class HeadquarterService {
   }
 
   // Get single student data by ID
-  getItem(id: number): Observable<HeadquarterI> {
+  getItem(id: number): Observable<{headquarter:HeadquarterI}> {
     return this.http
-      .get<HeadquarterI>(this.base_path_get + '/' + id)
+      .get<{headquarter:HeadquarterI}>(this.base_path_get + '/' + id)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -72,9 +72,9 @@ export class HeadquarterService {
   }
 
   // Update item by id
-  updateItem(id:number, item:HeadquarterI): Observable<HeadquarterI> {
+  updateItem(id:number, item:HeadquarterI): Observable<{headquarter:HeadquarterI}> {
     return this.http
-      .put<HeadquarterI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+      .patch<{headquarter:HeadquarterI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)

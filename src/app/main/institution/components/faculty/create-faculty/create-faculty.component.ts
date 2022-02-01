@@ -39,17 +39,11 @@ export class CreateFacultyComponent implements OnInit {
     name: '',
     cordinatorInvestigation: '',
     UniversityId:0
-    // University: { 
-    //   name: '',
-    //   nit: '',
-    //   addres: '',
-    // },
 };
 
-  // selectedCountry:string=''
 
-  displayMaximizable2:boolean=true
-  blockSpecial: RegExp = /^[^<>*!]+$/ 
+displayMaximizable2:boolean=true
+blockSpecial: RegExp = /^[^<>*!]+$/ 
   constructor(
     private administrativeService: AdministrativeService,
     private facultyService: FacultyService,
@@ -60,18 +54,9 @@ export class CreateFacultyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.buildForm();
     this.getAlladministrative()
     this.getAlluniversidades()
   
-  }
-
-  private buildForm() {
-    let form = {
-      name: '',
-      AdministrativeId: '',
-      HeadquarterId:'',
-    }
   }
 
 
@@ -83,7 +68,7 @@ export class CreateFacultyComponent implements OnInit {
       AdministrativeId:f.form.value.AdministrativeId.id,
       HeadquarterId:f.form.value.HeadquarterId.id
     };
-    console.log(formValue)
+    // console.log(formValue)
 
     if(formValue.name != ("" || null || undefined) && 
     formValue.AdministrativeId != ('' || 0 || null || undefined) &&

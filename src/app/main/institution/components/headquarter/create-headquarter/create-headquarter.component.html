@@ -1,33 +1,47 @@
-<!-- 
-<mat-card>
-    <div fxLayout="row" class="titleCard">
-      <mat-icon class="fondebabutton">
-        credit_card
-      </mat-icon>
-      <mat-card-title class="fondebabutton">Ingresar Sede</mat-card-title>
-    </div>
-      <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
-        <mat-card-content fxLayout="column wrap" >
-            
-                        <mat-form-field>
-                          <input matInput type="text" placeholder="Nombre" formControlName="name" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput type="text" placeholder="Cordinador de Investigacion" formControlName="cordinatorInvestigation" required>
-                          </mat-form-field>
 
-                      <mat-form-field>
-                        <mat-label>Universidad</mat-label>
-                        <mat-select formControlName="UniversityId" required>
-                          <mat-option *ngFor="let uni of universitys" [value]="uni.id">{{ uni.name | titlecase}} - {{ uni.nit}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    
-          </mat-card-content>
-    
-          <mat-card-actions>
-            <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Programa</button>
-          </mat-card-actions>
-      </form>
-  
-  </mat-card> -->
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Sede</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required>         
+          </div>
+
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
+            placeholder="CORDINADOR DE INVESTIGACIÓN" ngModel #cordinatorInvestigation="ngModel" required>         
+        </div>
+
+            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+            [options]="universitys" [filter]="true"
+              name="UniversityId" ngModel 
+              #UniversityId="ngModel" label="SELECCIONE AL DECANO" 
+              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedUniversit" 
+              optionvalue="id" optionLabel="name"  filterBy="name"
+              [required]="true" placeholder="SELECCIONE UNIVERSIDAD">
+              <ng-template let-option pTemplate="item">
+                <span >{{option.name }} - Nit: {{option.nit}}</span>
+            </ng-template>
+            </p-dropdown>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

@@ -55,7 +55,7 @@ export class EditUniversityComponent implements OnInit {
     this.displayMaximizable2 = false
   }
   actualizar(id: number){
-    console.log(id)
+    // console.log(id)
     this.getOneCntAccount(id)
   }
 
