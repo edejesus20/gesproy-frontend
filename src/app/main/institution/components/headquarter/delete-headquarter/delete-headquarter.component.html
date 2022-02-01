@@ -3,7 +3,7 @@
 </ng-template>
 <ng-template [ngIf]="tabla == false">
   <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw'}" 
     [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
         
         <div [style]="{'margin-top':'-1px'}" >

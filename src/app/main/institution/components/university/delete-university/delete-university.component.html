@@ -5,7 +5,7 @@
 
   
 <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
       >
       
@@ -18,16 +18,29 @@
               <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
               <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" disabled [(ngModel)]="form.name" >         
           </div>
-          <div class="p-inputgroup" style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <!-- <p-inputNumber inputId="inputnumber" name="nit" placeholder="NIT" ngModel #nit="ngModel" disabled ></p-inputNumber> -->
-              <input  type="number" class="p-inputtext-lg"  pInputText name="nit" placeholder="NIT" ngModel #nit="ngModel" [(ngModel)]="form.nit" disabled >         
-          </div>
+          <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
+            
+            <input type="number" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"
+            name="nit" placeholder="NIT" ngModel #nit="ngModel"
+            [(ngModel)]="form.nit"  disabled>
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NIT</h3></label>
+          </span>
+          <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
+            
+            <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"
+            name="addres" placeholder="DIRECCION" ngModel #addres="ngModel" [(ngModel)]="form.addres" disabled>
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DIRECCIÓN</h3></label>
+          </span>
 
-          <div class="p-inputgroup" >
+          <!-- <div class="p-inputgroup" style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input  type="number" class="p-inputtext-lg"  pInputText name="nit" placeholder="NIT" ngModel #nit="ngModel" [(ngModel)]="form.nit" disabled >         
+          </div> -->
+
+          <!-- <div class="p-inputgroup" >
             <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
             <input type="text" pInputText [pKeyFilter]="blockSpecial" class="p-inputtext-lg"  name="addres" placeholder="DIRECCION" ngModel #addres="ngModel" [(ngModel)]="form.addres" disabled>         
-        </div>
+        </div> -->
 
       </div>
               
