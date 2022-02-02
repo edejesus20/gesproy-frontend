@@ -41,8 +41,9 @@ export class ShowFacultiesComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'nit', header: 'Nit' },
-      { field: 'addres', header: 'Dirreccion' },
+      { field: 'Administrative', header: 'Decanatura' },
+      { field: 'Headquarter', header: 'Sede' },
+      { field: 'University', header: 'Universidad' },
       { field: 'createdAt', header: 'Fecha' }
   ];
 

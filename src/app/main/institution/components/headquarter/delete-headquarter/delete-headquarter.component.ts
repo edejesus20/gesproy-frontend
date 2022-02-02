@@ -18,7 +18,6 @@ export class DeleteHeadquarterComponent implements OnInit {
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public universitys: UniversityI[]=[]
-  private id:number=0
   public form:HeadquarterI={
     id:0,
      name:'',
@@ -75,9 +74,6 @@ export class DeleteHeadquarterComponent implements OnInit {
         ){
         this.form=cnt_groupFromApi.headquarter
             }
-  
-      if(this.form.id){this.id=this.form.id}
-      
      
       this.displayMaximizable2=true
       this.tabla = false

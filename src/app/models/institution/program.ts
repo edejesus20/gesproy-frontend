@@ -4,8 +4,9 @@ import { FacultyI } from "./faculty";
 export interface ProgramI {
    id?: number;
    name: string;
-   FacultyId?:string
-   CategoryId?:string;
+   FacultyId?:number;
+   CategoryId?:number;
    Faculty?:FacultyI
    Category?:CategoryI
+   createdAt?:string
 }

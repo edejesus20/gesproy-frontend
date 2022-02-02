@@ -15,17 +15,20 @@ const translate = require('translate');
 export class EditHeadquarterComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
- public edit:boolean=false;
+
  public universitys: UniversityI[]=[]
- selectedUniversit: UniversityI={
+ public selectedUniversit: UniversityI={
    id:0,
    name: '',
    nit: '',
    addres: '',
 };
- private id:number=0
+ 
  displayMaximizable2:boolean=true
  blockSpecial: RegExp = /^[^<>*!]+$/ 
+
+ private id:number=0
+ public edit:boolean=false;
  public form:HeadquarterI={
    id:0,
     name:'',
@@ -33,7 +36,7 @@ export class EditHeadquarterComponent implements OnInit {
     UniversityId:0,
     University:{
       id:0,
-      name:'',
+      name:'Uniguajira',
       nit:'',
       addres:''
     }
@@ -131,6 +134,8 @@ getOneCntAccount(id:number) {
     if(cnt_groupFromApi.headquarter.University != undefined
       ){
       this.form=cnt_groupFromApi.headquarter
+      // this.selectedUniversit=cnt_groupFromApi.headquarter.University
+      // console.log(this.selectedUniversit)
           }
 
     if(this.form.id){this.id=this.form.id}
@@ -140,4 +145,5 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
+
 }

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import {  PrimeNGConfig } from 'primeng/api';
 import * as FileSaver from 'file-saver';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
-import { Router } from '@angular/router';
 
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
@@ -41,8 +40,8 @@ export class ShowHeadquarterComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'nit', header: 'Nit' },
-      { field: 'addres', header: 'Dirreccion' },
+      { field: 'cordinatorInvestigation', header: 'Coordinador de Investigación' },
+      { field: 'University', header: 'Universidad' },
       { field: 'createdAt', header: 'Fecha' }
   ];
 

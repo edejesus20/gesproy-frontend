@@ -1,36 +1,51 @@
-<!-- 
-<mat-card>
-  <div fxLayout="row" class="titleCard">
-    <mat-icon class="fondebabutton">
-      credit_card
-    </mat-icon>
-    <mat-card-title class="fondebabutton">Ingresar Programas</mat-card-title>
-  </div>
-    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
-      <mat-card-content fxLayout="column wrap" >
-          
-                      <mat-form-field>
-                        <input matInput type="text" placeholder="Nombre" formControlName="name" required>
-                      </mat-form-field>
-                      
-                    <mat-form-field>
-                      <mat-label>Facultad</mat-label>
-                      <mat-select formControlName="FacultyId" required>
-                        <mat-option *ngFor="let fac of faculties" [value]="fac.id">{{ fac.name }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                      <mat-label>Categoria</mat-label>
-                      <mat-select formControlName="CategoryId" required>
-                        <mat-option *ngFor="let fac of categorys" [value]="fac.id">{{ fac.name }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  
-        </mat-card-content>
-  
-        <mat-card-actions>
-          <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Programa</button>
-        </mat-card-actions>
-    </form>
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '60vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Programa</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required>         
+          </div>
+            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+            [options]="faculties" [filter]="true"
+              name="FacultyId" ngModel 
+              #FacultyId="ngModel" label="SELECCIONE LA FACULTAD" 
+              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedFacultyI" 
+              optionvalue="id" optionLabel="name"  filterBy="name"
+              [required]="true" placeholder="SELECCIONE LA FACULTAD">
+              <ng-template let-option pTemplate="item">
+                <span >{{option.name }} - Sede: {{option.Headquarter.name}} - {{option.Headquarter.University.name}}</span>
+            </ng-template>
+            </p-dropdown>
 
-</mat-card> -->
+            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+            [options]="categorys" [filter]="true"
+              name="CategoryId" ngModel 
+              #CategoryId="ngModel" label="SELECCIONE LA CATEGORIA" 
+              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedCategoryI" 
+              optionvalue="id" optionLabel="name"  filterBy="name"
+              [required]="true" placeholder="SELECCIONE LA CATEGORIA">
+              <ng-template let-option pTemplate="item">
+                <span >{{option.name }}</span>
+            </ng-template>
+            </p-dropdown>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

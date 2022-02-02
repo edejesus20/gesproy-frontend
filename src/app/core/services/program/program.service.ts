@@ -61,9 +61,9 @@ createItem(program: ProgramI): Observable<ProgramI> {
 }
 
  // Get single student data by ID
- getItem(id: number): Observable<ProgramI> {
+ getItem(id: number): Observable<{program:ProgramI}> {
    return this.http
-     .get<ProgramI>(this.base_path_get + '/' + id)
+     .get<{program:ProgramI}>(this.base_path_get + '/' + id)
      .pipe(
        retry(2),
        catchError(this.handleError)
@@ -83,7 +83,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
  // Update item by id
  updateItem(id:number, item:ProgramI): Observable<ProgramI> {
    return this.http
-     .put<ProgramI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+     .patch<ProgramI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

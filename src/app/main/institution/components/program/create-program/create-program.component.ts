@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import {  NgForm  } from '@angular/forms';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { Router } from '@angular/router';
@@ -9,7 +8,8 @@ import { FacultyI } from 'src/app/models/institution/faculty';
 import { ProgramI } from 'src/app/models/institution/program';
 import { CategoryService } from 'src/app/core/services/institution/category.service';
 import { CategoryI } from 'src/app/models/institution/category';
-
+import { MessageService } from 'primeng/api';
+const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 
@@ -20,11 +20,37 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 })
 export class CreateProgramComponent implements OnInit {
   public faculties: FacultyI[]=[];
-  public form: FormGroup=this.formBuilder.group({});
   public categorys:CategoryI[] = []
+  selectedFacultyI: FacultyI={
+    id:0,
+    name:'',
+    AdministrativeId: 0,
+    HeadquarterId: 0,
+    Headquarter:{
+      id:0,
+      name:'',
+      cordinatorInvestigation:'',
+      UniversityId:0,
+      University:
+      {
+        id: 0,
+        name: '',
+        nit: '',
+        addres: '',
+      } 
+    }
+    
+};
 
+selectedCategoryI: CategoryI={
+  id:0,
+  name:'',
+};
+
+displayMaximizable2:boolean=true
+blockSpecial: RegExp = /^[^<>*!]+$/ 
   constructor(
-    private formBuilder: FormBuilder,
+    private messageService:MessageService,
     private programService: ProgramService,
     private facultyService: FacultyService,
     private categoryService:CategoryService,
@@ -33,61 +59,66 @@ export class CreateProgramComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.buildForm();
     this.getAllFaculty();
     this.getAllcolcienciaCategorys()
-  }
-
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(REGEXP_ALPHANUMERIC)]],
-      CategoryId: ['', Validators.required],
-      FacultyId: ['', Validators.required],
-    });
   }
 
   private getAllFaculty(selectId?: number) {
     this.facultyService.getList().subscribe(
       (facultiesFromApi) => {
         this.faculties = facultiesFromApi.facultys;
-        if (selectId !== undefined) {
-          this.form.value.FacultyId.setValue(selectId);
-        }
       }, error => console.error(error));
   }
   private getAllcolcienciaCategorys(selectId?: number) {
     this.categoryService.getList().subscribe(
       (facultiesFromApi) => {
         this.categorys = facultiesFromApi.categorys;
-        if (selectId !== undefined) {
-          this.form.value.CategoryId.setValue(selectId);
-        }
       }, error => console.error(error));
   }
 
+  public onSubmit(f:NgForm) {
+    // console.log(f)
 
-  public onSubmit(): void {
-    const formValue: ProgramI = this.form.value;
+    let formValue: ProgramI = {
+      name:f.form.value.name,
+      FacultyId:f.form.value.FacultyId.id,
+      CategoryId:f.form.value.CategoryId.id
+    };
+    console.log(formValue)
+
+    if(formValue.name != '' && formValue.FacultyId != ( 0) && formValue.FacultyId != undefined && 
+    formValue.CategoryId !=  undefined && formValue.CategoryId != 0
+    ){
+
     this.programService.createItem(formValue).subscribe(
       () => {
-        // this.snackBar.open('Programa creado exitosamente', 'Ok', {
-        //   duration: 5000,
-        // });
-        this.router.navigateByUrl('/institution/mostrar_programs');
-      },
-      err => {
-        // this.snackBar.open('Error. El programa no pudo ser creado', 'Ok', {
-        //   duration: 5000,
-        // });
-        console.error(err);
-      }
-    );
+              var date = new Date('2020-01-01 00:00:03');
+                function padLeft(n:any){ 
+                   return n ="00".substring(0, "00".length - n.length) + n;
+                }
+                var interval = setInterval(() => {
+                var minutes = padLeft(date.getMinutes() + "");
+                var seconds = padLeft(date.getSeconds() + "");
+                // console.log(minutes, seconds);
+                if( seconds == '03') {
+                this.messageService.add({severity:'success', summary: 'Success', 
+                detail: 'Registro de Programa Creado con exitoso'});
+                }
+                date = new Date(date.getTime() - 1000);
+                if( minutes == '00' && seconds == '01' ) {
+                  this.router.navigateByUrl('/institution/mostrar_programs');
+                  clearInterval(interval); 
+                 }
+          }, 1000);
+      },async error => {
+        if(error != undefined) {
+          const text = await translate(error.error.message, "es");
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
+      });
+  }else{
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
-
-  get name() { return this.form.get('name'); }
-
-  get CategoryId() { return this.form.get('CategoryId'); }
-
-  get FacultyId() { return this.form.get('FacultyId'); }
+}
 
 }
