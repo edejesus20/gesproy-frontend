@@ -38,9 +38,9 @@ handleError(res: Response) {
 };
 
 // Create a new item
-createItem(seedbeds: GroupI): Observable<GroupI> {
+createItem(group: GroupI): Observable<GroupI> {
   return this.http
-    .post<GroupI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<GroupI>(this.base_path_post, JSON.stringify(group), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -48,9 +48,9 @@ createItem(seedbeds: GroupI): Observable<GroupI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<GroupI> {
+getItem(id: number): Observable<{group:GroupI}> {
   return this.http
-    .get<GroupI>(this.base_path_get + '/' + id)
+    .get<{group:GroupI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -68,9 +68,9 @@ getList(): Observable<{ groups: GroupI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:GroupI): Observable<GroupI> {
+updateItem(id:number, group:GroupI): Observable<GroupI> {
   return this.http
-    .put<GroupI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .put<GroupI>(this.base_path_get + '/' + id, JSON.stringify(group), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

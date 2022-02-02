@@ -1,3 +1,47 @@
-<p>
-  create_CategoriaGrupos works!
-</p>
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height':'75%'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Categoria de Grupos</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText placeholder="NOMBRE" name="name"  ngModel #name="ngModel" required>         
+          </div>
+
+          <!-- <div class="p-inputgroup p-inputtext-lg" style="margin-bottom: 20px;">
+            
+            <p-calendar name="date"  [style]="{'width':'100%'}" 
+            ngModel #date="ngModel" [required]="true" placeholder="SELECCIONE LA FECHA"
+            [showIcon]="true" inputId="icon"></p-calendar>
+        </div> -->
+
+            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+            [options]="groups" [filter]="true"
+              name="GroupId" ngModel 
+              #GroupId="ngModel" label="SELECCIONE EL GRUPO DE INVETIGACIÓN" 
+              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedGroupI" 
+              optionvalue="id" optionLabel="name"  filterBy="name"
+              [required]="true" placeholder="SELECCIONE EL GRUPO DE INVETIGACIÓN">
+              <ng-template let-option pTemplate="item">
+                <span >{{option.name }}</span>
+            </ng-template>
+            </p-dropdown>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

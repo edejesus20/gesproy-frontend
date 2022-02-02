@@ -17,12 +17,12 @@ import { ProgramI } from 'src/app/models/institution/program';
   styleUrls: ['./show-programs.component.scss']
 })
 export class ShowProgramsComponent implements OnInit {
-  @Input() mostrar:number=0;
-  @Output() modificar= new EventEmitter<number>();
+ 
   public programs:ProgramI[]=[];
   first = 0;
   loading: boolean = true;
- 
+  @Input() mostrar:number=0;
+  @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
 

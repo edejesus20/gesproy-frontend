@@ -50,11 +50,12 @@ selectedCategoryI: CategoryI={
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!]+$/ 
   constructor(
+    private router: Router,
     private messageService:MessageService,
     private programService: ProgramService,
     private facultyService: FacultyService,
     private categoryService:CategoryService,
-    private router: Router,
+    
     // private snackBar: MatSnackBar,
   ) { }
 

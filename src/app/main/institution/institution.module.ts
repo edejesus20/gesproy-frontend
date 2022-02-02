@@ -81,6 +81,7 @@ import { SharedModule } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {DropdownModule} from 'primeng/dropdown';
+import {CalendarModule} from 'primeng/calendar';
 @NgModule({
   declarations: [
     InstitutionComponent,
@@ -180,7 +181,8 @@ import {DropdownModule} from 'primeng/dropdown';
     // VirtualScrollerModule,
     TableModule
 ,KeyFilterModule,
-DropdownModule
+DropdownModule,
+CalendarModule
 
   ],
   entryComponents: [

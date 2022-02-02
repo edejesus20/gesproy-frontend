@@ -39,9 +39,9 @@ handleError(res: Response) {
 };
 
 // Create a new item
-createItem(seedbeds: CategoryGroupI): Observable<CategoryGroupI> {
+createItem(categoryGroup: CategoryGroupI): Observable<CategoryGroupI> {
   return this.http
-    .post<CategoryGroupI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<CategoryGroupI>(this.base_path_post, JSON.stringify(categoryGroup), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -49,9 +49,9 @@ createItem(seedbeds: CategoryGroupI): Observable<CategoryGroupI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<CategoryGroupI> {
+getItem(id: number): Observable<{categoryGroup:CategoryGroupI}> {
   return this.http
-    .get<CategoryGroupI>(this.base_path_get + '/' + id)
+    .get<{categoryGroup:CategoryGroupI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -69,9 +69,9 @@ getList(): Observable<{ categoryGroups: CategoryGroupI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:CategoryGroupI): Observable<CategoryGroupI> {
+updateItem(id:number, categoryGroup:CategoryGroupI): Observable<CategoryGroupI> {
   return this.http
-    .put<CategoryGroupI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<CategoryGroupI>(this.base_path_get + '/' + id, JSON.stringify(categoryGroup), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
