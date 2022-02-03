@@ -74,7 +74,7 @@ export class AdministrativeService {
  // Update item by id
  updateItem(id:number, item:AdministrativeI): Observable<AdministrativeI> {
    return this.http
-     .put<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+     .patch<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

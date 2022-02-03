@@ -96,7 +96,7 @@ createUser(user: UserI): Observable<{ user: UserI }> {
 actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPasswordI }> {
   //console.log(user,'----------------');
   return this.http
-    .put<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user))
+    .patch<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user))
     .pipe(
       retry(2),
       catchError(this.handleError)

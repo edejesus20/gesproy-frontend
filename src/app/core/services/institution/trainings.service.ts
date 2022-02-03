@@ -48,9 +48,9 @@ createItem(seedbeds: TrainingI): Observable<TrainingI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<TrainingI> {
+getItem(id: number): Observable<{training:TrainingI}> {
   return this.http
-    .get<TrainingI>(this.base_path_get + '/' + id)
+    .get<{training:TrainingI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -68,9 +68,9 @@ getList(): Observable<{ trainings: TrainingI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:TrainingI): Observable<TrainingI> {
+updateItem(id:number, training:TrainingI): Observable<TrainingI> {
   return this.http
-    .put<TrainingI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<TrainingI>(this.base_path_get + '/' + id, JSON.stringify(training), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

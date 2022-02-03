@@ -1,3 +1,28 @@
-<p>
-  create_Relaciones works!
-</p>
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Relaciones</h2>
+          </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText placeholder="NOMBRE" name="name"  ngModel #name="ngModel" required>         
+          </div>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

@@ -49,9 +49,9 @@ createItem(seedbeds: RelationshipI): Observable<RelationshipI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<RelationshipI> {
+getItem(id: number): Observable<{relationship:RelationshipI}> {
   return this.http
-    .get<RelationshipI>(this.base_path_get + '/' + id)
+    .get<{relationship:RelationshipI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -69,9 +69,9 @@ getList(): Observable<{ relationships: RelationshipI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:RelationshipI): Observable<RelationshipI> {
+updateItem(id:number, relationship:RelationshipI): Observable<RelationshipI> {
   return this.http
-    .put<RelationshipI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<RelationshipI>(this.base_path_get + '/' + id, JSON.stringify(relationship), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

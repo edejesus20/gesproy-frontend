@@ -49,9 +49,9 @@ createItem(seedbeds: ScaleI): Observable<ScaleI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<ScaleI> {
+getItem(id: number): Observable<{scale:ScaleI}> {
   return this.http
-    .get<ScaleI>(this.base_path_get + '/' + id)
+    .get<{scale:ScaleI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -69,9 +69,9 @@ getList(): Observable<{ scales: ScaleI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:ScaleI): Observable<ScaleI> {
+updateItem(id:number, scale:ScaleI): Observable<ScaleI> {
   return this.http
-    .put<ScaleI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<ScaleI>(this.base_path_get + '/' + id, JSON.stringify(scale), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

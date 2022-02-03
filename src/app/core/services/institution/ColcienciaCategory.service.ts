@@ -41,9 +41,9 @@ handleError(res: Response) {
 
 
 // Create a new item
-createItem(seedbeds: ColcienciaCategoryI): Observable<ColcienciaCategoryI> {
+createItem(colcienciaCategory: ColcienciaCategoryI): Observable<ColcienciaCategoryI> {
   return this.http
-    .post<ColcienciaCategoryI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<ColcienciaCategoryI>(this.base_path_post, JSON.stringify(colcienciaCategory), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -51,9 +51,9 @@ createItem(seedbeds: ColcienciaCategoryI): Observable<ColcienciaCategoryI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<ColcienciaCategoryI> {
+getItem(id: number): Observable<{colcienciaCategory:ColcienciaCategoryI}> {
   return this.http
-    .get<ColcienciaCategoryI>(this.base_path_get + '/' + id)
+    .get<{colcienciaCategory:ColcienciaCategoryI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -71,9 +71,9 @@ getList(): Observable<{ colcienciaCategorys: ColcienciaCategoryI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:ColcienciaCategoryI): Observable<ColcienciaCategoryI> {
+updateItem(id:number, colcienciaCategory:ColcienciaCategoryI): Observable<ColcienciaCategoryI> {
   return this.http
-    .put<ColcienciaCategoryI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<ColcienciaCategoryI>(this.base_path_get + '/' + id, JSON.stringify(colcienciaCategory), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

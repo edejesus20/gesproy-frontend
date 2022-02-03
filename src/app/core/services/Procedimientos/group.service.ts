@@ -70,7 +70,7 @@ getList(): Observable<{ groups: GroupI[] }> {
 // Update item by id
 updateItem(id:number, group:GroupI): Observable<GroupI> {
   return this.http
-    .put<GroupI>(this.base_path_get + '/' + id, JSON.stringify(group), this.httpOptions)
+    .patch<GroupI>(this.base_path_get + '/' + id, JSON.stringify(group), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

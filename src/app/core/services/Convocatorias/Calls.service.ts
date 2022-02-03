@@ -69,7 +69,7 @@ handleError(res: Response) {
 // // Update item by id
 // updateItem(id:number, item:FacultyI): Observable<FacultyI> {
 //   return this.http
-//     .put<FacultyI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+//     .patch<FacultyI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
 //     .pipe(
 //       retry(2),
 //       catchError(this.handleError)

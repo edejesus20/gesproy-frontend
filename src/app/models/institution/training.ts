@@ -1,6 +1,11 @@
+import { TeacherI } from "../user/teacher";
+
 export interface TrainingI {
     id?: number;
     name: string;
+    createdAt?:string
+    Teachers?:TeacherI[]
+    
 }
 
 export interface TrainingTeacherI {
