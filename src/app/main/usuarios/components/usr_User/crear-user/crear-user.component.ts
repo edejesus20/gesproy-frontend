@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup,NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
 import { UserI } from 'src/app/models/authorization/usr_User';
-
+import { MessageService } from 'primeng/api';
+const translate = require('translate');
 
 @Component({
   selector: 'app-crear-user',
@@ -13,7 +14,8 @@ import { UserI } from 'src/app/models/authorization/usr_User';
   styleUrls: ['./crear-user.component.css']
 })
 export class CrearUserComponent implements OnInit {
-
+  displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
   public roles: RoleI[]=[];
   public mostrar:boolean=false;
   public algo:number[]=[0];
@@ -33,6 +35,7 @@ export class CrearUserComponent implements OnInit {
     private userService: UserService,
     private rolesService: RolesService,
     private router: Router,
+    private messageService:MessageService
    
   ) { }
 
@@ -45,23 +48,7 @@ export class CrearUserComponent implements OnInit {
       //console.log(this.roles);
     }, error => console.error(error));
   }
-  public onSubmit(): void {
-    const formValue: UserI = this.form.value;
-    this.userService.createUser(formValue).subscribe(
-      () => {
-        // this.snackBar.open('Usuario creado exitosamente', 'Ok', {
-        //   duration: 5000,
-        // });
-        this.router.navigateByUrl('/usuarios/users');
-      },
-      err => {
-        // this.snackBar.open('Error. El Usuario no pudo ser creado', 'Ok', {
-        //   duration: 5000,
-        // });
-        console.error(err);
-      }
-    );
-  }
+
 
 
      //metodos para agregar controles de Roles
@@ -93,10 +80,48 @@ export class CrearUserComponent implements OnInit {
     }
 
     
-  get fullName() { return this.form.get('fullName'); }
-  get name() { return this.form.get('name'); }
-  get email() { return this.form.get('email'); }
-  get password() { return this.form.get('password'); }
-
-
+    public onSubmit(f:NgForm) {
+      // console.log(f)
+      if(f.form.value.name != "" && f.form.value.nit != "" && f.form.value.addres != ""){
+        const formValue: UserI = {
+          username: f.form.value.username,
+          Person:{ 
+            identification: f.form.value.identification,
+            name: f.form.value.name,
+            surname: f.form.value.surname,
+          },
+          email: f.form.value.email,
+          fullName: f.form.value.fullName,
+          password: f.form.value.password,
+        };
+      this.userService.createUser(formValue).subscribe(
+        () => {
+                var date = new Date('2020-01-01 00:00:03');
+                  function padLeft(n:any){ 
+                     return n ="00".substring(0, "00".length - n.length) + n;
+                  }
+                  var interval = setInterval(() => {
+                  var minutes = padLeft(date.getMinutes() + "");
+                  var seconds = padLeft(date.getSeconds() + "");
+                  // console.log(minutes, seconds);
+                  if( seconds == '03') {
+                  this.messageService.add({severity:'success', summary: 'Success', 
+                  detail: 'Registro de Usuario Creado con exitoso'});
+                  }
+                  date = new Date(date.getTime() - 1000);
+                  if( minutes == '00' && seconds == '01' ) {
+                    this.router.navigateByUrl('/usuarios/users');
+                    clearInterval(interval); 
+                   }
+            }, 1000);
+        },async error => {
+          if(error != undefined) {
+            const text = await translate(error.error.message, "es");
+            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+          }
+        });
+    }else{
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+    }
+  }
 }

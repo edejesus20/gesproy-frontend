@@ -2,20 +2,18 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
+import { StudentI } from 'src/app/models/user/student';
 
 import { environment } from 'src/environments/environment';
-import { AdministrativeI } from 'src/app/models/user/administrative';
-
 @Injectable({
   providedIn: 'root'
 })
-export class AdministrativeService {
-
+export class StudentService {
   API_URI = environment.API_URI;
 
   // API path
- base_path_post = `${this.API_URI}/api/Administrative`;
- base_path_get = `${this.API_URI}/api/Administrative`;
+ base_path_post = `${this.API_URI}/api/Student`;
+ base_path_get = `${this.API_URI}/api/Student`;
 
  constructor(private http: HttpClient) { }
 
@@ -40,9 +38,9 @@ export class AdministrativeService {
 
 
  // Create a new item
- createItem(headq: AdministrativeI): Observable<AdministrativeI> {
-   return this.http.post<AdministrativeI>(this.base_path_post, headq).pipe(
-     tap((res: AdministrativeI) => {
+ createItem(student: StudentI): Observable<StudentI> {
+   return this.http.post<StudentI>(this.base_path_post, student).pipe(
+     tap((res: StudentI) => {
        if (res) {
          // Crear usuario
          // console.log('registro insertado');
@@ -52,9 +50,9 @@ export class AdministrativeService {
  }
 
  // Get single student data by ID
- getItem(id: number): Observable<AdministrativeI> {
+ getItem(id: number): Observable<{student:StudentI}> {
    return this.http
-     .get<AdministrativeI>(this.base_path_get + '/' + id)
+     .get<{student:StudentI}>(this.base_path_get + '/' + id)
      .pipe(
        retry(2),
        catchError(this.handleError)
@@ -63,9 +61,9 @@ export class AdministrativeService {
 
  // Get students data
 
- getList(): Observable<{ administratives: AdministrativeI[] }> {
+ getList(): Observable<{ students: StudentI[] }> {
    return this.http
-     .get<{ administratives: AdministrativeI[] }>(this.base_path_get)
+     .get<{ students: StudentI[] }>(this.base_path_get)
      .pipe(
        retry(2),
        catchError(this.handleError)
@@ -73,9 +71,9 @@ export class AdministrativeService {
  }
 
  // Update item by id
- updateItem(id:number, item:AdministrativeI): Observable<AdministrativeI> {
+ updateItem(id:number, student:StudentI): Observable<StudentI> {
    return this.http
-     .patch<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+     .patch<StudentI>(this.base_path_get + '/' + id, JSON.stringify(student), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)
@@ -85,7 +83,7 @@ export class AdministrativeService {
  // Delete item by id
  deleteItem(id:number) {
    return this.http
-     .delete<AdministrativeI>(this.base_path_get + '/' + id, this.httpOptions)
+     .delete<StudentI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

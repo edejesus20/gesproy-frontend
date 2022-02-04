@@ -19,6 +19,21 @@ import { EliminarResourceComponent } from './components/usr_resources/eliminar-r
 import { CambicarPasswordUserComponent } from './components/usr_User/cambicar-password-user/cambicar-password-user.component';
 import { AsignarRolUserComponent } from './components/usr_rol/asignar-rol-user/asignar-rol-user.component';
 import { AsignarRolResourceComponent } from './components/usr_rol/asignar-rol-resource/asignar-rol-resource.component';
+import { ShowAdministrativeComponent } from './components/Administrativos/show-administrative/show-administrative.component';
+import { ShowOneAdministrativeComponent } from './components/Administrativos/show-one-administrative/show-one-administrative.component';
+import { CreateAdministrativeComponent } from './components/Administrativos/create-administrative/create-administrative.component';
+import { EditarAdministrativeComponent } from './components/Administrativos/editar-administrative/editar-administrative.component';
+import { DeleteAdministrativeComponent } from './components/Administrativos/delete-administrative/delete-administrative.component';
+import { ShowTeacherComponent } from './components/Docentes/show-teacher/show-teacher.component';
+import { ShowOneTeacherComponent } from './components/Docentes/show-one-teacher/show-one-teacher.component';
+import { CreateTeacherComponent } from './components/Docentes/create-teacher/create-teacher.component';
+import { EditarTeacherComponent } from './components/Docentes/editar-teacher/editar-teacher.component';
+import { DeleteTeacherComponent } from './components/Docentes/delete-teacher/delete-teacher.component';
+import { ShowStudentComponent } from './components/Estudiantes/show-student/show-student.component';
+import { ShowOneStudentComponent } from './components/Estudiantes/show-one-student/show-one-student.component';
+import { CreateStudentComponent } from './components/Estudiantes/create-student/create-student.component';
+import { EditarStudentComponent } from './components/Estudiantes/editar-student/editar-student.component';
+import { DeleteStudentComponent } from './components/Estudiantes/delete-student/delete-student.component';
 
 const routes: Routes = [
   {
@@ -102,6 +117,70 @@ const routes: Routes = [
           path: 'resource_eliminar/:id',
           component:EliminarResourceComponent ,
         }, 
+        //administrativos
+        {
+          path: 'Administrative',
+          component: ShowAdministrativeComponent,
+        },
+        {
+          path: 'Administrative/:id',
+          component:ShowOneAdministrativeComponent ,
+        },
+        {
+          path: 'administrative_create',
+          component:CreateAdministrativeComponent ,
+        },   
+        {
+          path: 'administrative_modificar/:id',
+          component: EditarAdministrativeComponent,
+        },
+        {
+          path: 'administrative_eliminar/:id',
+          component:DeleteAdministrativeComponent ,
+        }, 
+
+        //Docentes
+        {
+          path: 'Teacher',
+          component: ShowTeacherComponent,
+        },
+        {
+          path: 'Teacher/:id',
+          component:ShowOneTeacherComponent ,
+        },
+        {
+          path: 'teacher_create',
+          component:CreateTeacherComponent ,
+        },   
+        {
+          path: 'teacher_modificar/:id',
+          component: EditarTeacherComponent,
+        },
+        {
+          path: 'teacher_eliminar/:id',
+          component:DeleteTeacherComponent ,
+        },
+        //estudiantes
+        {
+          path: 'Student',
+          component: ShowStudentComponent,
+        },
+        {
+          path: 'Student/:id',
+          component:ShowOneStudentComponent ,
+        },
+        {
+          path: 'student_create',
+          component:CreateStudentComponent ,
+        },   
+        {
+          path: 'student_modificar/:id',
+          component: EditarStudentComponent,
+        },
+        {
+          path: 'student_eliminar/:id',
+          component:DeleteStudentComponent ,
+        }
         
     ]
   }

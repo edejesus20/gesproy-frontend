@@ -5,6 +5,7 @@ export interface TrainingI {
     name: string;
     createdAt?:string
     Teachers?:TeacherI[]
+    TrainingTeacher?:TrainingTeacherI
     
 }
 

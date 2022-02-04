@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
-import { REGEXP_ALPHANUMERIC } from '../../program/create-program/create-program.component';
 const translate = require('translate');
 @Component({
   selector: 'app-create-university',

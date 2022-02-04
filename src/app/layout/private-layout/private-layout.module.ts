@@ -41,6 +41,9 @@ import { ToastModule } from 'primeng/toast';
 import { TreeModule } from 'primeng/tree';
 import { SharedModule } from 'primeng/api';
 import { TableModule } from 'primeng/table';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -94,7 +97,10 @@ import { TableModule } from 'primeng/table';
     TreeModule,
     SharedModule,
     // VirtualScrollerModule,
-    TableModule
+    TableModule,
+    KeyFilterModule,
+    DropdownModule,
+    CalendarModule
   ]
 })
 export class PrivateLayoutModule { }

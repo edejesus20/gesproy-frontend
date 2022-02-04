@@ -3,12 +3,12 @@ import { UniversityService } from 'src/app/core/services/institution/university.
 import { UniversityI } from 'src/app/models/institution/university';
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import * as FileSaver from 'file-saver';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
-import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-show-university',
   templateUrl: './show-university.component.html',
