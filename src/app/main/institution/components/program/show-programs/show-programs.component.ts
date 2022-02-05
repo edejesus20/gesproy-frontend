@@ -43,7 +43,6 @@ export class ShowProgramsComponent implements OnInit {
       { field: 'name', header: 'Nombre' },
       { field: 'FacultyId', header: 'Facultad' },
       { field: 'Faculty', header: 'Decanatura' },
-      { field: 'Headquarter', header: 'Sede' },
       { field: 'CategoryId', header: 'Categoria' },
       { field: 'createdAt', header: 'Fecha' }
   ];
@@ -72,7 +71,8 @@ Buscar(event: Event, dt1:any){
               CategoryId: key.CategoryId,
               Faculty:key.Faculty,
               Category:key.Category,
-              createdAt:key.createdAt
+              createdAt:key.createdAt,
+              Headquarters:key.Headquarters
             }
           )
         }
@@ -88,7 +88,6 @@ Buscar(event: Event, dt1:any){
           col_1:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_2:{ text: 'FACULTAD', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_3:{ text: 'DECANATURA', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_4:{ text: 'SEDE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_5:{ text: 'CATEGORIA', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_6:{ text: 'FECHA', style: 'tableHeader',fontSize: 12 ,bold: true, }
       }
@@ -99,7 +98,7 @@ Buscar(event: Event, dt1:any){
         if (headers.hasOwnProperty(key)){
             var header = headers[key];
             var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,
-              header.fila_0.col_3,header.fila_0.col_4,header.fila_0.col_5,header.fila_0.col_6]
+              header.fila_0.col_3,header.fila_0.col_5,header.fila_0.col_6]
             body.push(row);
         }
     }
@@ -108,10 +107,12 @@ Buscar(event: Event, dt1:any){
         if (this.rows2.hasOwnProperty(key))
         {
             var data = this.rows2[key];
-            var row:any[] = [data.name.toString(),data.Faculty?.name.toString(),
+            var row:any[] = [
+              data.name.toString(),
+              data.Faculty?.name.toString(),
               data.Faculty?.Administrative?.User?.fullName.toString()
-              ,data.Faculty?.Headquarter?.name.toString()
-              ,data.Category?.name.toString(),data.createdAt?.toString()]
+              ,data.Category?.name.toString(),
+              data.createdAt?.toString()]
   
             body.push(row);
         }
@@ -144,7 +145,7 @@ Buscar(event: Event, dt1:any){
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '20%', '20%','15%','15%','15%','15%'],
+              widths: [ '20%', '20%','25%','25%','10%'],
   
               body: body
           },

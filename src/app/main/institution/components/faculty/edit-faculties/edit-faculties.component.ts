@@ -10,6 +10,8 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { NgForm } from '@angular/forms';
+import { UniversityI } from 'src/app/models/institution/university';
+import { UniversityService } from 'src/app/core/services/institution/university.service';
 const translate = require('translate');
 
 @Component({
@@ -43,10 +45,12 @@ export class EditFacultiesComponent implements OnInit {
       },
       OcupationId:''
   };
-  selectedHeadquarterI: HeadquarterI={
-    name: '',
-    cordinatorInvestigation: '',
-    UniversityId:0
+public universitys: UniversityI[]=[]
+public selectedUniversit: UniversityI={
+  id:0,
+  name: '',
+  nit: '',
+  addres: '',
 };
 
 public form:FacultyI={
@@ -69,17 +73,13 @@ public form:FacultyI={
       }
     }
   },
-  HeadquarterId:0,
-  Headquarter:{
-    name:'',
-    cordinatorInvestigation:'',
-    UniversityId:0,
+  UniversityId:0,
     University:{
       id:0,
       name:'',
       nit:'',
       addres:''
-    }
+    
   }
 }
 
@@ -88,7 +88,8 @@ public form:FacultyI={
     private facultyService: FacultyService,
     private router: Router,
     private messageService:MessageService,
-    private headquarterService: HeadquarterService,
+    private universityService:UniversityService,
+
     private primengConfig: PrimeNGConfig,
     // private snackBar: MatSnackBar,
   ) { }
@@ -106,14 +107,14 @@ public form:FacultyI={
     let formValue: FacultyI = {
       name:f.form.value.name,
       AdministrativeId:0,
-      HeadquarterId:0
+      UniversityId:0
     };
 
     if(this.edit2 ==  false){
-      formValue.HeadquarterId=this.form.HeadquarterId
+      formValue.UniversityId=this.form.UniversityId
     }else{
 
-      formValue.HeadquarterId=f.form.value.HeadquarterId.id
+      formValue.UniversityId=f.form.value.UniversityId.id
     }
 
     if(this.edit ==  false){
@@ -125,7 +126,7 @@ public form:FacultyI={
     // console.log(formValue)
     if(formValue.name != ("" || null || undefined) && 
     formValue.AdministrativeId != ('' || 0 || null || undefined) &&
-    formValue.HeadquarterId != ("" || 0 || null || undefined)){
+    formValue.UniversityId != ("" || 0 || null || undefined)){
 
     this.facultyService.updateItem(this.id,formValue).subscribe(
       () => {
@@ -168,9 +169,9 @@ public form:FacultyI={
   }
 
   private getAlluniversidades(selectId?: number) {
-    this.headquarterService.getList().subscribe(
+    this.universityService.getList().subscribe(
       (AdministrativeFromApi) => {
-        this.Headquarter = AdministrativeFromApi.headquarters;
+        this.universitys = AdministrativeFromApi.universitys;
 
       }, error => console.error(error));
   }

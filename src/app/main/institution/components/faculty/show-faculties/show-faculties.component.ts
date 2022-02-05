@@ -70,10 +70,10 @@ export class ShowFacultiesComponent implements OnInit {
             {
               name:  key.name,
               AdministrativeId:  key.AdministrativeId,
-              HeadquarterId: key.HeadquarterId,
+              UniversityId: key.UniversityId,
               createdAt:  key.createdAt,
               Administrative:key.Administrative,
-              Headquarter:key.Headquarter
+              University:key.University
             }
           )
         }
@@ -90,7 +90,6 @@ export class ShowFacultiesComponent implements OnInit {
       fila_0:{
           col_1:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_2:{ text: 'DECANO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_3:{ text: 'SEDE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_4:{ text: 'UNIVERSIDAD', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_5:{ text: 'FECHA', style: 'tableHeader',fontSize: 12 ,bold: true, }
       }
@@ -100,8 +99,8 @@ export class ShowFacultiesComponent implements OnInit {
     for (var key in headers){
         if (headers.hasOwnProperty(key)){
             var header = headers[key];
-            var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,
-              header.fila_0.col_3,header.fila_0.col_4,header.fila_0.col_5]
+            var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2
+              ,header.fila_0.col_4,header.fila_0.col_5]
             body.push(row);
         }
     }
@@ -111,7 +110,7 @@ export class ShowFacultiesComponent implements OnInit {
         {
             var data = this.rows2[key];
             var row:any[] = [data.name.toString(),data.Administrative?.User?.fullName.toString(),
-              data.Headquarter?.name.toString(),data.Headquarter?.University?.name.toString(),data.createdAt?.toString()]
+              data.University?.name.toString(),data.createdAt?.toString()]
   
             body.push(row);
         }
@@ -144,7 +143,7 @@ export class ShowFacultiesComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '15%', '20%', '15%','25%','25%'],
+              widths: [ '25%', '25%','25%','25%'],
   
               body: body
           },

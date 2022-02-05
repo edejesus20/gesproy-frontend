@@ -21,20 +21,20 @@
               optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
               [required]="true" placeholder="SELECCIONE AL DECANO">
               <ng-template let-option pTemplate="item">
-                <span >{{option.User.fullName }} - {{option.User?.Person?.identification}}</span>
+                <span >{{option.User.fullName }} - {{option.User?.Person?.identification}} - {{option.Ocupation.name}}</span>
             </ng-template>
             </p-dropdown>
 
       
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-          [options]="Headquarter" [filter]="true"
-            name="HeadquarterId" ngModel 
-            #HeadquarterId="ngModel" label="SELECCIONE LA SEDE" 
-            [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedHeadquarterI" 
+          [options]="universitys" [filter]="true"
+          name="UniversityId" ngModel 
+          #UniversityId="ngModel" label="SELECCIONE LA UNIVERSIDAD" 
+            [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedUniversit" 
             optionLabel="name"optionvalue="id" filterBy="name"
-            [required]="true" placeholder="SELECCIONE  LA SEDE">
+            [required]="true" placeholder="SELECCIONE LA UNIVERSIDAD">
             <ng-template let-option pTemplate="item">
-              <span >{{option.name }} - {{option.University?.name}}</span>
+              <span >{{option.name }}</span>
           </ng-template>
           </p-dropdown>
       </div>

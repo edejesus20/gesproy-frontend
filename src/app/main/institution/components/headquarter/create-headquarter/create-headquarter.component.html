@@ -1,6 +1,6 @@
 
-<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}" 
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" >
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '50vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
       
       <div [style]="{'margin-top':'-1px'}" >
@@ -8,22 +8,24 @@
               <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
             <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Sede</h2>
           </div>
+
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
               <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required>         
+              <input type="text" class="p-inputtext-lg" 
+              pInputText name="name" placeholder="NOMBRE"
+              formControlName="name" required>         
           </div>
 
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
             <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
             <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
-            placeholder="CORDINADOR DE INVESTIGACIÓN" ngModel #cordinatorInvestigation="ngModel" required>         
+            placeholder="CORDINADOR DE INVESTIGACIÓN" 
+            formControlName="cordinatorInvestigation" required>         
         </div>
 
             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="universitys" [filter]="true"
-              name="UniversityId" ngModel 
-              #UniversityId="ngModel" label="SELECCIONE AL DECANO" 
-              [style]="{'width':'100%','margin-bottom':'20px'}" [(ngModel)]="selectedUniversit" 
+            [options]="universitys" [filter]="true" formControlName="UniversityId"
+              [style]="{'width':'100%','margin-bottom':'20px'}"
               optionvalue="id" optionLabel="name"  filterBy="name"
               [required]="true" placeholder="SELECCIONE UNIVERSIDAD">
               <ng-template let-option pTemplate="item">
@@ -34,7 +36,8 @@
               
           <ng-template pTemplate="footer">
               <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
-                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+                <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!form.valid"
+                class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
           </div>
           </ng-template>

@@ -165,7 +165,9 @@
       </div>
 
               <div fxLayout="row" class="titleCard" style="margin-top: 50px;">
-                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+                <button pButton type="button" type="submit"  [disabled]="!heroForm.form.valid"
+                 icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
+                 label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
           </div>
          

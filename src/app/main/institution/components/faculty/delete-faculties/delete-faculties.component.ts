@@ -43,17 +43,13 @@ public form:FacultyI={
       }
     }
   },
-  HeadquarterId:0,
-  Headquarter:{
-    name:'',
-    cordinatorInvestigation:'',
-    UniversityId:0,
+
     University:{
       id:0,
       name:'',
       nit:'',
       addres:''
-    }
+    
   }
 }
 
@@ -130,7 +126,7 @@ public form:FacultyI={
       id: this.form.id,
       name:f.form.value.name,
       AdministrativeId:this.form.AdministrativeId,
-      HeadquarterId:this.form.HeadquarterId
+      UniversityId:this.form.UniversityId
     };
     if(formValue.id)
     this.facultyService.deleteItem(formValue.id).subscribe(

@@ -8,4 +8,5 @@ export interface UniversityI {
     addres: string;
     createdAt?:string
     Headquarters?:HeadquarterI[]
+    Faculties?:FacultyI[]
 }

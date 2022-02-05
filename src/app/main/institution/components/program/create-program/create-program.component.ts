@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  NgForm  } from '@angular/forms';
+import {  FormArray, FormBuilder, FormGroup, NgForm, Validators  } from '@angular/forms';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,10 @@ import { ProgramI } from 'src/app/models/institution/program';
 import { CategoryService } from 'src/app/core/services/institution/category.service';
 import { CategoryI } from 'src/app/models/institution/category';
 import { MessageService } from 'primeng/api';
+import { AdministrativeI } from 'src/app/models/user/administrative';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -19,18 +23,31 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
   styleUrls: ['./create-program.component.scss']
 })
 export class CreateProgramComponent implements OnInit {
+  public mostrar:boolean=false;
+  public algo:number[]=[0];
   public faculties: FacultyI[]=[];
   public categorys:CategoryI[] = []
+  public administratives: AdministrativeI[]=[]
+  public headquarters: HeadquarterI[]=[]
+
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    FacultyId:['', [Validators.required]],
+    CategoryId:['', [Validators.required]],
+    Headquarters: this.formBuilder.array([this.formBuilder.group(
+      {
+        ProgramId:0,
+         HeadquarterId:['', [Validators.required]],
+        AdministrativeId:['', [Validators.required]]
+    })]),
+  });
+
+  
+  
   selectedFacultyI: FacultyI={
     id:0,
     name:'',
     AdministrativeId: 0,
-    HeadquarterId: 0,
-    Headquarter:{
-      id:0,
-      name:'',
-      cordinatorInvestigation:'',
-      UniversityId:0,
       University:
       {
         id: 0,
@@ -38,8 +55,6 @@ export class CreateProgramComponent implements OnInit {
         nit: '',
         addres: '',
       } 
-    }
-    
 };
 
 selectedCategoryI: CategoryI={
@@ -55,6 +70,9 @@ blockSpecial: RegExp = /^[^<>*!]+$/
     private programService: ProgramService,
     private facultyService: FacultyService,
     private categoryService:CategoryService,
+    private formBuilder: FormBuilder,
+    private headquarterService: HeadquarterService,
+    private administrativeService:AdministrativeService
     
     // private snackBar: MatSnackBar,
   ) { }
@@ -62,6 +80,8 @@ blockSpecial: RegExp = /^[^<>*!]+$/
   ngOnInit(): void {
     this.getAllFaculty();
     this.getAllcolcienciaCategorys()
+    this.getAlladministratives()
+    this.getAllheadquarters()
   }
 
   private getAllFaculty(selectId?: number) {
@@ -77,19 +97,21 @@ blockSpecial: RegExp = /^[^<>*!]+$/
       }, error => console.error(error));
   }
 
-  public onSubmit(f:NgForm) {
-    // console.log(f)
+  public onSubmit() {
+    let formValue: ProgramI = this.form.value;
+    formValue.FacultyId=this.form.value.FacultyId.id
+    formValue.CategoryId=this.form.value.CategoryId.id
 
-    let formValue: ProgramI = {
-      name:f.form.value.name,
-      FacultyId:f.form.value.FacultyId.id,
-      CategoryId:f.form.value.CategoryId.id
-    };
-    console.log(formValue)
-
-    if(formValue.name != '' && formValue.FacultyId != ( 0) && formValue.FacultyId != undefined && 
-    formValue.CategoryId !=  undefined && formValue.CategoryId != 0
+    if(formValue.name != '' &&
+    formValue.CategoryId != ( 0 )&&
+    formValue.FacultyId != ( 0 )
     ){
+    let control = <FormArray>this.form.controls['Headquarters']
+
+    for (const key of control.value) {
+      key.HeadquarterId=key.HeadquarterId.id
+      key.AdministrativeId=key.AdministrativeId.id
+    }
 
     this.programService.createItem(formValue).subscribe(
       () => {
@@ -121,5 +143,65 @@ blockSpecial: RegExp = /^[^<>*!]+$/
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
 }
+  
+public datos(position:number){
+  const control = <FormArray>this.form.controls['Headquarters']
+  let valor = control.controls[position].get('HeadquarterId')
+  if(valor != null){
+  this.headquarterService.getItem(valor.value.id).subscribe(
+    (AdministrativeFromApi) => {
+      if(AdministrativeFromApi.headquarter.Administratives)
+      this.administratives = AdministrativeFromApi.headquarter.Administratives;
+      // console.log(this.administratives)
+    }, error => console.error(error));
+  }
+}
+
+  get getRoles() {
+    return this.form.get('Headquarters') as FormArray;//obtener todos los formularios
+  }
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Headquarters']
+      if(control.length == 0 && this.mostrar == false){
+        control.push(this.formBuilder.group({
+          ProgramId:0,
+          HeadquarterId:['', [Validators.required]],
+        AdministrativeId:['', [Validators.required]]
+        }))
+      }
+      if(control.length >= 1 && this.mostrar == true){
+        control.push(this.formBuilder.group({
+          ProgramId:0,
+          HeadquarterId:['', [Validators.required]],
+        AdministrativeId:['', [Validators.required]]
+        }))
+
+      }
+      this.mostrar=true
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Headquarters']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar=false
+      }
+  }
+
+  private getAlladministratives() {
+    this.administrativeService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.administratives = AdministrativeFromApi.administratives;
+      }, error => console.error(error));
+  }
+
+  private getAllheadquarters() {
+    this.headquarterService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.headquarters = AdministrativeFromApi.headquarters;
+      }, error => console.error(error));
+  }
 
 }

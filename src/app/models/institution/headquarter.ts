@@ -1,4 +1,6 @@
+import { AdministrativeI } from "../user/administrative";
 import { FacultyI } from "./faculty";
+import { ProgramI } from "./program";
 import { UniversityI } from "./university";
 
 export interface HeadquarterI {
@@ -8,7 +10,10 @@ export interface HeadquarterI {
    UniversityId:number;
    createdAt?:string;
    University?:UniversityI
-   Faculties?:FacultyI
+   Programs?:ProgramI[]
+   Administratives?:AdministrativeI[]
+   HeadquarterProgram?:HeadquarterProgramI
+
 }
 
 export interface HeadquarterProgramI {

@@ -40,7 +40,7 @@
             optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
             [required]="true" placeholder="SELECCIONE AL DECANO">
             <ng-template let-option pTemplate="item">
-              <span >{{option.User.fullName }} - {{option.User?.Person?.identification}}</span>
+              <span >{{option.User.fullName }} - {{option.User?.Person?.identification}} - {{option.Ocupation.name}}</span>
           </ng-template>
           </p-dropdown>
           <button type="button" pButton pRipple label="Cancelar" (click)="edit = false" [style]="{'margin-left':'10px','margin-bottom':'25px'}"></button>
@@ -53,10 +53,10 @@
           
             <input type="text" class="p-inputtext-lg" 
             pInputText [style]="{'width':'80%'}" 
-             [value]="form.Headquarter?.name + ' - '+ form.Headquarter?.University?.name" 
+             [value]="form.University?.name" 
             disabled>
             <button type="button" pButton pRipple label="Cambiar" (click)="edit2 = true"  [style]="{'margin-left':'10px','margin-bottom':'5px'}"></button>
-            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">SEDE ACTUAL</h3></label>
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD ACTUAL</h3></label>
           </span>
          
         </ng-template>
@@ -64,14 +64,14 @@
         <ng-template [ngIf]="edit2 == true">
 
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-          [options]="Headquarter" [filter]="true"
-            name="HeadquarterId" ngModel 
-            #HeadquarterId="ngModel" label="SELECCIONE LA SEDE" 
-            [style]="{'width':'80%','margin-bottom':'20px'}" [(ngModel)]="form.HeadquarterId" 
+          [options]="universitys" [filter]="true"
+            name="UniversityId" ngModel 
+            #UniversityId="ngModel" label="SELECCIONE LA UNIVERSIDAD" 
+            [style]="{'width':'80%','margin-bottom':'20px'}" [(ngModel)]="form.UniversityId" 
             optionLabel="name"optionvalue="id" filterBy="name"
-            [required]="true" placeholder="SELECCIONE  LA SEDE">
+            [required]="true" placeholder="SELECCIONE LA UNIVERSIDAD">
             <ng-template let-option pTemplate="item">
-              <span >{{option.name }} - {{option.University?.name}}</span>
+              <span >{{option.name }}</span>
           </ng-template>
           </p-dropdown>
           <button type="button" pButton pRipple label="Cancelar" (click)="edit2 = false" [style]="{'margin-left':'10px','margin-bottom':'25px'}"></button>

@@ -6,10 +6,10 @@ export interface FacultyI {
     id?: number;
     name: string;
     AdministrativeId: number;
-    HeadquarterId:number
     createdAt?: string;
     updatedAt?: string;
     Administrative?:AdministrativeI
-    Headquarter?:HeadquarterI
     Programs?:ProgramI
+    UniversityId?:number;
+    University?:UniversityI
  }

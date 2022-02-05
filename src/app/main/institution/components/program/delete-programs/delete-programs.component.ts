@@ -33,20 +33,13 @@ export class DeleteProgramsComponent implements OnInit {
       id:0,
       name:'',
       AdministrativeId: 0,
-      HeadquarterId: 0,
-      Headquarter:{
-        id:0,
-        name:'',
-        cordinatorInvestigation:'',
-        UniversityId:0,
         University:
         {
           id: 0,
           name: '',
           nit: '',
           addres: '',
-        } 
-      }
+        }
     },
     Category:{ 
       id:0,

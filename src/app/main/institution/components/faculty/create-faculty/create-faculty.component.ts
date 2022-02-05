@@ -11,6 +11,8 @@ import { MessageService } from 'primeng/api';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { NgForm } from '@angular/forms';
+import { UniversityService } from 'src/app/core/services/institution/university.service';
+import { UniversityI } from 'src/app/models/institution/university';
 const translate = require('translate');
 @Component({
   selector: 'app-create-facultie',
@@ -35,11 +37,13 @@ export class CreateFacultyComponent implements OnInit {
       },
       OcupationId:''
   };
-  selectedHeadquarterI: HeadquarterI={
+  public universitys: UniversityI[]=[]
+  public selectedUniversit: UniversityI={
+    id:0,
     name: '',
-    cordinatorInvestigation: '',
-    UniversityId:0
-};
+    nit: '',
+    addres: '',
+  };
 
 
 displayMaximizable2:boolean=true
@@ -49,7 +53,8 @@ blockSpecial: RegExp = /^[^<>*!]+$/
     private facultyService: FacultyService,
     private router: Router,
     private messageService:MessageService,
-    private headquarterService: HeadquarterService
+    private headquarterService: HeadquarterService,
+    private universityService:UniversityService,
     // private snackBar: MatSnackBar,
   ) { }
 
@@ -66,13 +71,13 @@ blockSpecial: RegExp = /^[^<>*!]+$/
     const formValue: FacultyI = {
       name:f.form.value.name,
       AdministrativeId:f.form.value.AdministrativeId.id,
-      HeadquarterId:f.form.value.HeadquarterId.id
+      UniversityId:f.form.value.UniversityId.id
     };
     // console.log(formValue)
 
     if(formValue.name != ("" || null || undefined) && 
     formValue.AdministrativeId != ('' || 0 || null || undefined) &&
-    formValue.HeadquarterId != ("" || 0 || null || undefined)){
+    formValue.UniversityId != ("" || 0 || null || undefined)){
 
     this.facultyService.createItem(formValue).subscribe(
       () => {
@@ -115,9 +120,9 @@ blockSpecial: RegExp = /^[^<>*!]+$/
   }
 
   private getAlluniversidades(selectId?: number) {
-    this.headquarterService.getList().subscribe(
+    this.universityService.getList().subscribe(
       (AdministrativeFromApi) => {
-        this.Headquarter = AdministrativeFromApi.headquarters;
+        this.universitys = AdministrativeFromApi.universitys;
 
       }, error => console.error(error));
   }

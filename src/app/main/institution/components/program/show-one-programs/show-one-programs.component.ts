@@ -22,12 +22,6 @@ export class ShowOneProgramsComponent implements OnInit {
       id:0,
       name:'',
       AdministrativeId: 0,
-      HeadquarterId: 0,
-      Headquarter:{
-        id:0,
-        name:'',
-        cordinatorInvestigation:'',
-        UniversityId:0,
         University:
         {
           id: 0,
@@ -35,7 +29,6 @@ export class ShowOneProgramsComponent implements OnInit {
           nit: '',
           addres: '',
         } 
-      }
     },
     Category:{ 
       id:0,

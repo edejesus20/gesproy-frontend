@@ -13,23 +13,26 @@ const translate = require('translate');
 export class CreateUniversityComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    nit:['', [Validators.required]],
+    addres:['', [Validators.required]],
+  });
+
   constructor(
     private universityService: UniversityService,
     private router: Router,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private formBuilder: FormBuilder,
+
     ) { }
 
   ngOnInit() {
     
   }
-  public onSubmit(f:NgForm) {
-    // console.log(f)
-    if(f.form.value.name != "" && f.form.value.nit != "" && f.form.value.addres != ""){
-      const formValue: UniversityI = {
-        name:f.form.value.name,
-        nit:f.form.value.nit,
-        addres:f.form.value.addres
-      };
+  public onSubmit() {
+    let formValue: UniversityI = this.form.value;
+    if(formValue.name != "" && formValue.nit != "" && formValue.addres != ""){
     this.universityService.createItem(formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');

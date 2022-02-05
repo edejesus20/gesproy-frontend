@@ -4,7 +4,7 @@
 <ng-template [ngIf]="tabla == false">
 
   
-<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
       >
@@ -15,25 +15,32 @@
             <h2 class="fondebabutton" style="margin-top: -1px;">Editar Universidad</h2>
           </div>
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" required [(ngModel)]="form.name" >         
-          </div>
-          <div class="p-inputgroup" style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <!-- <p-inputNumber inputId="inputnumber" name="nit" placeholder="NIT" ngModel #nit="ngModel" required ></p-inputNumber> -->
-              <input  type="number" class="p-inputtext-lg"  pInputText name="nit" placeholder="NIT" ngModel #nit="ngModel" [(ngModel)]="form.nit" required >         
-          </div>
-
-          <div class="p-inputgroup" >
             <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="text" pInputText [pKeyFilter]="blockSpecial" class="p-inputtext-lg"  name="addres" placeholder="DIRECCION" ngModel #addres="ngModel" [(ngModel)]="form.addres" required>         
+            <input type="text" class="p-inputtext-lg" pInputText 
+            name="name" placeholder="NOMBRE" 
+            formControlName="name"required>         
         </div>
+        <div class="p-inputgroup" style="margin-bottom: 20px;">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <!-- <p-inputNumber inputId="inputnumber" name="nit" placeholder="NIT" ngModel #nit="ngModel" required ></p-inputNumber> -->
+            <input  type="text" pKeyFilter="int" class="p-inputtext-lg" 
+             pInputText name="nit" placeholder="NIT" 
+             formControlName="nit" required>         
+        </div>
+
+        <div class="p-inputgroup" >
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+          <input type="text" pInputText [pKeyFilter]="blockSpecial" class="p-inputtext-lg"  
+          name="addres" placeholder="DIRECCION" 
+          formControlName="addres" required  >         
+      </div>
 
       </div>
               
           <ng-template pTemplate="footer">
               <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
-                <button pButton type="button" type="submit"  icon="pi pi-check" class="p-button-warning p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
+                <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+                class="p-button-warning p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
               <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
           </div>
           </ng-template>

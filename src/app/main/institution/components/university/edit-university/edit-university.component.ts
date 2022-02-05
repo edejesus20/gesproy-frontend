@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
@@ -15,37 +15,53 @@ export class EditUniversityComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  public form:UniversityI={
-    id:0,
-    name:'',
-    nit:'',
-    addres:'',
-    }
+ 
+
+  public form:FormGroup=this.formBuilder.group({})
+
   private id:number=0
   constructor(
     private universityService: UniversityService,
     private primengConfig: PrimeNGConfig,
     private router: Router,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.form=this.formBuilder.group({
+      id:[''],
+      name:['', [Validators.required]],
+      nit:['', [Validators.required]],
+      addres:['', [Validators.required]],
+    });
+
     this.primengConfig.ripple = true;
   }
   getOneCntAccount(id:number) {
     this.universityService.getItem(id).subscribe((cnt_groupFromApi) => {
-      // this.cnt_account = cnt_groupFromApi.account;
-      this.form=cnt_groupFromApi.university
-      if(this.form.id){this.id=this.form.id}
+      if(cnt_groupFromApi.university.id != undefined){
+      this.id=cnt_groupFromApi.university.id
+      this.form.controls['id'].setValue(cnt_groupFromApi.university.id)
+      this.form.controls['name'].setValue(cnt_groupFromApi.university.name)
+      this.form.controls['nit'].setValue(cnt_groupFromApi.university.nit)
+      this.form.controls['addres'].setValue(cnt_groupFromApi.university.addres)
+      }
       this.displayMaximizable2=true
       this.tabla = false
       //console.log(this.cnt_group);
-    }, error => console.error(error));
+    },async error => {
+      if(error != undefined) {
+        const text = await translate(error.error.message, "es");
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+      }
+    });
   }
 
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
+    this.ngOnInit()
     this.displayMaximizable2 = false
     //console.log(event)
   }
@@ -59,14 +75,9 @@ export class EditUniversityComponent implements OnInit {
     this.getOneCntAccount(id)
   }
 
-  public onSubmit(f:NgForm) {
-    console.log(f)
-    if(f.form.value.name != ("" || null) && f.form.value.nit != ("" || null) && f.form.value.addres != ("" || null)){
-      const formValue: UniversityI = {
-        name:f.form.value.name,
-        nit:f.form.value.nit,
-        addres:f.form.value.addres
-      };
+  public onSubmit() {
+    let formValue: UniversityI = this.form.value;
+    if(formValue.name != "" && formValue.nit != "" && formValue.addres != ""){
      
     this.universityService.updateItem(this.id,formValue).subscribe(
       () => {

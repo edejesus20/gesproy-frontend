@@ -40,7 +40,6 @@
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="Administrative">DECANO<p-sortIcon field="Administrative"></p-sortIcon></th>
-          <th pSortableColumn="Headquarter">SEDE<p-sortIcon field="Headquarter"></p-sortIcon></th>
           <th pSortableColumn="University">UNIVERSIDAD<p-sortIcon field="University"></p-sortIcon></th>
           <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
@@ -60,8 +59,7 @@
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
           <td>{{item.Administrative?.User?.fullName | titlecase}}</td>
-          <td>{{item.Headquarter?.name | titlecase}}</td>
-          <td>{{item.Headquarter?.University?.name | titlecase}}</td>
+          <td>{{item.University?.name | titlecase}}</td>
           <td>{{item.createdAt | date:'fullDate' | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               

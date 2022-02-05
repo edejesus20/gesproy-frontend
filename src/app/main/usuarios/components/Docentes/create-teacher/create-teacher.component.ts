@@ -33,8 +33,8 @@ export class CreateTeacherComponent implements OnInit {
   public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
   // selectedDocumentTypeI: DocumentTypeI={
-  //   id:0,
-  //   name:'',
+  //   id:1,
+  //   name:'cedula de ciudadania',
   // };
   // selectedGenderI: GenderI={
   //   id:0,

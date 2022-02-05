@@ -22,8 +22,14 @@
               <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
               
                 <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"
-                [value]="form.Faculty?.Headquarter?.name" disabled>
-                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">SEDE ACTUAL</h3></label>
+                [value]="form.Faculty?.name" disabled>
+                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FACULTAD ACTUAL</h3></label>
+              </span>
+              <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
+              
+                <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"
+                [value]="form.Faculty?.University?.name" disabled>
+                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD ACTUAL</h3></label>
               </span>
 
               <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">

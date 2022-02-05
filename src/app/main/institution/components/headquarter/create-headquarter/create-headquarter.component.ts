@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
+import { ProgramService } from 'src/app/core/services/program/program.service';
+import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { ProgramI } from 'src/app/models/institution/program';
 import { UniversityI } from 'src/app/models/institution/university';
+import { AdministrativeI } from 'src/app/models/user/administrative';
 import { REGEXP_ALPHANUMERIC } from '../headquarter-programs/headquarter-programs.component';
 const translate = require('translate');
 @Component({
@@ -15,38 +19,36 @@ const translate = require('translate');
 })
 export class CreateHeadquarterComponent implements OnInit {
   public universitys: UniversityI[]=[]
+  public mostrar:boolean=false;
+  public algo:number[]=[0];
 
-  selectedUniversit: UniversityI={
-    id:0,
-    name: '',
-    nit: '',
-    addres: '',
-};
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!]+$/ 
+
+public form:FormGroup=this.formBuilder.group({
+  name:['', [Validators.required]],
+  cordinatorInvestigation:['', [Validators.required]],
+  UniversityId:['', [Validators.required]],
+});
+
   constructor( 
     private router: Router,
     private messageService:MessageService,
     private headquarterService: HeadquarterService,
-    // private snackBar: MatSnackBar,
-    private universityService:UniversityService
+    private universityService:UniversityService,
+    private formBuilder: FormBuilder,
     ) { }
 
   ngOnInit(): void {
    
     this.getAlluniversidades()
+
   }
 
 
-  public onSubmit(f:NgForm) {
-    // console.log(f)
-
-    let formValue: HeadquarterI = {
-      name:f.form.value.name,
-      cordinatorInvestigation:f.form.value.cordinatorInvestigation,
-      UniversityId:f.form.value.UniversityId.id
-    };
-    // console.log(formValue)
+  public onSubmit() {
+    let formValue: HeadquarterI = this.form.value;
+    formValue.UniversityId=this.form.value.UniversityId.id
 
     if(formValue.name != '' && 
     formValue.cordinatorInvestigation != '' &&
@@ -78,14 +80,19 @@ blockSpecial: RegExp = /^[^<>*!]+$/
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });
-  }else{
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-  }
+    }else{
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+    }
 }
+
+
   private getAlluniversidades() {
     this.universityService.getList().subscribe(
       (AdministrativeFromApi) => {
         this.universitys = AdministrativeFromApi.universitys;
       }, error => console.error(error));
   }
+
+
+
 }
