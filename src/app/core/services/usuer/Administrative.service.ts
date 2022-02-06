@@ -52,9 +52,9 @@ export class AdministrativeService {
  }
 
  // Get single student data by ID
- getItem(id: number): Observable<AdministrativeI> {
+ getItem(id: number): Observable<{administrative:AdministrativeI}> {
    return this.http
-     .get<AdministrativeI>(this.base_path_get + '/' + id)
+     .get<{administrative:AdministrativeI}>(this.base_path_get + '/' + id)
      .pipe(
        retry(2),
        catchError(this.handleError)
@@ -73,9 +73,9 @@ export class AdministrativeService {
  }
 
  // Update item by id
- updateItem(id:number, item:AdministrativeI): Observable<AdministrativeI> {
+ updateItem(id:number, administrative:AdministrativeI): Observable<AdministrativeI> {
    return this.http
-     .patch<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+     .patch<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(administrative), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

@@ -117,20 +117,6 @@ public form2:ProgramI={
   }
 
   public onSubmit() {
-    // console.log(f)
-    // if(this.edit ==  false){
-    //   formValue.FacultyId=this.form.value.FacultyId
-    // }else{
-    //   formValue.FacultyId=f.form.value.FacultyId.id
-
-    // }
-
-    // if(this.edit2 ==  false){
-    //   formValue.CategoryId=this.form.CategoryId
-    // }else{
-    //   formValue.CategoryId=f.form.value.CategoryId.id
-
-    // }
     let formValue: ProgramI = this.form.value;
     formValue.FacultyId=this.form.value.FacultyId.id
     formValue.CategoryId=this.form.value.CategoryId.id
@@ -142,7 +128,7 @@ public form2:ProgramI={
     let control = <FormArray>this.form.controls['Headquarters']
 
     for (const key of control.value) {
-      key.ProgramId=key.ProgramId.id
+      key.HeadquarterId=key.HeadquarterId.id
       key.AdministrativeId=key.AdministrativeId.id
     }
     this.programService.updateItem(this.id,formValue).subscribe(
@@ -180,12 +166,17 @@ public form2:ProgramI={
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.ngOnInit()
+    this.id =0
+    this.mostrar2=false
     //console.log(event)
   }
 
 ngOnDestroy() {
   this.tabla = true
   this.displayMaximizable2 = false
+  this.mostrar2=false
+  this.ngOnInit()
 }
 actualizar(id: number){
   // console.log(id)
@@ -195,13 +186,19 @@ actualizar(id: number){
 getOneCntAccount(id:number) {
   this.programService.getItem(id).subscribe((cnt_groupFromApi) => {
    
-    if(cnt_groupFromApi.program.id != undefined
+    if(cnt_groupFromApi.program.id != undefined && cnt_groupFromApi.program.CategoryId != undefined
+      && cnt_groupFromApi.program.FacultyId != undefined
       ){
       this.id=cnt_groupFromApi.program.id
       this.form.controls['id'].setValue(cnt_groupFromApi.program.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.program.name)
       this.form.controls['FacultyId'].setValue(cnt_groupFromApi.program.FacultyId)
-      this.form.controls['CategoryId'].setValue(cnt_groupFromApi.program.CategoryId)
+      this.facultyService.getItem(cnt_groupFromApi.program.FacultyId).subscribe((algo)=>{
+        this.form.controls['FacultyId'].setValue(algo.faculty)
+      })
+      this.categoryService.getItem(cnt_groupFromApi.program.CategoryId).subscribe((algo)=>{
+      this.form.controls['CategoryId'].setValue(algo.category)
+    })
       this.form2=cnt_groupFromApi.program
       }
 
@@ -216,36 +213,30 @@ getOneCntAccount(id:number) {
   }, error => console.error(error));
 }
   agregarDescuentos(Headquarters: HeadquarterI[]) {
-    
-    for (const key of Headquarters) {
-      if(key.HeadquarterProgram){
+
+    for (let key of Headquarters) {
+      if(key.HeadquarterProgram != undefined) {
         // console.log(DiscountLine)
         
         let control = <FormArray>this.form.controls['Headquarters']
-        // console.log(control,'{{{{')
-        
-        if(control.length == 1 && this.mostrar2 == false){
-          // console.log('111111')
-          //crear los ontroles del array
-          control.push(this.formBuilder.group({
-            ProgramId:[key.HeadquarterProgram.ProgramId, [Validators.required]],
-            HeadquarterId:[key.HeadquarterProgram.HeadquarterId, [Validators.required]],
-            AdministrativeId:[key.HeadquarterProgram.AdministrativeId, [Validators.required]],
-          }))//nuevo input
-        }
-        if(control.length > 1 && this.mostrar2 == true){
-          control.push(this.formBuilder.group({
-            ProgramId:[key.HeadquarterProgram.ProgramId, [Validators.required]],
-            HeadquarterId:[key.HeadquarterProgram.HeadquarterId, [Validators.required]],
-            AdministrativeId:[key.HeadquarterProgram.AdministrativeId, [Validators.required]],
-          }))//nuevo input
-      
-        }
-        this.mostrar2= true
+          this.headquarterService.getItem(key.HeadquarterProgram.HeadquarterId).subscribe((algo1)=>{
+            if(algo1.headquarter && key.HeadquarterProgram != undefined){
+              this.administrativeService.getItem(key.HeadquarterProgram.AdministrativeId).subscribe((algo)=>{
+                if(algo.administrative && key.HeadquarterProgram != undefined){
+                  control.push(this.formBuilder.group({
+                    ProgramId:[key.HeadquarterProgram.ProgramId, [Validators.required]],
+                    HeadquarterId:[algo1.headquarter, [Validators.required]],
+                    AdministrativeId:[algo.administrative, [Validators.required]],
+                  }))
+                }
     
+              })
+            }
+            
+          })
       }
     }
-    
+    this.mostrar2= true
     let control = <FormArray>this.form.controls['Headquarters']
     control.removeAt(0)
   }

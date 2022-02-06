@@ -11,47 +11,40 @@
             <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
           <h2 class="fondebabutton" style="margin-top: -1px;">Editar Sede</h2>
         </div>
-        <div class="p-inputgroup"  style="margin-bottom: 20px;">
-          <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+        <div class="p-inputgroup">
+          <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
           <input type="text" class="p-inputtext-lg" 
           pInputText name="name" placeholder="NOMBRE"
-          formControlName="name" required>         
+          formControlName="name" required>   
+          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE DE SEDE</h3></label>
+        </span>      
       </div>
+       
+          <div class="p-inputgroup">
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
+            placeholder="CORDINADOR DE INVESTIGACIÓN" 
+            formControlName="cordinatorInvestigation" required>
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORDINADOR DE INVESTIGACIÓN</h3></label>
+          </span>         
+          </div>
 
-      <div class="p-inputgroup"  style="margin-bottom: 20px;">
-        <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-        <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
-        placeholder="CORDINADOR DE INVESTIGACIÓN" 
-        formControlName="cordinatorInvestigation" required>         
+
+        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+          [options]="universitys" [filter]="true" formControlName="UniversityId" name="UniversityId"
+            [style]="{'width':'100%','margin-bottom':'20px'}"
+            optionvalue="id" optionLabel="name"  filterBy="name"
+            [required]="true" placeholder="SELECCIONE UNIVERSIDAD">
+            <ng-template let-option pTemplate="item">
+              <span >{{option.name | titlecase}} - Nit: {{option.nit}}</span>
+          </ng-template>
+          </p-dropdown>
+          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD</h3></label>
+        </span>
     </div>
-    <ng-template [ngIf]="edit2   == false">
-      <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
-      
-        <input type="text" class="p-inputtext-lg" 
-        pInputText [style]="{'width':'80%'}" 
-         [value]="form2.University?.name" 
-        disabled>
-        <button type="button" pButton pRipple label="Cambiar" (click)="edit2 = true" 
-         [style]="{'margin-left':'10px','margin-bottom':'5px'}"></button>
-        <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD ACTUAL</h3></label>
-      </span>
-     
-    </ng-template>
-
-    <ng-template [ngIf]="edit2 == true">
-        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-        [options]="universitys" [filter]="true" formControlName="UniversityId"
-          [style]="{'width':'80%','margin-bottom':'20px'}"
-          optionvalue="id" optionLabel="name"  filterBy="name"
-          [required]="true" placeholder="SELECCIONE UNIVERSIDAD">
-          <ng-template let-option pTemplate="item">
-            <span >{{option.name }} - Nit: {{option.nit}}</span>
-        </ng-template>
-        </p-dropdown>
-        <button type="button" pButton pRipple label="Cancelar" (click)="edit2 = false" [style]="{'margin-left':'10px','margin-bottom':'25px'}"></button>
-
-    </ng-template>
-        </div>
                 
             <ng-template pTemplate="footer">
                 <div fxLayout="row" class="titleCard"style="margin-top: -20px;">

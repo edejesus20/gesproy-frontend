@@ -68,15 +68,6 @@ public form2:HeadquarterI={
  public onSubmit() {
    let formValue: HeadquarterI = this.form.value;
    formValue.UniversityId=this.form.value.UniversityId.id
-
-   if(this.edit2 ==  false){
-     if(this.form2.University?.id != undefined)
-    formValue.UniversityId=this.form2.University?.id
-    }else{
-      formValue.UniversityId=this.form.value.UniversityId.id
-    }
-  //  console.log(formValue)
-
    if(formValue.name != '' && 
    formValue.cordinatorInvestigation != '' &&
    formValue.UniversityId != ( 0 )){
@@ -138,13 +129,15 @@ public form2:HeadquarterI={
 getOneCntAccount(id:number) {
   this.headquarterService.getItem(id).subscribe((cnt_groupFromApi) => {
 
-    if(cnt_groupFromApi.headquarter.id != undefined){
+    if(cnt_groupFromApi.headquarter.id != undefined && cnt_groupFromApi.headquarter.UniversityId){
       this.id=cnt_groupFromApi.headquarter.id
       this.form2=cnt_groupFromApi.headquarter
       this.form.controls['id'].setValue(cnt_groupFromApi.headquarter.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.headquarter.name)
       this.form.controls['cordinatorInvestigation'].setValue(cnt_groupFromApi.headquarter.cordinatorInvestigation)
-      this.form.controls['UniversityId'].setValue(cnt_groupFromApi.headquarter.UniversityId)
+      this.universityService.getItem(cnt_groupFromApi.headquarter.UniversityId).subscribe((algo)=>{
+        this.form.controls['UniversityId'].setValue(algo.university)
+      })
       }
 
     this.displayMaximizable2=true

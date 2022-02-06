@@ -13,13 +13,20 @@
         </div>
   
 
-            <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-                <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" ngModel #name="ngModel" [(ngModel)]="form.name" disabled>         
-            </div>
+            <div class="p-inputgroup">
             <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'40px'}">
             
-              <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}"  ngModel #cordinatorInvestigation="ngModel"
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="name" placeholder="NOMBRE" 
+              ngModel #name="ngModel" [(ngModel)]="form.name" disabled> 
+              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE DE SEDE</h3></label>
+            </span>
+            </div>
+
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px','margin-top':'20px'}">
+            
+              <input type="text" class="p-inputtext-lg" pInputText [style]="{'width':'100%'}" 
+               ngModel #cordinatorInvestigation="ngModel"
               [value]="form.cordinatorInvestigation"   disabled>
               <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORDINADOR DE INVESTIGACIÓN</h3></label>
             </span>

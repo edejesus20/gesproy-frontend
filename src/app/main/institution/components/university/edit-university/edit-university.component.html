@@ -14,25 +14,34 @@
               <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
             <h2 class="fondebabutton" style="margin-top: -1px;">Editar Universidad</h2>
           </div>
-          <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="text" class="p-inputtext-lg" pInputText 
-            name="name" placeholder="NOMBRE" 
-            formControlName="name"required>         
+          <div class="p-inputgroup" style="margin-top: 40px;">
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" 
+            pInputText name="name" placeholder="NOMBRE"
+            formControlName="name" required>   
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE DE UNIVERSIDAD</h3></label>
+          </span>      
         </div>
-        <div class="p-inputgroup" style="margin-bottom: 20px;">
+        <div class="p-inputgroup" >
+          <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
             <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
             <!-- <p-inputNumber inputId="inputnumber" name="nit" placeholder="NIT" ngModel #nit="ngModel" required ></p-inputNumber> -->
             <input  type="text" pKeyFilter="int" class="p-inputtext-lg" 
              pInputText name="nit" placeholder="NIT" 
-             formControlName="nit" required>         
+             formControlName="nit" required>  
+             <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NIT</h3></label>
+          </span>        
         </div>
 
         <div class="p-inputgroup" >
+          <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
           <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
           <input type="text" pInputText [pKeyFilter]="blockSpecial" class="p-inputtext-lg"  
           name="addres" placeholder="DIRECCION" 
-          formControlName="addres" required  >         
+          formControlName="addres" required  >   
+          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DIRECCION</h3></label>
+          </span>       
       </div>
 
       </div>

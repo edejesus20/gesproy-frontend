@@ -9,7 +9,7 @@ import { AdministrativeI } from 'src/app/models/user/administrative';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UniversityI } from 'src/app/models/institution/university';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 const translate = require('translate');
@@ -31,57 +31,10 @@ export class EditFacultiesComponent implements OnInit {
 
   public administratives: AdministrativeI[]=[];
   public Headquarter: HeadquarterI[]=[];
-  selectedAdministrativeI: AdministrativeI={
-      UserId:0,
-      HeadquarterId:'',
-      User: { 
-        username:'',
-        fullName:'',
-        email:'',
-        Person:{
-          name:'',
-          identification:''
-        }
-      },
-      OcupationId:''
-  };
+ 
 public universitys: UniversityI[]=[]
-public selectedUniversit: UniversityI={
-  id:0,
-  name: '',
-  nit: '',
-  addres: '',
-};
 
-public form:FacultyI={
-  id:0,
-  name:'',
-  AdministrativeId:0,
-  Administrative:{
-    id:0,
-    UserId:0,
-    HeadquarterId:'',
-    OcupationId:'',
-    User:{
-      id:0,
-      username:'',
-      fullName:'',
-      email:'',
-      Person:{ 
-        name:'',
-        identification:''
-      }
-    }
-  },
-  UniversityId:0,
-    University:{
-      id:0,
-      name:'',
-      nit:'',
-      addres:''
-    
-  }
-}
+public form:FormGroup=this.formBuilder.group({});
 
   constructor(
     private administrativeService: AdministrativeService,
@@ -89,7 +42,7 @@ public form:FacultyI={
     private router: Router,
     private messageService:MessageService,
     private universityService:UniversityService,
-
+    private formBuilder: FormBuilder,
     private primengConfig: PrimeNGConfig,
     // private snackBar: MatSnackBar,
   ) { }
@@ -98,36 +51,24 @@ public form:FacultyI={
     this.getAlladministrative()
     this.getAlluniversidades()
     this.primengConfig.ripple = true;
+
+    this.form=this.formBuilder.group({
+      id: [''],
+     name:['', [Validators.required]],
+     AdministrativeId:['', [Validators.required]],
+     UniversityId:['', [Validators.required]],
+    });
   
   }
 
 
-  public onSubmit(f:NgForm) {
-    // console.log(f)
-    let formValue: FacultyI = {
-      name:f.form.value.name,
-      AdministrativeId:0,
-      UniversityId:0
-    };
-
-    if(this.edit2 ==  false){
-      formValue.UniversityId=this.form.UniversityId
-    }else{
-
-      formValue.UniversityId=f.form.value.UniversityId.id
-    }
-
-    if(this.edit ==  false){
-      formValue.AdministrativeId=this.form.AdministrativeId
-    }else{
-      formValue.AdministrativeId=f.form.value.AdministrativeId.id
-
-    }
-    // console.log(formValue)
-    if(formValue.name != ("" || null || undefined) && 
-    formValue.AdministrativeId != ('' || 0 || null || undefined) &&
-    formValue.UniversityId != ("" || 0 || null || undefined)){
-
+  public onSubmit() {
+      let formValue: FacultyI = this.form.value;
+      formValue.AdministrativeId=this.form.value.AdministrativeId.id
+      formValue.UniversityId=this.form.value.UniversityId.id
+      if(formValue.name != '' && 
+      formValue.AdministrativeId != ( 0 ) &&
+      formValue.UniversityId != ( 0 )){
     this.facultyService.updateItem(this.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -195,16 +136,22 @@ public form:FacultyI={
   getOneCntAccount(id:number) {
     this.facultyService.getItem(id).subscribe((cnt_groupFromApi) => {
      
-      if(cnt_groupFromApi.faculty.Administrative?.User?.fullName != undefined
+      if(cnt_groupFromApi.faculty.UniversityId != undefined && cnt_groupFromApi.faculty.id
         ){
-        this.form=cnt_groupFromApi.faculty
+          this.id=cnt_groupFromApi.faculty.id 
+          this.form.controls['id'].setValue(cnt_groupFromApi.faculty.id)
+      this.form.controls['name'].setValue(cnt_groupFromApi.faculty.name)
+      this.form.controls['AdministrativeId'].setValue(cnt_groupFromApi.faculty.AdministrativeId)
+      this.administrativeService.getItem(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
+        this.form.controls['AdministrativeId'].setValue(algo.administrative)
+      })
+      this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{
+        this.form.controls['UniversityId'].setValue(algo.university)
+      })
         
         // this.form.Administrative.User.fullName=cnt_groupFromApi.faculty.Administrative?.User?.fullName
       }
 
-      if(this.form.id){this.id=this.form.id}
-      
-     
       this.displayMaximizable2=true
       this.tabla = false
     }, error => console.error(error));

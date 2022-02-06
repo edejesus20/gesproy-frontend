@@ -1,16 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-
 import { Router } from '@angular/router';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { AdministrativeI } from 'src/app/models/user/administrative';
-
 import { MessageService } from 'primeng/api';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
 const translate = require('translate');
@@ -22,38 +17,21 @@ const translate = require('translate');
 export class CreateFacultyComponent implements OnInit {
 
   public administratives: AdministrativeI[]=[];
-  public Headquarter: HeadquarterI[]=[];
-  selectedAdministrativeI: AdministrativeI={
-      UserId:0,
-      HeadquarterId:'',
-      User: { 
-        username:'',
-        fullName:'',
-        email:'',
-        Person:{
-          name:'',
-          identification:''
-        }
-      },
-      OcupationId:''
-  };
   public universitys: UniversityI[]=[]
-  public selectedUniversit: UniversityI={
-    id:0,
-    name: '',
-    nit: '',
-    addres: '',
-  };
-
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!]+$/ 
+public form:FormGroup=this.formBuilder.group({
+ name:['', [Validators.required]],
+ AdministrativeId:['', [Validators.required]],
+ UniversityId:['', [Validators.required]],
+});
   constructor(
     private administrativeService: AdministrativeService,
     private facultyService: FacultyService,
     private router: Router,
     private messageService:MessageService,
-    private headquarterService: HeadquarterService,
+    private formBuilder: FormBuilder,
     private universityService:UniversityService,
     // private snackBar: MatSnackBar,
   ) { }
@@ -65,19 +43,13 @@ blockSpecial: RegExp = /^[^<>*!]+$/
   }
 
 
-  public onSubmit(f:NgForm) {
-    console.log(f)
-
-    const formValue: FacultyI = {
-      name:f.form.value.name,
-      AdministrativeId:f.form.value.AdministrativeId.id,
-      UniversityId:f.form.value.UniversityId.id
-    };
-    // console.log(formValue)
-
-    if(formValue.name != ("" || null || undefined) && 
-    formValue.AdministrativeId != ('' || 0 || null || undefined) &&
-    formValue.UniversityId != ("" || 0 || null || undefined)){
+  public onSubmit() {
+    let formValue: FacultyI = this.form.value;
+    formValue.AdministrativeId=this.form.value.AdministrativeId.id
+    formValue.UniversityId=this.form.value.UniversityId.id
+    if(formValue.name != '' && 
+    formValue.AdministrativeId != ( 0 ) &&
+    formValue.UniversityId != ( 0 )){
 
     this.facultyService.createItem(formValue).subscribe(
       () => {
