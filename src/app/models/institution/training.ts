@@ -16,4 +16,6 @@ export interface TrainingTeacherI {
     name_institution: string;
     resolution_convalidation: string;
     degree_certificate: string;
+    TeacherId:number;
+    TrainingId:number
 }

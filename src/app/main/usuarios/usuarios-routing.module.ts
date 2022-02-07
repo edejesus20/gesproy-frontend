@@ -34,6 +34,7 @@ import { ShowOneStudentComponent } from './components/Estudiantes/show-one-stude
 import { CreateStudentComponent } from './components/Estudiantes/create-student/create-student.component';
 import { EditarStudentComponent } from './components/Estudiantes/editar-student/editar-student.component';
 import { DeleteStudentComponent } from './components/Estudiantes/delete-student/delete-student.component';
+import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
 
 const routes: Routes = [
   {
@@ -180,6 +181,11 @@ const routes: Routes = [
         {
           path: 'student_eliminar/:id',
           component:DeleteStudentComponent ,
+        }
+        ,
+        {
+          path: 'AsignarTeacher/:id',
+          component:AsignarTeacherComponent ,
         }
         
     ]

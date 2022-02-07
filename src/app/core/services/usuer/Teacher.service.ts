@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
+import { TrainingTeacherI } from 'src/app/models/institution/training';
 import { TeacherI } from 'src/app/models/user/teacher';
 
 import { environment } from 'src/environments/environment';
@@ -37,7 +38,6 @@ export class TeacherService {
 
 };
 
-
  // Create a new item
  createItem(teacher: TeacherI): Observable<TeacherI> {
    return this.http.post<TeacherI>(this.base_path_post, teacher).pipe(
@@ -49,6 +49,17 @@ export class TeacherService {
      }),
      catchError(this.handleError))
  }
+
+ AsignarTeacher(teacher: any): Observable<any> {
+  return this.http.post<any>(this.API_URI+'/api/AsignarTeacher', teacher).pipe(
+    tap((res: TeacherI) => {
+      if (res) {
+        // Crear usuario
+        // console.log('registro insertado');
+      }
+    }),
+    catchError(this.handleError))
+}
 
  // Get single student data by ID
  getItem(id: number): Observable<{teacher:TeacherI}> {
@@ -72,9 +83,9 @@ export class TeacherService {
  }
 
  // Update item by id
- updateItem(id:number, teacher:TeacherI): Observable<TeacherI> {
+ updateItem(id:number, teacher:any): Observable<any> {
    return this.http
-     .patch<TeacherI>(this.base_path_get + '/' + id, JSON.stringify(teacher), this.httpOptions)
+     .patch<any>(this.base_path_get + '/' + id, JSON.stringify(teacher), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

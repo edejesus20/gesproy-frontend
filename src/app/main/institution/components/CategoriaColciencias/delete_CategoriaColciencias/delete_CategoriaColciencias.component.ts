@@ -23,9 +23,9 @@ export class Delete_CategoriaColcienciasComponent implements OnInit {
       {
         id:0,
         UserId: 0,
-        scaleId: 0,
-        colcienciasCategoryId: 0,
-        groupId: 0,
+        ScaleId: 0,
+        ColcienciaCategoryId: 0,
+        GroupId: 0,
         User:
           {
             username: '',

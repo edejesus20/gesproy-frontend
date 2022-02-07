@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { CategoryGroupService } from 'src/app/core/services/institution/CategoryGroup.service';
@@ -16,11 +16,11 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 })
 export class Create_CategoriaGruposComponent implements OnInit {
   public groups: GroupI[]=[];
-  selectedGroupI: GroupI={
-    id:0,
-    name: '',
-    ident_colciencias:''
-  };
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    date:new Date().toDateString(),
+    GroupId:['', [Validators.required]],
+   });
   
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -29,6 +29,7 @@ export class Create_CategoriaGruposComponent implements OnInit {
     private categoryGroupService:CategoryGroupService,
     private groupService:GroupService,
     private router: Router,
+    private formBuilder: FormBuilder,
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
   ) { }
@@ -45,18 +46,12 @@ export class Create_CategoriaGruposComponent implements OnInit {
       }, error => console.error(error));
   }
 
-  public onSubmit(f:NgForm) {
-    // console.log(f)
+  public onSubmit() {
+    let formValue: CategoryGroupI = this.form.value;
+    formValue.GroupId=this.form.value.GroupId.id
 
-    let formValue: CategoryGroupI = {
-      name: f.form.value.name,
-      date:new Date().toDateString(),
-      GroupId: f.form.value.GroupId.id
-    };
-    // console.log(formValue)
-
-    if(formValue.name != '' && formValue.GroupId != ( 0) && formValue.GroupId != undefined
-    ){
+    if(formValue.name != '' && 
+    formValue.GroupId != ( 0 )){
 
     this.categoryGroupService.createItem(formValue).subscribe(
       () => {

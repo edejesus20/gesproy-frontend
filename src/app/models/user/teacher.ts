@@ -7,9 +7,9 @@ import { TrainingI, TrainingTeacherI } from "../institution/training";
 export interface TeacherI {
     id?:number
     UserId: number;
-    scaleId: number;
-    colcienciasCategoryId: number;
-    groupId: number;
+    ScaleId: number;
+    ColcienciaCategoryId: number;
+    GroupId: number;
     User?:UserI
     Scale?:ScaleI
     Group?:GroupI

@@ -32,14 +32,19 @@ export class CreateTeacherComponent implements OnInit {
   public scales:ScaleI[] =[]
   public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
-  // selectedDocumentTypeI: DocumentTypeI={
-  //   id:1,
-  //   name:'cedula de ciudadania',
-  // };
-  // selectedGenderI: GenderI={
-  //   id:0,
-  //   name: '',
-  // };
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    surname:['', [Validators.required]],
+    DocumentTypeId:['', [Validators.required]],
+    identification:['', [Validators.required]],
+    GenderId:['', [Validators.required]],
+    address:['', [Validators.required]],
+    phone:['', [Validators.required]],
+    email:['', [Validators.required]],
+    ScaleId:['', [Validators.required]],
+    ColcienciaCategoryId:['', [Validators.required]],
+    GroupId:['', [Validators.required]],
+   });
   constructor(
     private teacherService:TeacherService,
     private router: Router,
@@ -48,6 +53,8 @@ export class CreateTeacherComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
     private groupService:GroupService,
+    private formBuilder: FormBuilder,
+
     private colcienciaCategoryService:ColcienciaCategoryService,
   ) { }
 
@@ -59,68 +66,25 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllcolcienciaCategorys()
   }
 
-
-  private getAllgenders(selectId?: number) {
-    this.genderService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.genders = AdministrativeFromApi.genders;
-      }, error => console.error(error));
-  }
-
-  private getAlldocumentTypes(selectId?: number) {
-    this.documentTypeService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.documentTypes = AdministrativeFromApi.documentTypes;
-
-      }, error => console.error(error));
-  }
-
-  private getAllscales(selectId?: number) {
-    this.scaleService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.scales = AdministrativeFromApi.scales;
-      }, error => console.error(error));
-  }
-
-  private getAllgroups(selectId?: number) {
-    this.groupService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.groups = AdministrativeFromApi.groups;
-      }, error => console.error(error));
-  }
-
-  private getAllcolcienciaCategorys(selectId?: number) {
-    this.colcienciaCategoryService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
-      }, error => console.error(error));
-  }
-
-  public onSubmit(f:NgForm) {
-
+  public onSubmit() {
     const formValue={
-      name: f.form.value.name,
-      surname: f.form.value.surname,
-      DocumentTypeId: f.form.value.DocumentTypeId.id,
-      identification: f.form.value.identification,
-      GenderId: f.form.value.GenderId.id,
-      address: f.form.value.address,
-      phone: f.form.value.phone,
+      name: this.form.value.name,
+      surname: this.form.value.surname,
+      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      identification: this.form.value.identification,
+      GenderId: this.form.value.GenderId.id,
+      address: this.form.value.address,
+      phone: this.form.value.phone,
       username:'',
       fullName:'',
-      email:f.form.value.email,
+      email:this.form.value.email,
       password:'',
       UserId: 0,
-      scaleId: f.form.value.scaleId.id,
-      colcienciasCategoryId: f.form.value.colcienciasCategoryId.id,
-      groupId: f.form.value.groupId.id,
+      ScaleId: this.form.value.ScaleId.id,
+      ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
+      GroupId: this.form.value.GroupId.id,
     };
-    // console.log(f)
-   
+    console.log(formValue)
     if(
       formValue.name != ""&&
       formValue.surname != ""&&
@@ -130,10 +94,10 @@ export class CreateTeacherComponent implements OnInit {
       formValue.address != ""&&
       formValue.phone != ""&&
       formValue.email != ""&&
-     formValue.scaleId !=("" || undefined)
-    &&formValue.colcienciasCategoryId != ("" || undefined)
-    &&formValue.groupId != ("" || undefined)){
-      console.log(formValue)
+     formValue.ScaleId !=("" || undefined)
+    &&formValue.ColcienciaCategoryId != ("" || undefined)
+    &&formValue.GroupId != ("" || undefined)){
+
 
     this.teacherService.createItem(formValue).subscribe(
       () => {
@@ -164,6 +128,47 @@ export class CreateTeacherComponent implements OnInit {
   }else{
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
+}
+
+
+private getAllgenders(selectId?: number) {
+  this.genderService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.genders = AdministrativeFromApi.genders;
+    }, error => console.error(error));
+}
+
+private getAlldocumentTypes(selectId?: number) {
+  this.documentTypeService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      this.documentTypes = AdministrativeFromApi.documentTypes;
+
+    }, error => console.error(error));
+}
+
+private getAllscales(selectId?: number) {
+  this.scaleService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.scales = AdministrativeFromApi.scales;
+    }, error => console.error(error));
+}
+
+private getAllgroups(selectId?: number) {
+  this.groupService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.groups = AdministrativeFromApi.groups;
+    }, error => console.error(error));
+}
+
+private getAllcolcienciaCategorys(selectId?: number) {
+  this.colcienciaCategoryService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
+    }, error => console.error(error));
 }
 
 }

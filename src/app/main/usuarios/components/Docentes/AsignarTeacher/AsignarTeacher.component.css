@@ -17,12 +17,12 @@
       display:flex;
     }
     .grupocodeudor{
-      width: 85%;
+      width: 95%;
       padding-right: 10px;
       min-width: auto
     }
     .grupoinput{
-      width: 50%;
+      width: 95%;
       padding-right: 10px;
       min-width: auto;
     }
@@ -52,12 +52,12 @@
     }
     .bottomdelete{
       width: auto;
-      margin-top: 15px;
-      
+      margin-top: 50px;
+      padding-top: 40px;
       font-size: 10px;
       min-width: auto;
     }
     .bottomdelete .mat-icon{
-      margin-top:-7px;;
+      margin-top:-7px;
     }
     

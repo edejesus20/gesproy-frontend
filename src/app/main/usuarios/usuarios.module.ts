@@ -67,8 +67,9 @@ import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
 
-
+import {FieldsetModule} from 'primeng/fieldset';
 
 @NgModule({
   declarations: [
@@ -103,12 +104,14 @@ import { CalendarModule } from 'primeng/calendar';
     EditarTeacherComponent,
     ShowOneTeacherComponent,
     ShowTeacherComponent,
+    AsignarTeacherComponent,
     //administrativos
     CreateAdministrativeComponent,
     DeleteAdministrativeComponent,
     EditarAdministrativeComponent,
     ShowAdministrativeComponent,
     ShowOneAdministrativeComponent
+
 
   ],
   imports: [
@@ -148,7 +151,8 @@ import { CalendarModule } from 'primeng/calendar';
     TableModule,
     KeyFilterModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    FieldsetModule
 
   ]
 })

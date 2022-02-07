@@ -1,5 +1,5 @@
 
-<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
@@ -17,7 +17,7 @@
               <div class="p-inputgroup"  style="margin-bottom: 20px;">
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                 <input type="text" class="p-inputtext-lg" pInputText name="name" 
-                placeholder="NOMBRE" ngModel #name="ngModel" title="NOMBRES" required>         
+                placeholder="NOMBRE" formControlName="name" title="NOMBRES" required>         
             </div>
             </div>
             
@@ -26,7 +26,7 @@
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                 <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                 class="p-inputtext-lg"  name="surname" placeholder="APELLIDOS" title="APELLIDO"
-                ngModel #surname="ngModel" required  >         
+                formControlName="surname" required  >         
             </div>
             </div>
 
@@ -36,9 +36,7 @@
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="genders" [filter]="true"
-              name="GenderId" ngModel 
-              #GenderId="ngModel" label="SELECCIONE EL GENERO" 
+            [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
               [style]="{'width':'100%','margin-bottom':'20px'}" 
               optionvalue="id"  optionLabel="name" filterBy="name"
               [required]="true" placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO">
@@ -51,8 +49,8 @@
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup"  style="margin-bottom: 20px;">
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                <input type="email" class="p-inputtext-lg" pInputText name="email" 
-                placeholder="CORREO" ngModel #email="ngModel" required title="CORREO ELECTRONICO">         
+                <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
+                placeholder="CORREO" required title="CORREO ELECTRONICO">         
             </div>
 
             </div>
@@ -65,8 +63,7 @@
             <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="documentTypes" [filter]="true"
-                name="DocumentTypeId" ngModel 
-                #DocumentTypeId="ngModel" label="TIPO DE DOCUMENTO" 
+                name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
                 [style]="{'width':'100%','margin-bottom':'20px'}" 
                 optionvalue="id"  optionLabel="name" filterBy="name"
                 [required]="true" placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO">
@@ -79,8 +76,9 @@
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup"  style="margin-bottom: 20px;">
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                <input class="p-inputtext-lg" type="text" pInputText pKeyFilter="num" name="identification" 
-                placeholder="IDENTIFICACIÓN" ngModel #identification="ngModel" required title="IDENTIFICACIÓN">         
+                <input class="p-inputtext-lg" formControlName="identification" 
+                type="text" pInputText pKeyFilter="num" name="identification" 
+                placeholder="IDENTIFICACIÓN" required title="IDENTIFICACIÓN">         
             </div>
 
             </div>
@@ -93,16 +91,17 @@
               <div class="p-inputgroup" >
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                 <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" 
-                ngModel #address="ngModel" required title="DIRECCION" >         
+                class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
+                 required title="DIRECCION" >         
             </div>
 
             </div>
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup"  style="margin-bottom: 20px;">
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                <input class="p-inputtext-lg" type="text" pInputText pKeyFilter="num" name="phone" 
-                placeholder="TELEFONO" ngModel #phone="ngModel" title="TELEFONO"
+                <input class="p-inputtext-lg" type="text" formControlName="phone"
+                pInputText pKeyFilter="num" name="phone" 
+                placeholder="TELEFONO" title="TELEFONO"
                 required>         
             </div>
 
@@ -114,8 +113,7 @@
             <div class="col-12 md:col-6 lg:col-4">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="scales" [filter]="true"
-              name="scaleId" ngModel 
-              #scaleId="ngModel" label="ESCALAFON" 
+              name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
               [style]="{'width':'100%','margin-bottom':'20px'}"  
               optionvalue="id"  optionLabel="name" filterBy="name"
               [required]="true" placeholder="ESCALAFON" title="ESCALAFON">
@@ -129,8 +127,7 @@
             <div class="col-12 md:col-6 lg:col-4">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="groups" [filter]="true"
-              name="groupId" ngModel 
-              #groupId="ngModel" label="GRUPO" 
+              name="GroupId" formControlName="GroupId" label="GRUPO" 
               [style]="{'width':'100%','margin-bottom':'20px'}"
               optionvalue="id"  optionLabel="name" filterBy="name"
               [required]="true" placeholder="GRUPO" title="GRUPO DE INVESTIGACIÓN">
@@ -144,8 +141,7 @@
             <div class="col-12 md:col-6 lg:col-4">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="colcienciaCategorys" [filter]="true"
-              name="colcienciasCategoryId" ngModel 
-              #colcienciasCategoryId="ngModel" label="CATEGORIA COLCIENCIAS" 
+              name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
               [style]="{'width':'100%','margin-bottom':'20px'}" 
               optionvalue="id"  optionLabel="name" filterBy="name"
               [required]="true" placeholder="CATEGORIA COLCIENCIAS" title="CATEGORIA COLCIENCIAS">
@@ -165,7 +161,7 @@
       </div>
 
               <div fxLayout="row" class="titleCard" style="margin-top: 50px;">
-                <button pButton type="button" type="submit"  [disabled]="!heroForm.form.valid"
+                <button pButton type="button" type="submit"  [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>

@@ -28,7 +28,7 @@
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="categorys" [filter]="true"
                 formControlName="CategoryId"  label="SELECCIONE LA CATEGORIA" 
-                [style]="{'width':'100%'}" [(ngModel)]="selectedCategoryI" 
+                [style]="{'width':'100%'}" 
                 optionvalue="id" optionLabel="name"  filterBy="name"
                 [required]="true" placeholder="SELECCIONE LA CATEGORIA">
                 <ng-template let-option pTemplate="item">
@@ -112,7 +112,7 @@
                                 </ng-template>
                                 </p-dropdown>
                               </div> -->
-                              <div class="grupoinput1">
+                              <div class="grupoinput2">
                                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                 [options]="administratives" [filter]="true"
                                     formControlName="AdministrativeId"

@@ -38,9 +38,9 @@ handleError(res: Response) {
 };
 
 // Create a new item
-createItem(seedbeds: TrainingI): Observable<TrainingI> {
+createItem(training: TrainingI): Observable<TrainingI> {
   return this.http
-    .post<TrainingI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<TrainingI>(this.base_path_post, JSON.stringify(training), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

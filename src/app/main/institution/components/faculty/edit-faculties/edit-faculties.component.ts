@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { AdministrativeI } from 'src/app/models/user/administrative';
-
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UniversityI } from 'src/app/models/institution/university';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
@@ -22,15 +18,11 @@ const translate = require('translate');
 export class EditFacultiesComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
- public edit:boolean=false;
- public edit2:boolean=false;
-  
   private id:number=0
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
 
   public administratives: AdministrativeI[]=[];
-  public Headquarter: HeadquarterI[]=[];
  
 public universitys: UniversityI[]=[]
 
@@ -121,12 +113,14 @@ public form:FormGroup=this.formBuilder.group({});
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.ngOnInit()
     //console.log(event)
   }
 
   ngOnDestroy() {
     this.tabla = true
     this.displayMaximizable2 = false
+    this.ngOnInit()
   }
   actualizar(id: number){
     // console.log(id)

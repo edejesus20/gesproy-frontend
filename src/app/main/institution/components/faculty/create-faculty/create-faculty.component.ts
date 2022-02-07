@@ -42,7 +42,6 @@ public form:FormGroup=this.formBuilder.group({
   
   }
 
-
   public onSubmit() {
     let formValue: FacultyI = this.form.value;
     formValue.AdministrativeId=this.form.value.AdministrativeId.id

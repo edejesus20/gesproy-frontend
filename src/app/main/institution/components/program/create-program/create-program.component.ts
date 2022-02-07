@@ -42,25 +42,6 @@ export class CreateProgramComponent implements OnInit {
     })]),
   });
 
-  
-  
-  selectedFacultyI: FacultyI={
-    id:0,
-    name:'',
-    AdministrativeId: 0,
-      University:
-      {
-        id: 0,
-        name: '',
-        nit: '',
-        addres: '',
-      } 
-};
-
-selectedCategoryI: CategoryI={
-  id:0,
-  name:'',
-};
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!]+$/ 

@@ -5,7 +5,7 @@
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
-    [globalFilterFields]="['id','name','identification','email','phone','Group','scaleId','ColcienciaCategory']"
+    [globalFilterFields]="['id','name','identification','email','phone','Group','ScaleId','ColcienciaCategoryId']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -42,8 +42,8 @@
           <th pSortableColumn="email">CORREO<p-sortIcon field="email"></p-sortIcon></th>
           <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
           <th pSortableColumn="Group">GRUPO<p-sortIcon field="Group"></p-sortIcon></th>
-          <th pSortableColumn="scaleId">ESCALAFON<p-sortIcon field="scaleId"></p-sortIcon></th>
-          <th pSortableColumn="ColcienciaCategory">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategory"></p-sortIcon></th>
+          <th pSortableColumn="ScaleId">ESCALAFON<p-sortIcon field="ScaleId"></p-sortIcon></th>
+          <th pSortableColumn="ColcienciaCategoryId">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategoryId"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -82,6 +82,15 @@
               </td>
           
           </ng-template>
+
+          <ng-template [ngIf]="mostrar==4">
+            
+            <td >
+              <button pButton pRipple  type="button" title="Asignar Formaciones" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" (click)="delet(item.id)"></button>
+            </td>
+        
+        </ng-template>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

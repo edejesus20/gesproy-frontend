@@ -44,8 +44,8 @@ export class ShowTeacherComponent implements OnInit {
         { field: 'email', header: 'Correo Electronico' },
         { field: 'phone', header: 'Telefono' },
         { field: 'Group', header: 'Grupo' },
-        { field: 'scaleId', header: 'Escalafon' },
-        { field: 'ColcienciaCategory', header: 'Categoria de Colciencia' }
+        { field: 'ScaleId', header: 'Escalafon' },
+        { field: 'ColcienciaCategoryId', header: 'Categoria de Colciencia' }
     ];
   
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -63,9 +63,9 @@ export class ShowTeacherComponent implements OnInit {
             this.rows2.push(
               {
                 UserId: key.UserId,
-                scaleId: key.scaleId,
-                colcienciasCategoryId: key.colcienciasCategoryId,
-                groupId: key.groupId,
+                ScaleId: key.ScaleId,
+                ColcienciaCategoryId: key.ColcienciaCategoryId,
+                GroupId: key.GroupId,
                 User:key.User,
                 Scale:key.Scale,
                 Group:key.Group,
