@@ -39,13 +39,13 @@ export class ShowTeacherComponent implements OnInit {
       this.loading = false;
       this.cols = [
         { field: 'id', header: 'ID' },
-        { field: 'name', header: 'Nombre Completo' },
-        { field: 'identification', header: 'Identificacion' },
-        { field: 'email', header: 'Correo Electronico' },
-        { field: 'phone', header: 'Telefono' },
-        { field: 'Group', header: 'Grupo' },
-        { field: 'ScaleId', header: 'Escalafon' },
-        { field: 'ColcienciaCategoryId', header: 'Categoria de Colciencia' }
+        { field: 'User.fullName', header: 'Nombre Completo' },
+        { field: 'User.Person.identification', header: 'Identificacion' },
+        { field: 'User.email', header: 'Correo Electronico' },
+        { field: 'User.Person.phone', header: 'Telefono' },
+        { field: 'Group.name', header: 'Grupo' },
+        { field: 'Scale.name', header: 'Escalafon' },
+        { field: 'ColcienciaCategory.name', header: 'Categoria de Colciencia' }
     ];
   
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -87,9 +87,21 @@ export class ShowTeacherComponent implements OnInit {
   
   
   exportExcel() {
-  
+  let array:any[] = [];
+  for (const key of this.teachers) {
+    array.push({ 
+      id: key.id,
+      Nombre_Completo:key.User?.fullName,
+      Identificacion:key.User?.Person?.identification,
+      Correo_Electronico:key.User?.email,
+      Telefono:key.User?.Person?.phone,
+      Grupo:key.Group?.name,
+      Escalafon:key.Scale?.name,
+      Categoria_de_Colciencia:key.ColcienciaCategory?.name
+    })
+  }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.teachers);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "teachers");

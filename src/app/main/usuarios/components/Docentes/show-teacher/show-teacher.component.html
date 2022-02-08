@@ -5,7 +5,7 @@
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
-    [globalFilterFields]="['id','name','identification','email','phone','Group','ScaleId','ColcienciaCategoryId']"
+    [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email','User.Person.phone','Group.name','Scale.name','ColcienciaCategory.name']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -37,13 +37,13 @@
           <th style="width: 3rem"></th>
         </ng-template>
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
-          <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
-          <th pSortableColumn="email">CORREO<p-sortIcon field="email"></p-sortIcon></th>
-          <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
-          <th pSortableColumn="Group">GRUPO<p-sortIcon field="Group"></p-sortIcon></th>
-          <th pSortableColumn="ScaleId">ESCALAFON<p-sortIcon field="ScaleId"></p-sortIcon></th>
-          <th pSortableColumn="ColcienciaCategoryId">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategoryId"></p-sortIcon></th>
+          <th pSortableColumn="User.fullName">NOMBRE<p-sortIcon field="User.fullName"></p-sortIcon></th>
+          <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
+          <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
+          <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
+          <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
+          <th pSortableColumn="Scale.name">ESCALAFON<p-sortIcon field="Scale.name"></p-sortIcon></th>
+          <th pSortableColumn="ColcienciaCategory.name">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategory.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>

@@ -26,7 +26,6 @@ export class AsignarTeacherComponent implements OnInit {
   public mostrar:number=4;
   public tabla:boolean=true;
   public algo:number[]=[0];
-  private id:number=0
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar2:boolean=false
@@ -44,18 +43,7 @@ export class AsignarTeacherComponent implements OnInit {
     Trainings:undefined, 
 }
 
-  public form:FormGroup=this.formBuilder.group({
-    trainingTeacher: this.formBuilder.array([this.formBuilder.group(
-      {
-        name: ['', [Validators.required]],
-        date_graduation: ['', [Validators.required]],
-        name_institution: ['', [Validators.required]],
-        resolution_convalidation: ['', [Validators.required]],
-        degree_certificate: ['', [Validators.required]],
-        TeacherId:this.form2.id,
-        TrainingId:['', [Validators.required]],
-    })]),
-  })
+  public form:FormGroup=this.formBuilder.group({})
   public trainings: TrainingI[]=[]
   public teachers: TeacherI[] =[]
 
@@ -75,6 +63,20 @@ export class AsignarTeacherComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.getAlltrainings()
     this.getAllteachers()
+
+    this.form=this.formBuilder.group({
+      id: [''],
+      trainingTeacher: this.formBuilder.array([this.formBuilder.group(
+        {
+          name: ['', [Validators.required]],
+          date_graduation: ['', [Validators.required]],
+          name_institution: ['', [Validators.required]],
+          resolution_convalidation: ['', [Validators.required]],
+          degree_certificate: ['', [Validators.required]],
+          TeacherId:this.form2.id,
+          TrainingId:['', [Validators.required]],
+      })]),
+    })
 
   }
   public volver(event: Event){
@@ -99,15 +101,55 @@ export class AsignarTeacherComponent implements OnInit {
      
       if(cnt_groupFromApi.teacher.id != undefined
         ){
-        
-          this.id=cnt_groupFromApi.teacher.id 
           this.form2=cnt_groupFromApi.teacher
+          this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
+          if(cnt_groupFromApi.teacher.Trainings != undefined){
+            // console.log(cnt_groupFromApi.teacher.Trainings)
+            this.agregarDescuentos(cnt_groupFromApi.teacher.Trainings)    
+          }
       }
   
       this.displayMaximizable2=true
       this.tabla = false
     }, error => console.error(error));
   }
+  agregarDescuentos(Trainings: TrainingI[]) {
+    if(Trainings.length){
+      for (let key of Trainings) {
+        if(key.TrainingTeacher != undefined) {
+          // console.log(DiscountLine)
+          
+          let control = <FormArray>this.form.controls['trainingTeacher']
+            this.teacherService.getItem(key.TrainingTeacher.TeacherId).subscribe((algo1)=>{
+              if(algo1.teacher.id != undefined && key.TrainingTeacher != undefined) {
+                this.trainingsService.getItem(key.TrainingTeacher.TrainingId).subscribe((algo)=>{
+                  if(algo.training.id != undefined){
+                    control.push(this.formBuilder.group({
+                      name: [key.TrainingTeacher?.name, [Validators.required]],
+                      date_graduation: [new Date(''+key.TrainingTeacher?.date_graduation+''), [Validators.required]],
+                      name_institution: [key.TrainingTeacher?.name_institution, [Validators.required]],
+                      resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation, [Validators.required]],
+                      degree_certificate: [key.TrainingTeacher?.degree_certificate, [Validators.required]],
+                      TeacherId:algo1.teacher.id,
+                      TrainingId:[algo.training, [Validators.required]],
+                    }))
+                  }
+      
+                })
+              }
+              
+            })
+        }
+      }
+      this.mostrar2= true
+      let control = <FormArray>this.form.controls['trainingTeacher']
+      control.removeAt(0)
+    }
+
+  }
+
+
+
 
   get getRoles() {
     return this.form.get('trainingTeacher') as FormArray;//obtener todos los formularios
@@ -124,7 +166,7 @@ export class AsignarTeacherComponent implements OnInit {
           resolution_convalidation: ['', [Validators.required]],
           degree_certificate: ['', [Validators.required]],
           TeacherId:this.form2.id,
-          TrainingId:['', [Validators.required]],
+          TrainingId:['', [Validators.required]]
         }))
       }
       if(control.length >= 1 && this.mostrar2 == true){
@@ -135,7 +177,7 @@ export class AsignarTeacherComponent implements OnInit {
           resolution_convalidation: ['', [Validators.required]],
           degree_certificate: ['', [Validators.required]],
           TeacherId:this.form2.id,
-          TrainingId:['', [Validators.required]],
+          TrainingId:['', [Validators.required]]
         }))
 
       }
@@ -163,51 +205,54 @@ export class AsignarTeacherComponent implements OnInit {
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
-
+public verificar(){
+  let bandera:boolean=false;
+  let control = <FormArray>this.form.controls['trainingTeacher']
+  for (const key of control.value) {
+    key.TeacherId=this.form2.id
+    key.TrainingId=key.TrainingId.id
+    if(!key.TrainingId && key.TrainingId == undefined) {
+      return bandera=false
+    }
+  }
+  return bandera=true
+}
   public onSubmit() {
 
-    let control = <FormArray>this.form.controls['trainingTeacher']
-
-    for (const key of control.value) {
-      key.TeacherId=this.form2.id
-      key.TrainingId=key.TrainingId.id
+let bandera = this.verificar()
+    console.log(bandera);
+    if(bandera == true){
+      let formValue = this.form.value;
+      console.log(formValue);
+      this.teacherService.AsignarTeacher(formValue).subscribe(
+        () => {
+                var date = new Date('2020-01-01 00:00:03');
+                  function padLeft(n:any){ 
+                     return n ="00".substring(0, "00".length - n.length) + n;
+                  }
+                  var interval = setInterval(() => {
+                  var minutes = padLeft(date.getMinutes() + "");
+                  var seconds = padLeft(date.getSeconds() + "");
+                  // console.log(minutes, seconds);
+                  if( seconds == '03') {
+                  this.messageService.add({severity:'success', summary: 'Success', 
+                  detail: 'Registro de Asignacion de formacion con exito'});
+                  }
+                  date = new Date(date.getTime() - 1000);
+                  if( minutes == '00' && seconds == '01' ) {
+                    this.router.navigateByUrl('/usuarios/Teacher');
+                    clearInterval(interval); 
+                   }
+            }, 1000);
+        },async error => {
+          if(error != undefined) {
+            const text = await translate(error.error.message, "es");
+            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+          }
+        });
+    }else{
+      
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Seleccione la formacion'});
     }
-
-    let formValue = this.form.value;
-
-    // if(formValue[0].name != '' &&
-    // formValue[0].TeacherId != ( 0 )&&
-    // formValue[0].TrainingId != ( 0 )
-    // ){
-
-    this.teacherService.AsignarTeacher(formValue).subscribe(
-      () => {
-              var date = new Date('2020-01-01 00:00:03');
-                function padLeft(n:any){ 
-                   return n ="00".substring(0, "00".length - n.length) + n;
-                }
-                var interval = setInterval(() => {
-                var minutes = padLeft(date.getMinutes() + "");
-                var seconds = padLeft(date.getSeconds() + "");
-                // console.log(minutes, seconds);
-                if( seconds == '03') {
-                this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Asignacion de formacion con exito'});
-                }
-                date = new Date(date.getTime() - 1000);
-                if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Teacher');
-                  clearInterval(interval); 
-                 }
-          }, 1000);
-      },async error => {
-        if(error != undefined) {
-          const text = await translate(error.error.message, "es");
-          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-        }
-      });
-  // }else{
-  //   this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-  // }
-}
+  }
 }
