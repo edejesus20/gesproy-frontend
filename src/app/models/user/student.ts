@@ -5,5 +5,5 @@ export interface StudentI {
     id?:number;
     UserId: number;
     User?:UserI
-    Seedbed?:SeedbedI[]
+    Seedbeds?:SeedbedI[]
 }

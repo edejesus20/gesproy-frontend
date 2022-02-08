@@ -38,8 +38,8 @@ export class StudentService {
 
 
  // Create a new item
- createItem(student: StudentI): Observable<StudentI> {
-   return this.http.post<StudentI>(this.base_path_post, student).pipe(
+ createItem(student: any): Observable<any> {
+   return this.http.post<any>(this.base_path_post, student).pipe(
      tap((res: StudentI) => {
        if (res) {
          // Crear usuario
@@ -71,9 +71,9 @@ export class StudentService {
  }
 
  // Update item by id
- updateItem(id:number, student:StudentI): Observable<StudentI> {
+ updateItem(id:number, student:any): Observable<any> {
    return this.http
-     .patch<StudentI>(this.base_path_get + '/' + id, JSON.stringify(student), this.httpOptions)
+     .patch<any>(this.base_path_get + '/' + id, JSON.stringify(student), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

@@ -23,7 +23,6 @@ const translate = require('translate');
 export class EditarTeacherComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
-  private id:number=0
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form:FormGroup=this.formBuilder.group({});
@@ -201,7 +200,6 @@ getOneCntAccount(id:number) {
     if(cnt_groupFromApi.teacher.id != undefined
       ){
       
-        this.id=cnt_groupFromApi.teacher.id 
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
         if(cnt_groupFromApi.teacher.User?.Person != undefined
           ){

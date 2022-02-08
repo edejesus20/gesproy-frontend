@@ -1,0 +1,86 @@
+
+  .mat-form-field{
+    width: 100%;
+    min-width: 400px;
+  }
+  
+  mat-card{
+    width: 70%;
+  }
+  
+  .mat-icon{
+    font-size: 30px;
+    background-color:707070
+  }
+  
+  .titleCard{
+  margin: 0 0 10px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+  }
+  .fondebabutton{
+  color:#707070;
+  }
+  mat-card-title{
+  padding-left:10px;
+  padding-top:10px;
+  }
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    /* justify-content: flex-end; */
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }
+
+  
+
+  table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+ 
+th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+}
+
+th{ 
+  font-weight: bold;
+  font-size: 18px;}
+td{
+  text-align:justify;
+}
+
+.nohayregistro{
+  display:flex;
+  padding: 10px;
+  justify-content:center;
+  align-items:center;
+  font-size: 25px;
+  height:40px;
+  font-weight:lighter;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.editar{
+  background:orange;
+  color:white;
+}
+.texto{
+  text-align:left;
+}
+  

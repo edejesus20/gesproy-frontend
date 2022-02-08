@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-
 const translate = require('translate');
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { TeacherI } from 'src/app/models/user/teacher';
