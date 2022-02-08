@@ -27,8 +27,6 @@ export class Show_CategoriaGruposComponent implements OnInit {
 
   exportColumns: any[]=[];
   selectedProducts: CategoryGroupI[]=[];
-
-  
   constructor(
     private categoryGroupService:CategoryGroupService,
     private primengConfig: PrimeNGConfig,
@@ -40,11 +38,9 @@ export class Show_CategoriaGruposComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'GroupId', header: 'Grupo' },
+      { field: 'Group.name', header: 'Grupo' },
       { field: 'date', header: 'Fecha' }
-      
   ];
-  
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getAllScale() 
   }
@@ -68,10 +64,8 @@ export class Show_CategoriaGruposComponent implements OnInit {
       }
     }, error => console.error(error));
   }
-
   Buscar(event: Event, dt1:any){
     event.preventDefault();
-    
       const filterValue = (event.target as HTMLInputElement).value;
       dt1.filterGlobal(filterValue, 'contains')
   }
@@ -153,13 +147,17 @@ export class Show_CategoriaGruposComponent implements OnInit {
     const pdf = pdfMake.createPdf(pdfDefinition);
     pdf.open();
   }
-
-
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.categoryGroups) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+        Grupo:key.Group?.name,
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.categoryGroups);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "categoryGroups");

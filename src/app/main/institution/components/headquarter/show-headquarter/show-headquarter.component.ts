@@ -4,12 +4,8 @@ import * as FileSaver from 'file-saver';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
-
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
-
-
-
 
 @Component({
   selector: 'app-show-headquarter',
@@ -41,7 +37,7 @@ export class ShowHeadquarterComponent implements OnInit {
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
       { field: 'cordinatorInvestigation', header: 'Coordinador de Investigación' },
-      { field: 'University', header: 'Universidad' },
+      { field: 'University.name', header: 'Universidad' },
       { field: 'createdAt', header: 'Fecha' }
   ];
 
@@ -152,14 +148,18 @@ export class ShowHeadquarterComponent implements OnInit {
     pdf.open();
   }
 
-
-
-
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.headquarters) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+        Coordinador_de_Investigación:key.cordinatorInvestigation,
+        University:key.University?.name
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.headquarters);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "headquarters");

@@ -51,8 +51,6 @@ export class ShowUniversityComponent implements OnInit {
     this.getUniversitys()
   }
 
- 
-
   getUniversitys() {
     this.universityService.getList().subscribe((instititionsFromApi) => {
       this.universitys =instititionsFromApi.universitys;
@@ -72,7 +70,6 @@ export class ShowUniversityComponent implements OnInit {
       }
     }, error => console.error(error));
   }
-
   Buscar(event: Event, dt1:any){
     event.preventDefault();
     
@@ -80,12 +77,18 @@ export class ShowUniversityComponent implements OnInit {
       dt1.filterGlobal(filterValue, 'contains')
   }
 
-
 exportExcel() {
-  // console.log('excel')
-
+  let array:any[] = [];
+  for (const key of this.universitys) {
+    array.push({ 
+      id: key.id,
+      Nombre_Completo:key.name,
+      Nit:key.nit,
+      Direccion:key.addres,
+    })
+  }
   import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.universitys);
+      const worksheet = xlsx.utils.json_to_sheet(array);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, "universitys");

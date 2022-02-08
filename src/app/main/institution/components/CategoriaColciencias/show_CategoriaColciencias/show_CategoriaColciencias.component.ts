@@ -64,12 +64,10 @@ export class Show_CategoriaColcienciasComponent implements OnInit {
 
   Buscar(event: Event, dt1:any){
     event.preventDefault();
-    
       const filterValue = (event.target as HTMLInputElement).value;
       dt1.filterGlobal(filterValue, 'contains')
   }
 
-  
   async gerenratePdf(){
     const DATA = <HTMLDivElement> document.getElementById('todo');
     var headers = [{
@@ -146,13 +144,16 @@ export class Show_CategoriaColcienciasComponent implements OnInit {
     pdf.open();
   }
 
-  
-
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.colcienciaCategorys) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.colcienciaCategorys);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "colcienciaCategorys");

@@ -146,10 +146,15 @@ export class Show_capacitacionComponent implements OnInit {
     pdf.open();
   }
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.trainings) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.trainings);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "trainings");

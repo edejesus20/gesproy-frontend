@@ -41,15 +41,12 @@ export class ShowFacultiesComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'Administrative', header: 'Decanatura' },
-      { field: 'Headquarter', header: 'Sede' },
-      { field: 'University', header: 'Universidad' },
+      { field: 'Administrative.User.fullName', header: 'Decanatura' },
+      { field: 'University.name', header: 'Universidad' },
       { field: 'createdAt', header: 'Fecha' }
   ];
-
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getAllFaculty()
-    
   }
   Buscar(event: Event, dt1:any){
     event.preventDefault();
@@ -57,7 +54,6 @@ export class ShowFacultiesComponent implements OnInit {
       const filterValue = (event.target as HTMLInputElement).value;
       dt1.filterGlobal(filterValue, 'contains')
   }
-
   getAllFaculty() {
     
     this.facultyService.getList().subscribe((facultiesFromApi) => {
@@ -83,7 +79,6 @@ export class ShowFacultiesComponent implements OnInit {
       // console.log(this.faculties);
     }, error => console.error(error));
   }
-
   async gerenratePdf(){
     const DATA = <HTMLDivElement> document.getElementById('todo');
     var headers = [{
@@ -159,13 +154,19 @@ export class ShowFacultiesComponent implements OnInit {
     pdf.open();
   }
 
-  
 
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.faculties) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+        Decanatura:key.Administrative?.User?.fullName,
+        University:key.University?.name
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.faculties);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "faculties");

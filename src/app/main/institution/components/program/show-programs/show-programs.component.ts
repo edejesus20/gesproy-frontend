@@ -41,9 +41,9 @@ export class ShowProgramsComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'FacultyId', header: 'Facultad' },
-      { field: 'Faculty', header: 'Decanatura' },
-      { field: 'CategoryId', header: 'Categoria' },
+      { field: 'Faculty.name', header: 'Facultad' },
+      { field: 'Faculty.Administrative.User.fullName', header: 'Decanatura' },
+      { field: 'Category.name', header: 'Categoria' },
       { field: 'createdAt', header: 'Fecha' }
   ];
   
@@ -162,10 +162,18 @@ Buscar(event: Event, dt1:any){
   }
 
   exportExcel() {
-    // console.log('excel')
-  
+    let array:any[] = [];
+    for (const key of this.programs) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.name,
+        Facultad:key.Faculty?.name,
+        Decanatura:key.Faculty?.Administrative?.User?.fullName,
+        Categoria:key.Category?.name
+      })
+    }
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.programs);
+        const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "programs");

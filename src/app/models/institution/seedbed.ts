@@ -1,6 +1,7 @@
 export interface SeedbedI {
     id?: number;
     name: string;
+    SeedbedStudent?:SeedbedStudentI
 }
 
 export interface SeedbedStudentI {

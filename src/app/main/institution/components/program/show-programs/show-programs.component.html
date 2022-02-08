@@ -5,7 +5,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','FacultyId','Faculty','CategoryId','createdAt']"
+    [globalFilterFields]="['id','name','Faculty.name','Faculty.Administrative.User.fullName','Category.name','createdAt']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -39,9 +39,9 @@
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="FacultyId">FACULTAD<p-sortIcon field="FacultyId"></p-sortIcon></th>
-          <th pSortableColumn="Faculty">DECANATURA<p-sortIcon field="Faculty"></p-sortIcon></th>
-          <th pSortableColumn="CategoryId">CATEGORIA<p-sortIcon field="CategoryId"></p-sortIcon></th>
+          <th pSortableColumn="Faculty.name">FACULTAD<p-sortIcon field="Faculty.name"></p-sortIcon></th>
+          <th pSortableColumn="Faculty.Administrative.User.fullName">DECANATURA<p-sortIcon field="Faculty.Administrative.User.fullName"></p-sortIcon></th>
+          <th pSortableColumn="Category.name">CATEGORIA<p-sortIcon field="Category.name"></p-sortIcon></th>
           <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>

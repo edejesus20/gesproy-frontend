@@ -5,7 +5,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','GroupId','date']"
+    [globalFilterFields]="['id','name','Group.name','date']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -39,7 +39,7 @@
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="GroupId">GRUPO<p-sortIcon field="GroupId"></p-sortIcon></th>
+          <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
           <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>

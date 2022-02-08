@@ -46,16 +46,13 @@ export class AppComponent {
 
   public files1:menu[]=[]
 
-
   constructor(
-    private fb: FormBuilder,
-private messageService: MessageService,
-private primengConfig: PrimeNGConfig,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig,
     private anonimoService: AnonimoService,
     private authService: AuthService, 
     private userService:UserService,
-    private router:Router,
-    private confirmationService: ConfirmationService) {}
+    private router:Router,) {}
 
   ngOnInit() {
 
