@@ -31,7 +31,8 @@ export class ShowProgramsComponent implements OnInit {
   exportColumns: any[]=[];
   selectedProducts: ProgramI[]=[];
 
-  constructor(private programService: ProgramService ,
+  constructor(
+    private programService: ProgramService ,
      private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 

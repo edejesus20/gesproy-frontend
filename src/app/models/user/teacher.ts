@@ -1,6 +1,7 @@
 import { UserI } from "../authorization/usr_User";
 import { ColcienciaCategoryI } from "../institution/colciencias_category";
 import { GroupI } from "../institution/group";
+import { HeadquarterProgramTeacherI } from "../institution/headquarter";
 import { ScaleI } from "../institution/scale";
 import { TrainingI, TrainingTeacherI } from "../institution/training";
 
@@ -16,4 +17,5 @@ export interface TeacherI {
     ColcienciaCategory?:ColcienciaCategoryI,
     TrainingTeacher?:TrainingTeacherI[]
     Trainings?:TrainingI[]
+    headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
 }

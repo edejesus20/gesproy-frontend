@@ -21,11 +21,16 @@ export interface HeadquarterProgramI {
    ProgramId:number;
    HeadquarterId:number;
    AdministrativeId:number;
+   Programs?:ProgramI[]
+   Headquarters?:HeadquarterI[]
+   Administratives?:AdministrativeI[]
 }
 export interface HeadquarterProgramTeacherI {
    id?: number;
    TeacherId:number;
    HeadquarterProgramId:number;
+   RelationshipId:number,
+
 }
 export interface HeadquarterProgramStudentI {
    id?: number;

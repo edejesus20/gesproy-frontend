@@ -35,6 +35,21 @@ import { CreateStudentComponent } from './components/Estudiantes/create-student/
 import { EditarStudentComponent } from './components/Estudiantes/editar-student/editar-student.component';
 import { DeleteStudentComponent } from './components/Estudiantes/delete-student/delete-student.component';
 import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
+import { Create_genderComponent } from './components/Genero/create_gender/create_gender.component';
+import { Delete_genderComponent } from './components/Genero/delete_gender/delete_gender.component';
+import { Edit_genderComponent } from './components/Genero/edit_gender/edit_gender.component';
+import { Show_genderComponent } from './components/Genero/show_gender/show_gender.component';
+import { Show_one_genderComponent } from './components/Genero/show_one_gender/show_one_gender.component';
+import { Show_documentTypeComponent } from './components/TipoDocumento/show_documentType/show_documentType.component';
+import { Show_one_documentTypeComponent } from './components/TipoDocumento/show_one_documentType/show_one_documentType.component';
+import { Create_documentTypeComponent } from './components/TipoDocumento/create_documentType/create_documentType.component';
+import { Edit_documentTypeComponent } from './components/TipoDocumento/edit_documentType/edit_documentType.component';
+import { Delete_documentTypeComponent } from './components/TipoDocumento/delete_documentType/delete_documentType.component';
+import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
+import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
+import { Create_ocupationComponent } from './components/Ocupacion/create_ocupation/create_ocupation.component';
+import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
+import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupation/delete_Ocupation.component';
 
 const routes: Routes = [
   {
@@ -186,7 +201,70 @@ const routes: Routes = [
         {
           path: 'AsignarTeacher/:id',
           component:AsignarTeacherComponent ,
-        }
+        },
+        //genero
+        {
+          path: 'gender',
+          component: Show_genderComponent,
+        },
+        {
+          path: 'gender/:id',
+          component:Show_one_genderComponent ,
+        },
+        {
+          path: 'gender_create',
+          component:Create_genderComponent ,
+        },   
+        {
+          path: 'gender_modificar/:id',
+          component: Edit_genderComponent,
+        },
+        {
+          path: 'gender_eliminar/:id',
+          component:Delete_genderComponent ,
+        },
+        //documentType
+        {
+          path: 'documentType',
+          component: Show_documentTypeComponent,
+        },
+        {
+          path: 'documentType/:id',
+          component:Show_one_documentTypeComponent ,
+        },
+        {
+          path: 'documentType_create',
+          component:Create_documentTypeComponent ,
+        },   
+        {
+          path: 'documentType_modificar/:id',
+          component: Edit_documentTypeComponent,
+        },
+        {
+          path: 'documentType_eliminar/:id',
+          component:Delete_documentTypeComponent ,
+        },
+        //ocupaciones
+        {
+          path: 'Ocupation',
+          component: Show_OcupationComponent,
+        },
+        {
+          path: 'Ocupation/:id',
+          component:Show_One_OcupationComponent ,
+        },
+        {
+          path: 'ocupation_create',
+          component:Create_ocupationComponent ,
+        },   
+        {
+          path: 'ocupation_modificar/:id',
+          component: Edit_OcupationComponent,
+        },
+        {
+          path: 'ocupation_eliminar/:id',
+          component:Delete_OcupationComponent ,
+        },
         
     ]
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 const translate = require('translate');
@@ -15,6 +15,12 @@ import { ColcienciaCategoryService } from 'src/app/core/services/institution/Col
 import { ScaleI } from 'src/app/models/institution/scale';
 import { GroupI } from 'src/app/models/institution/group';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
+import { RelationshipI } from 'src/app/models/institution/relationship';
+import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { ProgramI } from 'src/app/models/institution/program';
+import { ProgramService } from 'src/app/core/services/program/program.service';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 
 @Component({
   selector: 'app-create-teacher',
@@ -24,7 +30,8 @@ import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_cate
 export class CreateTeacherComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-
+  public mostrar:boolean=false;
+  public algo:number[]=[0];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
@@ -42,7 +49,22 @@ export class CreateTeacherComponent implements OnInit {
     ScaleId:['', [Validators.required]],
     ColcienciaCategoryId:['', [Validators.required]],
     GroupId:['', [Validators.required]],
+    headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
+      {
+        TeacherId:0,
+        ProgramId:['', [Validators.required]],
+        HeadquarterId:['', [Validators.required]],
+        RelationshipId:['', [Validators.required]],
+    })]),
    });
+
+   public relationships:RelationshipI[]=[]
+   public headquarters: HeadquarterI[]=[]
+   public headquarterProgram: HeadquarterProgramI[]=[]
+   public programs:ProgramI[]=[];
+   public mostrarPrograma:boolean=false;
+
+
   constructor(
     private teacherService:TeacherService,
     private router: Router,
@@ -52,8 +74,10 @@ export class CreateTeacherComponent implements OnInit {
     private scaleService:ScaleService,
     private groupService:GroupService,
     private formBuilder: FormBuilder,
-
     private colcienciaCategoryService:ColcienciaCategoryService,
+    private headquarterService: HeadquarterService,
+    private programService: ProgramService ,
+    private relationshipService:RelationshipService,
   ) { }
 
   ngOnInit() {
@@ -62,9 +86,19 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllscales()
     this.getAllgroups()
     this.getAllcolcienciaCategorys()
+    this.getAllheadquarters()
+    this.getAllprograms()
+    this.getAllrelationships()
   }
 
   public onSubmit() {
+    let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+
+    for (const key of control.value) {
+      key.HeadquarterId=key.HeadquarterId.id
+      key.ProgramId=key.ProgramId.id
+      key.RelationshipId=key.RelationshipId.id
+    }
     const formValue={
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -81,6 +115,7 @@ export class CreateTeacherComponent implements OnInit {
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
       GroupId: this.form.value.GroupId.id,
+      headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
     console.log(formValue)
     if(
@@ -129,6 +164,41 @@ export class CreateTeacherComponent implements OnInit {
 }
 
 
+get getRoles() {
+  return this.form.get('headquarterProgramTeacher') as FormArray;//obtener todos los formularios
+}
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['headquarterProgramTeacher']
+      if(control.length == 0 && this.mostrar == false){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          ProgramId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
+          RelationshipId:['', [Validators.required]],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar == true){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          ProgramId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
+          RelationshipId:['', [Validators.required]],
+        }))
+
+      }
+      this.mostrar=true
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['headquarterProgramTeacher']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar=false
+      }
+  }
+
 private getAllgenders(selectId?: number) {
   this.genderService.getList().subscribe(
     (AdministrativeFromApi) => {
@@ -166,6 +236,33 @@ private getAllcolcienciaCategorys(selectId?: number) {
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
       this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
+    }, error => console.error(error));
+}
+
+private getAllheadquarters(selectId?: number) {
+  this.headquarterService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.headquarters = AdministrativeFromApi.headquarters;
+    }, error => console.error(error));
+}
+
+
+private getAllprograms(selectId?: number) {
+  this.programService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      this.programs = AdministrativeFromApi.programs;
+      console.log(this.programs)
+
+    }, error => console.error(error));
+}
+
+
+private getAllrelationships(selectId?: number) {
+  this.relationshipService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.relationships = AdministrativeFromApi.relationships;
     }, error => console.error(error));
 }
 

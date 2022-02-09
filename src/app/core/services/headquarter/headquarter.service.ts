@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +71,16 @@ export class HeadquarterService {
       )
   }
 
+  HeadquarterProgram(): Observable<{ headquarterProgram: HeadquarterProgramI[] }> {
+    return this.http
+      .get<{ headquarterProgram: HeadquarterProgramI[] }>(this.API_URI+'/api/HeadquarterProgram')
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  
   // Update item by id
   updateItem(id:number, item:HeadquarterI): Observable<{headquarter:HeadquarterI}> {
     return this.http

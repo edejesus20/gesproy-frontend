@@ -70,6 +70,21 @@ import { CalendarModule } from 'primeng/calendar';
 import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
 
 import {FieldsetModule} from 'primeng/fieldset';
+import { Show_genderComponent } from './components/Genero/show_gender/show_gender.component';
+import { Show_one_genderComponent } from './components/Genero/show_one_gender/show_one_gender.component';
+import { Create_genderComponent } from './components/Genero/create_gender/create_gender.component';
+import { Edit_genderComponent } from './components/Genero/edit_gender/edit_gender.component';
+import { Delete_genderComponent } from './components/Genero/delete_gender/delete_gender.component';
+import { Delete_documentTypeComponent } from './components/TipoDocumento/delete_documentType/delete_documentType.component';
+import { Create_documentTypeComponent } from './components/TipoDocumento/create_documentType/create_documentType.component';
+import { Edit_documentTypeComponent } from './components/TipoDocumento/edit_documentType/edit_documentType.component';
+import { Show_documentTypeComponent } from './components/TipoDocumento/show_documentType/show_documentType.component';
+import { Show_one_documentTypeComponent } from './components/TipoDocumento/show_one_documentType/show_one_documentType.component';
+import { Create_ocupationComponent } from './components/Ocupacion/create_ocupation/create_ocupation.component';
+import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupation/delete_Ocupation.component';
+import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
+import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
+import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
 
 @NgModule({
   declarations: [
@@ -110,8 +125,25 @@ import {FieldsetModule} from 'primeng/fieldset';
     DeleteAdministrativeComponent,
     EditarAdministrativeComponent,
     ShowAdministrativeComponent,
-    ShowOneAdministrativeComponent
-
+    ShowOneAdministrativeComponent,
+    //generos
+    Show_genderComponent,
+    Show_one_genderComponent,
+    Create_genderComponent,
+    Edit_genderComponent,
+    Delete_genderComponent,
+    //documentType
+    Delete_documentTypeComponent,
+    Create_documentTypeComponent,
+    Edit_documentTypeComponent,
+    Show_documentTypeComponent,
+    Show_one_documentTypeComponent,
+    //ocupation
+    Create_ocupationComponent,
+    Delete_OcupationComponent,
+    Edit_OcupationComponent,
+    Show_OcupationComponent,
+    Show_One_OcupationComponent,
 
   ],
   imports: [
