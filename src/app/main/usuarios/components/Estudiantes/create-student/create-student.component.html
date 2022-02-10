@@ -1,5 +1,5 @@
 
-<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="form" novalidate >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
@@ -109,10 +109,81 @@
 
           </div>
 
+          <div fxLayout="row" fxLayoutGap="20px">
+            <button pButton type="button" (click)="addRoles($event)" 
+            class="p-button-warning p-button-raised p-button-rounded"
+             label="Add Sedes y Programa"></button>  
+          </div>
+
+          <br>
+          <div fxLayout="row" fxLayoutGap="20px">
+            <div class="table-wrapper" >
+              <p-table [value]="algo" *ngIf="mostrar == true"> 
+                <ng-template pTemplate="header">
+                  <tr>
+                      <th pSortableColumn="id">Sedes<p-sortIcon field="id"></p-sortIcon></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                <tr [pSelectableRow]="rowData">
+                    <td>
+                      <div formArrayName="headquarterProgramStudent"> 
+                        <div *ngFor="let item of getRoles.controls; 
+                        let pointIndex=index" [formGroupName]="pointIndex">
+                          <div class="grupo"> 
+                            <div class="grupoinput1">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="headquarters" [filter]="true"
+                                  formControlName="HeadquarterId"
+                                 label="SELECCIONE SEDE" 
+                                [style]="{'width':'100%','margin-bottom':'20px'}"
+                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                [required]="true" placeholder="SELECCIONE SEDE" >
+                                <ng-template let-option pTemplate="item"  >
+                                  <span >{{option.name  | titlecase}} -
+                                    {{option.University?.name  | titlecase}}</span>
+                              </ng-template>
+                              </p-dropdown>
+                            </div>
+                            <div class="grupoinput2">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="programs" [filter]="true"
+                                  formControlName="ProgramId" name="ProgramId"
+                                 label="SELECCIONE PROGRAMA" 
+                                [style]="{'width':'100%','margin-bottom':'20px'}"
+                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                [required]="true" placeholder="SELECCIONE PROGRAMA">
+                                <ng-template let-option pTemplate="item">
+                                  <span >
+                                    {{option.name  | titlecase}} -
+                                    {{option.Faculty.University.name  | titlecase}}
+                                  </span>
+                              </ng-template>
+                              </p-dropdown>
+                            </div>
+                            
+                          <span class="bottomdelete" style="margin-top: 5px;">
+                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                            class="p-button-rounded p-button-danger"></button>
+                            <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                            (click)="removeRoles(pointIndex,$event)" 
+                            label="eliminar"></button> -->
+                          </span>
+                          
+                        </div>
+                        </div>
+                      </div> 
+                    </td>
+                </tr>
+              </ng-template>
+              </p-table>
+            </div>
+          </div>
+
       </div>
 
               <div fxLayout="row" class="titleCard" >
-                <button pButton type="button" type="submit"  [disabled]="!form.valid"
+                <button pButton type="button" type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>

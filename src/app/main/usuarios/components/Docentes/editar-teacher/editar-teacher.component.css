@@ -84,3 +84,62 @@ td{
   text-align:left;
 }
   
+
+
+.grupo{
+  width:auto;
+  display:flex;
+}
+.grupocodeudor{
+  width: 85%;
+  padding-right: 10px;
+  min-width: auto
+}
+.grupoinput{
+  width: 50%;
+  padding-right: 10px;
+  min-width: auto;
+}
+.grupoinput1{
+  width: 40%;
+ padding-right: 10px;
+ min-width: auto;
+}
+.grupoinput2{
+ width: 50%;
+ padding-right: 10px;
+ min-width: auto;
+}
+
+mat-card{
+  width: 50%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+mat-icon{
+    font-size: 30px;
+}
+
+.grupodescuento{
+  width: 45%;
+  padding-right: 15px;
+  min-width: auto;
+}
+.bottomdelete{
+  width: auto;
+  margin-top: 15px;
+  
+  font-size: 10px;
+  min-width: auto;
+}
+.bottomdelete .mat-icon{
+  margin-top:-7px;;
+}
+
+.titleCard{
+  margin: 0 0 20px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+}
+

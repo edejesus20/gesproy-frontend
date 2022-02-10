@@ -1,5 +1,5 @@
 
-<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="form" novalidate >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '80vw','height': '80vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
@@ -156,9 +156,9 @@
           <div fxLayout="row" fxLayoutGap="20px">
             <button pButton type="button" (click)="addRoles($event)" 
             class="p-button-warning p-button-raised p-button-rounded"
-             label="Add Sedes"></button>  
+             label="Add Sedes y Programa"></button>  
           </div>
-          
+
           <br>
           <div fxLayout="row" fxLayoutGap="20px">
             <div class="table-wrapper" >
@@ -244,7 +244,7 @@
       </div>
 
               <div fxLayout="row" class="titleCard" style="margin-top: 50px;">
-                <button pButton type="button" type="submit"  [disabled]="!form.valid"
+                <button pButton type="button" type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>

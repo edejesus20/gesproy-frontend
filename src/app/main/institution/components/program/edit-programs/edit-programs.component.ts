@@ -213,7 +213,7 @@ getOneCntAccount(id:number) {
   }, error => console.error(error));
 }
   agregarDescuentos(Headquarters: HeadquarterI[]) {
-
+    if(Headquarters.length){
     for (let key of Headquarters) {
       if(key.HeadquarterProgram != undefined) {
         // console.log(DiscountLine)
@@ -239,6 +239,7 @@ getOneCntAccount(id:number) {
     this.mostrar2= true
     let control = <FormArray>this.form.controls['Headquarters']
     control.removeAt(0)
+  }
   }
 
 

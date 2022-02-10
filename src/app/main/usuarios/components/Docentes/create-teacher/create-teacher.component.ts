@@ -21,6 +21,7 @@ import { ProgramI } from 'src/app/models/institution/program';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
+import { UserService } from 'src/app/core/services/usuarios/user.service';
 
 @Component({
   selector: 'app-create-teacher',
@@ -60,10 +61,9 @@ export class CreateTeacherComponent implements OnInit {
 
    public relationships:RelationshipI[]=[]
    public headquarters: HeadquarterI[]=[]
-   public headquarterProgram: HeadquarterProgramI[]=[]
    public programs:ProgramI[]=[];
-   public mostrarPrograma:boolean=false;
-
+   public headquarterProgramTeacher1:any[] = []
+ 
 
   constructor(
     private teacherService:TeacherService,
@@ -78,6 +78,8 @@ export class CreateTeacherComponent implements OnInit {
     private headquarterService: HeadquarterService,
     private programService: ProgramService ,
     private relationshipService:RelationshipService,
+    private userService:UserService,
+
   ) { }
 
   ngOnInit() {
@@ -91,14 +93,9 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllrelationships()
   }
 
-  public onSubmit() {
-    let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+  public onSubmit(e: Event) {
+    e.preventDefault()
 
-    for (const key of control.value) {
-      key.HeadquarterId=key.HeadquarterId.id
-      key.ProgramId=key.ProgramId.id
-      key.RelationshipId=key.RelationshipId.id
-    }
     const formValue={
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -117,50 +114,67 @@ export class CreateTeacherComponent implements OnInit {
       GroupId: this.form.value.GroupId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
-    console.log(formValue)
-    if(
-      formValue.name != ""&&
-      formValue.surname != ""&&
-      formValue.DocumentTypeId != ( 0 || undefined)&&
-      formValue.identification != ""&&
-      formValue.GenderId != ( 0 || undefined)&&
-      formValue.address != ""&&
-      formValue.phone != ""&&
-      formValue.email != ""&&
-     formValue.ScaleId !=("" || undefined)
-    &&formValue.ColcienciaCategoryId != ("" || undefined)
-    &&formValue.GroupId != ("" || undefined)){
+
+    if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
+      let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+      for (const key of control.value) {
+        key.HeadquarterId=key.HeadquarterId.id
+        key.ProgramId=key.ProgramId.id 
+        key.RelationshipId=key.RelationshipId.id 
+        this.headquarterProgramTeacher1.push({
+        TeacherId:0,
+        ProgramId:key.ProgramId,
+        HeadquarterId:key.HeadquarterId,
+        RelationshipId:key.RelationshipId,
+        })
+      }
+      formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
+    }else{
+      formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
+    }
+
+            if(formValue.name != ""&&
+              formValue.surname != ""&&
+              formValue.DocumentTypeId != ( 0 || undefined)&&
+              formValue.identification != ""&&
+              formValue.GenderId != ( 0 || undefined)&&
+              formValue.address != ""&&
+              formValue.phone != ""&&
+              formValue.email != ""&&
+            formValue.ScaleId !=("" || undefined)
+            &&formValue.ColcienciaCategoryId != ("" || undefined)
+            &&formValue.GroupId != ("" || undefined)){
 
 
-    this.teacherService.createItem(formValue).subscribe(
-      () => {
-              var date = new Date('2020-01-01 00:00:03');
-                function padLeft(n:any){ 
-                   return n ="00".substring(0, "00".length - n.length) + n;
+            this.teacherService.createItem(formValue).subscribe(
+              () => {
+                      var date = new Date('2020-01-01 00:00:03');
+                        function padLeft(n:any){ 
+                          return n ="00".substring(0, "00".length - n.length) + n;
+                        }
+                        var interval = setInterval(() => {
+                        var minutes = padLeft(date.getMinutes() + "");
+                        var seconds = padLeft(date.getSeconds() + "");
+                        // console.log(minutes, seconds);
+                        if( seconds == '03') {
+                        this.messageService.add({severity:'success', summary: 'Success', 
+                        detail: 'Registro de Docente Creado con exitoso'});
+                        }
+                        date = new Date(date.getTime() - 1000);
+                        if( minutes == '00' && seconds == '01' ) {
+                          this.router.navigateByUrl('/usuarios/Teacher');
+                          clearInterval(interval); 
+                        }
+                  }, 1000);
+              },async error => {
+                if(error != undefined) {
+                  const text = await translate(error.error.message, "es");
+                  this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
                 }
-                var interval = setInterval(() => {
-                var minutes = padLeft(date.getMinutes() + "");
-                var seconds = padLeft(date.getSeconds() + "");
-                // console.log(minutes, seconds);
-                if( seconds == '03') {
-                this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Docente Creado con exitoso'});
-                }
-                date = new Date(date.getTime() - 1000);
-                if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Teacher');
-                  clearInterval(interval); 
-                 }
-          }, 1000);
-      },async error => {
-        if(error != undefined) {
-          const text = await translate(error.error.message, "es");
-          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-        }
-      });
-  }else{
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-  }
+              });
+          }else{
+            this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+          }
 }
 
 
@@ -247,16 +261,14 @@ private getAllheadquarters(selectId?: number) {
     }, error => console.error(error));
 }
 
-
 private getAllprograms(selectId?: number) {
   this.programService.getList().subscribe(
     (AdministrativeFromApi) => {
       this.programs = AdministrativeFromApi.programs;
-      console.log(this.programs)
+      // console.log(this.programs)
 
     }, error => console.error(error));
 }
-
 
 private getAllrelationships(selectId?: number) {
   this.relationshipService.getList().subscribe(

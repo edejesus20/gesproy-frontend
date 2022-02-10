@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
+import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
+import { ProgramService } from 'src/app/core/services/program/program.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { GroupI } from 'src/app/models/institution/group';
+import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { ProgramI } from 'src/app/models/institution/program';
+import { RelationshipI } from 'src/app/models/institution/relationship';
 import { ScaleI } from 'src/app/models/institution/scale';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
@@ -22,6 +28,7 @@ const translate = require('translate');
 })
 export class EditarTeacherComponent implements OnInit {
   public mostrar:number=1;
+  public mostrar2:boolean=false;
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -31,7 +38,10 @@ export class EditarTeacherComponent implements OnInit {
   public scales:ScaleI[] =[]
   public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
-  
+  public algo:number[]=[0];
+  public relationships:RelationshipI[]=[]
+   public headquarters: HeadquarterI[]=[]
+   public programs:ProgramI[]=[];
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -42,8 +52,10 @@ export class EditarTeacherComponent implements OnInit {
     private scaleService:ScaleService,
     private groupService:GroupService,
     private formBuilder: FormBuilder,
-
     private colcienciaCategoryService:ColcienciaCategoryService,
+    private headquarterService: HeadquarterService,
+    private programService: ProgramService ,
+    private relationshipService:RelationshipService,
 
   ) { }
 
@@ -63,15 +75,32 @@ export class EditarTeacherComponent implements OnInit {
       ScaleId:['', [Validators.required]],
       ColcienciaCategoryId:['', [Validators.required]],
       GroupId:['', [Validators.required]],
+      headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
+        {
+          TeacherId:0,
+          ProgramId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
+          RelationshipId:['', [Validators.required]],
+      })]),
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllscales()
     this.getAllgroups()
     this.getAllcolcienciaCategorys()
+    this.getAllheadquarters()
+    this.getAllprograms()
+    this.getAllrelationships()
   }
 
   public onSubmit() {
+    let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+    for (const key of control.value) {
+      key.HeadquarterId=key.HeadquarterId.id
+      key.ProgramId=key.ProgramId.id
+      key.RelationshipId=key.RelationshipId.id
+      key.TeacherId=this.form.value.id
+    }
     const formValue={
       id: this.form.value.id,
       name: this.form.value.name,
@@ -89,6 +118,7 @@ export class EditarTeacherComponent implements OnInit {
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
       GroupId: this.form.value.GroupId.id,
+      headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
     // console.log(formValue)
     if(
@@ -135,6 +165,40 @@ export class EditarTeacherComponent implements OnInit {
   }
 }
 
+get getRoles() {
+  return this.form.get('headquarterProgramTeacher') as FormArray;//obtener todos los formularios
+}
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['headquarterProgramTeacher']
+      if(control.length == 0 && this.mostrar2 == false){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          ProgramId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
+          RelationshipId:['', [Validators.required]],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar2 == true){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          ProgramId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
+          RelationshipId:['', [Validators.required]],
+        }))
+
+      }
+      this.mostrar2=true
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['headquarterProgramTeacher']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar2=false
+      }
+  }
 
 private getAllgenders(selectId?: number) {
   this.genderService.getList().subscribe(
@@ -176,21 +240,47 @@ private getAllcolcienciaCategorys(selectId?: number) {
     }, error => console.error(error));
 }
 
+private getAllheadquarters(selectId?: number) {
+  this.headquarterService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.headquarters = AdministrativeFromApi.headquarters;
+    }, error => console.error(error));
+}
 
+private getAllprograms(selectId?: number) {
+  this.programService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      this.programs = AdministrativeFromApi.programs;
+      // console.log(this.programs)
+
+    }, error => console.error(error));
+}
+
+private getAllrelationships(selectId?: number) {
+  this.relationshipService.getList().subscribe(
+    (AdministrativeFromApi) => {
+      // console.log(AdministrativeFromApi.administratives)
+      this.relationships = AdministrativeFromApi.relationships;
+    }, error => console.error(error));
+}
 public volver(event: Event){
   event.preventDefault
   this.tabla = true
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.mostrar2 = false
+
 }
 
 ngOnDestroy() {
   this.tabla = true
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.mostrar2 = false
 }
 actualizar(id: number){
-  console.log(id)
+  // console.log(id)
   this.getOneCntAccount(id)
 }
 
@@ -209,7 +299,7 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          console.log('aqui')
+          // console.log('aqui')
         }
 
 
@@ -239,15 +329,53 @@ getOneCntAccount(id:number) {
         this.groupService.getItem((cnt_groupFromApi.teacher.GroupId)).subscribe((algo)=>{
           this.form.controls['GroupId'].setValue(algo.group)
         })
-
-        // console.log(this.form.value)
+// console.log(cnt_groupFromApi.teacher.HeadquarterPrograms)
+        if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined){
           
-      // this.form.Administrative.User.fullName=cnt_groupFromApi.teacher.Administrative?.User?.fullName
-    }
+          this.agregarDescuentos(cnt_groupFromApi.teacher.HeadquarterPrograms)
+          
+        }
+     }
 
     this.displayMaximizable2=true
     this.tabla = false
   }, error => console.error(error));
 }
+  agregarDescuentos(HeadquarterPrograms: HeadquarterProgramI[]) {
+    if(HeadquarterPrograms.length){
+      for (let key of HeadquarterPrograms) {
+        if(key.HeadquarterProgramTeacher != undefined) {
+          // console.log(DiscountLine)
+          
+          let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+            this.headquarterService.getItem(key.HeadquarterId).subscribe((algo)=>{
+              if(algo.headquarter && key.HeadquarterProgramTeacher != undefined){
+                this.programService.getItem(key.ProgramId).subscribe((algo1)=>{
+                  if(algo1.program && key.HeadquarterProgramTeacher != undefined){
+                    this.relationshipService.getItem(key.HeadquarterProgramTeacher.RelationshipId).subscribe
+                    ((algo2)=>{
+
+                      if(algo2.relationship && key.HeadquarterProgramTeacher != undefined){
+                        control.push(this.formBuilder.group({
+                          TeacherId:0,
+                            ProgramId:[algo1.program, [Validators.required]],
+                            HeadquarterId:[algo.headquarter, [Validators.required]],
+                            RelationshipId:[algo2.relationship, [Validators.required]],
+                        }))
+                      }
+                    })
+                  }
+      
+                })
+              }
+              
+            })
+        }
+      }
+      this.mostrar2= true
+      let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+      control.removeAt(0)
+    }
+  }
 
 }
