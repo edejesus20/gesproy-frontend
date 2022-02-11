@@ -289,6 +289,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.teacher.id != undefined
       ){
+          // console.log(cnt_groupFromApi.teacher)
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
         if(cnt_groupFromApi.teacher.User?.Person != undefined
@@ -300,19 +301,29 @@ getOneCntAccount(id:number) {
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           // console.log('aqui')
+
+          if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
+        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo)=>{
+          this.form.controls['GenderId'].setValue(algo.gender)
+        })
+
+        if(cnt_groupFromApi.teacher.User.Person.DocumentTypeId != undefined)
+        this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
+          this.form.controls['DocumentTypeId'].setValue(algo.documentType)
+        })
         }
 
 
-        if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
-        this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
-          this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-        })
+      //   if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined){
+      //   this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
+      //     this.form.controls['DocumentTypeId'].setValue(algo.documentType)
+      //     // console.log(this.form.value.DocumentTypeId)
+      //   })
+      // }
+      
+        
 
-
-        if(cnt_groupFromApi.teacher.User?.Person?.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
+        
 
   
 

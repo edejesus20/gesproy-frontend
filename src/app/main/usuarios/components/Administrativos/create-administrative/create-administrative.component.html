@@ -1,3 +1,37 @@
-<p>
-  create-administrative works!
-</p>
+<form [formGroup]="form" novalidate   enctype="multipart/form-data" >
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
+  [contentStyle]="{'overflow-y': 'auto'}"
+
+  [closable]="false" [closeOnEscape]="false" 
+      >
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Estudiante</h2>
+          </div>
+
+          
+                <input type="file" class="p-inputtext-lg" pInputText name="file" 
+                accept="image/png, image/jpeg"
+                placeholder="file" formControlName="file" title="file" required 
+                (change)="onFileChange($event)">
+                <img src="http://localhost:4000/subidas/file-1644523585906-773917424.jpeg" alt="" srcset="">
+
+      </div>
+
+            
+            <div fxLayout="row" class="titleCard" >
+              <button pButton type="submit" (click)="onSubmit()" [disabled]="!form.valid"
+               icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
+               label="Enviar Registro" styleClass="mr-2"></button>
+            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+        </div>
+       
+        
+            
+</p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

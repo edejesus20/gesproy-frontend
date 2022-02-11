@@ -46,6 +46,7 @@ import {TableModule} from 'primeng/table'
 import { SharedModule } from './modules/shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { UserService } from './core/services/usuarios/user.service';
 @NgModule({
   declarations: [
     AppComponent,

@@ -85,7 +85,7 @@ import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupati
 import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
 import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
 import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
-
+import {FileUploadModule} from 'primeng/fileupload';
 @NgModule({
   declarations: [
     UsuariosComponent,
@@ -184,7 +184,8 @@ import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocu
     KeyFilterModule,
     DropdownModule,
     CalendarModule,
-    FieldsetModule
+    FieldsetModule,
+    FileUploadModule
 
   ]
 })

@@ -116,5 +116,29 @@ eliminarUser(id:number){
   )
 }
 
+createImagen(formData:any){
+  // let token : string | null= localStorage.getItem('token')
+  // if(token != null) {
+  //   let httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'token':token
+  //     })
+  //   }
+  //   return this.http.post('http://localhost:4000/api/subir',formData,httpOptions)
+  //   .pipe(
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   )
+  // }else{
+    return this.http.post('http://localhost:4000/api/subir',JSON.stringify(formData))
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+
+// }
+
 
 }
