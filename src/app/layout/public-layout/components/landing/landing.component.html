@@ -2,21 +2,34 @@
 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque alias atque natus. Error quos, fugiat sequi natus
     modi, officia excepturi ex dolorum adipisci magni temporibus voluptatem exercitationem blanditiis illo quia!</p>
      -->
+
+
     <div class="margen">
-        <!-- <img class="imgLogo" src="{{image3}}" alt=""> -->
+        <ng-template [ngIf]="bandera">
+            <div >
+                <img alt="logo" src="assets/images/logo-uniguajira.png" 
+                width="800px" style="margin-left: 20px ;margin-top: 20px;" 
+                styleClass="p-button-outlined"class="mr-3"/>
+            </div>
+
         <div class="margSup">
             <div class="principal">
-                <div class="titleCard">
+                
+                <div class="titleCard" style="margin-top: -300px;" >
                     Bienvenido
                 </div>
-                <!-- <img class="imgLogo" src="{{image2}}" alt=""> -->
+
+                <div class="titleCard" style="margin-top: -30px;" >
+                  <img class="imgLogo" src="{{image3}}" alt=""  styleClass="p-button-outlined">
+                </div>
+              
             </div>
+            
                 
-                <!-- <img class="imgLogo" src="{{image}}" alt=""> -->
-                
-               
+
                 
         </div>
+    </ng-template>
 
 </div>
     

@@ -9,7 +9,7 @@ export interface FacultyI {
     createdAt?: string;
     updatedAt?: string;
     Administrative?:AdministrativeI
-    Programs?:ProgramI
+    Programs?:ProgramI[]
     UniversityId?:number;
     University?:UniversityI
  }

@@ -11,13 +11,22 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class LandingComponent implements OnInit {
   // public image:string='assets/images/institution/fondeba1.jpg'
   // public image2:string='assets/images/institution/alcaldia.png'
-  // public image3:string='assets/images/fondoBienvenido.jpg'
-
+  public image3:string='assets/avatars-avataaars.png'
+  public bandera:boolean=false
   constructor(
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    var token :string | null= localStorage.getItem('token');
+    var user :string | null= localStorage.getItem('user');
+    // var menu :string | null= localStorage.getItem('menu');
+    if(token!=null && user!=null){
+        this.showSuccess()
+        this.bandera=true
+      }else{
+        this.bandera=false
+      }
   //   var token :string | null= localStorage.getItem('token');
   //   var user :string | null= localStorage.getItem('user');
   //  console.log(user)
@@ -33,4 +42,7 @@ export class LandingComponent implements OnInit {
   //     }
   }
 
+ public showSuccess() {
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Ingreso exitoso'});
+}
 }

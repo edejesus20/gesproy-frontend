@@ -42,6 +42,7 @@ export class EditarTeacherComponent implements OnInit {
   public relationships:RelationshipI[]=[]
    public headquarters: HeadquarterI[]=[]
    public programs:ProgramI[]=[];
+   public headquarterProgramStudent1:any[]=[]
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -61,7 +62,6 @@ export class EditarTeacherComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
     this.form=this.formBuilder.group({
       id: [''],
       name:['', [Validators.required]],
@@ -94,13 +94,7 @@ export class EditarTeacherComponent implements OnInit {
   }
 
   public onSubmit() {
-    let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-    for (const key of control.value) {
-      key.HeadquarterId=key.HeadquarterId.id
-      key.ProgramId=key.ProgramId.id
-      key.RelationshipId=key.RelationshipId.id
-      key.TeacherId=this.form.value.id
-    }
+
     const formValue={
       id: this.form.value.id,
       name: this.form.value.name,
@@ -120,6 +114,28 @@ export class EditarTeacherComponent implements OnInit {
       GroupId: this.form.value.GroupId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
+
+    if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
+      let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+      for (const key of control.value) {
+        key.HeadquarterId=key.HeadquarterId.id
+        key.ProgramId=key.ProgramId.id
+        key.RelationshipId=key.RelationshipId.id
+        key.TeacherId=this.form.value.id
+        this.headquarterProgramStudent1.push({
+          TeacherId:0,
+          ProgramId:key.ProgramId,
+          HeadquarterId:key.HeadquarterId,
+          RelationshipId:key.RelationshipId,
+        })
+      }
+      formValue.headquarterProgramTeacher = this.form.value.headquarterProgramStudent
+      // console.log('aqui')
+    }else{
+      formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
+      // console.log('aqui2')
+
+    }
     // console.log(formValue)
     if(
       formValue.name != ""&&

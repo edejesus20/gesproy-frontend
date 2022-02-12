@@ -119,8 +119,9 @@ export class CreateTeacherComponent implements OnInit {
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
         key.HeadquarterId=key.HeadquarterId.id
-        key.ProgramId=key.ProgramId.id 
-        key.RelationshipId=key.RelationshipId.id 
+        key.ProgramId=key.ProgramId.id
+        key.RelationshipId=key.RelationshipId.id
+        key.TeacherId=this.form.value.id
         this.headquarterProgramTeacher1.push({
         TeacherId:0,
         ProgramId:key.ProgramId,

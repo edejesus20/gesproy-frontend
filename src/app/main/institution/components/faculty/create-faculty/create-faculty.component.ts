@@ -83,10 +83,10 @@ public form:FormGroup=this.formBuilder.group({
 
 
   private getAlladministrative(selectId?: number) {
-    this.administrativeService.getList().subscribe(
+    this.administrativeService.getTipoAdministrative('1').subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
-        this.administratives = AdministrativeFromApi.administratives;
+        this.administratives = AdministrativeFromApi.decanos;
       }, error => console.error(error));
   }
 

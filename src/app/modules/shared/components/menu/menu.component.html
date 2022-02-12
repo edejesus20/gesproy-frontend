@@ -4,15 +4,18 @@
     style="padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">
       <i [ngClass]="item.icono"   style="font-size: 1.5rem; margin-top: 5px;"></i>
       <span class="ml-4 font-bold" style=" width: 500px; font-size: 18px;">{{ item.titulo }}</span>
-      <ng-container *ngIf="item.menu != null" >
-        <span *ngIf="item.collapsed " style="margin-left: 10px; position: relative; top: 0px; left: 0px; right: 10px; bottom: 0px;">
-          <i class="ml-4 pi pi-angle-up"></i>
+      <ng-container *ngIf="item.menu != null" pTemplate="end">
+      
+          <span *ngIf="item.collapsed " style="margin-left: 10px; position: relative; top: 0px; left: 0px; right: 10px; bottom: 0px;">
+            <i class="ml-4 pi pi-angle-up"></i>
+  
+          </span>
+          <span *ngIf="!item.collapsed" style="margin-left: 10px; position: relative; top: 0px; left: 0px; right: 10px; bottom: 0px;">
+            <i class="mr-0  pi pi-angle-down"></i>
+  
+          </span>
+       
 
-        </span>
-        <span *ngIf="!item.collapsed" style="margin-left: 10px; position: relative; top: 0px; left: 0px; right: 10px; bottom: 0px;">
-          <i class="mr-0  pi pi-angle-down"></i>
-
-        </span>
       </ng-container>
     </span>
     <div *ngIf="item.menu && !item.collapsed">
