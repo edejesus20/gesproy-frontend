@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
@@ -7,7 +7,6 @@ import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.se
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
-import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
@@ -22,10 +21,7 @@ let uploadefiles:Array<File>
 export class CreateAdministrativeComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  // private images:any
-  // public form:FormGroup=this.formBuilder.group({
-  //   file:['', [Validators.required]],
-  // })
+
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     surname:['', [Validators.required]],
@@ -44,7 +40,6 @@ export class CreateAdministrativeComponent implements OnInit {
   public ocupations:OcupationI[]=[]
 
   constructor(
-    private userService:UserService,
     private administrativeService:AdministrativeService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
@@ -139,7 +134,7 @@ export class CreateAdministrativeComponent implements OnInit {
                         // console.log(minutes, seconds);
                         if( seconds == '03') {
                         this.messageService.add({severity:'success', summary: 'Success', 
-                        detail: 'Registro de Administrativo Creado con exitos'});
+                        detail: 'Registro de Administrativo Creado con exito'});
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {

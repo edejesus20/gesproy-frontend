@@ -11,5 +11,4 @@ export interface AdministrativeI {
     User?:UserI,
     Headquarter?:HeadquarterI
     Faculties?:FacultyI[]
-    
 }

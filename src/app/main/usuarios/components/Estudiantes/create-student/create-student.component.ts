@@ -38,13 +38,11 @@ export class CreateStudentComponent implements OnInit {
     headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
       {
         StudentId:0,
-        ProgramId:['', [Validators.required]],
-        HeadquarterId:['', [Validators.required]],
+        HeadquarterProgramId:['', [Validators.required]],
     })]),
    });
 
-   public headquarters: HeadquarterI[]=[]
-   public programs:ProgramI[]=[];
+   public headquarterProgram: any[]=[]
    public headquarterProgramStudent1:any[]=[]
   constructor(
     private studentService:StudentService,
@@ -63,7 +61,6 @@ export class CreateStudentComponent implements OnInit {
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllheadquarters()
-    this.getAllprograms()
   }
   
   public onSubmit(e:Event) {
@@ -87,12 +84,10 @@ export class CreateStudentComponent implements OnInit {
           if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
             for (const key of control.value) {
-              key.HeadquarterId=key.HeadquarterId.id
-              key.ProgramId=key.ProgramId.id 
+              key.HeadquarterProgramId=key.HeadquarterProgramId.id 
               this.headquarterProgramStudent1.push({
                StudentId:0,
-              ProgramId:key.ProgramId,
-              HeadquarterId:key.HeadquarterId,
+              HeadquarterProgramId:key.HeadquarterProgramId,
               })
             }
             formValue.headquarterProgramStudent = this.form.value.headquarterProgramStudent
@@ -162,19 +157,10 @@ export class CreateStudentComponent implements OnInit {
   }
 
   private getAllheadquarters(selectId?: number) {
-    this.headquarterService.getList().subscribe(
+    this.headquarterService.HeadquarterProgram().subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
-        this.headquarters = AdministrativeFromApi.headquarters;
-      }, error => console.error(error));
-  }
-  
-  private getAllprograms(selectId?: number) {
-    this.programService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.programs = AdministrativeFromApi.programs;
-        // console.log(this.programs)
-  
+        this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
       }, error => console.error(error));
   }
   
@@ -188,15 +174,13 @@ export class CreateStudentComponent implements OnInit {
         if(control.length == 0 && this.mostrar == false){
           control.push(this.formBuilder.group({
             StudentId:0,
-            ProgramId:['', [Validators.required]],
-            HeadquarterId:['', [Validators.required]],
+            HeadquarterProgramId:['', [Validators.required]],
           }))
         }
         if(control.length >= 1 && this.mostrar == true){
           control.push(this.formBuilder.group({
             StudentId:0,
-            ProgramId:['', [Validators.required]],
-            HeadquarterId:['', [Validators.required]],
+            HeadquarterProgramId:['', [Validators.required]],
           }))
   
         }

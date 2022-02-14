@@ -1,13 +1,5 @@
 
-  .mat-form-field{
-    width: 100%;
-    min-width: 400px;
-  }
-  
-  mat-card{
-    width: 70%;
-  }
-  
+
   .mat-icon{
     font-size: 30px;
     background-color:707070
@@ -98,7 +90,7 @@ td{
   min-width: auto;
 }
 .grupoinput1{
-  width: 40%;
+  width: 100%;
  padding-right: 10px;
  min-width: auto;
 }

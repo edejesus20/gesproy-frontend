@@ -19,7 +19,6 @@ const translate = require('translate');
   styleUrls: ['./editar-student.component.css']
 })
 export class EditarStudentComponent implements OnInit {
-
   public mostrar:number=1;
   public mostrar2:boolean=false;
   public algo:number[]=[0];
@@ -29,8 +28,7 @@ export class EditarStudentComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({});
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
-  public headquarters: HeadquarterI[]=[]
-  public programs:ProgramI[]=[];
+  public headquarterProgram: any[]=[]
   public headquarterProgramStudent1:any[]=[]
 
   constructor(
@@ -42,7 +40,6 @@ export class EditarStudentComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
-    private programService: ProgramService ,
   ) { }
 
   ngOnInit() {
@@ -61,14 +58,13 @@ export class EditarStudentComponent implements OnInit {
       headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
         {
           StudentId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
       })]),
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllheadquarters()
-    this.getAllprograms()
+
   }
 
   public onSubmit() {
@@ -92,12 +88,10 @@ export class EditarStudentComponent implements OnInit {
     if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
       let control = <FormArray>this.form.controls['headquarterProgramStudent']
       for (const key of control.value) {
-        key.HeadquarterId=key.HeadquarterId.id
-        key.ProgramId=key.ProgramId.id 
+        key.HeadquarterProgramId=key.HeadquarterProgramId.id 
         this.headquarterProgramStudent1.push({
          StudentId:0,
-        ProgramId:key.ProgramId,
-        HeadquarterId:key.HeadquarterId,
+        HeadquarterProgramId:key.HeadquarterProgramId,
         })
       }
       formValue.headquarterProgramStudent = this.form.value.headquarterProgramStudent
@@ -151,21 +145,13 @@ export class EditarStudentComponent implements OnInit {
 }
 
 private getAllheadquarters(selectId?: number) {
-  this.headquarterService.getList().subscribe(
+  this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
-      this.headquarters = AdministrativeFromApi.headquarters;
+      this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
     }, error => console.error(error));
 }
 
-private getAllprograms(selectId?: number) {
-  this.programService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.programs = AdministrativeFromApi.programs;
-      // console.log(this.programs)
-
-    }, error => console.error(error));
-}
 private getAllgenders(selectId?: number) {
   this.genderService.getList().subscribe(
     (AdministrativeFromApi) => {
@@ -250,22 +236,14 @@ getOneCntAccount(id:number) {
       for (let key of HeadquarterPrograms) {
         if(key.HeadquarterProgramStudent != undefined) {
           // console.log(DiscountLine)
-          
           let control = <FormArray>this.form.controls['headquarterProgramStudent']
-            this.headquarterService.getItem(key.HeadquarterId).subscribe((algo)=>{
-              if(algo.headquarter && key.HeadquarterProgramStudent != undefined){
-                this.programService.getItem(key.ProgramId).subscribe((algo1)=>{
-                  if(algo1.program && key.HeadquarterProgramStudent != undefined){
-                        control.push(this.formBuilder.group({
-                          StudentId:0,
-                            ProgramId:[algo1.program, [Validators.required]],
-                            HeadquarterId:[algo.headquarter, [Validators.required]],
-                        }))
-                  }
-      
-                })
+            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramStudent.HeadquarterProgramId).subscribe((algo)=>{
+              if(algo.headquarterProgram && key.HeadquarterProgramStudent != undefined){
+                control.push(this.formBuilder.group({
+                  StudentId:0,
+                  HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
+                }))
               }
-              
             })
         }
       }
@@ -285,20 +263,19 @@ getOneCntAccount(id:number) {
         if(control.length == 0 && this.mostrar2 == false){
           control.push(this.formBuilder.group({
             StudentId:0,
-            ProgramId:['', [Validators.required]],
-            HeadquarterId:['', [Validators.required]],
+            HeadquarterProgramId:['', [Validators.required]],
           }))
         }
         if(control.length >= 1 && this.mostrar2 == true){
           control.push(this.formBuilder.group({
             StudentId:0,
-            ProgramId:['', [Validators.required]],
-            HeadquarterId:['', [Validators.required]],
+            HeadquarterProgramId:['', [Validators.required]],
           }))
   
         }
         this.mostrar2=true
     }
+
     removeRoles(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form.controls['headquarterProgramStudent']//aceder al control

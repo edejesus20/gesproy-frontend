@@ -121,7 +121,7 @@
               <p-table [value]="algo" *ngIf="mostrar == true"> 
                 <ng-template pTemplate="header">
                   <tr>
-                      <th pSortableColumn="id">Sedes<p-sortIcon field="id"></p-sortIcon></th>
+                      <th pSortableColumn="id">Sedes y Programas<p-sortIcon field="id"></p-sortIcon></th>
                   </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
@@ -133,31 +133,15 @@
                           <div class="grupo"> 
                             <div class="grupoinput1">
                               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                              [options]="headquarters" [filter]="true"
-                                  formControlName="HeadquarterId"
-                                 label="SELECCIONE SEDE" 
+                              [options]="headquarterProgram" [filter]="true"
+                                  formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
+                                 label="SELECCIONE SEDE Y PROGRAMA" 
                                 [style]="{'width':'100%','margin-bottom':'20px'}"
                                 optionvalue="id" optionLabel="name"  filterBy="name"
-                                [required]="true" placeholder="SELECCIONE SEDE" >
+                                [required]="true" placeholder="SELECCIONE SEDE Y PROGRAMA"  >
                                 <ng-template let-option pTemplate="item"  >
-                                  <span >{{option.name  | titlecase}} -
-                                    {{option.University?.name  | titlecase}}</span>
-                              </ng-template>
-                              </p-dropdown>
-                            </div>
-                            <div class="grupoinput2">
-                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                              [options]="programs" [filter]="true"
-                                  formControlName="ProgramId" name="ProgramId"
-                                 label="SELECCIONE PROGRAMA" 
-                                [style]="{'width':'100%','margin-bottom':'20px'}"
-                                optionvalue="id" optionLabel="name"  filterBy="name"
-                                [required]="true" placeholder="SELECCIONE PROGRAMA">
-                                <ng-template let-option pTemplate="item">
-                                  <span >
-                                    {{option.name  | titlecase}} -
-                                    {{option.Faculty.University.name  | titlecase}}
-                                  </span>
+                                  <span >Sede: {{option.Sede  | titlecase}} -
+                                    Programa: {{option.Programa  | titlecase}}</span>
                               </ng-template>
                               </p-dropdown>
                             </div>
