@@ -40,9 +40,8 @@ export class EditarTeacherComponent implements OnInit {
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
   public algo:number[]=[0];
   public relationships:RelationshipI[]=[]
-   public headquarters: HeadquarterI[]=[]
-   public programs:ProgramI[]=[];
    public headquarterProgramStudent1:any[]=[]
+   public headquarterProgram:any[]=[]
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -55,7 +54,6 @@ export class EditarTeacherComponent implements OnInit {
     private formBuilder: FormBuilder,
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
-    private programService: ProgramService ,
     private relationshipService:RelationshipService,
 
   ) { }
@@ -78,8 +76,7 @@ export class EditarTeacherComponent implements OnInit {
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
           TeacherId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
       })]),
     });
@@ -89,7 +86,6 @@ export class EditarTeacherComponent implements OnInit {
     this.getAllgroups()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
-    this.getAllprograms()
     this.getAllrelationships()
   }
 
@@ -118,25 +114,22 @@ export class EditarTeacherComponent implements OnInit {
     if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
-        key.HeadquarterId=key.HeadquarterId.id
-        key.ProgramId=key.ProgramId.id
+        key.HeadquarterProgramId=key.HeadquarterProgramId.id
         key.RelationshipId=key.RelationshipId.id
         key.TeacherId=this.form.value.id
         this.headquarterProgramStudent1.push({
           TeacherId:0,
-          ProgramId:key.ProgramId,
-          HeadquarterId:key.HeadquarterId,
+          HeadquarterProgramId:key.HeadquarterProgramId,
           RelationshipId:key.RelationshipId,
         })
       }
-      formValue.headquarterProgramTeacher = this.form.value.headquarterProgramStudent
+      formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
       // console.log('aqui')
     }else{
       formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
       // console.log('aqui2')
 
     }
-    // console.log(formValue)
     if(
       formValue.name != ""&&
       formValue.surname != ""&&
@@ -191,16 +184,14 @@ get getRoles() {
       if(control.length == 0 && this.mostrar2 == false){
         control.push(this.formBuilder.group({
           TeacherId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
         }))
       }
       if(control.length >= 1 && this.mostrar2 == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
         }))
 
@@ -257,19 +248,9 @@ private getAllcolcienciaCategorys(selectId?: number) {
 }
 
 private getAllheadquarters(selectId?: number) {
-  this.headquarterService.getList().subscribe(
+  this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.headquarters = AdministrativeFromApi.headquarters;
-    }, error => console.error(error));
-}
-
-private getAllprograms(selectId?: number) {
-  this.programService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.programs = AdministrativeFromApi.programs;
-      // console.log(this.programs)
-
+      this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
     }, error => console.error(error));
 }
 
@@ -371,38 +352,33 @@ getOneCntAccount(id:number) {
   agregarDescuentos(HeadquarterPrograms: HeadquarterProgramI[]) {
     if(HeadquarterPrograms.length){
       for (let key of HeadquarterPrograms) {
-        if(key.HeadquarterProgramTeacher != undefined) {
+        if(key.HeadquarterProgramTeacher?.HeadquarterProgramId != undefined) {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-            this.headquarterService.getItem(key.HeadquarterId).subscribe((algo)=>{
-              if(algo.headquarter && key.HeadquarterProgramTeacher != undefined){
-                this.programService.getItem(key.ProgramId).subscribe((algo1)=>{
-                  if(algo1.program && key.HeadquarterProgramTeacher != undefined){
+            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
+              if(algo.headquarterProgram && key.HeadquarterProgramTeacher != undefined){
                     this.relationshipService.getItem(key.HeadquarterProgramTeacher.RelationshipId).subscribe
                     ((algo2)=>{
-
                       if(algo2.relationship && key.HeadquarterProgramTeacher != undefined){
                         control.push(this.formBuilder.group({
                           TeacherId:0,
-                            ProgramId:[algo1.program, [Validators.required]],
-                            HeadquarterId:[algo.headquarter, [Validators.required]],
+                            HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
                             RelationshipId:[algo2.relationship, [Validators.required]],
                         }))
                       }
-                    })
-                  }
-      
-                })
+                  })
               }
-              
             })
         }
       }
       this.mostrar2= true
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       control.removeAt(0)
+      console.log(control)
     }
+
+   
   }
 
 }

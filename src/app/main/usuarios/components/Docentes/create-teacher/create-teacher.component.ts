@@ -16,7 +16,7 @@ import { ScaleI } from 'src/app/models/institution/scale';
 import { GroupI } from 'src/app/models/institution/group';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { RelationshipI } from 'src/app/models/institution/relationship';
-import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { ProgramI } from 'src/app/models/institution/program';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
@@ -53,15 +53,13 @@ export class CreateTeacherComponent implements OnInit {
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
         TeacherId:0,
-        ProgramId:['', [Validators.required]],
-        HeadquarterId:['', [Validators.required]],
+        HeadquarterProgramId:['', [Validators.required]],
         RelationshipId:['', [Validators.required]],
     })]),
    });
 
    public relationships:RelationshipI[]=[]
-   public headquarters: HeadquarterI[]=[]
-   public programs:ProgramI[]=[];
+   public headquarterProgram:any[]=[]
    public headquarterProgramTeacher1:any[] = []
  
 
@@ -76,9 +74,7 @@ export class CreateTeacherComponent implements OnInit {
     private formBuilder: FormBuilder,
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
-    private programService: ProgramService ,
     private relationshipService:RelationshipService,
-    private userService:UserService,
 
   ) { }
 
@@ -89,7 +85,6 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllgroups()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
-    this.getAllprograms()
     this.getAllrelationships()
   }
 
@@ -118,14 +113,14 @@ export class CreateTeacherComponent implements OnInit {
     if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
-        key.HeadquarterId=key.HeadquarterId.id
-        key.ProgramId=key.ProgramId.id
+
+        key.HeadquarterProgramId=key.HeadquarterProgramId.id
         key.RelationshipId=key.RelationshipId.id
         key.TeacherId=this.form.value.id
+
         this.headquarterProgramTeacher1.push({
         TeacherId:0,
-        ProgramId:key.ProgramId,
-        HeadquarterId:key.HeadquarterId,
+        HeadquarterProgramId:key.HeadquarterProgramId,
         RelationshipId:key.RelationshipId,
         })
       }
@@ -189,16 +184,14 @@ get getRoles() {
       if(control.length == 0 && this.mostrar == false){
         control.push(this.formBuilder.group({
           TeacherId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
         }))
       }
       if(control.length >= 1 && this.mostrar == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
-          ProgramId:['', [Validators.required]],
-          HeadquarterId:['', [Validators.required]],
+          HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
         }))
 
@@ -230,6 +223,13 @@ private getAlldocumentTypes(selectId?: number) {
     }, error => console.error(error));
 }
 
+private getAllheadquarters(selectId?: number) {
+  this.headquarterService.HeadquarterProgram().subscribe(
+    (AdministrativeFromApi) => {
+      this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
+    }, error => console.error(error));
+}
+
 private getAllscales(selectId?: number) {
   this.scaleService.getList().subscribe(
     (AdministrativeFromApi) => {
@@ -251,23 +251,6 @@ private getAllcolcienciaCategorys(selectId?: number) {
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
       this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
-    }, error => console.error(error));
-}
-
-private getAllheadquarters(selectId?: number) {
-  this.headquarterService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.headquarters = AdministrativeFromApi.headquarters;
-    }, error => console.error(error));
-}
-
-private getAllprograms(selectId?: number) {
-  this.programService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.programs = AdministrativeFromApi.programs;
-      // console.log(this.programs)
-
     }, error => console.error(error));
 }
 

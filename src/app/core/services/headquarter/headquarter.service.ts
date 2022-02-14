@@ -80,6 +80,15 @@ export class HeadquarterService {
       )
   }
 
+
+  getHeadquarterProgramId(id: number): Observable<{headquarterProgram: HeadquarterProgramI[]}> {
+    return this.http
+      .get<{headquarterProgram: HeadquarterProgramI[]}>(this.API_URI+'/api/HeadquarterProgram' + '/' + id)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
   
   // Update item by id
   updateItem(id:number, item:HeadquarterI): Observable<{headquarter:HeadquarterI}> {
