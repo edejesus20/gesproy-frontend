@@ -10,7 +10,7 @@ import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { ProgramI } from 'src/app/models/institution/program';
 import { UniversityI } from 'src/app/models/institution/university';
 import { AdministrativeI } from 'src/app/models/user/administrative';
-import { REGEXP_ALPHANUMERIC } from '../headquarter-programs/headquarter-programs.component';
+
 const translate = require('translate');
 @Component({
   selector: 'app-create-headquarter',
@@ -23,7 +23,7 @@ export class CreateHeadquarterComponent implements OnInit {
   public algo:number[]=[0];
 
 displayMaximizable2:boolean=true
-blockSpecial: RegExp = /^[^<>*!]+$/ 
+blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 
 public form:FormGroup=this.formBuilder.group({
   name:['', [Validators.required]],
@@ -76,7 +76,10 @@ public form:FormGroup=this.formBuilder.group({
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

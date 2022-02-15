@@ -1,5 +1,6 @@
 import { DocumentTypeI } from "../user/document_types";
 import { GenderI } from "../user/gender";
+import { PersonI } from "../user/person";
 
 export interface UserI {
   id?:number;
@@ -12,18 +13,7 @@ export interface UserI {
       name:string
     }
   ]
-  Person?:{
-    name: string;
-    surname?: string;
-    DocumentTypeId?: string;
-    identification: string;
-    GenderId?: string;
-    UserId?: number;
-    address?: string;
-    phone?: string;
-    DocumentType?:DocumentTypeI;
-    Gender?:GenderI;
-  }
+  Person?:PersonI
 }
 
 

@@ -85,11 +85,11 @@ export class CrearUserComponent implements OnInit {
       if(f.form.value.name != "" && f.form.value.nit != "" && f.form.value.addres != ""){
         const formValue: UserI = {
           username: f.form.value.username,
-          Person:{ 
-            identification: f.form.value.identification,
-            name: f.form.value.name,
-            surname: f.form.value.surname,
-          },
+          // Person:{ 
+          //   identification: f.form.value.identification,
+          //   name: f.form.value.name,
+          //   surname: f.form.value.surname,
+          // },
           email: f.form.value.email,
           fullName: f.form.value.fullName,
           password: f.form.value.password,

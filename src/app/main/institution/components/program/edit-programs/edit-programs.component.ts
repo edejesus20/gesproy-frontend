@@ -54,7 +54,7 @@ selectedCategoryI: CategoryI={
 };
 
 displayMaximizable2:boolean=true
-blockSpecial: RegExp = /^[^<>*!]+$/ 
+blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 
 private id:number=0
 public edit:boolean=false;
@@ -153,7 +153,10 @@ public form2:ProgramI={
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

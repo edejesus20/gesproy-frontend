@@ -165,7 +165,10 @@ export class EditarTeacherComponent implements OnInit {
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });
@@ -289,7 +292,8 @@ getOneCntAccount(id:number) {
           // console.log(cnt_groupFromApi.teacher)
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
-        if(cnt_groupFromApi.teacher.User?.Person != undefined
+        if(cnt_groupFromApi.teacher.User?.Person != undefined &&
+          cnt_groupFromApi.teacher.User?.Person?.Gender != undefined
           ){
           this.form.controls['name'].setValue(cnt_groupFromApi.teacher.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.teacher.User.Person.surname)
@@ -297,32 +301,19 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          // console.log('aqui')
 
           if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
-
-        if(cnt_groupFromApi.teacher.User.Person.DocumentTypeId != undefined)
+        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo1)=>{
+           if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
         this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
           this.form.controls['DocumentTypeId'].setValue(algo.documentType)
+          this.form.controls['GenderId'].setValue(algo1.gender)
         })
+          
+        })
+
+       
         }
-
-
-      //   if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined){
-      //   this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
-      //     this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-      //     // console.log(this.form.value.DocumentTypeId)
-      //   })
-      // }
-      
-        
-
-        
-
-  
 
         if(cnt_groupFromApi.teacher.ScaleId != undefined)
         this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
@@ -337,7 +328,7 @@ getOneCntAccount(id:number) {
         this.groupService.getItem((cnt_groupFromApi.teacher.GroupId)).subscribe((algo)=>{
           this.form.controls['GroupId'].setValue(algo.group)
         })
-// console.log(cnt_groupFromApi.teacher.HeadquarterPrograms)
+
         if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined){
           
           this.agregarDescuentos(cnt_groupFromApi.teacher.HeadquarterPrograms)

@@ -20,7 +20,7 @@ export class EditFacultiesComponent implements OnInit {
   public tabla:boolean=true;
   private id:number=0
   displayMaximizable2:boolean=true
-  blockSpecial: RegExp = /^[^<>*!]+$/ 
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 
   public administratives: AdministrativeI[]=[];
  
@@ -83,7 +83,10 @@ public form:FormGroup=this.formBuilder.group({});
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

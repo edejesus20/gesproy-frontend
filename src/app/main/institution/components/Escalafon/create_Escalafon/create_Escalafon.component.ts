@@ -15,6 +15,7 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
   styleUrls: ['./create_Escalafon.component.css']
 })
 export class Create_EscalafonComponent implements OnInit {
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 
   displayMaximizable2:boolean=true
   constructor(
@@ -61,7 +62,10 @@ export class Create_EscalafonComponent implements OnInit {
         }, 1000);
     },async error => {
       if(error != undefined) {
-        const text = await translate(error.error.message, "es");
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
         this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
       }
     });

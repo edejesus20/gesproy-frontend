@@ -28,7 +28,8 @@ export class EditHeadquarterComponent implements OnInit {
  public edit2:boolean=false;
 
 displayMaximizable2:boolean=true
-blockSpecial: RegExp = /^[^<>*!]+$/ 
+blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+
 
 public form:FormGroup=this.formBuilder.group({});
 public form2:HeadquarterI={
@@ -93,7 +94,10 @@ public form2:HeadquarterI={
          }, 1000);
      },async error => {
        if(error != undefined) {
-         const text = await translate(error.error.message, "es");
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
        }
      });

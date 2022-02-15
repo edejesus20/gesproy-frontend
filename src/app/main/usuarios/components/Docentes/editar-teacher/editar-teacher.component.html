@@ -49,12 +49,12 @@
           
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
-
-                <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
-                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                  <span class="p-float-label" [style]="{'margin-top':'20px','margin-bottom':'20px'}">
                     
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                    [options]="genders" [filter]="true" formControlName="GenderId" name="GenderId" label="SELECCIONE EL GENERO" 
+                    [options]="genders" [filter]="true" 
+                    formControlName="GenderId" 
+                    name="GenderId" label="SELECCIONE EL GENERO" 
                       [style]="{'width':'100%','margin-bottom':'20px'}" 
                       optionvalue="id"  optionLabel="name" filterBy="name"
                       [required]="true" placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO">
@@ -64,12 +64,12 @@
                     </p-dropdown>
                     <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">GENERO</h3></label>
                 </span>       
-              </div>
+             
             </div>
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
                 <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="CORREO ELECTRONICO"><i class="pi pi-bookmark-fill"></i></span>
                   <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
                   placeholder="CORREO" required title="CORREO ELECTRONICO">        
                   <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORREO ELECTRONICO</h3></label>
@@ -84,21 +84,19 @@
 
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
-              <div class="p-inputgroup">
-                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                <span class="p-float-label" [style]="{'margin-top':'20px','margin-bottom':'20px'}">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="documentTypes" [filter]="true"
-                    name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
+                    name="DocumentTypeId" formControlName="DocumentTypeId" 
                     [style]="{'width':'100%','margin-bottom':'20px'}" 
                     optionvalue="id"  optionLabel="name" filterBy="name"
                     [required]="true" placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO">
                     <ng-template let-option pTemplate="item">
-                      <span >{{option.name}}</span>
+                      <span >{{option.name }}</span>
                   </ng-template>
                   </p-dropdown>      
                   <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">TIPO DE DOCUMENTO</h3></label>
                 </span>       
-              </div>
 
 
             </div>
@@ -106,8 +104,8 @@
             <div class="col-12 md:col-6 lg:col-6">
 
               <div class="p-inputgroup">
-                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                <span class="p-float-label" [style]="{'margin-top':'20px','margin-bottom':'20px'}">
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="IDENTIFICACIÓN"><i class="pi pi-bookmark-fill"></i></span>
                   <input class="p-inputtext-lg" formControlName="identification" 
                     type="text" pInputText pKeyFilter="num" name="identification" 
                     placeholder="IDENTIFICACIÓN" required title="IDENTIFICACIÓN">       
@@ -122,8 +120,8 @@
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup" >
-                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                <span class="p-float-label" [style]="{'margin-top':'20px','margin-bottom':'20px'}">
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="DIRECCIÓN"><i class="pi pi-bookmark-fill"></i></span>
                   <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                   class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
                    required title="DIRECCION" >        
@@ -133,8 +131,8 @@
             </div>
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup" >
-                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                <span class="p-float-label" [style]="{'margin-top':'20px','margin-bottom':'20px'}">
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="TELEFONO"><i class="pi pi-bookmark-fill"></i></span>
                   <input class="p-inputtext-lg" type="text" formControlName="phone"
                     pInputText pKeyFilter="num" name="phone" 
                     placeholder="TELEFONO" title="TELEFONO"

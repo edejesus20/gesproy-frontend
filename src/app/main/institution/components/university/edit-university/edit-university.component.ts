@@ -14,9 +14,8 @@ export class EditUniversityComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
-  blockSpecial: RegExp = /^[^<>*!]+$/ 
- 
-
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  
   public form:FormGroup=this.formBuilder.group({})
 
   private id:number=0
@@ -101,7 +100,10 @@ export class EditUniversityComponent implements OnInit {
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

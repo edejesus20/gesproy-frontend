@@ -14,6 +14,8 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 })
 export class Create_RelacionesComponent implements OnInit {
   displayMaximizable2:boolean=true
+blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+
   constructor(
     private relationshipService:RelationshipService ,
      private primengConfig: PrimeNGConfig,
@@ -57,7 +59,10 @@ export class Create_RelacionesComponent implements OnInit {
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

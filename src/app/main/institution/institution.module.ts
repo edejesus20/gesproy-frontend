@@ -9,7 +9,6 @@ import { InstitutionRoutingModule } from './institution-routing.module';
 import { ShowProgramsComponent } from './components/program/show-programs/show-programs.component';
 import { CreateProgramComponent } from './components/program/create-program/create-program.component';
 import { ShowHeadquarterComponent } from './components/headquarter/show-headquarter/show-headquarter.component';
-import { HeadquarterProgramsComponent } from './components/headquarter/headquarter-programs/headquarter-programs.component';
 import { ShowUniversityComponent } from './components/university/show-university/show-university.component';
 import { Show_EscalafonComponent } from './components/Escalafon/show_Escalafon/show_Escalafon.component';
 import { Show_CategoriaGruposComponent } from './components/CategoriaGrupos/show_CategoriaGrupos/show_CategoriaGrupos.component';
@@ -100,7 +99,6 @@ import {CalendarModule} from 'primeng/calendar';
 
     ShowHeadquarterComponent,
     ShowOneHeadquarterComponent,
-    HeadquarterProgramsComponent,
     CreateHeadquarterComponent,
     EditHeadquarterComponent,
     DeleteHeadquarterComponent,

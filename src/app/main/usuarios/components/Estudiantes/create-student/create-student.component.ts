@@ -130,8 +130,11 @@ export class CreateStudentComponent implements OnInit {
               }, 1000);
           },async error => {
             if(error != undefined) {
-              console.log(error);
-              let text = await translate(error.error.message, "es")
+              // console.log(error);
+              let text = await translate(error.error.message, "es");
+              if(error.error.dataErros){
+                text = await translate(error.error.dataErros[0].message, "es");
+              }
               this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
             }
           });

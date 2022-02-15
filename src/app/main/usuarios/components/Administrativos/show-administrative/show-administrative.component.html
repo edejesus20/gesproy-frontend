@@ -36,8 +36,9 @@
         <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
         </ng-template>
-        <ng-template [ngIf]="mostrar!=3"> 
-           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> </ng-template>
+        <!-- <ng-template [ngIf]="mostrar!=3"> 
+           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> 
+          </ng-template> -->
           <th pSortableColumn="User.fullName">NOMBRE<p-sortIcon field="User.fullName"></p-sortIcon></th>
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
@@ -57,9 +58,9 @@
               <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
         </ng-template> 
-        <ng-template [ngIf]="mostrar!=3">
+        <!-- <ng-template [ngIf]="mostrar!=3">
           <td>{{item.id}}</td>
-        </ng-template>
+        </ng-template> -->
          
           <td>{{item.User.fullName | titlecase}}</td>
           <td>{{item.User?.Person?.identification}}</td>

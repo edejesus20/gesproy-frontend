@@ -20,7 +20,8 @@ export class CreateFacultyComponent implements OnInit {
   public universitys: UniversityI[]=[]
 
 displayMaximizable2:boolean=true
-blockSpecial: RegExp = /^[^<>*!]+$/ 
+blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+
 public form:FormGroup=this.formBuilder.group({
  name:['', [Validators.required]],
  AdministrativeId:['', [Validators.required]],
@@ -72,7 +73,10 @@ public form:FormGroup=this.formBuilder.group({
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

@@ -20,7 +20,7 @@ export class Edit_CategoriaGruposComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({ });
 
   displayMaximizable2:boolean=true
-  blockSpecial: RegExp = /^[^<>*!]+$/ 
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 
   constructor(
     private categoryGroupService:CategoryGroupService,
@@ -79,7 +79,10 @@ export class Edit_CategoriaGruposComponent implements OnInit {
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

@@ -12,7 +12,7 @@ const translate = require('translate');
 })
 export class CreateUniversityComponent implements OnInit {
   displayMaximizable2:boolean=true
-  blockSpecial: RegExp = /^[^<>*!]+$/ 
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     nit:['', [Validators.required]],
@@ -55,7 +55,10 @@ export class CreateUniversityComponent implements OnInit {
           }, 1000);
       },async error => {
         if(error != undefined) {
-          const text = await translate(error.error.message, "es");
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
       });

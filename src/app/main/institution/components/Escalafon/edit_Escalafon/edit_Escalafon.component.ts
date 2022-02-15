@@ -22,6 +22,8 @@ export class Edit_EscalafonComponent implements OnInit {
     name: '',
     createdAt:'',
   }
+  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+
   constructor(
     private scaleService:ScaleService,
     private primengConfig: PrimeNGConfig,
@@ -95,7 +97,10 @@ export class Edit_EscalafonComponent implements OnInit {
         }, 1000);
     },async error => {
       if(error != undefined) {
-        const text = await translate(error.error.message, "es");
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
         this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
       }
     });
