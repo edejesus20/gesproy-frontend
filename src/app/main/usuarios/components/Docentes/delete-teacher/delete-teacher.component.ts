@@ -30,7 +30,6 @@ export class DeleteTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
   
   constructor(
@@ -41,9 +40,7 @@ export class DeleteTeacherComponent implements OnInit {
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
-    private groupService:GroupService,
     private formBuilder: FormBuilder,
-
     private colcienciaCategoryService:ColcienciaCategoryService,
 
   ) { }
@@ -63,12 +60,10 @@ export class DeleteTeacherComponent implements OnInit {
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
       ColcienciaCategoryId:['', [Validators.required]],
-      GroupId:['', [Validators.required]],
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllscales()
-    this.getAllgroups()
     this.getAllcolcienciaCategorys()
   }
 
@@ -88,8 +83,7 @@ export class DeleteTeacherComponent implements OnInit {
       password:'',
       UserId: 0,
       ScaleId: this.form.value.ScaleId.id,
-      ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-      GroupId: this.form.value.GroupId.id,
+      ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id
     };
     // console.log(formValue)
     if(
@@ -102,8 +96,7 @@ export class DeleteTeacherComponent implements OnInit {
       formValue.phone != ""&&
       formValue.email != ""&&
      formValue.ScaleId !=("" || undefined)
-    &&formValue.ColcienciaCategoryId != ("" || undefined)
-    &&formValue.GroupId != ("" || undefined)){
+    &&formValue.ColcienciaCategoryId != ("" || undefined)){
 
     this.teacherService.deleteItem(formValue.id).subscribe(
       () => {
@@ -164,13 +157,6 @@ private getAllscales(selectId?: number) {
     }, error => console.error(error));
 }
 
-private getAllgroups(selectId?: number) {
-  this.groupService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.groups = AdministrativeFromApi.groups;
-    }, error => console.error(error));
-}
 
 private getAllcolcienciaCategorys(selectId?: number) {
   this.colcienciaCategoryService.getList().subscribe(
@@ -239,10 +225,6 @@ getOneCntAccount(id:number) {
         if(cnt_groupFromApi.teacher.ColcienciaCategoryId != undefined)
         this.colcienciaCategoryService.getItem((cnt_groupFromApi.teacher.ColcienciaCategoryId)).subscribe((algo)=>{
           this.form.controls['ColcienciaCategoryId'].setValue(algo.colcienciaCategory)
-        })
-        if(cnt_groupFromApi.teacher.GroupId != undefined)
-        this.groupService.getItem((cnt_groupFromApi.teacher.GroupId)).subscribe((algo)=>{
-          this.form.controls['GroupId'].setValue(algo.group)
         })
 
         // console.log(this.form.value)

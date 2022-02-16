@@ -36,7 +36,6 @@ export class CreateTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
@@ -49,7 +48,6 @@ export class CreateTeacherComponent implements OnInit {
     email:['', [Validators.required]],
     ScaleId:['', [Validators.required]],
     ColcienciaCategoryId:['', [Validators.required]],
-    GroupId:['', [Validators.required]],
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
         TeacherId:0,
@@ -70,7 +68,6 @@ export class CreateTeacherComponent implements OnInit {
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
-    private groupService:GroupService,
     private formBuilder: FormBuilder,
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
@@ -82,7 +79,6 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllscales()
-    this.getAllgroups()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
@@ -106,9 +102,9 @@ export class CreateTeacherComponent implements OnInit {
       UserId: 0,
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-      GroupId: this.form.value.GroupId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
+
 
     if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
@@ -116,7 +112,7 @@ export class CreateTeacherComponent implements OnInit {
 
         key.HeadquarterProgramId=key.HeadquarterProgramId.id
         key.RelationshipId=key.RelationshipId.id
-        key.TeacherId=this.form.value.id
+        // key.TeacherId=this.form.value.id
 
         this.headquarterProgramTeacher1.push({
         TeacherId:0,
@@ -128,6 +124,7 @@ export class CreateTeacherComponent implements OnInit {
     }else{
       formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
     }
+  
 
             if(formValue.name != ""&&
               formValue.surname != ""&&
@@ -138,8 +135,7 @@ export class CreateTeacherComponent implements OnInit {
               formValue.phone != ""&&
               formValue.email != ""&&
             formValue.ScaleId !=("" || undefined)
-            &&formValue.ColcienciaCategoryId != ("" || undefined)
-            &&formValue.GroupId != ("" || undefined)){
+            &&formValue.ColcienciaCategoryId != ("" || undefined)){
 
 
             this.teacherService.createItem(formValue).subscribe(
@@ -238,14 +234,6 @@ private getAllscales(selectId?: number) {
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
       this.scales = AdministrativeFromApi.scales;
-    }, error => console.error(error));
-}
-
-private getAllgroups(selectId?: number) {
-  this.groupService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.groups = AdministrativeFromApi.groups;
     }, error => console.error(error));
 }
 

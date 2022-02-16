@@ -25,7 +25,6 @@ export class Delete_CategoriaColcienciasComponent implements OnInit {
         UserId: 0,
         ScaleId: 0,
         ColcienciaCategoryId: 0,
-        GroupId: 0,
         User:
           {
             username: '',

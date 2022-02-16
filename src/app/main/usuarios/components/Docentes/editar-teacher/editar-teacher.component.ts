@@ -6,15 +6,11 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
-import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
-import { ProgramService } from 'src/app/core/services/program/program.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
-import { GroupI } from 'src/app/models/institution/group';
-import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
-import { ProgramI } from 'src/app/models/institution/program';
+import { HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 import { RelationshipI } from 'src/app/models/institution/relationship';
 import { ScaleI } from 'src/app/models/institution/scale';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -36,7 +32,6 @@ export class EditarTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public groups:GroupI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
   public algo:number[]=[0];
   public relationships:RelationshipI[]=[]
@@ -50,7 +45,6 @@ export class EditarTeacherComponent implements OnInit {
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
-    private groupService:GroupService,
     private formBuilder: FormBuilder,
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
@@ -72,7 +66,6 @@ export class EditarTeacherComponent implements OnInit {
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
       ColcienciaCategoryId:['', [Validators.required]],
-      GroupId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
           TeacherId:0,
@@ -83,7 +76,7 @@ export class EditarTeacherComponent implements OnInit {
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllscales()
-    this.getAllgroups()
+  
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
@@ -107,7 +100,6 @@ export class EditarTeacherComponent implements OnInit {
       UserId: 0,
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-      GroupId: this.form.value.GroupId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
     };
 
@@ -140,8 +132,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.phone != ""&&
       formValue.email != ""&&
      formValue.ScaleId !=("" || undefined)
-    &&formValue.ColcienciaCategoryId != ("" || undefined)
-    &&formValue.GroupId != ("" || undefined)){
+    &&formValue.ColcienciaCategoryId != ("" || undefined)){
 
     this.teacherService.updateItem(formValue.id,formValue).subscribe(
       () => {
@@ -234,13 +225,6 @@ private getAllscales(selectId?: number) {
     }, error => console.error(error));
 }
 
-private getAllgroups(selectId?: number) {
-  this.groupService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.groups = AdministrativeFromApi.groups;
-    }, error => console.error(error));
-}
 
 private getAllcolcienciaCategorys(selectId?: number) {
   this.colcienciaCategoryService.getList().subscribe(
@@ -308,11 +292,9 @@ getOneCntAccount(id:number) {
         this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
           this.form.controls['DocumentTypeId'].setValue(algo.documentType)
           this.form.controls['GenderId'].setValue(algo1.gender)
-        })
-          
+          }) 
         })
 
-       
         }
 
         if(cnt_groupFromApi.teacher.ScaleId != undefined)
@@ -323,10 +305,6 @@ getOneCntAccount(id:number) {
         if(cnt_groupFromApi.teacher.ColcienciaCategoryId != undefined)
         this.colcienciaCategoryService.getItem((cnt_groupFromApi.teacher.ColcienciaCategoryId)).subscribe((algo)=>{
           this.form.controls['ColcienciaCategoryId'].setValue(algo.colcienciaCategory)
-        })
-        if(cnt_groupFromApi.teacher.GroupId != undefined)
-        this.groupService.getItem((cnt_groupFromApi.teacher.GroupId)).subscribe((algo)=>{
-          this.form.controls['GroupId'].setValue(algo.group)
         })
 
         if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined){

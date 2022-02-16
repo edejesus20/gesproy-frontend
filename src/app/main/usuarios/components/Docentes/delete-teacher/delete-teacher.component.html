@@ -152,7 +152,7 @@
           </div>
 
           <div class="grid p-fluid">
-            <div class="col-12 md:col-6 lg:col-4">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="scales" [filter]="true"
               name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
@@ -165,22 +165,8 @@
             </p-dropdown>
 
             </div>
-            
-            <div class="col-12 md:col-6 lg:col-4">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="groups" [filter]="true"
-              name="GroupId" formControlName="GroupId" label="GRUPO" 
-              [style]="{'width':'100%','margin-bottom':'20px'}"
-              optionvalue="id"  optionLabel="name" filterBy="name"
-              [disabled]="true" placeholder="GRUPO" title="GRUPO DE INVESTIGACIÓN">
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name }}</span>
-            </ng-template>
-            </p-dropdown>
 
-            </div>
-
-            <div class="col-12 md:col-6 lg:col-4">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="colcienciaCategorys" [filter]="true"
               name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 

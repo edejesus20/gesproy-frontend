@@ -5,7 +5,8 @@
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
-    [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email','User.Person.phone','Group.name','Scale.name','ColcienciaCategory.name']"
+    [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
+    'User.Person.phone','Scale.name','ColcienciaCategory.name']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -41,7 +42,7 @@
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
-          <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
+          <!-- <th pSortableColumn="Group[0].name">GRUPO<p-sortIcon field="Group[0].name"></p-sortIcon></th> -->
           <th pSortableColumn="Scale.name">ESCALAFON<p-sortIcon field="Scale.name"></p-sortIcon></th>
           <th pSortableColumn="ColcienciaCategory.name">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategory.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
@@ -63,7 +64,7 @@
           <td>{{item.User?.Person?.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
-          <td>{{item.Group?.name | titlecase}}</td>
+          <!-- <td>{{item.Groups[0]?.name | titlecase}}</td> -->
           <td>{{item.Scale?.name | titlecase}}</td>
           <td>{{item.ColcienciaCategory?.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">

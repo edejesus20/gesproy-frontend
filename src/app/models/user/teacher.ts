@@ -10,10 +10,10 @@ export interface TeacherI {
     UserId: number;
     ScaleId: number;
     ColcienciaCategoryId: number;
-    GroupId: number;
     User?:UserI
     Scale?:ScaleI
     Group?:GroupI
+    Groups?:GroupI[]
     ColcienciaCategory?:ColcienciaCategoryI,
     TrainingTeacher?:TrainingTeacherI[]
     Trainings?:TrainingI[]
