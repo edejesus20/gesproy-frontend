@@ -6,6 +6,11 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
 import { UserI } from 'src/app/models/authorization/usr_User';
 import { MessageService } from 'primeng/api';
+import { PersonI } from 'src/app/models/user/person';
+import { GenderI } from 'src/app/models/user/gender';
+import { DocumentTypeI } from 'src/app/models/user/document_types';
+import { GenderService } from 'src/app/core/services/usuer/Gender.service';
+import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 const translate = require('translate');
 
 @Component({
@@ -16,18 +21,23 @@ const translate = require('translate');
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
+  
   public roles: RoleI[]=[];
   public mostrar:boolean=false;
   public algo:number[]=[0];
-  public displayedColumns: string[] = ['roles'];
-
-  
+ 
+  public documentTypes:DocumentTypeI[]=[]
+  public genders:GenderI[] =[]
+  public Roles1:any[] =[]
   public form:FormGroup=this.formBuilder.group({
-    
-    fullName: ['', [Validators.required]],
-    identification: ['', [Validators.required]],
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
+    name:['', [Validators.required]],
+    surname:['', [Validators.required]],
+    DocumentTypeId:['', [Validators.required]],
+    identification:['', [Validators.required]],
+    GenderId:['', [Validators.required]],
+    address:['', [Validators.required]],
+    phone:['', [Validators.required]],
+    email:['', [Validators.required]],
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
@@ -35,12 +45,17 @@ export class CrearUserComponent implements OnInit {
     private userService: UserService,
     private rolesService: RolesService,
     private router: Router,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private genderService:GenderService,
+    private documentTypeService:DocumentTypeService,
    
   ) { }
 
   ngOnInit(): void {
     this.getUsrRoles()
+
+    this.getAllgenders()
+    this.getAlldocumentTypes()
   }
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
@@ -48,7 +63,21 @@ export class CrearUserComponent implements OnInit {
       //console.log(this.roles);
     }, error => console.error(error));
   }
-
+  private getAllgenders(selectId?: number) {
+    this.genderService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        // console.log(AdministrativeFromApi.administratives)
+        this.genders = AdministrativeFromApi.genders;
+      }, error => console.error(error));
+  }
+  
+  private getAlldocumentTypes(selectId?: number) {
+    this.documentTypeService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.documentTypes = AdministrativeFromApi.documentTypes;
+  
+      }, error => console.error(error));
+  }
 
 
      //metodos para agregar controles de Roles
@@ -79,49 +108,81 @@ export class CrearUserComponent implements OnInit {
       }
     }
 
-    
-    public onSubmit(f:NgForm) {
-      // console.log(f)
-      if(f.form.value.name != "" && f.form.value.nit != "" && f.form.value.addres != ""){
-        const formValue: UserI = {
-          username: f.form.value.username,
-          // Person:{ 
-          //   identification: f.form.value.identification,
-          //   name: f.form.value.name,
-          //   surname: f.form.value.surname,
-          // },
-          email: f.form.value.email,
-          fullName: f.form.value.fullName,
-          password: f.form.value.password,
-        };
-      this.userService.createUser(formValue).subscribe(
-        () => {
-                var date = new Date('2020-01-01 00:00:03');
-                  function padLeft(n:any){ 
-                     return n ="00".substring(0, "00".length - n.length) + n;
+    public onSubmit(e: Event) {
+      e.preventDefault()
+  
+      const formValue={
+        name: this.form.value.name,
+        surname: this.form.value.surname,
+        DocumentTypeId: this.form.value.DocumentTypeId.id,
+        identification: this.form.value.identification,
+        GenderId: this.form.value.GenderId.id,
+        address: this.form.value.address,
+        phone: this.form.value.phone,
+        username:'',
+        fullName:'',
+        email:this.form.value.email,
+        password:'',
+        UserId: 0,
+        Roles:this.form.value.Roles,
+      };
+      if(this.Roles1.length == 0 || this.Roles1 == []){
+        let control = <FormArray>this.form.controls['Roles']
+        for (const key of control.value) {
+          key.RoleId=key.RoleId.id 
+          this.Roles1.push({
+          RoleId:key.RoleId,
+          })
+        }
+        formValue.Roles = this.form.value.Roles
+        // console.log('aqui')
+      }else{
+        formValue.Roles = this.Roles1
+        // console.log('aqui2')
+
+      }
+      // console.log(formValue)
+              if(formValue.name != ""&&
+                formValue.surname != ""&&
+                formValue.DocumentTypeId != ( 0 || undefined)&&
+                formValue.identification != ""&&
+                formValue.GenderId != ( 0 || undefined)&&
+                formValue.address != ""&&
+                formValue.phone != ""&&
+                formValue.email != ""){
+  
+              this.userService.createUser(formValue).subscribe(
+                () => {
+                        var date = new Date('2020-01-01 00:00:03');
+                          function padLeft(n:any){ 
+                            return n ="00".substring(0, "00".length - n.length) + n;
+                          }
+                          var interval = setInterval(() => {
+                          var minutes = padLeft(date.getMinutes() + "");
+                          var seconds = padLeft(date.getSeconds() + "");
+                          // console.log(minutes, seconds);
+                          if( seconds == '03') {
+                          this.messageService.add({severity:'success', summary: 'Success', 
+                          detail: 'Registro de Usuario Creado con exito'});
+                          }
+                          date = new Date(date.getTime() - 1000);
+                          if( minutes == '00' && seconds == '01' ) {
+                            this.router.navigateByUrl('/usuarios/users');
+                            clearInterval(interval); 
+                          }
+                    }, 1000);
+                },async error => {
+                  if(error != undefined) {
+                    let text = await translate(error.error.message, "es");
+                    if(error.error.dataErros){
+                      text = await translate(error.error.dataErros[0].message, "es");
+                    }
+                    this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
                   }
-                  var interval = setInterval(() => {
-                  var minutes = padLeft(date.getMinutes() + "");
-                  var seconds = padLeft(date.getSeconds() + "");
-                  // console.log(minutes, seconds);
-                  if( seconds == '03') {
-                  this.messageService.add({severity:'success', summary: 'Success', 
-                  detail: 'Registro de Usuario Creado con exitoso'});
-                  }
-                  date = new Date(date.getTime() - 1000);
-                  if( minutes == '00' && seconds == '01' ) {
-                    this.router.navigateByUrl('/usuarios/users');
-                    clearInterval(interval); 
-                   }
-            }, 1000);
-        },async error => {
-          if(error != undefined) {
-            const text = await translate(error.error.message, "es");
-            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-          }
-        });
-    }else{
-      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-    }
+                });
+            }else{
+              this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+            }
   }
+
 }

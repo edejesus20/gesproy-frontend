@@ -16,6 +16,7 @@ export class UserService {
 
   // API path
   base_path = `${this.API_URI}/api/user`;
+  base_path_post = `${this.API_URI}/api/user`;
   base= `${this.API_URI}/api/change-password`;
   constructor(private http: HttpClient,
     ) {  
@@ -85,15 +86,26 @@ getOneUser(id: number): Observable<{ user: UserI }> {
 
 
 
-createUser(user: UserI): Observable<{ user: UserI }> {
-  //console.log(user,'----------------');
-  return this.http
-    .post<{ user: UserI }>(this.base_path, JSON.stringify(user))
-    .pipe(
-      retry(2),
-      catchError(this.handleError)
-    )
+// createUser(person: any): Observable<{ person: any }> {
+//   return this.http
+//     .post<{ person: any }>(this.base_path, JSON.stringify(person))
+//     .pipe(
+//       retry(2),
+//       catchError(this.handleError)
+//     )
+// }
+
+createUser(person: any): Observable<any> {
+  return this.http.post<any>(this.base_path_post, person).pipe(
+    tap((res: PersonI) => {
+      if (res) {
+        // Crear usuario
+        // console.log('registro insertado');
+      }
+    }),
+    catchError(this.handleError))
 }
+
 
 actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPasswordI }> {
   let token : string | null=localStorage.getItem('token')
