@@ -1,1 +1,205 @@
-<p>eliminar-user works!</p>
+
+<ng-template [ngIf]="tabla == true">
+    <app-mostrar-users [mostrar]="mostrar" (modificar)="actualizar($event)"></app-mostrar-users>
+  </ng-template>
+  <ng-template [ngIf]="tabla == false">
+  
+    
+  <form [formGroup]="form" novalidate >
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
+    [contentStyle]="{'overflow-y': 'auto'}"[closable]="false" [closeOnEscape]="false" >
+        
+        <div [style]="{'margin-top':'-1px'}" >
+            <div fxLayout="row" class="titleCard">
+                <i class="pi pi-trash" style="font-size: 2rem;margin-right: 10px;"></i>
+              <h2 class="fondebabutton" style="margin-top: -1px;">¿Seguro de eliminar este Usuario?</h2>
+            </div>
+      
+  
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" class="p-inputtext-lg" pInputText name="name" 
+                    placeholder="NOMBRE" [value]="form.value.name" [disabled]="true">  
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRES</h3></label>
+                </span>       
+              </div>
+               
+              </div>
+              
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                  class="p-inputtext-lg"  name="surname" placeholder="APELLIDOS" title="APELLIDO"
+                  [value]="form.value.surname" [disabled]="true"  >     
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">APELLIDOS</h3></label>
+                </span>       
+              </div>
+  
+              </div>
+  
+            </div>
+  
+            
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-6 lg:col-6">
+  
+                  <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+                    <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                      
+                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                      [options]="genders" [filter]="true" formControlName="GenderId"
+                       name="GenderId" label="SELECCIONE EL GENERO" 
+                        [style]="{'width':'100%','margin-bottom':'20px'}" 
+                        optionvalue="id"  optionLabel="name" filterBy="name"
+                        [disabled]="true" placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO">
+                        <ng-template let-option pTemplate="item">
+                          <span >{{option.name | titlecase}}</span>
+                      </ng-template>
+                      </p-dropdown>
+                      <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">GENERO</h3></label>
+                  </span>       
+                </div>
+              </div>
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="email" class="p-inputtext-lg" pInputText name="email" 
+                    [value]="form.value.email"
+                    placeholder="CORREO" [disabled]="true" title="CORREO ELECTRONICO">        
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORREO ELECTRONICO</h3></label>
+                  </span>       
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                    [options]="documentTypes" [filter]="true"
+                      name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
+                      [style]="{'width':'100%','margin-bottom':'20px'}" 
+                      optionvalue="id"  optionLabel="name" filterBy="name"
+                      [disabled]="true" placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO">
+                      <ng-template let-option pTemplate="item">
+                        <span >{{option.name}}</span>
+                    </ng-template>
+                    </p-dropdown>      
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">TIPO DE DOCUMENTO</h3></label>
+                  </span>       
+                </div>
+  
+  
+              </div>
+              
+              <div class="col-12 md:col-6 lg:col-6">
+  
+                <div class="p-inputgroup">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input class="p-inputtext-lg" [value]="form.value.identification" 
+                      type="text" pInputText pKeyFilter="num" name="identification" 
+                      placeholder="IDENTIFICACIÓN" [disabled]="true" title="IDENTIFICACIÓN">       
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">IDENTIFICACIÓN</h3></label>
+                  </span>       
+                </div>
+              
+              </div>
+  
+            </div>
+  
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup" >
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                    class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" 
+                    [value]="form.value.address"
+                     [disabled]="true" title="DIRECCION" >        
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DIRECCIÓN</h3></label>
+                  </span>       
+                </div>
+              </div>
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="p-inputgroup" >
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input class="p-inputtext-lg" type="text" [value]="form.value.phone"
+                      pInputText pKeyFilter="num" name="phone" 
+                      placeholder="TELEFONO" title="TELEFONO"
+                      [disabled]="true">        
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">TELEFONO</h3></label>
+                  </span>       
+                </div>
+              </div>
+  
+            </div>
+  
+              <br>
+              <div fxLayout="row" fxLayoutGap="20px">
+                <div class="table-wrapper" >
+                  <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                    <ng-template pTemplate="header">
+                      <tr>
+                          <th pSortableColumn="id">Roles<p-sortIcon field="id"></p-sortIcon></th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                    <tr [pSelectableRow]="rowData">
+                        <td>
+                          <div formArrayName="Roles"> 
+                            <div *ngFor="let item of getRoles.controls; 
+                            let pointIndex=index" [formGroupName]="pointIndex">
+                              <div class="grupo"> 
+                                <div class="grupoinput1">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="roles" [filter]="true"
+                                      formControlName="RoleId" name="RoleId"
+                                     label="SELECCIONE ROLES" 
+                                    [style]="{'width':'100%','margin-bottom':'20px'}"
+                                    optionvalue="id" optionLabel="name"  filterBy="name"
+                                    [disabled]="true" placeholder="SELECCIONE ROLES"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.name  | titlecase}}</span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                </div>
+                                
+                
+                              
+                            </div>
+                            </div>
+                          </div> 
+                        </td>
+                    </tr>
+                  </ng-template>
+                  </p-table>
+                </div>
+              </div>
+        </div>
+  
+        <div fxLayout="row" class="titleCard" >
+            <button pButton type="button" type="submit"  icon="pi pi-check"
+             (click)="onSubmit($event)"
+            class="p-button-danger p-button-raised p-button-rounded" label="Borrar Registro" styleClass="mr-2"></button>
+            <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+        
+      </div>
+           
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>

@@ -5,8 +5,6 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
-import { UserI } from 'src/app/models/authorization/usr_User';
-import { PersonI } from 'src/app/models/user/person';
 import { GenderI } from 'src/app/models/user/gender';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';

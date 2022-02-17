@@ -34,9 +34,9 @@
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
-        </ng-template> -->
+        </ng-template>
           <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
@@ -53,12 +53,12 @@
 
     <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
       <tr [pSelectableRow]="rowData">
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <td>
               <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
         </ng-template> 
-        -->
+       
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.name | titlecase}}</td>
           <td>{{item.surname | titlecase}}</td>
@@ -107,7 +107,7 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Seedbeds"  dataKey="id" 
+                  <p-table [value]="item.User.Roles"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -117,9 +117,8 @@
                               <th style="width: 3rem"></th>
                             </ng-template>  -->
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                              <th pSortableColumn="name">Nombre de Semillero <p-sortIcon field="name"></p-sortIcon></th>
-                              <th pSortableColumn="SeedbedStudent.date_firt">Fecha inicial<p-sortIcon field="SeedbedStudent.date_firt"></p-sortIcon></th>
-                              <th pSortableColumn="SeedbedStudent.date_end">Fecha final <p-sortIcon field="SeedbedStudent.date_end"></p-sortIcon></th>
+                              <th pSortableColumn="name">Roles <p-sortIcon field="name"></p-sortIcon></th>
+                              
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
@@ -131,8 +130,7 @@
                           </ng-template>  -->
                               <td>{{order.id}}</td>
                               <td>{{order.name | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.date_firt | date:'fullDate' | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.date_end | date:'fullDate' | titlecase}}</td>
+                              
                           </tr>
                       </ng-template>
 <!-- 
