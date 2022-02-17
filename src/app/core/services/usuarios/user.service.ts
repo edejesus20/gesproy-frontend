@@ -75,9 +75,9 @@ getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
 }
 
 // Get single student data by ID
-getOneUser(id: number): Observable<{ user: UserI }> {
+getOneUser(id: number): Observable<{ user: PersonI }> {
   return this.http
-    .get<{ user: UserI }>(this.base_path + '/' + id)
+    .get<{ user: PersonI }>(this.base_path + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -129,11 +129,30 @@ actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPassword
     }
 }
 
-updateUser(user:UserI){
-  return this.http.patch(`${this.base_path}/${user.id}`, user).pipe(
-    retry(2),
-    catchError(this.handleError)
-  )
+updateUser(user:any){
+  let token : string | null=localStorage.getItem('token')
+  let userT :string | null= localStorage.getItem('user');
+  if(token != null && userT != null) {
+    let userObjeto:any = JSON.parse(userT); 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':userObjeto
+      })
+    }
+    console.log('aqui')
+    return this.http.patch(`${this.base_path}/${user.id}`, user,httpOptions)
+    .pipe(retry(2),catchError(this.handleError))
+  }else{
+    return this.http.patch(`${this.base_path}/${user.id}`, user)
+      .pipe(retry(2),catchError(this.handleError)) 
+    }
+
+  // return this.http.patch(`${this.base_path}/${user.id}`, user).pipe(
+  //   retry(2),
+  //   catchError(this.handleError)
+  // )
 
 }
 eliminarUser(id:number){

@@ -5,7 +5,7 @@
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
-    [globalFilterFields]="['id','name','surname','identification','User.email',
+    [globalFilterFields]="['name','surname','identification','User.email',
     'phone','address','Gender.name']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
@@ -37,7 +37,7 @@
         <!-- <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
         </ng-template> -->
-          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
           <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
@@ -59,7 +59,7 @@
           </td>
         </ng-template> 
         -->
-          <td>{{item.id}}</td>
+          <!-- <td>{{item.id}}</td> -->
           <td>{{item.name | titlecase}}</td>
           <td>{{item.surname | titlecase}}</td>
           <td>{{item.identification}}</td>

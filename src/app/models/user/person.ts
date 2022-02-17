@@ -1,3 +1,4 @@
+import { RoleI } from "../authorization/usr_roles";
 import { DocumentTypeI } from "./document_types";
 import { GenderI } from "./gender";
 
@@ -19,11 +20,7 @@ export interface PersonI {
       email?:string;
       password?: string;
       fullName: string;
-      Roles?:[
-        {
-          name:string
-        }
-      ]
+      Roles?:RoleI[]
   
     }
   }

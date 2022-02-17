@@ -22,12 +22,13 @@ export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   
-  public roles: RoleI[]=[];
+  
   public mostrar:boolean=false;
   public algo:number[]=[0];
  
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
+  public roles: RoleI[]=[];
   public Roles1:any[] =[]
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],

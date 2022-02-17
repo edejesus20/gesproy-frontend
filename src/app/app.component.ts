@@ -89,8 +89,8 @@ export class AppComponent {
             this.subcribe=this.authService.getMenu2(userLoginResponse).subscribe((mainSesion)=>{
               
                 this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
-                  if(user.user.fullName){
-                    this.nombre = user.user.fullName
+                  if(user.user.User?.fullName){
+                    this.nombre = user.user.User?.fullName
                   }     
                 })
                   this.privateMenu=createMenu(mainSesion.mainSesion) as any;
@@ -113,8 +113,8 @@ export class AppComponent {
                 }
                 else{
                   this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
-                    if(user.user.fullName){
-                      this.nombre = user.user.fullName
+                    if(user.user.User?.fullName){
+                      this.nombre = user.user.User?.fullName
                     }     
                   })
                   

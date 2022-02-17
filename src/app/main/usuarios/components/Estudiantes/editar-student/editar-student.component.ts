@@ -2,17 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { ProgramService } from 'src/app/core/services/program/program.service';
+
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
-import { StudentService } from 'src/app/core/services/usuer/Student.service';
-import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
-import { ProgramI } from 'src/app/models/institution/program';
+
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
-
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { StudentService } from 'src/app/core/services/usuer/Student.service';
+import {  HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 @Component({
   selector: 'app-editar-student',
   templateUrl: './editar-student.component.html',
