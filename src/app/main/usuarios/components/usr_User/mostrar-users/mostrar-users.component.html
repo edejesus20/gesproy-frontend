@@ -1,85 +1,192 @@
-<!-- <div class="container">
 
-  <mat-form-field appearance="standard">
-    <mat-label>Busqueda</mat-label>
-    <input matInput (keyup)="Buscar($event)" #input>
-  </mat-form-field>
+<p-table  #dt1 [value]="users" responsiveLayout="scroll" dataKey="id" id="todo"
+[paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+   [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
+    [globalFilterFields]="['id','name','surname','identification','User.email',
+    'phone','address','Gender.name']"
+    [columns]="cols"
+   ><!-- styleClass="p-datatable-gridlines" -->
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Usuarios</h2>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+            (input)="Buscar($event, dt1)" placeholder="Buscar la palabra clave.." />
+        </span> 
+        
+       
+          <div class="mb-3 ml-3 mt-3">
 
-<div class="table-wrapper">
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
 
-    <table mat-table [dataSource]="users" class="mat-elevation-z8" matSort>
+          <!-- <p-button icon="pi pi-refresh"></p-button> -->
+      </div>
 
-      <ng-container matColumnDef="Identificacion">
-        <th mat-header-cell *matHeaderCellDef > Identificación </th>
-        <td mat-cell *matCellDef="let element"> {{element.identification}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="fullName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element.fullName | titlecase}}</td>
-      </ng-container>
       
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
-        <td mat-cell *matCellDef="let element"> {{element.User.username}}</td>
-      </ng-container>
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.User.email  | titlecase}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Rol">
-        <th mat-header-cell *matHeaderCellDef > Rol </th>
-        <td mat-cell *matCellDef="let element">
-            <ng-template [ngIf]="element.User.Roles.length > 1">
-                <span *ngFor="let item of element.User.Roles" >
-                    {{item.name  | titlecase}},  
-              </span>
-            </ng-template>
-            <ng-template [ngIf]="element.User.Roles.length == 1">
-              <span *ngFor="let item of element.User.Roles" >
-                  {{item.name  | titlecase}}  
-            </span>
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+        <!-- <ng-template [ngIf]="mostrar==3">
+          <th style="width: 3rem"></th>
+        </ng-template> -->
+          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
+          <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
+          <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
+          <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="address">DIRECCION<p-sortIcon field="address"></p-sortIcon></th>
+          <th pSortableColumn="Gender.name">GENERO<p-sortIcon field="Gender.name"></p-sortIcon></th>
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+            <th > ACCIONES </th>
           </ng-template>
-            </td>
-      </ng-container>
-      <ng-template [ngIf]="mostrar==1">
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef > Acciones </th>
-          <td mat-cell *matCellDef="let element">
-              <a mat-mini-fab color="link" class="editar" aria-label="" 
-              (click)="editar(element.id)">
-                <mat-icon>edit</mat-icon>
-              </a>
+      </tr>
+  </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+      <tr [pSelectableRow]="rowData">
+        <!-- <ng-template [ngIf]="mostrar==3">
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-        </ng-container>
-      </ng-template>
-      <ng-template [ngIf]="mostrar==2">
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef > Acciones </th>
-          <td mat-cell *matCellDef="let element">
-              <a mat-mini-fab color="warn" class="delete" aria-label="" 
-              (click)="delet(element.id)">
-                <mat-icon>delete</mat-icon>
-              </a>
-          </td>
-        </ng-container>
-      </ng-template>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-            <div class="nohayregistro"> 
-              No hay registros encontrados
-            </div>
+        </ng-template> 
+        -->
+          <td>{{item.id}}</td>
+          <td>{{item.name | titlecase}}</td>
+          <td>{{item.surname | titlecase}}</td>
+          <td>{{item.identification}}</td>
+          <td>{{item.User?.email | titlecase}}</td>
+          <td>{{item.phone }}</td>
+          <td>{{item.address | titlecase}}</td>
+          <td>{{item.Gender.name | titlecase}}</td>
+          <ng-template [ngIf]="mostrar==1">
+              
+              <td >
+                <button pButton pRipple  type="button"class="editar" title="Editar" 
+                  icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(item.id)"></button>
+              </td>
           
+          </ng-template>
+          <ng-template [ngIf]="mostrar==2">
+            
+              <td >
+                <button pButton pRipple  type="button" title="Eliminar" 
+                  icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(item.id)"></button>
+              </td>
+          
+          </ng-template>
+
+          <ng-template [ngIf]="mostrar==4">
+            
+            <td >
+              <button pButton pRipple  type="button" title="Asignar Formaciones" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" (click)="delet(item.id)"></button>
+            </td>
+        
+        </ng-template>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="6" style="text-align: center;">
+            <h3>No hay registros encontrados</h3>
           </td>
       </tr>
-    </table>
-  </div>
-  <br>
-    <mat-paginator [pageSizeOptions]="[5, 10,15,20]" showFirstLastButtons></mat-paginator>
-</div>
- -->
-algo
+  </ng-template>
+
+  
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+          <td colspan="12">
+              <div >
+                  <p-table [value]="item.Seedbeds"  dataKey="id" 
+                  [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                   >
+                      <ng-template pTemplate="header" >
+                          <tr style="background: rgba(0, 255, 255, 0.849);">
+                            <!-- <ng-template [ngIf]="mostrar==3">
+                              <th style="width: 3rem"></th>
+                            </ng-template>  -->
+                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre de Semillero <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="SeedbedStudent.date_firt">Fecha inicial<p-sortIcon field="SeedbedStudent.date_firt"></p-sortIcon></th>
+                              <th pSortableColumn="SeedbedStudent.date_end">Fecha final <p-sortIcon field="SeedbedStudent.date_end"></p-sortIcon></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-order let-expanded="expanded">
+                        <tr>
+                          <!-- <ng-template [ngIf]="mostrar==3">
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            </td>
+                          </ng-template>  -->
+                              <td>{{order.id}}</td>
+                              <td>{{order.name | titlecase}}</td>
+                              <td>{{order.SeedbedStudent.date_firt | date:'fullDate' | titlecase}}</td>
+                              <td>{{order.SeedbedStudent.date_end | date:'fullDate' | titlecase}}</td>
+                          </tr>
+                      </ng-template>
+<!-- 
+                      <ng-template pTemplate="rowexpansion" let-order>
+                        <tr>
+                            <td colspan="7">
+                                <div >
+                                    <p-table [value]="order.Faculties"  dataKey="AdministrativeId" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                                     >
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                                                <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
+                                                <th pSortableColumn="AdministrativeId">Decano<p-sortIcon field="AdministrativeId"></p-sortIcon></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-ok>
+                                          <tr>
+                                                <td>{{ok.id}}</td>
+                                                <td>{{ok.name}}</td>
+                                                <td>{{ok.Administrative?.User?.fullName}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        
+                                        <ng-template pTemplate="emptymessage">
+                                          <tr>
+                                            <td colspan="6" style="text-align: center;">
+                                              <h3>No hay registros encontrados</h3>
+                                            </td>
+                                        </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template> -->
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="6" style="text-align: center;">
+                            <h3>No hay registros encontrados</h3>
+                          </td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+  </ng-template>
+
+
+  <!-- <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total hay {{ universitys ? universitys.length : 0 }} universidades.
+    </div>
+</ng-template> -->
+</p-table>

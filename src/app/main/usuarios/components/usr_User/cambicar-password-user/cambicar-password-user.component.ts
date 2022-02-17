@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { CambiarPasswordI } from 'src/app/models/authorization/usr_CambiarPassword';
-
+const translate = require('translate');
 @Component({
   selector: 'app-cambicar-password-user',
   templateUrl: './cambicar-password-user.component.html',
@@ -14,9 +15,11 @@ export class CambicarPasswordUserComponent implements OnInit {
     oldPassword: ['', [Validators.required]],
     newPassword: ['', [Validators.required]],
   });
+  displayMaximizable2:boolean=true
+
   constructor(
     private router: Router,
-    // private snackBar: MatSnackBar,
+    private messageService:MessageService,
     private formBuilder: FormBuilder,
     private userService: UserService,
   ) { }
@@ -28,16 +31,16 @@ export class CambicarPasswordUserComponent implements OnInit {
     const formValue: CambiarPasswordI = this.form.value;
     this.userService.actualzarContraseña(formValue).subscribe(
       () => {
-        // this.snackBar.open('Cambio de Contraseña exitoso', 'Ok', {
-        //   duration: 5000,
-        // });
         this.router.navigateByUrl('/usuarios/users');
-      },
-      err => {
-        // this.snackBar.open('Error. El Cambio de Contraseña no pudo ser exitoso', 'Ok', {
-        //   duration: 5000,
-        // });
-        console.error(err);
+      }
+      ,async error => {
+        if(error != undefined) {
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
       }
     );
   }

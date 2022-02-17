@@ -62,6 +62,8 @@ getUser(): Observable<{users: PersonI[]}> {
     )
   }
 }
+
+
 getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
   return this.http
     .get<{ user: UserI }>(this.base_path+ '/cc/' + cc)
@@ -94,14 +96,27 @@ createUser(user: UserI): Observable<{ user: UserI }> {
 }
 
 actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPasswordI }> {
-  //console.log(user,'----------------');
-  return this.http
-    .patch<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user))
-    .pipe(
-      retry(2),
-      catchError(this.handleError)
-    )
+  let token : string | null=localStorage.getItem('token')
+  let userT :string | null= localStorage.getItem('user');
+  if(token != null && userT != null) {
+    let userObjeto:any = JSON.parse(userT); 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':userObjeto
+      })
+    }
+    return this.http
+    .put<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user),httpOptions)
+    .pipe(retry(2),catchError(this.handleError))
+  }else{
+      return this.http
+      .put<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user))
+      .pipe(retry(2),catchError(this.handleError)) 
+    }
 }
+
 updateUser(user:UserI){
   return this.http.patch(`${this.base_path}/${user.id}`, user).pipe(
     retry(2),
@@ -117,20 +132,7 @@ eliminarUser(id:number){
 }
 
 createImagen(formData:any){
-  // let token : string | null= localStorage.getItem('token')
-  // if(token != null) {
-  //   let httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'token':token
-  //     })
-  //   }
-  //   return this.http.post('http://localhost:4000/api/subir',formData,httpOptions)
-  //   .pipe(
-  //     retry(2),
-  //     catchError(this.handleError)
-  //   )
-  // }else{
+
     return this.http.post('http://localhost:4000/api/subir',JSON.stringify(formData))
     .pipe(
       retry(2),
