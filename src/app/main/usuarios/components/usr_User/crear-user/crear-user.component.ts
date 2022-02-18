@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup,NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
-import { UserI } from 'src/app/models/authorization/usr_User';
 import { MessageService } from 'primeng/api';
-import { PersonI } from 'src/app/models/user/person';
 import { GenderI } from 'src/app/models/user/gender';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
@@ -21,11 +19,8 @@ const translate = require('translate');
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  
-  
   public mostrar:boolean=false;
   public algo:number[]=[0];
- 
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public roles: RoleI[]=[];
@@ -49,12 +44,10 @@ export class CrearUserComponent implements OnInit {
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
-   
   ) { }
 
   ngOnInit(): void {
     this.getUsrRoles()
-
     this.getAllgenders()
     this.getAlldocumentTypes()
   }

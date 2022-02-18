@@ -1,1 +1,153 @@
-<p>modificar-resource works!</p>
+
+<ng-template [ngIf]="tabla == true">
+    <app-mostrar-resources [mostrar]="mostrar" (modificar)="actualizar($event)"></app-mostrar-resources>
+</ng-template>
+  <ng-template [ngIf]="tabla == false">
+  
+    
+  <form [formGroup]="form" novalidate >
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
+    [contentStyle]="{'overflow-y': 'auto'}"[closable]="false" [closeOnEscape]="false" >
+        
+        <div [style]="{'margin-top':'-1px'}" >
+            <div fxLayout="row" class="titleCard">
+              <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Editar Recurso</h2>
+          </div>
+  
+          <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="text" class="p-inputtext-lg" pInputText name="path" 
+                placeholder="PATH" formControlName="path" title="PATH" required>         
+            </div>
+            </div>
+            
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup" >
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                class="p-inputtext-lg"  name="method" placeholder="METHOD" title="METHOD"
+                formControlName="method"  >         
+            </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="grid p-fluid">
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input class="p-inputtext-lg" formControlName="id_padre" 
+                type="text" pInputText  name="id_padre" 
+                placeholder="ID_PADRE" title="ID_PADRE">         
+            </div>
+            </div>
+            
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input class="p-inputtext-lg" formControlName="icono" 
+                type="text" pInputText  name="icono" 
+                placeholder="ICONO" required title="ICONO">         
+            </div>
+
+            </div>
+
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="col-12 md:col-6 lg:col-6">
+              
+              <div class="p-inputgroup" >
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                class="p-inputtext-lg"  name="link" placeholder="LINK" formControlName="link"
+                 required title="LINK" >         
+            </div>
+
+            </div>
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input class="p-inputtext-lg" type="text" formControlName="titulo"
+                pInputText  name="titulo" 
+                placeholder="TITULO" title="TITULO"
+                required>         
+            </div>
+
+            </div>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="20px">
+            <button pButton type="button" (click)="addRoles($event)" 
+            class="p-button-warning p-button-raised p-button-rounded"
+             label="Add Roles"></button>  
+          </div>
+
+          <br>
+          <div fxLayout="row" fxLayoutGap="20px">
+            <div class="table-wrapper" >
+              <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                <ng-template pTemplate="header">
+                  <tr>
+                      <th pSortableColumn="id">Roles<p-sortIcon field="id"></p-sortIcon></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                <tr [pSelectableRow]="rowData">
+                    <td>
+                      <div formArrayName="Roles"> 
+                        <div *ngFor="let item of getRoles.controls; 
+                        let pointIndex=index" [formGroupName]="pointIndex">
+                          <div class="grupo"> 
+                            <div class="grupoinput1">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="roles" [filter]="true"
+                                  formControlName="RoleId" name="RoleId"
+                                 label="SELECCIONE ROLES" 
+                                [style]="{'width':'100%','margin-bottom':'20px'}"
+                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                [required]="true" placeholder="SELECCIONE ROLES"  >
+                                <ng-template let-option pTemplate="item"  >
+                                  <span >{{option.name  | titlecase}}</span>
+                              </ng-template>
+                              </p-dropdown>
+                            </div>
+                            
+                          <span class="bottomdelete" style="margin-top: 5px;">
+                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                            class="p-button-rounded p-button-danger"></button>
+                            <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                            (click)="removeRoles(pointIndex,$event)" 
+                            label="eliminar"></button> -->
+                          </span>
+                          
+                        </div>
+                        </div>
+                      </div> 
+                    </td>
+                </tr>
+              </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+  
+                <div fxLayout="row" class="titleCard" >
+                  <button pButton type="button"(click)="onSubmit($event)" icon="pi pi-check" [disabled]="!form.valid"
+                 class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
+                  <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            </div>
+           
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>

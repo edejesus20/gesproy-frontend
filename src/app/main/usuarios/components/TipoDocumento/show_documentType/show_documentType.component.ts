@@ -146,7 +146,7 @@ export class Show_documentTypeComponent implements OnInit {
           const worksheet = xlsx.utils.json_to_sheet(array);
           const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
           const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-          this.saveAsExcelFile(excelBuffer, "categoryGroups");
+          this.saveAsExcelFile(excelBuffer, "documentTypes");
       });
     }
     
