@@ -1,28 +1,33 @@
-<!-- 
-<mat-card>
-    <div fxLayout="row" class="titleCard">
-      <mat-icon >
-        credit_card
-      </mat-icon>
-      <mat-card-title >Ingresar Rol</mat-card-title>
-    </div>
-      <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
-        <mat-card-content fxLayout="column wrap" >
-            <div> 
-                <div fxLayout="row"  fxLayoutGap="20px">
-                    <div> 
-                        <mat-form-field>
-                          <input matInput type="text" placeholder="Nombre" formControlName="name" required>
-                        </mat-form-field>
-                      </div>
-                  </div>
-              </div>
-          </mat-card-content>
-    
-          <mat-card-actions>
-            <button type="submit" [disabled]="form.invalid" mat-button color="primary">Crear Rol</button>
-          </mat-card-actions>
-      </form>
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Rol</h2>
+          </div>
 
-  </mat-card>
-   -->
+          <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre">
+              <i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" pInputText name="name" [pKeyFilter]="blockSpecial"
+             formControlName="name" placeholder="NOMBRE" required>  
+       
+        </div>
+      </div>
+              
+          <ng-template pTemplate="footer">
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+                class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

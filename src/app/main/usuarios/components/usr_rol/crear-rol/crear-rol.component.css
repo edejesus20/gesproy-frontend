@@ -1,136 +1,52 @@
 mat-error > span:not(:first-child) {
-    display: none;
-  }
-  
-  :host{
-    display: flex;
-    justify-content: center;
-    margin: 0;
-  }
-  
-  .mat-form-field{
-    width: 100%;
-    min-width: auto;
-  
-  }
-  .grupo{
-    width:auto;
-    display:flex;
-  }
-  .grupoinput{
-    width: 50%;
-    padding-right: 10px;
-    min-width: auto;
-  }
-  .grupoinput1{
-     width: 85%;
-    padding-right: 10px;
-    min-width: auto;
-  }
-  mat-card{
-    width: 50%;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  mat-icon{
-      font-size: 30px;
-  }
-  
-  .titleCard{
-    margin: 0 0 10px 0;
-    display:flex;
-    justify-content:center;
-    align-content: center;
-  }
-  mat-card-title{
-    padding-left:10px;
-    padding-top:10px;
+  display: none;
 }
 
-  .categ-section {
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: flex-end;
-    height: 80px;
-  }
-  
-  .categ-margin {
-    margin: 0;
-  }
-  
-  .opcStatus{
-    margin: 0 40px;
-  }
-
-  /**botones*/
-
-  
-.container{
-  padding-top: 10px;
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  align-items:unset;
-  align-content:flex-start;
-   /*height:100vh; Este valor lo puedes omitir si la altura de tu componente esta definida*/
+:host{
+  display: flex;
+  justify-content: center;
+  margin: 0;
 }
 
-.item{
-  order:0;
-  flex:0 1 auto;
-  align-self:auto;
-  height:auto;
-  width:auto;
-}
-.nohayregistro{
-  display:flex;
-  padding-top: 10px;
-  justify-content:center;
-  align-items:center;
-  font-size: 25px;
-  height:40px;
-  font-weight:lighter;
-}
-.buscar{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.buscarinput{
-  width: 80%;
-}
-/* tabla**/
-.mat-row .mat-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-row:hover .mat-cell {
-  border-color: currentColor;
-}
-
-.mat-row:focus {
-  font-weight: bold;
-} 
-
-table {
+.mat-form-field{
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  min-width: 500px;
+  min-width: 400px;
 }
 
-th.mat-header-cell {
-  text-align: left;
-  max-width: 300px;
+mat-card{
+  width: 70%;
 }
 
-th{ 
-font-weight: bold;
-font-size: 18px;}
-td{
-text-align:justify;
+.mat-icon{
+  font-size: 30px;
+  background-color:707070
+}
+
+.titleCard{
+margin: 0 0 10px 0;
+display:flex;
+justify-content:center;
+align-content: center;
+}
+.fondebabutton{
+color:#707070;
+}
+mat-card-title{
+padding-left:10px;
+padding-top:10px;
+}
+.categ-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  /* justify-content: flex-end; */
+  height: 80px;
+}
+
+.categ-margin {
+  margin: 0;
+}
+
+.opcStatus{
+  margin: 0 40px;
 }
