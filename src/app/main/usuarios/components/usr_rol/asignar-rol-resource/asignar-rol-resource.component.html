@@ -1,143 +1,148 @@
-<!-- <mat-card>
-    <div fxLayout="row" class="titleCard">
-      <mat-icon >
-        credit_card
-      </mat-icon>
-      <mat-card-title >Asignar Rol a Recursos</mat-card-title>
-    </div>
- 
-<form [formGroup]="form2" novalidate (ngSubmit)="onSubmit2()" fxLayout="column" class="tittleForm">
-              <div fxLayout="row"  fxLayoutGap="20px">
-                <div class="buscar"> 
-                    <mat-form-field flex class="buscarinput">
-                    <input matInput (keyup)="Buscar($event)" placeholder="Digite Titulo o Path" #input>
-                    </mat-form-field>     
-                </div>
-              </div>
-        
-        <div class="table-wrapper">
-         
-          <ng-template [ngIf]="dataSource.filteredData.length > 0">
-              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
-               
-                       
-                       
-                       <ng-container matColumnDef="ID">
-                        
-                        <th mat-header-cell *matHeaderCellDef>
-                          <ng-template [ngIf]="dataSource.filteredData.length <= 100">
-                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                        [checked]="selection.hasValue() && isAllSelected()"
-                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                        [aria-label]="checkboxLabel()" disabled>
-                          </mat-checkbox>
-                        </ng-template>
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                          <ng-template [ngIf]="dataSource.filteredData.length <= 100">
-                          <mat-checkbox (click)="$event.stopPropagation()"
-                                        (change)="$event ? selection.toggle(element) : null"
-                                        [checked]="selection.isSelected(element)"
-                                        [aria-label]="checkboxLabel(element)" >
-                          </mat-checkbox>
-                        </ng-template>
-                        </td>
-                        
-                          <th mat-header-cell *matHeaderCellDef >
-                            <ng-template [ngIf]="dataSource.filteredData.length > 7">ID </ng-template></th>
-                              <td mat-cell *matCellDef="let element"> 
-                                <ng-template [ngIf]="dataSource.filteredData.length > 7">{{element.id}}</ng-template>
-                              </td>
-                      </ng-container>
-                
-                <ng-container matColumnDef="titulo">
-                  <th mat-header-cell *matHeaderCellDef > Titulo </th>
-                  <td mat-cell *matCellDef="let element"> {{element.titulo | titlecase}}</td>
-                </ng-container>
-                <ng-container matColumnDef="method">
-                  <th mat-header-cell *matHeaderCellDef > Method </th>
-                  <td mat-cell *matCellDef="let element"> {{element.method}}</td>
-                </ng-container>
-                <ng-container matColumnDef="path">
-                  <th mat-header-cell *matHeaderCellDef > Path </th>
-                  <td mat-cell *matCellDef="let element"> {{element.path}}</td>
-                </ng-container>
-                
-                <ng-container matColumnDef="Roles">
-                  <th mat-header-cell *matHeaderCellDef > Roles </th>
-                  <td mat-cell *matCellDef="let element">
-                      <ng-template [ngIf]="element.Roles.length > 1">
-                          <span *ngFor="let item of element.Roles" >
-                              {{item.name | titlecase}},  
-                        </span>
-                      </ng-template>
-                      <ng-template [ngIf]="element.Roles.length == 1">
-                        <span *ngFor="let item of element.Roles" >
-                            {{item.name | titlecase}}  
-                      </span>
-                    </ng-template>
-                      </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-            </table>
-            <br>
-            
-            
-            <div fxLayout="row" fxLayoutGap="20px">
-              <button mat-flat-button color="primary" (click)="asignarRoles($event)">Add Rol</button>
-            </div>
-            <br>
-                    <div fxLayout="row" fxLayoutGap="20px">
-                      <div class="table-wrapper" >
-                        <table mat-table [dataSource]="algo" class="mat-elevation-z8" *ngIf="mostrar == true">
-                            <ng-container matColumnDef="roles">
-                                <th mat-header-cell *matHeaderCellDef > Roles </th>
-                                <td mat-cell *matCellDef="let element"> 
-                                  <div formArrayName="Roles1" > 
-                                    <div *ngFor="let item of getRoles1.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                                      <div class="grupo"> 
-                                      <mat-form-field class="grupoinput1">
-                                        <mat-label>Rol</mat-label>
-                                        <mat-select formControlName="RoleId" required>
-                                          <mat-option *ngFor="let item of roles" [value]="item.id">{{ item.name | titlecase}}</mat-option>
-                                        </mat-select>
-                                      </mat-form-field>
-                                      <span class="bottomdelete">
-                                        <button  mat-flat-button color="warn" (click)="removeRoles(pointIndex,$event)">
-                                          <mat-icon>delete</mat-icon>
-                                        </button>
-                                      </span>
-                                      
-                                    </div>
-                                    </div>
-                                  </div> 
-                                </td>
-                             
-                            </ng-container>
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                        </table>
-                      </div>
-                    </div>
-          </ng-template>
-          
-          
-          <ng-template [ngIf]="dataSource.filteredData.length == 0">
-            <div mat-table class="mat-elevation-z8" >
-              <div class="nohayregistro"> 
-                No existe el registro
-              </div>
-            </div>
-          </ng-template>
-  
-        </div>
-        <br>
-        <mat-card-actions>
-          <button type="submit" [disabled]="form2.invalid" mat-button color="primary">Asignar Rol</button>
-        </mat-card-actions>
-</form>
-</mat-card>
+<form [formGroup]="form" novalidate  >
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '85vw','height': '70vw'}" 
+  [contentStyle]="{'overflow-y': 'auto'}"
 
- -->
+  [closable]="false" [closeOnEscape]="false" 
+      >
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Asignar Rol a Recursos</h2>
+          </div>
+          
+                <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+                  <div class="col-12 md:col-12 lg:col-12">
+                    <p-table 
+                    #dt1 [value]="resources" dataKey="id" id="todo"
+                    [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+                    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+                    [globalFilterFields]="['id','path','method','icono','link','titulo']"
+                    [columns]="cols"
+                    [filterDelay]="0"
+                    [scrollable]="true" scrollHeight="250px"
+                    (selectionChange)="onSelectionChange($event)" 
+                    [selectAll]="selectAll" 
+                    (selectAllChange)="onSelectAllChange($event)">
+                    <ng-template pTemplate="caption">
+                      <div class="flex align-items-center justify-content-between">
+                        <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Recursos</h2>
+                        
+                          <span class="p-input-icon-left ml-7">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" 
+                            style="width: 70%;border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+                            (input)="Buscar($event, dt1)" placeholder="Buscar la palabra clave.." />
+                        </span>
+                        
+                          
+                      </div>
+                      
+                  </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                          <th style="min-width:40px">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                            <!-- <th ></th> -->
+                            <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
+                            <th style="min-width:200px" pSortableColumn="path">RUTA<p-sortIcon field="path"></p-sortIcon></th>
+                            <th style="min-width:100px" pSortableColumn="method">METHODO<p-sortIcon field="method"></p-sortIcon></th>
+                            <th style="min-width:100px" pSortableColumn="icono">ICONO<p-sortIcon field="icono"></p-sortIcon></th>
+                            <th style="min-width:270px" pSortableColumn="link">ENLACE<p-sortIcon field="link"></p-sortIcon></th>
+                            <th style="min-width:200px" pSortableColumn="titulo">TITULO<p-sortIcon field="titulo"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item>
+                        <tr>
+                            <td style="min-width:40px">
+                                <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                            </td>
+                            <!-- <td>{{item.id}}</td> -->
+                            <td style="min-width:200px">{{item.path | titlecase}}</td>
+                            <td style="min-width:100px">{{item.method | titlecase}}</td>
+                            <td style="min-width:100px">{{item.icono | titlecase}}</td>
+                            <td style="min-width:270px">{{item.link | titlecase}}</td>
+                            <td style="min-width:200px">{{item.titulo | titlecase}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                  </div>
+                </div>
+
+
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <button pButton type="button" (click)="addRoles($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Roles"></button>  
+                </div>
+      
+                <br>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <div class="table-wrapper" >
+                    <p-table [value]="algo" *ngIf="mostrar == true"> 
+                      <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="id">Roles<p-sortIcon field="id"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                      <tr [pSelectableRow]="rowData">
+                          <td>
+                            <div formArrayName="Roles"> 
+                              <div *ngFor="let item of getRoles.controls; 
+                              let pointIndex=index" [formGroupName]="pointIndex">
+                              <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+                                <div class="col-12 sm:col-11 md:col-11 lg:col-11">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="roles" [filter]="true"
+                                      formControlName="RoleId" name="RoleId"
+                                     label="SELECCIONE ROLES" 
+                                    [style]="{'width':'100%','margin-bottom':'20px'}"
+                                    optionvalue="id" optionLabel="name"  filterBy="name"
+                                    [required]="true" placeholder="SELECCIONE ROLES"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.name  | titlecase}}</span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                </div>
+                                <div class="col-12 sm:col-1 md:col-1 lg:col-1">
+                                  <span class="bottomdelete" style="margin-top: 5px;">
+                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                                    class="p-button-rounded p-button-danger"></button>
+                                    <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                                    (click)="removeRoles(pointIndex,$event)" 
+                                    label="eliminar"></button> -->
+                                  </span>
+                                </div>
+
+                              </div>
+                              </div> 
+                            </div>
+                       
+                          </td>
+                      </tr>
+                    </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+      
+      </div>
+
+            
+            <div fxLayout="row" class="titleCard">
+              <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
+               icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
+               label="Enviar Registro" styleClass="mr-2"></button>
+            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+        </div>
+       
+        
+            
+</p-dialog>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

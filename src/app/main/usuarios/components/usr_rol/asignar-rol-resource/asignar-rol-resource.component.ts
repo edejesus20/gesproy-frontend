@@ -1,15 +1,13 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import { MatTableDataSource } from '@angular/material/table';
+const translate = require('translate');
 import { Router } from '@angular/router';
 import { ResourcesService } from 'src/app/core/services/usuarios/resources.service';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { assinRoleResourceI } from 'src/app/models/authorization/usr_assinRoleResource';
 import { ResourceI } from 'src/app/models/authorization/usr_resource';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
-
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 @Component({
   selector: 'app-asignar-rol-resource',
   templateUrl: './asignar-rol-resource.component.html',
@@ -20,152 +18,192 @@ export class AsignarRolResourceComponent implements OnInit {
   public resources: ResourceI[]=[];
   public mostrar:boolean = false
   public roles: RoleI[]=[];
-  public dataSource:any=[]
-  public selection:any=[]
-  public displayedColumns1: string[] = ['ID','titulo','method','path','Roles'];
-  public displayedColumns2: string[] =['roles'];
+  public Roles1:any[] =[]
+  displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
   public algo:number[]=[0];
-  //columnas para las tablas
+  selectAll: boolean = false;
+  totalRecords: number=0
+  first = 0;
+  loading: boolean = true;
+  rows = 1;
+  cols: any[]=[];
+  exportColumns: any[]=[];
+  selectedProducts: ResourceI[]=[];
 
-  public form2:FormGroup=this.formBuilder.group({
+
+  public form:FormGroup=this.formBuilder.group({
     //select: ['', [Validators.required]],
-    Roles1: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
     private rolesService: RolesService,
     private resourcesService: ResourcesService,
+    private primengConfig: PrimeNGConfig,
+    private messageService:MessageService,
     private router: Router,
-    // private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
+    this.cols = [
+      { field: 'id', header: 'Id' },
+      { field: 'path', header: 'Ruta | Path' },
+      { field: 'method', header: 'Metodo' },
+      { field: 'icono', header: 'Icono' },
+      { field: 'link', header: 'Enlace' },
+      { field: 'titulo', header: 'Titulo' },
+    ];
+    this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   this.getUsrRoles()
   this.getUsrResource()
+
+  this.loading = false;
   }
+
+
+
+public onSelectionChange(value = []) {
+    this.selectAll = value.length === this.totalRecords;
+    this.selectedProducts = value;
+}
+
+public onSelectAllChange(event:any) {
+    const checked = event.checked;
+
+    if (checked) {
+        this.resourcesService.getResource().subscribe(res => {
+            this.selectedProducts = res.resources;
+            this.selectAll = true;
+        });
+    }
+    else {
+        this.selectedProducts = [];
+        this.selectAll = false;
+    }
+}
+
+
+
   getUsrResource() {
   this.resourcesService.getResource().subscribe((ResourceFromApi) => {
     this.resources = ResourceFromApi.resources;
-    //this.dataSource2 = new MatTableDataSource(this.resources)
-    // this.dataSource = new MatTableDataSource<ResourceI>(this.resources);
-    this.selection = new SelectionModel<ResourceI>(true, []);
-    //console.log(this.resources);
   }, error => console.error(error));
   }
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
       this.roles = rolesFromApi.roles;
-      //console.log(this.roles);
     }, error => console.error(error));
   }
 
-
-    /** para el checkbox */
-    isAllSelected() {
-      const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.data.length;
-      return numSelected === numRows;
-    }
-
-
-    masterToggle() {
-      if (this.isAllSelected()) {
-        this.selection.clear();
-        return;
-      }
-
-      this.selection.select(...this.dataSource.data);
-    }
-
-
-    checkboxLabel(row?: ResourceI): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-      }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id}`;
-    }
-
-  Buscar(event: Event){
+  Buscar(event: Event, dt1:any){
     event.preventDefault();
       const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-      this.mostrar = true;
+      dt1.filterGlobal(filterValue, 'contains')
+      console.log('aqui',dt1)
   }
-  //enviar formularo asignar roles a usuarios
+
 
     //enviar formularo asignar roles a recursos
-    public onSubmit2():void {
-
+    public onSubmit(e:Event):void {
+      e.preventDefault()
       const array:any=[]
+      let arrRoles:any=[]=this.form.value.Roles
 
-      for (let recurso of this.selection._selected) { 
+      if(this.Roles1.length == 0 || this.Roles1 == []){
 
-        for (let role of this.form2.value.Roles1){
+        let control = <FormArray>this.form.controls['Roles']
+        for (const key of control.value) {
+          key.RoleId=key.RoleId.id 
+          this.Roles1.push({
+          RoleId:key.RoleId,
+          })
+        }
+        arrRoles = this.form.value.Roles
+        // console.log('aqui')
+      }else{
+        arrRoles = this.Roles1
+      }
+
+      for (let recurso of this.selectedProducts) { 
+        for (let role of arrRoles){
           array.push(
             {
                 "ResourceId":recurso.id,
                 "RoleId":role.RoleId   
-            }
-        )
-        }
-        
+            })
+        } 
       }
-      //console.log(array)
       const formValue:assinRoleResourceI={
         RecursosRoles:array
       }
-      console.log(formValue)
-      this.rolesService.assinRoleResource(formValue).subscribe(
-        () => {
-          // this.snackBar.open('Asignado exitosamente', 'Ok', {
-          //   duration: 5000,
-          // });
-          this.router.navigateByUrl('/usuarios/resources');
-        },
-        err => {
-          // this.snackBar.open('Error. La Asignacion no pudo ser realizada', 'Ok', {
-          //   duration: 5000,
-          // });
-          console.error(err);
+
+
+      
+      // console.log(formValue)
+
+      if(this.selectedProducts != [] && formValue.RecursosRoles.length > 0){
+
+    this.rolesService.assinRoleResource(formValue).subscribe(
+      () => {
+              var date = new Date('2020-01-01 00:00:03');
+                function padLeft(n:any){ 
+                  return n ="00".substring(0, "00".length - n.length) + n;
+                }
+                var interval = setInterval(() => {
+                var minutes = padLeft(date.getMinutes() + "");
+                var seconds = padLeft(date.getSeconds() + "");
+                // console.log(minutes, seconds);
+                if( seconds == '03') {
+                this.messageService.add({severity:'success', summary: 'Success', 
+                detail: 'Registro de Recurso Creado con exito'});
+                }
+                date = new Date(date.getTime() - 1000);
+                if( minutes == '00' && seconds == '01' ) {
+                  this.router.navigateByUrl('/usuarios/resources');
+                  clearInterval(interval); 
+                }
+          }, 1000);
+      },async error => {
+        if(error != undefined) {
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }
-      );
+      });
+    }else{
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Selecionar Recursos'});
+    }
+    
     }
 
-  //para metodos asignar roles
-  get getRoles1() {
-    return this.form2.get('Roles1') as FormArray;//obtener todos los formularios
-  }
-
-  asignarRoles(event: Event){
-    //console.log(this.selection._selected)
-    //console.log(this.form2.value.Roles1)
-    event.preventDefault();
-    const control = <FormArray>this.form2.controls['Roles1']
-    //console.log(control)      
-      //crear los controles del array
-    if(control.length == 0 && this.mostrar == false){
-      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
+ 
+    get getRoles() {
+      return this.form.get('Roles') as FormArray;
     }
-    if(control.length >= 1 && this.mostrar == true){
-      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
-
+  
+    addRoles(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form.controls['Roles']
+      if(control.length == 0 && this.mostrar == false){
+        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+      }
+      if(control.length >= 1 && this.mostrar == true){
+        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+  
+      }
+        this.mostrar=true
     }
-
-    this.mostrar =true
-  }
-
-  removeRoles(index: number,event: Event){
-    event.preventDefault();
-      let control = <FormArray>this.form2.controls['Roles1']//aceder al control
+    removeRoles(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form.controls['Roles']
       control.removeAt(index)
       if(control.length <= 0){
        this.mostrar=false
+      }
     }
-    
-  }
 
-
-  //get select() { return this.form2.get('select'); }
-  
-  get Roles1() { return this.form2.get('Roles1'); }
 }

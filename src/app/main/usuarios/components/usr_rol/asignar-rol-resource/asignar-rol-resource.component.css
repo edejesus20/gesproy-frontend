@@ -23,7 +23,7 @@ mat-error > span:not(:first-child) {
     min-width: auto;
   }
   .grupoinput1{
-     width: 85%;
+     width: 100%;
     padding-right: 10px;
     min-width: auto;
   }

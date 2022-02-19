@@ -89,12 +89,8 @@ export class AsignarRolUserComponent implements OnInit {
 
 
   asignarRoles(event: Event){
-    //console.log(this.selection._selected)
-    //console.log(this.form2.value.Roles1)
     event.preventDefault();
       const control = <FormArray>this.form1.controls['Roles']
-      //console.log(control)      
-        //crear los controles del array
       if(control.length == 0 && this.mostrar == false){
         control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
       }
@@ -115,6 +111,5 @@ export class AsignarRolUserComponent implements OnInit {
       }
   }
 
-  get select() { return this.form1.get('select'); }
-  get Roles() { return this.form1.get('Roles'); }
+
 }

@@ -30,7 +30,8 @@ export class MostrarResourcesComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 
-  ngOnInit(): void {this.primengConfig.ripple = true;
+  ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.loading = false;
     this.cols = [
     { field: 'id', header: 'Id' },
