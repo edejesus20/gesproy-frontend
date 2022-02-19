@@ -63,7 +63,31 @@ getUser(): Observable<{users: PersonI[]}> {
     )
   }
 }
-
+userteacher(): Observable<{users: PersonI[]}> {
+  let token : string | null=localStorage.getItem('token')
+  if(token != null) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'token':token
+      })
+    }
+    // console.log(httpOptions)
+    return this.http
+      .get<{users: PersonI[]}>(this.API_URI + '/api/userteacher',httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }else{
+    return this.http
+    .get<{users: PersonI[]}>(this.API_URI + '/api/userteacher')
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+}
 
 getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
   return this.http
