@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import { MatTableDataSource } from '@angular/material/table';
+const translate = require('translate');
 import { Router } from '@angular/router';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { assinRoleUserI } from 'src/app/models/usr_assinRoleUser';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
-import { UserI } from 'src/app/models/authorization/usr_User';
 import { PersonI } from 'src/app/models/user/person';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-asignar-rol-user',
@@ -19,26 +18,48 @@ export class AsignarRolUserComponent implements OnInit {
   public users:PersonI[]=[]
   public mostrar:boolean = false
   public roles: RoleI[]=[];
-  public dataSource:any=[]
-  public displayedColumns: string[] = ['ID','fullName','username','email','Rol'];
-  public displayedColumns2: string[] =['roles'];
+  public Roles1:any[] =[]
+  displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
   public algo:number[]=[0];
-  
-  public form1:FormGroup=this.formBuilder.group({
-    select: ['', [Validators.required]],
+ 
+  selectAll: boolean = false;
+  totalRecords: number=0
+  first = 0;
+  loading: boolean = true;
+  rows = 1;
+  cols: any[]=[];
+  exportColumns: any[]=[];
+  selectedProducts: PersonI[]=[];
+
+  public form:FormGroup=this.formBuilder.group({
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
     private rolesService: RolesService,
     private userService: UserService,
+    private primengConfig: PrimeNGConfig,
+    private messageService:MessageService,
     private router: Router,
-    // private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
     this.getUser()
   this.getUsrRoles()
+  this.loading = false;
+  this.primengConfig.ripple = true;
+    this.cols = [
+      { field: 'id', header: 'ID' },
+      { field: 'name', header: 'Nombre' },
+      { field: 'surname', header: 'Apellido' },
+      { field: 'identification', header: 'Identificacion' },
+      { field: 'User.email', header: 'Correo Electronico' },
+      { field: 'phone', header: 'Telefono' },
+      { field: 'address', header: 'Direccion' },
+      { field: 'Gender.name', header: 'Genero' },
+    ];
+    this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   }
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
@@ -49,67 +70,134 @@ export class AsignarRolUserComponent implements OnInit {
   getUser() {
     this.userService.getUser().subscribe((userFromApi) => {
       this.users = userFromApi.users;
-      // this.dataSource = new MatTableDataSource(this.users)
-      //console.log(this.users)
-      //console.log(this.dataSource)
     }, error => console.error(error));
   }
-  Buscar(event: Event){
-    event.preventDefault();
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-      this.mostrar = true;
-  }
-  //enviar formularo asignar roles a usuarios
-  public onSubmit1():void {
-    const formValue1: assinRoleUserI = {
-      UserId:this.form1.value.select,
-      Roles:this.form1.value.Roles
+  public onSelectionChange(value = []) {
+    this.selectAll = value.length === this.totalRecords;
+    this.selectedProducts = value;
+}
+
+public onSelectAllChange(event:any) {
+    const checked = event.checked;
+
+    if (checked) {
+        this.userService.getUser().subscribe(res => {
+            this.selectedProducts = res.users;
+            this.selectAll = true;
+        });
     }
-    this.rolesService.assinRole(formValue1).subscribe(
-      () => {
-        // this.snackBar.open('Rol asignado exitosamente', 'Ok', {
-        //   duration: 5000,
-        // });
-        this.router.navigateByUrl('/usuarios/users');
-      },
-      err => {
-        // this.snackBar.open('Error. La Asignacion no pudo ser realizada', 'Ok', {
-        //   duration: 5000,
-        // });
-        console.error(err);
+    else {
+        this.selectedProducts = [];
+        this.selectAll = false;
+    }
+}
+Buscar(event: Event, dt1:any){
+  event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+    dt1.filterGlobal(filterValue, 'contains')
+    console.log('aqui',dt1)
+}
+
+  public onSubmit(e:Event):void {
+    e.preventDefault()
+    const array:any=[]
+    let arrRoles:any=[]=this.form.value.Roles
+
+    if(this.Roles1.length == 0 || this.Roles1 == []){
+
+      let control = <FormArray>this.form.controls['Roles']
+      for (const key of control.value) {
+        key.RoleId=key.RoleId.id 
+        this.Roles1.push({
+        RoleId:key.RoleId,
+        })
       }
-    );
-  }
+      arrRoles = this.form.value.Roles
+      // console.log('aqui')
+    }else{
+      arrRoles = this.Roles1
+    }
 
-  //para metodos asignar roles
-  get getRoles() {
-    return this.form1.get('Roles') as FormArray;//obtener todos los formularios
-  }
+    for (let recurso of this.selectedProducts) { 
+      for (let role of arrRoles){
+        array.push(
+          {
+              "UserId":recurso.UserId,
+              "RoleId":role.RoleId   
+          })
+      } 
+    }
+    const formValue:assinRoleUserI={
+      UsersRoles:array
+    }
 
 
-  asignarRoles(event: Event){
-    event.preventDefault();
-      const control = <FormArray>this.form1.controls['Roles']
-      if(control.length == 0 && this.mostrar == false){
-        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
+    
+    console.log(formValue)
+
+    if(this.selectedProducts != [] && formValue.UsersRoles.length > 0){
+
+      this.rolesService.assinRole(formValue).subscribe(
+    () => {
+            var date = new Date('2020-01-01 00:00:03');
+              function padLeft(n:any){ 
+                return n ="00".substring(0, "00".length - n.length) + n;
+              }
+              var interval = setInterval(() => {
+              var minutes = padLeft(date.getMinutes() + "");
+              var seconds = padLeft(date.getSeconds() + "");
+              // console.log(minutes, seconds);
+              if( seconds == '03') {
+              this.messageService.add({severity:'success', summary: 'Success', 
+              detail: 'Rol asignado a Usuario con exito'});
+              }
+              date = new Date(date.getTime() - 1000);
+              if( minutes == '00' && seconds == '01' ) {
+                this.router.navigateByUrl('/usuarios/users');
+                clearInterval(interval); 
+              }
+        }, 1000);
+    },async error => {
+      if(error != undefined) {
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
       }
-      if(control.length >= 1 && this.mostrar == true){
-        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
+    });
+  }else{
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Selecionar Usuarios'});
+  }
   
-      }
-        this.mostrar=true
   }
 
 
+  get getRoles() {
+    return this.form.get('Roles') as FormArray;
+  }
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Roles']
+    if(control.length == 0 && this.mostrar == false){
+      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+    }
+    if(control.length >= 1 && this.mostrar == true){
+      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+
+    }
+      this.mostrar=true
+  }
   removeRoles(index: number,event: Event){
     event.preventDefault();
-      let control = <FormArray>this.form1.controls['Roles']//aceder al control
-      control.removeAt(index)
-      if(control.length <= 0){
-       this.mostrar=false
-      }
+    let control = <FormArray>this.form.controls['Roles']
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrar=false
+    }
   }
+
 
 
 }

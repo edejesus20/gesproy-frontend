@@ -1,5 +1,10 @@
 export interface assinRoleUserI{
-    id?:number; 
-    UserId: string; 
-    Roles:[]
+    id?:number;
+   UsersRoles:[
+      {
+        UserId: string; 
+        RoleId:string;
+      }
+    ]
+
   }
