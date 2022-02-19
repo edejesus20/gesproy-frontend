@@ -57,7 +57,6 @@ export class CreateStudentComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
-    private programService: ProgramService ,
     private userService:UserService,
 
   ) { }
@@ -140,7 +139,7 @@ export class CreateStudentComponent implements OnInit {
   formValue.phone != ""&& formValue.email != "")
   ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
   ){
-  console.log(formValue)
+  // console.log(formValue)
     
         this.studentService.createItem(formValue).subscribe(
           () => {

@@ -12,6 +12,8 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { OcupationService } from 'src/app/core/services/usuer/Ocupation.service';
 import { OcupationI } from 'src/app/models/user/ocupation';
+import { PersonI } from 'src/app/models/user/person';
+import { UserService } from 'src/app/core/services/usuarios/user.service';
 let uploadefiles:Array<File>
 @Component({
   selector: 'app-create-administrative',
@@ -23,17 +25,22 @@ export class CreateAdministrativeComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
 
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    surname:['', [Validators.required]],
-    DocumentTypeId:['', [Validators.required]],
-    identification:['', [Validators.required]],
-    GenderId:['', [Validators.required]],
-    address:['', [Validators.required]],
-    phone:['', [Validators.required]],
-    email:['', [Validators.required]],
+    name:[''],
+    surname:[''],
+    DocumentTypeId:[''],
+    identification:[''],
+    GenderId:[''],
+    address:[''],
+    phone:[''],
+    email:[''],
+    UserId:[''],
     HeadquarterId:['', [Validators.required]],
     OcupationId:['', [Validators.required]],
    });
+
+   public mostrarUser:boolean=false;
+   public users:PersonI[]=[];
+   
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
@@ -48,6 +55,7 @@ export class CreateAdministrativeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private router: Router,
+    private userService:UserService,
 
     // private http: HttpClient,
   ) { }
@@ -57,6 +65,15 @@ export class CreateAdministrativeComponent implements OnInit {
     this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getAllocupations()
+    this.getAllUser()
+  }
+
+  getAllUser() {
+    this.userService.userteacher().subscribe(
+      (AdministrativeFromApi) => {
+        this.users = AdministrativeFromApi.userseadministrative;
+        console.log(this.users)
+      }, error => console.error(error));
   }
   private getAllgenders(selectId?: number) {
     this.genderService.getList().subscribe(
@@ -93,34 +110,52 @@ export class CreateAdministrativeComponent implements OnInit {
   public onSubmit(e: Event) {
     e.preventDefault()
 
-    const formValue={
-      name: this.form.value.name,
-      surname: this.form.value.surname,
-      DocumentTypeId: this.form.value.DocumentTypeId.id,
-      identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
-      username:'',
-      fullName:'',
-      email:this.form.value.email,
-      password:'',
-      UserId: 0,
-      OcupationId: this.form.value.OcupationId.id,
+    let formValue:any={}
+    if(this.mostrarUser == false){
+      formValue={
+        name: '',
+        surname: '',
+        DocumentTypeId: '',
+        identification: '',
+        GenderId: '',
+        address: '',
+        phone: '',
+        username:'',
+        fullName:'',
+        email:'',
+        password:'',
+        UserId:  this.form.value.UserId.UserId,
+        OcupationId: this.form.value.OcupationId.id,
       HeadquarterId: this.form.value.HeadquarterId.id
-    };
+      };
+    }
 
-            if(formValue.name != ""&&
-              formValue.surname != ""&&
-              formValue.DocumentTypeId != ( 0 || undefined)&&
-              formValue.OcupationId != ( 0 || undefined)&&
-              formValue.HeadquarterId != ( 0 || undefined)&&
-              formValue.identification != ""&&
-              formValue.GenderId != ( 0 || undefined)&&
-              formValue.address != ""&&
-              formValue.phone != ""&&
-              formValue.email != ""){
+    if(this.mostrarUser == true){
+      formValue={
+        name: this.form.value.name,
+        surname: this.form.value.surname,
+        DocumentTypeId: this.form.value.DocumentTypeId.id,
+        identification: this.form.value.identification,
+        GenderId: this.form.value.GenderId.id,
+        address: this.form.value.address,
+        phone: this.form.value.phone,
+        username:'',
+        fullName:'',
+        email:this.form.value.email,
+        password:'',
+        UserId: undefined,
+        OcupationId: this.form.value.OcupationId.id,
+      HeadquarterId: this.form.value.HeadquarterId.id
+      };
 
+    }
+    if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+    formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
+    formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+    formValue.phone != ""&& formValue.email != "")
+    ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
+    ){
+    // console.log(formValue)
 
             this.administrativeService.createItem(formValue).subscribe(
               () => {
@@ -155,6 +190,8 @@ export class CreateAdministrativeComponent implements OnInit {
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
           }
 }
+
+
   // onFileChange(e: Event) {
   //   e.preventDefault()
   //   const algo= (e.target as HTMLInputElement)
