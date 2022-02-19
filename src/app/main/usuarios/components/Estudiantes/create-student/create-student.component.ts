@@ -13,6 +13,7 @@ import { ProgramService } from 'src/app/core/services/program/program.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { ProgramI } from 'src/app/models/institution/program';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
+import { PersonI } from 'src/app/models/user/person';
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
@@ -27,14 +28,15 @@ export class CreateStudentComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    surname:['', [Validators.required]],
-    DocumentTypeId:['', [Validators.required]],
-    identification:['', [Validators.required]],
-    GenderId:['', [Validators.required]],
-    address:['', [Validators.required]],
-    phone:['', [Validators.required]],
-    email:['', [Validators.required]],
+    name:[''],
+    surname:[''],
+    DocumentTypeId:[''],
+    identification:[''],
+    GenderId:[''],
+    address:[''],
+    phone:[''],
+    email:[''],
+    UserId:[''],
     headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
       {
         StudentId:0,
@@ -44,6 +46,9 @@ export class CreateStudentComponent implements OnInit {
 
    public headquarterProgram: any[]=[]
    public headquarterProgramStudent1:any[]=[]
+
+   public mostrarUser:boolean=false;
+   public users:PersonI[]=[];
   constructor(
     private studentService:StudentService,
     private router: Router,
@@ -61,27 +66,58 @@ export class CreateStudentComponent implements OnInit {
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllheadquarters()
+    this.getAllUser()
   }
-  
+
+  getAllUser() {
+    this.userService.userteacher().subscribe(
+      (AdministrativeFromApi) => {
+        this.users = AdministrativeFromApi.usersestudiente;
+        console.log(this.users)
+      }, error => console.error(error));
+  }
   public onSubmit(e:Event) {
     e.preventDefault()
-          const formValue={
-            name: this.form.value.name,
-            surname: this.form.value.surname,
-            DocumentTypeId: this.form.value.DocumentTypeId.id,
-            identification: this.form.value.identification,
-            GenderId: this.form.value.GenderId.id,
-            address: this.form.value.address,
-            phone: this.form.value.phone,
-            username:'',
-            fullName:'',
-            email:this.form.value.email,
-            password:'',
-            UserId: 0,
-            headquarterProgramStudent: this.form.value.headquarterProgramStudent
-          };
 
-          if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
+    let formValue:any={}
+    if(this.mostrarUser == false){
+      formValue={
+        name: '',
+        surname: '',
+        DocumentTypeId: '',
+        identification: '',
+        GenderId: '',
+        address: '',
+        phone: '',
+        username:'',
+        fullName:'',
+        email:'',
+        password:'',
+        UserId:  this.form.value.UserId.UserId,
+        headquarterProgramStudent: this.form.value.headquarterProgramStudent
+      };
+    }
+
+    if(this.mostrarUser == true){
+      formValue={
+        name: this.form.value.name,
+        surname: this.form.value.surname,
+        DocumentTypeId: this.form.value.DocumentTypeId.id,
+        identification: this.form.value.identification,
+        GenderId: this.form.value.GenderId.id,
+        address: this.form.value.address,
+        phone: this.form.value.phone,
+        username:'',
+        fullName:'',
+        email:this.form.value.email,
+        password:'',
+        UserId: undefined,
+        headquarterProgramStudent: this.form.value.headquarterProgramStudent
+      };
+
+    }
+
+      if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
             for (const key of control.value) {
               key.HeadquarterProgramId=key.HeadquarterProgramId.id 
@@ -98,15 +134,13 @@ export class CreateStudentComponent implements OnInit {
 
           }
   //  console.log(formValue.headquarterProgramStudent)
-        if(
-          formValue.name != ""&&
-          formValue.surname != ""&&
-          formValue.DocumentTypeId != ( 0 || undefined)&&
-          formValue.identification != ""&&
-          formValue.GenderId != ( 0 || undefined)&&
-          formValue.address != ""&&
-          formValue.phone != ""&&
-          formValue.email != ""){
+  if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+  formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
+  formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+  formValue.phone != ""&& formValue.email != "")
+  ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
+  ){
+  console.log(formValue)
     
         this.studentService.createItem(formValue).subscribe(
           () => {

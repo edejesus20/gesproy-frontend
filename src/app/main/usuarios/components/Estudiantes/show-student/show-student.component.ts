@@ -41,6 +41,7 @@ export class ShowStudentComponent implements OnInit {
       { field: 'User.Person.identification', header: 'Identificacion' },
       { field: 'User.email', header: 'Correo Electronico' },
       { field: 'User.Person.phone', header: 'Telefono' },
+      { field: 'User.Person.Gender.name', header: 'Genero' },
   ];
 
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -79,6 +80,7 @@ export class ShowStudentComponent implements OnInit {
         Identificacion:key.User?.Person?.identification,
         Correo_Electronico:key.User?.email,
         Telefono:key.User?.Person?.phone,
+        Genero:key.User?.Person?.Gender?.name,
       })
     }
       import("xlsx").then(xlsx => {
@@ -107,6 +109,7 @@ export class ShowStudentComponent implements OnInit {
             col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_3:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            col_5:{ text: 'GENERO', style: 'tableHeader',fontSize: 12 ,bold: true, },
         }
       }]
     
@@ -115,7 +118,7 @@ export class ShowStudentComponent implements OnInit {
           if (headers.hasOwnProperty(key)){
               var header = headers[key];
               var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,header.fila_0.col_3,
-                header.fila_0.col_4
+                header.fila_0.col_4,header.fila_0.col_5
               ]
               body.push(row);
           }
@@ -130,6 +133,7 @@ export class ShowStudentComponent implements OnInit {
                 data.User?.fullName.toString(),
                 data.User?.email.toString(),
                 data.User?.Person?.phone?.toString(),
+                data.User?.Person?.Gender?.name.toString(),
               ]
     
               body.push(row);
@@ -163,7 +167,7 @@ export class ShowStudentComponent implements OnInit {
             style: 'tableExample',
             table: {
               headerRows: 1,
-                widths: [ '25%', '25%','25%','25%'],
+                widths: [ '20%', '20%','20%','20%','20%'],
     
                 body: body
             },

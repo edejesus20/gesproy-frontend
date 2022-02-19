@@ -6,7 +6,7 @@
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
     [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
-    'User.Person.phone']"
+    'User.Person.phone','User.Person.Gender.name']" 
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -42,6 +42,7 @@
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
+          <th pSortableColumn="User.Person.Gender.name">GENERO<p-sortIcon field="User.Person.Gender.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -61,6 +62,7 @@
           <td>{{item.User?.Person?.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
+          <td>{{item.User?.Person?.Gender?.name}}</td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >
