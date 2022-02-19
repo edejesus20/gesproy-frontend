@@ -129,17 +129,15 @@ export class CreateStudentComponent implements OnInit {
             // console.log('aqui')
           }else{
             formValue.headquarterProgramStudent = this.headquarterProgramStudent1
-            // console.log('aqui2')
-
           }
-  //  console.log(formValue.headquarterProgramStudent)
-  if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
-  formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
-  formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-  formValue.phone != ""&& formValue.email != "")
-  ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
-  ){
-  // console.log(formValue)
+
+      if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+      formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
+      formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+      formValue.phone != ""&& formValue.email != "")
+      ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
+      ){
+ 
     
         this.studentService.createItem(formValue).subscribe(
           () => {
