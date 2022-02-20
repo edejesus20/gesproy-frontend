@@ -2,17 +2,17 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { ProjetI } from 'src/app/models/projet/projet';
+import { LineI } from 'src/app/models/projet/line';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
-export class ProjetService {
+export class LineService {
+
 
   API_URI = environment.API_URI;
-  base_path_post = `${this.API_URI}/api/Projet`;
-  base_path_get = `${this.API_URI}/api/Projet`;
+  base_path_post = `${this.API_URI}/api/line`;
+  base_path_get = `${this.API_URI}/api/line`;
 
 constructor(private http: HttpClient) { }
 
@@ -37,9 +37,9 @@ handleError(res: Response) {
 
 
 // Create a new item
-createItem(seedbeds: ProjetI): Observable<ProjetI> {
+createItem(line: LineI): Observable<LineI> {
   return this.http
-    .post<ProjetI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<LineI>(this.base_path_post, JSON.stringify(line), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -47,9 +47,9 @@ createItem(seedbeds: ProjetI): Observable<ProjetI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<ProjetI> {
+getItem(id: number): Observable<LineI> {
   return this.http
-    .get<ProjetI>(this.base_path_get + '/' + id)
+    .get<LineI>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -57,9 +57,9 @@ getItem(id: number): Observable<ProjetI> {
 }
 
 // Get students data
-getList(): Observable<{ projets: ProjetI[] }> {
+getList(): Observable<{ lines: LineI[] }> {
  return this.http
-   .get<{ projets: ProjetI[] }>(this.base_path_get)
+   .get<{ lines: LineI[] }>(this.base_path_get)
    .pipe(
      retry(2),
      catchError(this.handleError)
@@ -67,9 +67,9 @@ getList(): Observable<{ projets: ProjetI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:ProjetI): Observable<ProjetI> {
+updateItem(id:number, line:LineI): Observable<LineI> {
   return this.http
-    .patch<ProjetI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<LineI>(this.base_path_get + '/' + id, JSON.stringify(line), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -79,7 +79,7 @@ updateItem(id:number, item:ProjetI): Observable<ProjetI> {
 // Delete item by id
 deleteItem(id:number) {
   return this.http
-    .delete<ProjetI>(this.base_path_get + '/' + id, this.httpOptions)
+    .delete<LineI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

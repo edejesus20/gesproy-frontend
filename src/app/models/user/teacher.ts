@@ -3,7 +3,9 @@ import { ColcienciaCategoryI } from "../institution/colciencias_category";
 import { GroupI } from "../institution/group";
 import { HeadquarterProgramI, HeadquarterProgramTeacherI } from "../institution/headquarter";
 import { ScaleI } from "../institution/scale";
+import { SeedbedI } from "../institution/seedbed";
 import { TrainingI, TrainingTeacherI } from "../institution/training";
+import { LineI } from "../projet/line";
 
 export interface TeacherI {
     id?:number
@@ -16,6 +18,8 @@ export interface TeacherI {
     Groups?:GroupI[]
     ColcienciaCategory?:ColcienciaCategoryI,
     TrainingTeacher?:TrainingTeacherI[]
+    Seedbeds?:SeedbedI[]
+    Lines?:LineI[]
     Trainings?:TrainingI[]
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
     HeadquarterPrograms?:HeadquarterProgramI[]

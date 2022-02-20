@@ -67,9 +67,10 @@ import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
-import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
-
+import {FileUploadModule} from 'primeng/fileupload';
 import {FieldsetModule} from 'primeng/fieldset';
+
+import { AsignarTeacherComponent } from './components/Docentes/AsignarTeacher/AsignarTeacher.component';
 import { Show_genderComponent } from './components/Genero/show_gender/show_gender.component';
 import { Show_one_genderComponent } from './components/Genero/show_one_gender/show_one_gender.component';
 import { Create_genderComponent } from './components/Genero/create_gender/create_gender.component';
@@ -85,7 +86,7 @@ import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupati
 import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
 import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
 import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
-import {FileUploadModule} from 'primeng/fileupload';
+
 @NgModule({
   declarations: [
     UsuariosComponent,

@@ -1,21 +1,22 @@
 <ng-template [ngIf]="isLoggedIn === true">
 
-        <!-- <p-menubar [model]="items2" [style]="{'background-color':'#e9682e'}"> -->
+        <!-- <p-menubar [model]="items2" [style]="{'background-color':'#f16357''}"> -->
           <p-menubar [model]="items2" [style]="{'background-color':'#f16357'}">
             <ng-template pTemplate="start">
                 <p-button styleClass="p-button-outlined" (click)="display = true" class="mr-3">
-                    <img alt="logo" src="assets/avatars-avataaars.png" style="width: 1.5rem"/>
-                    <span class="ml-2 font-bold">GESPROY - UNIGUAJIRA</span>
+                  <i class="pi pi-align-justify"  style="font-size: 1.5rem; margin-top: 5px;color:black"></i>
+                    <!-- <img alt="logo" src="assets/avatars-avataaars.png" style="width: 1.5rem"/> -->
+                    <span class="ml-2 font-bold" >GESPROY - UNIGUAJIRA</span>
                 </p-button>
             </ng-template>
             <ng-template pTemplate="end">
-              <button type="button" pButton pRipple
+              <button type="button" pButton pRipple 
               class="p-button-rounded p-button-text"
                icon="pi pi-plus" (click)="menu.toggle($event)">
                 <p-avatar image="assets/avatars-avataaars.png" 
                 styleClass="ml-3" size="large" shape="circle"></p-avatar>
               </button>
-            <p-menu #menu [popup]="true" [model]="items" [style]="{'width':'140px','margin-top':'10px'}"></p-menu>
+            <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'140px','margin-top':'10px'}"></p-menu>
               
 
                 <!-- <input type="text" pInputText  placeholder="Search">
