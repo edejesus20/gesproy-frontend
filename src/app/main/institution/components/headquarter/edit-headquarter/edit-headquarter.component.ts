@@ -84,7 +84,7 @@ public form2:HeadquarterI={
                // console.log(minutes, seconds);
                if( seconds == '03') {
                this.messageService.add({severity:'success', summary: 'Success', 
-               detail: 'Registro de Sede Actualizado con exitoso'});
+               detail: 'Registro de Sede Actualizado con exito'});
                }
                date = new Date(date.getTime() - 1000);
                if( minutes == '00' && seconds == '01' ) {

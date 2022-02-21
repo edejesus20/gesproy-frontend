@@ -48,7 +48,7 @@ export class Create_capacitacionComponent implements OnInit {
               // console.log(minutes, seconds);
               if( seconds == '03') {
               this.messageService.add({severity:'success', summary: 'Success', 
-              detail: 'Registro de Capacitación Creado con exitoso'});
+              detail: 'Registro de Capacitación Creado con exito'});
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {

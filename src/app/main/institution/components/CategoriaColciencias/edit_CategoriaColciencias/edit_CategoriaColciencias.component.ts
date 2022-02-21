@@ -105,7 +105,7 @@ export class Edit_CategoriaColcienciasComponent implements OnInit {
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Categoria de Colciencias Actualizado con exitoso'});
+                detail: 'Registro de Categoria de Colciencias Actualizado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {

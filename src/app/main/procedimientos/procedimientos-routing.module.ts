@@ -35,6 +35,11 @@ import { Delete_librosComponent } from './components/libros/delete_libros/delete
 import { Edit_librosComponent } from './components/libros/edit_libros/edit_libros.component';
 import { Show_librosComponent } from './components/libros/show_libros/show_libros.component';
 import { Show_one_librosComponent } from './components/libros/show_one_libros/show_one_libros.component';
+import { Create_linesComponent } from './components/Lineas/create_lines/create_lines.component';
+import { Delete_linesComponent } from './components/Lineas/delete_lines/delete_lines.component';
+import { Edit_linesComponent } from './components/Lineas/edit_lines/edit_lines.component';
+import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.component';
+import { Show_one_linesComponent } from './components/Lineas/show_one_lines/show_one_lines.component';
 import { Create_ponenciasComponent } from './components/Ponencias/create_ponencias/create_ponencias.component';
 import { Delete_ponenciasComponent } from './components/Ponencias/delete_ponencias/delete_ponencias.component';
 import { Edit_ponenciasComponent } from './components/Ponencias/edit_ponencias/edit_ponencias.component';
@@ -297,6 +302,28 @@ const routes: Routes = [
           {
             path: 'delete_committees/:id',
             component: Delete_asistenciaComitesComponent,
+          },
+
+          //lineas
+          {
+            path: 'line',
+            component: Show_linesComponent,
+          },
+          {
+            path: 'line/:id',
+            component: Show_one_linesComponent,
+          },
+          {
+            path: 'line_create',
+            component: Create_linesComponent,
+          },
+          {
+            path: 'line_modificar/:id',
+            component: Edit_linesComponent,
+          },
+          {
+            path: 'line_eliminar/:id',
+            component: Delete_linesComponent,
           },
         
     ]

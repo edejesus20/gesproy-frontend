@@ -138,7 +138,7 @@ public form:FacultyI={
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Facultad Eliminado con exitoso'});
+                detail: 'Registro de Facultad Eliminado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {

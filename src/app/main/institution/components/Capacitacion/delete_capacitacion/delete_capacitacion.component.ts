@@ -83,7 +83,7 @@ export class Delete_capacitacionComponent implements OnInit {
               // console.log(minutes, seconds);
               if( seconds == '03') {
               this.messageService.add({severity:'success', summary: 'Success', 
-              detail: 'Registro de Capacitación Eliminado con exitoso'});
+              detail: 'Registro de Capacitación Eliminado con exito'});
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {

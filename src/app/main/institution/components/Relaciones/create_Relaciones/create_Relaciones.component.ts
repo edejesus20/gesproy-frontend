@@ -49,7 +49,7 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Relaciones Creado con exitoso'});
+                detail: 'Registro de Relaciones Creado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {

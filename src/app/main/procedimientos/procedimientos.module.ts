@@ -94,6 +94,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { Create_linesComponent } from './components/Lineas/create_lines/create_lines.component';
+import { Delete_linesComponent } from './components/Lineas/delete_lines/delete_lines.component';
+import { Edit_linesComponent } from './components/Lineas/edit_lines/edit_lines.component';
+import { Show_one_linesComponent } from './components/Lineas/show_one_lines/show_one_lines.component';
+import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.component';
 @NgModule({
   declarations: [
     ProcedimientosComponent,
@@ -161,7 +166,14 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     Show_one_asistenciaComitesComponent,
     Create_asistenciaComitesComponent,
     Edit_asistenciaComitesComponent,
-    Delete_asistenciaComitesComponent
+    Delete_asistenciaComitesComponent,
+
+
+    Create_linesComponent,
+    Delete_linesComponent,
+    Edit_linesComponent,
+    Show_linesComponent,
+    Show_one_linesComponent,
 
     
   ],

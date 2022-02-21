@@ -63,7 +63,7 @@ public form:FormGroup=this.formBuilder.group({
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Facultad Creado con exitoso'});
+                detail: 'Registro de Facultad Creado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {

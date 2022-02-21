@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+const translate = require('translate');
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
@@ -37,17 +39,19 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({});
   constructor(
     private groupService:GroupService,
-    private formBuilder: FormBuilder,
-    private router: Router,
+  
     private headquarterService:HeadquarterService,
     private teacherService:TeacherService,
-    private lineService:LineService,
+    // private lineService:LineService,
     private facultyService: FacultyService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private messageService:MessageService,
+
     ) { }
   ngOnInit(): void {
     this.buildForm();
     this.getTeachers();
-    this.getLines();
     this.geFacultad();
   }
  public SelectFacultad(){
@@ -77,11 +81,7 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
-  getLines() {
-    this.lineService.getList().subscribe(teachersA => {
-      this.lines=teachersA.lines
-    }, error => console.error(error))
-  }
+ 
   getTeachers() {
     this.teacherService.getList().subscribe(teachersA => {
       this.teachers=teachersA.teachers
@@ -119,21 +119,39 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
   public onSubmit(e: Event): void {
     e.preventDefault();
     const formValue: GroupI = this.form.value;
+    if(this.mostrarFacultad == true && formValue.name != ""){
     this.groupService.createItem(formValue).subscribe(
-      (newFaculty) => {
-
-          // this.snackBar.open('Facultad creada exitosamente', 'Ok', {
-          //   duration: 5000,
-          // });
-          this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
-        
-      }, () => {
-
-          // this.snackBar.open('Error. La facultad no pudo ser creada', 'Ok', {
-          //   duration: 5000,
-          // });
+      () => {
+        var date = new Date('2020-01-01 00:00:03');
+          function padLeft(n:any){ 
+            return n ="00".substring(0, "00".length - n.length) + n;
+          }
+          var interval = setInterval(() => {
+          var minutes = padLeft(date.getMinutes() + "");
+          var seconds = padLeft(date.getSeconds() + "");
+          // console.log(minutes, seconds);
+          if( seconds == '03') {
+          this.messageService.add({severity:'success', summary: 'Success', 
+          detail: 'Registro de Grupo Creado con exito'});
+          }
+          date = new Date(date.getTime() - 1000);
+          if( minutes == '00' && seconds == '01' ) {
+            this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+            clearInterval(interval); 
+          }
+    }, 1000);
+      },async error => {
+        if(error != undefined) {
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
+      });
+      }else{
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
       }
-    );
   }
 
 

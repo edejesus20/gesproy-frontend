@@ -13,8 +13,22 @@
           <br>
     
             <div style="border: 1px solid black;padding: 10px;">
-              
-              <h3 style="text-align: center;">INFORMACIÓN DEL GRUPO DE INVESTIGACIÓN</h3>
+
+              <div class="grid p-fluid" style="padding: 10px;">
+                <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                  <img alt="logo" src="../../../../../../assets/images/images.jpg" 
+                  style="width: 100%"/>
+                </div>
+
+                <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+                  <h3 style="text-align: center;">FORMALIZACIÓN GRUPO DE INVESTIGACIÓN</h3>
+                </div>
+
+                <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                  <img alt="logo" src="../../../../../../assets/images/uniguajira_iso.jpg" 
+                  style="width: 100%"/>
+                </div>
+              </div>
               
               <div class="bordep">
                 <h4 style="text-align:left;">1. NOMBRE DEL GRUPO:</h4>
@@ -64,11 +78,13 @@
                   label="SELECCIONE EL INVESTIGADOR PRINCIPAL" 
                   formControlName="TecaherId" name="TecaherId"
                     [style]="{'width':'100%'}" 
-                    optionvalue="id"  optionLabel="name" filterBy="name"
+                    optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
                     [required]="true" placeholder="SELECCIONE EL INVESTIGADOR PRINCIPAL" (onChange)="SelectTeacher()"
                     title="SELECCIONE EL INVESTIGADOR PRINCIPAL">
                     <ng-template let-option pTemplate="item" >
-                      <span >{{option.User?.Person?.name  | titlecase}}</span>
+                      <span >{{option.User.fullName  | titlecase}} -
+                      cc: {{option.User.Person.identification }} 
+                      </span>
                   </ng-template>
                   </p-dropdown>
                 <h5 style="text-align:left;">3.2. Investigadores Secundarios o Coinvestigadores:</h5>
@@ -101,10 +117,12 @@
                                         formControlName="TecaherId" name="TecaherId"
                                        label="SELECCIONE PROFESORES" 
                                       [style]="{'width':'100%','margin-bottom':'20px'}"
-                                      optionvalue="id" optionLabel="name"  filterBy="User.Person.name"
+                                      optionvalue="id" optionLabel="User.fullName" filterBy="User.fullName"
                                       [required]="true" placeholder="SELECCIONE PROFESORES"  >
                                       <ng-template let-option pTemplate="item"  >
-                                        <span >{{option.User?.Person?.name  | titlecase}}</span>
+                                        <span >{{option.User.fullName  | titlecase}} -
+                                          cc: {{option.User.Person.identification }} 
+                                          </span>
                                     </ng-template>
                                     </p-dropdown>
                                   </div>
