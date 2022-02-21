@@ -250,11 +250,63 @@
               </p-table>
             </div>
           </div>
+
+          <div fxLayout="row" fxLayoutGap="20px">
+            <button pButton type="button" (click)="addLines($event)" 
+            class="p-button-warning p-button-raised p-button-rounded"
+             label="Add Lineas"></button>  
+          </div>
+
+          <br>
+          <div fxLayout="row" fxLayoutGap="20px">
+            <div class="table-wrapper" >
+              <p-table [value]="algo2" *ngIf="mostrar2 == true"> 
+                <ng-template pTemplate="header">
+                  <tr>
+                      <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                <tr [pSelectableRow]="rowData">
+                    <td>
+                      <div formArrayName="Lines"> 
+                        <div *ngFor="let item of getLines.controls; 
+                        let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="grid p-fluid">
+                          <div class="col-10 md:col-10 lg:col-10">
+                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                            [options]="lines" [filter]="true"
+                                formControlName="LineId" name="LineId"
+                               label="SELECCIONE LINEA" 
+                              [style]="{'width':'100%','margin-bottom':'20px'}"
+                              optionvalue="id" optionLabel="name"  filterBy="name"
+                              [required]="true" placeholder="SELECCIONE LINEA"  >
+                              <ng-template let-option pTemplate="item"  >
+                                <span >{{option.name  | titlecase}} -
+                                {{option.resolution  | titlecase}}</span>
+                            </ng-template>
+                            </p-dropdown>
+                          </div>
+                          <div class="col-2 md:col-2 lg:col-2">
+                            <span class="bottomdelete" style="margin-top: 5px;">
+                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeLines(pointIndex,$event)"  
+                              class="p-button-rounded p-button-danger"></button>
+                            </span>
+                          </div>
+                        </div>
+                        </div>
+                      </div> 
+                    </td>
+                </tr>
+              </ng-template>
+              </p-table>
+            </div>
+          </div>
          
 
       </div>
 
-              <div fxLayout="row" class="titleCard" style="margin-top: 50px;">
+              <div fxLayout="row" class="titleCard" style="margin-top: 20px;">
                 <button pButton type="button" type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>

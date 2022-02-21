@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 const translate = require('translate');
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { TeacherI } from 'src/app/models/user/teacher';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -18,6 +17,8 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
+import { LineI } from 'src/app/models/projet/line';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 
 @Component({
   selector: 'app-create-teacher',
@@ -28,7 +29,10 @@ export class CreateTeacherComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
+  public mostrar2:boolean=false;
+  
   public algo:number[]=[0];
+  public algo2:number[]=[0];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
@@ -36,6 +40,7 @@ export class CreateTeacherComponent implements OnInit {
 
   public mostrarUser:boolean=false;
   public users:PersonI[]=[];
+  public lines:LineI[]=[];
 
 
   public form:FormGroup=this.formBuilder.group({
@@ -56,12 +61,18 @@ export class CreateTeacherComponent implements OnInit {
         HeadquarterProgramId:['', [Validators.required]],
         RelationshipId:['', [Validators.required]],
     })]),
+    Lines: this.formBuilder.array([this.formBuilder.group(
+      {
+        TeacherId:0,
+        LineId:['', [Validators.required]],
+    })]),
    });
    public relationships:RelationshipI[]=[]
    public headquarterProgram:any[]=[]
    public headquarterProgramTeacher1:any[] = []
+   public Lines:any[] = []
  
-
+   
   constructor(
     private teacherService:TeacherService,
     private router: Router,
@@ -73,8 +84,8 @@ export class CreateTeacherComponent implements OnInit {
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
     private relationshipService:RelationshipService,
-    private userService:UserService
-
+    private userService:UserService,
+    private lineService:LineService,
   ) { }
 
   ngOnInit() {
@@ -85,6 +96,13 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllheadquarters()
     this.getAllrelationships()
     this.getAllUser()
+    this.getAllLines()
+  }
+  getAllLines() {
+    this.lineService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.lines = AdministrativeFromApi.lines;
+      }, error => console.error(error));
   }
 
   getAllUser() {
@@ -113,7 +131,8 @@ export class CreateTeacherComponent implements OnInit {
         UserId:  this.form.value.UserId.UserId,
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-        headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
+        headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
+        Lines: this.form.value.Lines
       };
     }
 
@@ -133,7 +152,8 @@ export class CreateTeacherComponent implements OnInit {
         UserId: undefined,
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-        headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
+        headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
+        Lines: this.form.value.Lines
       };
 
     }
@@ -144,8 +164,6 @@ export class CreateTeacherComponent implements OnInit {
 
         key.HeadquarterProgramId=key.HeadquarterProgramId.id
         key.RelationshipId=key.RelationshipId.id
-        // key.TeacherId=this.form.value.id
-
         this.headquarterProgramTeacher1.push({
         TeacherId:0,
         HeadquarterProgramId:key.HeadquarterProgramId,
@@ -156,6 +174,23 @@ export class CreateTeacherComponent implements OnInit {
     }else{
       formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
     }
+
+    if(this.Lines.length == 0 || this.Lines == []){
+      let control = <FormArray>this.form.controls['Lines']
+      for (const key of control.value) {
+
+        key.LineId=key.LineId.id
+
+        this.Lines.push({
+        TeacherId:0,
+        LineId:key.LineId,
+        })
+      }
+      formValue.Lines = this.form.value.Lines
+    }else{
+      formValue.Lines = this.Lines
+    }
+
   if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
               formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
@@ -267,7 +302,6 @@ private getAllscales(selectId?: number) {
 private getAllcolcienciaCategorys(selectId?: number) {
   this.colcienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
       this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
     }, error => console.error(error));
 }
@@ -275,9 +309,39 @@ private getAllcolcienciaCategorys(selectId?: number) {
 private getAllrelationships(selectId?: number) {
   this.relationshipService.getList().subscribe(
     (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
       this.relationships = AdministrativeFromApi.relationships;
     }, error => console.error(error));
 }
 
+
+get getLines() {
+  return this.form.get('Lines') as FormArray;//obtener todos los formularios
+}
+
+  addLines(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Lines']
+      if(control.length == 0 && this.mostrar2 == false){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          LineId:['', [Validators.required]],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar2 == true){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          LineId:['', [Validators.required]],
+        }))
+
+      }
+      this.mostrar2=true
+  }
+  removeLines(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Lines']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar2=false
+      }
+  }
 }

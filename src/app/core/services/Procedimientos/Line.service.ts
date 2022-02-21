@@ -47,9 +47,9 @@ createItem(line: LineI): Observable<LineI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<LineI> {
+getItem(id: number): Observable<{line:LineI}> {
   return this.http
-    .get<LineI>(this.base_path_get + '/' + id)
+    .get<{line:LineI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)

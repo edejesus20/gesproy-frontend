@@ -6,6 +6,7 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
@@ -13,6 +14,7 @@ import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_cate
 import { HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 import { RelationshipI } from 'src/app/models/institution/relationship';
 import { ScaleI } from 'src/app/models/institution/scale';
+import { LineI } from 'src/app/models/projet/line';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
@@ -25,6 +27,7 @@ const translate = require('translate');
 export class EditarTeacherComponent implements OnInit {
   public mostrar:number=1;
   public mostrar2:boolean=false;
+  public mostrar3:boolean=false;
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -33,7 +36,12 @@ export class EditarTeacherComponent implements OnInit {
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
+
   public algo:number[]=[0];
+  public algo2:number[]=[0];
+  public lines:LineI[]=[];
+  public Lines:any[] = []
+  
   public relationships:RelationshipI[]=[]
    public headquarterProgramStudent1:any[]=[]
    public headquarterProgram:any[]=[]
@@ -49,6 +57,8 @@ export class EditarTeacherComponent implements OnInit {
     private colcienciaCategoryService:ColcienciaCategoryService,
     private headquarterService: HeadquarterService,
     private relationshipService:RelationshipService,
+    private lineService:LineService,
+
 
   ) { }
 
@@ -72,6 +82,11 @@ export class EditarTeacherComponent implements OnInit {
           HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
       })]),
+      Lines: this.formBuilder.array([this.formBuilder.group(
+        {
+          TeacherId:0,
+          LineId:['', [Validators.required]],
+      })]),
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -80,6 +95,13 @@ export class EditarTeacherComponent implements OnInit {
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
+    this.getAllLines()
+  }
+  getAllLines() {
+    this.lineService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.lines = AdministrativeFromApi.lines;
+      }, error => console.error(error));
   }
 
   public onSubmit() {
@@ -100,7 +122,9 @@ export class EditarTeacherComponent implements OnInit {
       UserId: 0,
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-      headquarterProgramTeacher: this.form.value.headquarterProgramTeacher
+      headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
+      Lines: this.form.value.Lines
+
     };
 
     if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
@@ -116,11 +140,23 @@ export class EditarTeacherComponent implements OnInit {
         })
       }
       formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
-      // console.log('aqui')
     }else{
       formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
-      // console.log('aqui2')
+    }
+    if(this.Lines.length == 0 || this.Lines == []){
+      let control = <FormArray>this.form.controls['Lines']
+      for (const key of control.value) {
 
+        key.LineId=key.LineId.id
+
+        this.Lines.push({
+        TeacherId:0,
+        LineId:key.LineId,
+        })
+      }
+      formValue.Lines = this.form.value.Lines
+    }else{
+      formValue.Lines = this.Lines
     }
     if(
       formValue.name != ""&&
@@ -200,7 +236,36 @@ get getRoles() {
       this.mostrar2=false
       }
   }
-
+  get getLines() {
+    return this.form.get('Lines') as FormArray;//obtener todos los formularios
+  }
+  
+    addLines(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form.controls['Lines']
+        if(control.length == 0 && this.mostrar3 == false){
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            LineId:['', [Validators.required]],
+          }))
+        }
+        if(control.length >= 1 && this.mostrar3 == true){
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            LineId:['', [Validators.required]],
+          }))
+  
+        }
+        this.mostrar3=true
+    }
+    removeLines(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form.controls['Lines']//aceder al control
+      control.removeAt(index)
+        if(control.length <= 0){
+        this.mostrar3=false
+        }
+    }
 private getAllgenders(selectId?: number) {
   this.genderService.getList().subscribe(
     (AdministrativeFromApi) => {
@@ -224,7 +289,6 @@ private getAllscales(selectId?: number) {
       this.scales = AdministrativeFromApi.scales;
     }, error => console.error(error));
 }
-
 
 private getAllcolcienciaCategorys(selectId?: number) {
   this.colcienciaCategoryService.getList().subscribe(
@@ -309,7 +373,12 @@ getOneCntAccount(id:number) {
 
         if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined){
           
-          this.agregarDescuentos(cnt_groupFromApi.teacher.HeadquarterPrograms)
+          this.agregarHeadquarterPrograms(cnt_groupFromApi.teacher.HeadquarterPrograms)
+          
+        }
+        if(cnt_groupFromApi.teacher.Lines != undefined){
+          
+          this.agregarLines(cnt_groupFromApi.teacher.Lines)
           
         }
      }
@@ -318,7 +387,30 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
-  agregarDescuentos(HeadquarterPrograms: HeadquarterProgramI[]) {
+  agregarLines(Lines: LineI[]) {
+    if(Lines.length){
+      for (let key of Lines) {
+        if(key.id != undefined) {
+          // console.log(DiscountLine)
+          
+          let control = <FormArray>this.form.controls['Lines']
+            this.lineService.getItem(key.id).subscribe((algo)=>{
+              if(algo.line && key.id != undefined){
+                  control.push(this.formBuilder.group({
+                    TeacherId:0,
+                      LineId:[algo.line, [Validators.required]]
+                  }))
+                }
+            })
+        }
+      }
+      this.mostrar3= true
+      let control = <FormArray>this.form.controls['Lines']
+      control.removeAt(0)
+      // console.log(control)
+    }
+  }
+  agregarHeadquarterPrograms(HeadquarterPrograms: HeadquarterProgramI[]) {
     if(HeadquarterPrograms.length){
       for (let key of HeadquarterPrograms) {
         if(key.HeadquarterProgramTeacher?.HeadquarterProgramId != undefined) {
@@ -344,10 +436,8 @@ getOneCntAccount(id:number) {
       this.mostrar2= true
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       control.removeAt(0)
-      console.log(control)
+      // console.log(control)
     }
-
-   
   }
 
 }
