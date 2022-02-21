@@ -12,6 +12,7 @@ export interface TeacherI {
     UserId: number;
     ScaleId: number;
     ColcienciaCategoryId: number;
+    hours_of_dedication:string;
     User?:UserI
     Scale?:ScaleI
     Group?:GroupI

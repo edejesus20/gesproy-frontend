@@ -175,6 +175,9 @@
             </div>
 
           </div>
+        
+
+          
 
           <div fxLayout="row" fxLayoutGap="20px">
             <button pButton type="button" (click)="addRoles($event)" 
@@ -244,6 +247,16 @@
               </p-table>
             </div>
           </div>
+          <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+            class="p-inputtext-lg"  name="hours_of_dedication" placeholder="HORAS DE DEDICACIÓN" title="HORAS DE DEDICACIÓN"
+            formControlName="hours_of_dedication" required  >     
+              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">HORAS DE DEDICACIÓN</h3></label>
+          </span>       
+        </div>
+        
           <div fxLayout="row" fxLayoutGap="20px">
             <button pButton type="button" (click)="addLines($event)" 
             class="p-button-warning p-button-raised p-button-rounded"

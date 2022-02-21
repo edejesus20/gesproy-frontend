@@ -25,6 +25,8 @@ export class Edit_CategoriaColcienciasComponent implements OnInit {
         UserId: 0,
         ScaleId: 0,
         ColcienciaCategoryId: 0,
+        hours_of_dedication:'',
+
         User:
           {
             username: '',

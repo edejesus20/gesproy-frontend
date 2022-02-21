@@ -55,6 +55,8 @@ export class CreateTeacherComponent implements OnInit {
     ScaleId:['', [Validators.required]],
     UserId:[''],
     ColcienciaCategoryId:['', [Validators.required]],
+    hours_of_dedication:['', [Validators.required]],
+
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
         TeacherId:0,
@@ -129,6 +131,7 @@ export class CreateTeacherComponent implements OnInit {
         email:'',
         password:'',
         UserId:  this.form.value.UserId.UserId,
+        hours_of_dedication: this.form.value.hours_of_dedication,
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
@@ -150,6 +153,7 @@ export class CreateTeacherComponent implements OnInit {
         email:this.form.value.email,
         password:'',
         UserId: undefined,
+        hours_of_dedication: this.form.value.hours_of_dedication,
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
@@ -196,7 +200,8 @@ export class CreateTeacherComponent implements OnInit {
               formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
               formValue.phone != ""&& formValue.email != ""&&
               formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined))
-      ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
+      ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
+      && formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined))
             ){
               // console.log(formValue)
 

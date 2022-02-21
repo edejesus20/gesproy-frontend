@@ -43,7 +43,7 @@ export class ShowTeacherComponent implements OnInit {
         { field: 'User.Person.identification', header: 'Identificacion' },
         { field: 'User.email', header: 'Correo Electronico' },
         { field: 'User.Person.phone', header: 'Telefono' },
-        // { field: 'Group.name', header: 'Grupo' },
+        { field: 'hours_of_dedication', header: 'Horas de dedicación' },
         { field: 'Scale.name', header: 'Escalafon' },
         { field: 'ColcienciaCategory.name', header: 'Categoria de Colciencia' }
     ];
@@ -69,7 +69,8 @@ export class ShowTeacherComponent implements OnInit {
                 Scale:key.Scale,
                 Groups:key.Groups,
                 ColcienciaCategory:key.ColcienciaCategory,
-                TrainingTeacher:key.TrainingTeacher
+                TrainingTeacher:key.TrainingTeacher,
+                hours_of_dedication:key.hours_of_dedication
               }
             )
           }
@@ -94,7 +95,7 @@ export class ShowTeacherComponent implements OnInit {
       Identificacion:key.User?.Person?.identification,
       Correo_Electronico:key.User?.email,
       Telefono:key.User?.Person?.phone,
-      // Grupo:key.Group?.name,
+      Horas_de_dedicación:key.hours_of_dedication,
       Escalafon:key.Scale?.name,
       Categoria_de_Colciencia:key.ColcienciaCategory?.name
     })
@@ -127,7 +128,7 @@ export class ShowTeacherComponent implements OnInit {
           col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_3:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          // col_5:{ text: 'GRUPO', style: 'tableHeader',fontSize: 12 ,bold: true, },
+          col_5:{ text: 'HORAS DE DEDICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_6:{ text: 'ESCALAFON', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_7:{ text: 'CATEGORIA COLCIENCIAS', style: 'tableHeader',fontSize: 12 ,bold: true, }
       }
@@ -139,7 +140,7 @@ export class ShowTeacherComponent implements OnInit {
             var header = headers[key];
             var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,header.fila_0.col_3,
               header.fila_0.col_4,
-              // header.fila_0.col_5,
+              header.fila_0.col_5,
               header.fila_0.col_6,header.fila_0.col_7
             ]
             body.push(row);
@@ -155,7 +156,7 @@ export class ShowTeacherComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              // data.Group?.name.toString(),
+              data.hours_of_dedication.toString(),
               data.Scale?.name.toString(),
               data.ColcienciaCategory?.name?.toString()
             ]
@@ -191,7 +192,7 @@ export class ShowTeacherComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '15%', '20%','15%','15%','15%','20%'],
+              widths: [ '15%', '15%','15%','15%','15%','10','10%'],
   
               body: body
           },

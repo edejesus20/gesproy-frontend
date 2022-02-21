@@ -33,6 +33,7 @@ export class AsignarTeacherComponent implements OnInit {
     id:0,   
      UserId: 0,
     ScaleId: 0,
+    hours_of_dedication:'',
     ColcienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 

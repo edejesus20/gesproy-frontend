@@ -75,6 +75,7 @@ export class EditarTeacherComponent implements OnInit {
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
+      hours_of_dedication:['', [Validators.required]],
       ColcienciaCategoryId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
@@ -120,6 +121,7 @@ export class EditarTeacherComponent implements OnInit {
       email:this.form.value.email,
       password:'',
       UserId: 0,
+      hours_of_dedication: this.form.value.hours_of_dedication,
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
@@ -167,6 +169,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.address != ""&&
       formValue.phone != ""&&
       formValue.email != ""&&
+      formValue.hours_of_dedication != ""&&
      formValue.ScaleId !=("" || undefined)
     &&formValue.ColcienciaCategoryId != ("" || undefined)){
 
@@ -349,6 +352,7 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
+          this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
 
           if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
         this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo1)=>{
