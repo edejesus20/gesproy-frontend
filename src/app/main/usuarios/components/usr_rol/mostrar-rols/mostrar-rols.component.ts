@@ -28,7 +28,6 @@ export class MostrarRolsComponent implements OnInit {
   selectedProducts: RoleI[]=[]; 
   constructor(
     private rolesService: RolesService,
-    private router:Router,
     private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 

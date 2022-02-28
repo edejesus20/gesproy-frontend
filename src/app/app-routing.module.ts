@@ -6,6 +6,10 @@ const routes: Routes = [
     redirectTo: '/landing',
     pathMatch: 'full'
   },
+  {
+    path: '**',
+    redirectTo: '/landing'
+  }
  
 ];
 

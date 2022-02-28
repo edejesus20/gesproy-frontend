@@ -294,9 +294,10 @@
                               <div *ngFor="let item of getAnexos.controls; 
                               let pointIndex=index" [formGroupName]="pointIndex">
                                 <div class="grupo"> 
-                                  <div class="grupoinput1">
-                                    <input type="file" style="margin-bottom: 10px;" class="p-inputtext-lg" pInputText name="Anexos" 
-                                    placeholder="Anexo" formControlName="Anexos" title="Anexos" required> 
+                                  <div class="grupoinput1 custom-input-file">
+                                    <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
+                                    name="Anexos" 
+                                    placeholder="Anexo" formControlName="Anexos" title="Anexos" required>
                                   </div>
                                   
                                 <span class="bottomdelete" style="margin-top: 5px;">
