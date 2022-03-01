@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
@@ -9,6 +9,7 @@ import { GenderI } from 'src/app/models/user/gender';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 const translate = require('translate');
 
 @Component({
@@ -36,6 +37,7 @@ export class CrearUserComponent implements OnInit {
     email:['', [Validators.required]],
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
+  public mostrarDialogo:boolean=false;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -44,9 +46,16 @@ export class CrearUserComponent implements OnInit {
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
+    public ref: DynamicDialogRef, public config: DynamicDialogConfig,
+     
   ) { }
 
   ngOnInit(): void {
+    // console.log(this.ref)
+    console.log(this.config)
+    if(this.config.data.id == '1'){
+      this.mostrarDialogo= true
+    }
     this.getUsrRoles()
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -146,25 +155,31 @@ export class CrearUserComponent implements OnInit {
                 formValue.email != ""){
   
               this.userService.createUser(formValue).subscribe(
-                () => {
-                        var date = new Date('2020-01-01 00:00:03');
-                          function padLeft(n:any){ 
-                            return n ="00".substring(0, "00".length - n.length) + n;
-                          }
-                          var interval = setInterval(() => {
-                          var minutes = padLeft(date.getMinutes() + "");
-                          var seconds = padLeft(date.getSeconds() + "");
-                          // console.log(minutes, seconds);
-                          if( seconds == '03') {
-                          this.messageService.add({severity:'success', summary: 'Success', 
-                          detail: 'Registro de Usuario Creado con exito'});
-                          }
-                          date = new Date(date.getTime() - 1000);
-                          if( minutes == '00' && seconds == '01' ) {
-                            this.router.navigateByUrl('/usuarios/users');
-                            clearInterval(interval); 
-                          }
-                    }, 1000);
+                (algo) => {
+                  if(this.mostrarDialogo== true){
+                    this.ref.close(algo);
+                  }else{
+                    var date = new Date('2020-01-01 00:00:03');
+                    function padLeft(n:any){ 
+                      return n ="00".substring(0, "00".length - n.length) + n;
+                    }
+                    var interval = setInterval(() => {
+                    var minutes = padLeft(date.getMinutes() + "");
+                    var seconds = padLeft(date.getSeconds() + "");
+                    // console.log(minutes, seconds);
+                    if( seconds == '03') {
+                    this.messageService.add({severity:'success', summary: 'Success', 
+                    detail: 'Registro de Usuario Creado con exito'});
+                    }
+                    date = new Date(date.getTime() - 1000);
+                    if( minutes == '00' && seconds == '01' ) {
+                      this.router.navigateByUrl('/usuarios/users');
+                      clearInterval(interval); 
+                    }
+              }, 1000);
+                  }
+                  
+                   
                 },async error => {
                   if(error != undefined) {
                     let text = await translate(error.error.message, "es");

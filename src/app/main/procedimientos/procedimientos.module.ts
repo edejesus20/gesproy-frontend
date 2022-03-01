@@ -99,6 +99,8 @@ import { Delete_linesComponent } from './components/Lineas/delete_lines/delete_l
 import { Edit_linesComponent } from './components/Lineas/edit_lines/edit_lines.component';
 import { Show_one_linesComponent } from './components/Lineas/show_one_lines/show_one_lines.component';
 import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.component';
+
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 @NgModule({
   declarations: [
     ProcedimientosComponent,
@@ -221,7 +223,8 @@ import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.c
     DropdownModule,
     CalendarModule,
     FieldsetModule,
-    FileUploadModule
+    FileUploadModule,
+    DynamicDialogModule
  
   ]
 

@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
-  [style]="{'width': '60vw','height': '70vw'}" 
+  [style]="{'width': '65vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
   [closable]="true" [closeOnEscape]="false" 
@@ -88,18 +88,46 @@
                       </span>
                   </ng-template>
                   </p-dropdown>
+                  
+                  <ng-template [ngIf]="mostrarTeacher == true">
+                    <br><br>
+                    <p-fieldset legend="Datos del Docente">
+                      <div class="flex" >
+                        <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
+                          <h3 class="fondebabutton">Nombre : {{ form2.User?.fullName | titlecase }}</h3>
+                          <h3 class="fondebabutton">Identificacion : {{ form2.User?.Person?.identification | titlecase }}</h3>
+                          <h3 class="fondebabutton">Correo : {{ form2.User?.email| titlecase }}</h3>
+                          
+                        </div>
+                        <p-divider layout="vertical" ></p-divider>
+                        <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
+                          <h3 class="fondebabutton">Telefono : {{ form2.User?.Person?.phone }}</h3>
+                          <h3  class="fondebabutton">Categoria Colciencias : {{ form2.ColcienciaCategory?.name| titlecase }}</h3>
+                          <h3  class="fondebabutton">Escalafón : {{ form2.Scale?.name | titlecase }}</h3>
+                          <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
+                        </div>
+                      </div>
+                      </p-fieldset>
+                  </ng-template>
+
                 <h5 style="text-align:left;">3.2. Investigadores Secundarios o Coinvestigadores:</h5>
 
                 <div fxLayout="row" fxLayoutGap="20px">
-                  <button pButton type="button" (click)="addTecahers($event)" 
-                  class="p-button-warning p-button-raised p-button-rounded"
-                   label="Add Investigadores Secundarios"></button>  
+    
+                   <button pButton type="button" (click)="addInvestigatorCollaborators($event)" style="margin-right: 15px;" 
+                  class="p-button-success p-button-raised p-button-rounded"
+                   label="Add Investigadores Secundarios"></button> 
+
+                   <button pButton type="button" (click)="addInvestigator($event)" 
+                   class="p-button-info p-button-raised p-button-rounded"
+                    label="Crear nuevo Investigador"></button> 
                 </div>
       
                 <br>
+    
                 <div fxLayout="row" fxLayoutGap="20px">
                   <div class="table-wrapper" >
-                    <p-table [value]="algo" *ngIf="mostrar == true"> 
+                    <p-table [value]="algoI" *ngIf="mostrarI == true"> 
                       <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="id">Investigadores Secundarios<p-sortIcon field="id"></p-sortIcon></th>
@@ -108,28 +136,42 @@
                     <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
                       <tr [pSelectableRow]="rowData">
                           <td>
-                            <div formArrayName="Tecahers"> 
-                              <div *ngFor="let item of getTecahers.controls; 
+                            <div formArrayName="InvestigatorCollaborators"> 
+                              <div *ngFor="let item of getInvestigatorCollaborator.controls; 
                               let pointIndex=index" [formGroupName]="pointIndex">
                                 <div class="grupo"> 
                                   <div class="grupoinput1">
                                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                    [options]="teachers" [filter]="true"
-                                        formControlName="TecaherId" name="TecaherId"
-                                       label="SELECCIONE PROFESORES" 
+                                    [options]="users" [filter]="true"
+                                        formControlName="UserId" name="UserId"
+                                       label="SELECCIONE INVESTIGADOR" 
                                       [style]="{'width':'100%','margin-bottom':'20px'}"
                                       optionvalue="id" optionLabel="User.fullName" filterBy="User.fullName"
-                                      [required]="true" placeholder="SELECCIONE PROFESORES"  >
+                                      [required]="true" placeholder="SELECCIONE INVESTIGADOR"  >
                                       <ng-template let-option pTemplate="item"  >
                                         <span >{{option.User.fullName  | titlecase}} -
-                                          cc: {{option.User.Person.identification }} 
+                                          cc: {{option.identification }} 
+                                          </span>
+                                    </ng-template>
+                                    </p-dropdown></div>
+                                    <div class="grupoinput1">
+                                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                    [options]="roles" [filter]="true"
+                                        formControlName="RoleId" name="RoleId"
+                                       label="SELECCIONE ROL DE INVESTIGACIÓN" 
+                                      [style]="{'width':'100%','margin-bottom':'20px'}"
+                                      optionvalue="id" optionLabel="name" filterBy="name"
+                                      [required]="true" placeholder="SELECCIONE ROL DE INVESTIGACIÓN"  >
+                                      <ng-template let-option pTemplate="item"  >
+                                        <span >{{option.name  | titlecase}} 
+                                         
                                           </span>
                                     </ng-template>
                                     </p-dropdown>
                                   </div>
                                   
                                 <span class="bottomdelete" style="margin-top: 5px;">
-                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeTecahers(pointIndex,$event)"  
+                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
                                   class="p-button-rounded p-button-danger"></button>
                                   <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
                                   (click)="removeRoles(pointIndex,$event)" 

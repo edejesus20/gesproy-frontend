@@ -5,18 +5,27 @@ import { MessageService } from 'primeng/api';
 const translate = require('translate');
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
-import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
-import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
+import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
+import { UserI } from 'src/app/models/authorization/usr_User';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { GroupI } from 'src/app/models/institution/group';
-import { LineI } from 'src/app/models/projet/line';
+import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
+import { PersonI } from 'src/app/models/user/person';
+import { StudentI } from 'src/app/models/user/student';
 import { TeacherI } from 'src/app/models/user/teacher';
+
+import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import { CrearUserComponent } from 'src/app/main/usuarios/components/usr_User/crear-user/crear-user.component';
+
 @Component({
   selector: 'app-create_grupodeInvetigacion',
   templateUrl: './create_grupodeInvetigacion.component.html',
-  styleUrls: ['./create_grupodeInvetigacion.component.css']
+  styleUrls: ['./create_grupodeInvetigacion.component.css'],
+  providers: [DialogService]
 })
 export class Create_grupodeInvetigacionComponent implements OnInit {
   public seedbeds: any;
@@ -35,26 +44,81 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
+  public form2:TeacherI= {
+    id:0,   
+     UserId: 0,
+    ScaleId: 0,
+    hours_of_dedication:'',
+    ColcienciaCategoryId: 0,
+    User:undefined, 
+    Scale:undefined, 
+    Group:undefined, 
+    ColcienciaCategory:undefined, 
+    TrainingTeacher:undefined, 
+    Trainings:undefined, 
+}
+public investigatorCollaborators:InvestigatorCollaboratorI[] =[]
+public algoI:number[]=[0];
+public mostrarI:boolean=false;
 
+public students:StudentI[] =[]
+public algoS:number[]=[0];
+public mostrarS:boolean=false;
+
+public users:PersonI[]=[]
+public roles:RoleInvestigationI[] = []
+
+public mostrarTeacher:boolean=false
   public form: FormGroup = this.formBuilder.group({});
+ public ref:any;
+
   constructor(
     private groupService:GroupService,
-  
+    private roleInvestigationsService:RoleInvestigationsService,
     private headquarterService:HeadquarterService,
     private teacherService:TeacherService,
-    // private lineService:LineService,
     private facultyService: FacultyService,
     private formBuilder: FormBuilder,
     private router: Router,
     private messageService:MessageService,
-
+    private userService: UserService,
+    public dialogService: DialogService
     ) { }
   ngOnInit(): void {
     this.buildForm();
     this.getTeachers();
     this.geFacultad();
-    console.log('aqui')
+    this.getInvestigatorCollaborators()
+    this.getRoles()
+    // console.log('aqui')
   }
+
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      HeadquarterProgramId: ['', [Validators.required]],
+      TecaherId:['', [Validators.required]],
+      InvestigatorCollaborators: this.formBuilder.array([
+        this.formBuilder.group({
+          UserId:['', [Validators.required]],
+          RoleId:['', [Validators.required]]
+        })
+      ]),
+      ObjetivoGeneral: ['', [Validators.required]],
+      ObjetivosEspecificos: ['', [Validators.required]],
+      Mision: ['', [Validators.required]],
+      Vision: ['', [Validators.required]],
+      Perfil: ['', [Validators.required]],
+      Metas: ['', [Validators.required]],
+      Resultados: ['', [Validators.required]],
+      Facultad: ['', [Validators.required]],
+      // InvestigatorCollaborators: this.formBuilder.array([
+      //   this.formBuilder.group({UserId:['']})]),
+      Sector: ['', [Validators.required]],
+      // Student: this.formBuilder.array([this.formBuilder.group({StudentId:['']})]),
+      Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
+    });
+  }  
  public SelectFacultad(){
     if(this.form.value.Facultad != ''){
       this.getFacultadHeadquarterProgram(this.form.value.Facultad.id)
@@ -65,6 +129,8 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
   public SelectTeacher(){
     if(this.form.value.TecaherId != ''){
       this.getLineTeacherId(this.form.value.TecaherId.id)
+      this.getOneTeachers(this.form.value.TecaherId.id)
+      this.mostrarTeacher=true
       this.mostrarLienas=true
     }
   }
@@ -87,6 +153,26 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     this.teacherService.getList().subscribe(teachersA => {
       this.teachers=teachersA.teachers
     }, error => console.error(error))
+  }  
+
+  getInvestigatorCollaborators() {
+
+    this.userService.getUser().subscribe(teachersA => {
+      this.users=teachersA.users
+    }, error => console.error(error))
+  } 
+
+  getRoles() {
+    this.roleInvestigationsService.getList().subscribe(teachersA => {
+      this.roles=teachersA.roleInvestigations
+    }, error => console.error(error))
+  } 
+  getOneTeachers(id:number) {
+    this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
+      if(cnt_groupFromApi.teacher.id != undefined){
+          this.form2=cnt_groupFromApi.teacher
+      }
+    }, error => console.error(error));
   }
 
   getFacultadHeadquarterProgram(id:number) {
@@ -96,26 +182,7 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      HeadquarterProgramId: ['', [Validators.required]],
-      TecaherId:['', [Validators.required]],
-      Tecahers: this.formBuilder.array([this.formBuilder.group({TecaherId:['', [Validators.required]]})]),
-      ObjetivoGeneral: ['', [Validators.required]],
-      ObjetivosEspecificos: ['', [Validators.required]],
-      Mision: ['', [Validators.required]],
-      Vision: ['', [Validators.required]],
-      Perfil: ['', [Validators.required]],
-      Metas: ['', [Validators.required]],
-      Resultados: ['', [Validators.required]],
-      Facultad: ['', [Validators.required]],
-      // Lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
-      Sector: ['', [Validators.required]],
-      // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId:['', [Validators.required]]})]),
-      Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
-    });
-  }  
+
   
   public onSubmit(e: Event): void {
     e.preventDefault();
@@ -156,33 +223,32 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
   }
 
 
-  get getTecahers() {
-    return this.form.get('Tecahers') as FormArray;//obtener todos los formularios
-  }
+  // get getTecahers() {
+  //   return this.form.get('Tecahers') as FormArray;//obtener todos los formularios
+  // }
 
-  addTecahers(event: Event){
-    event.preventDefault();
-    const control = <FormArray>this.form.controls['Tecahers']
-    //console.log(control)      
-      //crear los controles del array
-    if(control.length == 0 && this.mostrar == false){
-      control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
-    }
-    if(control.length >= 1 && this.mostrar == true){
-      control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
+  // addTecahers(event: Event){
+  //   event.preventDefault();
+  //   const control = <FormArray>this.form.controls['Tecahers']
+  //   //console.log(control)      
+  //     //crear los controles del array
+  //   if(control.length == 0 && this.mostrar == false){
+  //     control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
+  //   }
+  //   if(control.length >= 1 && this.mostrar == true){
+  //     control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
 
-    }
-      this.mostrar=true
-  }
-  removeTecahers(index: number,event: Event){
-    event.preventDefault();
-    let control = <FormArray>this.form.controls['Tecahers']//aceder al control
-    control.removeAt(index)
-    if(control.length <= 0){
-     this.mostrar=false
-    }
-  }
-
+  //   }
+  //     this.mostrar=true
+  // }
+  // removeTecahers(index: number,event: Event){
+  //   event.preventDefault();
+  //   let control = <FormArray>this.form.controls['Tecahers']//aceder al control
+  //   control.removeAt(index)
+  //   if(control.length <= 0){
+  //    this.mostrar=false
+  //   }
+  // }
 
   get getAnexos() {
     return this.form.get('Anexos') as FormArray;//obtener todos los formularios
@@ -209,5 +275,87 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     if(control.length <= 0){
      this.mostrar2=false
     }
+  }
+
+  // get getStudent() {
+  //   return this.form.get('Student') as FormArray;//obtener todos los formularios
+  // }
+
+  // addStudent(event: Event){
+  //   event.preventDefault();
+  //   const control = <FormArray>this.form.controls['Student']
+  //   //console.log(control)      
+  //     //crear los controles del array
+  //   if(control.length == 0 && this.mostrarS == false){
+  //     control.push(this.formBuilder.group({StudentId:['']}))//nuevo input
+  //   }
+  //   if(control.length >= 1 && this.mostrarS == true){
+  //     control.push(this.formBuilder.group({StudentId:['']}))//nuevo input
+
+  //   }
+  //     this.mostrarS=true
+  // }
+  // removeStudent(index: number,event: Event){
+  //   event.preventDefault();
+  //   let control = <FormArray>this.form.controls['Student']//aceder al control
+  //   control.removeAt(index)
+  //   if(control.length <= 0){
+  //    this.mostrarS=false
+  //   }
+  // }
+
+  get getInvestigatorCollaborator() {
+    return this.form.get('InvestigatorCollaborators') as FormArray;//obtener todos los formularios
+  }
+
+  addInvestigatorCollaborators(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['InvestigatorCollaborators']
+    //console.log(control)      
+      //crear los controles del array
+    if(control.length == 0 && this.mostrarI == false){
+      control.push(this.formBuilder.group({
+        UserId:['', [Validators.required]],
+          RoleId:['', [Validators.required]]
+      }))//nuevo input
+    }
+    if(control.length >= 1 && this.mostrarI == true){
+      control.push(this.formBuilder.group({
+        UserId:['', [Validators.required]],
+          RoleId:['', [Validators.required]]
+      }))//nuevo input
+
+    }
+      this.mostrarI=true
+  }
+  removeInvestigatorCollaborators(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['InvestigatorCollaborators']//aceder al control
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrarI=false
+    }
+  }
+
+  addInvestigator(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(CrearUserComponent, {
+      width: '60%',
+      height: '70%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: PersonI) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Usuario Creado', detail: person.User?.fullName});
+      this.getInvestigatorCollaborators()
+
+        }
+  });
   }
 }
