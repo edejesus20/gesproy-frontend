@@ -265,8 +265,13 @@ const routes: Routes = [
           path: 'ocupation_eliminar/:id',
           component:Delete_OcupationComponent ,
         },
+       
         
     ]
+  },
+  {
+    path: '**',
+    redirectTo: '/landing'
   }
 ];
 

@@ -146,6 +146,7 @@ import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocu
     Show_OcupationComponent,
     Show_One_OcupationComponent,
 
+
   ],
   imports: [
     CommonModule,

@@ -53,6 +53,7 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     this.buildForm();
     this.getTeachers();
     this.geFacultad();
+    console.log('aqui')
   }
  public SelectFacultad(){
     if(this.form.value.Facultad != ''){

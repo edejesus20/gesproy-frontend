@@ -1,8 +1,9 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
+  [style]="{'width': '60vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
-  [closable]="false" [closeOnEscape]="false" 
+  [closable]="true" [closeOnEscape]="false" 
       >
       
       <div [style]="{'margin-top':'-1px'}" >

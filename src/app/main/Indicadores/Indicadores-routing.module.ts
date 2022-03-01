@@ -63,6 +63,10 @@ const routes: Routes = [
             component: Delete_indicador_externoComponent,
           }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: '/landing'
   }
 ];
 

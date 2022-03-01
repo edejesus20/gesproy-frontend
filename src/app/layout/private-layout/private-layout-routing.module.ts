@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: PrivateLayoutComponent,
     canActivate: [ValidateGuard],
-    // canLoad:[ValidateGuard],
+    canLoad:[ValidateGuard],
     children: [
       {
         path: 'dashboard',

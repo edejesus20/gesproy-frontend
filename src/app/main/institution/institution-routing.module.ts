@@ -45,6 +45,11 @@ import { DeleteUniversityComponent } from './components/university/delete-univer
 import { EditUniversityComponent } from './components/university/edit-university/edit-university.component';
 import { ShowOneUniversityComponent } from './components/university/show-one-university/show-one-university.component';
 import { ShowUniversityComponent } from './components/university/show-university/show-university.component';
+import { CrearRolInvestigationComponent } from './components/user_rol_investigation/crear-rol-investigation/crear-rol-investigation.component';
+import { DeleteRolInvestigationComponent } from './components/user_rol_investigation/delete-rol-investigation/delete-rol-investigation.component';
+import { EditRolInvestigationComponent } from './components/user_rol_investigation/edit-rol-investigation/edit-rol-investigation.component';
+import { ShowOneRolInvestigationComponent } from './components/user_rol_investigation/show-one-rol-investigation/show-one-rol-investigation.component';
+import { ShowRolInvestigationComponent } from './components/user_rol_investigation/show-rol-investigation/show-rol-investigation.component';
 import { InstitutionComponent } from './institution.component';
 
 const routes: Routes = [
@@ -251,9 +256,35 @@ const routes: Routes = [
             path:'delete_training/:id',
             component:Delete_capacitacionComponent
           },
+           //rol investigaciones
+    {
+      path: 'mostrar_RoleInvestigations',
+      component: ShowRolInvestigationComponent,
+    },
+    {
+      path: 'mostrar_RoleInvestigation/:id',
+      component:ShowOneRolInvestigationComponent ,
+    },
+    {
+      path: 'crear_RoleInvestigation',
+      component:CrearRolInvestigationComponent ,
+    },   
+    {
+      path: 'edit_RoleInvestigation/:id',
+      component: EditRolInvestigationComponent,
+    },
+    {
+      path: 'delete_RoleInvestigation/:id',
+      component:DeleteRolInvestigationComponent ,
+    },
           
         ]
     }
+    ,
+  {
+    path: '**',
+    redirectTo: '/landing'
+  }
 ];
 
 @NgModule({
