@@ -63,11 +63,19 @@ export class CreateTeacherComponent implements OnInit {
         HeadquarterProgramId:['', [Validators.required]],
         RelationshipId:['', [Validators.required]],
     })]),
-    Lines: this.formBuilder.array([this.formBuilder.group(
-      {
-        TeacherId:0,
-        LineId:['', [Validators.required]],
-    })]),
+    // Lines: this.formBuilder.array([this.formBuilder.group(
+    //   {
+    //     TeacherId:0,
+    //     LineId:['', [Validators.required]],
+    // })]),
+    tiulosAcademicos:[''],
+    camposCiencia:[''],
+    cargosDesempeñados:[''],
+    formacionInvestigativa:[''],
+    publicacionesResientes:[''],
+    practicas:[''],
+    nationality:[''],
+    date_of_birth:[''],
    });
    public relationships:RelationshipI[]=[]
    public headquarterProgram:any[]=[]
@@ -117,7 +125,7 @@ export class CreateTeacherComponent implements OnInit {
   public onSubmit(e: Event) {
     e.preventDefault()
     let formValue:any={}
-    if(this.mostrarUser == false){
+   
       formValue={
         name: '',
         surname: '',
@@ -135,31 +143,22 @@ export class CreateTeacherComponent implements OnInit {
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
-        Lines: this.form.value.Lines
+        // Lines: this.form.value.Lines,
+        tiulosAcademicos:this.form.value.tiulosAcademicos,
+        camposCiencia:this.form.value.camposCiencia,
+        cargosDesempeñados:this.form.value.cargosDesempeñados,
+        formacionInvestigativa:this.form.value.formacionInvestigativa,
+        publicacionesResientes:this.form.value.publicacionesResientes,
+        practicas:this.form.value.practicas,
+        nationality: this.form.value.nationality,
+        date_of_birth: this.form.value.date_of_birth,
       };
-    }
+      if(this.mostrarUser == false){ 
+        formValue.UserId=  this.form.value.UserId.UserId
+       }
 
     if(this.mostrarUser == true){
-      formValue={
-        name: this.form.value.name,
-        surname: this.form.value.surname,
-        DocumentTypeId: this.form.value.DocumentTypeId.id,
-        identification: this.form.value.identification,
-        GenderId: this.form.value.GenderId.id,
-        address: this.form.value.address,
-        phone: this.form.value.phone,
-        username:'',
-        fullName:'',
-        email:this.form.value.email,
-        password:'',
-        UserId: undefined,
-        hours_of_dedication: this.form.value.hours_of_dedication,
-        ScaleId: this.form.value.ScaleId.id,
-        ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
-        headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
-        Lines: this.form.value.Lines
-      };
-
+      formValue.UserId= undefined
     }
 
     if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
@@ -179,28 +178,32 @@ export class CreateTeacherComponent implements OnInit {
       formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
     }
 
-    if(this.Lines.length == 0 || this.Lines == []){
-      let control = <FormArray>this.form.controls['Lines']
-      for (const key of control.value) {
+    // if(this.Lines.length == 0 || this.Lines == []){
+    //   let control = <FormArray>this.form.controls['Lines']
+    //   for (const key of control.value) {
 
-        key.LineId=key.LineId.id
+    //     key.LineId=key.LineId.id
 
-        this.Lines.push({
-        TeacherId:0,
-        LineId:key.LineId,
-        })
-      }
-      formValue.Lines = this.form.value.Lines
-    }else{
-      formValue.Lines = this.Lines
-    }
+    //     this.Lines.push({
+    //     TeacherId:0,
+    //     LineId:key.LineId,
+    //     })
+    //   }
+    //   formValue.Lines = this.form.value.Lines
+    // }else{
+    //   formValue.Lines = this.Lines
+    // }
 
   if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
               formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
               formValue.phone != ""&& formValue.email != ""&&
-              formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined))
-      ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
+              formValue.ScaleId !=("" || undefined) && 
+                formValue.nationality != ("" || undefined) && 
+                formValue. date_of_birth!= ("" || undefined) && 
+              formValue.ColcienciaCategoryId != ("" || undefined))
+     
+              ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
       && formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined))
             ){
               // console.log(formValue)

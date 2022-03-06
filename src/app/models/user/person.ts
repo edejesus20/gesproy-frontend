@@ -23,4 +23,6 @@ export interface PersonI {
       Roles?:RoleI[]
   
     }
+    nationality: string;
+    date_of_birth: string;
   }

@@ -1,7 +1,9 @@
 mat-error > span:not(:first-child) {
   display: none;
 }
-
+.bordep{
+  border-left: 1px solid black;border-top: 1px solid black;border-right: 1px solid black;padding: 10px;
+}
 :host{
   display: flex;
   justify-content: center;

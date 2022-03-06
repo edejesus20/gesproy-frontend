@@ -64,7 +64,25 @@
                 </div>
     
               </div>
+              <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+                <div class="col-12 md:col-6 lg:col-6">
+                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="date" class="p-inputtext-lg" pInputText name="date_of_birth" 
+                    placeholder="FECHA DE NACIMIENTO" formControlName="date_of_birth" title="FECHA DE NACIMIENTO" required>         
+                </div>
+                </div>
+                
+                <div class="col-12 md:col-6 lg:col-6">
+                  <div class="p-inputgroup" >
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                    class="p-inputtext-lg"  name="nationality" placeholder="NACIONALIDAD" title="NACIONALIDAD"
+                    formControlName="nationality" required  >         
+                </div>
+                </div>
     
+              </div>
               
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">

@@ -70,7 +70,9 @@ export class MostrarUsersComponent implements OnInit {
                 phone: key.phone,
                 Gender:key.Gender,
                 DocumentType:key.DocumentType,
-                User:key.User
+                User:key.User,
+                nationality: key.nationality,
+                date_of_birth: key.date_of_birth
               }
             )
           }

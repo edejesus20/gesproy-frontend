@@ -24,4 +24,10 @@ export interface TeacherI {
     Trainings?:TrainingI[]
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
+    publicacionesResientes?:string
+    camposCiencia?:string
+    tiulosAcademicos?:string
+    formacionInvestigativa?:string
+    cargosDesempeñados?:string
+    practicas?:string
 }

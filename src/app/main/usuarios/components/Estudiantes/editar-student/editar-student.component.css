@@ -4,7 +4,9 @@
     font-size: 30px;
     background-color:707070
   }
-  
+  .bordep{
+    border-left: 1px solid black;border-top: 1px solid black;border-right: 1px solid black;padding: 10px;
+  }
   .titleCard{
   margin: 0 0 10px 0;
   display:flex;

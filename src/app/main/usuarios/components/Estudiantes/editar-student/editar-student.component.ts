@@ -54,11 +54,19 @@ export class EditarStudentComponent implements OnInit {
       address:['', [Validators.required]],
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
+      nationality:['', [Validators.required]],
+      date_of_birth:['', [Validators.required]],
       headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
         {
           StudentId:0,
           HeadquarterProgramId:['', [Validators.required]],
       })]),
+      current_semester:['', [Validators.required]],
+      current_average:['', [Validators.required]],
+      experienciaInvestigativa:[''],
+      areasEstudio:[''],
+      publicacionesResientes:[''],
+      practicas:['']
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -81,7 +89,15 @@ export class EditarStudentComponent implements OnInit {
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      headquarterProgramStudent: this.form.value.headquarterProgramStudent
+      headquarterProgramStudent: this.form.value.headquarterProgramStudent,
+      nationality: this.form.value.nationality,
+      date_of_birth: this.form.value.date_of_birth,
+      current_semester: this.form.value.current_semester,
+      current_average: this.form.value.current_average,
+      experienciaInvestigativa: this.form.value.experienciaInvestigativa,
+      areasEstudio: this.form.value.areasEstudio,
+      publicacionesResientes: this.form.value.publicacionesResientes,
+      practicas: this.form.value.practicas,
     };
 
     if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
@@ -109,7 +125,10 @@ export class EditarStudentComponent implements OnInit {
     formValue.GenderId != ( 0 || undefined)&&
     formValue.address != ""&&
     formValue.phone != ""&&
-    formValue.email != ""){
+    formValue.nationality != ("" || undefined) && 
+    formValue. date_of_birth!= ("" || undefined) && 
+    formValue.email != ""&& 
+    formValue.current_semester  != "" && formValue.current_average  != ""){
 
       this.studentService.updateItem(formValue.id,formValue).subscribe(
         () => {
@@ -140,9 +159,9 @@ export class EditarStudentComponent implements OnInit {
             this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
           }
         });
-}else{
-  this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-} 
+  }else{
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+  } 
 
 }
 
@@ -203,7 +222,14 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.student.User.email)
-          // console.log('aqui')
+          this.form.controls['nationality'].setValue(cnt_groupFromApi.student.User.Person.nationality)
+          this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
+          this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
+          this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
+          this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
+          this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
+          this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
+          this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
        
           }
 

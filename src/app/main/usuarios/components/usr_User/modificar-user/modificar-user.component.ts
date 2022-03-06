@@ -55,8 +55,11 @@ export class ModificarUserComponent implements OnInit {
       address:['', [Validators.required]],
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
+      nationality: ['', [Validators.required]],
+      date_of_birth: ['', [Validators.required]],
       Roles: this.formBuilder.array([this.formBuilder.group({
         UserId:0,RoleId:['', [Validators.required]]})]),
+
     });
   
       this.getUsrRoles()
@@ -104,6 +107,8 @@ export class ModificarUserComponent implements OnInit {
       password:'',
       UserId:this.form.value.id,
       Roles:this.form.value.Roles,
+      nationality: this.form.value.nationality,
+      date_of_birth: this.form.value.date_of_birth,
     };
     if(this.Roles1.length == 0 || this.Roles1 == []){
       let control = <FormArray>this.form.controls['Roles']
@@ -129,7 +134,9 @@ export class ModificarUserComponent implements OnInit {
               formValue.GenderId != ( 0 || undefined)&&
               formValue.address != ""&&
               formValue.phone != ""&&
-              formValue.email != ""){
+              formValue.email != ""&&
+              formValue.nationality != "" && 
+              formValue. date_of_birth!= ""){
 
             this.userService.updateUser(formValue).subscribe(
               () => {
@@ -192,7 +199,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.user.id != undefined
       ){
-      console.log(cnt_groupFromApi.user)
+      // console.log(cnt_groupFromApi.user)
         this.form.controls['id'].setValue(cnt_groupFromApi.user.id)
         if(cnt_groupFromApi.user?.User != undefined
           ){
@@ -202,6 +209,9 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.user.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.user.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.user.User.email)
+
+          this.form.controls['nationality'].setValue(cnt_groupFromApi.user.nationality)
+          this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.user.date_of_birth)
           // console.log('aqui')
        
           }

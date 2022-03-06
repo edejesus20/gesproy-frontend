@@ -83,11 +83,19 @@ export class EditarTeacherComponent implements OnInit {
           HeadquarterProgramId:['', [Validators.required]],
           RelationshipId:['', [Validators.required]],
       })]),
-      Lines: this.formBuilder.array([this.formBuilder.group(
-        {
-          TeacherId:0,
-          LineId:['', [Validators.required]],
-      })]),
+      // Lines: this.formBuilder.array([this.formBuilder.group(
+      //   {
+      //     TeacherId:0,
+      //     LineId:['', [Validators.required]],
+      // })]),
+      tiulosAcademicos:[''],
+      camposCiencia:[''],
+      cargosDesempeñados:[''],
+      formacionInvestigativa:[''],
+      publicacionesResientes:[''],
+      practicas:[''],
+      nationality:[''],
+      date_of_birth:[''],
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -125,7 +133,15 @@ export class EditarTeacherComponent implements OnInit {
       ScaleId: this.form.value.ScaleId.id,
       ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
-      Lines: this.form.value.Lines
+      // Lines: this.form.value.Lines
+      tiulosAcademicos:this.form.value.tiulosAcademicos,
+      camposCiencia:this.form.value.camposCiencia,
+      cargosDesempeñados:this.form.value.cargosDesempeñados,
+      formacionInvestigativa:this.form.value.formacionInvestigativa,
+      publicacionesResientes:this.form.value.publicacionesResientes,
+      practicas:this.form.value.practicas,
+      nationality: this.form.value.nationality,
+      date_of_birth: this.form.value.date_of_birth,
 
     };
 
@@ -145,21 +161,21 @@ export class EditarTeacherComponent implements OnInit {
     }else{
       formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
     }
-    if(this.Lines.length == 0 || this.Lines == []){
-      let control = <FormArray>this.form.controls['Lines']
-      for (const key of control.value) {
+    // if(this.Lines.length == 0 || this.Lines == []){
+    //   let control = <FormArray>this.form.controls['Lines']
+    //   for (const key of control.value) {
 
-        key.LineId=key.LineId.id
+    //     key.LineId=key.LineId.id
 
-        this.Lines.push({
-        TeacherId:0,
-        LineId:key.LineId,
-        })
-      }
-      formValue.Lines = this.form.value.Lines
-    }else{
-      formValue.Lines = this.Lines
-    }
+    //     this.Lines.push({
+    //     TeacherId:0,
+    //     LineId:key.LineId,
+    //     })
+    //   }
+    //   formValue.Lines = this.form.value.Lines
+    // }else{
+    //   formValue.Lines = this.Lines
+    // }
     if(
       formValue.name != ""&&
       formValue.surname != ""&&
@@ -170,6 +186,8 @@ export class EditarTeacherComponent implements OnInit {
       formValue.phone != ""&&
       formValue.email != ""&&
       formValue.hours_of_dedication != ""&&
+      formValue.nationality != ("" || undefined) && 
+      formValue. date_of_birth!= ("" || undefined) && 
      formValue.ScaleId !=("" || undefined)
     &&formValue.ColcienciaCategoryId != ("" || undefined)){
 
@@ -353,7 +371,14 @@ getOneCntAccount(id:number) {
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
-
+          this.form.controls['tiulosAcademicos'].setValue(cnt_groupFromApi.teacher.tiulosAcademicos)
+          this.form.controls['camposCiencia'].setValue(cnt_groupFromApi.teacher.camposCiencia)
+          this.form.controls['cargosDesempeñados'].setValue(cnt_groupFromApi.teacher.cargosDesempeñados)
+          this.form.controls['formacionInvestigativa'].setValue(cnt_groupFromApi.teacher.formacionInvestigativa)
+          this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.teacher.publicacionesResientes)
+          this.form.controls['practicas'].setValue(cnt_groupFromApi.teacher.practicas)
+          this.form.controls['nationality'].setValue(cnt_groupFromApi.teacher.User.Person.nationality)
+            this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.teacher.User.Person.date_of_birth)
           if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
         this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo1)=>{
            if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
@@ -380,11 +405,11 @@ getOneCntAccount(id:number) {
           this.agregarHeadquarterPrograms(cnt_groupFromApi.teacher.HeadquarterPrograms)
           
         }
-        if(cnt_groupFromApi.teacher.Lines != undefined){
+        // if(cnt_groupFromApi.teacher.Lines != undefined){
           
-          this.agregarLines(cnt_groupFromApi.teacher.Lines)
+        //   this.agregarLines(cnt_groupFromApi.teacher.Lines)
           
-        }
+        // }
      }
 
     this.displayMaximizable2=true

@@ -7,14 +7,31 @@
   
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
-  [contentStyle]="{'overflow-y': 'auto'}"[closable]="false" [closeOnEscape]="false" >
-      
-      <div [style]="{'margin-top':'-1px'}" >
-          <div fxLayout="row" class="titleCard">
-            <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
-          <h2 class="fondebabutton" style="margin-top: -1px;">Editar Estudiante</h2>
-        </div>
-
+  [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" >
+  
+        <div [style]="{'margin-top':'-1px'}" >
+          <br>
+  
+          <div style="border: 1px solid black;padding: 10px;">
+  
+            <div class="grid p-fluid" style="padding: 10px;">
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                <img alt="logo" src="../../../../../../assets/images/images.jpg" 
+                style="width: 100%"/>
+              </div>
+  
+              <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+                <h2 style="text-align: center;">HOJA DE VIDA PARA ESTUDIANTES</h2>
+              </div>
+  
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                <img alt="logo" src="../../../../../../assets/images/uniguajira_iso.jpg" 
+                style="width: 100%"/>
+              </div>
+            </div>
+           
+            <div class="bordep">
+              <h3 style="text-align:center;">1. Datos Basicos:</h3>
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
               <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
@@ -43,7 +60,25 @@
 
           </div>
 
-          
+          <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="date" class="p-inputtext-lg" pInputText name="date_of_birth" 
+                placeholder="FECHA DE NACIMIENTO" formControlName="date_of_birth" title="FECHA DE NACIMIENTO" required>         
+            </div>
+            </div>
+            
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="p-inputgroup" >
+                <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                class="p-inputtext-lg"  name="nationality" placeholder="NACIONALIDAD" title="NACIONALIDAD"
+                formControlName="nationality" required  >         
+            </div>
+            </div>
+
+          </div>
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
 
@@ -141,8 +176,37 @@
             </div>
 
           </div>
+            </div>
+            
+            <div class="bordep">
+              <h3 style="text-align:center;">2. Datos Secundarios:</h3>
 
-          <div fxLayout="row" fxLayoutGap="20px">
+              <div class="grid p-fluid">
+                <div class="col-12 md:col-6 lg:col-6">
+                  
+                  <div class="p-inputgroup" >
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                    class="p-inputtext-lg"  name="current_semester" placeholder="SEMESTRE ACTUAL" 
+                    formControlName="current_semester" required
+                      title="SEMESTRE ACTUAL" >         
+                </div>
+    
+                </div>
+                <div class="col-12 md:col-6 lg:col-6">
+                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input class="p-inputtext-lg" type="text" formControlName="current_average"
+                    pInputText pKeyFilter="num" name="current_average" 
+                    placeholder="PROMEDIO ACTUAL" title="PROMEDIO ACTUAL" required
+                    >         
+                </div>
+    
+                </div>
+    
+              </div>
+
+          <div fxLayout="row" fxLayoutGap="20px"  style="display: flex;justify-content:center;align-items:center" >
             <button pButton type="button" (click)="addRoles($event)" 
             class="p-button-warning p-button-raised p-button-rounded"
              label="Add Sedes y Programa"></button>  
@@ -196,7 +260,59 @@
               </p-table>
             </div>
           </div>
+        </div>
+        <div  style="border: 1px solid black;padding: 10px;">
+          <h3 style="text-align:center;">3. Datos Adicionales</h3>
+          <div class="bordep">
+            <h4 style="text-align:left;">3.1. Experiencia Investigativa y Participación en Proyectos de Investigación. </h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+              pInputTextarea [autoResize]="true"
+              formControlName="experienciaInvestigativa" placeholder="ESCRIBIR "  ></textarea>
+            </div>                    
+          </div>
+
+          <div class="bordep">
+            <h4 style="text-align:left;">3.2. Áreas y/o Temáticas de Estudio  </h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+              pInputTextarea [autoResize]="true"
+              formControlName="areasEstudio" placeholder="ESCRIBIR "  ></textarea>
+            </div>                    
+          </div>
+
+          <!-- <div class="bordep">
+            <h4 style="text-align:left;">3.3. Líneas de Investigación del Grupo y/0 Semillero </h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+              pInputTextarea [autoResize]="true"
+              formControlName="tiulosAcademicos" placeholder="ESCRIBIR "  ></textarea>
+            </div>                    
+          </div> -->
+
+          <div class="bordep">
+            <h4 style="text-align:left;">3.4. Publicaciones recientes en las que ha participado.</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+              pInputTextarea [autoResize]="true"
+              formControlName="publicacionesResientes" placeholder="ESCRIBIR "  ></textarea>
+            </div>                    
+          </div>
+
+          <div style="border: 1px solid black;padding: 10px">
+            <h4 style="text-align:left;">3.4. Prácticas o pasantías que haya realiza.</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+              pInputTextarea [autoResize]="true"
+              formControlName="practicas" placeholder="ESCRIBIR "  ></textarea>
+            </div>                    
+          </div>
+
+        </div>
+          </div>
+
       </div>
+      <br>
 
               <div fxLayout="row" class="titleCard" >
                 <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"

@@ -53,6 +53,8 @@ export class EditarAdministrativeComponent implements OnInit {
       email:['', [Validators.required]],
       HeadquarterId:['', [Validators.required]],
       OcupationId:['', [Validators.required]],
+      nationality:['', [Validators.required]],
+      date_of_birth:['', [Validators.required]],
      });
   
       this.getAllgenders()
@@ -106,8 +108,8 @@ export class EditarAdministrativeComponent implements OnInit {
           this.form.controls['address'].setValue(cnt_groupFromApi.administrative.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.administrative.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.administrative.User.email)
-          // console.log('aqui')
-       
+            this.form.controls['nationality'].setValue(cnt_groupFromApi.administrative.User.Person.nationality)
+            this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.administrative.User.Person.date_of_birth)
           }
 
         if(cnt_groupFromApi.administrative.User?.Person?.GenderId != undefined)
@@ -124,8 +126,8 @@ export class EditarAdministrativeComponent implements OnInit {
                 if(cnt_groupFromApi.administrative.Ocupation != undefined){
                   this.form.controls['OcupationId'].setValue(cnt_groupFromApi.administrative.Ocupation)
                 }
-                console.log(cnt_groupFromApi.administrative);
-        console.log(this.form.value);
+                // console.log(cnt_groupFromApi.administrative);
+        // console.log(this.form.value);
                 })
               }
           }) 
@@ -174,7 +176,9 @@ export class EditarAdministrativeComponent implements OnInit {
       password:'',
       UserId: 0,
       OcupationId: this.form.value.OcupationId.id,
-      HeadquarterId: this.form.value.HeadquarterId.id
+      HeadquarterId: this.form.value.HeadquarterId.id,
+      nationality: this.form.value.nationality,
+      date_of_birth: this.form.value.date_of_birth,
     };
 
             if(formValue.name != ""&&
@@ -186,7 +190,9 @@ export class EditarAdministrativeComponent implements OnInit {
               formValue.GenderId != ( 0 || undefined)&&
               formValue.address != ""&&
               formValue.phone != ""&&
-              formValue.email != ""){
+              formValue.email != ""&&
+              formValue.nationality != ("" || undefined) && 
+              formValue. date_of_birth!= ("" || undefined)){
 
 
             this.administrativeService.updateItem(formValue.id,formValue).subscribe(

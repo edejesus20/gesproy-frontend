@@ -28,20 +28,27 @@ export class CreateStudentComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public form:FormGroup=this.formBuilder.group({
-    name:[''],
-    surname:[''],
-    DocumentTypeId:[''],
-    identification:[''],
-    GenderId:[''],
-    address:[''],
-    phone:[''],
-    email:[''],
+    name:['', [Validators.required]],
+    surname:['', [Validators.required]],
+    DocumentTypeId:['', [Validators.required]],
+    identification:['', [Validators.required]],
+    GenderId:['', [Validators.required]],
+    address:['', [Validators.required]],
+    phone:['', [Validators.required]],
+    email:['', [Validators.required]],
     UserId:[''],
-    headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
-      {
+    nationality:['', [Validators.required]],
+    date_of_birth:['', [Validators.required]],
+    headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
         StudentId:0,
         HeadquarterProgramId:['', [Validators.required]],
     })]),
+    current_semester:['', [Validators.required]],
+    current_average:['', [Validators.required]],
+    experienciaInvestigativa:[''],
+    areasEstudio:[''],
+    publicacionesResientes:[''],
+    practicas:['']
    });
 
    public headquarterProgram: any[]=[]
@@ -72,49 +79,44 @@ export class CreateStudentComponent implements OnInit {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
         this.users = AdministrativeFromApi.usersestudiente;
-        console.log(this.users)
+        // console.log(this.users)
       }, error => console.error(error));
   }
   public onSubmit(e:Event) {
     e.preventDefault()
 
     let formValue:any={}
-    if(this.mostrarUser == false){
-      formValue={
-        name: '',
-        surname: '',
-        DocumentTypeId: '',
-        identification: '',
-        GenderId: '',
-        address: '',
-        phone: '',
-        username:'',
-        fullName:'',
-        email:'',
-        password:'',
-        UserId:  this.form.value.UserId.UserId,
-        headquarterProgramStudent: this.form.value.headquarterProgramStudent
-      };
-    }
+    formValue={
+      name: this.form.value.name,
+      surname: this.form.value.surname,
+      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      identification: this.form.value.identification,
+      GenderId: this.form.value.GenderId.id,
+      address: this.form.value.address,
+      phone: this.form.value.phone,
+      username:'',
+      fullName:'',
+      email:this.form.value.email,
+      password:'',
+      UserId: undefined,
+      headquarterProgramStudent: this.form.value.headquarterProgramStudent,
+      nationality: this.form.value.nationality,
+      date_of_birth: this.form.value.date_of_birth,
+      current_semester: this.form.value.current_semester,
+      current_average: this.form.value.current_average,
+      experienciaInvestigativa: this.form.value.experienciaInvestigativa,
+      areasEstudio: this.form.value.areasEstudio,
+      publicacionesResientes: this.form.value.publicacionesResientes,
+      practicas: this.form.value.practicas,
+    };
+    // if(this.mostrarUser == false){
+    //   formValue.UserId=  this.form.value.UserId.UserId
+    // }
 
-    if(this.mostrarUser == true){
-      formValue={
-        name: this.form.value.name,
-        surname: this.form.value.surname,
-        DocumentTypeId: this.form.value.DocumentTypeId.id,
-        identification: this.form.value.identification,
-        GenderId: this.form.value.GenderId.id,
-        address: this.form.value.address,
-        phone: this.form.value.phone,
-        username:'',
-        fullName:'',
-        email:this.form.value.email,
-        password:'',
-        UserId: undefined,
-        headquarterProgramStudent: this.form.value.headquarterProgramStudent
-      };
+    // if(this.mostrarUser == true){
+    //   formValue.UserId=undefined
 
-    }
+    // }
 
       if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
@@ -131,11 +133,17 @@ export class CreateStudentComponent implements OnInit {
             formValue.headquarterProgramStudent = this.headquarterProgramStudent1
           }
 
-      if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+      // if((this.mostrarUser == true && 
+        if(  formValue.name != ""&& formValue.surname != ""&&
       formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
       formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-      formValue.phone != ""&& formValue.email != "")
-      ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
+      formValue.nationality != ("" || undefined) && 
+      formValue. date_of_birth!= ("" || undefined) && 
+      formValue.phone != ""&& formValue.email != "" && 
+      formValue.current_semester  != "" && formValue.current_average  != "" 
+      // )
+      // ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && 
+      // formValue.current_semester  != "" && formValue.current_average  != "")
       ){
  
     

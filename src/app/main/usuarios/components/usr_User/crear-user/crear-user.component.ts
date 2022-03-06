@@ -9,13 +9,14 @@ import { GenderI } from 'src/app/models/user/gender';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 const translate = require('translate');
 
 @Component({
   selector: 'app-crear-user',
   templateUrl: './crear-user.component.html',
-  styleUrls: ['./crear-user.component.css']
+  styleUrls: ['./crear-user.component.css'],
+  providers: [DialogService,DynamicDialogRef,DynamicDialogConfig]
 })
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
@@ -35,6 +36,8 @@ export class CrearUserComponent implements OnInit {
     address:['', [Validators.required]],
     phone:['', [Validators.required]],
     email:['', [Validators.required]],
+    nationality: ['', [Validators.required]],
+    date_of_birth: ['', [Validators.required]],
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   public mostrarDialogo:boolean=false;
@@ -52,7 +55,8 @@ export class CrearUserComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.ref)
-    console.log(this.config)
+    // console.log(this.config)
+    if(this.config.data)
     if(this.config.data.id == '1'){
       this.mostrarDialogo= true
     }
@@ -128,6 +132,8 @@ export class CrearUserComponent implements OnInit {
         password:'',
         UserId: 0,
         Roles:this.form.value.Roles,
+        nationality: this.form.value.nationality,
+        date_of_birth: this.form.value.date_of_birth,
       };
       if(this.Roles1.length == 0 || this.Roles1 == []){
         let control = <FormArray>this.form.controls['Roles']
@@ -152,7 +158,9 @@ export class CrearUserComponent implements OnInit {
                 formValue.GenderId != ( 0 || undefined)&&
                 formValue.address != ""&&
                 formValue.phone != ""&&
-                formValue.email != ""){
+                formValue.email != "" && 
+                formValue.nationality != "" && 
+                formValue. date_of_birth!= ""){
   
               this.userService.createUser(formValue).subscribe(
                 (algo) => {

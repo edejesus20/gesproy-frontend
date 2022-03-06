@@ -34,6 +34,8 @@ export class CreateAdministrativeComponent implements OnInit {
     phone:[''],
     email:[''],
     UserId:[''],
+    nationality:[''],
+    date_of_birth:[''],
     HeadquarterId:['', [Validators.required]],
     OcupationId:['', [Validators.required]],
    });
@@ -72,7 +74,7 @@ export class CreateAdministrativeComponent implements OnInit {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
         this.users = AdministrativeFromApi.userseadministrative;
-        console.log(this.users)
+        // console.log(this.users)
       }, error => console.error(error));
   }
   private getAllgenders(selectId?: number) {
@@ -111,48 +113,40 @@ export class CreateAdministrativeComponent implements OnInit {
     e.preventDefault()
 
     let formValue:any={}
+
+    formValue={
+      name: '',
+      surname: '',
+      DocumentTypeId: '',
+      identification: '',
+      GenderId: '',
+      address: '',
+      phone: '',
+      username:'',
+      fullName:'',
+      email:'',
+      password:'',
+      UserId:  this.form.value.UserId.UserId,
+      OcupationId: this.form.value.OcupationId.id,
+    HeadquarterId: this.form.value.HeadquarterId.id,
+    nationality: this.form.value.nationality,
+    date_of_birth: this.form.value.date_of_birth,
+    };
+
     if(this.mostrarUser == false){
-      formValue={
-        name: '',
-        surname: '',
-        DocumentTypeId: '',
-        identification: '',
-        GenderId: '',
-        address: '',
-        phone: '',
-        username:'',
-        fullName:'',
-        email:'',
-        password:'',
-        UserId:  this.form.value.UserId.UserId,
-        OcupationId: this.form.value.OcupationId.id,
-      HeadquarterId: this.form.value.HeadquarterId.id
-      };
+      formValue.UserId=  this.form.value.UserId.UserId
     }
 
     if(this.mostrarUser == true){
-      formValue={
-        name: this.form.value.name,
-        surname: this.form.value.surname,
-        DocumentTypeId: this.form.value.DocumentTypeId.id,
-        identification: this.form.value.identification,
-        GenderId: this.form.value.GenderId.id,
-        address: this.form.value.address,
-        phone: this.form.value.phone,
-        username:'',
-        fullName:'',
-        email:this.form.value.email,
-        password:'',
-        UserId: undefined,
-        OcupationId: this.form.value.OcupationId.id,
-      HeadquarterId: this.form.value.HeadquarterId.id
-      };
-
+      formValue.UserId= undefined
     }
     if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
     formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-    formValue.phone != ""&& formValue.email != "")
+    formValue.phone != ""&& formValue.email != ""&&
+      formValue.nationality != ("" || undefined) && 
+      formValue. date_of_birth!= ("" || undefined)
+      )
     ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
     ){
     // console.log(formValue)
