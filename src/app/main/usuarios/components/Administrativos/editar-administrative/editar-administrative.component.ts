@@ -124,7 +124,10 @@ export class EditarAdministrativeComponent implements OnInit {
                 this.form.controls['GenderId'].setValue(algo1.gender)
                 this.form.controls['HeadquarterId'].setValue(algo2.headquarter)
                 if(cnt_groupFromApi.administrative.Ocupation != undefined){
-                  this.form.controls['OcupationId'].setValue(cnt_groupFromApi.administrative.Ocupation)
+                  this.ocupationService.getItem(parseInt(cnt_groupFromApi.administrative.OcupationId)).subscribe( (algo4)=>{
+                    this.form.controls['OcupationId'].setValue(algo4.ocupation)
+                  })
+                  
                 }
                 // console.log(cnt_groupFromApi.administrative);
         // console.log(this.form.value);

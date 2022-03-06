@@ -1,0 +1,17 @@
+.titleCard{
+    margin: 0 0 10px 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    }
+    .fondebabutton{
+    color:#707070;
+    }
+  
+    .opcStatus{
+      margin: 0 40px;
+    }
+    .bordep{
+        border-left: 1px solid black;border-top: 1px solid black;border-right: 1px solid black;padding: 10px;
+      }
+    

@@ -49,11 +49,13 @@
   }
   .padre:hover{
     border-left: 5px solid #F16257;
+    /* border-left: 5px solid #FBC02D; */
     text-decoration-color: #F16257;
     cursor: pointer;
     /* color:#F16257 */
     /* background-color: #F16257; */
   }
+
   
   .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
     display: flex;

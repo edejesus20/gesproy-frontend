@@ -34,8 +34,7 @@ export class Show_linesComponent implements OnInit {
       this.cols = [
       { field: 'name', header: 'Nombre' },
       { field: 'justification', header: 'Justificación' },
-      { field: 'Overall_objective', header: 'Objetivo General' },
-      { field: 'Specific_objectives', header: 'Objetivos Especificos' },
+      { field: 'objectives', header: 'Objetivos' },
       { field: 'thematics', header: 'Tematicas Asociadas' },
       { field: 'resolution', header: 'Resolución' },
     ];
@@ -54,8 +53,7 @@ export class Show_linesComponent implements OnInit {
                 id:key.id,
                 name: key.name,
                 justification:key.justification,
-                Overall_objective:key.Overall_objective,
-                Specific_objectives:key.Specific_objectives,
+                objectives:key.objectives,
                 thematics:key.thematics,
                 resolution:key.resolution,
               }
@@ -79,8 +77,7 @@ export class Show_linesComponent implements OnInit {
         id: key.id,
         Nombre:key.name,
         Justificación:key.justification,
-        Objetivo_General:key.Overall_objective,
-        Objetivos_Especificos:key.Specific_objectives,
+        Objetivos:key.objectives,
         Tematicas_Asociadas:key.thematics,
         Resolución:key.resolution,
       })
@@ -121,8 +118,7 @@ export class Show_linesComponent implements OnInit {
             // col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_4:{ text: 'OBJETIVO GENERAL', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_5:{ text: 'OBJETIVOS ESPECIFICOS', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            col_5:{ text: 'OBJETIVOS', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_7:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 12 ,bold: true, },
         }
@@ -136,7 +132,7 @@ export class Show_linesComponent implements OnInit {
               var row:any[] = [ 
                 // headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
-              headerU.fila_0.col_3,headerU.fila_0.col_4,
+              headerU.fila_0.col_3,
               headerU.fila_0.col_5,headerU.fila_0.col_6,
               headerU.fila_0.col_7,
               ]
@@ -152,8 +148,7 @@ export class Show_linesComponent implements OnInit {
                 // data.id?.toString(),
                 data.name.toString(),
                 data.justification.toString(),
-                data.Overall_objective.toString(),
-                data.Specific_objectives.toString(),
+                data.objectives.toString(),
                 data.thematics.toString(),
                 data.resolution?.toString()
               ]
@@ -189,7 +184,7 @@ export class Show_linesComponent implements OnInit {
             style: 'tableExample',
             table: {
               headerRows: 1,
-              widths: [ '15%', '10%', '18%', '27%', '19%', '11%'],
+              widths: [ '15%', '15%', '24%', '27%', '19%'],
              
                 body: body
             },

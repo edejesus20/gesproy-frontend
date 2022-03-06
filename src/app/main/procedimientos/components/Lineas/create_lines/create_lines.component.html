@@ -1,8 +1,6 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
-  [contentStyle]="{'overflow-y': 'auto'}"
-
-  [closable]="false" [closeOnEscape]="false" 
+  [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" 
       >
       
       <div [style]="{'margin-top':'-1px'}" >
@@ -46,15 +44,10 @@
               </div>
               <div class="bordep">
                 <h4 style="text-align:left;">3. OBJETIVOS DE LA LÍNEA</h4>
-                <h5 style="text-align:left;">3.1 General:</h5>
                 <div class="p-inputgroup" >
-                  <input type="text" class="p-inputtext-lg" pInputText name="name" 
-                  placeholder="Objetivo General" formControlName="Overall_objective" title="Objetivo General" required>         
-                </div>
-                <h5 style="text-align:left;">3.2. Especificos:</h5>
-                <div class="p-inputgroup" >
-                  <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
-                  formControlName="Specific_objectives" required></textarea> 
+                  <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}"
+                   pInputTextarea [autoResize]="true"
+                  formControlName="objectives" placeholder="ESCRIBIR OBJETIVOS"  required></textarea> 
                 </div>
               </div>
 

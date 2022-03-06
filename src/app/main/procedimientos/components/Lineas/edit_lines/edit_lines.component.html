@@ -1,3 +1,90 @@
-<p>
-  edit_lines works!
-</p>
+<ng-template [ngIf]="tabla == true">
+  <app-show_lines [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show_lines>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+  <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
+    [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" 
+        >
+        
+        <div [style]="{'margin-top':'-1px'}" >
+            <div fxLayout="row" class="titleCard">
+                <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+              <h2 class="fondebabutton" style="margin-top: -1px;">Editar Linea de Investigacón</h2>
+            </div>
+    
+      
+              <div style="border: 1px solid black;padding: 10px;">
+  
+                <div class="grid p-fluid" style="padding: 10px;">
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                    <img alt="logo" src="../../../../../../assets/images/images.jpg" 
+                    style="width: 100%"/>
+                  </div>
+  
+                  <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+                    <h3 style="text-align: center;">DATOS DE LA LÍNEA DE INVESTIGACIÓN</h3>
+                  </div>
+  
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                    <img alt="logo" src="../../../../../../assets/images/uniguajira_iso.jpg" 
+                    style="width: 100%"/>
+                  </div>
+                </div>
+                
+                <div class="bordep">
+                  <h4 style="text-align:left;">1. NOMBRE DE LA LINEA:</h4>
+                    <div class="p-inputgroup" >
+                      <input type="text" class="p-inputtext-lg" pInputText name="name" 
+                      placeholder="NOMBRE DE LA LINEA" formControlName="name" title="NOMBRE DE LA LINEA" required>         
+                    </div>
+                </div>
+                <div class="bordep">
+                  <h4 style="text-align:left;">2.  JUSTIFICACIÓN DE LA LÍNEA </h4>
+                  <div class="p-inputgroup" style="margin-bottom: 10px;">
+                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+                    formControlName="justification" placeholder="ESCRIBIR LA JUSTIFICACIÓN"  required></textarea>
+                  </div>
+                </div>
+                <div class="bordep">
+                  <h4 style="text-align:left;">3. OBJETIVOS DE LA LÍNEA</h4>
+                  <div class="p-inputgroup" >
+                    <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}"
+                     pInputTextarea [autoResize]="true"
+                    formControlName="objectives" placeholder="ESCRIBIR OBJETIVOS"  required></textarea> 
+                  </div>
+                </div>
+  
+                <div style="border: 1px solid black;padding: 10px">
+                  <h4 style="text-align:left;">4. TEMÁTICAS ASOCIADAS A LA LÍNEA DE INVESTIGACIÓN </h4>
+                  <div class="p-inputgroup" style="margin-bottom: 10px;">
+                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+                    formControlName="thematics" placeholder="ESCRIBIR TEMÁTICAS ASOCIADAS A LA LÍNEA"  required></textarea>
+                  </div>                  
+                </div>
+  
+                <div style="border: 1px solid black;padding: 10px">
+                  <h4 style="text-align:left;">5. RESOLUCION </h4>
+                  <div class="p-inputgroup" style="margin-bottom: 10px;">
+                    <input type="text" class="p-inputtext-lg" pInputText name="resolution" 
+                    placeholder="ESCRIBIR RESOLUCION" formControlName="resolution" 
+                    title="ESCRIBIR RESOLUCION" required>        
+                  </div>                  
+                </div>
+           <br>
+                <div fxLayout="row" class="titleCard" >
+                  <button pButton type="button" type="submit"  icon="pi pi-check" 
+                  [disabled]="!form.valid" (click)="onSubmit($event)"
+                 class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
+                  <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            </div>
+  
+            </div>
+        </div>
+         
+  </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+
+</ng-template>

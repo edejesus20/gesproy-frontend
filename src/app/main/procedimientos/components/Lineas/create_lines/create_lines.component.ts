@@ -28,8 +28,7 @@ export class Create_linesComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       justification: ['', [Validators.required]],
-      Overall_objective: ['', [Validators.required]],
-      Specific_objectives: ['', [Validators.required]],
+      objectives: ['', [Validators.required]],
       thematics: ['', [Validators.required]],
       resolution: ['', [Validators.required]],
     });
@@ -39,7 +38,7 @@ export class Create_linesComponent implements OnInit {
     e.preventDefault();
     const formValue: LineI = this.form.value;
     if(formValue.name != "" && formValue.justification != "" && 
-    formValue.Overall_objective != "" && formValue.Specific_objectives !="" && 
+    formValue.objectives !="" && 
     formValue.thematics != ""  &&  formValue.resolution != ""){
     this.lineService.createItem(formValue).subscribe(
       () => {

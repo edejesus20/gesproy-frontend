@@ -4,7 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','justification','Overall_objective','Specific_objectives','thematics','resolution']"
+    [globalFilterFields]="['id','name','justification','objectives','thematics','resolution']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -38,8 +38,7 @@
           <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="justification">JUSTIFICACIÓN<p-sortIcon field="justification"></p-sortIcon></th>
-          <th   pSortableColumn="Overall_objective">OBJETIVO GENERAL<p-sortIcon field="Overall_objective"></p-sortIcon></th>
-          <th pSortableColumn="Specific_objectives">OBJETIVOS ESPECIFICOS<p-sortIcon field="Specific_objectives"></p-sortIcon></th>
+          <th pSortableColumn="objectives">OBJETIVOS<p-sortIcon field="objectives"></p-sortIcon></th>
           <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
           <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
@@ -59,8 +58,7 @@
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.name  | titlecase}}</td>
           <td>{{item.justification }}</td>
-          <td>{{item.Overall_objective}}</td>
-          <td>{{item.Specific_objectives }}</td>
+          <td>{{item.objectives }}</td>
           <td>{{item.thematics }}</td>
           <td>{{item.resolution | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">

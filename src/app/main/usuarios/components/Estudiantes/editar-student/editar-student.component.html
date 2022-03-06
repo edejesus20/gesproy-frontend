@@ -1,16 +1,17 @@
-
 <ng-template [ngIf]="tabla == true">
   <app-show-student [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show-student>
 </ng-template>
 <ng-template [ngIf]="tabla == false">
-
-  
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" >
   
         <div [style]="{'margin-top':'-1px'}" >
-          <br>
+          <div fxLayout="row" class="titleCard">
+            <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+          <h2 class="fondebabutton" style="margin-top: -1px;">Editar Estudiante</h2>
+        </div>
+
   
           <div style="border: 1px solid black;padding: 10px;">
   
