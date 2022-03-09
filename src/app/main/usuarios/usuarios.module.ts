@@ -87,6 +87,7 @@ import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/e
 import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
 import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -191,6 +192,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     FileUploadModule,
     InputTextareaModule
 
-  ]
+  ],
+  
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class UsuariosModule { }

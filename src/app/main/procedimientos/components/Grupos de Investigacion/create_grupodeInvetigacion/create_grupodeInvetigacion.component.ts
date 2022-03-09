@@ -112,10 +112,9 @@ public mostrarTeacher:boolean=false
       Metas: ['', [Validators.required]],
       Resultados: ['', [Validators.required]],
       Facultad: ['', [Validators.required]],
-      // InvestigatorCollaborators: this.formBuilder.array([
-      //   this.formBuilder.group({UserId:['']})]),
+      lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
       Sector: ['', [Validators.required]],
-      // Student: this.formBuilder.array([this.formBuilder.group({StudentId:['']})]),
+      Seedbed: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
       Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
     });
   }  
@@ -136,7 +135,7 @@ public mostrarTeacher:boolean=false
   }
   getLineTeacherId(id: any) {
       this.teacherService.getItem(id).subscribe(teacher=>{
-        console.log(teacher.teacher)
+        // console.log(teacher.teacher)
         if(teacher.teacher.Seedbeds && teacher.teacher.Lines){
           this.Seedbeds=teacher.teacher.Seedbeds
           this.lines=teacher.teacher.Lines
@@ -223,32 +222,32 @@ public mostrarTeacher:boolean=false
   }
 
 
-  // get getTecahers() {
-  //   return this.form.get('Tecahers') as FormArray;//obtener todos los formularios
-  // }
+  get getlines() {
+    return this.form.get('lines') as FormArray;//obtener todos los formularios
+  }
 
-  // addTecahers(event: Event){
-  //   event.preventDefault();
-  //   const control = <FormArray>this.form.controls['Tecahers']
-  //   //console.log(control)      
-  //     //crear los controles del array
-  //   if(control.length == 0 && this.mostrar == false){
-  //     control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
-  //   }
-  //   if(control.length >= 1 && this.mostrar == true){
-  //     control.push(this.formBuilder.group({TecaherId:['', [Validators.required]]}))//nuevo input
+  addlines(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['lines']
+    //console.log(control)      
+      //crear los controles del array
+    if(control.length == 0 && this.mostrar == false){
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
+    }
+    if(control.length >= 1 && this.mostrar == true){
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
 
-  //   }
-  //     this.mostrar=true
-  // }
-  // removeTecahers(index: number,event: Event){
-  //   event.preventDefault();
-  //   let control = <FormArray>this.form.controls['Tecahers']//aceder al control
-  //   control.removeAt(index)
-  //   if(control.length <= 0){
-  //    this.mostrar=false
-  //   }
-  // }
+    }
+      this.mostrar=true
+  }
+  removelines(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['lines']//aceder al control
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrar=false
+    }
+  }
 
   get getAnexos() {
     return this.form.get('Anexos') as FormArray;//obtener todos los formularios
@@ -277,32 +276,32 @@ public mostrarTeacher:boolean=false
     }
   }
 
-  // get getStudent() {
-  //   return this.form.get('Student') as FormArray;//obtener todos los formularios
-  // }
+  get getSeedbed() {
+    return this.form.get('Seedbed') as FormArray;//obtener todos los formularios
+  }
 
-  // addStudent(event: Event){
-  //   event.preventDefault();
-  //   const control = <FormArray>this.form.controls['Student']
-  //   //console.log(control)      
-  //     //crear los controles del array
-  //   if(control.length == 0 && this.mostrarS == false){
-  //     control.push(this.formBuilder.group({StudentId:['']}))//nuevo input
-  //   }
-  //   if(control.length >= 1 && this.mostrarS == true){
-  //     control.push(this.formBuilder.group({StudentId:['']}))//nuevo input
+  addSeedbed(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Seedbed']
+    //console.log(control)      
+      //crear los controles del array
+    if(control.length == 0 && this.mostrarS == false){
+      control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+    }
+    if(control.length >= 1 && this.mostrarS == true){
+      control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
 
-  //   }
-  //     this.mostrarS=true
-  // }
-  // removeStudent(index: number,event: Event){
-  //   event.preventDefault();
-  //   let control = <FormArray>this.form.controls['Student']//aceder al control
-  //   control.removeAt(index)
-  //   if(control.length <= 0){
-  //    this.mostrarS=false
-  //   }
-  // }
+    }
+      this.mostrarS=true
+  }
+  removeSeedbed(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Seedbed']//aceder al control
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrarS=false
+    }
+  }
 
   get getInvestigatorCollaborator() {
     return this.form.get('InvestigatorCollaborators') as FormArray;//obtener todos los formularios

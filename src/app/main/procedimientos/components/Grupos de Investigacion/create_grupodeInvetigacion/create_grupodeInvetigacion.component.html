@@ -248,6 +248,65 @@
 
               <div class="bordep">
                 <h4 style="text-align:left;">8.  LINEA DE INVESTIGACIÓN Y TEMÁTICAS ASOCIADAS AL GRUPO</h4>
+                
+                <div fxLayout="row" fxLayoutGap="20px">
+    
+                  <button pButton type="button" 
+                  (click)="addlines($event)" style="margin-right: 15px;" 
+                 class="p-button-success p-button-raised p-button-rounded"
+                  label="Add Lineas"></button> 
+               </div>
+     
+               <br>
+   
+               <div fxLayout="row" fxLayoutGap="20px">
+                 <div class="table-wrapper" >
+                   <p-table [value]="algo" *ngIf="mostrar == true"> 
+                     <ng-template pTemplate="header">
+                       <tr>
+                           <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
+                       </tr>
+                   </ng-template>
+                   <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                     <tr [pSelectableRow]="rowData">
+                         <td>
+                           <div formArrayName="lines"> 
+                             <div *ngFor="let item of getlines.controls; 
+                             let pointIndex=index" [formGroupName]="pointIndex">
+                               <div class="grupo"> 
+                                 <div class="grupoinput">
+                                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                   [options]="lines" [filter]="true"
+                                       formControlName="LineId" name="LineId"
+                                      label="SELECCIONE LINEA" 
+                                     [style]="{'width':'100%','margin-bottom':'20px'}"
+                                     optionvalue="id" optionLabel="name" 
+                                     filterBy="name"
+                                     [required]="true" placeholder="SELECCIONE LINEA"  >
+                                     <ng-template let-option pTemplate="item"  >
+                                       <span >{{option.name  | titlecase}}
+                                         </span>
+                                   </ng-template>
+                                   </p-dropdown></div>
+                                 
+                               <span class="bottomdelete" style="margin-top: 5px;">
+                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
+                                 class="p-button-rounded p-button-danger"></button>
+                                 <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                                 (click)="removeRoles(pointIndex,$event)" 
+                                 label="eliminar"></button> -->
+                               </span>
+                               
+                             </div>
+                             </div>
+                           </div> 
+                         </td>
+                     </tr>
+                   </ng-template>
+                   </p-table>
+                 </div>
+               </div>
+
                 <ng-template [ngIf]="mostrarLienas==true">
                   <p-table [value]="lines" > 
                     <ng-template pTemplate="header">
@@ -287,6 +346,65 @@
 
               <div class="bordep">
                 <h4 style="text-align:left;">10.  SEMILLEROS ASOCIADOS AL GRUPO</h4>
+
+                
+                <div fxLayout="row" fxLayoutGap="20px">
+    
+                  <button pButton type="button" (click)="addSeedbed($event)" style="margin-right: 15px;" 
+                 class="p-button-success p-button-raised p-button-rounded"
+                  label="Add Semilleros"></button> 
+               </div>
+     
+               <br>
+   
+               <div fxLayout="row" fxLayoutGap="20px">
+                 <div class="table-wrapper" >
+                   <p-table [value]="algoS" *ngIf="mostrarS == true"> 
+                     <ng-template pTemplate="header">
+                       <tr>
+                           <th pSortableColumn="id">Semilleros<p-sortIcon field="id"></p-sortIcon></th>
+                       </tr>
+                   </ng-template>
+                   <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                     <tr [pSelectableRow]="rowData">
+                         <td>
+                           <div formArrayName="Seedbed"> 
+                             <div *ngFor="let item of getSeedbed.controls; 
+                             let pointIndex=index" [formGroupName]="pointIndex">
+                               <div class="grupo"> 
+                                 <div class="grupoinput">
+                                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                   [options]="Seedbeds" [filter]="true"
+                                       formControlName="SeedbedId" name="SeedbedId"
+                                      label="SELECCIONE SEMILLERO" 
+                                     [style]="{'width':'100%','margin-bottom':'20px'}"
+                                     optionvalue="id" optionLabel="name" 
+                                     filterBy="name"
+                                     [required]="true" placeholder="SELECCIONE SEMILLERO"  >
+                                     <ng-template let-option pTemplate="item"  >
+                                       <span >{{option.name  | titlecase}}
+                                         </span>
+                                   </ng-template>
+                                   </p-dropdown></div>
+                                 
+                               <span class="bottomdelete" style="margin-top: 5px;">
+                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removeSeedbed(pointIndex,$event)"  
+                                 class="p-button-rounded p-button-danger"></button>
+                                 <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                                 (click)="removeRoles(pointIndex,$event)" 
+                                 label="eliminar"></button> -->
+                               </span>
+                               
+                             </div>
+                             </div>
+                           </div> 
+                         </td>
+                     </tr>
+                   </ng-template>
+                   </p-table>
+                 </div>
+               </div>
+<!-- 
                 <ng-template [ngIf]="mostrarLienas==true">
                   <p-table [value]="Seedbeds" > 
                     <ng-template pTemplate="header">
@@ -310,7 +428,7 @@
                 
 
                 </ng-template>
-                <p><b>Nota: </b>(Semilleros asociadas al Investigador principal)</p>
+                <p><b>Nota: </b>(Semilleros asociadas al Investigador principal)</p> -->
               </div>
 
               <div style="border: 1px solid black;padding: 10px">

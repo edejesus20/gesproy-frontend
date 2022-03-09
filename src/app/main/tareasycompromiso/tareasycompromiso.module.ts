@@ -51,6 +51,16 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
+import { Create_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/create_tipo_tareas/create_tipo_tareas.component';
+import { Delete_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/delete_tipo_tareas/delete_tipo_tareas.component';
+import { Edit_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/edit_tipo_tareas/edit_tipo_tareas.component';
+import { Show_one_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/show_one_tipo_tareas/show_one_tipo_tareas.component';
+import { Show_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/show_tipo_tareas/show_tipo_tareas.component';
+import { Create_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/create_pasos_tareas/create_pasos_tareas.component';
+import { Delete_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/delete_pasos_tareas/delete_pasos_tareas.component';
+import { Edit_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/edit_pasos_tareas/edit_pasos_tareas.component';
+import { Show_one_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/show_one_pasos_tareas/show_one_pasos_tareas.component';
+import { Show_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/show_pasos_tareas/show_pasos_tareas.component';
 
 @NgModule({
   imports: [
@@ -112,7 +122,19 @@ import { FileUploadModule } from 'primeng/fileupload';
     Show_one_tareascompletadasComponent,
     Create_tareascompletadasComponent,
     Edit_tareascompletadasComponent,
-    Delete_tareascompletadasComponent
+    Delete_tareascompletadasComponent,
+
+    Create_tipo_tareasComponent,
+    Delete_tipo_tareasComponent,
+    Edit_tipo_tareasComponent,
+    Show_one_tipo_tareasComponent,
+    Show_tipo_tareasComponent,
+
+    Create_pasos_tareasComponent,
+    Delete_pasos_tareasComponent,
+    Edit_pasos_tareasComponent,
+    Show_one_pasos_tareasComponent,
+    Show_pasos_tareasComponent,
    ]
 })
 export class TareasycompromisoModule { }

@@ -22,11 +22,7 @@ export class Delete_CategoriaGruposComponent implements OnInit {
     name: '',
     date:'',
     GroupId: 0,
-    Group:{
-      id:0,
-      name: '',
-      ident_colciencias:''
-    }
+    Group:undefined
   
   }
 

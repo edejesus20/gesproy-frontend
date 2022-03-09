@@ -15,4 +15,5 @@ export interface StudentI {
     areasEstudio:string,
     publicacionesResientes:string,
     practicas:string
+    status_seedbed?:string,
 }

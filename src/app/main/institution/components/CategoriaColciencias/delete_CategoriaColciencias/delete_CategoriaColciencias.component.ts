@@ -32,11 +32,7 @@ export class Delete_CategoriaColcienciasComponent implements OnInit {
             email: '',
             fullName: '',
           },
-        Group:{
-          id:0,
-          name: '',
-          ident_colciencias:''
-        }
+        Group:undefined
       }
     ]
     

@@ -15,8 +15,7 @@ const translate = require('translate');
 @Component({
   selector: 'app-crear-user',
   templateUrl: './crear-user.component.html',
-  styleUrls: ['./crear-user.component.css'],
-  providers: [DialogService,DynamicDialogRef,DynamicDialogConfig]
+  styleUrls: ['./crear-user.component.css']
 })
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
@@ -41,6 +40,7 @@ export class CrearUserComponent implements OnInit {
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   public mostrarDialogo:boolean=false;
+  
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -49,17 +49,23 @@ export class CrearUserComponent implements OnInit {
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
-    public ref: DynamicDialogRef, public config: DynamicDialogConfig,
+    public ref: DynamicDialogRef,
+ public config: DynamicDialogConfig,
+    
      
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.ref)
-    // console.log(this.config)
-    if(this.config.data)
-    if(this.config.data.id == '1'){
-      this.mostrarDialogo= true
+
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+
     }
+    
     this.getUsrRoles()
     this.getAllgenders()
     this.getAlldocumentTypes()

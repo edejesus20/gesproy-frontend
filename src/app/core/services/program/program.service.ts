@@ -49,12 +49,9 @@ export class ProgramService {
 //  }
 
 createItem(program: ProgramI): Observable<ProgramI> {
-  // console.log(program);
   return this.http.post<ProgramI>(this.base_path_post, program).pipe(tap(
     (res: ProgramI) => {
       if (res) {
-        // Crear usuario
-        // console.log('registro insertado');
       }
     })
   );
