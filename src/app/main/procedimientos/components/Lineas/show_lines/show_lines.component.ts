@@ -159,9 +159,9 @@ export class Show_linesComponent implements OnInit {
     
       const pdfDefinition: any = {
         pageOrientation: 'landscape',
-        footer: {
-          columns: [ ]
-        },
+        // footer: {
+        //   columns: [ ]
+        // },
         content: [
           {
             columns: [

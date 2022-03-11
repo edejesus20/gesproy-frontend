@@ -1,3 +1,156 @@
-<p>
-  show_pasos_tareas works!
-</p>
+<p-tabView [scrollable]="true">
+    <p-tabPanel *ngFor="let item of this.rows2" header="{{item.name}}" [disabled]="item.disabled">
+      <ng-template [ngIf]="item.ProductivitySteps != undefined ">
+        <p-table #dt2 [value]="item.ProductivitySteps" 
+        responsiveLayout="scroll" dataKey="id" id="todo"
+          [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+          [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+          [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+          [globalFilterFields]="['id','name','description','responsable']" [columns]="cols">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Pasos de {{item.name}}</h2>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+                (input)="Buscar($event, dt2)" placeholder="Buscar la palabra clave.." />
+            </span> 
+            
+              <div class="mb-3 ml-3 mt-3">
+                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt2.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcelOne(item.id,item.name,$event)" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdfOne(item.id,item.name,$event)" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt2.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            </div>
+          </div> 
+        </ng-template>
+        
+        <ng-template pTemplate="header" >
+                <tr style="background: rgba(0, 255, 255, 0.849);">
+        
+                    <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
+                    <th pSortableColumn="name">Nombre de Pasos<p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="description">Descripción <p-sortIcon field="description"></p-sortIcon></th>
+                    <th pSortableColumn="responsable">Responsable <p-sortIcon field="responsable"></p-sortIcon></th>
+                    <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+                      <th > ACCIONES </th>
+                    </ng-template>
+                  </tr>
+            </ng-template>
+
+        <ng-template pTemplate="body" let-order let-rowData let-expanded="expanded">
+            <tr [pSelectableRow]="rowData">
+                <!-- <td>{{order.id}}</td> -->
+                <td>{{order.name | titlecase}}</td>
+                <td>{{order.description }}</td>
+                <td>{{order.responsable | titlecase}}</td>
+                <ng-template [ngIf]="mostrar==1">
+          
+                  <td >
+                    <button pButton pRipple  type="button"class="editar" title="Editar" 
+                      icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(order.id)"></button>
+                  </td>
+              
+              </ng-template>
+              <ng-template [ngIf]="mostrar==2">
+                
+                  <td >
+                    <button pButton pRipple  type="button" title="Eliminar" 
+                      icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(order.id)"></button>
+                  </td>
+              
+              </ng-template>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" style="text-align: center;">
+              <h3>No hay registros encontrados</h3>
+            </td>
+        </tr>
+        </ng-template>
+        </p-table>
+      </ng-template>
+    </p-tabPanel>
+    <!-- Todas las tareas -->
+    <p-tabPanel header="Todos los pasos">
+      <p-table #dt2 [value]="productivitySteps" 
+      responsiveLayout="scroll" dataKey="id" id="todo"
+      [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+      [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+      [globalFilterFields]="['id','name','description','responsable','ProductivityType.name']"
+      [columns]="cols" >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Todos los Pasos de Tareas</h2>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+              (input)="Buscar($event, dt2)" placeholder="Buscar la palabra clave.." />
+          </span> 
+          
+         
+            <div class="mb-3 ml-3 mt-3">
+              <button type="button" pButton pRipple icon="pi pi-file" (click)="dt2.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+              <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+              <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+              <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt2.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+          </div>
+  
+            <!-- <p-button icon="pi pi-refresh"></p-button> -->
+        </div> 
+    </ng-template>
+      
+          <ng-template pTemplate="header" >
+              <tr style="background: rgba(0, 255, 255, 0.849);">
+         
+                  <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
+                  <th pSortableColumn="name">Nombre de Pasos<p-sortIcon field="name"></p-sortIcon></th>
+                  <th pSortableColumn="description">Descripción <p-sortIcon field="description"></p-sortIcon></th>
+                  <th pSortableColumn="responsable">Responsable <p-sortIcon field="responsable"></p-sortIcon></th>
+                  <th pSortableColumn="ProductivityType.name">Tarea <p-sortIcon field="ProductivityType.name"></p-sortIcon></th>
+                  <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+                    <th > ACCIONES </th>
+                  </ng-template>
+                </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order let-rowData let-expanded="expanded">
+              <tr [pSelectableRow]="rowData">
+                  <!-- <td>{{order.id}}</td> -->
+                  <td>{{order.name | titlecase}}</td>
+                  <td>{{order.description }}</td>
+                  <td>{{order.responsable | titlecase}}</td>
+                  <td>{{order.ProductivityType.name | titlecase}}</td>
+                  <ng-template [ngIf]="mostrar==1">
+              
+                    <td >
+                      <button pButton pRipple  type="button"class="editar" title="Editar" 
+                        icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(order.id)"></button>
+                    </td>
+                
+                </ng-template>
+                <ng-template [ngIf]="mostrar==2">
+                  
+                    <td >
+                      <button pButton pRipple  type="button" title="Eliminar" 
+                        icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(order.id)"></button>
+                    </td>
+                
+                </ng-template>
+              </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" style="text-align: center;">
+                <h3>No hay registros encontrados</h3>
+              </td>
+          </tr>
+          </ng-template>
+      </p-table>
+    </p-tabPanel>
+</p-tabView>

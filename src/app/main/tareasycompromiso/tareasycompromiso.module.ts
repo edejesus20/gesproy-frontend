@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TareasycompromisoRoutingModule } from './tareasycompromiso-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 import { TareasycompromisoComponent } from './tareasycompromiso.component';
@@ -22,6 +21,17 @@ import { Show_one_tareascompletadasComponent } from './components/Completadas/sh
 import { Create_tareascompletadasComponent } from './components/Completadas/create_tareascompletadas/create_tareascompletadas.component';
 import { Edit_tareascompletadasComponent } from './components/Completadas/edit_tareascompletadas/edit_tareascompletadas.component';
 import { Delete_tareascompletadasComponent } from './components/Completadas/delete_tareascompletadas/delete_tareascompletadas.component';
+import { Create_tipo_tareasComponent } from './components/tipos_tareas/create_tipo_tareas/create_tipo_tareas.component';
+import { Delete_tipo_tareasComponent } from './components/tipos_tareas/delete_tipo_tareas/delete_tipo_tareas.component';
+import { Edit_tipo_tareasComponent } from './components/tipos_tareas/edit_tipo_tareas/edit_tipo_tareas.component';
+import { Show_one_tipo_tareasComponent } from './components/tipos_tareas/show_one_tipo_tareas/show_one_tipo_tareas.component';
+import { Show_tipo_tareasComponent } from './components/tipos_tareas/show_tipo_tareas/show_tipo_tareas.component';
+import { Create_pasos_tareasComponent } from './components/pasos_tareas/create_pasos_tareas/create_pasos_tareas.component';
+import { Delete_pasos_tareasComponent } from './components/pasos_tareas/delete_pasos_tareas/delete_pasos_tareas.component';
+import { Edit_pasos_tareasComponent } from './components/pasos_tareas/edit_pasos_tareas/edit_pasos_tareas.component';
+import { Show_one_pasos_tareasComponent } from './components/pasos_tareas/show_one_pasos_tareas/show_one_pasos_tareas.component';
+import { Show_pasos_tareasComponent } from './components/pasos_tareas/show_pasos_tareas/show_pasos_tareas.component';
+
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -51,16 +61,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
-import { Create_tipo_tareasComponent } from './components/tipos_tareas/create_tipo_tareas/create_tipo_tareas.component';
-import { Delete_tipo_tareasComponent } from './components/tipos_tareas/delete_tipo_tareas/delete_tipo_tareas.component';
-import { Edit_tipo_tareasComponent } from './components/tipos_tareas/edit_tipo_tareas/edit_tipo_tareas.component';
-import { Show_one_tipo_tareasComponent } from './components/tipos_tareas/show_one_tipo_tareas/show_one_tipo_tareas.component';
-import { Show_tipo_tareasComponent } from './components/tipos_tareas/show_tipo_tareas/show_tipo_tareas.component';
-import { Create_pasos_tareasComponent } from './components/pasos_tareas/create_pasos_tareas/create_pasos_tareas.component';
-import { Delete_pasos_tareasComponent } from './components/pasos_tareas/delete_pasos_tareas/delete_pasos_tareas.component';
-import { Edit_pasos_tareasComponent } from './components/pasos_tareas/edit_pasos_tareas/edit_pasos_tareas.component';
-import { Show_one_pasos_tareasComponent } from './components/pasos_tareas/show_one_pasos_tareas/show_one_pasos_tareas.component';
-import { Show_pasos_tareasComponent } from './components/pasos_tareas/show_pasos_tareas/show_pasos_tareas.component';
+import {TabViewModule} from 'primeng/tabview';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   imports: [
@@ -104,7 +108,12 @@ import { Show_pasos_tareasComponent } from './components/pasos_tareas/show_pasos
     DropdownModule,
     CalendarModule,
     FieldsetModule,
-    FileUploadModule
+    FileUploadModule,
+    TabViewModule,
+
+    InputTextareaModule,
+    ScrollingModule,
+    DynamicDialogModule
   ],
   declarations: [	
     TareasycompromisoComponent,
