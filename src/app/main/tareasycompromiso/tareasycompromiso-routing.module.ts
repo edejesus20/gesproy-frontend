@@ -13,18 +13,18 @@ import { Show_tareasenprocesoComponent } from './components/En Procesos/show_tar
 import { Create_tareaspendientesComponent } from './components/Pendinetes/create_tareaspendientes/create_tareaspendientes.component';
 import { Delete_tareaspendientesComponent } from './components/Pendinetes/delete_tareaspendientes/delete_tareaspendientes.component';
 import { Edit_tareaspendientesComponent } from './components/Pendinetes/edit_tareaspendientes/edit_tareaspendientes.component';
-import { Create_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/create_pasos_tareas/create_pasos_tareas.component';
-import { Delete_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/delete_pasos_tareas/delete_pasos_tareas.component';
-import { Edit_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/edit_pasos_tareas/edit_pasos_tareas.component';
-import { Show_one_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/show_one_pasos_tareas/show_one_pasos_tareas.component';
-import { Show_pasos_tareasComponent } from './components/Pendinetes/pasos_tareas/show_pasos_tareas/show_pasos_tareas.component';
+import { Create_pasos_tareasComponent } from './components/pasos_tareas/create_pasos_tareas/create_pasos_tareas.component';
+import { Delete_pasos_tareasComponent } from './components/pasos_tareas/delete_pasos_tareas/delete_pasos_tareas.component';
+import { Edit_pasos_tareasComponent } from './components/pasos_tareas/edit_pasos_tareas/edit_pasos_tareas.component';
+import { Show_one_pasos_tareasComponent } from './components/pasos_tareas/show_one_pasos_tareas/show_one_pasos_tareas.component';
+import { Show_pasos_tareasComponent } from './components/pasos_tareas/show_pasos_tareas/show_pasos_tareas.component';
 import { Show_one_tareaspendientesComponent } from './components/Pendinetes/show_one_tareaspendientes/show_one_tareaspendientes.component';
 import { Show_tareaspendientesComponent } from './components/Pendinetes/show_tareaspendientes/show_tareaspendientes.component';
-import { Create_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/create_tipo_tareas/create_tipo_tareas.component';
-import { Delete_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/delete_tipo_tareas/delete_tipo_tareas.component';
-import { Edit_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/edit_tipo_tareas/edit_tipo_tareas.component';
-import { Show_one_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/show_one_tipo_tareas/show_one_tipo_tareas.component';
-import { Show_tipo_tareasComponent } from './components/Pendinetes/tipos_tareas/show_tipo_tareas/show_tipo_tareas.component';
+import { Create_tipo_tareasComponent } from './components/tipos_tareas/create_tipo_tareas/create_tipo_tareas.component';
+import { Delete_tipo_tareasComponent } from './components/tipos_tareas/delete_tipo_tareas/delete_tipo_tareas.component';
+import { Edit_tipo_tareasComponent } from './components/tipos_tareas/edit_tipo_tareas/edit_tipo_tareas.component';
+import { Show_one_tipo_tareasComponent } from './components/tipos_tareas/show_one_tipo_tareas/show_one_tipo_tareas.component';
+import { Show_tipo_tareasComponent } from './components/tipos_tareas/show_tipo_tareas/show_tipo_tareas.component';
 import { TareasycompromisoComponent } from './tareasycompromiso.component';
 
 const routes: Routes = [
