@@ -79,6 +79,16 @@
               </td>
           
           </ng-template>
+          <ng-template [ngIf]="mostrar==4">
+            
+            <td >
+              <button pButton pRipple  type="button" title="Vincular linea" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" 
+                (click)="vincular(item.id)"></button>
+            </td>
+        
+        </ng-template>
+          
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

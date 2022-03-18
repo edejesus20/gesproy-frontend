@@ -162,10 +162,13 @@
                                       [style]="{'width':'100%','margin-bottom':'20px'}"
                                       optionvalue="id" optionLabel="name" filterBy="name"
                                       [required]="true" placeholder="SELECCIONE ROL DE INVESTIGACIÓN"  >
-                                      <ng-template let-option pTemplate="item"  >
-                                        <span >{{option.name  | titlecase}} 
+                                      <ng-template let-option  pTemplate="item">
+                                        <span>
+                                          {{option.name  | titlecase}} 
                                          
-                                          </span>
+                                          
+                                        </span>
+                                        
                                     </ng-template>
                                     </p-dropdown>
                                   </div>

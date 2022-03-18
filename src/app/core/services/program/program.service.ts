@@ -86,7 +86,14 @@ createItem(program: ProgramI): Observable<ProgramI> {
        catchError(this.handleError)
      )
  }
-
+ vincularLine(id:number, item:any): Observable<any> {
+  return this.http
+    .patch<any>(this.API_URI + '/api/VincularLineProgram/' + id, JSON.stringify(item), this.httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
  // Delete item by id
  deleteItem(id:number) {
    return this.http

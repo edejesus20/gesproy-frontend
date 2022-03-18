@@ -1,0 +1,93 @@
+<ng-template [ngIf]="tabla == true">
+  <app-show-programs [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show-programs>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+
+  <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+        
+        <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard" style="margin-bottom: 10px;">
+            <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
+          <h2 class="fondebabutton" style="margin-top: -1px;">Vincular Linea al Programa</h2>
+        </div>
+        <p-fieldset legend="Datos del Programa">
+          <div class="flex" >
+            <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
+              <h3 class="fondebabutton">Nombre: {{ form.value.name | titlecase }}</h3>            
+                <button pButton type="button" (click)="addRoles($event)" style="margin-top:20px"
+                  class="p-button-warning p-button-raised p-button-rounded" label="Add Lineas">
+                </button>
+              
+            </div>
+            <p-divider layout="vertical" ></p-divider>
+            <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
+              <h3 class="fondebabutton">Facultad : {{ form.value.FacultyId | titlecase }}</h3>
+              <h3 class="fondebabutton">Categoria : {{ form.value.CategoryId | titlecase }}</h3>
+              <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
+            </div>
+          </div>
+          </p-fieldset>
+        <br>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div class="table-wrapper" >
+            <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+              <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+              <tr [pSelectableRow]="rowData">
+                  <td>
+                    <div formArrayName="Lines"> 
+                      <div *ngFor="let item of getRoles.controls; 
+                      let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="grupo"> 
+                          <div class="grupoinput1">
+                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                            [options]="lines" [filter]="true"
+                                formControlName="LineId" name="LineId"
+                               label="SELECCIONE LINEA" 
+                              [style]="{'width':'100%','margin-bottom':'20px'}"
+                              optionvalue="id" optionLabel="name"  filterBy="name"
+                              [required]="true" placeholder="SELECCIONE LINEA">
+                              <ng-template let-option pTemplate="item"  >
+                                <span >{{option.name  | titlecase}}</span>
+                            </ng-template>
+                            </p-dropdown>
+                          </div>
+                          
+                        <span class="bottomdelete" style="margin-top: 5px;">
+                          <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                          class="p-button-rounded p-button-danger"></button>
+                        </span>
+                        
+                      </div>
+                      </div>
+                    </div> 
+                  </td>
+              </tr>
+            </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+        </div>
+              <br><br>  
+            <!-- <ng-template pTemplate="footer"> -->
+                <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                  <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!form.valid"
+                  class="p-button-success p-button-raised p-button-rounded" label="Vincular Linea" styleClass="mr-2"></button>
+                <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            </div>
+            <!-- </ng-template> -->
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>

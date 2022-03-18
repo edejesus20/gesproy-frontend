@@ -35,6 +35,7 @@ import { DeleteProgramsComponent } from './components/program/delete-programs/de
 import { EditProgramsComponent } from './components/program/edit-programs/edit-programs.component';
 import { ShowOneProgramsComponent } from './components/program/show-one-programs/show-one-programs.component';
 import { ShowProgramsComponent } from './components/program/show-programs/show-programs.component';
+import { VincularLineasComponent } from './components/program/vincular-lineas/vincular-lineas.component';
 import { Create_RelacionesComponent } from './components/Relaciones/create_Relaciones/create_Relaciones.component';
 import { Delete_RelacionesComponent } from './components/Relaciones/delete_Relaciones/delete_Relaciones.component';
 import { Edit_RelacionesComponent } from './components/Relaciones/edit_Relaciones/edit_Relaciones.component';
@@ -277,6 +278,10 @@ const routes: Routes = [
       path: 'delete_RoleInvestigation/:id',
       component:DeleteRolInvestigationComponent ,
     },
+    { 
+      path: 'create_VincularLineProgram/:id',
+      component:VincularLineasComponent
+    }
           
         ]
     }

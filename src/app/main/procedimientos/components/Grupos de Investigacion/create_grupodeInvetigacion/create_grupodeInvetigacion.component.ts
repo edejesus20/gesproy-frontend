@@ -163,7 +163,10 @@ public mostrarTeacher:boolean=false
 
   getRoles() {
     this.roleInvestigationsService.getList().subscribe(teachersA => {
-      this.roles=teachersA.roleInvestigations
+      for (const key of teachersA.roleInvestigations) {
+        if(key.id != 1)
+        this.roles.push(key)
+      }
     }, error => console.error(error))
   } 
   getOneTeachers(id:number) {

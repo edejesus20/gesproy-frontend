@@ -201,4 +201,7 @@ Buscar(event: Event, dt1:any){
   detalle(id: number){
     this.modificar.emit(id)
   }
+  vincular(id: number){
+    this.modificar.emit(id)
+  }
 }

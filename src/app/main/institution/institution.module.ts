@@ -81,11 +81,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
+import {FileUploadModule} from 'primeng/fileupload';
+import {FieldsetModule} from 'primeng/fieldset';
+
 import { ShowRolInvestigationComponent } from './components/user_rol_investigation/show-rol-investigation/show-rol-investigation.component';
 import { ShowOneRolInvestigationComponent } from './components/user_rol_investigation/show-one-rol-investigation/show-one-rol-investigation.component';
 import { EditRolInvestigationComponent } from './components/user_rol_investigation/edit-rol-investigation/edit-rol-investigation.component';
 import { DeleteRolInvestigationComponent } from './components/user_rol_investigation/delete-rol-investigation/delete-rol-investigation.component';
 import { CrearRolInvestigationComponent } from './components/user_rol_investigation/crear-rol-investigation/crear-rol-investigation.component';
+import { VincularLineasComponent } from './components/program/vincular-lineas/vincular-lineas.component';
+
 @NgModule({
   declarations: [
     InstitutionComponent,
@@ -150,6 +155,7 @@ import { CrearRolInvestigationComponent } from './components/user_rol_investigat
     EditRolInvestigationComponent,
     ShowOneRolInvestigationComponent,
     ShowRolInvestigationComponent,
+    VincularLineasComponent
   ],
   imports: [
     CommonModule,
@@ -192,7 +198,9 @@ import { CrearRolInvestigationComponent } from './components/user_rol_investigat
     TableModule
 ,KeyFilterModule,
 DropdownModule,
-CalendarModule
+CalendarModule,
+FieldsetModule,
+FileUploadModule
 
   ],
   entryComponents: [
