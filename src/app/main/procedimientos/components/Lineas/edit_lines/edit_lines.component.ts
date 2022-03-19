@@ -33,7 +33,7 @@ export class Edit_linesComponent implements OnInit {
       name: ['', [Validators.required]],
       justification: ['', [Validators.required]],
       objectives: ['', [Validators.required]],
-      thematics: ['', [Validators.required]],
+      // thematics: ['', [Validators.required]],
       resolution: ['', [Validators.required]],
     });
   }  
@@ -43,7 +43,8 @@ export class Edit_linesComponent implements OnInit {
     const formValue: LineI = this.form.value;
     if(formValue.name != "" && formValue.justification != "" && 
     formValue.objectives !="" && formValue.id &&
-    formValue.thematics != ""  &&  formValue.resolution != ""){
+    // formValue.thematics != ""  &&  
+    formValue.resolution != ""){
     this.lineService.updateItem(formValue.id,formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');
@@ -86,7 +87,7 @@ export class Edit_linesComponent implements OnInit {
       this.form.controls['name'].setValue(cnt_groupFromApi.line.name)
       this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
       this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
-      this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
+      // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
       this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
       this.displayMaximizable2=true
       this.tabla = false

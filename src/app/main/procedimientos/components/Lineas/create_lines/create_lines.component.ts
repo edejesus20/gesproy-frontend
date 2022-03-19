@@ -29,7 +29,7 @@ export class Create_linesComponent implements OnInit {
       name: ['', [Validators.required]],
       justification: ['', [Validators.required]],
       objectives: ['', [Validators.required]],
-      thematics: ['', [Validators.required]],
+      // thematics: ['', [Validators.required]],
       resolution: ['', [Validators.required]],
     });
   }  
@@ -39,7 +39,8 @@ export class Create_linesComponent implements OnInit {
     const formValue: LineI = this.form.value;
     if(formValue.name != "" && formValue.justification != "" && 
     formValue.objectives !="" && 
-    formValue.thematics != ""  &&  formValue.resolution != ""){
+    // formValue.thematics != ""  &&  
+    formValue.resolution != ""){
     this.lineService.createItem(formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');

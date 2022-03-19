@@ -135,10 +135,43 @@
                       </tr>
                       </ng-template>
                   </p-table>
-              </div>
-          </td>
-      </tr>
-  </ng-template>
+    <br>
+
+                <p-table [value]="item.Lines"  dataKey="id" [paginator]="true" [rows]="3" 
+                [showCurrentPageReport]="true"  
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                 >
+                    <ng-template pTemplate="header" >
+                        <tr style="background: rgba(0, 255, 255, 0.849);">
+                            <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                            <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
+                            <!-- <th pSortableColumn="cordinatorInvestigation">Cordinador de Investigacion
+                               <p-sortIcon field="cordinatorInvestigation"></p-sortIcon>
+                            </th> -->
+                            <!-- <th pSortableColumn="University">Universidad<p-sortIcon field="University"></p-sortIcon></th> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-order >
+                      <tr>
+                            <td>{{order.id}}</td>
+                            <td>{{order.name | titlecase}}</td>
+                            <!-- <td>{{order.cordinatorInvestigation }}</td> -->
+                            <!-- <td>{{order.University.name | titlecase}}</td> -->
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6" style="text-align: center;">
+                          <h3>No hay registros encontrados</h3>
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </td>
+    </tr>
+</ng-template>
 
 
   <!-- <ng-template pTemplate="summary">

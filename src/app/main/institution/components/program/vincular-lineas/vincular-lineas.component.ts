@@ -85,7 +85,7 @@ public form2:ProgramI={
       array.push({LineId:key.LineId,ProgramId:this.id})
     }
     if(array.length > 0){
-      console.log({array})
+      // console.log({array})
     this.programService.vincularLine(this.id,{array}).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');

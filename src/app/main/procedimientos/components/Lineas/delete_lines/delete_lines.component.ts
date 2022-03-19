@@ -34,7 +34,7 @@ export class Delete_linesComponent implements OnInit {
       name: ['', [Validators.required]],
       justification: ['', [Validators.required]],
       objectives: ['', [Validators.required]],
-      thematics: ['', [Validators.required]],
+      // thematics: ['', [Validators.required]],
       resolution: ['', [Validators.required]],
     });
   }  
@@ -85,7 +85,7 @@ export class Delete_linesComponent implements OnInit {
       this.form.controls['name'].setValue(cnt_groupFromApi.line.name)
       this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
       this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
-      this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
+      // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
       this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
       this.displayMaximizable2=true
       this.tabla = false

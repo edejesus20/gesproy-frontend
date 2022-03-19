@@ -35,7 +35,7 @@ export class Show_linesComponent implements OnInit {
       { field: 'name', header: 'Nombre' },
       { field: 'justification', header: 'Justificación' },
       { field: 'objectives', header: 'Objetivos' },
-      { field: 'thematics', header: 'Tematicas Asociadas' },
+      // { field: 'thematics', header: 'Tematicas Asociadas' },
       { field: 'resolution', header: 'Resolución' },
     ];
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -54,7 +54,7 @@ export class Show_linesComponent implements OnInit {
                 name: key.name,
                 justification:key.justification,
                 objectives:key.objectives,
-                thematics:key.thematics,
+                // thematics:key.thematics,
                 resolution:key.resolution,
               }
             )
@@ -78,7 +78,7 @@ export class Show_linesComponent implements OnInit {
         Nombre:key.name,
         Justificación:key.justification,
         Objetivos:key.objectives,
-        Tematicas_Asociadas:key.thematics,
+        // Tematicas_Asociadas:key.thematics,
         Resolución:key.resolution,
       })
     }
@@ -119,7 +119,7 @@ export class Show_linesComponent implements OnInit {
             col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_5:{ text: 'OBJETIVOS', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            // col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_7:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 12 ,bold: true, },
         }
       }]
@@ -133,7 +133,8 @@ export class Show_linesComponent implements OnInit {
                 // headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
               headerU.fila_0.col_3,
-              headerU.fila_0.col_5,headerU.fila_0.col_6,
+              headerU.fila_0.col_5,
+              // headerU.fila_0.col_6,
               headerU.fila_0.col_7,
               ]
               body.push(row);
@@ -149,7 +150,7 @@ export class Show_linesComponent implements OnInit {
                 data.name.toString(),
                 data.justification.toString(),
                 data.objectives.toString(),
-                data.thematics.toString(),
+                // data.thematics.toString(),
                 data.resolution?.toString()
               ]
               body.push(row);
@@ -184,7 +185,7 @@ export class Show_linesComponent implements OnInit {
             style: 'tableExample',
             table: {
               headerRows: 1,
-              widths: [ '15%', '15%', '24%', '27%', '19%'],
+              widths: [ '15%', '22%', '34%', '29%'],
              
                 body: body
             },

@@ -4,7 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','justification','objectives','thematics','resolution']"
+    [globalFilterFields]="['id','name','justification','objectives','resolution']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -59,7 +59,13 @@
           <td>{{item.name  | titlecase}}</td>
           <td>{{item.justification }}</td>
           <td>{{item.objectives }}</td>
-          <td>{{item.thematics }}</td>
+          <td >
+            <span *ngFor="let i of item.Thematics">
+              <span style="display: flex;">
+                * {{i.name}} 
+              </span>
+            </span>
+          </td>
           <td>{{item.resolution | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               
@@ -101,77 +107,22 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Users"  dataKey="id" 
+            
+                  
+                  <p-table [value]="item.Programs"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
-                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                   >
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                            <!-- <ng-template [ngIf]="mostrar==3">
-                              <th style="width: 3rem"></th>
-                            </ng-template>  -->
-                            <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-                            <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
-                            <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
-                            <th pSortableColumn="email">CORREO<p-sortIcon field="email"></p-sortIcon></th>
-                            <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
-                            <th pSortableColumn="address">DIRECCION<p-sortIcon field="address"></p-sortIcon></th>
-                            <th pSortableColumn="Gender.name">GENERO<p-sortIcon field="Gender.name"></p-sortIcon></th>
+                            <th pSortableColumn="name">Nombre de Programas<p-sortIcon field="name"></p-sortIcon></th>
                               
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <!-- <ng-template [ngIf]="mostrar==3">
-                            <td>
-                                <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                            </td>
-                          </ng-template>  -->
-                          <td>{{order.Person?.name | titlecase}}</td>
-                          <td>{{order.Person?.surname | titlecase}}</td>
-                          <td>{{order.Person?.identification}}</td>
-                          <td>{{order.email | titlecase}}</td>
-                          <td>{{order.Person?.phone }}</td>
-                          <td>{{order.Person?.address | titlecase}}</td>
-                          <td>{{order.Person?.Gender?.name | titlecase}}</td>
-                              
+                          <td>{{order.name | titlecase}}</td> 
                           </tr>
                       </ng-template>
-<!-- 
-                      <ng-template pTemplate="rowexpansion" let-order>
-                        <tr>
-                            <td colspan="7">
-                                <div >
-                                    <p-table [value]="order.Faculties"  dataKey="AdministrativeId" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
-                                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                                     >
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                                                <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
-                                                <th pSortableColumn="AdministrativeId">Decano<p-sortIcon field="AdministrativeId"></p-sortIcon></th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-ok>
-                                          <tr>
-                                                <td>{{ok.id}}</td>
-                                                <td>{{ok.name}}</td>
-                                                <td>{{ok.Administrative?.User?.fullName}}</td>
-                                            </tr>
-                                        </ng-template>
-                                        
-                                        <ng-template pTemplate="emptymessage">
-                                          <tr>
-                                            <td colspan="6" style="text-align: center;">
-                                              <h3>No hay registros encontrados</h3>
-                                            </td>
-                                        </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template> -->
                       <ng-template pTemplate="emptymessage">
                         <tr>
                           <td colspan="6" style="text-align: center;">
