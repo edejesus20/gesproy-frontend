@@ -3,7 +3,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
-import { LineI } from 'src/app/models/projet/line';
+import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
+import { LineI, LineThematicI, ThematicI } from 'src/app/models/projet/line';
 const translate = require('translate');
 @Component({
   selector: 'app-create_lines',
@@ -14,15 +15,25 @@ export class Create_linesComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({});
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
+  public mostrar2:boolean=false;
+  public thematics:ThematicI[] =[]
+  public algo:number[]=[0];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private lineService:LineService,
     private messageService:MessageService,
+    private thematicService:ThematicService
   ) { }
 
   ngOnInit() {
     this.buildForm();
+    this.thematic()
+  }
+  thematic() {
+    this.thematicService.getList().subscribe(list => {
+      this.thematics=list.thematics
+    })
   }
   private buildForm() {
     this.form = this.formBuilder.group({
@@ -30,6 +41,11 @@ export class Create_linesComponent implements OnInit {
       justification: ['', [Validators.required]],
       objectives: ['', [Validators.required]],
       // thematics: ['', [Validators.required]],
+      Thematics: this.formBuilder.array([this.formBuilder.group(
+        {
+          ThematicId:['', [Validators.required]],
+          LineId:[0, [Validators.required]],
+      })]),
       resolution: ['', [Validators.required]],
     });
   }  
@@ -37,8 +53,14 @@ export class Create_linesComponent implements OnInit {
   public onSubmit(e: Event): void {
     e.preventDefault();
     const formValue: LineI = this.form.value;
+    let control = <FormArray>this.form.controls['Thematics']
+    let array:LineThematicI[] =[]
+    for (const key of control.value) {
+      key.ThematicId=key.ThematicId.id
+      array.push({LineId:key.LineId,ThematicId:key.ThematicId})
+    }
     if(formValue.name != "" && formValue.justification != "" && 
-    formValue.objectives !="" && 
+    formValue.objectives !="" && array.length > 0 &&
     // formValue.thematics != ""  &&  
     formValue.resolution != ""){
     this.lineService.createItem(formValue).subscribe(
@@ -74,5 +96,39 @@ export class Create_linesComponent implements OnInit {
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
       }
   }
+  get getThematics() {
+    return this.form.get('Thematics') as FormArray;//obtener todos los formularios
+  }
 
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Thematics']
+      if(control.length == 0 && this.mostrar2 == false){
+        control.push(this.formBuilder.group({
+          ThematicId:['', [Validators.required]],
+           LineId:[0, [Validators.required]],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar2 == true){
+        control.push(this.formBuilder.group({
+          ThematicId:['', [Validators.required]],
+           LineId:[0, [Validators.required]],
+        }))
+
+      }
+      this.mostrar2=true
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Thematics']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar2=false
+      control.push(this.formBuilder.group({
+        ThematicId:['', [Validators.required]],
+           LineId:[0, [Validators.required]],
+      }))
+      }
+      // console.log(control)
+  }
 }

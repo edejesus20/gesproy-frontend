@@ -51,14 +51,61 @@
                 </div>
               </div>
 
-              <!-- <div style="border: 1px solid black;padding: 10px">
+              <div style="border: 1px solid black;padding: 10px">
                 <h4 style="text-align:left;">4. TEMÁTICAS ASOCIADAS A LA LÍNEA DE INVESTIGACIÓN </h4>
-                <div class="p-inputgroup" style="margin-bottom: 10px;">
-                  <textarea rows="3" cols="30" 
-                  [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
-                  formControlName="thematics" placeholder="ESCRIBIR TEMÁTICAS ASOCIADAS A LA LÍNEA"  required></textarea>
-                </div>                  
-              </div> -->
+                <!-- <div class="p-inputgroup" style="margin-bottom: 10px;"> -->
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <button pButton type="button" (click)="addRoles($event)" 
+                    class="p-button-warning p-button-raised p-button-rounded"
+                     label="Add AREAS Y TEMATICAS"></button>
+                  </div>
+                  <br>
+                    <div fxLayout="row" fxLayoutGap="20px">
+                      <div class="table-wrapper" >
+                        <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                          <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="id">AREAS Y TEMATICAS<p-sortIcon field="id"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                          <tr [pSelectableRow]="rowData">
+                              <td>
+                                <div formArrayName="Thematics"> 
+                                  <div *ngFor="let item of getThematics.controls; 
+                                  let pointIndex=index" [formGroupName]="pointIndex">
+                                    <div class="grupo"> 
+                                      <div class="grupoinput1">
+                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                        [options]="thematics" [filter]="true"
+                                            formControlName="ThematicId" name="ThematicId"
+                                           label="SELECCIONE AREAS Y TEMATICAS" 
+                                          [style]="{'width':'100%','margin-bottom':'20px'}"
+                                          optionvalue="id" optionLabel="name"  filterBy="name"
+                                          [required]="true" placeholder="SELECCIONE AREAS Y TEMATICAS">
+                                          <ng-template let-option pTemplate="item"  >
+                                            <span >{{option.name  | titlecase}}</span>
+                                        </ng-template>
+                                        </p-dropdown>
+                                      </div>
+                                      
+                                    <span class="bottomdelete" style="margin-top: 5px;">
+                                      <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                                      class="p-button-rounded p-button-danger"></button>
+                                    </span>
+                                    
+                                  </div>
+                                  </div>
+                                </div> 
+                              </td>
+                          </tr>
+                        </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                <!-- </div>                   -->
+              </div>
+              
 
               <div style="border: 1px solid black;padding: 10px">
                 <h4 style="text-align:left;">5. RESOLUCION </h4>
