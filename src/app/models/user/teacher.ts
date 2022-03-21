@@ -31,3 +31,9 @@ export interface TeacherI {
     cargosDesempeñados?:string
     practicas?:string
 }
+
+export interface LinkTypeI {
+    id?: number;
+    name: string;
+    Teachers?:TeacherI[]
+}
