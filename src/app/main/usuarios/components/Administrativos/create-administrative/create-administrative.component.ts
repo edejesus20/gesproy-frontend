@@ -111,21 +111,17 @@ export class CreateAdministrativeComponent implements OnInit {
 
   public onSubmit(e: Event) {
     e.preventDefault()
-
     let formValue:any={}
-
     formValue={
-      name: '',
-      surname: '',
-      DocumentTypeId: '',
-      identification: '',
-      GenderId: '',
-      address: '',
-      phone: '',
-      username:'',
-      fullName:'',
-      email:'',
-      password:'',
+      name:  this.form.value.name,
+      surname:  this.form.value.surname,
+      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      identification:  this.form.value.identification,
+      GenderId:  this.form.value.GenderId.id,
+      address:  this.form.value.address,
+      phone:  this.form.value.phone,
+      username: this.form.value.username,
+      email: this.form.value.email,
       UserId:  this.form.value.UserId.UserId,
       OcupationId: this.form.value.OcupationId.id,
     HeadquarterId: this.form.value.HeadquarterId.id,

@@ -1,0 +1,165 @@
+mat-error > span:not(:first-child) {
+    display: none;
+  }
+  
+  :host{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .mat-form-field{
+    width: 100%;
+    min-width: 400px;
+  }
+  
+  mat-card{
+    width: 70%;
+  }
+  
+  .mat-icon{
+    font-size: 30px;
+    background-color:707070
+  }
+  
+  .titleCard{
+  margin: 0 0 10px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+  }
+  .fondebabutton{
+  color:#707070;
+  }
+  mat-card-title{
+  padding-left:10px;
+  padding-top:10px;
+  }
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    /* justify-content: flex-end; */
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }
+  
+  .grupo{
+    width:auto;
+    display:flex;
+  }
+  .grupocodeudor{
+    width: 85%;
+    padding-right: 10px;
+    min-width: auto
+  }
+  .grupoinput{
+    width: 50%;
+    padding-right: 10px;
+    min-width: auto;
+  }
+  .grupoinput1{
+    width: 40%;
+   padding-right: 10px;
+   min-width: auto;
+  }
+  .grupoinput2{
+   width: 50%;
+   padding-right: 10px;
+   min-width: auto;
+  }
+  
+  mat-card{
+    width: 50%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  mat-icon{
+      font-size: 30px;
+  }
+  
+  .grupodescuento{
+    width: 45%;
+    padding-right: 15px;
+    min-width: auto;
+  }
+  .bottomdelete{
+    width: auto;
+    margin-top: 15px;
+    
+    font-size: 10px;
+    min-width: auto;
+  }
+  .bottomdelete .mat-icon{
+    margin-top:-7px;;
+  }
+  
+  .titleCard{
+    margin: 0 0 20px 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+  }
+  mat-card-title{
+    padding-left:10px;
+    padding-top:10px;
+  }
+  
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }
+  
+  /* tabla */
+  
+  .mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+  }
+  
+  .mat-row:hover .mat-cell {
+  border-color: currentColor;
+  }
+  
+  .mat-row:focus {
+  font-weight: bold;
+  } 
+  
+  table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+  }
+  
+  th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+  }
+  
+  th{ 
+  font-weight: bold;
+  font-size: 18px;}
+  td{
+  text-align:justify;
+  }
+  
