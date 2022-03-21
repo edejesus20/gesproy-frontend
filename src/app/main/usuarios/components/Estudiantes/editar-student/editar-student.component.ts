@@ -61,8 +61,8 @@ export class EditarStudentComponent implements OnInit {
           StudentId:0,
           HeadquarterProgramId:['', [Validators.required]],
       })]),
-      current_semester:['', [Validators.required]],
-      current_average:['', [Validators.required]],
+      // current_semester:['', [Validators.required]],
+      // current_average:['', [Validators.required]],
       experienciaInvestigativa:[''],
       areasEstudio:[''],
       publicacionesResientes:[''],
@@ -92,8 +92,8 @@ export class EditarStudentComponent implements OnInit {
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
-      current_semester: this.form.value.current_semester,
-      current_average: this.form.value.current_average,
+      // current_semester: this.form.value.current_semester,
+      // current_average: this.form.value.current_average,
       experienciaInvestigativa: this.form.value.experienciaInvestigativa,
       areasEstudio: this.form.value.areasEstudio,
       publicacionesResientes: this.form.value.publicacionesResientes,
@@ -127,8 +127,10 @@ export class EditarStudentComponent implements OnInit {
     formValue.phone != ""&&
     formValue.nationality != ("" || undefined) && 
     formValue. date_of_birth!= ("" || undefined) && 
-    formValue.email != ""&& 
-    formValue.current_semester  != "" && formValue.current_average  != ""){
+    formValue.email != ""
+    // && 
+    // formValue.current_semester  != "" && formValue.current_average  != ""
+    ){
 
       this.studentService.updateItem(formValue.id,formValue).subscribe(
         () => {
@@ -224,8 +226,8 @@ getOneCntAccount(id:number) {
           this.form.controls['email'].setValue(cnt_groupFromApi.student.User.email)
           this.form.controls['nationality'].setValue(cnt_groupFromApi.student.User.Person.nationality)
           this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
-          this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
-          this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
+          // this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
+          // this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
           this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
           this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
           this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)

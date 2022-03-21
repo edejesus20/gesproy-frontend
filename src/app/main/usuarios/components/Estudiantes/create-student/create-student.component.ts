@@ -24,7 +24,10 @@ export class CreateStudentComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
+  public mostrar2:boolean=false;
+  
   public algo:number[]=[0];
+  public algo1:number[]=[0];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public form:FormGroup=this.formBuilder.group({
@@ -43,12 +46,24 @@ export class CreateStudentComponent implements OnInit {
         StudentId:0,
         HeadquarterProgramId:['', [Validators.required]],
     })]),
-    current_semester:['', [Validators.required]],
-    current_average:['', [Validators.required]],
-    experienciaInvestigativa:[''],
-    areasEstudio:[''],
-    publicacionesResientes:[''],
-    practicas:['']
+    // current_semester:['', [Validators.required]],
+    // current_average:['', [Validators.required]],
+    StudentInternships: this.formBuilder.array([this.formBuilder.group({
+      StudentId:0,
+      nameP:['', [Validators.required]],
+      start_date:['', [Validators.required]],
+      final_date:['', [Validators.required]],
+      name_institution:['', [Validators.required]],
+      internship_certificate:['', [Validators.required]],
+      practice_hours:['', [Validators.required]],
+      area:['', [Validators.required]],
+      post:['', [Validators.required]],
+      functions:['', [Validators.required]],
+  })]),
+    // experienciaInvestigativa:[''],
+    // areasEstudio:[''],
+    // publicacionesResientes:[''],
+    // practicas:['']
    });
 
    public headquarterProgram: any[]=[]
@@ -102,8 +117,8 @@ export class CreateStudentComponent implements OnInit {
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
-      current_semester: this.form.value.current_semester,
-      current_average: this.form.value.current_average,
+      // current_semester: this.form.value.current_semester,
+      // current_average: this.form.value.current_average,
       experienciaInvestigativa: this.form.value.experienciaInvestigativa,
       areasEstudio: this.form.value.areasEstudio,
       publicacionesResientes: this.form.value.publicacionesResientes,
@@ -139,8 +154,9 @@ export class CreateStudentComponent implements OnInit {
       formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
       formValue.nationality != ("" || undefined) && 
       formValue. date_of_birth!= ("" || undefined) && 
-      formValue.phone != ""&& formValue.email != "" && 
-      formValue.current_semester  != "" && formValue.current_average  != "" 
+      formValue.phone != ""&& formValue.email != "" 
+      // && 
+      // formValue.current_semester  != "" && formValue.current_average  != "" 
       // )
       // ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && 
       // formValue.current_semester  != "" && formValue.current_average  != "")
@@ -236,5 +252,52 @@ export class CreateStudentComponent implements OnInit {
         this.mostrar=false
         }
     }
+    get getStudentInternships() {
+      return this.form.get('StudentInternships') as FormArray;//obtener todos los formularios
+    }
+
+    addStudentInternships(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form.controls['StudentInternships']
+        if(control.length == 0 && this.mostrar2 == false){
+          control.push(this.formBuilder.group({
+            StudentId:0,
+            nameP:['', [Validators.required]],
+            start_date:['', [Validators.required]],
+            final_date:['', [Validators.required]],
+            name_institution:['', [Validators.required]],
+            internship_certificate:['', [Validators.required]],
+            practice_hours:['', [Validators.required]],
+            area:['', [Validators.required]],
+            post:['', [Validators.required]],
+            functions:['', [Validators.required]],
+          }))
+        }
+        if(control.length >= 1 && this.mostrar2 == true){
+          control.push(this.formBuilder.group({
+            StudentId:0,
+            nameP:['', [Validators.required]],
+            start_date:['', [Validators.required]],
+            final_date:['', [Validators.required]],
+            name_institution:['', [Validators.required]],
+            internship_certificate:['', [Validators.required]],
+            practice_hours:['', [Validators.required]],
+            area:['', [Validators.required]],
+            post:['', [Validators.required]],
+            functions:['', [Validators.required]],
+          }))
+  
+        }
+        this.mostrar2=true
+    }
+    removeStudentInternships(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form.controls['StudentInternships']//aceder al control
+      control.removeAt(index)
+        if(control.length <= 0){
+        this.mostrar2=false
+        }
+    }
+    
   
 }

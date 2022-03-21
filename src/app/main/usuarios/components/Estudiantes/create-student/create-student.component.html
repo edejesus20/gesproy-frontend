@@ -185,7 +185,7 @@
               <div class="bordep">
                 <h3 style="text-align:center;">2. Datos Secundarios:</h3>
 
-                <div class="grid p-fluid">
+                <!-- <div class="grid p-fluid">
                   <div class="col-12 md:col-6 lg:col-6">
                     
                     <div class="p-inputgroup" >
@@ -208,7 +208,7 @@
       
                   </div>
       
-                </div>
+                </div> -->
                
                 <div fxLayout="row" fxLayoutGap="20px" 
                 style="display: flex;justify-content:center;align-items:center" >
@@ -265,51 +265,95 @@
                   </div>
                 </div>
               </div>
+
               <div  style="border: 1px solid black;padding: 10px;">
                 <h3 style="text-align:center;">3. Datos Adicionales</h3>
-                <div class="bordep">
-                  <h4 style="text-align:left;">3.1. Experiencia Investigativa y Participación en Proyectos de Investigación. </h4>
-                  <div class="p-inputgroup" style="margin-bottom: 10px;">
-                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
-                    pInputTextarea [autoResize]="true"
-                    formControlName="experienciaInvestigativa" placeholder="ESCRIBIR "  ></textarea>
-                  </div>                    
-                </div>
-
-                <div class="bordep">
-                  <h4 style="text-align:left;">3.2. Áreas y/o Temáticas de Estudio  </h4>
-                  <div class="p-inputgroup" style="margin-bottom: 10px;">
-                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
-                    pInputTextarea [autoResize]="true"
-                    formControlName="areasEstudio" placeholder="ESCRIBIR "  ></textarea>
-                  </div>                    
-                </div>
-
-                <!-- <div class="bordep">
-                  <h4 style="text-align:left;">3.3. Líneas de Investigación del Grupo y/0 Semillero </h4>
-                  <div class="p-inputgroup" style="margin-bottom: 10px;">
-                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
-                    pInputTextarea [autoResize]="true"
-                    formControlName="tiulosAcademicos" placeholder="ESCRIBIR "  ></textarea>
-                  </div>                    
-                </div> -->
-
-                <div class="bordep">
-                  <h4 style="text-align:left;">3.4. Publicaciones recientes en las que ha participado.</h4>
-                  <div class="p-inputgroup" style="margin-bottom: 10px;">
-                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
-                    pInputTextarea [autoResize]="true"
-                    formControlName="publicacionesResientes" placeholder="ESCRIBIR "  ></textarea>
-                  </div>                    
-                </div>
-
                 <div style="border: 1px solid black;padding: 10px">
-                  <h4 style="text-align:left;">3.4. Prácticas o pasantías que haya realiza.</h4>
-                  <div class="p-inputgroup" style="margin-bottom: 10px;">
-                    <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
-                    pInputTextarea [autoResize]="true"
-                    formControlName="practicas" placeholder="ESCRIBIR "  ></textarea>
-                  </div>                    
+                  <h4 style="text-align:center;">3.1. Prácticas o pasantías que haya realiza</h4>
+                  
+
+                    <div fxLayout="row" fxLayoutGap="20px" 
+                    style="display: flex;justify-content:center;align-items:center" >
+                      <button pButton type="button" (click)="addStudentInternships($event)" 
+                      class="p-button-warning p-button-raised p-button-rounded"
+                       label="Add Pasantias o Practicas"></button>  
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="20px">
+                      <div class="table-wrapper" >
+                        <p-table [value]="algo1" *ngIf="mostrar2 == true"> 
+                          <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="id">Pasantias o Practicas<p-sortIcon field="id"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                          <tr [pSelectableRow]="rowData">
+                              <td>
+                                <div formArrayName="StudentInternships"> 
+                                  <div *ngFor="let item of getStudentInternships.controls; 
+                                  let pointIndex=index" [formGroupName]="pointIndex">
+                                    <div class="grupo" style="margin-bottom: 5px;border: 1px solid rgb(70, 68, 68);padding: 10px;border-radius: 5px"> 
+                                      <div class="grupoinput1" >
+                                        <div class="grid p-fluid">
+                                          <div class="col-12 md:col-4 lg:col-6">
+                                            <input class="p-inputtext-lg" type="text" formControlName="nameP"
+                                            pInputText  name="nameP" 
+                                            placeholder="NOMBRE" title="NOMBRE" required style="margin-bottom: 10px;"> 
+                                            
+                                            <input class="p-inputtext-lg" type="text" formControlName="name_institution"
+                                            pInputText name="name_institution" 
+                                            placeholder="NOMBRE DE LA INSTITUCIÓN" title="NOMBRE DE LA INSTITUCIÓN" required > 
+                                          </div>
+                                          <div class="col-12 md:col-4 lg:col-6">
+                                            <input type="date" class="p-inputtext-lg" pInputText name="start_date" 
+                                            placeholder="FECHA DE INICIO" formControlName="start_date" 
+                                            title="FECHA DE INICIO" required style="margin-bottom: 10px;"> 
+                                           
+                                            <input type="date" class="p-inputtext-lg" pInputText name="final_date" 
+                                            placeholder="FECHA DE TERMINACIÓN" formControlName="final_date" 
+                                            title="FECHA DE TERMINACIÓN" required> 
+                                          </div>
+                                        </div>
+                                        <div class="grid p-fluid">
+                                          <div class="col-12 md:col-4 lg:col-6">
+                                            <input class="p-inputtext-lg" type="text" formControlName="practice_hours"
+                                            pInputText pKeyFilter="num" name="practice_hours" 
+                                            placeholder="HORAS DE PRACTICAS" title="HORAS DE PRACTICAS" required style="margin-bottom: 10px;"> 
+                        
+                                            <input class="p-inputtext-lg" type="text" formControlName="area"
+                                            pInputText  name="area" 
+                                            placeholder="AREA DE TRABAJO" title="AREA DE TRABAJO" required > 
+                                          </div>
+                                          <div class="col-12 md:col-4 lg:col-6">
+                                            <input class="p-inputtext-lg" type="text" formControlName="post" style="margin-bottom: 10px;"
+                                            pInputText  name="post" 
+                                            placeholder="CARGO" title="CARGO" required > 
+                        
+                                            <input class="p-inputtext-lg" type="text" formControlName="functions"
+                                            pInputText  name="functions" 
+                                            placeholder="FUNCIONES DESEMPEÑADAS" title="FUNCIONES DESEMPEÑADAS" required > 
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                  
+                                     
+                                      
+                                    <span class="bottomdelete" style="margin-top: 5px;">
+                                      <button pButton pRipple type="button" icon="pi pi-times" (click)="removeStudentInternships(pointIndex,$event)"  
+                                      class="p-button-rounded p-button-danger"></button>
+                                    </span>
+                                    </div>
+                                  </div>
+                                  </div>
+                               
+                              </td>
+                          </tr>
+                        </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                                   
                 </div>
 
               </div>

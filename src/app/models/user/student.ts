@@ -9,8 +9,8 @@ export interface StudentI {
     Seedbeds?:SeedbedI[]
     headquarterProgramStudent?:HeadquarterProgramStudentI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
-    current_average:string
-    current_semester:string
+    current_average?:string
+    current_semester?:string
     experienciaInvestigativa:string,
     areasEstudio:string,
     publicacionesResientes:string,
