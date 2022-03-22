@@ -12,6 +12,7 @@ const translate = require('translate');
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import {  HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { StudentInternshipsI } from 'src/app/models/user/student';
 @Component({
   selector: 'app-editar-student',
   templateUrl: './editar-student.component.html',
@@ -20,7 +21,10 @@ import {  HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 export class EditarStudentComponent implements OnInit {
   public mostrar:number=1;
   public mostrar2:boolean=false;
+  public mostrar3:boolean=false;
+  
   public algo:number[]=[0];
+  public algo1:number[]=[0];
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -63,10 +67,22 @@ export class EditarStudentComponent implements OnInit {
       })]),
       // current_semester:['', [Validators.required]],
       // current_average:['', [Validators.required]],
-      experienciaInvestigativa:[''],
-      areasEstudio:[''],
-      publicacionesResientes:[''],
-      practicas:['']
+      // experienciaInvestigativa:[''],
+      // areasEstudio:[''],
+      // publicacionesResientes:[''],
+      // practicas:['']
+      StudentInternship: this.formBuilder.array([this.formBuilder.group({
+        StudentId:0,
+        nameP:[''],
+        start_date:[''],
+        final_date:[''],
+        name_institution:[''],
+        internship_certificate:[''],
+        practice_hours:[''],
+        area:[''],
+        post:[''],
+        functions:[''],
+    })]),
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -94,12 +110,15 @@ export class EditarStudentComponent implements OnInit {
       date_of_birth: this.form.value.date_of_birth,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
-      experienciaInvestigativa: this.form.value.experienciaInvestigativa,
-      areasEstudio: this.form.value.areasEstudio,
-      publicacionesResientes: this.form.value.publicacionesResientes,
-      practicas: this.form.value.practicas,
+      // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
+      // areasEstudio: this.form.value.areasEstudio,
+      // publicacionesResientes: this.form.value.publicacionesResientes,
+      // practicas: this.form.value.practicas,
+      StudentInternship:this.form.value.StudentInternship,
     };
-
+    if(this.mostrar3==false){
+      formValue.StudentInternship=[]
+    }
     if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
       let control = <FormArray>this.form.controls['headquarterProgramStudent']
       for (const key of control.value) {
@@ -116,7 +135,7 @@ export class EditarStudentComponent implements OnInit {
       // console.log('aqui2')
 
     }
-//  console.log(formValue.headquarterProgramStudent)
+ console.log(formValue)
   if(
     formValue.name != ""&&
     formValue.surname != ""&&
@@ -228,10 +247,10 @@ getOneCntAccount(id:number) {
           this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
           // this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
           // this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
-          this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
-          this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
-          this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
-          this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
+          // this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
+          // this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
+          // this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
+          // this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
        
           }
 
@@ -247,9 +266,16 @@ getOneCntAccount(id:number) {
           this.form.controls['GenderId'].setValue(algo.gender)
         })
 
-        if(cnt_groupFromApi.student.HeadquarterPrograms != undefined){
+        if(cnt_groupFromApi.student.HeadquarterPrograms != undefined
+          && cnt_groupFromApi.student.HeadquarterPrograms.length > 0){
           
           this.agregarDescuentos(cnt_groupFromApi.student.HeadquarterPrograms)
+          
+        }
+        if(cnt_groupFromApi.student.StudentInternships != undefined 
+          && cnt_groupFromApi.student.StudentInternships.length > 0){
+          
+          this.agregarStudentInternships(cnt_groupFromApi.student.StudentInternships)
           
         }
         // console.log(this.form.value)
@@ -261,6 +287,28 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
+  agregarStudentInternships(StudentInternships:StudentInternshipsI[]) {
+    if(StudentInternships.length){
+      for (let key of StudentInternships) {
+        let control = <FormArray>this.form.controls['StudentInternship']
+        control.push(this.formBuilder.group({
+          StudentId:0,
+          nameP:[key.name],
+          start_date:[key.start_date],
+          final_date:[key.final_date],
+          name_institution:[key.name_institution],
+          internship_certificate:[key.internship_certificate],
+          practice_hours:[key.practice_hours],
+          area:[key.area],
+          post:[key.post],
+          functions:[key.functions],
+        }))
+      }
+      this.mostrar3= true
+      let control = <FormArray>this.form.controls['StudentInternship']
+      control.removeAt(0)
+    }
+  }
   agregarDescuentos(HeadquarterPrograms:HeadquarterProgramI[]) {
     if(HeadquarterPrograms.length){
       for (let key of HeadquarterPrograms) {
@@ -314,5 +362,54 @@ getOneCntAccount(id:number) {
         this.mostrar2=false
         }
     }
+
+    get getStudentInternships() {
+      return this.form.get('StudentInternship') as FormArray;//obtener todos los formularios
+    }
+
+    addStudentInternships(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form.controls['StudentInternship']
+        if(control.length == 0 && this.mostrar3 == false){
+          control.push(this.formBuilder.group({
+            StudentId:0,
+            nameP:[''],
+            start_date:[''],
+            final_date:[''],
+            name_institution:[''],
+            internship_certificate:[''],
+            practice_hours:[''],
+            area:[''],
+            post:[''],
+            functions:[''],
+          }))
+        }
+        if(control.length >= 1 && this.mostrar3 == true){
+          control.push(this.formBuilder.group({
+            StudentId:0,
+            nameP:[''],
+            start_date:[''],
+            final_date:[''],
+            name_institution:[''],
+            internship_certificate:[''],
+            practice_hours:[''],
+            area:[''],
+            post:[''],
+            functions:[''],
+          }))
+  
+        }
+        this.mostrar3=true
+    }
+    removeStudentInternships(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form.controls['StudentInternship']//aceder al control
+      control.removeAt(index)
+        if(control.length <= 0){
+          console.log('aqui')
+        this.mostrar3=false
+        }
+    }
+    
   
 }

@@ -48,22 +48,22 @@ export class CreateStudentComponent implements OnInit {
     })]),
     // current_semester:['', [Validators.required]],
     // current_average:['', [Validators.required]],
-    StudentInternships: this.formBuilder.array([this.formBuilder.group({
+    StudentInternship: this.formBuilder.array([this.formBuilder.group({
       StudentId:0,
-      nameP:['', [Validators.required]],
-      start_date:['', [Validators.required]],
-      final_date:['', [Validators.required]],
-      name_institution:['', [Validators.required]],
-      internship_certificate:['', [Validators.required]],
-      practice_hours:['', [Validators.required]],
-      area:['', [Validators.required]],
-      post:['', [Validators.required]],
-      functions:['', [Validators.required]],
+      nameP:[''],
+      start_date:[''],
+      final_date:[''],
+      name_institution:[''],
+      internship_certificate:[''],
+      practice_hours:[''],
+      area:[''],
+      post:[''],
+      functions:[''],
   })]),
     // experienciaInvestigativa:[''],
     // areasEstudio:[''],
     // publicacionesResientes:[''],
-    // practicas:['']
+    // practicas:['',[Validators.required]]
    });
 
    public headquarterProgram: any[]=[]
@@ -119,20 +119,17 @@ export class CreateStudentComponent implements OnInit {
       date_of_birth: this.form.value.date_of_birth,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
-      experienciaInvestigativa: this.form.value.experienciaInvestigativa,
-      areasEstudio: this.form.value.areasEstudio,
-      publicacionesResientes: this.form.value.publicacionesResientes,
-      practicas: this.form.value.practicas,
+      // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
+      // areasEstudio: this.form.value.areasEstudio,
+      // publicacionesResientes: this.form.value.publicacionesResientes,
+      // practicas: this.form.value.practicas,
+      StudentInternship:this.form.value.StudentInternship,
     };
-    // if(this.mostrarUser == false){
-    //   formValue.UserId=  this.form.value.UserId.UserId
-    // }
+    if(this.mostrar2==false){
+      formValue.StudentInternship=[]
+    }
 
-    // if(this.mostrarUser == true){
-    //   formValue.UserId=undefined
-
-    // }
-
+    console.log(formValue)
       if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
             for (const key of control.value) {
@@ -253,38 +250,38 @@ export class CreateStudentComponent implements OnInit {
         }
     }
     get getStudentInternships() {
-      return this.form.get('StudentInternships') as FormArray;//obtener todos los formularios
+      return this.form.get('StudentInternship') as FormArray;//obtener todos los formularios
     }
 
     addStudentInternships(event: Event){
       event.preventDefault();
-      const control = <FormArray>this.form.controls['StudentInternships']
+      const control = <FormArray>this.form.controls['StudentInternship']
         if(control.length == 0 && this.mostrar2 == false){
           control.push(this.formBuilder.group({
             StudentId:0,
-            nameP:['', [Validators.required]],
-            start_date:['', [Validators.required]],
-            final_date:['', [Validators.required]],
-            name_institution:['', [Validators.required]],
-            internship_certificate:['', [Validators.required]],
-            practice_hours:['', [Validators.required]],
-            area:['', [Validators.required]],
-            post:['', [Validators.required]],
-            functions:['', [Validators.required]],
+            nameP:[''],
+            start_date:[''],
+            final_date:[''],
+            name_institution:[''],
+            internship_certificate:[''],
+            practice_hours:[''],
+            area:[''],
+            post:[''],
+            functions:[''],
           }))
         }
         if(control.length >= 1 && this.mostrar2 == true){
           control.push(this.formBuilder.group({
             StudentId:0,
-            nameP:['', [Validators.required]],
-            start_date:['', [Validators.required]],
-            final_date:['', [Validators.required]],
-            name_institution:['', [Validators.required]],
-            internship_certificate:['', [Validators.required]],
-            practice_hours:['', [Validators.required]],
-            area:['', [Validators.required]],
-            post:['', [Validators.required]],
-            functions:['', [Validators.required]],
+            nameP:[''],
+            start_date:[''],
+            final_date:[''],
+            name_institution:[''],
+            internship_certificate:[''],
+            practice_hours:[''],
+            area:[''],
+            post:[''],
+            functions:[''],
           }))
   
         }
@@ -292,9 +289,10 @@ export class CreateStudentComponent implements OnInit {
     }
     removeStudentInternships(index: number,event: Event){
       event.preventDefault();
-      let control = <FormArray>this.form.controls['StudentInternships']//aceder al control
+      let control = <FormArray>this.form.controls['StudentInternship']//aceder al control
       control.removeAt(index)
         if(control.length <= 0){
+          console.log('aqui')
         this.mostrar2=false
         }
     }

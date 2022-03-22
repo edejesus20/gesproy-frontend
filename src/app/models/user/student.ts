@@ -16,4 +16,19 @@ export interface StudentI {
     publicacionesResientes:string,
     practicas:string
     status_seedbed?:string,
+    StudentInternships?:StudentInternshipsI[]
+}
+
+export interface StudentInternshipsI {
+    id?:number;
+    name: string;
+    start_date:string
+    final_date:string
+    name_institution: string;
+    internship_certificate: string;
+    practice_hours:string;
+    area:string
+    post:string
+    functions:string
+    StudentId:number;
 }
