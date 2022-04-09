@@ -52,25 +52,28 @@
                             <div *ngFor="let item of getRoles.controls; 
                             let pointIndex=index" [formGroupName]="pointIndex">
                             <div class="grupo">
-                              <div class="grupoinput">
-                                <div class="grid p-fluid">
+                              <div>
+                                <div class="grid ">
                                   <div class="col-12 md:col-4 lg:col-4">
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
     
-                                      <input type="text" class="p-inputtext-lg"
-                                       pInputText name="name" placeholder="NOMBRE"
+                                      <input type="text" class="p-inputtext-lg" title="NOMBRE DE FORMACIÓN" 
+                                       pInputText name="name" placeholder="NOMBRE DE FORMACIÓN"
                                        formControlName="name" required>  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
-                                 
+                                  </div>
+                                    <div class="col-12 md:col-4 lg:col-4">
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
-                                      <p-calendar class="p-inputtext-lg" inputId="basic" name="date_graduation" placeholder="FECHA DE GRADUACION"
-                                      formControlName="date_graduation"></p-calendar>
+                                      <input type="date"class="p-inputtext-lg"  title="FECHA DE GRADUACION"
+                                       inputId="basic" name="date_graduation" pInputText
+                                       placeholder="FECHA DE GRADUACION"
+                                      formControlName="date_graduation" required />
                                       <!-- <input type="text" class="p-inputtext-lg"
                                        pInputText name="date_graduation" placeholder="FECHA DE GRADUACION"
                                        formControlName="date_graduation" required>   -->
@@ -79,23 +82,51 @@
                                     </div>
                                   </div>
                                   <div class="col-12 md:col-4 lg:col-4">
+                                    <div class="flex">
+                                     
+                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                        [options]="trainings" [filter]="true"
+                                            formControlName="TrainingId" name="TrainingId"
+                                          label="CAPACITACION" 
+                                          [style]="{'width':'100%','margin-top':'10px'}"
+                                          optionvalue="id" optionLabel="name"  filterBy="name"
+                                          [required]="true" placeholder="CAPACITACION"  title="CAPACITACION">
+                                          <ng-template let-option pTemplate="item">
+                                            <span >
+                                              {{option.name  | titlecase}} -
+                                              </span>
+                                        </ng-template>
+                                        </p-dropdown>
+                                     
+                                      <span class="bottomdelete" style="margin-top: -25px;">
+                                        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                        class="p-button-rounded p-button-outlined" (click)="addCapacitaciones($event)" ></button>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="grid ">
+                                  <div class="col-12 md:col-4 lg:col-4">
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
        
                                       <input type="text" class="p-inputtext-lg"
-                                       pInputText name="name_institution" placeholder="NOMBRE DE INSTITUCIÓN"
+                                       pInputText name="name_institution" placeholder="INSTITUCIÓN"
+                                       title="INSTITUCIÓN"
                                        formControlName="name_institution" required>  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
+                                  </div>
+                                  <div class="col-12 md:col-4 lg:col-4">
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
     
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="resolution_convalidation" 
-                                       placeholder="RESOLUCION DE CONVALIDACION"
+                                       placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION" 
                                        formControlName="resolution_convalidation" required>  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
@@ -108,29 +139,17 @@
     
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="degree_certificate" 
-                                       placeholder="CERTIFICADO DE GRADO"
+                                       placeholder="CERTIFICADO DE GRADO" title="CERTIFICADO DE GRADO" 
                                        formControlName="degree_certificate" required>  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
-    
-                                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                    [options]="trainings" [filter]="true"
-                                        formControlName="TrainingId" name="TrainingId"
-                                       label="SELECCIONE CAPACITACION" 
-                                      [style]="{'width':'100%','margin-top':'10px'}"
-                                      optionvalue="id" optionLabel="name"  filterBy="name"
-                                      [required]="true" placeholder="SELECCIONE CAPACITACION">
-                                      <ng-template let-option pTemplate="item">
-                                        <span >
-                                          {{option.name  | titlecase}} -
-                                          </span>
-                                    </ng-template>
-                                    </p-dropdown>
                                   </div>
                                 </div>
                               </div>
-                              <span class="bottomdelete" style="margin-top: 5px;">
+          
+                             
+                              <span class="bottomdelete"  style="margin-left: 20px ;margin-top: 5px;">
                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                 class="p-button-rounded p-button-danger"></button>
                                 <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
@@ -138,9 +157,6 @@
                                 label="eliminar"></button> -->
                               </span>
                             </div>
-
-                                
-
                               <hr>
                             </div>
                           </div> 

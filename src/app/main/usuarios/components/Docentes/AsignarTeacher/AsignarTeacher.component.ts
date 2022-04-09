@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
@@ -9,6 +10,7 @@ import { GroupService } from 'src/app/core/services/Procedimientos/group.service
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
+import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { GroupI } from 'src/app/models/institution/group';
 import { ScaleI } from 'src/app/models/institution/scale';
@@ -20,7 +22,8 @@ const translate = require('translate');
 @Component({
   selector: 'app-AsignarTeacher',
   templateUrl: './AsignarTeacher.component.html',
-  styleUrls: ['./AsignarTeacher.component.css']
+  styleUrls: ['./AsignarTeacher.component.css'],
+  providers: [DialogService]
 })
 export class AsignarTeacherComponent implements OnInit {
   public mostrar:number=4;
@@ -47,7 +50,7 @@ export class AsignarTeacherComponent implements OnInit {
     LinkTypeId:0,
 
 }
-
+public ref:any;
   public form:FormGroup=this.formBuilder.group({})
   public trainings: TrainingI[]=[]
   public Workexperiences:any[] =[]
@@ -60,6 +63,7 @@ export class AsignarTeacherComponent implements OnInit {
     private teacherService:TeacherService,
     private trainingsService:TrainingsService,
     private router: Router,
+    public dialogService: DialogService,
     private messageService:MessageService,
     private formBuilder: FormBuilder,
 
@@ -99,6 +103,8 @@ export class AsignarTeacherComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.mostrar2= false
+    this.mostrar3= false
   }
   
   ngOnDestroy() {
@@ -107,7 +113,7 @@ export class AsignarTeacherComponent implements OnInit {
     this.ngOnInit()
   }
   actualizar(id: number){
-    console.log(id)
+    // console.log(id)
     this.getOneCntAccount(id)
   }
 
@@ -116,7 +122,7 @@ export class AsignarTeacherComponent implements OnInit {
      
       if(cnt_groupFromApi.teacher.id != undefined
         ){
-          console.log(cnt_groupFromApi.teacher)
+          // console.log(cnt_groupFromApi.teacher)
           this.form2=cnt_groupFromApi.teacher
           this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
           if(cnt_groupFromApi.teacher.Trainings?.length != undefined && cnt_groupFromApi.teacher.Trainings?.length > 0){
@@ -349,5 +355,27 @@ public verificar(){
         if(control.length <= 0){
         this.mostrar3=false
         }
+    }
+
+    addCapacitaciones(e:Event){
+      e.preventDefault()
+  
+      this.ref = this.dialogService.open(Create_capacitacionComponent, {
+        width: '35%',
+        height: '50%',
+        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+        baseZIndex: 10000,
+        data: {
+          id: '1'
+      },
+    });
+  
+    this.ref.onClose.subscribe((person: any) =>{
+        if (person) {
+            this.messageService.add({severity:'info', summary: 'Capacitación Creada', detail: person.name,life: 2000});
+        this.getAlltrainings()
+  
+          }
+    });
     }
 }
