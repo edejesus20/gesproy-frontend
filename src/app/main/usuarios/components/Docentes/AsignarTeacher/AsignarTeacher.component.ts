@@ -15,7 +15,7 @@ import { ScaleI } from 'src/app/models/institution/scale';
 import { TrainingI, TrainingTeacherI } from 'src/app/models/institution/training';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
-import { TeacherI } from 'src/app/models/user/teacher';
+import { TeacherI, WorkexperienceI } from 'src/app/models/user/teacher';
 const translate = require('translate');
 @Component({
   selector: 'app-AsignarTeacher',
@@ -26,6 +26,9 @@ export class AsignarTeacherComponent implements OnInit {
   public mostrar:number=4;
   public tabla:boolean=true;
   public algo:number[]=[0];
+  public mostrar3:boolean=false;
+  public algo3:number[]=[0];
+
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar2:boolean=false
@@ -47,7 +50,7 @@ export class AsignarTeacherComponent implements OnInit {
 
   public form:FormGroup=this.formBuilder.group({})
   public trainings: TrainingI[]=[]
-  
+  public Workexperiences:any[] =[]
   public teachers: TeacherI[] =[]
 
   
@@ -79,6 +82,15 @@ export class AsignarTeacherComponent implements OnInit {
           TeacherId:this.form2.id,
           TrainingId:['', [Validators.required]],
       })]),
+      Workexperiences:this.formBuilder.array([this.formBuilder.group(
+        {
+          TeacherId:0,
+          name_institution: [''],
+          position_type: [''],
+          functions:[''],
+          start_date:[''],
+          final_date:[''],
+      })]),
     })
 
   }
@@ -104,17 +116,44 @@ export class AsignarTeacherComponent implements OnInit {
      
       if(cnt_groupFromApi.teacher.id != undefined
         ){
+          console.log(cnt_groupFromApi.teacher)
           this.form2=cnt_groupFromApi.teacher
           this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
-          if(cnt_groupFromApi.teacher.Trainings != undefined){
+          if(cnt_groupFromApi.teacher.Trainings?.length != undefined && cnt_groupFromApi.teacher.Trainings?.length > 0){
             // console.log(cnt_groupFromApi.teacher.Trainings)
             this.agregarDescuentos(cnt_groupFromApi.teacher.Trainings)    
+          }
+          
+          if(cnt_groupFromApi.teacher.Workexperiences?.length != undefined && cnt_groupFromApi.teacher.Workexperiences?.length > 0){
+            // console.log(cnt_groupFromApi.teacher.Trainings)
+            this.agregarDescuentos2(cnt_groupFromApi.teacher.Workexperiences)    
           }
       }
   
       this.displayMaximizable2=true
       this.tabla = false
     }, error => console.error(error));
+  }
+  agregarDescuentos2(Workexperiences: WorkexperienceI[]) {
+    if(Workexperiences.length){
+      for (let key of Workexperiences) {
+        if(key.TeacherId != undefined) {
+          // console.log(DiscountLine)
+          
+          let control = <FormArray>this.form.controls['Workexperiences']
+                    control.push(this.formBuilder.group({
+                      final_date: key.final_date,
+                      functions: key.functions,
+                      name_institution:key.name_institution,
+                      position_type:key.position_type,
+                      start_date:key.start_date
+                    }))
+      }
+    }
+      this.mostrar3= true
+      let control = <FormArray>this.form.controls['Workexperiences']
+      control.removeAt(0)
+    }
   }
   agregarDescuentos(Trainings: TrainingI[]) {
     if(Trainings.length){
@@ -222,10 +261,21 @@ public verificar(){
 }
   public onSubmit() {
 
-let bandera = this.verificar()
+    let bandera = this.verificar()
     console.log(bandera);
     if(bandera == true){
       let formValue = this.form.value;
+      if(this.Workexperiences.length == 0 || this.Workexperiences == []){
+        this.Workexperiences = this.form.value.Workexperiences 
+        formValue.Workexperiences = this.form.value.Workexperiences
+      }else{
+        formValue.Workexperiences = this.Workexperiences
+      }
+      if(this.form.value.Workexperiences[0].name_institution == ''){
+        // this.form.value.Workexperiences=[]
+        formValue.Workexperiences=[]
+  
+      }
       console.log(formValue);
       this.teacherService.AsignarTeacher(formValue).subscribe(
         () => {
@@ -261,4 +311,43 @@ let bandera = this.verificar()
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Seleccione la formacion'});
     }
   }
+
+  get getWorkexperiences() {
+    return this.form.get('Workexperiences') as FormArray;//obtener todos los formularios
+  }
+  
+    addWorkexperiences(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form.controls['Workexperiences']
+        if(control.length == 0 && this.mostrar3 == false){
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            name_institution: [''],
+            position_type: [''],
+            functions:[''],
+            start_date:[''],
+            final_date:[''],
+          }))
+        }
+        if(control.length >= 1 && this.mostrar3 == true){
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            name_institution: [''],
+            position_type: [''],
+            functions:[''],
+            start_date:[''],
+            final_date:[''],
+          }))
+  
+        }
+        this.mostrar3=true
+    }
+    removeWorkexperiences(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form.controls['Workexperiences']//aceder al control
+      control.removeAt(index)
+        if(control.length <= 0){
+        this.mostrar3=false
+        }
+    }
 }

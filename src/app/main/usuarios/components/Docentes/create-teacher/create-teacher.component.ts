@@ -264,7 +264,7 @@ export class CreateTeacherComponent implements OnInit {
     formValue.ColcienciaCategoryId != ("" || undefined) && formValue.LinkTypeId != ("" || undefined))||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
     && formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined) &&
     formValue.LinkTypeId != ("" || undefined))){
-              console.log(formValue)
+              // console.log(formValue)
 
             this.teacherService.createItem(formValue).subscribe(
               () => {
