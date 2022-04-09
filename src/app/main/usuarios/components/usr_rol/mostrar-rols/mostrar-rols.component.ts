@@ -79,19 +79,7 @@ export class MostrarRolsComponent implements OnInit {
       }
     }]
 
-    // var headersU = [{
-    //   fila_0:{
-    //       col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_3:{ text: 'APELLIDO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_4:{ text: 'IDENTIFICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_5:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_6:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_7:{ text: 'DIRECCIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //       col_8:{ text: 'GENERO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-    //   }
-    // }]
-  
+   
     var body = [];
     // var body2 = [];
     for (var key in headers){
@@ -104,19 +92,6 @@ export class MostrarRolsComponent implements OnInit {
         }
     }
 
-  //   for (var key in headersU){
-  //     if (headers.hasOwnProperty(key)){
-  //         var headerU = headersU[key];
-  //         var rowu:any[] = [ 
-  //           headerU.fila_0.col_1,headerU.fila_0.col_2,
-  //           headerU.fila_0.col_3,headerU.fila_0.col_4,
-  //           headerU.fila_0.col_5,headerU.fila_0.col_6,
-  //           headerU.fila_0.col_7,headerU.fila_0.col_8,
-  //         ]
-  //         body2.push(rowu);
-  //     }
-  // }
-
     for (var key in this.rows2) {
         if (this.rows2.hasOwnProperty(key))
         {
@@ -125,21 +100,6 @@ export class MostrarRolsComponent implements OnInit {
               data.id?.toString(),
               data.name.toString()
             ]
-            // if(data.Users !=  undefined ){
-            //   for (let key2 of data.Users) {
-            //     if(key2.id && key2.Person && key2.Person.Gender)
-            //     body2.push([
-            //       key2.id.toString(),
-            //       key2.Person.name.toString(),
-            //       key2.Person.surname.toString(),
-            //       key2.Person.identification.toString(),
-            //       key2.email.toString(),
-            //       key2.Person.phone.toString(),
-            //       key2.Person.address.toString(),
-            //       key2.Person.Gender.name.toString(),
-            //     ])
-            //   }
-            // }
             body.push(row);
             
         }

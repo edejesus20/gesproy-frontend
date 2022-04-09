@@ -3,7 +3,8 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { RelationshipI } from 'src/app/models/institution/relationship';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -15,8 +16,14 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 export class Create_RelacionesComponent implements OnInit {
   displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-
-  constructor(
+public mostrarDialogo:boolean=false;
+public form:FormGroup=this.formBuilder.group({
+  name:['', [Validators.required]],
+ })
+constructor(
+  private formBuilder: FormBuilder,
+  public ref: DynamicDialogRef,
+  public config: DynamicDialogConfig,
     private relationshipService:RelationshipService ,
      private primengConfig: PrimeNGConfig,
      private router: Router,
@@ -25,15 +32,22 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
   }
-  public onSubmit(f:NgForm) {
-    let formValue: RelationshipI = {
-      name: f.form.value.name,
-    };
+  public onSubmit() {
+    let formValue: RelationshipI = this.form.value;
     if(formValue.name != ''){
     this.relationshipService.createItem(formValue).subscribe(
-      () => {
+      (algo) => {
+        if(this.mostrarDialogo== true){
+          this.ref.close(algo);
+        }else{
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -52,6 +66,7 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
                   clearInterval(interval); 
                  }
           }, 1000);
+        }
       },async error => {
         if(error != undefined) {
           let text = await translate(error.error.message, "es");

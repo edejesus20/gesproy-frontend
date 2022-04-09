@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 const translate = require('translate');
@@ -15,6 +16,7 @@ export class Create_documentTypeComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
    });
+   public mostrarDialogo:boolean=false;
   
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
@@ -24,18 +26,30 @@ export class Create_documentTypeComponent implements OnInit {
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
     private documentTypeService:DocumentTypeService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
 
   ) { }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
   }
 
   public onSubmit() {
     let formValue: DocumentTypeI = this.form.value;
     if(formValue.name != ''){
     this.documentTypeService.createItem(formValue).subscribe(
-      () => {
+      (algo) => {
+        if(this.mostrarDialogo== true){
+          this.ref.close(algo);
+        }else{
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -54,6 +68,7 @@ export class Create_documentTypeComponent implements OnInit {
                   clearInterval(interval); 
                  }
           }, 1000);
+        }
       },async error => {
         if(error != undefined) {
           let text = await translate(error.error.message, "es");

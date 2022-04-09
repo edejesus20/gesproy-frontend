@@ -96,6 +96,7 @@ export class EditarTeacherComponent implements OnInit {
       practicas:[''],
       nationality:[''],
       date_of_birth:[''],
+      LinkTypeId:['', [Validators.required]]
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -371,12 +372,7 @@ getOneCntAccount(id:number) {
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
-          this.form.controls['tiulosAcademicos'].setValue(cnt_groupFromApi.teacher.tiulosAcademicos)
-          this.form.controls['camposCiencia'].setValue(cnt_groupFromApi.teacher.camposCiencia)
-          this.form.controls['cargosDesempeñados'].setValue(cnt_groupFromApi.teacher.cargosDesempeñados)
-          this.form.controls['formacionInvestigativa'].setValue(cnt_groupFromApi.teacher.formacionInvestigativa)
-          this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.teacher.publicacionesResientes)
-          this.form.controls['practicas'].setValue(cnt_groupFromApi.teacher.practicas)
+          this.form.controls['LinkTypeId'].setValue(cnt_groupFromApi.teacher.LinkTypeId)
           this.form.controls['nationality'].setValue(cnt_groupFromApi.teacher.User.Person.nationality)
             this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.teacher.User.Person.date_of_birth)
           if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)

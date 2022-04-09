@@ -1,4 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="mostrarDialogo == false">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
       
@@ -24,9 +25,29 @@
               <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
           </div>
           </ng-template>
-          
-              
+        
   </p-dialog>
+</ng-template>
+<ng-template [ngIf]="mostrarDialogo == true">
+  <div [style]="{'margin-top':'-1px'}" >
+    <div fxLayout="row" class="titleCard">
+        <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+      <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Ocupación</h2>
+    </div>
+    <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+      <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre">
+        <i class="pi pi-bookmark-fill"></i></span>
+      <input type="text" class="p-inputtext-lg" pInputText name="name" [pKeyFilter]="blockSpecial"
+       formControlName="name" placeholder="NOMBRE" required>  
+ 
+  </div>
+</div>
+<br>
+        <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+          <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+          class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+    </div>
+</ng-template>
 </form>
 <p-toast></p-toast>
 

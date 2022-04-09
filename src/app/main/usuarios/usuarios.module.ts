@@ -88,16 +88,17 @@ import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/s
 import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Create_linkTypeComponent } from './components/Tipo Vinculacion/create_linkType/create_linkType.component';
-import { Delete_linkTypeComponent } from './components/Tipo Vinculacion/delete_linkType/delete_linkType.component';
-import { Show_linkTypeComponent } from './components/Tipo Vinculacion/show_linkType/show_linkType.component';
-import { Edit_linkTypeComponent } from './components/Tipo Vinculacion/edit_linkType/edit_linkType.component';
-import { Show_one_linkTypeComponent } from './components/Tipo Vinculacion/show_one_linkType/show_one_linkType.component';
+
 import { Create_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { Delete_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/delete_InvestigatorCollaborator/delete_InvestigatorCollaborator.component';
 import { Edit_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/edit_InvestigatorCollaborator/edit_InvestigatorCollaborator.component';
 import { Show_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_InvestigatorCollaborator/show_InvestigatorCollaborator.component';
 import { Show_one_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_one_InvestigatorCollaborator/show_one_InvestigatorCollaborator.component';
+import { Create_linkTypeComponent } from './components/Tipo Vinculacion/create_linkType/create_linkType.component';
+import { Delete_linkTypeComponent } from './components/Tipo Vinculacion/delete_linkType/delete_linkType.component';
+import { Edit_linkTypeComponent } from './components/Tipo Vinculacion/edit_linkType/edit_linkType.component';
+import { Show_linkTypeComponent } from './components/Tipo Vinculacion/show_linkType/show_linkType.component';
+import { Show_one_linkTypeComponent } from './components/Tipo Vinculacion/show_one_linkType/show_one_linkType.component';
 
 @NgModule({
   declarations: [
@@ -188,7 +189,8 @@ import { Show_one_InvestigatorCollaboratorComponent } from './components/Investi
     MenuModule,
     MessagesModule,
     MessageModule,
-
+    ConfirmPopupModule,
+    ToastModule,
     SplitterModule,
     MenubarModule,
     AvatarGroupModule,
@@ -199,8 +201,7 @@ import { Show_one_InvestigatorCollaboratorComponent } from './components/Investi
     ToolbarModule,
     SplitButtonModule,
     DialogModule,
-    ConfirmPopupModule,
-    ToastModule,
+  
     TreeModule,
     SharedModule,
     // VirtualScrollerModule,

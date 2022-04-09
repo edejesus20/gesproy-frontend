@@ -41,10 +41,13 @@ export class AsignarTeacherComponent implements OnInit {
     ColcienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
+    LinkTypeId:0,
+
 }
 
   public form:FormGroup=this.formBuilder.group({})
   public trainings: TrainingI[]=[]
+  
   public teachers: TeacherI[] =[]
 
   

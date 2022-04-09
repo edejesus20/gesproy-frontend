@@ -24,12 +24,19 @@ export interface TeacherI {
     Trainings?:TrainingI[]
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
-    publicacionesResientes?:string
-    camposCiencia?:string
-    tiulosAcademicos?:string
-    formacionInvestigativa?:string
-    cargosDesempeñados?:string
-    practicas?:string
+    LinkTypeId:number,
+    trainingTeacher?:TrainingTeacherI[],
+    Workexperiences?:WorkexperienceI[]
+}
+
+export interface WorkexperienceI {
+    id?: number;
+    name_institution: string;
+    position_type: string;
+    functions:string
+    TeacherId?:number;
+    start_date:string
+    final_date:string
 }
 
 export interface LinkTypeI {

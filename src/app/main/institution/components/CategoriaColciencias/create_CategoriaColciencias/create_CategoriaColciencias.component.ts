@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 const translate = require('translate');
@@ -15,31 +16,44 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 export class Create_CategoriaColcienciasComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-
+  public mostrarDialogo:boolean=false;
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+   })
   constructor(
+    private formBuilder: FormBuilder,
+
     private colcienciaCategoryService:ColcienciaCategoryService ,
     private primengConfig: PrimeNGConfig,
     private router: Router,
     private messageService:MessageService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
   ) { }
 
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
   
   }
-  public onSubmit(f:NgForm) {
+  public onSubmit() {
     // console.log(f)
-
-    let formValue: ColcienciaCategoryI = {
-      name: f.form.value.name,
-    };
     // console.log(formValue)
-
+    let formValue: ColcienciaCategoryI = this.form.value;
     if(formValue.name != ''){
 
     this.colcienciaCategoryService.createItem(formValue).subscribe(
-      () => {
+      (algo) => {
+        if(this.mostrarDialogo== true){
+          this.ref.close(algo);
+        }else{
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -58,6 +72,7 @@ export class Create_CategoriaColcienciasComponent implements OnInit {
                   clearInterval(interval); 
                  }
           }, 1000);
+        }
       },async error => {
         if(error != undefined) {
           let text = await translate(error.error.message, "es");
@@ -68,7 +83,9 @@ export class Create_CategoriaColcienciasComponent implements OnInit {
         }
       });
   }else{
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+    
+       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+     
   }
   }
 }

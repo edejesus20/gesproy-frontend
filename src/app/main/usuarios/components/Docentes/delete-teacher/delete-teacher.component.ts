@@ -60,6 +60,8 @@ export class DeleteTeacherComponent implements OnInit {
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
       ColcienciaCategoryId:['', [Validators.required]],
+      LinkTypeId:['', [Validators.required]]
+
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -200,6 +202,8 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
+          this.form.controls['LinkTypeId'].setValue(cnt_groupFromApi.teacher.LinkTypeId),
+
           console.log('aqui')
         }
 

@@ -52,6 +52,54 @@ padding-top:10px;
 .opcStatus{
   margin: 0 40px;
 }
+.grupo{
+  width:auto;
+  display:flex;
+}
+.grupocodeudor{
+  width: 95%;
+  padding-right: 10px;
+  min-width: auto
+}
+.grupoinput{
+  width: 95%;
+  padding-right: 10px;
+  min-width: auto;
+}
+.grupoinput1{
+   width: 40%;
+  padding-right: 10px;
+  min-width: auto;
+}
+.grupoinput2{
+  width: 50%;
+  padding-right: 10px;
+  min-width: auto;
+}
+mat-card{
+  width: 50%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+mat-icon{
+    font-size: 30px;
+}
+
+.grupodescuento{
+  width: 45%;
+  padding-right: 15px;
+  min-width: auto;
+}
+.bottomdelete{
+  width: auto;
+  margin-top: 50px;
+  padding-top: 40px;
+  font-size: 10px;
+  min-width: auto;
+}
+.bottomdelete .mat-icon{
+  margin-top:-7px;
+}
 
 .grupo{
   width:auto;

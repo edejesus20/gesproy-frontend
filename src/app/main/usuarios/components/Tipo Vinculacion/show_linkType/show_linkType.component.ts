@@ -4,8 +4,8 @@ import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
-import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
 import { LinkTypeI } from 'src/app/models/user/teacher';
+import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
 @Component({
   selector: 'app-show_linkType',
   templateUrl: './show_linkType.component.html',
@@ -14,6 +14,7 @@ import { LinkTypeI } from 'src/app/models/user/teacher';
 export class Show_linkTypeComponent implements OnInit {
 
   public linkTypes:LinkTypeI[]=[]
+  
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;

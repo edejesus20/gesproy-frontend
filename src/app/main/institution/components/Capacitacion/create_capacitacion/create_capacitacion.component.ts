@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
 import { TrainingI } from 'src/app/models/institution/training';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -15,8 +16,14 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 export class Create_capacitacionComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-  
+  public mostrarDialogo:boolean=false;
+  public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+   })
   constructor(
+    private formBuilder: FormBuilder,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
     private trainingsService:TrainingsService,
     private primengConfig: PrimeNGConfig,
     private router: Router,
@@ -25,19 +32,23 @@ export class Create_capacitacionComponent implements OnInit {
 
  ngOnInit() {
    this.primengConfig.ripple = true;
+   if(this.config.data){
+    if(this.config.data.id == '1'){
+      this.mostrarDialogo= true
+    }
+  }else{
+    this.mostrarDialogo= false
+  }
 
  }
- public onSubmit(f:NgForm) {
-  // console.log(f)
-
-  let formValue: TrainingI = {
-    name: f.form.value.name,
-  };
-  // console.log(formValue)
-
+ public onSubmit() {
+  let formValue: TrainingI = this.form.value;
   if(formValue.name != ''){
   this.trainingsService.createItem(formValue).subscribe(
-    () => {
+    (algo) => {
+      if(this.mostrarDialogo== true){
+        this.ref.close(algo);
+      }else{
             var date = new Date('2020-01-01 00:00:03');
               function padLeft(n:any){ 
                  return n ="00".substring(0, "00".length - n.length) + n;
@@ -56,6 +67,7 @@ export class Create_capacitacionComponent implements OnInit {
                 clearInterval(interval); 
                }
         }, 1000);
+      }
     },async error => {
       if(error != undefined) {
         let text = await translate(error.error.message, "es");

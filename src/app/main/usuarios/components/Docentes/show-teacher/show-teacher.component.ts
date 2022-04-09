@@ -70,7 +70,8 @@ export class ShowTeacherComponent implements OnInit {
                 Groups:key.Groups,
                 ColcienciaCategory:key.ColcienciaCategory,
                 TrainingTeacher:key.TrainingTeacher,
-                hours_of_dedication:key.hours_of_dedication
+                hours_of_dedication:key.hours_of_dedication,
+                LinkTypeId:key.LinkTypeId
               }
             )
           }

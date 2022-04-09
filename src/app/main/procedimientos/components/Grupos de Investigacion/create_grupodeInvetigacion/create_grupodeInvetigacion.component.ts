@@ -56,6 +56,7 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     ColcienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
+    LinkTypeId:0
 }
 public investigatorCollaborators:InvestigatorCollaboratorI[] =[]
 public algoI:number[]=[0];

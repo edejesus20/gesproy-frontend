@@ -4,7 +4,7 @@
 <ng-template [ngIf]="tabla == false">
  
   <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" >
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '75vw','height': '60vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '80vw','height': '60vw'}" 
     [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
         
         <div [style]="{'margin-top':'-1px'}" >
@@ -42,7 +42,7 @@
                   <p-table [value]="algo" *ngIf="mostrar2 == true"> 
                     <ng-template pTemplate="header">
                       <tr>
-                          <th pSortableColumn="id">Sedes<p-sortIcon field="id"></p-sortIcon></th>
+                          <th pSortableColumn="id">Titulos Academicos<p-sortIcon field="id"></p-sortIcon></th>
                       </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
@@ -69,7 +69,7 @@
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
-                                      <p-calendar lass="p-inputtext-lg" inputId="basic" name="date_graduation" placeholder="FECHA DE GRADUACION"
+                                      <p-calendar class="p-inputtext-lg" inputId="basic" name="date_graduation" placeholder="FECHA DE GRADUACION"
                                       formControlName="date_graduation"></p-calendar>
                                       <!-- <input type="text" class="p-inputtext-lg"
                                        pInputText name="date_graduation" placeholder="FECHA DE GRADUACION"
