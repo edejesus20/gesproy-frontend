@@ -14,7 +14,46 @@
     font-size: 30px;
     background-color:707070
   }
+  .grupodescuento{
+    width: 45%;
+    padding-right: 15px;
+    min-width: auto;
+  }
+  .bottomdelete{
+    width: auto;
+    margin-top: 50px;
+    padding-top: 40px;
+    font-size: 10px;
+    min-width: auto;
+  }
+  .bottomdelete .mat-icon{
+    margin-top:-7px;
+  }
   
+  .grupo{
+    width:auto;
+    display:flex;
+  }
+  .grupocodeudor{
+    width: 85%;
+    padding-right: 10px;
+    min-width: auto
+  }
+  .grupoinput{
+    width: 50%;
+    padding-right: 10px;
+    min-width: auto;
+  }
+  .grupoinput1{
+    width: 50%;
+   padding-right: 10px;
+   min-width: auto;
+  }
+  .grupoinput2{
+   width: 50%;
+   padding-right: 10px;
+   min-width: auto;
+  }
   .titleCard{
   margin: 0 0 10px 0;
   display:flex;

@@ -25,6 +25,7 @@ export interface TeacherI {
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
     LinkTypeId:number,
+    LinkType?:LinkTypeI
     trainingTeacher?:TrainingTeacherI[],
     Workexperiences?:WorkexperienceI[]
 }
@@ -43,4 +44,6 @@ export interface LinkTypeI {
     id?: number;
     name: string;
     Teachers?:TeacherI[]
+    createdAt?:string
+    updatedAt?:string
 }

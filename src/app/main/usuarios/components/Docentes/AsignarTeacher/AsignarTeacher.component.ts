@@ -48,6 +48,7 @@ export class AsignarTeacherComponent implements OnInit {
     TrainingTeacher:undefined, 
     Trainings:undefined, 
     LinkTypeId:0,
+    LinkType:undefined
 
 }
 public ref:any;
@@ -174,7 +175,7 @@ public ref:any;
                   if(algo.training.id != undefined){
                     control.push(this.formBuilder.group({
                       name: [key.TrainingTeacher?.name, [Validators.required]],
-                      date_graduation: [new Date(''+key.TrainingTeacher?.date_graduation+''), [Validators.required]],
+                      date_graduation: [key.TrainingTeacher?.date_graduation, [Validators.required]],
                       name_institution: [key.TrainingTeacher?.name_institution, [Validators.required]],
                       resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation, [Validators.required]],
                       degree_certificate: [key.TrainingTeacher?.degree_certificate, [Validators.required]],
@@ -195,9 +196,6 @@ public ref:any;
     }
 
   }
-
-
-
 
   get getRoles() {
     return this.form.get('trainingTeacher') as FormArray;//obtener todos los formularios

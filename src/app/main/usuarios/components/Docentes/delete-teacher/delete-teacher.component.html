@@ -153,38 +153,43 @@
 
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="scales" [filter]="true"
-              name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-              [style]="{'width':'100%','margin-bottom':'20px'}"  
-              optionvalue="id"  optionLabel="name" filterBy="name"
-              [disabled]="true" placeholder="ESCALAFON" title="ESCALAFON">
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name }}</span>
-            </ng-template>
-            </p-dropdown>
+              <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'10px'}">
+                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                [options]="scales" [filter]="true"
+                  name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
+                  [style]="{'width':'100%','margin-top':'20px'}"  
+                  optionvalue="id"  optionLabel="name" filterBy="name"
+                  [disabled]="true" placeholder="ESCALAFON" title="ESCALAFON">
+                  <ng-template let-option pTemplate="item">
+                    <span >{{option.name }}</span>
+                </ng-template>
+                </p-dropdown>
+                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">ESCALAFON</h3></label>
+            </span> 
+
 
             </div>
-
             <div class="col-12 md:col-6 lg:col-6">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="colcienciaCategorys" [filter]="true"
-              name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
-              [style]="{'width':'100%','margin-bottom':'20px'}" 
-              optionvalue="id"  optionLabel="name" filterBy="name"
-              [disabled]="true" placeholder="CATEGORIA COLCIENCIAS" title="CATEGORIA COLCIENCIAS">
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name }}</span>
-            </ng-template>
-            </p-dropdown>
-
+              <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'10px'}">
+                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                [options]="colcienciaCategorys" [filter]="true"
+                  name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
+                  [style]="{'width':'100%','margin-top':'20px'}" 
+                  optionvalue="id"  optionLabel="name" filterBy="name"
+                  [disabled]="true" placeholder="CATEGORIA COLCIENCIAS" title="CATEGORIA COLCIENCIAS">
+                  <ng-template let-option pTemplate="item">
+                    <span >{{option.name }}</span>
+                </ng-template>
+                </p-dropdown>
+                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA COLCIENCIAS</h3></label>
+            </span> 
             </div>
 
           </div>
 
       </div>
 
-              <div fxLayout="row" class="titleCard" style="margin-top: 50px;">
+              <div fxLayout="row" class="titleCard" style="margin-top: 20px;">
                 <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid" 
                 class="p-button-danger p-button-raised p-button-rounded" label="Borrar Registro" styleClass="mr-2"></button>
                 <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>

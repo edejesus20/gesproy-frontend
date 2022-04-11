@@ -8,9 +8,13 @@ import { UserI, UserLoginI, UserLoginResponseI } from 'src/app/models/authorizat
 import { environment } from 'src/environments/environment';
 import { createMenu } from 'src/app/consts/menu';
 import { Router } from '@angular/router';
+import *as moment from 'moment';
+
 const KEY_TOKEN = 'token';
 const KEY_USER = 'user';
 const KEY_MENU = 'menu';
+const KEY_FECHA = 'fecha';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -116,9 +120,8 @@ export class AuthService {
   private setLoginData(loginData: UserLoginResponseI): void {
     localStorage.setItem(KEY_TOKEN, loginData.token);
     this._KEY_CODE_TOKEN=loginData.token;
-    // console.log(this._KEY_CODE_TOKEN)
-    // const userData = this.decodeUserData(token);
-    // localStorage.setItem(KEY_USER, JSON.stringify(userData));
+    let fecha =  moment();
+    localStorage.setItem(KEY_FECHA, JSON.stringify(fecha));
     localStorage.setItem(KEY_USER, JSON.stringify(loginData.user));
   }
 
@@ -126,10 +129,18 @@ export class AuthService {
     localStorage.removeItem(KEY_TOKEN);
     this._KEY_CODE_TOKEN='';
     localStorage.removeItem(KEY_USER);
+    localStorage.removeItem(KEY_FECHA);
+    this.setLogin(false);
+    this.router.navigateByUrl('/landing');
     // localStorage.removeItem(KEY_MENU);
     // TODO: Call logout service (backend) to remove TOKEN for sessions
   }
   public getToken(): Observable<boolean> | boolean {
+    let fechanueva:string | undefined =localStorage.getItem('fecha')?.replace(/["]/g, '');
+    let a = moment(moment(fechanueva).format("DD-MM-YYYY"));
+    let b = moment(moment().format("DD-MM-YYYY"));
+    let algo: number = b.diff(a, 'days');
+    if(algo == 0){
     var token :string | null= JSON.stringify(localStorage.getItem('token'));
     var user :string | null= localStorage.getItem('user');
     // var menu :string | null= localStorage.getItem('menu');
@@ -152,10 +163,21 @@ export class AuthService {
           // this.router.navigateByUrl('/dashboard');
       return true;
     }
-    }
+  }
+    
 
   this.router.navigateByUrl('/landing');
   return false
+  }else{
+    localStorage.removeItem(KEY_TOKEN);
+    this._KEY_CODE_TOKEN='';
+    localStorage.removeItem(KEY_USER);
+    localStorage.removeItem(KEY_FECHA);
+    this.setLogin(false);
+    this.router.navigateByUrl('/login');
+    return false
   }
+
+}
 
 }

@@ -78,6 +78,19 @@ export class ShowAdministrativeComponent implements OnInit {
   
   exportExcel() {
   let array:any[] = [];
+  if(this.selectedProducts.length > 0){
+    for (const key of this.selectedProducts) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.User?.fullName,
+        Identificacion:key.User?.Person?.identification,
+        Correo_Electronico:key.User?.email,
+        Telefono:key.User?.Person?.phone,
+        Ocupación:key.Ocupation?.name,
+        Sede:key.Headquarter?.name
+      })
+    }
+  }else{
   for (const key of this.administratives) {
     array.push({ 
       id: key.id,
@@ -89,6 +102,7 @@ export class ShowAdministrativeComponent implements OnInit {
       Sede:key.Headquarter?.name
     })
   }
+}
     import("xlsx").then(xlsx => {
         const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
@@ -132,6 +146,26 @@ export class ShowAdministrativeComponent implements OnInit {
             body.push(row);
         }
     }
+
+    if(this.selectedProducts.length > 0){
+      for (const key in this.selectedProducts) {
+        if (this.selectedProducts.hasOwnProperty(key))
+        {
+            var data = this.selectedProducts[key];
+            var row:any[] = [
+              data.User?.Person?.identification.toString(),
+              data.User?.fullName.toString(),
+              data.User?.email.toString(),
+              data.User?.Person?.phone?.toString(),
+              data.Ocupation?.name.toString(),
+              data.Headquarter?.name.toString() +' - '+ data.Headquarter?.University?.name.toString()
+          
+            ]
+            body.push(row);
+            
+        }
+      }
+    }else{
     for (var key in this.rows2) 
     {
         if (this.rows2.hasOwnProperty(key))
@@ -149,6 +183,7 @@ export class ShowAdministrativeComponent implements OnInit {
             body.push(row);
         }
     }
+  }
   
     const pdfDefinition: any = {
       pageOrientation: 'landscape',

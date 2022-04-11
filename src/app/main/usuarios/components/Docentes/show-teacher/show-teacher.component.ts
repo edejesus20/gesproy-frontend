@@ -81,7 +81,6 @@ export class ShowTeacherComponent implements OnInit {
   
     Buscar(event: Event, dt1:any){
       event.preventDefault();
-      
         const filterValue = (event.target as HTMLInputElement).value;
         dt1.filterGlobal(filterValue, 'contains')
     }
@@ -89,6 +88,20 @@ export class ShowTeacherComponent implements OnInit {
   
   exportExcel() {
   let array:any[] = [];
+  if(this.selectedProducts.length > 0){
+    for (const key of this.selectedProducts) {
+      array.push({ 
+        id: key.id,
+        Nombre_Completo:key.User?.fullName,
+        Identificacion:key.User?.Person?.identification,
+        Correo_Electronico:key.User?.email,
+        Telefono:key.User?.Person?.phone,
+        Horas_de_dedicación:key.hours_of_dedication,
+        Escalafon:key.Scale?.name,
+        Categoria_de_Colciencia:key.ColcienciaCategory?.name
+      })
+    }
+  }else{
   for (const key of this.teachers) {
     array.push({ 
       id: key.id,
@@ -101,6 +114,7 @@ export class ShowTeacherComponent implements OnInit {
       Categoria_de_Colciencia:key.ColcienciaCategory?.name
     })
   }
+}
     import("xlsx").then(xlsx => {
         const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
@@ -147,6 +161,27 @@ export class ShowTeacherComponent implements OnInit {
             body.push(row);
         }
     }
+
+    if(this.selectedProducts.length > 0){
+      for (const key in this.selectedProducts) {
+        if (this.selectedProducts.hasOwnProperty(key))
+        {
+            var data = this.selectedProducts[key];
+            var row:any[] = [
+              data.User?.Person?.identification.toString(),
+              data.User?.fullName.toString(),
+              data.User?.email.toString(),
+              data.User?.Person?.phone?.toString(),
+              data.hours_of_dedication.toString(),
+              data.Scale?.name.toString(),
+              data.ColcienciaCategory?.name?.toString()
+          
+            ]
+            body.push(row);
+            
+        }
+      }
+    }else{
     for (var key in this.rows2) 
     {
         if (this.rows2.hasOwnProperty(key))
@@ -165,6 +200,7 @@ export class ShowTeacherComponent implements OnInit {
             body.push(row);
         }
     }
+  }
   
     const pdfDefinition: any = {
       pageOrientation: 'landscape',
@@ -193,7 +229,7 @@ export class ShowTeacherComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '15%', '15%','15%','15%','15%','10','10%'],
+              widths: [ '15%', '15%','15%','15%','15%','10%','10%'],
   
               body: body
           },

@@ -73,6 +73,18 @@ export class ShowStudentComponent implements OnInit {
 
   exportExcel() {
     let array:any[] = [];
+    if(this.selectedProducts.length > 0){
+      for (const key of this.selectedProducts) {
+        array.push({ 
+          id: key.id,
+          Nombre_Completo:key.User?.fullName,
+          Identificacion:key.User?.Person?.identification,
+          Correo_Electronico:key.User?.email,
+          Telefono:key.User?.Person?.phone,
+          Genero:key.User?.Person?.Gender?.name,
+        })
+      }
+    }else{
     for (const key of this.students) {
       array.push({ 
         id: key.id,
@@ -83,6 +95,7 @@ export class ShowStudentComponent implements OnInit {
         Genero:key.User?.Person?.Gender?.name,
       })
     }
+  }
       import("xlsx").then(xlsx => {
           const worksheet = xlsx.utils.json_to_sheet(array);
           const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
@@ -123,23 +136,42 @@ export class ShowStudentComponent implements OnInit {
               body.push(row);
           }
       }
-      for (var key in this.rows2) 
-      {
-          if (this.rows2.hasOwnProperty(key))
+
+      if(this.selectedProducts.length > 0){
+        for (const key in this.selectedProducts) {
+          if (this.selectedProducts.hasOwnProperty(key))
           {
-              var data = this.rows2[key];
+              var data = this.selectedProducts[key];
               var row:any[] = [
                 data.User?.Person?.identification.toString(),
                 data.User?.fullName.toString(),
                 data.User?.email.toString(),
                 data.User?.Person?.phone?.toString(),
                 data.User?.Person?.Gender?.name.toString(),
+            
+              ]
+              body.push(row);
+              
+          }
+        }
+      }else{
+      for (var key in this.rows2) 
+      {
+          if (this.rows2.hasOwnProperty(key))
+          {
+              var data1 = this.rows2[key];
+              var row:any[] = [
+                data1.User?.Person?.identification.toString(),
+                data1.User?.fullName.toString(),
+                data1.User?.email.toString(),
+                data1.User?.Person?.phone?.toString(),
+                data1.User?.Person?.Gender?.name.toString(),
               ]
     
               body.push(row);
           }
       }
-    
+      }
       const pdfDefinition: any = {
         pageOrientation: 'landscape',
         footer: {
