@@ -113,6 +113,26 @@ export class MostrarUsersComponent implements OnInit {
               body.push(row);
           }
       }
+      if(this.selectedProducts.length > 0){
+        for (const key in this.selectedProducts) {
+          if (this.selectedProducts.hasOwnProperty(key))
+          {
+              var data = this.selectedProducts[key];
+              var row:any[] = [
+                data.id?.toString(),
+                data.name.toString(),
+                data.surname.toString(),
+                data.identification.toString(),
+                data.User?.email?.toString(),
+                data.phone.toString(),
+                data.address.toString(),
+                data.Gender?.name?.toString(),
+              ]
+              body.push(row);
+              
+          }
+        }
+      }else{
       for (var key in this.rows2) 
       {
           if (this.rows2.hasOwnProperty(key))
@@ -132,6 +152,7 @@ export class MostrarUsersComponent implements OnInit {
               body.push(row);
           }
       }
+    }
     
       const pdfDefinition: any = {
         pageOrientation: 'landscape',
@@ -177,6 +198,20 @@ export class MostrarUsersComponent implements OnInit {
     }
     exportExcel() {
       let array:any[] = [];
+      if(this.selectedProducts.length > 0){
+        for (const key of this.selectedProducts) {
+          array.push({ 
+            id: key.id,
+            Nombre:key.name,
+            Apellido:key.surname,
+            Identificacion:key.identification,
+            Correo_Electronico:key.User?.email,
+            Telefono:key.phone,
+            Direccion:key.address,
+            Genero:key.Gender?.name,
+          })
+        }
+      }else{
       for (const key of this.users) {
         array.push({ 
           id: key.id,
@@ -189,6 +224,7 @@ export class MostrarUsersComponent implements OnInit {
           Genero:key.Gender?.name,
         })
       }
+    }
       import("xlsx").then(xlsx => {
           const worksheet = xlsx.utils.json_to_sheet(array);
           const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };

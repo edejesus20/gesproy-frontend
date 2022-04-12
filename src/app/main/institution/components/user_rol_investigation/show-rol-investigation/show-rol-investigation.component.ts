@@ -69,12 +69,21 @@ export class ShowRolInvestigationComponent implements OnInit {
     }
     exportExcel() {
       let array:any[] = [];
+      if(this.selectedProducts.length > 0){
+        for (const key of this.selectedProducts) {
+          array.push({ 
+            id: key.id,
+            Nombre:key.name,
+          })
+        }
+      }else{
       for (const key of this.roles) {
         array.push({ 
           id: key.id,
           Nombre:key.name,
         })
       }
+    }
       import("xlsx").then(xlsx => {
           const worksheet = xlsx.utils.json_to_sheet(array);
           const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
@@ -125,7 +134,20 @@ export class ShowRolInvestigationComponent implements OnInit {
                 body.push(row);
             }
         }
-    
+        if(this.selectedProducts.length > 0){
+          for (const key in this.selectedProducts) {
+            if (this.selectedProducts.hasOwnProperty(key))
+            {
+                var data = this.selectedProducts[key];
+                var row:any[] = [
+                  data.id?.toString(),
+                  data.name.toString()
+                ]
+                body.push(row);
+                
+            }
+          }
+        }else{
         for (var key in this.rows2) {
             if (this.rows2.hasOwnProperty(key))
             {
@@ -138,6 +160,7 @@ export class ShowRolInvestigationComponent implements OnInit {
                 
             }
         }
+      }
       
         const pdfDefinition: any = {
           // pageOrientation: 'landscape',

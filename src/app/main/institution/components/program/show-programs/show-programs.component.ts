@@ -103,6 +103,23 @@ Buscar(event: Event, dt1:any){
             body.push(row);
         }
     }
+    if(this.selectedProducts.length > 0){
+      for (const key in this.selectedProducts) {
+        if (this.selectedProducts.hasOwnProperty(key))
+        {
+            var data = this.selectedProducts[key];
+            var row:any[] = [
+              data.name.toString(),
+              data.Faculty?.name.toString(),
+              data.Faculty?.Administrative?.User?.fullName.toString()
+              ,data.Category?.name.toString(),
+              data.createdAt?.toString()
+            ]
+            body.push(row);
+            
+        }
+      }
+    }else{
     for (var key in this.rows2) 
     {
         if (this.rows2.hasOwnProperty(key))
@@ -113,11 +130,13 @@ Buscar(event: Event, dt1:any){
               data.Faculty?.name.toString(),
               data.Faculty?.Administrative?.User?.fullName.toString()
               ,data.Category?.name.toString(),
-              data.createdAt?.toString()]
+              data.createdAt?.toString()
+            ]
   
             body.push(row);
         }
     }
+  }
   
     const pdfDefinition: any = {
   
@@ -164,6 +183,17 @@ Buscar(event: Event, dt1:any){
 
   exportExcel() {
     let array:any[] = [];
+    if(this.selectedProducts.length > 0){
+      for (const key of this.selectedProducts) {
+        array.push({ 
+          id: key.id,
+          Nombre_Completo:key.name,
+          Facultad:key.Faculty?.name,
+          Decanatura:key.Faculty?.Administrative?.User?.fullName,
+          Categoria:key.Category?.name
+        })
+      }
+    }else{
     for (const key of this.programs) {
       array.push({ 
         id: key.id,
@@ -173,6 +203,7 @@ Buscar(event: Event, dt1:any){
         Categoria:key.Category?.name
       })
     }
+  }
     import("xlsx").then(xlsx => {
         const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };

@@ -1,21 +1,39 @@
 <ng-template [ngIf]="isLoggedIn === true">
 
         <!-- <p-menubar [model]="items2" [style]="{'background-color':'#f16357''}"> -->
-          <p-menubar [model]="items2" [style]="{'background-color':'#f16357'}">
+          <p-menubar [model]="items2" 
+          
+          [style]="{'background':'#f16357',
+    'color':'#fff','font-weight':'bold',
+    'border':'1px solid #f16357','border-radius':'0px'}">
             <ng-template pTemplate="start">
-                <p-button styleClass="p-button-outlined" (click)="display = true" class="mr-3">
+                <p-button styleClass="p-button-outlined  p-button-warning" (click)="display = true" class="mr-3">
                   <i class="pi pi-align-justify"  style="font-size: 1.5rem; margin-top: 5px;color:black"></i>
                     <!-- <img alt="logo" src="assets/avatars-avataaars.png" style="width: 1.5rem"/> -->
                     <span class="ml-2 font-bold" style="color:#FBC02D">GESPROY - UNIGUAJIRA</span>
                 </p-button>
             </ng-template>
             <ng-template pTemplate="end">
-              <button type="button" pButton pRipple 
-              class="p-button-rounded p-button-text"
-               icon="pi pi-plus" (click)="menu.toggle($event)">
-                <p-avatar image="assets/avatars-avataaars.png" 
-                styleClass="ml-3" size="large" shape="circle"></p-avatar>
-              </button>
+              <!-- <button  pButton pRipple type="button" style="margin-right: 10px;" class="p-button-outlined p-button-rounded p-button-danger"(click)="cerrarSesion()">
+                <i class="pi pi-power-off"  style="font-size: 1rem;margin-right: 10px;"></i>
+               Cerrar Sesion 
+                </button>  -->
+                <button type="button" pButton pRipple 
+                class="p-button-rounded p-button-text mr-2"
+                 icon="pi pi-plus" (click)="menu.toggle($event)">
+                  <p-avatar image="assets/avatars-avataaars.png" 
+                  styleClass="ml-3" size="large" shape="circle"></p-avatar>
+                </button>
+                <button pButton pRipple type="button"  [disabled]="true"
+                class="p-button-outlined  p-button-warning"
+                style="padding: 7px;">
+               <div class="clock" style="color:#FBC02D;font-weight:bold">
+                 {{dia | titlecase}} - {{fecha | titlecase}} [
+                    <span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span>
+                 <span class="ampm"> {{ampm}}</span> ]
+               </div>
+                 </button> 
+             
             <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'140px','margin-top':'10px'}"></p-menu>
               
 

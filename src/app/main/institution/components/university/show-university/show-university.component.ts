@@ -79,6 +79,16 @@ export class ShowUniversityComponent implements OnInit {
 
 exportExcel() {
   let array:any[] = [];
+  if(this.selectedProducts.length > 0){
+    for (const key of this.selectedProducts) {
+      array.push({ 
+      id: key.id,
+      Nombre_Completo:key.name,
+      Nit:key.nit,
+      Direccion:key.addres,
+      })
+    }
+  }else{
   for (const key of this.universitys) {
     array.push({ 
       id: key.id,
@@ -87,6 +97,7 @@ exportExcel() {
       Direccion:key.addres,
     })
   }
+}
   import("xlsx").then(xlsx => {
       const worksheet = xlsx.utils.json_to_sheet(array);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
@@ -124,16 +135,33 @@ async gerenratePdf(){
           body.push(row);
       }
   }
+
+  if(this.selectedProducts.length > 0){
+    for (const key in this.selectedProducts) {
+      if (this.selectedProducts.hasOwnProperty(key))
+      {
+          var data = this.selectedProducts[key];
+          var row:any[] = [
+            data.name.toString(),data.nit.toString(),data.addres.toString(),data.createdAt?.toString()
+          ]
+          body.push(row);
+          
+      }
+    }
+  }else{
   for (var key in this.rows2) 
   {
       if (this.rows2.hasOwnProperty(key))
       {
           var data = this.rows2[key];
-          var row:any[] = [data.name.toString(),data.nit.toString(),data.addres.toString(),data.createdAt?.toString()]
+          var row:any[] = [
+            data.name.toString(),data.nit.toString(),data.addres.toString(),data.createdAt?.toString()
+          ]
 
           body.push(row);
       }
   }
+}
 
   const pdfDefinition: any = {
 

@@ -99,6 +99,20 @@ export class ShowFacultiesComponent implements OnInit {
             body.push(row);
         }
     }
+    if(this.selectedProducts.length > 0){
+      for (const key in this.selectedProducts) {
+        if (this.selectedProducts.hasOwnProperty(key))
+        {
+            var data = this.selectedProducts[key];
+            var row:any[] = [
+              data.name.toString(),data.Administrative?.User?.fullName.toString(),
+              data.University?.name.toString(),data.createdAt?.toString()
+            ]
+            body.push(row);
+            
+        }
+      }
+    }else{
     for (var key in this.rows2) 
     {
         if (this.rows2.hasOwnProperty(key))
@@ -110,6 +124,7 @@ export class ShowFacultiesComponent implements OnInit {
             body.push(row);
         }
     }
+  }
   
     const pdfDefinition: any = {
   
@@ -157,6 +172,17 @@ export class ShowFacultiesComponent implements OnInit {
 
   exportExcel() {
     let array:any[] = [];
+    if(this.selectedProducts.length > 0){
+      for (const key of this.selectedProducts) {
+        array.push({ 
+          id: key.id,
+          Nombre_Completo:key.name,
+          Decanatura:key.Administrative?.User?.fullName,
+          University:key.University?.name
+        })
+      }
+    }else{
+
     for (const key of this.faculties) {
       array.push({ 
         id: key.id,
@@ -165,6 +191,7 @@ export class ShowFacultiesComponent implements OnInit {
         University:key.University?.name
       })
     }
+  }
     import("xlsx").then(xlsx => {
         const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };

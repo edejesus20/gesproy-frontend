@@ -74,6 +74,17 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
   
   exportExcel() {
   let array:any[] = [];
+  if(this.selectedProducts.length > 0){
+    for (const key of this.selectedProducts) {
+      array.push({ 
+        id: key.id,
+      Nombre_Completo:key.User?.fullName,
+      Identificacion:key.User?.Person?.identification,
+      Correo_Electronico:key.User?.email,
+      Telefono:key.User?.Person?.phone,
+      })
+    }
+  }else{
   for (const key of this.investigatorCollaborators) {
     array.push({ 
       id: key.id,
@@ -82,6 +93,7 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
       Correo_Electronico:key.User?.email,
       Telefono:key.User?.Person?.phone,
     })
+  }
   }
     import("xlsx").then(xlsx => {
         const worksheet = xlsx.utils.json_to_sheet(array);
@@ -124,6 +136,22 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
             body.push(row);
         }
     }
+    if(this.selectedProducts.length > 0){
+      for (const key in this.selectedProducts) {
+        if (this.selectedProducts.hasOwnProperty(key))
+        {
+            var data = this.selectedProducts[key];
+            var row:any[] = [
+              data.User?.Person?.identification.toString(),
+              data.User?.fullName.toString(),
+              data.User?.email.toString(),
+              data.User?.Person?.phone?.toString(),
+            ]
+            body.push(row);
+            
+        }
+      }
+    }else{
     for (var key in this.rows2) 
     {
         if (this.rows2.hasOwnProperty(key))
@@ -139,7 +167,7 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
             body.push(row);
         }
     }
-  
+    }
     const pdfDefinition: any = {
       pageOrientation: 'landscape',
       footer: {

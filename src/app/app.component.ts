@@ -5,11 +5,12 @@ import { createMenu } from './consts/menu';
 import { AnonimoService } from './core/services/auth/anonimo.service';
 import { AuthService } from './core/services/auth/auth.service';
 import { listaMenuI } from './models/menu';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { UserService } from './core/services/usuarios/user.service';
 import { Router } from '@angular/router';
 import { UserLoginI } from './models/authorization/usr_User';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
+import { valorReloj, XsegundoService } from './core/services/reloj/Xsegundo.service';
 const translate = require('translate');
 interface menu{
     label:string,
@@ -45,17 +46,32 @@ export class AppComponent {
   public  password: string | undefined=undefined
 
   public files1:menu[]=[]
-
+  datos$: Observable<valorReloj>=this.segundo.getInfoReloj();
+  hora?: number=0;
+  minutos?: string='';
+  dia?: string='';
+  fecha?: string='';
+  ampm?: string='';
+  segundos?: string='';
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
     private anonimoService: AnonimoService,
     private authService: AuthService, 
     private userService:UserService,
-    private router:Router,) {}
+    private router:Router,
+    private segundo: XsegundoService) {}
 
   ngOnInit() {
-
+    this.datos$=this.segundo.getInfoReloj();
+    this.datos$.subscribe(x => {
+      this.hora = x.hora;
+      this.minutos = x.minutos;
+      this.dia = x.diadesemana;
+      this.fecha = x.diaymes;
+      this.ampm = x.ampm;
+      this.segundos = x.segundo
+    });
     this.files1=
         [
             {
