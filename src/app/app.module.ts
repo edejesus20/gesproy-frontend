@@ -47,6 +47,8 @@ import { SharedModule } from './modules/shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { UserService } from './core/services/usuarios/user.service';
+import { CarouselModule } from 'primeng/carousel';
+import {GalleriaModule} from 'primeng/galleria';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +92,9 @@ import { UserService } from './core/services/usuarios/user.service';
     SharedModule,
     // VirtualScrollerModule,
     TableModule
-    ,KeyFilterModule
+    ,KeyFilterModule,
+    CarouselModule,
+    GalleriaModule,
     
     
   ],

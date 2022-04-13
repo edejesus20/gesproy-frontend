@@ -141,11 +141,34 @@
     </div>
     
     <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
-        <p-dialog [(visible)]="displayMaximizable" [modal]="true" [style]="{'width': '35vw'}" 
-        [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
-            >
-            
-            <div [style]="{'margin-top':'-1px'}" >
+        <p-dialog [(visible)]="displayMaximizable" [modal]="true" [style]="{'width': '70vw','text-align': 'center','background':'#333333'}" 
+        [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+        <p-header >
+          <span style="padding-left: 200px;">SISTEMA PARA LA GESTIÓN DE LA INVESTIGACIÓN (GESPROY)</span>
+    </p-header>  
+        <div class="grid">
+              <div class="col-12 sm:col-12 md:col-7 lg:col-7 xl:col-8"  style="padding-top:-20px">
+                <p-galleria [value]="images" 
+                [responsiveOptions]="responsiveOptions" 
+                [containerStyle]="{'max-width': '640px'}" [numVisible]="1"
+                [circular]="false" [showItemNavigators]="true" [showThumbnails]="false" 
+                [autoPlay]="true" [transitionInterval]="3000"
+                [showIndicators]="false" [showItemNavigatorsOnHover]="false"
+                [showIndicatorsOnItem]="false"> 
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="item.imagen" style="width: 100%; " />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="grid grid-nogutter justify-content-center">
+                        <img [src]="item.thumbnailImageSrc" style="display: block;" />
+                    </div>
+                </ng-template>
+              </p-galleria>
+              </div>
+          
+            <div class="col-12 sm:col-12 md:col-5 lg:col-5 xl:col-4" style="padding: 20px;">
+              <p-avatar image="/assets/img/logo-uniguajira.png" styleClass="mr-2 mt-3"  shape="circle" size="xlarge"></p-avatar> 
+              <div [style]="{'margin-top':'-1px'}" >
                 <div fxLayout="row" class="titleCard">
                     <i class="pi pi-shield" style="font-size: 2rem;margin-right: 10px;"></i>
                   <h2 class="fondebabutton" style="margin-top: -1px;">Inicio de sesión</h2>
@@ -161,12 +184,15 @@
 
             </div>
                     
-                <ng-template pTemplate="footer">
-                    <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+               
+            <div fxLayout="row" class="titleCard "style="margin-top: 35px;">
                     <p-button type="submit"  icon="pi pi-check" label="Entrar" styleClass="mr-2"></p-button>
                     <p-button (click)="displayMaximizable=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
                 </div>
-                </ng-template>
+               
+            </div>
+          </div>
+
                 
                     
         </p-dialog>

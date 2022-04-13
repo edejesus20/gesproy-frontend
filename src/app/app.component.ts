@@ -40,7 +40,7 @@ export class AppComponent {
   public nombre:string = '';
   public subcribe:any;
   public token: string | null=null;
-  public displayMaximizable:boolean =false
+  public displayMaximizable:boolean =true
   public mostrar:boolean =false;
   public username: string | undefined=undefined
   public  password: string | undefined=undefined
@@ -53,6 +53,51 @@ export class AppComponent {
   fecha?: string='';
   ampm?: string='';
   segundos?: string='';
+
+
+  public images: any[]=[
+    
+    {
+        "imagen": "assets/images/fondo2.jpg",
+        "thumbnailImageSrc": "assets/images/fondo2.jpg",
+        "alt": "Description for Image 5",
+        "title": "Title 5"
+    },
+    {
+      "imagen": "assets/images/bloque2.jpg",
+      "thumbnailImageSrc": "assets/images/bloque2.jpg",
+      "alt": "Description for Image 3",
+      "title": "Title 3"
+  },
+     {
+      "imagen": "assets/images/bloque.jpg",
+      "thumbnailImageSrc": "assets/images/bloque.jpg",
+      "alt": "Description for Image 3",
+      "title": "Title 3"
+  },
+    
+];
+
+public responsiveOptions:any[] = [
+   {
+       breakpoint: '1024px',
+       numVisible: 5
+   },
+   {
+       breakpoint: '768px',
+       numVisible: 3
+   },
+   {
+       breakpoint: '560px',
+       numVisible: 1
+   }
+];
+
+
+
+
+
+
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
@@ -63,104 +108,101 @@ export class AppComponent {
     private segundo: XsegundoService) {}
 
   ngOnInit() {
-    this.datos$=this.segundo.getInfoReloj();
-    this.datos$.subscribe(x => {
-      this.hora = x.hora;
-      this.minutos = x.minutos;
-      this.dia = x.diadesemana;
-      this.fecha = x.diaymes;
-      this.ampm = x.ampm;
-      this.segundos = x.segundo
-    });
-    this.files1=
-        [
-            {
-                "label": "Pictures",
-                "data": "Pictures Folder",
-                "expandedIcon": "pi pi-folder-open",
-                "collapsedIcon": "pi pi-folder",
-                "children": [
-                    {"label": "barcelona.jpg", "icon": "pi pi-image", "data": "Barcelona Photo"},
-                    {"label": "logo.jpg", "icon": "pi pi-image", "data": "PrimeFaces Logo"},
-                    {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
-            },
+        this.datos$=this.segundo.getInfoReloj();
+        this.datos$.subscribe(x => {
+          this.hora = x.hora;
+          this.minutos = x.minutos;
+          this.dia = x.diadesemana;
+          this.fecha = x.diaymes;
+          this.ampm = x.ampm;
+          this.segundos = x.segundo
+        });
+        this.files1=
+            [
+                {
+                    "label": "Pictures",
+                    "data": "Pictures Folder",
+                    "expandedIcon": "pi pi-folder-open",
+                    "collapsedIcon": "pi pi-folder",
+                    "children": [
+                        {"label": "barcelona.jpg", "icon": "pi pi-image", "data": "Barcelona Photo"},
+                        {"label": "logo.jpg", "icon": "pi pi-image", "data": "PrimeFaces Logo"},
+                        {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
+                },
 
         ]
-    
-
-
-    var token :string | null= localStorage.getItem('token');
-    var user :string | null= localStorage.getItem('user');
-    // var menu :string | null= localStorage.getItem('menu');
-    if(token!=null && user!=null){
-        this.showSuccess()
-      let userObjeto:any = JSON.parse(user); 
-      // let menuObjeto:any = JSON.parse(menu); 
-      let userLoginResponse={
-        user:userObjeto,
-        token:token,
-      }
-      this.isLoggedIn=true
-      this.setLogin(true) 
-            this.subcribe=this.authService.getMenu2(userLoginResponse).subscribe((mainSesion)=>{
-              
-                this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
-                  if(user.user.User?.fullName){
-                    this.nombre = user.user.User?.fullName
-                  }     
-                })
-                  this.privateMenu=createMenu(mainSesion.mainSesion) as any;
-                  this.menu = this.privateMenu;
+        var token :string | null= localStorage.getItem('token');
+        var user :string | null= localStorage.getItem('user');
+        // var menu :string | null= localStorage.getItem('menu');
+      if(token!=null && user!=null){
+          this.showSuccess()
+        let userObjeto:any = JSON.parse(user); 
+        // let menuObjeto:any = JSON.parse(menu); 
+        let userLoginResponse={
+          user:userObjeto,
+          token:token,
+        }
+        this.isLoggedIn=true
+        this.setLogin(true) 
+              this.subcribe=this.authService.getMenu2(userLoginResponse).subscribe((mainSesion)=>{
                 
-            })
-      }else{
-        this.isLoggedIn=false
-        forkJoin({
-          publicMenu: this.anonimoService.getMenu(),
-        }).subscribe(({ publicMenu }) => {
-          this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-  
-            this.isLoggedIn = isLoggedIn;
-            if(this.isLoggedIn){  
-              this.subcribe=this.authService.userLoginResponse$.subscribe((userLoginResponse)=>{
-                if(userLoginResponse.user.id == 0){
-            //   console.log('usuario 0')
-  
-                }
-                else{
                   this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
                     if(user.user.User?.fullName){
                       this.nombre = user.user.User?.fullName
                     }     
                   })
-                  
-                  this.authService.getMenu2(userLoginResponse).subscribe((mainSesion)=>{
-                   this.confirm()
                     this.privateMenu=createMenu(mainSesion.mainSesion) as any;
                     this.menu = this.privateMenu;
-                   }) 
                   
-                   
-                }
               })
-              console.log(this.nombre)
-              this.messageService.add({severity:'success', summary: 'Success',
-               detail: `Bienvenido ${this.nombre}`});
-        
-            }else{
-              // var token :string | null= localStorage.getItem('token');
-              // if(token!=null){
-              //   this.router.navigateByUrl('/dashboard')
-              // }else{
-                console.log('menu-public')
-                this.publicMenu = createMenu(publicMenu.mainDefault) as any;
-                this.menu = this.publicMenu;
-              // }
-  
-            }
-          });
-        })
-      }
+        }else{
+          this.isLoggedIn=false
+          forkJoin({
+            publicMenu: this.anonimoService.getMenu(),
+          }).subscribe(({ publicMenu }) => {
+            this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+    
+              this.isLoggedIn = isLoggedIn;
+              if(this.isLoggedIn){  
+                this.subcribe=this.authService.userLoginResponse$.subscribe((userLoginResponse)=>{
+                  if(userLoginResponse.user.id == 0){
+              //   console.log('usuario 0')
+    
+                  }
+                  else{
+                    this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
+                      if(user.user.User?.fullName){
+                        this.nombre = user.user.User?.fullName
+                      }     
+                    })
+                    
+                    this.authService.getMenu2(userLoginResponse).subscribe((mainSesion)=>{
+                    this.confirm()
+                      this.privateMenu=createMenu(mainSesion.mainSesion) as any;
+                      this.menu = this.privateMenu;
+                    }) 
+                    
+                    
+                  }
+                })
+                console.log(this.nombre)
+                this.messageService.add({severity:'success', summary: 'Success',
+                detail: `Bienvenido ${this.nombre}`});
+          
+              }else{
+                // var token :string | null= localStorage.getItem('token');
+                // if(token!=null){
+                //   this.router.navigateByUrl('/dashboard')
+                // }else{
+                  console.log('menu-public')
+                  this.publicMenu = createMenu(publicMenu.mainDefault) as any;
+                  this.menu = this.publicMenu;
+                // }
+    
+              }
+            });
+          })
+        }
 
 
       this.primengConfig.ripple = true;
@@ -187,18 +229,20 @@ export class AppComponent {
                 {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
             ]
         }
-    ];
-    this.items = [
-      {label: 'Update', icon: 'pi pi-refresh', command: () => {
-          this.update();
-      }},
-      { label: 'Delete', icon: 'pi pi-times', command: () => {this.delete();}},
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io'},
-      {separator: true},
-      {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
-  ];
+      ];
+      this.items = [
+        {label: 'Update', icon: 'pi pi-refresh', command: () => {
+            this.update();
+        }},
+        { label: 'Delete', icon: 'pi pi-times', command: () => {this.delete();}},
+        { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io'},
+        {separator: true},
+        {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
+      ];
     
   }
+
+  
 
   ocultarMenu(boolean: boolean){
     this.display=boolean

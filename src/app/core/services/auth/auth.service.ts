@@ -137,8 +137,8 @@ export class AuthService {
   }
   public getToken(): Observable<boolean> | boolean {
     let fechanueva:string | undefined =localStorage.getItem('fecha')?.replace(/["]/g, '');
-    let a = moment(moment(fechanueva).format("DD-MM-YYYY"));
-    let b = moment(moment().format("DD-MM-YYYY"));
+    let a = moment(moment(fechanueva).format("YYYY-MM-DD"));
+    let b = moment(moment().format("YYYY-MM-DD"));
     let algo: number = b.diff(a, 'days');
     if(algo == 0){
     var token :string | null= JSON.stringify(localStorage.getItem('token'));
