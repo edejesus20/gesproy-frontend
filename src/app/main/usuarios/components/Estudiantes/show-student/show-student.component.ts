@@ -51,6 +51,7 @@ export class ShowStudentComponent implements OnInit {
   getUniversitys() {
     this.studentService.getList().subscribe((instititionsFromApi) => {
       this.students =instititionsFromApi.students;
+      console.log(instititionsFromApi.students)
       this.rows2=[]
       if(instititionsFromApi.students != undefined){
         for (const key of instititionsFromApi.students) {
