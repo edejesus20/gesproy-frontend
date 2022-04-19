@@ -21,7 +21,7 @@
     /* border-radius: 13px; */
     padding: 20px;
     box-shadow: 7px 8px 19px 0px #00000047;
-    background-image: url('../assets/images/fondo2.jpg');
+    /* background-image: url('../assets/images/fondo2.jpg'); */
       /* background: linear-gradient(0deg, rgba(51,102,0,1) 0%, rgba(34,193,195,0.5578606442577031) 100%); */
       background-size: cover;
   }

@@ -1,7 +1,8 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <ng-template [ngIf]="mostrarDialogo == false">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
-  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+  <br>
       
       <div [style]="{'margin-top':'-1px'}" >
           <div fxLayout="row" class="titleCard">

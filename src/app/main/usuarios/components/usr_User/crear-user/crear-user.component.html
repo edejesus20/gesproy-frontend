@@ -3,7 +3,8 @@
     <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
     <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}" [closable]="true" [closeOnEscape]="false" 
-        >
+    [showHeader]="false"   >
+    <br>
       <div [style]="{'margin-top':'-1px'}" >
           <div fxLayout="row" class="titleCard">
               <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>

@@ -1,9 +1,10 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
-
+  
   [closable]="false" [closeOnEscape]="false" 
-      >
+  [showHeader]="false"   >
+      <br>
       
       <div [style]="{'margin-top':'-1px'}" >
           <div fxLayout="row" class="titleCard">
@@ -12,7 +13,7 @@
           </div>
           <ng-template [ngIf]="mostrarUser == false">
 
-            <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px">
+            <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px;text-align: center">
               <button pButton type="button" (click)="mostrarUser=true" 
               class="p-button-success p-button-raised p-button-rounded"
                label="Add Usuario"></button>  
@@ -38,7 +39,7 @@
           </ng-template>
 
           <ng-template [ngIf]="mostrarUser == true">
-            <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px">
+            <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px;text-align: center;">
               <button pButton type="button" (click)="mostrarUser=false"
               class="p-button-info p-button-raised p-button-rounded"
                label="Volver"></button>  

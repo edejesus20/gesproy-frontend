@@ -7,7 +7,8 @@
   
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '75vw','height': '80vw'}" 
-  [contentStyle]="{'overflow-y': 'auto'}" [closable]="false" [closeOnEscape]="false" >
+  [contentStyle]="{'overflow-y': 'auto'}" [closable]="false" [closeOnEscape]="false"   [showHeader]="false"   >
+  <br>
       
       <div [style]="{'margin-top':'-1px'}" >
         <div fxLayout="row" class="titleCard">
@@ -96,6 +97,7 @@
                   <div class="field">
                     <label for="name"style="font-weight: bold;">GENERO</label>
                     <div class="flex">
+                      <div style="width:100%">
                       <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                       [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
                         [style]="{'width':'100%'}" 
@@ -105,6 +107,7 @@
                           <span >{{option.name }}</span>
                       </ng-template>
                       </p-dropdown>
+                      </div>
                       <span class="bottomdelete" style="margin-top: -35px;">
                         <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                         class="p-button-rounded p-button-outlined" (click)="addGenero($event)" ></button>
@@ -120,6 +123,7 @@
                 <div class="field">
                   <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label>
                   <div class="flex">
+                    <div style="width:100%">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="documentTypes" [filter]="true"
                     name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
@@ -130,6 +134,7 @@
                       <span >{{option.name}}</span>
                   </ng-template>
                   </p-dropdown>
+                    </div>
                   <span class="bottomdelete" style="margin-top: -35px;">
                     <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                     class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
@@ -212,7 +217,7 @@
               </div>
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="grupo"> 
-                  <div >
+                  <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                     [options]="scales" [filter]="true"
                       name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
@@ -236,7 +241,7 @@
             <div class="grid p-fluid">
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="grupo"> 
-                  <div >
+                  <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                     [options]="linkTypes" [filter]="true"
                       name="LinkTypeId" formControlName="LinkTypeId" label="SELECCIONE VINCULACION" 
@@ -261,7 +266,7 @@
   
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="grupo"> 
-                  <div >
+                  <div style="width:100%">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="colcienciaCategorys" [filter]="true"
                 name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
@@ -323,7 +328,7 @@
                               </div>
                               <div class="grupoinput2">
                               <div class="grupo">
-                                <div>
+                                <div style="width:100%">
                                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                   [options]="relationships" [filter]="true"
                                       formControlName="RelationshipId" name="RelationshipId"
@@ -423,7 +428,7 @@
                                   </div>
                                   <div class="col-12 md:col-4 lg:col-4">
                                     <div class="flex">
-                                     
+                                      <div style="width:100%">
                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                         [options]="trainings" [filter]="true"
                                             formControlName="TrainingId" name="TrainingId"
@@ -437,7 +442,7 @@
                                               </span>
                                         </ng-template>
                                         </p-dropdown>
-                                     
+                                      </div>
                                       <span class="bottomdelete" style="margin-top: -25px;">
                                         <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                                         class="p-button-rounded p-button-outlined" (click)="addCapacitaciones($event)" ></button>

@@ -84,14 +84,14 @@
 
 
   <ng-template [ngIf]="isLoggedIn === false">
-    <p-menubar  >
+    <!-- <p-menubar  >
         <ng-template pTemplate="start" >
             <a routerLink="/landing" class="logo">
                 <img alt="logo" src="assets/images/logo-uniguajira.png" style="width: 7.5rem;  padding-top: 4px;" 
                 styleClass="p-button-outlined"
-                class="mr-3"/><!-- (click)="display = true"  -->
+                class="mr-3"/>
             </a>
-                <!-- <span class="ml-2 font-bold">PrimeNG</span> -->
+    
            
         </ng-template>
         <ng-template pTemplate="end" >
@@ -105,40 +105,17 @@
                 <span class="ml-2 font-bold">Login</span>
             </button>
         </ng-template>            
-    </p-menubar>
+    </p-menubar> -->
 
-<div class="container margen"> 
+<!-- <div class="container margen"> 
     
     <div class="content2">
       
         <router-outlet></router-outlet>
    
-        <section class="redes_sociales container-fluid">
-          <div class="container">
-            <div class="row">
-                <div class="span12">
-                  
-                <ul class="nav " id="redes_sociales">
-                <li class="item-616">	
-                  <a class="twitter" href="https://twitter.com/UniLaGuajira" 
-                  target="_blank" title="Síguenos en Twitter">Twitter</a>
-                </li>
-                  <li class="item-617">	
-                    <a class="facebook" href="https://www.facebook.com/Universidad-de-La-Guajira-422758191075433/" target="_blank" title="Síguenos en Facebook">Facebook</a>
-                  </li>
-                    <li class="item-618">	
-                      <a class="instagram" href="https://www.instagram.com/uniguajira_/" target="_blank" title="Síguenos en Instagram">Instagram</a>
-                    </li>
-                      <li class="item-619">	
-                        <a class="youtube" href="https://www.youtube.com/user/UniLaGuajira" target="_blank" title="Síguenos en YouTube">YouTube</a>
-                    </li>
-                  </ul>
-                </div>
-            </div>
-          </div>    
-        </section>
+        
       </div>
-    </div>
+    </div> -->
     
     <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
         <p-dialog [(visible)]="displayMaximizable" [modal]="true" [style]="{'width': '70vw','text-align': 'center','background':'#333333'}" 
@@ -153,8 +130,8 @@
                 [containerStyle]="{'max-width': '640px'}" [numVisible]="1"
                 [circular]="false" [showItemNavigators]="true" [showThumbnails]="false" 
                 [autoPlay]="true" [transitionInterval]="3000"
-                [showIndicators]="false" [showItemNavigatorsOnHover]="false"
-                [showIndicatorsOnItem]="false"> 
+                [showIndicators]="true" [showItemNavigatorsOnHover]="false"
+                [showIndicatorsOnItem]="true"> 
                 <ng-template pTemplate="item" let-item>
                     <img [src]="item.imagen" style="width: 100%; " />
                 </ng-template>
@@ -192,7 +169,34 @@
                
             </div>
           </div>
-
+          
+          <p-footer>
+            <section class="redes_sociales container-fluid">
+              <div class="container">
+                <div class="row">
+                    <div class="span12">
+                      
+                    <ul class="nav " id="redes_sociales">
+                    <li class="item-616">	
+                      <a class="twitter" href="https://twitter.com/UniLaGuajira" 
+                      target="_blank" title="Síguenos en Twitter">Twitter</a>
+                    </li>
+                      <li class="item-617">	
+                        <a class="facebook" href="https://www.facebook.com/Universidad-de-La-Guajira-422758191075433/" target="_blank" title="Síguenos en Facebook">Facebook</a>
+                      </li>
+                        <li class="item-618">	
+                          <a class="instagram" href="https://www.instagram.com/uniguajira_/" target="_blank" title="Síguenos en Instagram">Instagram</a>
+                        </li>
+                          <li class="item-619">	
+                            <a class="youtube" href="https://www.youtube.com/user/UniLaGuajira" target="_blank" title="Síguenos en YouTube">YouTube</a>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+              </div>    
+            </section>
+          </p-footer>
+         
                 
                     
         </p-dialog>

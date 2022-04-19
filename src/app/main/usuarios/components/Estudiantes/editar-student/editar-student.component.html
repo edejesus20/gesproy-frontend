@@ -4,7 +4,8 @@
 <ng-template [ngIf]="tabla == false">
 <form [formGroup]="form" novalidate >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
-  [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" >
+  [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false"  [showHeader]="false"   >
+  <br>
   
         <div [style]="{'margin-top':'-1px'}" >
           <div fxLayout="row" class="titleCard">
