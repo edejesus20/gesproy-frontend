@@ -17,6 +17,7 @@ export interface StudentI {
     practicas:string
     status_seedbed?:string,
     StudentInternships?:StudentInternshipsI[]
+    SeedbedId:number
 }
 
 export interface StudentInternshipsI {

@@ -1,6 +1,10 @@
+import { TeacherI } from "../user/teacher";
+
 export interface SeedbedI {
     id?: number;
     name: string;
+    TeacherId:number
+    Teacher?:TeacherI
     SeedbedStudent?:SeedbedStudentI
 }
 

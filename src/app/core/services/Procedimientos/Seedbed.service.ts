@@ -46,9 +46,9 @@ createItem(seedbeds: SeedbedI): Observable<SeedbedI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<SeedbedI> {
+getItem(id: number): Observable<{seedbed:SeedbedI}> {
   return this.http
-    .get<SeedbedI>(this.base_path_get + '/' + id)
+    .get<{seedbed:SeedbedI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)

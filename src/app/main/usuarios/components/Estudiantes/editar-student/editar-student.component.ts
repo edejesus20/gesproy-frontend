@@ -16,6 +16,8 @@ import { StudentInternshipsI } from 'src/app/models/user/student';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { SeedbedI } from 'src/app/models/institution/seedbed';
+import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
 @Component({
   selector: 'app-editar-student',
   templateUrl: './editar-student.component.html',
@@ -38,8 +40,10 @@ export class EditarStudentComponent implements OnInit {
   public headquarterProgram: any[]=[]
   public headquarterProgramStudent1:any[]=[]
   public ref:any;
+  public seedbeds:SeedbedI[] =[]
   constructor(
     public dialogService: DialogService,
+    private seedbedService:SeedbedService,
 
     private primengConfig: PrimeNGConfig,
     private studentService:StudentService,
@@ -89,11 +93,17 @@ export class EditarStudentComponent implements OnInit {
         post:[''],
         functions:[''],
     })]),
+    SeedbedId:['', [Validators.required]],
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
     this.getAllheadquarters()
-
+    this.getSeedbed()
+  }
+  getSeedbed() {
+    this.seedbedService.getList().subscribe(data => {
+      this.seedbeds=data.seedbeds
+    }, error => console.error(error));
   }
 
   public onSubmit() {
@@ -114,6 +124,7 @@ export class EditarStudentComponent implements OnInit {
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
+      SeedbedId:this.form.value.SeedbedId.id,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
@@ -146,6 +157,7 @@ export class EditarStudentComponent implements OnInit {
     formValue.name != ""&&
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
+    formValue.SeedbedId != ( 0 || undefined)&&
     formValue.identification != ""&&
     formValue.GenderId != ( 0 || undefined)&&
     formValue.address != ""&&
@@ -239,7 +251,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.student.id != undefined
       ){
-      console.log(cnt_groupFromApi.student)
+      // console.log(cnt_groupFromApi.student)
         this.form.controls['id'].setValue(cnt_groupFromApi.student.id)
         if(cnt_groupFromApi.student.User?.Person != undefined
           ){
@@ -271,6 +283,20 @@ getOneCntAccount(id:number) {
         this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
           this.form.controls['GenderId'].setValue(algo.gender)
         })
+        if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
+          let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
+          if(algo?.id != undefined)
+          this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
+            this.form.controls['SeedbedId'].setValue(algo1.seedbed)
+            // console.log(this.form.controls['SeedbedId'].value)
+          })
+        }
+        
+       
+        
+      
+
+        
 
         if(cnt_groupFromApi.student.HeadquarterPrograms != undefined
           && cnt_groupFromApi.student.HeadquarterPrograms.length > 0){

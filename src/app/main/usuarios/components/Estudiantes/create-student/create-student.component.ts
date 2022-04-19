@@ -17,6 +17,8 @@ import { PersonI } from 'src/app/models/user/person';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
+import { SeedbedI } from 'src/app/models/institution/seedbed';
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
@@ -64,7 +66,7 @@ export class CreateStudentComponent implements OnInit {
       post:[''],
       functions:[''],
   })]),
-    // experienciaInvestigativa:[''],
+    SeedbedId:['', [Validators.required]],
     // areasEstudio:[''],
     // publicacionesResientes:[''],
     // practicas:['',[Validators.required]]
@@ -76,6 +78,7 @@ export class CreateStudentComponent implements OnInit {
    public mostrarUser:boolean=false;
    public users:PersonI[]=[];
    public ref:any;
+   public seedbeds:SeedbedI[] =[]
   constructor(
     private studentService:StudentService,
     private router: Router,
@@ -86,6 +89,7 @@ export class CreateStudentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
     private userService:UserService,
+    private seedbedService:SeedbedService
 
   ) { }
 
@@ -94,6 +98,12 @@ export class CreateStudentComponent implements OnInit {
     this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getAllUser()
+    this.getSeedbed()
+  }
+  getSeedbed() {
+    this.seedbedService.getList().subscribe(data => {
+      this.seedbeds=data.seedbeds
+    }, error => console.error(error));
   }
 
   getAllUser() {
@@ -123,6 +133,7 @@ export class CreateStudentComponent implements OnInit {
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
+      SeedbedId:this.form.value.SeedbedId.id,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
