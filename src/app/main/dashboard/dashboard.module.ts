@@ -84,6 +84,6 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog/dynamicdialog-config'
     FileUploadModule
   ],
   
-  providers: [DynamicDialogRef,DynamicDialogConfig]
+  // providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class DashboardModule { }

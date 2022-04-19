@@ -31,6 +31,8 @@
   </p-dialog>
 </ng-template>
 <ng-template [ngIf]="mostrarDialogo == true">
+  <br>
+  <br>
   <div [style]="{'margin-top':'-1px'}" >
     <div fxLayout="row" class="titleCard">
         <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
@@ -46,6 +48,8 @@
 </div>
 <br>
         <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+          <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
           <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
           class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
     </div>

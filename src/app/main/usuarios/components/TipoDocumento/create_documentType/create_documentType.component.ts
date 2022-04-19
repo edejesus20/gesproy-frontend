@@ -41,7 +41,9 @@ export class Create_documentTypeComponent implements OnInit {
       this.mostrarDialogo= false
     }
   }
-
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   public onSubmit() {
     let formValue: DocumentTypeI = this.form.value;
     if(formValue.name != ''){

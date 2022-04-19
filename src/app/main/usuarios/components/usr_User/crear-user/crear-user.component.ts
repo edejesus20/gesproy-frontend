@@ -10,12 +10,16 @@ import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
+import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { CrearRolComponent } from '../../usr_rol/crear-rol/crear-rol.component';
 const translate = require('translate');
 
 @Component({
   selector: 'app-crear-user',
   templateUrl: './crear-user.component.html',
-  styleUrls: ['./crear-user.component.css']
+  styleUrls: ['./crear-user.component.css'],
+  providers: [DialogService]
 })
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
@@ -41,7 +45,9 @@ export class CrearUserComponent implements OnInit {
   });
   public mostrarDialogo:boolean=false;
   
+  public ref1:any;
   constructor(
+    public dialogService: DialogService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private rolesService: RolesService,
@@ -206,6 +212,72 @@ export class CrearUserComponent implements OnInit {
             }else{
               this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
             }
+  }
+
+  addGenero(e:Event){
+    e.preventDefault()
+  
+    this.ref1 = this.dialogService.open(Create_genderComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+  
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+      this.getAllgenders()
+  
+        }
+  });
+  }
+  
+  
+  addTipoDocumento(e:Event){
+    e.preventDefault()
+  
+    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+  
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+      this.getAlldocumentTypes()
+  
+        }
+  });
+  }
+  addroles(e:Event){
+    e.preventDefault()
+  
+    this.ref1 = this.dialogService.open(CrearRolComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+  
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Rol Creado', detail: person.name,life: 2000});
+      this.getUsrRoles()
+  
+        }
+  });
   }
 
 }

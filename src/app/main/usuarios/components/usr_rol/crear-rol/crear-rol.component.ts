@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-crear-rol',
@@ -12,6 +13,7 @@ import { RoleI } from 'src/app/models/authorization/usr_roles';
   styleUrls: ['./crear-rol.component.css']
 })
 export class CrearRolComponent implements OnInit {
+  public mostrarDialogo:boolean=false;
 
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
@@ -25,17 +27,32 @@ export class CrearRolComponent implements OnInit {
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
     private rolesService: RolesService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
   ) { }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
+  }
+  public cancelar(){
+    this.ref.close(undefined);
   }
 
   public onSubmit() {
     let formValue: RoleI = this.form.value;
     if(formValue.name != ''){
     this.rolesService.createRole(formValue).subscribe(
-      () => {
+      (algo) => {
+        if(this.mostrarDialogo== true){
+          this.ref.close(algo);
+        }else{
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -54,6 +71,7 @@ export class CrearRolComponent implements OnInit {
                   clearInterval(interval); 
                  }
           }, 1000);
+        }
       },async error => {
         if(error != undefined) {
           let text = await translate(error.error.message, "es");

@@ -14,10 +14,14 @@ import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { ProgramI } from 'src/app/models/institution/program';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
+import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
+import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { DialogService } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
-  styleUrls: ['./create-student.component.css']
+  styleUrls: ['./create-student.component.css'],
+  providers: [DialogService]
 })
 export class CreateStudentComponent implements OnInit {
 
@@ -71,9 +75,11 @@ export class CreateStudentComponent implements OnInit {
 
    public mostrarUser:boolean=false;
    public users:PersonI[]=[];
+   public ref:any;
   constructor(
     private studentService:StudentService,
     private router: Router,
+    public dialogService: DialogService,
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
@@ -129,7 +135,7 @@ export class CreateStudentComponent implements OnInit {
       formValue.StudentInternship=[]
     }
 
-    console.log(formValue)
+    // console.log(formValue)
       if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
             for (const key of control.value) {
@@ -297,5 +303,48 @@ export class CreateStudentComponent implements OnInit {
         }
     }
     
+    addGenero(e:Event){
+      e.preventDefault()
   
+      this.ref = this.dialogService.open(Create_genderComponent, {
+        width: '35%',
+        height: '50%',
+        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+        baseZIndex: 10000,
+        data: {
+          id: '1'
+      },
+    });
+  
+    this.ref.onClose.subscribe((person: any) =>{
+        if (person) {
+            this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+        this.getAllgenders()
+  
+          }
+    });
+    }
+  
+  
+    addTipoDocumento(e:Event){
+      e.preventDefault()
+  
+      this.ref = this.dialogService.open(Create_documentTypeComponent, {
+        width: '35%',
+        height: '50%',
+        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+        baseZIndex: 10000,
+        data: {
+          id: '1'
+      },
+    });
+  
+    this.ref.onClose.subscribe((person: any) =>{
+        if (person) {
+            this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+        this.getAlldocumentTypes()
+  
+          }
+    });
+    }
 }

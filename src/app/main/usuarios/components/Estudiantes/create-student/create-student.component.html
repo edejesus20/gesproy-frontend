@@ -1,6 +1,6 @@
 
 <form [formGroup]="form" novalidate >
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '80vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '80vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}" [closable]="true" [closeOnEscape]="false"  [showHeader]="false"   >
   <br>
           <div [style]="{'margin-top':'-1px'}" >
@@ -71,7 +71,29 @@
               
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
-                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                  <div class="field">
+                    <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
+                    <div class="flex">
+                      <div style="width:100%">
+                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                        [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
+                          [style]="{'width':'100%'}" 
+                          optionvalue="id"  optionLabel="name" filterBy="name"
+                           placeholder="SELECCIONE GENERO" title="SELECCIONE GENERO">
+                          <ng-template let-option pTemplate="item">
+                            <span >{{option.name }}</span>
+                        </ng-template>
+                        </p-dropdown>
+                      </div>
+                      <span class="bottomdelete" style="margin-top: -35px;">
+                        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                        class="p-button-rounded p-button-outlined" (click)="addGenero($event)" ></button>
+                      </span>
+
+                    </div>
+           
+                </div>
+                  <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                 [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
                   [style]="{'width':'100%','margin-bottom':'20px'}" 
                   optionvalue="id"  optionLabel="name" filterBy="name"
@@ -79,7 +101,7 @@
                   <ng-template let-option pTemplate="item">
                     <span >{{option.name }}</span>
                 </ng-template>
-                </p-dropdown>
+                </p-dropdown> -->
     
                 </div>
                 <div class="col-12 md:col-6 lg:col-6">
@@ -97,7 +119,29 @@
     
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
-                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                  <div class="field">
+                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
+                    <div class="flex">
+                      <div style="width:100%">
+                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                    [options]="documentTypes" [filter]="true"
+                      name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
+                      [style]="{'width':'100%'}" 
+                      optionvalue="id"  optionLabel="name" filterBy="name"
+                       placeholder="SELECCIONE TIPO DE DOCUMENTO" title="SELECCIONE TIPO DE DOCUMENTO">
+                      <ng-template let-option pTemplate="item">
+                        <span >{{option.name}}</span>
+                    </ng-template>
+                    </p-dropdown>
+                    </div>
+                    <span class="bottomdelete" style="margin-top: -35px;">
+                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                      class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
+                    </span>
+                  </div>
+            
+                  </div>
+                  <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="documentTypes" [filter]="true"
                     name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
                     [style]="{'width':'100%','margin-bottom':'20px'}" 
@@ -106,7 +150,7 @@
                     <ng-template let-option pTemplate="item">
                       <span >{{option.name}}</span>
                   </ng-template>
-                  </p-dropdown>
+                  </p-dropdown> -->
                 </div>
                 
                 <div class="col-12 md:col-6 lg:col-6">
@@ -158,7 +202,7 @@
                   class="p-button-warning p-button-raised p-button-rounded"
                    label="Add Sedes y Programa"></button>  
                 </div>
-      
+      <br>
                 <div fxLayout="row" fxLayoutGap="20px">
                   <div class="table-wrapper" >
                     <p-table [value]="algo" *ngIf="mostrar == true"> 
@@ -189,7 +233,7 @@
                                     </p-dropdown>
                                   </div>
                                   
-                                <span class="bottomdelete" style="margin-top: 5px;">
+                                <span class="bottomdelete" style="margin-top: -35px;">
                                   <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                   class="p-button-rounded p-button-danger"></button>
                                   <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
@@ -220,6 +264,7 @@
                       class="p-button-warning p-button-raised p-button-rounded"
                        label="Add Pasantias o Practicas"></button>  
                     </div>
+                    <br>
                     <div fxLayout="row" fxLayoutGap="20px">
                       <div class="table-wrapper" >
                         <p-table [value]="algo1" *ngIf="mostrar2 == true"> 

@@ -9,11 +9,15 @@ import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
 import { PersonI } from 'src/app/models/user/person';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
+import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
+import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { DialogService } from 'primeng/dynamicdialog';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
 @Component({
   selector: 'app-create_InvestigatorCollaborator',
   templateUrl: './create_InvestigatorCollaborator.component.html',
-  styleUrls: ['./create_InvestigatorCollaborator.component.css']
+  styleUrls: ['./create_InvestigatorCollaborator.component.css'],
+  providers: [DialogService]
 })
 export class Create_InvestigatorCollaboratorComponent implements OnInit {
   displayMaximizable2:boolean=true
@@ -37,7 +41,9 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   public users:PersonI[]=[];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
+  public ref:any;
   constructor(
+    public dialogService: DialogService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private investigadorColaboladorService:InvestigadorColaboladorService,
@@ -142,5 +148,50 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
           }else{
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
           }
+}
+
+addGenero(e:Event){
+  e.preventDefault()
+
+  this.ref = this.dialogService.open(Create_genderComponent, {
+    width: '35%',
+    height: '50%',
+    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+    baseZIndex: 10000,
+    data: {
+      id: '1'
+  },
+});
+
+this.ref.onClose.subscribe((person: any) =>{
+    if (person) {
+        this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+    this.getAllgenders()
+
+      }
+});
+}
+
+
+addTipoDocumento(e:Event){
+  e.preventDefault()
+
+  this.ref = this.dialogService.open(Create_documentTypeComponent, {
+    width: '35%',
+    height: '50%',
+    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+    baseZIndex: 10000,
+    data: {
+      id: '1'
+  },
+});
+
+this.ref.onClose.subscribe((person: any) =>{
+    if (person) {
+        this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+    this.getAlldocumentTypes()
+
+      }
+});
 }
 }

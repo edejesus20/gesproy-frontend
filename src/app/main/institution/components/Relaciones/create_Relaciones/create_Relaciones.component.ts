@@ -40,6 +40,9 @@ constructor(
       this.mostrarDialogo= false
     }
   }
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   public onSubmit() {
     let formValue: RelationshipI = this.form.value;
     if(formValue.name != ''){

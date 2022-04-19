@@ -12,10 +12,15 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { OcupationService } from 'src/app/core/services/usuer/Ocupation.service';
 import { OcupationI } from 'src/app/models/user/ocupation';
+import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
+import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { Create_ocupationComponent } from '../../Ocupacion/create_ocupation/create_ocupation.component';
 @Component({
   selector: 'app-editar-administrative',
   templateUrl: './editar-administrative.component.html',
-  styleUrls: ['./editar-administrative.component.css']
+  styleUrls: ['./editar-administrative.component.css'],
+  providers: [DialogService]
 })
 export class EditarAdministrativeComponent implements OnInit {
 
@@ -29,7 +34,9 @@ export class EditarAdministrativeComponent implements OnInit {
   public headquarters: HeadquarterI[]=[]
   public ocupations:OcupationI[]=[]
 
+  public ref:any;
   constructor(
+    public dialogService: DialogService,
     private administrativeService:AdministrativeService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
@@ -230,5 +237,72 @@ export class EditarAdministrativeComponent implements OnInit {
           }else{
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
           }
+  }
+
+  addGenero(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(Create_genderComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+      this.getAllgenders()
+
+        }
+  });
+  }
+
+
+  addTipoDocumento(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(Create_documentTypeComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+      this.getAlldocumentTypes()
+
+        }
+  });
+  }
+
+  addOcupacion(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(Create_ocupationComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+      this.getAllocupations()
+
+        }
+  });
   }
 }

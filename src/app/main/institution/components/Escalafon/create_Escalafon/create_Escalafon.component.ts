@@ -45,7 +45,9 @@ export class Create_EscalafonComponent implements OnInit {
 
  }
 
-
+ public cancelar(){
+  this.ref.close(undefined);
+}
  public onSubmit() {
 
   let formValue: ScaleI = this.form.value;

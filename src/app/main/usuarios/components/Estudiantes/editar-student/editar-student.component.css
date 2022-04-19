@@ -27,7 +27,21 @@
     /* justify-content: flex-end; */
     height: 80px;
   }
-  
+  .grupodescuento{
+    width: 45%;
+    padding-right: 15px;
+    min-width: auto;
+  }
+  .bottomdelete{
+    width: auto;
+    margin-top: 50px;
+    padding-top: 40px;
+    font-size: 10px;
+    min-width: auto;
+  }
+  .bottomdelete .mat-icon{
+    margin-top:-7px;
+  }
   .categ-margin {
     margin: 0;
   }

@@ -42,6 +42,9 @@ export class Create_linkTypeComponent implements OnInit {
       this.mostrarDialogo= false
     }
   }
+  public cancelar(){
+    this.ref.close(undefined);
+  }
 
   public onSubmit() {
     let formValue: LinkTypeI = this.form.value;

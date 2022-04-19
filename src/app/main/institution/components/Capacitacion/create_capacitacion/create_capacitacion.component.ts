@@ -41,6 +41,9 @@ export class Create_capacitacionComponent implements OnInit {
   }
 
  }
+ public cancelar(){
+  this.ref.close(undefined);
+}
  public onSubmit() {
   let formValue: TrainingI = this.form.value;
   if(formValue.name != ''){

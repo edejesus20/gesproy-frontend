@@ -470,7 +470,7 @@ get getWorkexperiences() {
     this.ref = this.dialogService.open(Create_linkTypeComponent, {
       width: '40%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -491,7 +491,7 @@ get getWorkexperiences() {
     this.ref = this.dialogService.open(Create_EscalafonComponent, {
       width: '40%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -512,7 +512,7 @@ get getWorkexperiences() {
     this.ref = this.dialogService.open(Create_CategoriaColcienciasComponent, {
       width: '40%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -533,7 +533,7 @@ get getWorkexperiences() {
     this.ref = this.dialogService.open(Create_RelacionesComponent, {
       width: '35%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -554,7 +554,7 @@ get getWorkexperiences() {
     this.ref = this.dialogService.open(Create_capacitacionComponent, {
       width: '35%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -574,9 +574,9 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref = this.dialogService.open(Create_genderComponent, {
-      width: '40%',
-      height: '52%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -597,9 +597,9 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref = this.dialogService.open(Create_documentTypeComponent, {
-      width: '40%',
+      width: '35%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'

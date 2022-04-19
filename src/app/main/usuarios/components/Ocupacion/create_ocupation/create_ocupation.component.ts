@@ -40,7 +40,9 @@ export class Create_ocupationComponent implements OnInit {
       this.mostrarDialogo= false
     }
   }
-
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   public onSubmit() {
     let formValue: OcupationI = this.form.value;
     if(formValue.name != ''){

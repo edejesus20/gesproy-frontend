@@ -45,6 +45,8 @@
   <br>
 
         <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+      <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
           <button pButton type="button" type="submit"  icon="pi pi-check" 
            class="p-button-success p-button-raised p-button-rounded"  [disabled]="!form.valid"
           label="Enviar Registro" styleClass="mr-2"></button>

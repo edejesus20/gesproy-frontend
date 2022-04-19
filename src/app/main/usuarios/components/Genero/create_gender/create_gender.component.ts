@@ -30,7 +30,9 @@ export class Create_genderComponent implements OnInit {
     public config: DynamicDialogConfig,
 
   ) { }
-
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   ngOnInit() {
     this.primengConfig.ripple = true;
     if(this.config.data){

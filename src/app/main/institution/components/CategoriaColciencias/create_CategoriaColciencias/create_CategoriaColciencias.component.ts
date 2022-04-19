@@ -43,6 +43,9 @@ export class Create_CategoriaColcienciasComponent implements OnInit {
     }
   
   }
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   public onSubmit() {
     // console.log(f)
     // console.log(formValue)
