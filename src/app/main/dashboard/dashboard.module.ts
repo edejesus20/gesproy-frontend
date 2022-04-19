@@ -35,6 +35,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DynamicDialogRef } from 'primeng/dynamicdialog/dynamicdialog-ref';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog/dynamicdialog-config';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CalendarModule,
     FieldsetModule,
     FileUploadModule
-  ]
+  ],
+  
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class DashboardModule { }

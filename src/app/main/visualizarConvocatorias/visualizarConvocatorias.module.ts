@@ -39,6 +39,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {FieldsetModule} from 'primeng/fieldset';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 @NgModule({
   imports: [
     CommonModule,
@@ -88,6 +89,8 @@ import { HttpClientModule } from '@angular/common/http';
     Show_one_convocatoriaComponent,
     Edit_convocatoriaComponent,
     Delete_convocatoriaComponent
-  ]
+  ],
+  
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class VisualizarConvocatoriasModule { }

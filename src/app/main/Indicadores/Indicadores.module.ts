@@ -44,6 +44,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 @NgModule({
   imports: [
     CommonModule,
@@ -99,5 +100,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     Create_indicador_externoComponent,
     Edit_indicador_externoComponent,
     Delete_indicador_externoComponent]
+    ,
+  
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class IndicadoresModule { }

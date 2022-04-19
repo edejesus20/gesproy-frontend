@@ -90,6 +90,7 @@ import { EditRolInvestigationComponent } from './components/user_rol_investigati
 import { DeleteRolInvestigationComponent } from './components/user_rol_investigation/delete-rol-investigation/delete-rol-investigation.component';
 import { CrearRolInvestigationComponent } from './components/user_rol_investigation/crear-rol-investigation/crear-rol-investigation.component';
 import { VincularLineasComponent } from './components/program/vincular-lineas/vincular-lineas.component';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -205,6 +206,8 @@ FileUploadModule
   ],
   entryComponents: [
     
-  ]
+  ],
+  
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class InstitutionModule { }

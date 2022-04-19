@@ -62,7 +62,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import {TabViewModule} from 'primeng/tabview';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
@@ -144,6 +144,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     Edit_pasos_tareasComponent,
     Show_one_pasos_tareasComponent,
     Show_pasos_tareasComponent,
-   ]
+   ],
+  
+   providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class TareasycompromisoModule { }
