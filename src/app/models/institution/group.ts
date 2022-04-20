@@ -1,3 +1,5 @@
+import { LineProgramGroupI } from "./program";
+
 export interface GroupI {
     id?: number;
     name: string;
@@ -16,4 +18,5 @@ export interface GroupI {
     Anexos?:any[]
     InvestigatorCollaborators?:any[]
     lines?:any[]
+    LineProgramGroups?:LineProgramGroupI
 }

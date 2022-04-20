@@ -30,8 +30,9 @@ import { CrearUserComponent } from 'src/app/main/usuarios/components/usr_User/cr
 export class Create_grupodeInvetigacionComponent implements OnInit {
   public seedbeds: any;
   public mostrar:boolean=false;
-  public mostrar2:boolean=false;
   public algo:number[]=[0];
+  public mostrar2:boolean=false;
+  
   public algo2:number[]=[0];
 
   public FacultadHeadquarterProgram:any[]=[]

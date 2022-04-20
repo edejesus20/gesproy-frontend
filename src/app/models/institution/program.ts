@@ -20,12 +20,15 @@ export interface LineProgramI {
    id?: number;
    LineId:number;
    ProgramId:number;
+   Program?:ProgramI
+   Line?: LineI
 }
 
 export interface LineProgramGroupI {
    id?: number;
    LineProgramId:number;
    GroupId:number;
+   LineProgram?:LineProgramI
 }
 export interface LineProgramGroupTeacherI {
    id?: number;
