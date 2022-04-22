@@ -117,6 +117,7 @@
                               <th pSortableColumn="Docente">Docente <p-sortIcon field="Docente"></p-sortIcon></th>
                               <th pSortableColumn="SeedbedStudent.date_firt">Fecha inicial<p-sortIcon field="SeedbedStudent.date_firt"></p-sortIcon></th>
                               <th pSortableColumn="SeedbedStudent.date_end">Fecha final <p-sortIcon field="SeedbedStudent.date_end"></p-sortIcon></th>
+                              <th pSortableColumn="SeedbedStudent.Horas">Horas<p-sortIcon field="SeedbedStudent.Horas"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
@@ -131,6 +132,8 @@
                               <td>{{order.Teacher?.User?.fullName | titlecase}}</td>
                               <td>{{order.SeedbedStudent.date_firt | date:'fullDate' | titlecase}}</td>
                               <td>{{order.SeedbedStudent.date_end | date:'fullDate' | titlecase}}</td>
+                              <td>{{order.SeedbedStudent.Horas}}</td>
+                              
                           </tr>
                       </ng-template>
 <!-- 

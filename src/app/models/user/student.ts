@@ -18,6 +18,7 @@ export interface StudentI {
     status_seedbed?:string,
     StudentInternships?:StudentInternshipsI[]
     SeedbedId:number
+    Horas?:string
 }
 
 export interface StudentInternshipsI {

@@ -60,6 +60,11 @@ export class Create_semillerosComponent implements OnInit {
 }
 public mostrarTeacher:boolean=false
 public students:StudentI[] =[]
+public lines1:any[] =[]
+public Students:any[] =[]
+private HeadquarterProgramId:number = 0
+private TeacherId:number = 0
+private GroupId:number = 0
   constructor(
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,
@@ -99,7 +104,10 @@ public students:StudentI[] =[]
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      date:['', [Validators.required]],
+      creation_date:['', [Validators.required]],
+      approval_date:['', [Validators.required]],
+      resolution:['', [Validators.required]],
+      article:['', [Validators.required]],
       name: ['', [Validators.required]],
       TeacherId: ['', [Validators.required]],
       ObjetivoGeneral: ['', [Validators.required]],
@@ -169,43 +177,101 @@ public students:StudentI[] =[]
 
 
   public onSubmit(): void {
-    this.form.value.TeacherId=this.form.value.TeacherId.id
-    const formValue: SeedbedI = this.form.value;
-    console.log(this.form.value)
+    let formValue: SeedbedI = this.form.value;
+    formValue.TeacherId=this.form.value.TeacherId.id
+    formValue.GroupId=this.form.value.GroupId.id
+    formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
+
+    if(this.HeadquarterProgramId == 0 &&
+      this.TeacherId == 0 &&
+      this.GroupId == 0
+      ){
+        this.HeadquarterProgramId= formValue.HeadquarterProgramId
+        this.TeacherId= formValue.TeacherId
+        this.GroupId= formValue.GroupId
+      }else{
+        formValue.TeacherId=this.TeacherId
+        formValue.GroupId=this.GroupId
+        formValue.HeadquarterProgramId=this.HeadquarterProgramId
+      }
+    
+    
+    
+    if(this.lines1.length == 0 || this.lines1 == []){
+      let control = <FormArray>this.form.controls['lines']
+      for (const key of control.value) {
+        key.LineId=key.LineId.id 
+        this.lines1.push({
+         LineId:key.LineId,
+        })
+      }
+      formValue.lines = this.form.value.lines
+      // console.log('aqui')
+    }else{
+      formValue.lines = this.lines1
+    }
+    if(this.Students.length == 0 || this.Students == []){
+      let control = <FormArray>this.form.controls['Students']
+      for (const key of control.value) {
+        key.StudentId=key.StudentId.id 
+        this.Students.push({
+          StudentId:key.StudentId,
+          Horas:key.Horas
+        })
+      }
+      formValue.Students = this.form.value.Students
+      // console.log('aqui')
+    }else{
+      formValue.Students = this.Students
+    }
     console.log(formValue)
-    // if(formValue.TeacherId != 0 && formValue.name != ""){
-    //   this.seedbedService.createItem(formValue).subscribe(
-    //     () => {
-    //       var date = new Date('2020-01-01 00:00:03');
-    //         function padLeft(n:any){ 
-    //           return n ="00".substring(0, "00".length - n.length) + n;
-    //         }
-    //         var interval = setInterval(() => {
-    //         var minutes = padLeft(date.getMinutes() + "");
-    //         var seconds = padLeft(date.getSeconds() + "");
-    //         // console.log(minutes, seconds);
-    //         if( seconds == '03') {
-    //         this.messageService.add({severity:'success', summary: 'Success', 
-    //         detail: 'Registro de Semillero Creado con exito'});
-    //         }
-    //         date = new Date(date.getTime() - 1000);
-    //         if( minutes == '00' && seconds == '01' ) {
-    //           this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
-    //           clearInterval(interval); 
-    //         }
-    //   }, 1000);
-    //     },async error => {
-    //       if(error != undefined) {
-    //         let text = await translate(error.error.message, "es");
-    //         if(error.error.dataErros){
-    //           text = await translate(error.error.dataErros[0].message, "es");
-    //         }
-    //         this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-    //       }
-    //     });
-    //     }else{
-    //     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-    //     }
+    if(formValue.TeacherId != 0 && formValue.name != "" &&
+    formValue.creation_date != "" && 
+    formValue.approval_date != "" && 
+    formValue.resolution != "" && 
+    formValue.article != "" && 
+    formValue.ObjetivoGeneral != "" && 
+    formValue.ObjetivosEspecificos != "" && 
+    formValue.Mision != "" && 
+    formValue.Vision != "" && 
+    formValue.estrategias != "" && 
+    formValue.Vision != "" && 
+    formValue.HeadquarterProgramId != ( 0 || undefined)&&
+    formValue.GroupId != ( 0 || undefined)
+
+    ){
+      this.seedbedService.createItem(formValue).subscribe(
+        () => {
+          var date = new Date('2020-01-01 00:00:03');
+            function padLeft(n:any){ 
+              return n ="00".substring(0, "00".length - n.length) + n;
+            }
+            var interval = setInterval(() => {
+            var minutes = padLeft(date.getMinutes() + "");
+            var seconds = padLeft(date.getSeconds() + "");
+            // console.log(minutes, seconds);
+            if( seconds == '03') {
+            this.messageService.add({severity:'success', summary: 'Success', 
+            detail: 'Registro de Semillero Creado con exito'});
+            }
+            date = new Date(date.getTime() - 1000);
+            if( minutes == '00' && seconds == '01' ) {
+              this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+              clearInterval(interval); 
+            }
+      }, 1000);
+        },async error => {
+          if(error != undefined) {
+            let text = await translate(error.error.message, "es");
+            if(error.error.dataErros){
+              text = await translate(error.error.dataErros[0].message, "es");
+            }
+            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+          }
+        });
+        }else{
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+        }
   }
 
   get name() { return this.form.get('name'); }

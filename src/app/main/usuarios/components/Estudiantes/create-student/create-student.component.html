@@ -199,18 +199,27 @@
                     <div class="field">
                       <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
                       <div class="flex">
-                        <div style="width:100%">
+                        <div style="width:80%">
                       <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                       [options]="seedbeds" [filter]="true"
                         name="SeedbedId" formControlName="SeedbedId" label="SEMILLERO" 
                         [style]="{'width':'100%'}" 
                         optionvalue="id"  optionLabel="name" filterBy="name"
-                         placeholder="SELECCIONE SEMILLERO" title="SELECCIONE SEMILLERO" [required]="true">
+                         placeholder="SELECCIONE SEMILLERO" title="SELECCIONE SEMILLERO" >
                         <ng-template let-option pTemplate="item">
                           <span >{{option.name | titlecase}} - Docente : {{ option.Teacher?.User?.fullName  | titlecase }} CC: {{option.Teacher.User.Person.identification }}</span>
                       </ng-template>
                       </p-dropdown>
                       </div>
+                      <div style="width:20%">
+                        <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                          <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                          <input class="p-inputtext-lg" type="text" formControlName="Horas"
+                          pInputText pKeyFilter="num" name="Horas" 
+                          placeholder="Horas" title="Horas" >         
+                      </div>
+                      </div>
+                      
                       <!-- <span class="bottomdelete" style="margin-top: -35px;">
                         <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                         class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>

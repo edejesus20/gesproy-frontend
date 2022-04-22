@@ -1,5 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height':'30vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height':'100vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
   <br>
       
@@ -31,8 +31,8 @@
                 <label for="name"style="font-weight: bold;">FECHA CREACIÓN DEL SEMILLERO</label>
               <div class="p-inputgroup" >
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                  <input type="date" class="p-inputtext-lg" pInputText name="date" 
-                   formControlName="date" title="FECHA CREACIÓN DEL SEMILLERO" required>  
+                  <input type="date" class="p-inputtext-lg" pInputText name="creation_date" 
+                   formControlName="creation_date" title="FECHA CREACIÓN DEL SEMILLERO" required>  
 
               </div>
                 </div>
@@ -239,6 +239,45 @@
           </div>
  
       </p-panel>
+      <br>
+      <div class="grid p-fluid ml-1 mr-1">
+        <div class="col-12 md:col-4 lg:col-4" >
+          <div class="field ">
+          <label for="name"style="font-weight: bold;">FECHA APROVACIÓN </label>
+        <div class="p-inputgroup" >
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="date" class="p-inputtext-lg" pInputText name="approval_date" 
+             formControlName="approval_date" title="FECHA APROVACIÓN DEL SEMILLERO" required>  
+
+        </div>
+          </div>
+        </div>
+        
+        <div class="col-12 md:col-4 lg:col-4" >
+          <div class="field ">
+            <label for="name"style="font-weight: bold;">RESOLUCIÓN DEL SEMILLERO</label>
+          <div class="p-inputgroup" >
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" pInputText  
+            class="p-inputtext-lg"  name="resolution"  title="RESOLUCIÓN DEL SEMILLERO"
+            formControlName="resolution" required>         
+        </div>
+          </div>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4" >
+          <div class="field ">
+            <label for="name"style="font-weight: bold;">ARTICULO</label>
+          <div class="p-inputgroup" >
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" pInputText 
+            class="p-inputtext-lg"  name="article"  title="ARTICULO DE LA RESOLUCION"
+            formControlName="article" required>         
+        </div>
+          </div>
+        </div>
+
+      </div>
+
           </div>
           <div class="bordep">
             <h3 style="text-align:center;">2. IDENTIFICACIÓN DEL PROFESOR COORDINADOR</h3>

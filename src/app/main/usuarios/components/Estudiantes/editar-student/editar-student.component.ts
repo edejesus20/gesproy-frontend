@@ -94,6 +94,7 @@ export class EditarStudentComponent implements OnInit {
         functions:[''],
     })]),
     SeedbedId:['', [Validators.required]],
+    Horas:['', [Validators.required]],
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -125,6 +126,7 @@ export class EditarStudentComponent implements OnInit {
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
       SeedbedId:this.form.value.SeedbedId.id,
+      Horas: this.form.value.Horas,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
@@ -158,6 +160,7 @@ export class EditarStudentComponent implements OnInit {
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
     formValue.SeedbedId != ( 0 || undefined)&&
+    formValue.Horas != ""&&
     formValue.identification != ""&&
     formValue.GenderId != ( 0 || undefined)&&
     formValue.address != ""&&
@@ -285,6 +288,8 @@ getOneCntAccount(id:number) {
         })
         if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
           let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
+          let nuevo =algo?.SeedbedStudent?.Horas
+          this.form.controls['Horas'].setValue(nuevo)
           if(algo?.id != undefined)
           this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
             this.form.controls['SeedbedId'].setValue(algo1.seedbed)

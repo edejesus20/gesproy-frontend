@@ -66,7 +66,8 @@ export class CreateStudentComponent implements OnInit {
       post:[''],
       functions:[''],
   })]),
-    SeedbedId:['', [Validators.required]],
+    SeedbedId:[''],
+    Horas:[''],
     // areasEstudio:[''],
     // publicacionesResientes:[''],
     // practicas:['',[Validators.required]]
@@ -134,6 +135,7 @@ export class CreateStudentComponent implements OnInit {
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
       SeedbedId:this.form.value.SeedbedId.id,
+      Horas: this.form.value.Horas,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
@@ -167,6 +169,7 @@ export class CreateStudentComponent implements OnInit {
       formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
       formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
       formValue.nationality != ("" || undefined) && 
+      // formValue.SeedbedId != ( 0 || undefined)&& formValue.Horas != ""&&
       formValue. date_of_birth!= ("" || undefined) && 
       formValue.phone != ""&& formValue.email != "" 
       // && 
