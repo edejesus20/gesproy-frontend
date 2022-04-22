@@ -61,7 +61,11 @@ import { Edit_semillerosComponent } from './components/Semilleros/edit_semillero
 import { Show_one_semillerosComponent } from './components/Semilleros/show_one_semilleros/show_one_semilleros.component';
 import { Show_semillerosComponent } from './components/Semilleros/show_semilleros/show_semilleros.component';
 import { ProcedimientosComponent } from './procedimientos.component';
-
+import { Show_ThematicComponent } from './components/Areas y tematicas lineas/show_Thematic/show_Thematic.component';
+import { Show_one_ThematicComponent } from './components/Areas y tematicas lineas/show_one_Thematic/show_one_Thematic.component';
+import { Edit_ThematicComponent } from './components/Areas y tematicas lineas/edit_Thematic/edit_Thematic.component';
+import { Delete_ThematicComponent } from './components/Areas y tematicas lineas/delete_Thematic/delete_Thematic.component';
+import { Create_ThematicComponent } from './components/Areas y tematicas lineas/create_Thematic/create_Thematic.component';
 const routes: Routes = [
   {
     path: '',
@@ -324,6 +328,27 @@ const routes: Routes = [
           {
             path: 'line_eliminar/:id',
             component: Delete_linesComponent,
+          },
+           //Tematicas de lineas
+           {
+            path: 'Thematic',
+            component: Show_ThematicComponent,
+          },
+          {
+            path: 'Thematic/:id',
+            component: Show_one_ThematicComponent,
+          },
+          {
+            path: 'Thematic_create',
+            component: Create_ThematicComponent,
+          },
+          {
+            path: 'Thematic_modificar/:id',
+            component: Edit_ThematicComponent,
+          },
+          {
+            path: 'Thematic_eliminar/:id',
+            component: Delete_ThematicComponent,
           },
         
     ]

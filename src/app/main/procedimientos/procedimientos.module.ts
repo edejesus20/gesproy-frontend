@@ -101,6 +101,11 @@ import { Show_one_linesComponent } from './components/Lineas/show_one_lines/show
 import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.component';
 import {PanelModule} from 'primeng/panel';
 import {DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef} from 'primeng/dynamicdialog';
+import { Show_ThematicComponent } from './components/Areas y tematicas lineas/show_Thematic/show_Thematic.component';
+import { Show_one_ThematicComponent } from './components/Areas y tematicas lineas/show_one_Thematic/show_one_Thematic.component';
+import { Edit_ThematicComponent } from './components/Areas y tematicas lineas/edit_Thematic/edit_Thematic.component';
+import { Delete_ThematicComponent } from './components/Areas y tematicas lineas/delete_Thematic/delete_Thematic.component';
+import { Create_ThematicComponent } from './components/Areas y tematicas lineas/create_Thematic/create_Thematic.component';
 @NgModule({
   declarations: [
     ProcedimientosComponent,
@@ -176,6 +181,11 @@ import {DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef} from 'primen
     Edit_linesComponent,
     Show_linesComponent,
     Show_one_linesComponent,
+    Show_ThematicComponent,
+    Show_one_ThematicComponent,
+    Edit_ThematicComponent,
+    Delete_ThematicComponent,
+    Create_ThematicComponent,
 
     
   ],
