@@ -116,11 +116,11 @@ export class Show_linesComponent implements OnInit {
       var headers = [{
         fila_0:{
             // col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_5:{ text: 'OBJETIVOS', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            // col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader',fontSize: 12 ,bold: true, },
-            col_7:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            col_2:{ text: 'NOMBRE', style: 'tableHeader' ,bold: true, },
+            col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader' ,bold: true, },
+            col_5:{ text: 'OBJETIVOS', style: 'tableHeader' ,bold: true, },
+            // col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader' ,bold: true, },
+            col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
         }
       }]
 
@@ -184,6 +184,7 @@ export class Show_linesComponent implements OnInit {
           },
           {
             style: 'tableExample',
+            fontSize: 8,
             table: {
               headerRows: 1,
               widths: [ '15%', '22%', '34%', '29%'],

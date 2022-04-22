@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
 import { LineI, LineThematicI, ThematicI } from 'src/app/models/projet/line';
+import { Create_ThematicComponent } from '../../Areas y tematicas lineas/create_Thematic/create_Thematic.component';
 const translate = require('translate');
 @Component({
   selector: 'app-create_lines',
   templateUrl: './create_lines.component.html',
-  styleUrls: ['./create_lines.component.css']
+  styleUrls: ['./create_lines.component.css'],
+  providers: [DialogService]
 })
 export class Create_linesComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({});
@@ -18,7 +21,10 @@ export class Create_linesComponent implements OnInit {
   public mostrar2:boolean=false;
   public thematics:ThematicI[] =[]
   public algo:number[]=[0];
+  public ref:any;
+
   constructor(
+    public dialogService: DialogService,
     private formBuilder: FormBuilder,
     private router: Router,
     private lineService:LineService,
@@ -130,5 +136,29 @@ export class Create_linesComponent implements OnInit {
       }))
       }
       // console.log(control)
+  }
+
+  // modal
+
+  addTematica(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(Create_ThematicComponent, {
+      width: '35%',
+      height: '50%',
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Tematica Creada', detail: person.name,life: 2000});
+      this.thematic()
+
+        }
+  });
   }
 }
