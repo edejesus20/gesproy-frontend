@@ -288,12 +288,13 @@ getOneCntAccount(id:number) {
         })
         if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
           let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
-          let nuevo =algo?.SeedbedStudent?.Horas
+          let nuevo =algo?.SeedbedStudent?.hours
+          
           this.form.controls['Horas'].setValue(nuevo)
           if(algo?.id != undefined)
           this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
             this.form.controls['SeedbedId'].setValue(algo1.seedbed)
-            // console.log(this.form.controls['SeedbedId'].value)
+            console.log(algo1.seedbed)
           })
         }
         

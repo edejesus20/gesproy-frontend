@@ -32,5 +32,5 @@ export interface SeedbedStudentI {
     name: string;
     date_firt: string;
     date_end: string;
-    Horas:string
+    hours:string
 }
