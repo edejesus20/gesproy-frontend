@@ -1,6 +1,7 @@
 import { TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
-import { LineProgramGroupI } from "./program";
+import { HeadquarterProgramI } from "./headquarter";
+import { LineProgramGroupI, ProgramI } from "./program";
 import { SeedbedI } from "./seedbed";
 
 export interface GroupI {
@@ -20,16 +21,20 @@ export interface GroupI {
     Sector?: string
     resolution:string
     CategoryGroupId:number
-    LINK_GRUPLAC:string
+    Link_gruplac:string
 
 
     Seedbed?:any[]
     Anexos?:any[]
     InvestigatorCollaborators?:any[]
     lines?:any[]
-    LineProgramGroups?:LineProgramGroupI
+    LineProgramGroups?:LineProgramGroupI[]
     CategoryGroup?:CategoryGroupI
     Teacher?:TeacherI
+    HeadquarterProgram?:HeadquarterProgramI
+    Program?:ProgramI
+    
+    // LineProgramGroups?
 }
 
 export interface Knowledge_areaI{

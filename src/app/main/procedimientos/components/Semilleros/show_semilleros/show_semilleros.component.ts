@@ -70,7 +70,7 @@ export class Show_semillerosComponent implements OnInit {
         
         
       });
-      console.log(this.seedbeds)
+      // console.log(this.seedbeds)
       this.rows2=[]
       if(rolesFromApi.seedbeds != undefined){
         for (const key of rolesFromApi.seedbeds) {

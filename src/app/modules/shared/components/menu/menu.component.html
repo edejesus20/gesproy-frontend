@@ -25,7 +25,7 @@
         <span   [routerLink]="subitem.link" (click)="clickHandler($event, subitem)" 
         style="padding-left: 10px;">
           <i class="ml-2 pi pi-chevron-right"  style="font-size: 1.5rem; margin-top: 5px;"></i>
-          <span class="ml-4 " style="font-size: 18px;">{{ subitem.titulo }}</span>
+          <span class="ml-2 " style="font-size: 18px;">{{ subitem.titulo }}</span>
 
           <ng-container *ngIf="subitem.menu">
             <span *ngIf="subitem.collapsed ">

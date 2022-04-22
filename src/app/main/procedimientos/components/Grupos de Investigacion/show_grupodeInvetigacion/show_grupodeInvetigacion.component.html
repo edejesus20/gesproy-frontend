@@ -1,49 +1,169 @@
-<!-- <br>
-<div class="container">
 
-  <mat-form-field appearance="standard">
-    <mat-label>Busqueda</mat-label>
-    <input matInput (keyup)="Buscar($event)" #input>
-  </mat-form-field>
+<p-table  #dt1 [value]="groups" responsiveLayout="scroll" dataKey="id" id="todo"
+[paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+   [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+    [globalFilterFields]="['name','group_code','ObjetivoGeneral',
+    'ident_colciencias','CategoryGroup.name','Link_gruplac','resolution','Teacher.User.fullName']"
+    [columns]="cols"
+   ><!-- styleClass="p-datatable-gridlines" -->
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Grupos de Investigación</h2>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+            (input)="Buscar($event, dt1)" placeholder="Buscar la palabra clave.." />
+        </span> 
+        
+       
+          <div class="mb-3 ml-3 mt-3">
 
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
 
-<div class="table-wrapper">
+          <!-- <p-button icon="pi pi-refresh"></p-button> -->
+      </div>
 
-    <table mat-table [dataSource]="groups" class="mat-elevation-z8" matSort>
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHACREAT </th>
-        <td mat-cell *matCellDef="let element"> {{element.createdAt | date }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="updatedAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHAUPD </th>
-        <td mat-cell *matCellDef="let element"> {{element.updatedAt | date }} </td>
-      </ng-container>
-
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-            <div class="nohayregistro"> 
-              No hay registros encontrados
-            </div>
+      
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+        <ng-template [ngIf]="mostrar==3">
+          <th style="width: 3rem"></th>
+        </ng-template>
+          <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
+          <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="group_code">CODIGO<p-sortIcon field="group_code"></p-sortIcon></th>
+          <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           
+          <th style="min-width:300px" pSortableColumn="ObjetivoGeneral">OBJETIVO GENERAL
+            <p-sortIcon field="ObjetivoGeneral"></p-sortIcon></th>
+          <!-- <th pSortableColumn="ident_colciencias">ID COLCIENCIAS<p-sortIcon field="ident_colciencias"></p-sortIcon></th> -->
+          <th pSortableColumn="CategoryGroup.name">CATEGORIA<p-sortIcon field="CategoryGroup.name"></p-sortIcon></th>
+          <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
+          <th pSortableColumn="Teacher.User.fullName">LIDER<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
+          <th style="max-width:400px" pSortableColumn="Link_gruplac">LINK GRUPLAC<p-sortIcon field="Link_gruplac"></p-sortIcon></th>
+
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+            <th > ACCIONES </th>
+          </ng-template>
+      </tr>
+  </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+      <tr [pSelectableRow]="rowData">
+        <ng-template [ngIf]="mostrar==3">
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+        </ng-template> 
+       
+          <!-- <td>{{item.id}}</td> -->
+          <td>{{item.name  | titlecase}}</td>
+          <td>{{item.group_code }}</td>
+          <td>{{item.Program?.Faculty?.name | titlecase}}</td>
+          <td style="min-width:300px" >{{item.ObjetivoGeneral }}</td>
+          <!-- <td>{{item.ident_colciencias }}</td> -->
+          <td>{{item.CategoryGroup.name }}</td>
+          
+          <td>{{item.resolution }}</td>
+          <td>{{item.Teacher.User.fullName }}</td>
+          <td style="max-width:400px" >
+            <a pButton 
+            pRipple type="button" class="p-button-outlined p-button-info" 
+            title="Ir a Sitio" 
+             target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
+            </td>
+          <ng-template [ngIf]="mostrar==1">
+              
+              <td >
+                <button pButton pRipple  type="button"class="editar" title="Editar" 
+                  icon="pi pi-pencil" class="p-button-warning" (click)="editar(item.id)"></button>
+              </td>
+          
+          </ng-template>
+          <ng-template [ngIf]="mostrar==2">
+            
+              <td >
+                <button pButton pRipple  type="button" title="Eliminar" 
+                  icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(item.id)"></button>
+              </td>
+          
+          </ng-template>
+
+          <ng-template [ngIf]="mostrar==4">
+            
+            <td >
+              <button pButton pRipple  type="button" title="Asignar Formaciones" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" (click)="delet(item.id)"></button>
+            </td>
+        
+        </ng-template>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="6" style="text-align: center;">
+            <h3>No hay registros encontrados</h3>
           </td>
       </tr>
-    </table>
-  </div>
-  <br>
-    <mat-paginator [pageSizeOptions]="[5, 10,15,20]" showFirstLastButtons></mat-paginator>
-</div> -->
+  </ng-template>
+
+  
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+          <td colspan="12">
+              <div >
+            
+                  
+                  <p-table [value]="item.lines"  dataKey="id" 
+                  [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
+                      <ng-template pTemplate="header" >
+                          <tr style="background: rgba(0, 255, 255, 0.849);">
+                            <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>
+                            <th pSortableColumn="resolution">Resolucion<p-sortIcon field="resolution"></p-sortIcon></th>
+                            <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
+                              
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-order let-expanded="expanded">
+                        <tr>
+                          <td>{{order.name | titlecase}}</td> 
+                          <td>{{order.objectives }}</td> 
+                          <td>{{order.resolution }}</td> 
+                          <td >
+                            <span *ngFor="let i of order.Thematics">
+                              <span style="display: flex;">
+                                * {{i.name}} 
+                              </span>
+                            </span>
+                          </td>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="6" style="text-align: center;">
+                            <h3>No hay registros encontrados</h3>
+                          </td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+  </ng-template>
+
+
+  <!-- <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total hay {{ universitys ? universitys.length : 0 }} universidades.
+    </div>
+</ng-template> -->
+</p-table>
