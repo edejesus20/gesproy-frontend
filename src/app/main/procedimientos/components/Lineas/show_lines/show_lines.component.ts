@@ -123,6 +123,7 @@ export class Show_linesComponent implements OnInit {
             col_7:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 12 ,bold: true, },
         }
       }]
+
     
       var body = [];
       // var body2 = [];

@@ -1,4 +1,5 @@
 import { LineProgramGroupI } from "./program";
+import { SeedbedI } from "./seedbed";
 
 export interface GroupI {
     id?: number;

@@ -26,6 +26,7 @@ export interface HeadquarterProgramI {
    Administratives?:AdministrativeI[]
    HeadquarterProgramTeacher?:HeadquarterProgramTeacherI
    HeadquarterProgramStudent?:HeadquarterProgramStudentI
+   Administrative?:AdministrativeI
 }
 export interface HeadquarterProgramTeacherI {
    id?: number;

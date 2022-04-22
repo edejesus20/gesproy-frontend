@@ -1,4 +1,7 @@
+import { StudentI } from "../user/student";
 import { TeacherI } from "../user/teacher";
+import { GroupI } from "./group";
+import { HeadquarterProgramI } from "./headquarter";
 
 export interface SeedbedI {
     id?: number;
@@ -18,7 +21,10 @@ export interface SeedbedI {
     Teacher?:TeacherI
     SeedbedStudent?:SeedbedStudentI
     lines?:any[]
-    Students?:any[];
+    Students?:StudentI[];
+    Group?:GroupI
+    HeadquarterProgram?:HeadquarterProgramI
+    Program?:any
 }
 
 export interface SeedbedStudentI {
