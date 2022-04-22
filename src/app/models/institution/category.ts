@@ -8,6 +8,6 @@ export interface CategoryGroupI {
     id?: number;
     name: string;
     date: string;
-    GroupId: number;
-    Group?:GroupI
+    // GroupId: number;
+    Groups?:GroupI
 }

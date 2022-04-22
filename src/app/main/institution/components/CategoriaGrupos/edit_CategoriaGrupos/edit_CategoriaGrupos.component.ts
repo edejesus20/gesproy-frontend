@@ -38,7 +38,7 @@ export class Edit_CategoriaGruposComponent implements OnInit {
       id:[''],
       name:['', [Validators.required]],
       date:new Date().toDateString(),
-      GroupId:['', [Validators.required]],
+      // GroupId:['', [Validators.required]],
      });
   
   }
@@ -51,10 +51,12 @@ export class Edit_CategoriaGruposComponent implements OnInit {
 
   public onSubmit() {
     let formValue: CategoryGroupI = this.form.value;
-    formValue.GroupId=this.form.value.GroupId.id
+    // formValue.GroupId=this.form.value.GroupId.id
 
-    if(formValue.name != '' && 
-    formValue.GroupId != ( 0 )){
+    if(formValue.name != '' 
+    // && 
+    // formValue.GroupId != ( 0 )
+    ){
 
     if(formValue.id)
     this.categoryGroupService.updateItem(formValue.id,formValue).subscribe(
@@ -115,10 +117,10 @@ export class Edit_CategoriaGruposComponent implements OnInit {
       if(cnt_groupFromApi.categoryGroup.id != undefined){
         this.form.controls['id'].setValue(cnt_groupFromApi.categoryGroup.id)
     this.form.controls['name'].setValue(cnt_groupFromApi.categoryGroup.name)
-    this.form.controls['GroupId'].setValue(cnt_groupFromApi.categoryGroup.GroupId)
-    this.groupService.getItem(cnt_groupFromApi.categoryGroup.GroupId).subscribe((algo)=>{
-      this.form.controls['GroupId'].setValue(algo.group)
-    })
+    // this.form.controls['GroupId'].setValue(cnt_groupFromApi.categoryGroup.GroupId)
+    // this.groupService.getItem(cnt_groupFromApi.categoryGroup.GroupId).subscribe((algo)=>{
+      // this.form.controls['GroupId'].setValue(algo.group)
+    // })
         // console.log(this.form)
             }
       this.displayMaximizable2=true

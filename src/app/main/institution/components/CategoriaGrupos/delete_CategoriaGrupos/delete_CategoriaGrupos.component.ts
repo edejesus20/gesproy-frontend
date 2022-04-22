@@ -21,8 +21,8 @@ export class Delete_CategoriaGruposComponent implements OnInit {
     id:0,
     name: '',
     date:'',
-    GroupId: 0,
-    Group:undefined
+    // GroupId: 0,
+    Groups:undefined
   
   }
 
@@ -57,7 +57,7 @@ export class Delete_CategoriaGruposComponent implements OnInit {
       id:this.form.id,
       name: f.form.value.name,
       date:this.form.date,
-      GroupId:0
+      // GroupId:0
     };
 
 
@@ -115,7 +115,7 @@ export class Delete_CategoriaGruposComponent implements OnInit {
   getOneCntAccount(id:number) {
   this.categoryGroupService.getItem(id).subscribe((cnt_groupFromApi) => {
   
-    if(cnt_groupFromApi.categoryGroup.Group?.name != undefined){
+    if(cnt_groupFromApi.categoryGroup.name != undefined){
         
       this.form=cnt_groupFromApi.categoryGroup
       // console.log(this.form)

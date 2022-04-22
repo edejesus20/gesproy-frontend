@@ -5,7 +5,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','Group.name','date']"
+    [globalFilterFields]="['id','name','date']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -33,13 +33,15 @@
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
-        </ng-template>  -->
+        </ng-template> 
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
+          <!-- <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name">
+
+          </p-sortIcon></th> -->
           <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -49,15 +51,15 @@
 
     <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
       <tr [pSelectableRow]="rowData">
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <td>
               <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-        </ng-template>  -->
+        </ng-template> 
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
-          <td>{{item.Group.name| titlecase}}</td>
+          <!-- <td>{{item.Group.name| titlecase}}</td> -->
           <td>{{item.date  | date:'fullDate' | titlecase}}</td>
           
           <!-- <td>{{item.Faculty.Headquarter.name| titlecase}}</td>
@@ -90,28 +92,28 @@
   </ng-template>
 
   
-    <!-- <ng-template pTemplate="rowexpansion" let-item>
+    <ng-template pTemplate="rowexpansion" let-item>
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Faculties"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.Groups"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                              <th pSortableColumn="name">Nombre de Facultades<p-sortIcon field="name"></p-sortIcon></th>
-                              <th pSortableColumn="identification">Decano <p-sortIcon field="Decano"></p-sortIcon></th>
-                              <th pSortableColumn="Decano">Identificacion del Decano <p-sortIcon field="identification"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre de Grupos<p-sortIcon field="name"></p-sortIcon></th>
+                              <!-- <th pSortableColumn="identification">Lider <p-sortIcon field="Decano"></p-sortIcon></th> -->
+                              <!-- <th pSortableColumn="Decano">Identificacion del Decano <p-sortIcon field="identification"></p-sortIcon></th> -->
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
                               <td>{{order.id}}</td>
                               <td>{{order.name | titlecase}}</td>
-                              <td>{{order.Administrative?.User?.fullName | titlecase}}</td>
-                              <td>{{order.Administrative?.User?.Person?.identification}}</td>
+                              <!-- <td>{{order.Administrative?.User?.fullName | titlecase}}</td> -->
+                              <!-- <td>{{order.Administrative?.User?.Person?.identification}}</td> -->
                           </tr>
                       </ng-template>
 
@@ -126,7 +128,7 @@
               </div>
           </td>
       </tr>
-  </ng-template> -->
+  </ng-template>
 
 
   <!-- <ng-template pTemplate="summary">

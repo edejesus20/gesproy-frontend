@@ -18,8 +18,8 @@ export class Show_one_CategoriaGruposComponent implements OnInit {
     id:0,
     name: '',
     date:'',
-    GroupId: 0,
-    Group:undefined
+    // GroupId: 0,
+    Groups:undefined
   
   }
   constructor(
@@ -53,7 +53,7 @@ export class Show_one_CategoriaGruposComponent implements OnInit {
   getOneCntAccount(id:number) {
   this.categoryGroupService.getItem(id).subscribe((cnt_groupFromApi) => {
   
-    if(cnt_groupFromApi.categoryGroup.Group?.name != undefined){
+    if(cnt_groupFromApi.categoryGroup.name != undefined){
         
       this.form=cnt_groupFromApi.categoryGroup
       // console.log(this.form)

@@ -38,7 +38,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID' },
       { field: 'name', header: 'Nombre' },
-      { field: 'Group.name', header: 'Grupo' },
+      // { field: 'Group.name', header: 'Grupo' },
       { field: 'date', header: 'Fecha' }
   ];
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -48,6 +48,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
   getAllScale() {
     this.categoryGroupService.getList().subscribe((categoryGroupsApiFrom) => {
       this.categoryGroups =categoryGroupsApiFrom.categoryGroups
+      // console.log(categoryGroupsApiFrom.categoryGroups)
       this.rows2=[]
       if(categoryGroupsApiFrom.categoryGroups != undefined){
         for (const key of categoryGroupsApiFrom.categoryGroups) {
@@ -56,8 +57,8 @@ export class Show_CategoriaGruposComponent implements OnInit {
               id:key.id,
               name:  key.name,
               date:  key.date,
-              GroupId:key.GroupId,
-              Group: key.Group,
+              // GroupId:key.GroupId,
+              Groups: key.Groups,
             }
           )
         }
@@ -77,7 +78,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
           col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_3:{ text: 'FECHA', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_4:{ text: 'GRUPO', style: 'tableHeader',fontSize: 12 ,bold: true, },
+          // col_4:{ text: 'GRUPO', style: 'tableHeader',fontSize: 12 ,bold: true, },
       }
     }]
   
@@ -86,7 +87,9 @@ export class Show_CategoriaGruposComponent implements OnInit {
         if (headers.hasOwnProperty(key)){
             var header = headers[key];
             var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,
-              header.fila_0.col_3,header.fila_0.col_4]
+              header.fila_0.col_3,
+              // header.fila_0.col_4
+            ]
             body.push(row);
         }
     }
@@ -99,7 +102,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
               data.id?.toString(),
               data.name.toString(),
               data.date.toString(),
-              data.Group?.name.toString()
+              // data.Group?.name.toString()
             ]
             body.push(row);
             
@@ -115,7 +118,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
               data.id?.toString(),
               data.name.toString(),
               data.date.toString(),
-              data.Group?.name.toString()
+              // data.Group?.name.toString()
             ]
   
             body.push(row);
@@ -150,7 +153,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '25%', '25%','25%','25%'],
+              widths: [ '30%', '35%','35%'],
   
               body: body
           },
@@ -179,7 +182,7 @@ export class Show_CategoriaGruposComponent implements OnInit {
       array.push({ 
         id: key.id,
         Nombre_Completo:key.name,
-        Grupo:key.Group?.name,
+        // Grupo:key.Group?.name,
       })
       }
     }

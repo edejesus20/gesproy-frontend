@@ -19,7 +19,7 @@ export class Create_CategoriaGruposComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     date:new Date().toDateString(),
-    GroupId:['', [Validators.required]],
+    // GroupId:['', [Validators.required]],
    });
   
   displayMaximizable2:boolean=true
@@ -47,10 +47,12 @@ export class Create_CategoriaGruposComponent implements OnInit {
 
   public onSubmit() {
     let formValue: CategoryGroupI = this.form.value;
-    formValue.GroupId=this.form.value.GroupId.id
+    // formValue.GroupId=this.form.value.GroupId.id
 
-    if(formValue.name != '' && 
-    formValue.GroupId != ( 0 )){
+    if(formValue.name != '' 
+    // && 
+    // formValue.GroupId != ( 0 )
+    ){
 
     this.categoryGroupService.createItem(formValue).subscribe(
       () => {
