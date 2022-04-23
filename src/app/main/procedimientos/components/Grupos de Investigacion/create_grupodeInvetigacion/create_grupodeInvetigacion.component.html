@@ -1,8 +1,8 @@
-<form [formGroup]="form" novalidate   enctype="multipart/form-data" >
+<form [formGroup]="form"  novalidate (ngSubmit)="onSubmit()"  enctype="multipart/form-data" >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
   [style]="{'width': '65vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
-
+ 
   [closable]="true" [closeOnEscape]="false" 
   [showHeader]="false"   >
       <br>
@@ -75,9 +75,9 @@
                       formControlName="Facultad" name="Facultad"
                         [style]="{'width':'100%','margin-bottom':'20px'}" 
                         optionvalue="id"  optionLabel="name" filterBy="name"
-                        [required]="true" placeholder="SELECCIONE LA FACULTAD" title="SELECCIONE LA FACULTAD" (onChange)="SelectFacultad()">
+                        [required]="true" placeholder="SELECCIONE LA FACULTAD" title="SELECCIONE LA FACULTAD" (click)="SelectFacultad($event)">
                         <ng-template let-option pTemplate="item" >
-                          <span >{{option.name | titlecase}}</span>
+                          <span  >{{option.name | titlecase}}</span>
                       </ng-template>
                       </p-dropdown>
                     </div>
@@ -91,7 +91,7 @@
                           [style]="{'width':'100%','margin-bottom':'20px'}" 
                           optionvalue="id"  optionLabel="name" filterBy="name"
                           [required]="true" placeholder="SELECCIONE EL PROGRAMA" 
-                          title="SELECCIONE EL PROGRAMA" (onChange)="getHeadquarterProgram()">
+                          title="SELECCIONE EL PROGRAMA" (click)="getHeadquarterProgram($event)">
                           <ng-template let-option pTemplate="item" >
                             <span > {{option.name | titlecase}}</span>
                         </ng-template>
@@ -289,10 +289,10 @@
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                     [options]="teachers" [filter]="true" 
                     label="SELECCIONE EL INVESTIGADOR PRINCIPAL" 
-                    formControlName="TecaherId" name="TecaherId"
+                    formControlName="TeacherId" name="TeacherId"
                       [style]="{'width':'100%'}" 
                       optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
-                      [required]="true" placeholder="SELECCIONE EL INVESTIGADOR PRINCIPAL" (onChange)="SelectTeacher()"
+                      [required]="true" placeholder="SELECCIONE EL INVESTIGADOR PRINCIPAL" (click)="SelectTeacher($event)"
                       title="SELECCIONE EL INVESTIGADOR PRINCIPAL">
                       <ng-template let-option pTemplate="item" >
                         <span >{{option.User.fullName  | titlecase}} -
@@ -711,7 +711,7 @@
 
                           
             <div fxLayout="row" class="titleCard" style="margin-top: 20px">
-              <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
+              <button pButton type="submit" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                label="Enviar Registro" styleClass="mr-2"></button>
             <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>

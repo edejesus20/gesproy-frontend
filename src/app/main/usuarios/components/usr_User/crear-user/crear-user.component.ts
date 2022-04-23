@@ -76,6 +76,9 @@ export class CrearUserComponent implements OnInit {
     this.getAllgenders()
     this.getAlldocumentTypes()
   }
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
       this.roles = rolesFromApi.roles;

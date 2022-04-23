@@ -34,20 +34,21 @@
   <ng-template pTemplate="header">
       <tr>
         <ng-template [ngIf]="mostrar==3">
-          <th style="width: 3rem"></th>
+          <th style="width: 1rem"></th>
         </ng-template>
           <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="group_code">CODIGO<p-sortIcon field="group_code"></p-sortIcon></th>
           <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           
-          <th style="min-width:300px" pSortableColumn="ObjetivoGeneral">OBJETIVO GENERAL
+          <th style="min-width:245px" pSortableColumn="ObjetivoGeneral">OBJETIVO GENERAL
             <p-sortIcon field="ObjetivoGeneral"></p-sortIcon></th>
           <!-- <th pSortableColumn="ident_colciencias">ID COLCIENCIAS<p-sortIcon field="ident_colciencias"></p-sortIcon></th> -->
           <th pSortableColumn="CategoryGroup.name">CATEGORIA<p-sortIcon field="CategoryGroup.name"></p-sortIcon></th>
           <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
           <th pSortableColumn="Teacher.User.fullName">LIDER<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <th style="max-width:400px" pSortableColumn="Link_gruplac">LINK GRUPLAC<p-sortIcon field="Link_gruplac"></p-sortIcon></th>
+          <th pSortableColumn="Knowledge_areas">AREAS DE CONOCIMIENTO<p-sortIcon field="Knowledge_areas"></p-sortIcon></th>
 
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -67,17 +68,25 @@
           <td>{{item.name  | titlecase}}</td>
           <td>{{item.group_code }}</td>
           <td>{{item.Program?.Faculty?.name | titlecase}}</td>
-          <td style="min-width:300px" >{{item.ObjetivoGeneral }}</td>
+          <td style="min-width:245px" >{{item.ObjetivoGeneral }}</td>
           <!-- <td>{{item.ident_colciencias }}</td> -->
           <td>{{item.CategoryGroup.name }}</td>
           
           <td>{{item.resolution }}</td>
           <td>{{item.Teacher.User.fullName }}</td>
+          
           <td style="max-width:400px" >
             <a pButton 
             pRipple type="button" class="p-button-outlined p-button-info" 
             title="Ir a Sitio" 
              target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
+            </td>
+            <td >
+              <span *ngFor="let i of item.Knowledge_areas">
+                <span style="display: flex;">
+                  * {{i.name}} 
+                </span>
+              </span>
             </td>
           <ng-template [ngIf]="mostrar==1">
               
@@ -158,6 +167,7 @@
               </div>
           </td>
       </tr>
+
   </ng-template>
 
 

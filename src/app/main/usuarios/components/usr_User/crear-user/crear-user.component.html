@@ -439,6 +439,8 @@
 </div>
 <br>
       <div fxLayout="row" class="titleCard">
+        <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+        
         <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
          icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
          label="Enviar Registro" styleClass="mr-2"></button>

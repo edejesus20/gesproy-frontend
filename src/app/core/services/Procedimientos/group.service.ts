@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 import { GroupI } from 'src/app/models/institution/group';
 import { environment } from 'src/environments/environment';
 
@@ -39,9 +39,13 @@ handleError(res: Response) {
 
 // Create a new item
 createItem(group: GroupI): Observable<GroupI> {
-  return this.http
-    .post<GroupI>(this.base_path_post, JSON.stringify(group), this.httpOptions)
+  return this.http.post<GroupI>(this.base_path_post, JSON.stringify(group), this.httpOptions)
     .pipe(
+      tap((res: GroupI) => {
+        if (res) {
+          console.log(res)
+        }
+      }),
       retry(2),
       catchError(this.handleError)
     )

@@ -83,6 +83,14 @@ public mostrarTeacher:boolean=false
  public mostrarHeadquarterProgram:boolean=false;
   public categoryGroups:CategoryGroupI[] = []
   public knowledge_areas: Knowledge_areaI[]=[];
+  private HeadquarterProgramId:number = 0
+private TeacherId:number = 0
+private CategoryGroupId:number = 0
+
+public lines1:any[] =[]
+public InvestigatorCollaborators1:any[] =[]
+public knowledge_areas1:any[] =[]
+
   constructor(
     private groupService:GroupService,
     private roleInvestigationsService:RoleInvestigationsService,
@@ -136,34 +144,30 @@ public mostrarTeacher:boolean=false
       Resultados: ['', [Validators.required]],
       Sector: ['', [Validators.required]],
 
-      TecaherId:['', [Validators.required]],
+      TeacherId:['', [Validators.required]],
      
-      InvestigatorCollaborators: this.formBuilder.array([
-        this.formBuilder.group({
-          UserId:['', [Validators.required]],
-          RoleId:['', [Validators.required]]
-        })
-      ]),
-      
-     
-      
+      InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group({UserId:['', [Validators.required]],
+          RoleId:['', [Validators.required]]}) ]),
+
       knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
       lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
       // Seedbed: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
       // Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
     });
   }  
- public SelectFacultad(){
+ public SelectFacultad(e:Event){
+  e.preventDefault();
     if(this.form.value.Facultad != ''){
       this.getFacultadHeadquarterProgram(this.form.value.Facultad.id)
       this.mostrarFacultad=true
     }
   }
 
-  public SelectTeacher(){
-    if(this.form.value.TecaherId != ''){
-      this.getLineTeacherId(this.form.value.TecaherId.id)
-      this.getOneTeachers(this.form.value.TecaherId.id)
+  public SelectTeacher(e:Event){
+    e.preventDefault();
+    if(this.form.value.TeacherId != ''){
+      this.getLineTeacherId(this.form.value.TeacherId.id)
+      this.getOneTeachers(this.form.value.TeacherId.id)
       this.mostrarTeacher=true
       this.mostrarLienas=true
     }
@@ -180,14 +184,16 @@ public mostrarTeacher:boolean=false
   geFacultad() {
     this.facultyService.getList().subscribe(teachersA => {
       this.facultys=teachersA.facultys
-      console.log(teachersA.facultys)
+      // console.log(teachersA.facultys)
     }, error => console.error(error))
   }
-  public getHeadquarterProgram(){
+  public getHeadquarterProgram(e:Event){
+    e.preventDefault();
+
     this.teachers=[]
     if(this.form.value.HeadquarterProgramId != ''){
       this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
-       console.log(rolesFromApi.teachers)
+      //  console.log(rolesFromApi.teachers)
        this.lines=rolesFromApi.lines
        for (const key of rolesFromApi.teachers) {
          if(key.TeacherId){
@@ -245,45 +251,120 @@ public mostrarTeacher:boolean=false
 
 
   
-  public onSubmit(e: Event): void {
-    e.preventDefault();
+  public onSubmit(){
+    console.log('aqui1')
     let formValue: GroupI = this.form.value;
+    // console.log('aqui2',formValue)
     formValue.CategoryGroupId=this.form.value.CategoryGroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
     formValue.TeacherId=this.form.value.TeacherId.id
-        console.log(formValue)
+    // console.log('aqui3',formValue)
 
-    if(this.mostrarFacultad == true && formValue.name != ""){
-      
-    // this.groupService.createItem(formValue).subscribe(
-    //   () => {
-    //     var date = new Date('2020-01-01 00:00:03');
-    //       function padLeft(n:any){ 
-    //         return n ="00".substring(0, "00".length - n.length) + n;
-    //       }
-    //       var interval = setInterval(() => {
-    //       var minutes = padLeft(date.getMinutes() + "");
-    //       var seconds = padLeft(date.getSeconds() + "");
-    //       // console.log(minutes, seconds);
-    //       if( seconds == '03') {
-    //       this.messageService.add({severity:'success', summary: 'Success', 
-    //       detail: 'Registro de Grupo Creado con exito'});
-    //       }
-    //       date = new Date(date.getTime() - 1000);
-    //       if( minutes == '00' && seconds == '01' ) {
-    //         this.router.navigateByUrl('/Procedimientos/mostrar_groups');
-    //         clearInterval(interval); 
-    //       }
-    // }, 1000);
-    //   },async error => {
-    //     if(error != undefined) {
-    //       let text = await translate(error.error.message, "es");
-    //       if(error.error.dataErros){
-    //         text = await translate(error.error.dataErros[0].message, "es");
-    //       }
-    //       this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-    //     }
-    //   });
+      if(this.HeadquarterProgramId == 0 &&this.TeacherId == 0 &&this.CategoryGroupId == 0){
+          this.HeadquarterProgramId= formValue.HeadquarterProgramId
+          this.TeacherId= formValue.TeacherId
+          this.CategoryGroupId= formValue.CategoryGroupId
+      }else{
+        formValue.TeacherId=this.TeacherId
+        formValue.CategoryGroupId=this.CategoryGroupId
+        formValue.HeadquarterProgramId=this.HeadquarterProgramId
+      }
+
+      // console.log('aqui4',formValue,this.TeacherId,this.CategoryGroupId,)
+
+      if(this.lines1.length == 0 || this.lines1 == []){
+        let control = <FormArray>this.form.controls['lines']
+        for (const key of control.value) {
+          key.LineId=key.LineId.id 
+          this.lines1.push({
+            LineId:key.LineId,
+          })
+        }
+        formValue.lines = this.form.value.lines
+        // console.log('aqui')
+      }else{
+        formValue.lines = this.lines1
+      }
+
+      if(this.knowledge_areas1.length == 0 || this.knowledge_areas1 == []){
+        let control = <FormArray>this.form.controls['knowledge_areas']
+        for (const key of control.value) {
+          key.Knowledge_areaId=key.Knowledge_areaId.id 
+          this.knowledge_areas1.push({
+            Knowledge_areaId:key.Knowledge_areaId,
+          })
+        }
+        formValue.knowledge_areas = this.form.value.knowledge_areas
+        // console.log('aqui')
+      }else{
+        formValue.knowledge_areas = this.knowledge_areas1
+      }
+      // console.log('aqui5',formValue)
+
+
+      if(this.InvestigatorCollaborators1.length == 0 || this.InvestigatorCollaborators1 == []){
+        let control = <FormArray>this.form.controls['InvestigatorCollaborators']
+        for (const key of control.value) {
+          key.RoleId=key.RoleId.id 
+          key.UserId=key.UserId.id 
+          this.InvestigatorCollaborators1.push({
+            RoleId:key.RoleId,
+            UserId:key.UserId,
+          })
+        }
+        formValue.InvestigatorCollaborators = this.form.value.InvestigatorCollaborators
+        // console.log('aqui')
+      }else{
+        formValue.InvestigatorCollaborators = this.InvestigatorCollaborators1
+      }
+      // console.log(formValue)
+    if(this.mostrarFacultad == true && formValue.name != ""&&
+    formValue.ident_colciencias != "" &&
+    formValue.resolution != "" && 
+    formValue.group_code != "" && 
+    formValue.Sector != "" && 
+    formValue.ObjetivoGeneral != "" && 
+    formValue.ObjetivosEspecificos != "" && 
+    formValue.Mision != "" && 
+    formValue.Vision != "" && 
+    formValue.Resultados != "" && 
+    formValue.Perfil != "" && 
+    formValue.Metas != "" && 
+    formValue.TeacherId != ( 0 || undefined)&&
+    formValue.HeadquarterProgramId != ( 0 || undefined)&&
+    formValue.CategoryGroupId != ( 0 || undefined)&&
+    formValue.Link_gruplac != ""){
+      console.log(formValue,'aqui')
+      // https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003518 
+    this.groupService.createItem(formValue).subscribe(
+      () => {
+        var date = new Date('2020-01-01 00:00:03');
+          function padLeft(n:any){ 
+            return n ="00".substring(0, "00".length - n.length) + n;
+          }
+          var interval = setInterval(() => {
+          var minutes = padLeft(date.getMinutes() + "");
+          var seconds = padLeft(date.getSeconds() + "");
+          // console.log(minutes, seconds);
+          if( seconds == '03') {
+          this.messageService.add({severity:'success', summary: 'Success', 
+          detail: 'Registro de Grupo Creado con exito'});
+          }
+          date = new Date(date.getTime() - 1000);
+          if( minutes == '00' && seconds == '01' ) {
+            this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+            clearInterval(interval); 
+          }
+    }, 1000);
+      },async error => {
+        if(error != undefined) {
+          let text = await translate(error.error.message, "es");
+          if(error.error.dataErros){
+            text = await translate(error.error.dataErros[0].message, "es");
+          }
+          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+        }
+      });
       }else{
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
       }

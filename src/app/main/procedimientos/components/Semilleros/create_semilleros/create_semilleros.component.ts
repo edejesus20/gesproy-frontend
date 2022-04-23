@@ -235,7 +235,6 @@ private GroupId:number = 0
     formValue.Mision != "" && 
     formValue.Vision != "" && 
     formValue.estrategias != "" && 
-    formValue.Vision != "" && 
     formValue.HeadquarterProgramId != ( 0 || undefined)&&
     formValue.GroupId != ( 0 || undefined)
 

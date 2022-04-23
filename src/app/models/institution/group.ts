@@ -23,11 +23,13 @@ export interface GroupI {
     CategoryGroupId:number
     Link_gruplac:string
 
+    InvestigatorCollaborators?:any[]
+    lines?:any[]
+    knowledge_areas?:any[]
 
     Seedbed?:any[]
     Anexos?:any[]
-    InvestigatorCollaborators?:any[]
-    lines?:any[]
+    
     LineProgramGroups?:LineProgramGroupI[]
     CategoryGroup?:CategoryGroupI
     Teacher?:TeacherI
