@@ -69,7 +69,12 @@ export class AsignarRolUserComponent implements OnInit {
   }
   getUser() {
     this.userService.getUser().subscribe((userFromApi) => {
-      this.users = userFromApi.users;
+      for (const key of userFromApi.users) {
+        if(key.Person != undefined){
+          this.users.push(key.Person)
+        }
+      }
+      // this.users = userFromApi.users;
     }, error => console.error(error));
   }
   public onSelectionChange(value = []) {
@@ -82,7 +87,7 @@ public onSelectAllChange(event:any) {
 
     if (checked) {
         this.userService.getUser().subscribe(res => {
-            this.selectedProducts = res.users;
+            this.selectedProducts = this.users;
             this.selectAll = true;
         });
     }

@@ -369,11 +369,11 @@
                                          formControlName="UserId" name="UserId"
                                         label="SELECCIONE INVESTIGADOR" 
                                        [style]="{'width':'100%','margin-bottom':'20px'}"
-                                       optionvalue="id" optionLabel="User.fullName" filterBy="User.fullName"
+                                       optionvalue="UserId" optionLabel="fullName" filterBy="fullName"
                                        [required]="true" placeholder="SELECCIONE INVESTIGADOR"  >
                                        <ng-template let-option pTemplate="item"  >
-                                         <span >{{option.User.fullName  | titlecase}} -
-                                           cc: {{option.identification }} 
+                                         <span >{{option.fullName  | titlecase}} -
+                                           CC: {{option.identification }}  Rol : {{option.rol }}
                                            </span>
                                      </ng-template>
                                      </p-dropdown></div>

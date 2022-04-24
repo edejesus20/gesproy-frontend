@@ -53,28 +53,32 @@ export class MostrarUsersComponent implements OnInit {
   
     getAllScale() {
       this.userService.getUser().subscribe((categoryGroupsApiFrom) => {
-        this.users =categoryGroupsApiFrom.users
         this.rows2=[]
         if(categoryGroupsApiFrom.users != undefined){
           for (const key of categoryGroupsApiFrom.users) {
-            this.rows2.push(
-              {
-                id:key.id,
-                name: key.name,
-                surname: key.surname,
-                DocumentTypeId: key.DocumentTypeId,
-                identification: key.identification,
-                GenderId: key.GenderId,
-                UserId: key.UserId,
-                address: key.address,
-                phone: key.phone,
-                Gender:key.Gender,
-                DocumentType:key.DocumentType,
-                User:key.User,
-                nationality: key.nationality,
-                date_of_birth: key.date_of_birth
-              }
-            )
+            if(key.Person != undefined){
+              this.users.push(key.Person)
+
+              this.rows2.push(
+                {
+                  id:key.id,
+                  name: key.Person.name,
+                  surname: key.Person.surname,
+                  DocumentTypeId: key.Person.DocumentTypeId,
+                  identification: key.Person.identification,
+                  GenderId: key.Person.GenderId,
+                  UserId: key.Person.UserId,
+                  address: key.Person.address,
+                  phone: key.Person.phone,
+                  Gender:key.Person.Gender,
+                  DocumentType:key.Person.DocumentType,
+                  User:key.Person.User,
+                  nationality: key.Person.nationality,
+                  date_of_birth: key.Person.date_of_birth
+                }
+              )
+            }
+       
           }
         }
       }, error => console.error(error));

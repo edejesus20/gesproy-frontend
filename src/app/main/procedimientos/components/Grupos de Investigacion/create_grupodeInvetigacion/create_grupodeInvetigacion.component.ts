@@ -74,7 +74,7 @@ public students:StudentI[] =[]
 public algoS:number[]=[0];
 public mostrarS:boolean=false;
 
-public users:PersonI[]=[]
+public users:any[]=[]
 public roles:RoleInvestigationI[] = []
 
 public mostrarTeacher:boolean=false
@@ -216,9 +216,24 @@ public knowledge_areas1:any[] =[]
     }, error => console.error(error))
   }  
 
-  getInvestigatorCollaborators() {
+ async getInvestigatorCollaborators() {
 
-    this.userService.getUser().subscribe(teachersA => {
+   
+   this.userService.getUserteacherinvestigatorstudent().subscribe(teachersA => {
+      for (let key of teachersA.users) {
+        if(key.rol == "teacher"){
+          key.rol=  "Docente";
+        }
+        if(key.rol == "student"){
+          key.rol=  "Estudiante";
+        }
+        if(key.rol == "investigator"){
+          key.rol=  "Investigador";
+        }
+        
+        // console.log(key.rol.__zone_symbol__value)
+        this.users.push(key)
+      }
       this.users=teachersA.users
     }, error => console.error(error))
   } 
@@ -303,10 +318,10 @@ public knowledge_areas1:any[] =[]
 
 
       if(this.InvestigatorCollaborators1.length == 0 || this.InvestigatorCollaborators1 == []){
-        let control = <FormArray>this.form.controls['InvestigatorCollaborators']
-        for (const key of control.value) {
+        let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
+        for (const key of control1.value) {
           key.RoleId=key.RoleId.id 
-          key.UserId=key.UserId.id 
+          key.UserId=key.UserId.UserId 
           this.InvestigatorCollaborators1.push({
             RoleId:key.RoleId,
             UserId:key.UserId,
@@ -335,7 +350,7 @@ public knowledge_areas1:any[] =[]
     formValue.CategoryGroupId != ( 0 || undefined)&&
     formValue.Link_gruplac != ""){
       console.log(formValue,'aqui')
-      // https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003518 
+      https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003518 
     this.groupService.createItem(formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');

@@ -38,7 +38,7 @@ handleError(res: Response) {
 
 };
 // Get students data
-getUser(): Observable<{users: PersonI[]}> {
+getUser(): Observable<{users: UserI[]}> {
   let token : string | null=localStorage.getItem('token')
   if(token != null) {
     let httpOptions = {
@@ -49,20 +49,51 @@ getUser(): Observable<{users: PersonI[]}> {
     }
     // console.log(httpOptions)
     return this.http
-      .get<{users: PersonI[]}>(this.base_path,httpOptions)
+      .get<{users: UserI[]}>(this.base_path,httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
       )
   }else{
     return this.http
-    .get<{users: PersonI[]}>(this.base_path)
+    .get<{users: UserI[]}>(this.base_path)
     .pipe(
       retry(2),
       catchError(this.handleError)
     )
   }
 }
+
+getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
+  let token : string | null=localStorage.getItem('token')
+  if(token != null) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'token':token
+      })
+    }
+    // console.log(httpOptions)
+    return this.http
+      .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent',httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }else{
+    return this.http
+    .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent')
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+}
+
+
+
+
+
 userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[]}> {
   let token : string | null=localStorage.getItem('token')
   if(token != null) {
