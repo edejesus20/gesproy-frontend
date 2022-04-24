@@ -70,9 +70,9 @@ export class TeacherService {
        catchError(this.handleError)
      )
  }
- getItemHeadquarterProgram(id: number): Observable<{teachers:any[],lines:any[]}> {
+ getItemHeadquarterProgram(id: number): Observable<{teachers:any[],lines:any[],semilleros:any[]}> {
   return this.http
-    .get<{teachers:any[],lines:any[]}>(this.base_path_get + '/HeadquarterProgram/' + id)
+    .get<{teachers:any[],lines:any[],semilleros:any[]}>(this.base_path_get + '/HeadquarterProgram/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)

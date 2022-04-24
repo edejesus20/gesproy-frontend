@@ -27,7 +27,7 @@ export interface GroupI {
     lines?:any[]
     knowledge_areas?:any[]
 
-    Seedbed?:any[]
+    Seedbeds?:any[]
     Anexos?:any[]
     
     LineProgramGroups?:LineProgramGroupI[]

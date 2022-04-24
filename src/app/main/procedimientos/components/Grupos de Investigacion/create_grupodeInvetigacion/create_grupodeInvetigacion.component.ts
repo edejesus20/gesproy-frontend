@@ -33,7 +33,7 @@ import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/crea
   providers: [DialogService]
 })
 export class Create_grupodeInvetigacionComponent implements OnInit {
-  public seedbeds: any;
+  public seedbeds: any[] = [];
   public mostrar:boolean=false;
   public algo:number[]=[0];
   public mostrar2:boolean=false;
@@ -90,6 +90,7 @@ private CategoryGroupId:number = 0
 public lines1:any[] =[]
 public InvestigatorCollaborators1:any[] =[]
 public knowledge_areas1:any[] =[]
+public Seedbeds1:any[] =[]
 
   constructor(
     private groupService:GroupService,
@@ -151,7 +152,7 @@ public knowledge_areas1:any[] =[]
 
       knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
       lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
-      // Seedbed: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
+      // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
       // Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
     });
   }  
@@ -166,7 +167,7 @@ public knowledge_areas1:any[] =[]
   public SelectTeacher(e:Event){
     e.preventDefault();
     if(this.form.value.TeacherId != ''){
-      this.getLineTeacherId(this.form.value.TeacherId.id)
+      // this.getLineTeacherId(this.form.value.TeacherId.id)
       this.getOneTeachers(this.form.value.TeacherId.id)
       this.mostrarTeacher=true
       this.mostrarLienas=true
@@ -193,8 +194,9 @@ public knowledge_areas1:any[] =[]
     this.teachers=[]
     if(this.form.value.HeadquarterProgramId != ''){
       this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
-      //  console.log(rolesFromApi.teachers)
+      //  console.log(rolesFromApi.semilleros)
        this.lines=rolesFromApi.lines
+       this.seedbeds= rolesFromApi.semilleros
        for (const key of rolesFromApi.teachers) {
          if(key.TeacherId){
           this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
@@ -301,6 +303,22 @@ public knowledge_areas1:any[] =[]
         formValue.lines = this.lines1
       }
 
+      
+
+      // if(this.Seedbeds1.length == 0 || this.Seedbeds1 == []){
+      //   let control = <FormArray>this.form.controls['Seedbeds']
+      //   for (const key of control.value) {
+      //     key.SeedbedId=key.SeedbedId.id 
+      //     this.Seedbeds1.push({
+      //       SeedbedId:key.SeedbedId,
+      //     })
+      //   }
+      //   formValue.Seedbeds = this.form.value.Seedbeds
+      //   // console.log('aqui')
+      // }else{
+      //   formValue.Seedbeds = this.Seedbeds1
+      // }
+
       if(this.knowledge_areas1.length == 0 || this.knowledge_areas1 == []){
         let control = <FormArray>this.form.controls['knowledge_areas']
         for (const key of control.value) {
@@ -332,6 +350,8 @@ public knowledge_areas1:any[] =[]
       }else{
         formValue.InvestigatorCollaborators = this.InvestigatorCollaborators1
       }
+
+
       // console.log(formValue)
     if(this.mostrarFacultad == true && formValue.name != ""&&
     formValue.ident_colciencias != "" &&
@@ -441,12 +461,12 @@ public knowledge_areas1:any[] =[]
   }
 
   get getSeedbed() {
-    return this.form.get('Seedbed') as FormArray;//obtener todos los formularios
+    return this.form.get('Seedbeds') as FormArray;//obtener todos los formularios
   }
 
   addSeedbed(event: Event){
     event.preventDefault();
-    const control = <FormArray>this.form.controls['Seedbed']
+    const control = <FormArray>this.form.controls['Seedbeds']
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrarS == false){
@@ -460,7 +480,7 @@ public knowledge_areas1:any[] =[]
   }
   removeSeedbed(index: number,event: Event){
     event.preventDefault();
-    let control = <FormArray>this.form.controls['Seedbed']//aceder al control
+    let control = <FormArray>this.form.controls['Seedbeds']//aceder al control
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrarS=false
@@ -597,7 +617,7 @@ public knowledge_areas1:any[] =[]
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Area de Conocimiento Creada', detail: person.name,life: 2000});
-      this.getCateghoria()
+      this.getKnowledge_area()
 
         }
   });
