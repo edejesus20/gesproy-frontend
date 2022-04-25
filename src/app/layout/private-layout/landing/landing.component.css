@@ -1,3 +1,48 @@
+.margSup{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  justify-content:flex-end;
+  padding-right: 10%;
+  padding-top: 10px;
+
+}
+
+.imgLogo {
+width:auto;
+ /* min-height: 250px; */
+  margin-top:25px;
+  /* margin-left: 30px; */
+  /* max-width: 500px; */
+  /* max-height:700px; */
+  border : 1px solid transparent;
+  border-radius: 15px;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+}
+.imgLogo2 {
+  width:auto;
+   /* min-height: 250px; */
+    /* margin-left: 30px; */
+    /* max-width: 500px; */
+    /* max-height:700px; */
+    border : 1px solid transparent;
+    border-radius: 15px;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+  }
+.titleCard{
+  display:flex;
+  justify-content:center;
+  align-content: center;
+  font-size: 45px;
+  font-weight: bold;
+  /* color:rgba(51,102,0,1); */
+  margin-top: 10px;
+}
+
 .margen {
   /* padding: 10px; */
   margin-top: -5px;
@@ -190,9 +235,6 @@ li {
   margin-bottom: 24px;
   list-style: none;
 }
-.p-menubar-button {
-  display: none;
-}
 
 #redes_sociales li a {
   color: #fff;
@@ -218,13 +260,13 @@ li {
 .nav > li > a {
   display: block;
 }
-.titleCard{
+/* .titleCard{
   margin: 0px;
   display:flex;
   justify-content:center;
   align-content: center;
   text-align: center;
-}
+} */
 .fondebabutton{
   color:#707070;
 }

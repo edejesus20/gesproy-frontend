@@ -1,30 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ValidateGuard } from 'src/app/core/guards/validate.guard';
+import { FormLoginComponent } from './components/form-login/form-login.component';
 import { FormRegisterComponent } from './components/form-register/form-register.component';
 // import { FormLoginComponent } from './components/form-login/form-login.component';
 // import { FormRegisterComponent } from './components/form-register/form-register.component';
-import { LandingComponent } from './components/landing/landing.component';
+import { LandingComponent } from '../private-layout/landing/landing.component';
 import { PublicLayoutComponent } from './public-layout.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: PublicLayoutComponent,
-    children: [
-      {
-        path: 'landing',
-        component: LandingComponent
-      },
-      // {
-      //   path: 'login',
-      //   component: FormLoginComponent
-      // },
-      {
-        path: 'register',
-        component: FormRegisterComponent
-      },
-    ]
-  }
+    path: 'login',
+    component:FormLoginComponent,
+    canLoad:[!ValidateGuard]
+},
+{
+  path: 'register',
+  component: FormRegisterComponent,
+  canLoad:[!ValidateGuard]
+
+},
+  
 ];
 
 @NgModule({

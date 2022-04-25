@@ -5,3 +5,37 @@
 mat-sidenav {
     width: 250px;
 }
+#redes_sociales li a.twitter{
+    background: url(../../../assets/images/redes_sociales-t.png) no-repeat;
+    width: 48px;
+    height: 48px;
+  }
+  #redes_sociales li a.twitter:hover{
+    background: url(../../../assets/images/redes_sociales-t2.png) no-repeat;
+    width: 48px;
+    height: 48px;
+  }
+  #redes_sociales li a.facebook{
+    background: url(../../../assets/images/redes_sociales-f.png) no-repeat;  width: 48px;
+    height: 48px;
+  }
+  #redes_sociales li a.facebook:hover{
+    background: url(../../../assets/images/redes_sociales-f2.png) no-repeat;  width: 48px;
+    height: 48px;
+  }
+  #redes_sociales li a.instagram{
+    background: url(../../../assets/images/redes_sociales-i.png) no-repeat;  width: 48px;
+    height: 48px;
+  } 
+  #redes_sociales li a.instagram:hover{
+    background: url(../../../assets/images/redes_sociales-i2.png) no-repeat;  width: 48px;
+    height: 48px;
+  } 
+  #redes_sociales li a.youtube {
+  background: url(../../../assets/images/redes_sociales-y.png) no-repeat;  width: 48px;
+    height: 48px;
+  }
+  #redes_sociales li a.youtube:hover{
+    background: url(../../../assets/images/redes_sociales-y2.png) no-repeat;  width: 48px;
+      height: 48px;
+    }

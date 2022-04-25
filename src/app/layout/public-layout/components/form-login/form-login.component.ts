@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserLoginI } from 'src/app/models/authorization/usr_User';
 export interface datos{
@@ -14,54 +15,124 @@ export interface datos{
   styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent implements OnInit {
-  public mostrar:boolean =false;
-  loginForm = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required]
-  })
+  displayMaximizable:boolean=true
+  public form:FormGroup=this.formBuilder.group({
+    username:['', [Validators.required]],
+    password:['', [Validators.required]],
+   });
+
+   public images: any[]=[
+    
+    {
+        "previewImageSrc": "assets/images/fondo2.jpg",
+        "thumbnailImageSrc": "assets/images/bloque2.jpg",
+        "alt": "Description for Image 5",
+        "title": "Title 5"
+    },
+    {
+      "previewImageSrc": "assets/images/bloque2.jpg",
+      "thumbnailImageSrc": "assets/images/fondo2.jpg",
+      "alt": "Description for Image 3",
+      "title": "Title 3"
+  },
+     {
+      "previewImageSrc": "assets/images/bloque.jpg",
+      "thumbnailImageSrc": "assets/images/fondo2.jpg",
+      "alt": "Description for Image 3",
+      "title": "Title 3"
+  },
+  {
+    "previewImageSrc": "assets/images/fondo2.jpg",
+    "thumbnailImageSrc": "assets/images/bloque2.jpg",
+    "alt": "Description for Image 5",
+    "title": "Title 5"
+},
+  {
+    "previewImageSrc": "assets/images/bloque.jpg",
+    "thumbnailImageSrc": "assets/images/fondo2.jpg",
+    "alt": "Description for Image 3",
+    "title": "Title 3"
+},
+];
+
+public responsiveOptions:any[] = [
+   {
+       breakpoint: '768px',
+       numVisible: 5
+   },
+  
+];
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService, 
-    // private snackBar: MatSnackBar,
-    private router: Router, 
-    // public dialog: MatDialog,
-    // @Inject(MAT_DIALOG_DATA) public data? : datos
-  ) {
+    private formBuilder: FormBuilder,
+    private authService:AuthService,
+    private router: Router,
+    private messageService: MessageService,
+    ) { }
 
-   }
+   
 
-  ngOnInit(): void {
-    // if(this.data?.dato != undefined){
-    //   this.mostrar=true
-    // }
-  }
+    ngOnInit(): void {
+      var token :string | null= localStorage.getItem('token');
+      var user :string | null= localStorage.getItem('user');
+      // var menu :string | null= localStorage.getItem('menu');
+      if(token!=null && user!=null){
+          // this.showSuccess()
+        let userObjeto:any = JSON.parse(user); 
+        // let menuObjeto:any = JSON.parse(menu); 
+        let userLoginResponse={
+          user:userObjeto,
+          token:token,
+        }
+        // this.isLoggedIn=true
+        // this.setLogin(true) 
+              
+          // this.userService.getOneUser(userLoginResponse.user.id).subscribe((user)=>{
+          //   if(user.user.User?.fullName){
+          //     this.nombre = user.user.User?.fullName
+          //   }  
+              
+          // })
+          this.router.navigateByUrl('/welcome'); 
+      }else{
+        // this.isLoggedIn=false
+        // this.router.navigateByUrl('/login');
+      }
+    }
 
   onSubmit() {
-    const formValue: UserLoginI = this.loginForm.value;
-    this.authService.login(formValue).subscribe(
-      () => {
-        // this.snackBar.open('Autenticacion Exitosa !!!', 'OK', {
-        //   duration: 5000,
-        // });
-        // if(this.data?.dato == undefined){
+    let form :UserLoginI= this.form.value
+    this.authService.login(form).subscribe(
+      (result) => {
+        var date = new Date('2020-01-01 00:00:03');
+        function padLeft(n:any){ 
+          return n ="00".substring(0, "00".length - n.length) + n;
+        }
+        var interval = setInterval(() => {
+        var minutes = padLeft(date.getMinutes() + "");
+        var seconds = padLeft(date.getSeconds() + "");
+        // console.log(minutes, seconds);
+        if( seconds == '03') {
+          this.messageService.add({severity:'success', summary: 'Bienvenido', detail: `${result.user.username}`});
+        }
+        date = new Date(date.getTime() - 1000);
+        if( minutes == '00' && seconds == '02' ) {
           this.router.navigateByUrl('/landing');
+          clearInterval(interval); 
+        }
+  }, 1000)
+        
+    },async error => {
+      if(error != undefined) {
+        // let text =await translate('Sometemos', {to: 'en'}) 
+        // if(error.error.dataErros){
+        //   text = await translate(error.error.dataErros[0].message, { to:  "es"});
         // }
-       
-      },
-      err => {
-        // this.snackBar.open('Error al iniciar, revise sus datos !!!', 'OK', {
-        //   duration: 5000,
-        // });
-        // const dialogRef = this.dialog.open(FormLoginComponent,{
-        //   width:'75%',height:'auto',
-        //   data:{dato:1}
-        // });
-    
-        // dialogRef.afterClosed().subscribe(result => {
-        // });
+        console.log(error);
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${error.error.detail}`});
       }
-    );
+    })
+
   }
 
 }

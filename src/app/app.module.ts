@@ -15,7 +15,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {RippleModule} from 'primeng/ripple';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {CardModule} from 'primeng/card';
 import { MenuModule } from 'primeng/menu';
@@ -49,6 +49,11 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { UserService } from './core/services/usuarios/user.service';
 import { CarouselModule } from 'primeng/carousel';
 import {GalleriaModule} from 'primeng/galleria';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,12 +100,20 @@ import {GalleriaModule} from 'primeng/galleria';
     ,KeyFilterModule,
     CarouselModule,
     GalleriaModule,
+  
     
+      ReactiveFormsModule,
     
-  ],
-  providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport,
-  {provide:LOCALE_ID, useValue:'es'}],
- 
-  bootstrap: [AppComponent]
+      DropdownModule,
+      CalendarModule,
+      FieldsetModule,
+      FileUploadModule,
+      InputTextareaModule,
+
+   
+    ],
+    providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport,
+    {provide:LOCALE_ID, useValue:'es'}],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

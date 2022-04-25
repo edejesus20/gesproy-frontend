@@ -44,10 +44,24 @@ import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { PanelModule } from 'primeng/panel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CarouselModule } from 'primeng/carousel';
+import { FieldsetModule } from 'primeng/fieldset';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {SlideMenuModule} from 'primeng/slidemenu';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { LandingComponent } from './landing/landing.component';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
+    LandingComponent,
+    MenuComponent
     
   ],
   imports: [
@@ -100,7 +114,20 @@ import { CalendarModule } from 'primeng/calendar';
     TableModule,
     KeyFilterModule,
     DropdownModule,
-    CalendarModule
-  ]
+    CalendarModule,
+
+    PanelModule,
+    AutoCompleteModule,
+    InputNumberModule,
+    CarouselModule,
+
+    SlideMenuModule,
+
+    FieldsetModule,
+    FileUploadModule,
+    InputTextareaModule,
+    ConfirmDialogModule
+  ],
+  providers: [DynamicDialogRef,DynamicDialogConfig]
 })
 export class PrivateLayoutModule { }

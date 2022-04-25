@@ -16,7 +16,7 @@ export class ValidateGuard implements CanActivate, CanLoad {
     state: RouterStateSnapshot): Observable<boolean> | boolean {
      
         if (this.authService.getToken() == of(false)) {
-        this.router.navigateByUrl('/landing');
+        this.router.navigateByUrl('/login');
         return of(false);
       }
       return of(true)
@@ -26,7 +26,7 @@ export class ValidateGuard implements CanActivate, CanLoad {
     segments: UrlSegment[]): Observable<boolean >|  boolean {
       // console.log('canLand')
       if (this.authService.getToken() == of(false)) {
-        this.router.navigateByUrl('/landing');
+        this.router.navigateByUrl('/login');
         return of(false);
       }
       return of(true)

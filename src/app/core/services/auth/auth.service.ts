@@ -22,12 +22,15 @@ export class AuthService {
 
   API_URI = environment.API_URI;
   public _KEY_CODE_TOKEN='';
+  public _KEY_MENU='';
+  
   private _isLoggedIn = false;
   public isLoggedIn$ = new BehaviorSubject(this._isLoggedIn);
   // public KEY_CODE_TOKEN$ = new BehaviorSubject(this._KEY_CODE_TOKEN);
   public userLoginResponse:UserLoginResponseI={
     user:{username:'',id:0},
-    token: ''
+    token: '',
+    menu:undefined
   }
  
   public userLoginResponse$ = new BehaviorSubject(this.userLoginResponse);
@@ -49,6 +52,9 @@ export class AuthService {
   }
   public get KEY_CODE_TOKEN() {
     return this._KEY_CODE_TOKEN;
+  }
+  public get KEY_MENU() {
+    return this._KEY_MENU;
   }
 
   // Handle API errors
@@ -120,18 +126,24 @@ export class AuthService {
   private setLoginData(loginData: UserLoginResponseI): void {
     localStorage.setItem(KEY_TOKEN, loginData.token);
     this._KEY_CODE_TOKEN=loginData.token;
+    this._KEY_MENU=loginData.menu
     let fecha =  moment();
     localStorage.setItem(KEY_FECHA, JSON.stringify(fecha));
     localStorage.setItem(KEY_USER, JSON.stringify(loginData.user));
+    localStorage.setItem(KEY_MENU, JSON.stringify(loginData.menu));
+    
   }
 
   public logout(): void {
     localStorage.removeItem(KEY_TOKEN);
     this._KEY_CODE_TOKEN='';
+    this._KEY_MENU='';
     localStorage.removeItem(KEY_USER);
     localStorage.removeItem(KEY_FECHA);
+    localStorage.removeItem(KEY_MENU);
     this.setLogin(false);
-    this.router.navigateByUrl('/landing');
+    this.router.navigateByUrl('/login');
+    // this.getToken()
     // localStorage.removeItem(KEY_MENU);
     // TODO: Call logout service (backend) to remove TOKEN for sessions
   }
@@ -143,17 +155,19 @@ export class AuthService {
     if(algo == 0){
     var token :string | null= JSON.stringify(localStorage.getItem('token'));
     var user :string | null= localStorage.getItem('user');
+    var menu :string | null= localStorage.getItem('menu');
     // var menu :string | null= localStorage.getItem('menu');
     if(this.isLoggedIn$.value==true){
       // this.router.navigateByUrl('/dashboard');
       return true;
     }else{
-      if (token!=null !=null && user!=null) {
+      if (token!=null && user!=null && menu !== undefined) {
         let userObjeto:any = JSON.parse(user); 
         // let menuObjeto:any = JSON.parse(menu); 
         let userLoginResponse={
           user:userObjeto,
           token:token,
+          menu:undefined
           // menu:menuObjeto
         }
         this.setLogin(true)
@@ -173,6 +187,7 @@ export class AuthService {
     this._KEY_CODE_TOKEN='';
     localStorage.removeItem(KEY_USER);
     localStorage.removeItem(KEY_FECHA);
+    localStorage.removeItem(KEY_MENU);
     this.setLogin(false);
     this.router.navigateByUrl('/login');
     return false

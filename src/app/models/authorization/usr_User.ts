@@ -27,6 +27,7 @@ export interface UserLoginI {
 export interface UserLoginResponseI {
   user:  UsernameI;
   token: string;
+  menu?:any
 }
 
 export interface MenuResponseI {
