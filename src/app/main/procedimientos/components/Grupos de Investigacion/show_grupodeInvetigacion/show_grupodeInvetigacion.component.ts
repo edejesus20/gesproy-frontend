@@ -40,7 +40,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
       { field: 'name', header: 'Nombre' },
       { field: 'group_code', header: 'Codigo' },
       { field: 'ObjetivoGeneral', header: 'Objetivo General' },
-      { field: 'ident_colciencias', header: 'Identificacion Colciencias' },
+      // { field: 'ident_colciencias', header: 'Identificacion Colciencias' },
       { field: 'Program.Faculty.name', header: 'Facultad' },
       { field: 'CategoryGroup.name', header: 'Categoria' },
       { field: 'Link_gruplac', header: 'Link Gruplac' },
@@ -91,7 +91,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
               {
                 id:key.id,
                 name: key.name,
-                ident_colciencias:key.ident_colciencias,
+                // ident_colciencias:key.ident_colciencias,
                 HeadquarterProgramId:key.HeadquarterProgramId,
                 TeacherId:key.TeacherId,
                 group_code:key.group_code,
@@ -122,7 +122,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
       array.push({ 
         id: key.id,
         Nombre:key.name,
-        Identificacion_Colciencias:key.ident_colciencias,
+        // Identificacion_Colciencias:key.ident_colciencias,
         // HeadquarterProgramId:key.HeadquarterProgramId,
         Facultad:key.Program?.Faculty?.name,
         Codigo:key.group_code,
@@ -169,7 +169,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
         fila_0:{
             // col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_2:{ text: 'NOMBRE', style: 'tableHeader' ,bold: true, },
-            col_3:{ text: 'IDENTIFICACIÓN COLCIENCIAS', style: 'tableHeader' ,bold: true, },
+            // col_3:{ text: 'IDENTIFICACIÓN COLCIENCIAS', style: 'tableHeader' ,bold: true, },
             col_5:{ text: 'CODIGO', style: 'tableHeader' ,bold: true, },
             col_11:{ text: 'FACULTAD', style: 'tableHeader' ,bold: true, },
             col_6:{ text: 'OBJETIVO GENERAL', style: 'tableHeader' ,bold: true, },
@@ -189,7 +189,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
               var row:any[] = [ 
                 // headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
-              headerU.fila_0.col_3,
+              // headerU.fila_0.col_3,
               headerU.fila_0.col_5,
               headerU.fila_0.col_11,
               headerU.fila_0.col_6,
@@ -215,7 +215,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
               var row:any[] = [
                 // data.id?.toString(),
                 data.name.toString(),
-                data.ident_colciencias.toString(),
+                // data.ident_colciencias.toString(),
                 data.group_code.toString(),
                 data.Program?.Faculty?.name.toString(),
                 data.ObjetivoGeneral.toString(),
@@ -257,7 +257,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
             fontSize: 8,
             table: {
               headerRows: 1,
-              widths: [ '12%', '10%', '12%', '8%','13%','10%','10%','8%','12%'],
+              widths: [ '12%', '12%', '8%','23%','10%','10%','8%','12%'],
              
                 body: body
             },

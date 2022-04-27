@@ -112,31 +112,20 @@
                  Otros Datos:
                 </ng-template>
               <div class="grid p-fluid ">
-                <div class="col-12 md:col-6 lg:col-6" >
-                  <div class="field ">
-                    <label for="name"style="font-weight: bold;">IDENTIFICACIÓN COLCIENCIAS</label>
-                  <div class="p-inputgroup" >
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input type="text" pInputText  
-                    class="p-inputtext-lg"  name="ident_colciencias"  title="IDENTIFICACIÓN COLCIENCIAS"
-                    formControlName="ident_colciencias" required>         
-                </div>
-                  </div>
-                </div>
-                <div class="col-12 md:col-6 lg:col-6" >
+                <div class="col-12 md:col-5 lg:col-5" >
                   <div class="field">
                     <label for="name"style="font-weight: bold;">CATEGORIA:</label>
-                    <div class="flex">
+                    <div class="flex" style="width:100%">
                       <div style="width:100%">
                        
                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                         [options]="categoryGroups" [filter]="true" 
-                        label="SELECCIONE EL CATEGORIA" 
+                        label="SELECCIONE CATEGORIA" 
                         formControlName="CategoryGroupId" name="CategoryGroupId"
                           [style]="{'width':'100%'}" 
                           optionvalue="id"  optionLabel="name" filterBy="name"
-                          [required]="true" placeholder="SELECCIONE EL CATEGORIA" 
-                          title="SELECCIONE EL CATEGORIA" >
+                          [required]="true" placeholder="SELECCIONE CATEGORIA" 
+                          title="SELECCIONE CATEGORIA" >
                           <ng-template let-option pTemplate="item" >
                             <span > {{option.name | titlecase}}</span>
                         </ng-template>
@@ -154,10 +143,7 @@
                   
   
                 </div>
-              </div>
-              <br>
-              <div class="grid p-fluid">
-                <div class="col-12 md:col-6 lg:col-6" >
+                <div class="col-12 md:col-4 lg:col-4" >
                   <div class="field ">
                     <label for="name"style="font-weight: bold;">RESOLUCIÓN DEL GRUPO</label>
                   <div class="p-inputgroup" >
@@ -168,7 +154,7 @@
                 </div>
                   </div>
                 </div>
-                <div class="col-12 md:col-6 lg:col-6" >
+                <div class="col-12 md:col-3 lg:col-3" >
                   <div class="field ">
                     <label for="name"style="font-weight: bold;">LINK GRUPLAC</label>
                   <div class="p-inputgroup" >
@@ -179,8 +165,8 @@
                 </div>
                   </div>
                 </div>
-        
               </div>
+              <br>
             </p-panel>
             <br>
             <!-- Objetivos -->

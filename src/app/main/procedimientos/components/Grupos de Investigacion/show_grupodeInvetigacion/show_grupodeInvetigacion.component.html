@@ -4,8 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['name','group_code','ObjetivoGeneral',
-    'ident_colciencias','CategoryGroup.name','Link_gruplac','resolution','Teacher.User.fullName']"
+    [globalFilterFields]="['name','group_code','ObjetivoGeneral','CategoryGroup.name','Link_gruplac','resolution','Teacher.User.fullName']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">

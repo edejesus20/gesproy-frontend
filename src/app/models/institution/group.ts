@@ -7,7 +7,7 @@ import { SeedbedI } from "./seedbed";
 export interface GroupI {
     id?: number;
     name: string;
-    ident_colciencias:string
+    ident_colciencias?:string
     HeadquarterProgramId:number
     TeacherId:number
     group_code:string

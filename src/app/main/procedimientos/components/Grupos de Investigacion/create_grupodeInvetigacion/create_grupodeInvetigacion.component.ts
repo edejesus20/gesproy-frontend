@@ -132,7 +132,7 @@ public Seedbeds1:any[] =[]
       group_code:['', [Validators.required]],
       Facultad: ['', [Validators.required]],
       HeadquarterProgramId: ['', [Validators.required]],
-      ident_colciencias:['', [Validators.required]],
+      // ident_colciencias:['', [Validators.required]],
       CategoryGroupId: ['', [Validators.required]],
       resolution: ['', [Validators.required]],
       Link_gruplac: ['', [Validators.required]],
@@ -269,7 +269,7 @@ public Seedbeds1:any[] =[]
 
   
   public onSubmit(){
-    console.log('aqui1')
+    // console.log('aqui1')
     let formValue: GroupI = this.form.value;
     // console.log('aqui2',formValue)
     formValue.CategoryGroupId=this.form.value.CategoryGroupId.id
@@ -354,7 +354,7 @@ public Seedbeds1:any[] =[]
 
       // console.log(formValue)
     if(this.mostrarFacultad == true && formValue.name != ""&&
-    formValue.ident_colciencias != "" &&
+    // formValue.ident_colciencias != "" &&
     formValue.resolution != "" && 
     formValue.group_code != "" && 
     formValue.Sector != "" && 
