@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-// import { MatSnackBar } from '@angular/material/snack-bar';
+const translate = require('translate');
+
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
@@ -124,12 +124,12 @@ public responsiveOptions:any[] = [
         
     },async error => {
       if(error != undefined) {
-        // let text =await translate('Sometemos', {to: 'en'}) 
-        // if(error.error.dataErros){
-        //   text = await translate(error.error.dataErros[0].message, { to:  "es"});
-        // }
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
         console.log(error);
-        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${error.error.detail}`});
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
       }
     })
 

@@ -24,7 +24,7 @@ export class MostrarUsersComponent implements OnInit {
   @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
-  private rows2:PersonI[] = []
+  public rows2:PersonI[] = []
   exportColumns: any[]=[];
   selectedProducts: PersonI[]=[]; 
 

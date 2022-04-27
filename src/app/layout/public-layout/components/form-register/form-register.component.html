@@ -1,102 +1,208 @@
-<!-- <mat-card>
-  <div fxLayout="row" class="titleCard">
-    <mat-icon class="fondebabutton">
-        credit_card
-    </mat-icon>
-    <mat-card-title class="fondebabutton">Registro de Usuarios</mat-card-title>
-  </div> -->
+<form (ngSubmit)="onSubmit()"[formGroup]="form" novalidate  >
+  <p-dialog [(visible)]="displayMaximizable" [modal]="true" 
+  [style]="{'width': '77vw','text-align': 'center','background':'#333333'}" 
 
-      <!-- <form [formGroup]="form" novalidate  (ngSubmit)="onRegister($event)" class="tittleForm">
-              <mat-card-content fxLayout="column wrap">
-                <div> 
-                  <div fxLayout="row" fxLayoutGap="20px">
-                   <div> 
-                        <mat-form-field class="Inputalgo">
-                        <input  matInput type="name" placeholder="Ingrese su Nombre" formControlName="name" required>
-                      </mat-form-field>
-  
-                    </div>
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"   [showHeader]="false">
+  <!-- <p-header width="auto" [style]="{'text-aling':'center'}">
+    <span [style]="{'width':'100%','text-aling':'center'}">SISTEMA PARA LA GESTIÓN DE LA INVESTIGACIÓN (GESPROY)</span>
+</p-header>   -->
+  <!-- contentStyleClass="overflow-y-hidden" -->
+<div class="grid grid-nogutter surface-section text-800 " >
+  <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6 overflow-hidden">
+   
+    <img src="assets/images/fondo2.jpg" alt="Image" class="sm:ml-auto block sm:h-full sm:w-full " 
+    style="clip-path: polygon(0% 0%, 95% 0%, 85% 100%, 0% 100%) ">
+</div>
+  <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6 pl-3 pr-3  text-center 
+  md:text-center  align-items-center ">
+      <section class="ml-1 text-center ">
+        <div fxLayout="row" class="titleCard">
+          <p-avatar image="/assets/img/logo-uniguajira.png" styleClass="mr-2 "  
+            shape="circle" size="xlarge"></p-avatar> 
+            <span class="block text-6xl font-bold mb-3" style="color:#F16257">
+              
+              GESPROY</span>
+        </div>
+         
+            <!-- <div class="text-6xl text-primary font-bold mb-3">GESPROY</div>
+            <p class="mt-0 mb-4 text-700 line-height-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
+            
+        <div [style]="{'margin-top':'-5px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-shield" style="font-size: 2rem;margin-right: 10px;margin-top: -10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -10px;">Registro de Usuario</h2>
+          </div>
+          <div class="grid">
+            <div class="col-6">
+              <div class="p-inputgroup mr-2 mb-2 ">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText formControlName="name" placeholder="Nombre"  title="Nombre">         
+            </div>
+            <div class="p-inputgroup mb-2 ">
+              <span class="p-inputgroup-addon"><i class="pi pi-credit-card"></i></span>
+              <p-dropdown class="visorg500-select-filter" 
+              [options]="documentTypes" [filter]="true"
+                name="DocumentTypeId" formControlName="DocumentTypeId" label="Tipo de Documento" 
+                [style]="{'width':'100%','height':'100%'}" 
+                optionvalue="id"  optionLabel="name" filterBy="name"
+                [required]="true" placeholder="Tipo de Documento" title="Tipo de Documento">
+                <ng-template let-option pTemplate="item">
+                  <span >{{option.name}}</span>
+              </ng-template>
+              </p-dropdown>               
+            </div>
 
-                     <div>   
-                        <mat-form-field class="Inputalgo">
-                          <input   matInput type="surname" placeholder="Ingrese sus Apellidos" formControlName="surname" required>
-                        </mat-form-field>
-                      
-                      </div>  
-                    </div>
-                    
-                    <div fxLayout="row" fxLayoutGap="20px"> 
-                    <div> 
-                      <mat-form-field class="Inputalgo" >
-                        <input   matInput type="date" placeholder="Fecha de Nacimiento" formControlName="birthdate" required>
-                      </mat-form-field>
-                     
-                    </div>
+            <div class="p-inputgroup mr-2 mb-2 ">
+              <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+              <input type="date" class="p-inputtext" pInputText name="date_of_birth" 
+          placeholder="Fecha de Nacimiento" formControlName="date_of_birth" 
+          title="Fecha de Nacimiento" required>         
+          </div>
+          <div class="p-inputgroup mr-2 mb-2 ">
+            <span class="p-inputgroup-addon"><i class="pi pi-question"></i></span>
 
-                    <div>
-                        <mat-form-field class="Inputalgo">
-                          <input   matInput type="phoneNumber" placeholder="Nuemro Telefonico" formControlName="phoneNumber" required >
-                        </mat-form-field>
-                       
-                    </div>
-                  </div>
-
-                  <div fxLayout="row" fxLayoutGap="20px"> 
-
-                    <div> 
-                      <mat-form-field class="Inputalgo">
-                        <input   matInput type="profilePicture" placeholder="Imagen de Perfil" formControlName="profilePicture" required >
-                      </mat-form-field>
-                     
-                    </div>
-
-                    <div>
-                        <mat-form-field class="Inputalgo">
-                          <input   matInput type="identification" placeholder="Numero de Identificacion" formControlName="identification" required>
-                        </mat-form-field>
-                       
-                    </div>
-
-                  </div>
-                  <div fxLayout="row" fxLayoutGap="20px">  
-                    <mat-form-field class="Inputalgo">
-                      <input  matInput type="email" placeholder="Ingrese su Correo" formControlName="email" required >
-                    </mat-form-field>
-                    
-
-                  </div>
-               
-                 <div fxLayout="row" fxLayoutGap="20px">  
-                  <div>
-                   <mat-form-field class="Inputalgo">
-                      <input matInput  type="password" placeholder="Ingrese su Password" formControlName="password" required>
-                  </mat-form-field>
-                 
-
-                  </div>
-
-                  <div>
-                    <mat-form-field class="Inputalgo">
-                      <input matInput  type="password" placeholder="Confirme su Password" formControlName="password2" required>
-                  </mat-form-field>
-                   
+              <p-dropdown class="visorg500-select-filter " 
+              [options]="genders" [filter]="true" formControlName="GenderId" label="Seleccione Genero" 
+                [style]="{'width':'100%','height':'100%'}" 
+                optionvalue="id"  optionLabel="name" filterBy="name"
+                [required]="true" placeholder="Seleccione Genero" title="Seleccione Genero">
+                <ng-template let-option pTemplate="item">
+                  <span >{{option.name }}</span>
+              </ng-template>
+              </p-dropdown>
+            </div>
+            <div class="p-inputgroup mr-2 mb-2 ">
+            <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
+            <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+              class="p-inputtext"  name="address" placeholder="Dirección" formControlName="address"
+              required title="Dirección" >       
                 </div>
-              </div> 
-               </div>   
-              </mat-card-content>
-              <mat-card-actions>
-                <ng-template [ngIf]="mostrar == true">
-                  <div class="centrar">
-                    <button mat-raised-button class="fondebabutton" type="submit" [disabled]="!this.form.valid" mat-dialog-close >Registrarse</button>
-                  </div>
-                  </ng-template>
-                  <ng-template [ngIf]="mostrar == false">
-                    <div class="centrar">
-                      <button mat-raised-button class="fondebabutton" type="submit" [disabled]="!this.form.valid">Registrarse</button>
-                    </div>
-                  </ng-template>
-            </mat-card-actions>
-      </form>
-    </mat-card> -->
 
-    registro
+                <div class="p-inputgroup mb-1 ">
+                  <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                  <input type="password" pInputText formControlName="password" placeholder="Contraseña" title="Contraseña" >          
+                </div>
+            </div>
+
+            <div class="col-6">
+              <div class="p-inputgroup mb-2 ">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText formControlName="surname" placeholder="Apellido" title="Apellido" >          
+              </div>
+              <div class="p-inputgroup mb-2 ">
+                <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
+                <input  type="number" pInputText formControlName="identification" 
+              placeholder="Identification" required title="Identification" >        
+              </div>
+
+              <div class="p-inputgroup mb-2 ">
+                <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
+                <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                class="p-inputtext"  name="nationality" placeholder="Nacionalidad" title="Nacionalidad"
+                formControlName="nationality" required  >                 
+              </div>
+              <div class="p-inputgroup mr-2 mb-2 ">
+                <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
+
+                <input type="email"  pInputText [pKeyFilter]="blockSpecial" 
+                class="p-inputtext"  name="email" formControlName="email"
+              placeholder="Correo" required title="Correo Electronico">
+                </div>
+                <div class="p-inputgroup mb-2 ">
+                  <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
+                  <input class="p-inputtext" type="text" formControlName="phone"
+                  pInputText pKeyFilter="num" name="phone" 
+                  placeholder="Telefono" title="Telefono"
+                  required>       
+                </div>
+                <div class="p-inputgroup mb-1 ">
+                  <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                  <input type="password" pInputText formControlName="password2"  placeholder="Confirmación de Contraseña"title="Confirmación Contraseña" >          
+                </div>
+            </div>
+          
+            
+          </div>
+   
+        </div>
+              
+         
+      <!-- <div fxLayout="row" class="titleCard "style="margin-top: 35px;">
+              <p-button type="submit"  icon="pi pi-check" label="Entrar" [disabled]="!form.valid" styleClass="mr-2"></p-button>
+              <p-button (click)="displayMaximizable=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div> -->
+          <div fxLayout="row" class="titleCard ">
+          <button pButton pRipple  type="submit"  icon="pi pi-check" label="Enviar" 
+          [disabled]="!form.valid" class=" mr-2 p-button-success "></button>
+          <button pButton pRipple  type="button" routerLink="/login" icon="pi pi-sync" 
+           styleClass="p-button-text" label="Login"class="p-button-outlined "></button></div>
+      </section>
+  </div>
+  
+</div>
+  
+    
+    <p-footer >
+      <section class="redes_sociales ">
+        <div class="container ">
+          <div class="row">
+            <div class="span12">
+              <ul class="nav " id="redes_sociales">
+                <div class="grid">
+                  <div class="col-2 sm:col-3 md:col-3 lg:col-3 xl:col-3
+                  text-center md:text-center flex align-items-center ">
+                  <ul class="nav " id="redes_sociales">
+                    <li class="item-616">	
+                      <a class="twitter" href="https://twitter.com/UniLaGuajira" 
+                      target="_blank" title="Síguenos en Twitter">Twitter</a>
+                    </li>
+                  </ul>
+               
+                  </div>
+                  <div class="col-2 sm:col-3 md:col-3 lg:col-3 xl:col-3 
+                  text-center md:text-center flex align-items-center ">
+                  <ul class="nav " id="redes_sociales">
+                 
+                    <li class="item-616">	
+                      <a class="facebook" href="https://www.facebook.com/Universidad-de-La-Guajira-422758191075433/" target="_blank" title="Síguenos en Facebook">Facebook</a>
+                
+                    </li>
+                  </ul>
+                  </div>
+                  <div class="col-2 sm:col-3 md:col-3 lg:col-3 xl:col-3 
+                  text-center md:text-center flex align-items-center ">
+                  <ul class="nav " id="redes_sociales">
+                 
+                    <li class="item-616">	
+                      <a class="instagram" href="https://www.instagram.com/uniguajira_/" target="_blank" title="Síguenos en Instagram">Instagram</a>
+                
+                    </li>
+                  </ul>
+                  </div>
+                  <div class="col-2 sm:col-3 md:col-3 lg:col-3 xl:col-3 
+                  text-center md:text-center flex align-items-center ">
+                  <ul class="nav " id="redes_sociales">
+                    <li class="item-616">	
+                      <a class="youtube" href="https://www.youtube.com/user/UniLaGuajira" target="_blank" title="Síguenos en YouTube">YouTube</a>
+                    </li>
+                  </ul>
+                  
+                  </div>
+                      </div>
+              </ul>
+     
+          </div>
+        </div>
+        </div>
+      </section>
+      
+    </p-footer>
+   
+          
+              
+  </p-dialog>
+</form>
+
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>
