@@ -20,7 +20,7 @@
           <button type="button" pButton pRipple 
           class="p-button-rounded p-button-text mr-2"
            icon="pi pi-plus" (click)="menu.toggle($event)">
-            <p-avatar image="assets/avatars-avataaars.png" 
+            <p-avatar image="{{image3}}" 
             styleClass="ml-3" size="large" shape="circle"></p-avatar>
           </button>
           <button pButton pRipple type="button"  [disabled]="true"
@@ -33,7 +33,7 @@
          </div>
            </button> 
        
-      <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'140px','margin-top':'10px'}"></p-menu>
+      <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'200px','margin-top':'10px'}"></p-menu>
         
 
           <!-- <input type="text" pInputText  placeholder="Search">

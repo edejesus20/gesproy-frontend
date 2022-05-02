@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { UserService } from 'src/app/core/services/usuarios/user.service';
 
 
 @Component({
@@ -13,7 +14,12 @@ export class LandingComponent implements OnInit {
   // public image2:string='assets/images/institution/alcaldia.png'
   public image3:string='assets/avatars-avataaars.png'
   public bandera:boolean=false
+  public nombre:string = '';
+
+
   constructor(
+    private userService:UserService,
+
     private messageService: MessageService
   ) {}
 
@@ -24,6 +30,22 @@ export class LandingComponent implements OnInit {
     if(token!=null && user!=null){
         this.showSuccess()
         this.bandera=true
+        let userObjeto:any = JSON.parse(user); 
+      // console.log(menuObjeto)
+        this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
+        if(user.user.User?.fullName && user.user.Gender?.name){
+          this.nombre = user.user.User?.fullName
+          let sexo=user.user.Gender?.name
+          if(sexo == 'masculino'){
+            this.image3='assets/avatares/avatars-avataaars.png'
+          }else if(sexo == 'femenino'){
+            this.image3='assets/avatares/avataaars-example.png'
+          }else{
+            this.image3='assets/avatares/infiltrado.jpg'
+
+          }
+        }     
+      })
       }else{
         this.bandera=false
       }

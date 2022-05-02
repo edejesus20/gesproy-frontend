@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { createMenu } from 'src/app/consts/menu';
 import { UserLoginResponseI } from 'src/app/models/authorization/usr_User';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CambicarPasswordUserComponent } from 'src/app/main/usuarios/components/usr_User/cambicar-password-user/cambicar-password-user.component';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -22,7 +24,8 @@ interface menu{
 @Component({
   selector: 'app-private-layout',
   templateUrl: './private-layout.component.html',
-  styleUrls: ['./private-layout.component.css']
+  styleUrls: ['./private-layout.component.css'],
+  providers: [DialogService]
 })
 export class PrivateLayoutComponent implements OnInit {
   display=false
@@ -52,6 +55,8 @@ export class PrivateLayoutComponent implements OnInit {
   fecha?: string='';
   ampm?: string='';
   segundos?: string='';
+  public ref1:any;
+  public image3:string='assets/avatars-avataaars.png'
 
 
   constructor(
@@ -61,7 +66,9 @@ export class PrivateLayoutComponent implements OnInit {
     private authService: AuthService, 
     private userService:UserService,
     private router:Router,
-    private segundo: XsegundoService
+    private segundo: XsegundoService,
+    public dialogService: DialogService,
+
   ) { 
 
   }
@@ -120,18 +127,37 @@ export class PrivateLayoutComponent implements OnInit {
     }
   ];
   this.items = [
-    {label: 'Update', icon: 'pi pi-refresh', command: () => {
-        this.update();
-    }},
-    { label: 'Delete', icon: 'pi pi-times', command: () => {this.delete();}},
-    { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io'},
+    { label: 'CAngular.io', icon: 'pi pi-times ', url: 'http://angular.io'},
+    { label: 'Cambiar Clave', icon: 'pi pi-refresh', command: () => {this.modalCambiarClave(new Event(''))}},
+    {label: 'Cerrar Sesion', icon: 'pi pi-power-off', command: () => {
+      this.cerrarSesion();
+  }},
     {separator: true},
     {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
   ];
 
 }
 
+modalCambiarClave(e:Event){
+  e.preventDefault()
+  
+  this.ref1 = this.dialogService.open(CambicarPasswordUserComponent, {
+    width: '35%',
+    height: '55%',
+    contentStyle:{'overflow-y': 'auto'} ,closable:false, closeOnEscape:false, showHeader:false, 
+    baseZIndex: 10000,
+    data: {
+      id: '1'
+  },
+});
 
+this.ref1.onClose.subscribe((person: any) =>{
+    if (person) {
+        this.messageService.add({severity:'warn', summary: 'Contraseña Cambiada', detail: person.name,life: 2000});
+      this.ngOnInit()
+      }
+});
+}
 
 ocultarMenu(boolean: boolean){
 this.display=boolean
@@ -189,8 +215,17 @@ if(token!=null && user!=null && menu != null){
   this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
   this.menu = this.privateMenu;
   this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-  if(user.user.User?.fullName){
+  if(user.user.User?.fullName && user.user.Gender?.name){
     this.nombre = user.user.User?.fullName
+    let sexo=user.user.Gender?.name
+          if(sexo == 'masculino'){
+            this.image3='assets/avatares/avatars-avataaars.png'
+          }else if(sexo == 'femenino'){
+            this.image3='assets/avatares/avataaars-example.png'
+          }else{
+            this.image3='assets/avatares/infiltrado.jpg'
+
+          }
   }     
 })
   this.isLoggedIn=true
