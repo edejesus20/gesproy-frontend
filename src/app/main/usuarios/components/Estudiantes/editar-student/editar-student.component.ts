@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-
+import *as moment from 'moment';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 
@@ -93,8 +93,10 @@ export class EditarStudentComponent implements OnInit {
         post:[''],
         functions:[''],
     })]),
-    SeedbedId:['', [Validators.required]],
-    Horas:['', [Validators.required]],
+    SeedbedId:[''],
+    Horas:[''],
+    date_firt:[''],
+    date_end:[''],
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -127,6 +129,8 @@ export class EditarStudentComponent implements OnInit {
       date_of_birth: this.form.value.date_of_birth,
       SeedbedId:this.form.value.SeedbedId.id,
       Horas: this.form.value.Horas,
+      date_firt:this.form.value.date_firt,
+      date_end:this.form.value.date_end,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
@@ -159,8 +163,8 @@ export class EditarStudentComponent implements OnInit {
     formValue.name != ""&&
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
-    formValue.SeedbedId != ( 0 || undefined)&&
-    formValue.Horas != ""&&
+    // formValue.SeedbedId != ( 0 || undefined)&&
+    // formValue.Horas != ""&&
     formValue.identification != ""&&
     formValue.GenderId != ( 0 || undefined)&&
     formValue.address != ""&&
@@ -254,7 +258,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.student.id != undefined
       ){
-      // console.log(cnt_groupFromApi.student)
+      console.log(cnt_groupFromApi.student)
         this.form.controls['id'].setValue(cnt_groupFromApi.student.id)
         if(cnt_groupFromApi.student.User?.Person != undefined
           ){
@@ -289,12 +293,19 @@ getOneCntAccount(id:number) {
         if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
           let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
           let nuevo =algo?.SeedbedStudent?.hours
+          let date_firt=moment(algo?.SeedbedStudent?.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+          let date_end=moment(algo?.SeedbedStudent?.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
           
           this.form.controls['Horas'].setValue(nuevo)
+          this.form.controls['date_firt'].setValue(date_firt)
+          this.form.controls['date_end'].setValue(date_end)
+            console.log(date_firt)
+            console.log(date_end)
+
           if(algo?.id != undefined)
           this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
             this.form.controls['SeedbedId'].setValue(algo1.seedbed)
-            console.log(algo1.seedbed)
+            // console.log(algo1.seedbed)
           })
         }
         

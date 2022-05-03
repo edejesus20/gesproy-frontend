@@ -17,6 +17,8 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import { Create_ocupationComponent } from '../../Ocupacion/create_ocupation/create_ocupation.component';
 let uploadefiles:Array<File>
 @Component({
@@ -53,9 +55,12 @@ export class CreateAdministrativeComponent implements OnInit {
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
   public ocupations:OcupationI[]=[]
+  public mostrarDialogo:boolean=false;
 
-  public ref:any;
+  public ref1:any;
   constructor(
+    public ref: DynamicDialogRef,
+
     public dialogService: DialogService,
     private administrativeService:AdministrativeService,
     private genderService:GenderService,
@@ -66,6 +71,7 @@ export class CreateAdministrativeComponent implements OnInit {
     private messageService:MessageService,
     private router: Router,
     private userService:UserService,
+    public config: DynamicDialogConfig,
 
     // private http: HttpClient,
   ) { }
@@ -76,8 +82,17 @@ export class CreateAdministrativeComponent implements OnInit {
     this.getAllheadquarters()
     this.getAllocupations()
     this.getAllUser()
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
   }
-
+  public cancelar(){
+    this.ref.close(undefined);
+  }
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
@@ -156,7 +171,10 @@ export class CreateAdministrativeComponent implements OnInit {
     // console.log(formValue)
 
             this.administrativeService.createItem(formValue).subscribe(
-              () => {
+              (algo) => {
+                if(this.mostrarDialogo== true){
+                  this.ref.close(algo);
+                }else{
                       var date = new Date('2020-01-01 00:00:03');
                         function padLeft(n:any){ 
                           return n ="00".substring(0, "00".length - n.length) + n;
@@ -175,6 +193,7 @@ export class CreateAdministrativeComponent implements OnInit {
                           clearInterval(interval); 
                         }
                   }, 1000);
+                }
               },async error => {
                 if(error != undefined) {
                   let text = await translate(error.error.message, "es");
@@ -214,7 +233,7 @@ export class CreateAdministrativeComponent implements OnInit {
   addGenero(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_genderComponent, {
+    this.ref1 = this.dialogService.open(Create_genderComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -224,7 +243,7 @@ export class CreateAdministrativeComponent implements OnInit {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
       this.getAllgenders()
@@ -237,7 +256,7 @@ export class CreateAdministrativeComponent implements OnInit {
   addTipoDocumento(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_documentTypeComponent, {
+    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -247,7 +266,7 @@ export class CreateAdministrativeComponent implements OnInit {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
       this.getAlldocumentTypes()
@@ -259,7 +278,7 @@ export class CreateAdministrativeComponent implements OnInit {
   addOcupacion(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_ocupationComponent, {
+    this.ref1 = this.dialogService.open(Create_ocupationComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -269,7 +288,7 @@ export class CreateAdministrativeComponent implements OnInit {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
       this.getAllocupations()

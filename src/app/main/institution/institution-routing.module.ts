@@ -15,6 +15,11 @@ import { Delete_CategoriaGruposComponent } from './components/CategoriaGrupos/de
 import { Edit_CategoriaGruposComponent } from './components/CategoriaGrupos/edit_CategoriaGrupos/edit_CategoriaGrupos.component';
 import { Show_CategoriaGruposComponent } from './components/CategoriaGrupos/show_CategoriaGrupos/show_CategoriaGrupos.component';
 import { Show_one_CategoriaGruposComponent } from './components/CategoriaGrupos/show_one_CategoriaGrupos/show_one_CategoriaGrupos.component';
+import { Create_CategoryComponent } from './components/CategoriaProgramas/create_Category/create_Category.component';
+import { Delete_CategoryComponent } from './components/CategoriaProgramas/delete_Category/delete_Category.component';
+import { Edit_CategoryComponent } from './components/CategoriaProgramas/edit_Category/edit_Category.component';
+import { Show_CategoryComponent } from './components/CategoriaProgramas/show_Category/show_Category.component';
+import { Show_one_CategoryComponent } from './components/CategoriaProgramas/show_one_Category/show_one_Category.component';
 import { Create_EscalafonComponent } from './components/Escalafon/create_Escalafon/create_Escalafon.component';
 import { Delete_EscalafonComponent } from './components/Escalafon/delete_Escalafon/delete_Escalafon.component';
 import { Edit_EscalafonComponent } from './components/Escalafon/edit_Escalafon/edit_Escalafon.component';
@@ -170,6 +175,30 @@ const routes: Routes = [
             path:'delete_category/:id',
             component:Delete_CategoriaGruposComponent
           },
+          
+          //categorias de programa
+          {
+            path:'mostrar_categorysP',
+            component:Show_CategoryComponent
+          },
+
+          {
+            path:'mostrar_categoryP/:id',
+            component:Show_one_CategoryComponent
+          },
+          {
+            path:'create_categoryP',
+            component:Create_CategoryComponent
+          },
+          {
+            path:'edit_categoryP/:id',
+            component:Edit_CategoryComponent
+          },
+          {
+            path:'delete_categoryP/:id',
+            component:Delete_CategoryComponent
+          },
+    
 
           //categorias colciencias
           {

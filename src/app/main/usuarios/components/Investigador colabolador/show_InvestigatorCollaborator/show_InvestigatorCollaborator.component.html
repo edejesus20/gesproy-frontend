@@ -101,7 +101,7 @@
   </ng-template>
 
   
-    <!-- <ng-template pTemplate="rowexpansion" let-item>
+    <ng-template pTemplate="rowexpansion" let-item>
       <tr>
           <td colspan="12">
               <div >
@@ -111,26 +111,37 @@
                    >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                            <ng-template [ngIf]="mostrar==3">
+                            <!-- <ng-template [ngIf]="mostrar==3">
                               <th style="width: 3rem"></th>
-                            </ng-template> 
+                            </ng-template>  -->
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                              <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre de Grupos <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th>
+                              <th pSortableColumn="facultad">FACULTAD <p-sortIcon field="facultad"></p-sortIcon></th>
+                              <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <ng-template [ngIf]="mostrar==3">
+                          <!-- <ng-template [ngIf]="mostrar==3">
                             <td>
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
-                          </ng-template> 
+                          </ng-template>  -->
                               <td>{{order.id}}</td>
                               <td>{{order.name | titlecase}}</td>
+                              <td>{{order.group_code }}</td>
+                              <td>{{order.Program?.Faculty?.name | titlecase }}</td>
+                              <td style="max-width:400px" >
+                                <a pButton 
+                                pRipple type="button" class="p-button-outlined p-button-info" 
+                                title="Ir a Sitio" 
+                                 target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
+                                </td>
                           </tr>
                       </ng-template>
 
-                      <ng-template pTemplate="rowexpansion" let-order>
+                      <!-- <ng-template pTemplate="rowexpansion" let-order>
                         <tr>
                             <td colspan="7">
                                 <div >
@@ -164,7 +175,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </ng-template>
+                    </ng-template> -->
                       <ng-template pTemplate="emptymessage">
                         <tr>
                           <td colspan="6" style="text-align: center;">
@@ -176,7 +187,7 @@
               </div>
           </td>
       </tr>
-  </ng-template> -->
+  </ng-template>
 
 
   <!-- <ng-template pTemplate="summary">

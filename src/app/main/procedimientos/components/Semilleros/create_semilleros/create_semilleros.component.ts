@@ -59,7 +59,7 @@ export class Create_semillerosComponent implements OnInit {
     LinkType:undefined
 }
 public mostrarTeacher:boolean=false
-public students:StudentI[] =[]
+public students:any[] =[]
 public lines1:any[] =[]
 public Students:any[] =[]
 private HeadquarterProgramId:number = 0
@@ -83,11 +83,11 @@ private GroupId:number = 0
     this.geFacultad() 
     this.getstudents()
   }
-  getstudents() {
-    this.studentService.getList().subscribe(
+ getstudents() {
+   this.studentService.AddStudentsSemilleros().subscribe(
       (facultiesFromApi) => {
-        // console.log(facultiesFromApi.teachers)
-        this.students = facultiesFromApi.students;
+        // console.log(facultiesFromApi.students)
+        this.students =  facultiesFromApi.students;
       }, error => console.error(error));
   }
   geFacultad() {
@@ -119,7 +119,12 @@ private GroupId:number = 0
       HeadquarterProgramId: ['', [Validators.required]],
       GroupId:['', [Validators.required]],
       lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
-      Students: this.formBuilder.array([this.formBuilder.group({StudentId:[''],Horas:['']})]),
+      Students: this.formBuilder.array([this.formBuilder.group({
+        date_firt:['',[Validators.required]],
+        date_end:['',[Validators.required]],
+        StudentId:['',[Validators.required]],
+        Horas:['',[Validators.required]]
+      })]),
     });
   }  
   public SelectFacultad(){
@@ -213,10 +218,12 @@ private GroupId:number = 0
     if(this.Students.length == 0 || this.Students == []){
       let control = <FormArray>this.form.controls['Students']
       for (const key of control.value) {
-        key.StudentId=key.StudentId.id 
+        key.StudentId=key.StudentId.StudentId 
         this.Students.push({
           StudentId:key.StudentId,
-          Horas:key.Horas
+          Horas:key.Horas,
+          date_firt:key.date_firt,
+          date_end:key.date_end
         })
       }
       formValue.Students = this.form.value.Students
@@ -285,11 +292,17 @@ private GroupId:number = 0
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar1 == false){
-      control.push(this.formBuilder.group({StudentId:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({
+        StudentId:['', [Validators.required]],
+      date_firt:['',[Validators.required]],
+      date_end:['',[Validators.required]]
+    }))
     }
     if(control.length >= 1 && this.mostrar1 == true){
-      control.push(this.formBuilder.group({StudentId:['', [Validators.required]]}))//nuevo input
-
+      control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
+      date_firt:['',[Validators.required]],
+      date_end:['',[Validators.required]]
+    }))
     }
       this.mostrar1=true
   }

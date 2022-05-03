@@ -8,11 +8,14 @@ import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 import { UniversityI } from 'src/app/models/institution/university';
+import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/Administrativos/create-administrative/create-administrative.component';
+import { DialogService } from 'primeng/dynamicdialog';
 const translate = require('translate');
 @Component({
   selector: 'app-create-facultie',
   templateUrl: './create-faculty.component.html',
-  styleUrls: ['./create-faculty.component.scss']
+  styleUrls: ['./create-faculty.component.scss'],
+  providers: [DialogService]
 })
 export class CreateFacultyComponent implements OnInit {
 
@@ -27,7 +30,9 @@ public form:FormGroup=this.formBuilder.group({
  AdministrativeId:['', [Validators.required]],
  UniversityId:['', [Validators.required]],
 });
-  constructor(
+public ref1:any;
+constructor(
+  public dialogService: DialogService,
     private administrativeService: AdministrativeService,
     private facultyService: FacultyService,
     private router: Router,
@@ -100,6 +105,30 @@ public form:FormGroup=this.formBuilder.group({
         this.universitys = AdministrativeFromApi.universitys;
 
       }, error => console.error(error));
+  }
+
+  
+  addAdministrative(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
+      width: '65vw',
+      // height: '70vw',
+      contentStyle:{'padding': '0%'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+      this.getAlladministrative()
+
+        }
+  });
   }
 
 }

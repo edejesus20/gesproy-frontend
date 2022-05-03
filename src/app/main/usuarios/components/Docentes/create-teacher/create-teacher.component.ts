@@ -166,20 +166,49 @@ export class CreateTeacherComponent implements OnInit {
   public onSubmit(e: Event) {
     e.preventDefault()
     let formValue:any={}
-   
+ 
+      if(this.mostrarUser == false){ 
+        formValue={
+          name: '',
+          surname: '',
+          DocumentTypeId: '',
+          identification: '',
+          GenderId: '',
+          address: '',
+          phone: '',
+          username:'',
+          fullName:'',
+          email:'',
+          password:null,
+          UserId:  this.form.value.UserId.UserId,
+          hours_of_dedication: this.form.value.hours_of_dedication,
+          ScaleId: this.form.value.ScaleId.id,
+          ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
+          headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
+          // Lines: this.form.value.Lines,
+          nationality: this.form.value.nationality,
+          date_of_birth: this.form.value.date_of_birth,
+          LinkTypeId: this.form.value.LinkTypeId.id,
+          Workexperiences: this.form.value.Workexperiences,
+          trainingTeacher:this.form.value.trainingTeacher
+        };
+       }
+
+    if(this.mostrarUser == true){
+        
       formValue={
-        name: '',
-        surname: '',
-        DocumentTypeId: '',
-        identification: '',
-        GenderId: '',
-        address: '',
-        phone: '',
-        username:'',
-        fullName:'',
-        email:'',
-        password:'',
-        UserId:  this.form.value.UserId.UserId,
+        name: this.form.value.name,
+        surname: this.form.value.surname,
+        DocumentTypeId: this.form.value.DocumentTypeId.id,
+        identification: this.form.value.identification,
+        GenderId: this.form.value.GenderId.id,
+        address: this.form.value.address,
+        phone: this.form.value.phone,
+        // username:this.form.value.,
+        // fullName:this.form.value.,
+        email:this.form.value.email,
+        password:this.form.value.identification,
+        UserId:  undefined,
         hours_of_dedication: this.form.value.hours_of_dedication,
         ScaleId: this.form.value.ScaleId.id,
         ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
@@ -191,12 +220,7 @@ export class CreateTeacherComponent implements OnInit {
         Workexperiences: this.form.value.Workexperiences,
         trainingTeacher:this.form.value.trainingTeacher
       };
-      if(this.mostrarUser == false){ 
-        formValue.UserId=  this.form.value.UserId.UserId
-       }
-
-    if(this.mostrarUser == true){
-      formValue.UserId= undefined
+     
     }
 
     if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
@@ -253,15 +277,21 @@ export class CreateTeacherComponent implements OnInit {
 
     }
     
+              console.log(formValue)
 
-  if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+  if(
+    (this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
     formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
     formValue.phone != ""&& formValue.email != ""&&
     formValue.ScaleId !=("" || undefined) && 
     formValue.nationality != ("" || undefined) && 
     formValue. date_of_birth!= ("" || undefined) && 
-    formValue.ColcienciaCategoryId != ("" || undefined) && formValue.LinkTypeId != ("" || undefined))||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
+    formValue.ColcienciaCategoryId != ("" || undefined) 
+    && formValue.hours_of_dedication != ""
+    && formValue.LinkTypeId != ("" || undefined))
+    ||
+    (this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
     && formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined) &&
     formValue.LinkTypeId != ("" || undefined))){
               // console.log(formValue)

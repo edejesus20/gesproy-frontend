@@ -71,7 +71,7 @@
                   <div class="p-inputgroup" >
                     <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input type="text" class="p-inputtext-lg" pInputText name="name" 
-                       formControlName="name" title="NOMBRES" >  
+                       formControlName="name" title="NOMBRES" required>  
 
                   </div>
                     </div>
@@ -84,7 +84,7 @@
                       <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                       class="p-inputtext-lg"  name="surname"  title="APELLIDO"
-                      formControlName="surname">         
+                      formControlName="surname" required>         
                   </div>
                     </div>
                   </div>
@@ -129,7 +129,7 @@
                             [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
                               [style]="{'width':'100%'}" 
                               optionvalue="id"  optionLabel="name" filterBy="name"
-                               placeholder="SELECCIONE GENERO" title="SELECCIONE GENERO">
+                               placeholder="SELECCIONE GENERO" title="SELECCIONE GENERO" [required]="true">
                               <ng-template let-option pTemplate="item">
                                 <span >{{option.name }}</span>
                             </ng-template>
@@ -155,7 +155,7 @@
                       [options]="documentTypes" [filter]="true"
                         name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
                         [style]="{'width':'100%'}" 
-                        optionvalue="id"  optionLabel="name" filterBy="name"
+                        optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
                          placeholder="SELECCIONE TIPO DE DOCUMENTO" title="SELECCIONE TIPO DE DOCUMENTO">
                         <ng-template let-option pTemplate="item">
                           <span >{{option.name}}</span>
@@ -180,7 +180,7 @@
                     <div class="p-inputgroup" >
                       <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
-                      placeholder="CORREO"  title="CORREO ELECTRONICO">         
+                      placeholder="CORREO"  title="CORREO ELECTRONICO" required>          
                   </div>
                     </div>
                   </div>
@@ -192,7 +192,7 @@
                       <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input class="p-inputtext-lg" formControlName="identification" 
                       type="text" pInputText pKeyFilter="num" name="identification" 
-                      placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN">         
+                      placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN" required>         
                   </div>
                     </div>
       
@@ -208,7 +208,7 @@
                       <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                       class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
-                        title="DIRECCION" >         
+                        title="DIRECCION" required>         
                   </div>
                     </div>
       
@@ -220,7 +220,7 @@
                       <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                       <input class="p-inputtext-lg" type="text" formControlName="phone"
                       pInputText pKeyFilter="num" name="phone" 
-                      placeholder="TELEFONO" title="TELEFONO"
+                      placeholder="TELEFONO" title="TELEFONO" required
                       >         
                     </div>
                   </div>
@@ -245,7 +245,7 @@
                 <!-- <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span> -->
                 <input class="p-inputtext-lg" type="text" formControlName="hours_of_dedication"
                 pInputText  name="hours_of_dedication" 
-                placeholder="HORAS DE DEDICACIÓN" title="HORAS DE DEDICACIÓN">         
+                placeholder="HORAS DE DEDICACIÓN" title="HORAS DE DEDICACIÓN" required>         
               </div>
             </div>
             <div class="col-12 md:col-6 lg:col-6">
@@ -255,7 +255,7 @@
                 [options]="linkTypes" [filter]="true"
                   name="LinkTypeId" formControlName="LinkTypeId" label="SELECCIONE VINCULACION" 
                   [style]="{'width':'100%','margin-bottom':'20px'}"  
-                  optionvalue="id"  optionLabel="name" filterBy="name"
+                  optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
                    placeholder="SELECCIONE VINCULACION" title="SELECCIONE VINCULACION">
                   <ng-template let-option pTemplate="item">
                     <span >{{option.name  | titlecase}}

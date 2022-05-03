@@ -91,6 +91,11 @@ import { DeleteRolInvestigationComponent } from './components/user_rol_investiga
 import { CrearRolInvestigationComponent } from './components/user_rol_investigation/crear-rol-investigation/crear-rol-investigation.component';
 import { VincularLineasComponent } from './components/program/vincular-lineas/vincular-lineas.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Create_CategoryComponent } from './components/CategoriaProgramas/create_Category/create_Category.component';
+import { Delete_CategoryComponent } from './components/CategoriaProgramas/delete_Category/delete_Category.component';
+import { Edit_CategoryComponent } from './components/CategoriaProgramas/edit_Category/edit_Category.component';
+import { Show_CategoryComponent } from './components/CategoriaProgramas/show_Category/show_Category.component';
+import { Show_one_CategoryComponent } from './components/CategoriaProgramas/show_one_Category/show_one_Category.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +161,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
     EditRolInvestigationComponent,
     ShowOneRolInvestigationComponent,
     ShowRolInvestigationComponent,
-    VincularLineasComponent
+    VincularLineasComponent,
+
+    Create_CategoryComponent,
+    Delete_CategoryComponent,
+    Edit_CategoryComponent,
+    Show_CategoryComponent,
+    Show_one_CategoryComponent
   ],
   imports: [
     CommonModule,

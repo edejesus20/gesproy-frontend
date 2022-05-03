@@ -13,6 +13,8 @@ import { Create_documentTypeComponent } from '../../TipoDocumento/create_documen
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 @Component({
   selector: 'app-create_InvestigatorCollaborator',
   templateUrl: './create_InvestigatorCollaborator.component.html',
@@ -22,6 +24,7 @@ import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/Inve
 export class Create_InvestigatorCollaboratorComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
+  public mostrarDialogo:boolean=false;
 
   public form:FormGroup=this.formBuilder.group({
     name:[''],
@@ -41,8 +44,10 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   public users:PersonI[]=[];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
-  public ref:any;
+  public ref1:any;
   constructor(
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
     public dialogService: DialogService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
@@ -56,11 +61,21 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     this.getAllgenders()
     this.getAllUser()
     this.getAlldocumentTypes()
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
+  }
+  public cancelar(){
+    this.ref.close(undefined);
   }
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
-        this.users = AdministrativeFromApi.userseadministrative;
+        this.users = AdministrativeFromApi.usersInvestigador;
         // console.log(this.users)
       }, error => console.error(error));
   }
@@ -116,7 +131,10 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     // console.log(formValue)
 
             this.investigadorColaboladorService.createItem(formValue).subscribe(
-              () => {
+              (algo) => {
+                if(this.mostrarDialogo== true){
+                  this.ref.close(algo);
+                }else{
                       var date = new Date('2020-01-01 00:00:03');
                         function padLeft(n:any){ 
                           return n ="00".substring(0, "00".length - n.length) + n;
@@ -134,7 +152,9 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
                           this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
                           clearInterval(interval); 
                         }
+                     
                   }, 1000);
+                }
               },async error => {
                 // console.log(error)
                 if(error != undefined) {
@@ -153,7 +173,7 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
 addGenero(e:Event){
   e.preventDefault()
 
-  this.ref = this.dialogService.open(Create_genderComponent, {
+  this.ref1 = this.dialogService.open(Create_genderComponent, {
     width: '35%',
     height: '50%',
     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -163,7 +183,7 @@ addGenero(e:Event){
   },
 });
 
-this.ref.onClose.subscribe((person: any) =>{
+this.ref1.onClose.subscribe((person: any) =>{
     if (person) {
         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
     this.getAllgenders()
@@ -176,7 +196,7 @@ this.ref.onClose.subscribe((person: any) =>{
 addTipoDocumento(e:Event){
   e.preventDefault()
 
-  this.ref = this.dialogService.open(Create_documentTypeComponent, {
+  this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
     width: '35%',
     height: '50%',
     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -186,7 +206,7 @@ addTipoDocumento(e:Event){
   },
 });
 
-this.ref.onClose.subscribe((person: any) =>{
+this.ref1.onClose.subscribe((person: any) =>{
     if (person) {
         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
     this.getAlldocumentTypes()

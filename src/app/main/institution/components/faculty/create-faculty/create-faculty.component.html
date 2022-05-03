@@ -18,7 +18,8 @@
              formControlName="name" placeholder="NOMBRE" required>  
        
         </div>
-
+        <div class="flex">
+          <div style="width:100%">
         <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
           formControlName="AdministrativeId" name="AdministrativeId"
@@ -32,6 +33,18 @@
         </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
         </span>
+
+      </div>
+      <span class="bottomdelete" style="margin-top: 5px;">
+        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+        class="p-button-rounded p-button-outlined" (click)="addAdministrative($event)" ></button>
+      </span>
+      </div>
+
+        <!-- <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+         
+          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
+        </span> -->
 
         <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 

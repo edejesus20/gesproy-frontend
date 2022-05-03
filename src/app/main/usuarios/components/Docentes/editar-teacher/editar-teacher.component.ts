@@ -113,13 +113,13 @@ export class EditarTeacherComponent implements OnInit {
       // })]),
       trainingTeacher: this.formBuilder.array([this.formBuilder.group(
         {
-          name: ['', [Validators.required]],
-          date_graduation: ['', [Validators.required]],
-          name_institution: ['', [Validators.required]],
-          resolution_convalidation: ['', [Validators.required]],
-          degree_certificate: ['', [Validators.required]],
+          name: [''],
+          date_graduation: [''],
+          name_institution: [''],
+          resolution_convalidation: [''],
+          degree_certificate: [''],
           TeacherId:this.form.value.id,
-          TrainingId:['', [Validators.required]],
+          TrainingId:[''],
       })]),
       Workexperiences:this.formBuilder.array([this.formBuilder.group(
         {
@@ -130,8 +130,8 @@ export class EditarTeacherComponent implements OnInit {
           start_date:[''],
           final_date:[''],
       })]),
-      nationality:[''],
-      date_of_birth:[''],
+      nationality:['', [Validators.required]],
+      date_of_birth:['', [Validators.required]],
       LinkTypeId:['', [Validators.required]]
     });
     this.getAllgenders()
@@ -667,7 +667,7 @@ getOneCntAccount(id:number) {
 
     this.ref = this.dialogService.open(Create_linkTypeComponent, {
       width: '40%',
-      height: '50%',
+      height: '50%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
       baseZIndex: 10000,
       data: {
@@ -688,7 +688,7 @@ getOneCntAccount(id:number) {
 
     this.ref = this.dialogService.open(Create_EscalafonComponent, {
       width: '40%',
-      height: '50%',
+      height: '50%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
       baseZIndex: 10000,
       data: {
@@ -710,7 +710,7 @@ getOneCntAccount(id:number) {
     this.ref = this.dialogService.open(Create_CategoriaColcienciasComponent, {
       width: '40%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,showHeader:false,
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -730,7 +730,7 @@ getOneCntAccount(id:number) {
 
     this.ref = this.dialogService.open(Create_RelacionesComponent, {
       width: '35%',
-      height: '50%',
+      height: '50%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
       baseZIndex: 10000,
       data: {
@@ -752,7 +752,7 @@ getOneCntAccount(id:number) {
     this.ref = this.dialogService.open(Create_capacitacionComponent, {
       width: '35%',
       height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false,
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -773,7 +773,7 @@ getOneCntAccount(id:number) {
 
     this.ref = this.dialogService.open(Create_genderComponent, {
       width: '40%',
-      height: '52%',
+      height: '52%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
       baseZIndex: 10000,
       data: {
@@ -796,7 +796,7 @@ getOneCntAccount(id:number) {
 
     this.ref = this.dialogService.open(Create_documentTypeComponent, {
       width: '40%',
-      height: '50%',
+      height: '50%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
       baseZIndex: 10000,
       data: {

@@ -1,4 +1,5 @@
 import { UserI } from "../authorization/usr_User";
+import { GroupI } from "../institution/group";
 import { HeadquarterProgramI, HeadquarterProgramStudentI } from "../institution/headquarter";
 import { SeedbedI } from "../institution/seedbed";
 
@@ -19,6 +20,7 @@ export interface StudentI {
     StudentInternships?:StudentInternshipsI[]
     SeedbedId:number
     Horas?:string
+    Groups?:GroupI[]
 }
 
 export interface StudentInternshipsI {

@@ -137,7 +137,7 @@
                             <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
                             <th pSortableColumn="objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>
                             <th pSortableColumn="resolution">Resolucion<p-sortIcon field="resolution"></p-sortIcon></th>
-                            <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
+                            <!-- <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th> -->
                               
                           </tr>
                       </ng-template>
@@ -146,13 +146,13 @@
                           <td>{{order.name | titlecase}}</td> 
                           <td>{{order.objectives }}</td> 
                           <td>{{order.resolution }}</td> 
-                          <td >
+                          <!-- <td >
                             <span *ngFor="let i of order.Thematics">
                               <span style="display: flex;">
                                 * {{i.name}} 
                               </span>
                             </span>
-                          </td>
+                          </td> -->
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">

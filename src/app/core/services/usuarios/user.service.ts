@@ -94,7 +94,7 @@ getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
 
 
 
-userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[]}> {
+userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}> {
   let token : string | null=localStorage.getItem('token')
   if(token != null) {
     let httpOptions = {
@@ -105,14 +105,14 @@ userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadm
     }
     // console.log(httpOptions)
     return this.http
-      .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[]}>(this.API_URI + '/api/userteacher',httpOptions)
+      .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}>(this.API_URI + '/api/userteacher',httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
       )
   }else{
     return this.http
-    .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[]}>(this.API_URI + '/api/userteacher')
+    .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}>(this.API_URI + '/api/userteacher')
     .pipe(
       retry(2),
       catchError(this.handleError)

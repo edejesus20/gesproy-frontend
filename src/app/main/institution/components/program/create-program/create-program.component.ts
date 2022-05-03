@@ -3,6 +3,7 @@ import {  FormArray, FormBuilder, FormGroup, NgForm, Validators  } from '@angula
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { Router } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { ProgramI } from 'src/app/models/institution/program';
@@ -13,6 +14,7 @@ import { AdministrativeI } from 'src/app/models/user/administrative';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
+import { Create_CategoryComponent } from '../../CategoriaProgramas/create_Category/create_Category.component';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -20,7 +22,8 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 @Component({
   selector: 'app-create-program',
   templateUrl: './create-program.component.html',
-  styleUrls: ['./create-program.component.scss']
+  styleUrls: ['./create-program.component.scss'],
+  providers: [DialogService]
 })
 export class CreateProgramComponent implements OnInit {
   public mostrar:boolean=false;
@@ -45,7 +48,9 @@ export class CreateProgramComponent implements OnInit {
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-  constructor(
+public ref1:any;
+constructor(
+  public dialogService: DialogService,
     private router: Router,
     private messageService:MessageService,
     private programService: ProgramService,
@@ -60,7 +65,7 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
 
   ngOnInit(): void {
     this.getAllFaculty();
-    this.getAllcolcienciaCategorys()
+    this.getAllCategorys()
     this.getAlladministratives()
     this.getAllheadquarters()
   }
@@ -71,7 +76,7 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
         this.faculties = facultiesFromApi.facultys;
       }, error => console.error(error));
   }
-  private getAllcolcienciaCategorys(selectId?: number) {
+  private getAllCategorys(selectId?: number) {
     this.categoryService.getList().subscribe(
       (facultiesFromApi) => {
         this.categorys = facultiesFromApi.categorys;
@@ -186,6 +191,28 @@ public datos(position:number){
       (AdministrativeFromApi) => {
         this.headquarters = AdministrativeFromApi.headquarters;
       }, error => console.error(error));
+  }
+  addAdministrative(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(Create_CategoryComponent, {
+      width: '65vw',
+      // height: '70vw',
+      contentStyle:{'padding': '0%'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+      this.getAllCategorys()
+
+        }
+  });
   }
 
 }

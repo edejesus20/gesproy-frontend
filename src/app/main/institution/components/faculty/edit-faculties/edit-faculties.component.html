@@ -24,12 +24,13 @@
               <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label>
           </span>       
         </div>
-
-        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+        <div class="flex">
+          <div style="width:100%">
+        <span class="p-float-label" [style]="{'width':'100%'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
           formControlName="AdministrativeId" name="AdministrativeId"
           [options]="administratives" [filter]="true" label="SELECCIONE AL DECANO" 
-            [style]="{'width':'100%','margin-bottom':'20px'}"
+            [style]="{'width':'100%'}"
             optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
             [required]="true" placeholder="SELECCIONE AL DECANO">
             <ng-template let-option pTemplate="item">
@@ -38,6 +39,14 @@
         </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
         </span>
+        <p>Valor Cargado: {{form.value.AdministrativeId.User.fullName}}</p>
+      </div>
+      <span class="bottomdelete" style="margin-top: 5px;">
+        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+        class="p-button-rounded p-button-outlined" (click)="addAdministrative($event)" ></button>
+      </span>
+      </div>
+      <br>
 
         <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -51,7 +60,7 @@
           </ng-template>
           </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD</h3></label>
-        </span>
+        </span> 
 
     </div>
             

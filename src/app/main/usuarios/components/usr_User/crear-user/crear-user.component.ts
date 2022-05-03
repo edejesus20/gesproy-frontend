@@ -41,10 +41,10 @@ export class CrearUserComponent implements OnInit {
     email:['', [Validators.required]],
     nationality: ['', [Validators.required]],
     date_of_birth: ['', [Validators.required]],
-    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
   });
   public mostrarDialogo:boolean=false;
-  
+  public TipoUser:string=''
   public ref1:any;
   constructor(
     public dialogService: DialogService,
@@ -66,6 +66,9 @@ export class CrearUserComponent implements OnInit {
     if(this.config.data){
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
+      }
+      if(this.config.data.Tipo=='I'){
+        this.TipoUser='I'
       }
     }else{
       this.mostrarDialogo= false
@@ -113,10 +116,10 @@ export class CrearUserComponent implements OnInit {
       //console.log(control)      
         //crear los controles del array
       if(control.length == 0 && this.mostrar == false){
-        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
+        control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
       }
       if(control.length >= 1 && this.mostrar == true){
-        control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))//nuevo input
+        control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
   
       }
         this.mostrar=true
@@ -133,23 +136,28 @@ export class CrearUserComponent implements OnInit {
     public onSubmit(e: Event) {
       e.preventDefault()
   
-      const formValue={
-        name: this.form.value.name,
-        surname: this.form.value.surname,
-        DocumentTypeId: this.form.value.DocumentTypeId.id,
-        identification: this.form.value.identification,
-        GenderId: this.form.value.GenderId.id,
-        address: this.form.value.address,
-        phone: this.form.value.phone,
-        username:'',
-        fullName:'',
-        email:this.form.value.email,
-        password:'',
-        UserId: 0,
-        Roles:this.form.value.Roles,
-        nationality: this.form.value.nationality,
-        date_of_birth: this.form.value.date_of_birth,
-      };
+      let formValue:any
+      if(this.mostrarDialogo!= true){
+        formValue={
+          name: this.form.value.name,
+          surname: this.form.value.surname,
+          DocumentTypeId: this.form.value.DocumentTypeId.id,
+          identification: this.form.value.identification,
+          GenderId: this.form.value.GenderId.id,
+          address: this.form.value.address,
+          phone: this.form.value.phone,
+          username:'',
+          fullName:'',
+          email:this.form.value.email,
+          password:this.form.value.identification,
+          UserId: 0,
+          Roles:this.form.value.Roles,
+          nationality: this.form.value.nationality,
+          date_of_birth: this.form.value.date_of_birth,
+        };
+
+
+              
       if(this.Roles1.length == 0 || this.Roles1 == []){
         let control = <FormArray>this.form.controls['Roles']
         for (const key of control.value) {
@@ -165,7 +173,30 @@ export class CrearUserComponent implements OnInit {
         // console.log('aqui2')
 
       }
-      // console.log(formValue)
+
+      }else{
+        formValue={
+          name: this.form.value.name,
+          surname: this.form.value.surname,
+          DocumentTypeId: this.form.value.DocumentTypeId.id,
+          identification: this.form.value.identification,
+          GenderId: this.form.value.GenderId.id,
+          address: this.form.value.address,
+          phone: this.form.value.phone,
+          username:'',
+          fullName:'',
+          email:this.form.value.email,
+          password:this.form.value.identification,
+          UserId: 0,
+          Roles:[],
+          nationality: this.form.value.nationality,
+          date_of_birth: this.form.value.date_of_birth,
+          TipoUser:this.TipoUser
+        };
+      }
+
+
+      console.log(formValue)
               if(formValue.name != ""&&
                 formValue.surname != ""&&
                 formValue.DocumentTypeId != ( 0 || undefined)&&

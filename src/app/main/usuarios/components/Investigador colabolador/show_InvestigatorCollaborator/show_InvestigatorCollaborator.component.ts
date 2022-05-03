@@ -51,12 +51,14 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
       this.investigadorColaboladorService.getList().subscribe((instititionsFromApi) => {
         this.investigatorCollaborators =instititionsFromApi.investigatorCollaborators;
         this.rows2=[]
+        // console.log(instititionsFromApi.investigatorCollaborators)
         if(instititionsFromApi.investigatorCollaborators != undefined){
           for (const key of instititionsFromApi.investigatorCollaborators) {
             this.rows2.push(
               {
                 UserId: key.UserId,
                 User:key.User,
+                Groups:key.Groups
               }
             )
           }

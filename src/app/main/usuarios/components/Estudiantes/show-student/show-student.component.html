@@ -1,11 +1,11 @@
 
-<p-table  #dt1 [value]="students" responsiveLayout="scroll" dataKey="id" id="todo"
+<p-table  #dt1 [value]="rows2" responsiveLayout="scroll" dataKey="id" id="todo"
 [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
-    [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
+    [globalFilterFields]="['User.fullName','User.Person.identification','User.email','User.Person.nationality',
     'User.Person.phone','User.Person.Gender.name']" 
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
@@ -37,10 +37,11 @@
         <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
         </ng-template>
-          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="User.fullName">NOMBRE<p-sortIcon field="User.fullName"></p-sortIcon></th>
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
+          <th pSortableColumn="User.Person.nationality">NACIONALIDAD<p-sortIcon field="User.Person.nationality"></p-sortIcon></th>
+          
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
           <th pSortableColumn="User.Person.Gender.name">GENERO<p-sortIcon field="User.Person.Gender.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
@@ -57,9 +58,11 @@
           </td>
         </ng-template> 
        
-          <td>{{item.id}}</td>
+          <!-- <td>{{item.id}}</td> -->
           <td>{{item.User.fullName | titlecase}}</td>
           <td>{{item.User?.Person?.identification}}</td>
+          <td>{{item.User.Person.nationality | titlecase}}</td>
+          
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
           <td>{{item.User?.Person?.Gender?.name}}</td>
@@ -181,6 +184,50 @@
                   </p-table>
               </div>
           </td>
+      </tr>
+      <tr>
+          <td colspan="12">
+            <div >
+                <p-table [value]="item.Groups"  dataKey="id" 
+                [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                 >
+                    <ng-template pTemplate="header" >
+                        <tr style="background: rgba(0, 255, 255, 0.849);">
+                    
+                            <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                            <th pSortableColumn="name">Nombre de Grupos <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th>
+                            <th pSortableColumn="facultad">FACULTAD <p-sortIcon field="facultad"></p-sortIcon></th>
+                            <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-order let-expanded="expanded">
+                      <tr>
+
+                            <td>{{order.id}}</td>
+                            <td>{{order.name | titlecase}}</td>
+                            <td>{{order.group_code }}</td>
+                            <td>{{order.Program?.Faculty?.name | titlecase }}</td>
+                            <td style="max-width:400px" >
+                              <a pButton 
+                              pRipple type="button" class="p-button-outlined p-button-info" 
+                              title="Ir a Sitio" 
+                               target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
+                              </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6" style="text-align: center;">
+                          <h3>No hay registros encontrados</h3>
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </td>
       </tr>
   </ng-template>
 

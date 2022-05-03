@@ -69,7 +69,15 @@ export class StudentService {
        catchError(this.handleError)
      )
  }
-
+ AddStudentsSemilleros(): Observable<{ students: any[] }> {
+  return this.http
+    .get<{ students: any[] }>(this.API_URI+'/api/AddStudentsSemilleros')
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+ 
  // Update item by id
  updateItem(id:number, student:any): Observable<any> {
    return this.http

@@ -4,7 +4,7 @@
 <ng-template [ngIf]="tabla == false">
  
   <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" >
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '80vw','height': '60vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '74vw','height': '60vw'}" 
     [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"   [showHeader]="false"   >
     <br>
         
@@ -152,7 +152,7 @@
                               </div>
           
                              
-                              <span class="bottomdelete"  style="margin-left: 20px ;margin-top: 5px;">
+                              <span class="bottomdelete"  style="margin-left: 25px ;margin-top: 35px;">
                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                 class="p-button-rounded p-button-danger"></button>
                                 <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"

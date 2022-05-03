@@ -9,11 +9,14 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UniversityI } from 'src/app/models/institution/university';
 import { UniversityService } from 'src/app/core/services/institution/university.service';
 const translate = require('translate');
+import { DialogService } from 'primeng/dynamicdialog';
+import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/Administrativos/create-administrative/create-administrative.component';
 
 @Component({
   selector: 'app-edit-faculties',
   templateUrl: './edit-faculties.component.html',
-  styleUrls: ['./edit-faculties.component.css']
+  styleUrls: ['./edit-faculties.component.css'],
+  providers: [DialogService]
 })
 export class EditFacultiesComponent implements OnInit {
   public mostrar:number=1;
@@ -27,8 +30,9 @@ export class EditFacultiesComponent implements OnInit {
 public universitys: UniversityI[]=[]
 
 public form:FormGroup=this.formBuilder.group({});
-
-  constructor(
+public ref1:any;
+constructor(
+  public dialogService: DialogService,
     private administrativeService: AdministrativeService,
     private facultyService: FacultyService,
     private router: Router,
@@ -152,5 +156,28 @@ public form:FormGroup=this.formBuilder.group({});
       this.displayMaximizable2=true
       this.tabla = false
     }, error => console.error(error));
+  }
+
+  addAdministrative(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
+      width: '65vw',
+      // height: '70vw',
+      contentStyle:{'padding': '0%'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+      this.getAlladministrative()
+
+        }
+  });
   }
 }

@@ -6,6 +6,8 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { StudentI } from 'src/app/models/user/student';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
+import { GroupI } from 'src/app/models/institution/group';
+import { ProgramService } from 'src/app/core/services/program/program.service';
 @Component({
   selector: 'app-show-student',
   templateUrl: './show-student.component.html',
@@ -21,12 +23,13 @@ export class ShowStudentComponent implements OnInit {
   rows = 1;
   cols: any[]=[];
 
-  private rows2:any[] = []
+  public rows2:any[] = []
 
   exportColumns: any[]=[];
   selectedProducts: StudentI[]=[];
   constructor(
     private studentService:StudentService,
+    private programService:ProgramService,
 
     private primengConfig: PrimeNGConfig,
     ) { 
@@ -51,18 +54,35 @@ export class ShowStudentComponent implements OnInit {
   getUniversitys() {
     this.studentService.getList().subscribe((instititionsFromApi) => {
       this.students =instititionsFromApi.students;
-      console.log(instititionsFromApi.students)
       this.rows2=[]
+
       if(instititionsFromApi.students != undefined){
-        for (const key of instititionsFromApi.students) {
+        for (let key of instititionsFromApi.students) {
           this.rows2.push(
             {
+              id: key.id,
               UserId: key.UserId,
               User:key.User,
+              Groups:key.Groups,
+              Seedbeds:key.Seedbeds
             }
           )
+          if(key.Groups != undefined){
+            for (let index = 0; index < key.Groups.length; index++) {
+              let element = key.Groups[index];
+              this.programService.getItem(element.HeadquarterProgramId).subscribe((item) => {
+                Object.defineProperty( element, 'Program', {
+                  value:item.program
+                  });
+    
+              })
+            }
+          }
         }
+
       }
+      // console.log(this.rows2)
+
     }, error => console.error(error));
   }
   Buscar(event: Event, dt1:any){

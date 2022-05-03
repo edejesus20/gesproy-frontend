@@ -25,6 +25,7 @@ import { CategoryGroupService } from 'src/app/core/services/institution/Category
 import { Create_CategoriaGruposComponent } from 'src/app/main/institution/components/CategoriaGrupos/create_CategoriaGrupos/create_CategoriaGrupos.component';
 import { Knowledge_areaService } from 'src/app/core/services/Procedimientos/Knowledge_area.service';
 import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/create_Knowledge_area/create_Knowledge_area.component';
+import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -559,13 +560,16 @@ public Seedbeds1:any[] =[]
   addInvestigator(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(CrearUserComponent, {
-      width: '60%',
-      height: '70%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false,
-      baseZIndex: 10000,
+    this.ref = this.dialogService.open(Create_InvestigatorCollaboratorComponent, {
+      width: '70vw',
+      height: '70vw',
+      contentStyle:{'overflow-y': 'auto'} ,
+      modal:true,
+      closable:true, closeOnEscape:false, showHeader:false,
+      // baseZIndex: 10000,
       data: {
-        id: '1'
+        id: '1',
+        Tipo:'I'
     },
   });
 
