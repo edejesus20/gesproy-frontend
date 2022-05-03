@@ -4,7 +4,7 @@
 <ng-template [ngIf]="tabla == false">
 
   <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '80vw','height': '60vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '60vw'}" 
     [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
     <br>
         
@@ -31,7 +31,29 @@
 
           </div>
           <div class="col-12 md:col-6 lg:col-6">
-             <span class="p-float-label" 
+            <div class="flex">
+              <div style="width:100%">
+            <span class="p-float-label" [style]="{'width':'100%','margin-top':'10px'}">
+              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+              [options]="categorys" [filter]="true"
+                formControlName="CategoryId"  label="SELECCIONE LA CATEGORIA" 
+                [style]="{'width':'100%'}" 
+                optionvalue="id" optionLabel="name"  filterBy="name"
+                [required]="true" placeholder="SELECCIONE LA CATEGORIA">
+                <ng-template let-option pTemplate="item">
+                  <span >{{option.name  | titlecase}}</span>
+              </ng-template>
+              </p-dropdown>
+                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA</h3></label>
+            </span>
+    
+          </div>
+          <span class="bottomdelete" style="margin-top: 15px;">
+            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+            class="p-button-rounded p-button-outlined" (click)="addCategoria($event)" ></button>
+          </span>
+          </div>
+             <!-- <span class="p-float-label" 
               [style]="{'width':'100%','margin-top':'10px'}">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="categorys" [filter]="true"
@@ -44,7 +66,7 @@
               </ng-template>
               </p-dropdown>
                 <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA</h3></label>
-              </span>
+              </span> -->
           </div>
 
         </div>
@@ -65,7 +87,7 @@
 
 
 
-        <div fxLayout="row" fxLayoutGap="20px">
+        <div fxLayout="row" fxLayoutGap="20px" style="text-align: center;">
           <button pButton type="button" (click)="addRoles($event)" 
           class="p-button-warning p-button-raised p-button-rounded"
            label="Add Sedes"></button>
@@ -105,7 +127,35 @@
                           </div>
 
                           <div class="grupoinput2">
-                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                            <div class="flex">
+                              <div style="width:100%">
+                            <span class="p-float-label" [style]="{'width':'100%'}">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                            [options]="administratives" [filter]="true"
+                                formControlName="AdministrativeId"
+                               label="SELECCIONE DIRECTOR" 
+                              [style]="{'width':'100%','margin-bottom':'20px'}"
+                              optionvalue="id" optionLabel="User.fullName"  filterBy="User.fullName"
+                              [required]="true" placeholder="SELECCIONE DIRECTOR">
+                              <ng-template let-option pTemplate="item">
+                                <span >
+                                  {{option.Ocupation?.name  | titlecase}} -
+                                  {{option.User.fullName  | titlecase}} - 
+                                  {{option.User.Person.identification }}-
+                                  {{option.Headquarter.name | titlecase}}
+                                  </span>
+                            </ng-template>
+                            </p-dropdown>
+                                <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">ADMIN</h3></label> -->
+                            </span>
+                    
+                          </div>
+                          <span class="bottomdelete" style="margin-top: 5px;">
+                            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                            class="p-button-rounded p-button-outlined" (click)="addAdministrativos($event)" ></button>
+                          </span>
+                          </div>
+                            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                             [options]="administratives" [filter]="true"
                                 formControlName="AdministrativeId" name="AdministrativeId"
                                label="SELECCIONE DIRECTOR" 
@@ -120,7 +170,7 @@
                                   {{option.Headquarter.name | titlecase}}
                                   </span>
                             </ng-template>
-                            </p-dropdown>
+                            </p-dropdown> -->
                           </div>
                           
                         <span class="bottomdelete" style="margin-top: 5px;">
@@ -141,6 +191,7 @@
         </div>
                 
             <ng-template pTemplate="footer">
+              <br>
                 <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
                   <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!form.valid"
                   class="p-button-success p-button-raised p-button-rounded" label="Modificar Registro" styleClass="mr-2"></button>

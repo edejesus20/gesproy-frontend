@@ -4,7 +4,7 @@
 <ng-template [ngIf]="tabla == false">
 
   <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '80%'}"  [showHeader]="false"
     [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
         
         <div [style]="{'margin-top':'-1px'}" >
@@ -29,7 +29,7 @@
             </div>
           </div>
           </p-fieldset>
-        <br>
+        <br><br>
         <div fxLayout="row" fxLayoutGap="20px">
           <div class="table-wrapper" >
             <p-table [value]="algo" *ngIf="mostrar2 == true"> 
@@ -75,14 +75,15 @@
         </div>
 
         </div>
-              <br><br>  
-            <!-- <ng-template pTemplate="footer"> -->
+              <br><br> <br> 
+            <ng-template pTemplate="footer">
+              <br>
                 <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
                   <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!form.valid"
                   class="p-button-success p-button-raised p-button-rounded" label="Vincular Linea" styleClass="mr-2"></button>
                 <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
             </div>
-            <!-- </ng-template> -->
+            </ng-template>
             
                 
     </p-dialog>

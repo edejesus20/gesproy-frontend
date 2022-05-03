@@ -3,6 +3,9 @@ import {  FormArray, FormBuilder, FormGroup, NgForm, Validators  } from '@angula
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { Router } from '@angular/router';
+import { Create_CategoryComponent } from '../../CategoriaProgramas/create_Category/create_Category.component';
+import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/Administrativos/create-administrative/create-administrative.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { ProgramI } from 'src/app/models/institution/program';
@@ -19,7 +22,8 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
 @Component({
   selector: 'app-edit-programs',
   templateUrl: './edit-programs.component.html',
-  styleUrls: ['./edit-programs.component.css']
+  styleUrls: ['./edit-programs.component.css'],
+  providers: [DialogService]
 })
 export class EditProgramsComponent implements OnInit {
   public mostrar:number=1;
@@ -70,7 +74,9 @@ public form2:ProgramI={
   Headquarters:undefined,
   HeadquarterProgram:undefined,
 }
-  constructor(
+public ref1:any;
+constructor(
+  public dialogService: DialogService,
     private messageService:MessageService,
     private programService: ProgramService,
     private facultyService: FacultyService,
@@ -98,7 +104,7 @@ public form2:ProgramI={
     });
 
     this.getAllFaculty();
-    this.getAllcolcienciaCategorys();
+    this.getAllCategorys();
     this.getAlladministratives()
     this.getAllheadquarters()
   }
@@ -109,7 +115,7 @@ public form2:ProgramI={
         this.faculties = facultiesFromApi.facultys;
       }, error => console.error(error));
   }
-  private getAllcolcienciaCategorys(selectId?: number) {
+  private getAllCategorys(selectId?: number) {
     this.categoryService.getList().subscribe(
       (facultiesFromApi) => {
         this.categorys = facultiesFromApi.categorys;
@@ -307,6 +313,49 @@ public datos(position:number){
       }, error => console.error(error));
   }
 
+  addCategoria(e:Event){
+    e.preventDefault()
 
+    this.ref1 = this.dialogService.open(Create_CategoryComponent, {
+      width: '50vw',
+      // height: '70vw',
+      contentStyle:{'padding': '0%'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Categoria Creada', detail: person.name,life: 2000});
+      this.getAllCategorys()
+
+        }
+  });
+  }
+  addAdministrativos(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
+      width: '60%',
+      // height: '70vw',
+      contentStyle:{'padding': '10px','overflow-y': 'auto'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+      this.getAlladministratives()
+
+        }
+  });
+  }
 
 }
