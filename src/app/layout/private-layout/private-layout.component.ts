@@ -56,7 +56,7 @@ export class PrivateLayoutComponent implements OnInit {
   ampm?: string='';
   segundos?: string='';
   public ref1:any;
-  public image3:string='assets/avatars-avataaars.png'
+  public image3:string='assets/avatares/avatars-avataaars.png'
 
 
   constructor(

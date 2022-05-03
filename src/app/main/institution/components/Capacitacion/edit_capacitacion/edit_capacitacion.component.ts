@@ -90,7 +90,7 @@ export class Edit_capacitacionComponent implements OnInit {
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/institution/mostrar_trainings');
+                this.router.navigateByUrl('/usuarios/mostrar_trainings');
                 clearInterval(interval); 
                }
         }, 1000);

@@ -111,7 +111,7 @@
                               <td>{{order.id}}</td>
                               <td>{{order.User.fullName | titlecase}}</td>
                               <td>{{order.Scale?.name | titlecase}}</td>
-                              <td>{{order.Group?.name | titlecase}}</td>
+                              <td>{{order.Groups[0]?.name | titlecase}}</td>
                           </tr>
                       </ng-template>
 

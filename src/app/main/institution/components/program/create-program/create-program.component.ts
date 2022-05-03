@@ -15,6 +15,7 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { Create_CategoryComponent } from '../../CategoriaProgramas/create_Category/create_Category.component';
+import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/Administrativos/create-administrative/create-administrative.component';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -192,11 +193,11 @@ public datos(position:number){
         this.headquarters = AdministrativeFromApi.headquarters;
       }, error => console.error(error));
   }
-  addAdministrative(e:Event){
+  addCategoria(e:Event){
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(Create_CategoryComponent, {
-      width: '65vw',
+      width: '50vw',
       // height: '70vw',
       contentStyle:{'padding': '0%'} ,
       closable:true, closeOnEscape:true, showHeader:false, 
@@ -208,11 +209,32 @@ public datos(position:number){
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Categoria Creada', detail: person.name,life: 2000});
       this.getAllCategorys()
 
         }
   });
   }
+  addAdministrativos(e:Event){
+    e.preventDefault()
 
+    this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
+      width: '60%',
+      // height: '70vw',
+      contentStyle:{'padding': '10px','overflow-y': 'auto'} ,
+      closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+      this.getAlladministratives()
+
+        }
+  });
+  }
 }

@@ -72,7 +72,7 @@ getList(): Observable<{ categorys: CategoryI[] }> {
 // Update item by id
 updateItem(id:number, category:CategoryI): Observable<CategoryI> {
   return this.http
-    .put<CategoryI>(this.base_path_get + '/' + id, JSON.stringify(category), this.httpOptions)
+    .patch<CategoryI>(this.base_path_get + '/' + id, JSON.stringify(category), this.httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)

@@ -60,6 +60,11 @@ import { Show_one_InvestigatorCollaboratorComponent } from './components/Investi
 import { Create_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { Edit_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/edit_InvestigatorCollaborator/edit_InvestigatorCollaborator.component';
 import { Delete_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/delete_InvestigatorCollaborator/delete_InvestigatorCollaborator.component';
+import { Show_capacitacionComponent } from '../institution/components/Capacitacion/show_capacitacion/show_capacitacion.component';
+import { Show_one_capacitacionComponent } from '../institution/components/Capacitacion/show_one_capacitacion/show_one_capacitacion.component';
+import { Create_capacitacionComponent } from '../institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
+import { Edit_capacitacionComponent } from '../institution/components/Capacitacion/edit_capacitacion/edit_capacitacion.component';
+import { Delete_capacitacionComponent } from '../institution/components/Capacitacion/delete_capacitacion/delete_capacitacion.component';
 
 const routes: Routes = [
   {
@@ -318,6 +323,27 @@ const routes: Routes = [
           {
             path: 'InvestigatorCollaborator_eliminar/:id',
             component:Delete_InvestigatorCollaboratorComponent ,
+          },
+          //capacitaciones
+          {
+            path:'mostrar_trainings',
+            component:Show_capacitacionComponent
+          },
+          {
+            path:'mostrar_training/:id',
+            component:Show_one_capacitacionComponent
+          },
+          {
+            path:'crear_training',
+            component:Create_capacitacionComponent
+          },
+          {
+            path:'edit_training/:id',
+            component:Edit_capacitacionComponent
+          },
+          {
+            path:'delete_training/:id',
+            component:Delete_capacitacionComponent
           },
         
     ]

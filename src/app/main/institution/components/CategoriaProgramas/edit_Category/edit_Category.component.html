@@ -1,3 +1,54 @@
-<p>
-  edit_Category works!
-</p>
+<ng-template [ngIf]="tabla == true">
+  <app-show_Category [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show_Category>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+  <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+    <br>
+        
+        <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+            <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
+          <h2 class="fondebabutton" style="margin-top: -1px;">Editar Categoria de Programas</h2>
+        </div>
+        <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre">
+            <i class="pi pi-bookmark-fill"></i></span>
+          <input type="text" class="p-inputtext-lg" pInputText name="name" 
+           formControlName="name" placeholder="NOMBRE" required>  
+     
+      </div>
+      <!-- <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+        formControlName="GroupId" name="GroupId"
+        [options]="groups" [filter]="true" name="GroupId" label="SELECCIONE EL GRUPO DE INVETIGACIÓN" 
+            [style]="{'width':'100%','margin-bottom':'20px'}"
+            optionvalue="id" optionLabel="name"  filterBy="name"
+            [required]="true" placeholder="SELECCIONE EL GRUPO DE INVETIGACIÓN">
+            <ng-template let-option pTemplate="item">
+              <span >{{option.name }}</span>
+          </ng-template>
+          </p-dropdown>
+        <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">GRUPO DE INVETIGACIÓN</h3></label>
+      </span> -->
+
+        </div>
+                
+            <ng-template pTemplate="footer">
+              <br>
+                <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                  <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!form.valid"
+                  class="p-button-success p-button-raised p-button-rounded" label="Modificar Registro" styleClass="mr-2"></button>
+                <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            </div>
+            </ng-template>
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>

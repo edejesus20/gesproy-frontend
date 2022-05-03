@@ -112,9 +112,9 @@ constructor(
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
-      width: '65vw',
-      // height: '70vw',
-      contentStyle:{'padding': '0%'} ,
+      // width: '65vw',
+      height: '50vw',
+      contentStyle:{'padding': '20px'} ,
       closable:true, closeOnEscape:true, showHeader:false, 
       baseZIndex: 10000,
       data: {

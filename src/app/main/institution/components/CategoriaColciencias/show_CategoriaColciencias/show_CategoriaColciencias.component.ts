@@ -47,6 +47,8 @@ export class Show_CategoriaColcienciasComponent implements OnInit {
   getAllScale() {
     this.colcienciaCategoryService.getList().subscribe((colcienciaCategorysApiFrom) => {
       this.colcienciaCategorys =colcienciaCategorysApiFrom.colcienciaCategorys
+           console.log(colcienciaCategorysApiFrom.colcienciaCategorys)
+
       this.rows2=[]
       if(colcienciaCategorysApiFrom.colcienciaCategorys != undefined){
         for (const key of colcienciaCategorysApiFrom.colcienciaCategorys) {

@@ -265,27 +265,7 @@ const routes: Routes = [
             path:'delete_scale/:id',
             component:Delete_EscalafonComponent
           },
-          //capacitaciones
-          {
-            path:'mostrar_trainings',
-            component:Show_capacitacionComponent
-          },
-          {
-            path:'mostrar_training/:id',
-            component:Show_one_capacitacionComponent
-          },
-          {
-            path:'crear_training',
-            component:Create_capacitacionComponent
-          },
-          {
-            path:'edit_training/:id',
-            component:Edit_capacitacionComponent
-          },
-          {
-            path:'delete_training/:id',
-            component:Delete_capacitacionComponent
-          },
+
            //rol investigaciones
     {
       path: 'mostrar_RoleInvestigations',
