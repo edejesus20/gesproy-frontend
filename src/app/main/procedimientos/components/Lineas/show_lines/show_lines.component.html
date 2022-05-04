@@ -115,12 +115,18 @@
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                             <th pSortableColumn="name">Nombre de Programas<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="Faculty">Facultad<p-sortIcon field="Faculty"></p-sortIcon></th>
+                            <th pSortableColumn="Decanatura">Decanatura<p-sortIcon field="Decanatura"></p-sortIcon></th>
+                            <th pSortableColumn="University">Universidad<p-sortIcon field="University"></p-sortIcon></th>
                               
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
                           <td>{{order.name | titlecase}}</td> 
+                          <td>{{order.Faculty.name | titlecase}}</td> 
+                          <td>{{order.Faculty.Administrative.User.fullName | titlecase}}</td> 
+                          <td>{{order.Faculty.University.name | titlecase}}</td> 
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">

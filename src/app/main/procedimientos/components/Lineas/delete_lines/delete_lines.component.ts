@@ -3,7 +3,8 @@ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
-import { LineI } from 'src/app/models/projet/line';
+import { LineI, ThematicI } from 'src/app/models/projet/line';
+import { threadId } from 'worker_threads';
 const translate = require('translate');
 @Component({
   selector: 'app-delete_lines',
@@ -17,7 +18,7 @@ export class Delete_linesComponent implements OnInit {
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form: FormGroup = this.formBuilder.group({});
-
+  public Thematics:ThematicI[] = []
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -87,10 +88,18 @@ export class Delete_linesComponent implements OnInit {
       this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
       this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+      if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
+        this.agregarThematics(cnt_groupFromApi.line.Thematics)  
+      } 
       this.displayMaximizable2=true
       this.tabla = false
       //console.log(this.cnt_group);
     }, error => console.error(error));
+  }
+  agregarThematics(Thematics:ThematicI[]) {
+    if(Thematics.length > 0){
+     this.Thematics=Thematics
+    }
   }
 
   public volver(event: Event){

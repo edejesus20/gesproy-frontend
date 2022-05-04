@@ -44,7 +44,7 @@ export class Show_linesComponent implements OnInit {
   getUsrRoles() {
     this.lineService.getList().subscribe((rolesFromApi) => {
       this.lines =rolesFromApi.lines
-      // console.log(rolesFromApi.roles)
+      // console.log(rolesFromApi.lines)
       this.rows2=[]
       if(rolesFromApi.lines != undefined){
         for (const key of rolesFromApi.lines) {

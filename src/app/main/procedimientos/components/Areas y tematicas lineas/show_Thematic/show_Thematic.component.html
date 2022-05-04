@@ -100,7 +100,7 @@
                    >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                              <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
                               <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
                               <th pSortableColumn="objectives">Objetivo <p-sortIcon field="objectives"></p-sortIcon></th>
                               <th pSortableColumn="resolution">Resolución <p-sortIcon field="resolution"></p-sortIcon></th>
@@ -109,7 +109,7 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <td>{{order.id}}</td>
+                              <!-- <td>{{order.id}}</td> -->
                               <td>{{order.name | titlecase}}</td>
                               <td>{{order.objectives }}</td>
                               <td>{{order.resolution}}</td>

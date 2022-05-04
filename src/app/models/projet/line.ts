@@ -20,4 +20,5 @@ export interface ThematicI {
     id?:number;
     name: string;
     Lines?:LineI[]
+    LineThematic?:LineThematicI
 }
