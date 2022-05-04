@@ -1,7 +1,7 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 
 import localEs from '@angular/common/locales/es'
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 registerLocaleData(localEs,'es')
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -113,7 +113,10 @@ import { FileUploadModule } from 'primeng/fileupload';
    
     ],
     providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport,
-    {provide:LOCALE_ID, useValue:'es'}],
+    {provide:LOCALE_ID, useValue:'es'},
+      { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
+
     bootstrap: [AppComponent]
 })
 export class AppModule { }

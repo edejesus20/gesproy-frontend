@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URI : 'http://localhost:4000'
+  // API_URI : 'http://localhost:3000'
+  API_URI : 'http://181.78.22.118/appgesproy/backend'
+
 };
 
 /*

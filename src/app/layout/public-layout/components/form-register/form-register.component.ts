@@ -28,6 +28,8 @@ export class FormRegisterComponent implements OnInit {
     password:['', [Validators.required]],
    });
 
+  public image :string='assets/img/logo-uniguajira.png'
+
    public images: any[]=[
     
     {

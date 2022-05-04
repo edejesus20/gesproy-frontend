@@ -57,7 +57,7 @@ export class PrivateLayoutComponent implements OnInit {
   segundos?: string='';
   public ref1:any;
   public image3:string='assets/avatares/avatars-avataaars.png'
-
+  public image2:string='assets/images/logoGrupoSem2.png'
 
   constructor(
     private messageService: MessageService,

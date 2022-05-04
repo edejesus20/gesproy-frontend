@@ -12,7 +12,7 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 export class LandingComponent implements OnInit {
   // public image:string='assets/images/institution/fondeba1.jpg'
   // public image2:string='assets/images/institution/alcaldia.png'
-  public image3:string='assets/avatars-avataaars.png'
+  public image3:string='assets/avatares/avatars-avataaars.png'
   public bandera:boolean=false
   public nombre:string = '';
 

@@ -44,10 +44,10 @@ getUser(): Observable<{users: UserI[]}> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token':token
+        'x-token':token
       })
     }
-    // console.log(httpOptions)
+    console.log(httpOptions)
     return this.http
       .get<{users: UserI[]}>(this.base_path,httpOptions)
       .pipe(

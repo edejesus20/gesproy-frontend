@@ -190,73 +190,7 @@
     margin-bottom: 24px;
     list-style: none;
   }
-  #redes_sociales li a .twitter {
-    background-position: 0px 0px;
-  }
-  #redes_sociales li a .facebook {
-    background-position: -48px 0px;
-  }
-  #redes_sociales li a .instagram {
-    background-position: -96px 0px;
-  }
-  #redes_sociales li a .youtube {
-    background-position: -144px 0px;
-  }
-  #redes_sociales li a.twitter{
-    background: url(../assets/images/redes_sociales-t.png) no-repeat;
-    width: 48px;
-    height: 48px;
-  }
-  #redes_sociales li a.twitter:hover{
-    background: url(../assets/images/redes_sociales-t2.png) no-repeat;
-    width: 48px;
-    height: 48px;
-  }
-  #redes_sociales li a.facebook{
-    background: url(../assets/images/redes_sociales-f.png) no-repeat;  width: 48px;
-    height: 48px;
-  }
-  #redes_sociales li a.facebook:hover{
-    background: url(../assets/images/redes_sociales-f2.png) no-repeat;  width: 48px;
-    height: 48px;
-  }
-  #redes_sociales li a.instagram{
-    background: url(../assets/images/redes_sociales-i.png) no-repeat;  width: 48px;
-    height: 48px;
-  } 
-  #redes_sociales li a.instagram:hover{
-    background: url(../assets/images/redes_sociales-i2.png) no-repeat;  width: 48px;
-    height: 48px;
-  } 
-  #redes_sociales li a.youtube {
-  background: url(../assets/images/redes_sociales-y.png) no-repeat;  width: 48px;
-    height: 48px;
-  }
-  #redes_sociales li a.youtube:hover{
-    background: url(../assets/images/redes_sociales-y2.png) no-repeat;  width: 48px;
-      height: 48px;
-    }
-  #redes_sociales li a {
-    color: #fff;
-    font-size: 0px;
-    padding: 0;
-    margin: 0;
-  }
-  #redes_sociales li {
-    margin: 8px 40px;
-    padding: 0;
-  }
-  #redes_sociales {
-    width: 100%;
-    margin: 0;
-    margin-top:-5px;
-    display: flex;
-    justify-content: center;
-    -webkit-justify-content: center;
-    -ms-justify-content: center;
-    -o-justify-content: center;
-    -moz-justify-content: center;
-  }
+ 
   .nav > li > a {
     display: block;
   }

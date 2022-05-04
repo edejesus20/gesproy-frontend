@@ -20,7 +20,7 @@ export class FormLoginComponent implements OnInit {
     username:['', [Validators.required]],
     password:['', [Validators.required]],
    });
-
+   public image3:string='assets/img/logo-uniguajira.png'
    public images: any[]=[
     
     {
