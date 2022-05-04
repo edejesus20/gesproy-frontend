@@ -55,7 +55,7 @@ export class Edit_linesComponent implements OnInit {
           ThematicId:['', [Validators.required]],
           LineId:[0, [Validators.required]],
       })]),
-      resolution: ['', [Validators.required]],
+      // resolution: ['', [Validators.required]],
     });
   }  
 
@@ -69,9 +69,11 @@ export class Edit_linesComponent implements OnInit {
       array.push({LineId:key.LineId,ThematicId:key.ThematicId})
     }
     if(formValue.name != "" && formValue.justification != "" && 
-    formValue.objectives !="" && formValue.id &&
+    formValue.objectives !="" && formValue.id 
+    // &&
     // formValue.thematics != ""  &&  
-    formValue.resolution != ""){
+    // formValue.resolution != ""
+    ){
     this.lineService.updateItem(formValue.id,formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');
@@ -115,7 +117,7 @@ export class Edit_linesComponent implements OnInit {
       this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
       this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
-      this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+      // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
       if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
         this.agregarThematics(cnt_groupFromApi.line.Thematics)  
       } 

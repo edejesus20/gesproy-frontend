@@ -52,7 +52,7 @@ export class Create_linesComponent implements OnInit {
           ThematicId:['', [Validators.required]],
           LineId:[0, [Validators.required]],
       })]),
-      resolution: ['', [Validators.required]],
+      // resolution: ['', [Validators.required]],
     });
   }  
 
@@ -66,9 +66,11 @@ export class Create_linesComponent implements OnInit {
       array.push({LineId:key.LineId,ThematicId:key.ThematicId})
     }
     if(formValue.name != "" && formValue.justification != "" && 
-    formValue.objectives !="" && array.length > 0 &&
+    formValue.objectives !="" && array.length > 0 
+   
     // formValue.thematics != ""  &&  
-    formValue.resolution != ""){
+    // && formValue.resolution != ""
+    ){
     this.lineService.createItem(formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');

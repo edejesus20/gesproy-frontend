@@ -4,7 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','justification','objectives','resolution']"
+    [globalFilterFields]="['id','name','justification','objectives']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -40,7 +40,7 @@
           <th pSortableColumn="justification">JUSTIFICACIÓN<p-sortIcon field="justification"></p-sortIcon></th>
           <th pSortableColumn="objectives">OBJETIVOS<p-sortIcon field="objectives"></p-sortIcon></th>
           <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
-          <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
+          <!-- <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -66,7 +66,7 @@
               </span>
             </span>
           </td>
-          <td>{{item.resolution | titlecase}}</td>
+          <!-- <td>{{item.resolution | titlecase}}</td> -->
           <ng-template [ngIf]="mostrar==1">
               
               <td >

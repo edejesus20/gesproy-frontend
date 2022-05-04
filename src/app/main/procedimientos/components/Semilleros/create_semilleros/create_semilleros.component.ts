@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
-import {Location} from '@angular/common';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { MessageService } from 'primeng/api';
@@ -16,7 +14,6 @@ import { GroupI } from 'src/app/models/institution/group';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { LineI } from 'src/app/models/projet/line';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
-import { StudentI } from 'src/app/models/user/student';
 const translate = require('translate');
 
 @Component({

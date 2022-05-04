@@ -36,7 +36,7 @@ export class Show_linesComponent implements OnInit {
       { field: 'justification', header: 'Justificación' },
       { field: 'objectives', header: 'Objetivos' },
       // { field: 'thematics', header: 'Tematicas Asociadas' },
-      { field: 'resolution', header: 'Resolución' },
+      // { field: 'resolution', header: 'Resolución' },
     ];
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getUsrRoles()
@@ -79,7 +79,7 @@ export class Show_linesComponent implements OnInit {
         Justificación:key.justification,
         Objetivos:key.objectives,
         // Tematicas_Asociadas:key.thematics,
-        Resolución:key.resolution,
+        // Resolución:key.resolution,
       })
     }
     import("xlsx").then(xlsx => {
@@ -120,7 +120,7 @@ export class Show_linesComponent implements OnInit {
             col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader' ,bold: true, },
             col_5:{ text: 'OBJETIVOS', style: 'tableHeader' ,bold: true, },
             // col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader' ,bold: true, },
-            col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
+            // col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
         }
       }]
 
@@ -136,7 +136,7 @@ export class Show_linesComponent implements OnInit {
               headerU.fila_0.col_3,
               headerU.fila_0.col_5,
               // headerU.fila_0.col_6,
-              headerU.fila_0.col_7,
+              // headerU.fila_0.col_7,
               ]
               body.push(row);
           }
@@ -152,7 +152,7 @@ export class Show_linesComponent implements OnInit {
                 data.justification.toString(),
                 data.objectives.toString(),
                 // data.thematics.toString(),
-                data.resolution?.toString()
+                // data.resolution?.toString()
               ]
               body.push(row);
               
@@ -187,7 +187,7 @@ export class Show_linesComponent implements OnInit {
             fontSize: 8,
             table: {
               headerRows: 1,
-              widths: [ '15%', '22%', '34%', '29%'],
+              widths: [ '30%', '35%', '35%'],
              
                 body: body
             },

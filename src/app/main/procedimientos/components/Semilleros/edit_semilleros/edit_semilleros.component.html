@@ -1,3 +1,495 @@
-<p>
-  edit_semilleros works!
-</p>
+<ng-template [ngIf]="tabla == true">
+  <app-show_semilleros [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show_semilleros>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+  <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height':'100vw'}" 
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+    <br>
+        
+        <div [style]="{'margin-top':'-1px'}" >
+          <div style="border: 1px solid black;padding: 10px;">
+  
+            <div class="grid p-fluid" style="padding: 10px;">
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                <img alt="logo" src="../../../../../../assets/images/images.jpg" 
+                style="width: 100%"/>
+              </div>
+  
+              <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+                
+                <h2 style="text-align: center;">FORMALIZACIÓN DE SEMILLEROS DE INVESTIGACIÓN</h2>
+              </div>
+  
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                <img alt="logo" src="../../../../../../assets/images/uniguajira_iso.jpg" 
+                style="width: 100%"/>
+              </div>
+            </div>
+            <div class="bordep">
+             
+              <h3 style="text-align:center;">1. IDENTIFICACIÓN DEL SEMILLERO</h3>
+              <div class="grid p-fluid ml-1 mr-1">
+                <div class="col-12 md:col-6 lg:col-6" style="border: 1px solid black;">
+                  <div class="field ">
+                  <label for="name"style="font-weight: bold;">FECHA CREACIÓN DEL SEMILLERO</label>
+                <div class="p-inputgroup" >
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="date" class="p-inputtext-lg" pInputText name="creation_date" 
+                     formControlName="creation_date" title="FECHA CREACIÓN DEL SEMILLERO" required>  
+  
+                </div>
+                  </div>
+                </div>
+                
+                <div class="col-12 md:col-6 lg:col-6" style="border: 1px solid black;">
+                  <div class="field ">
+                    <label for="name"style="font-weight: bold;">NOMBRE DEL SEMILLERO</label>
+                  <div class="p-inputgroup" >
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
+                    class="p-inputtext-lg"  name="name"  title="NOMBRE DEL SEMILLERO"
+                    formControlName="name" required>         
+                </div>
+                  </div>
+                </div>
+    
+              </div>
+              <br>
+              <p-panel >
+                <ng-template pTemplate="header">
+                  Facultad y programa a la que está adscrito el semillero:
+                </ng-template>
+                <div class="grid p-fluid ">
+                  <div class="col-12 md:col-6 lg:col-6" >
+                    <h5 style="text-align:left;">FACULTAD:</h5>
+                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                    [options]="facultys" [filter]="true" label="SELECCIONE LA FACULTAD"
+                    formControlName="Facultad" name="Facultad"
+                      [style]="{'width':'100%','margin-bottom':'20px'}" 
+                      optionvalue="id"  optionLabel="name" filterBy="name"
+                      [required]="true" placeholder="SELECCIONE LA FACULTAD" title="SELECCIONE LA FACULTAD" (onChange)="SelectFacultad()">
+                      <ng-template let-option pTemplate="item" >
+                        <span >{{option.name | titlecase}}</span>
+                    </ng-template>
+                    </p-dropdown>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-6" >
+                    <ng-template [ngIf]="mostrarFacultad==true">
+                      <h5 style="text-align:left;">PROGRAMA:</h5>
+                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                      [options]="FacultadHeadquarterProgram" [filter]="true" 
+                      label="SELECCIONE EL PROGRAMA" 
+                      formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
+                        [style]="{'width':'100%','margin-bottom':'20px'}" 
+                        optionvalue="id"  optionLabel="name" filterBy="name"
+                        [required]="true" placeholder="SELECCIONE EL PROGRAMA" 
+                        title="SELECCIONE EL PROGRAMA" (onChange)="getHeadquarterProgram()">
+                        <ng-template let-option pTemplate="item" >
+                          <span >Sede: {{option.Sede | titlecase}} -
+                            Programa: {{option.Programa | titlecase}}</span>
+                      </ng-template>
+                      </p-dropdown>
+                    </ng-template>
+                  </div>
+                </div>
+           
+  
+                
+          
+            </p-panel>
+            <br>
+            <p-panel >
+              <ng-template pTemplate="header">
+                Grupo de investigación al cual estará articulado el semillero:
+              </ng-template>
+              <ng-template [ngIf]="mostrarHeadquarterProgram==true">
+                <h5 style="text-align:left;">GRUPOS:</h5>
+                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                [options]="groups" [filter]="true" 
+                label="SELECCIONE EL GRUPO" 
+                formControlName="GroupId" name="GroupId"
+                  [style]="{'width':'100%','margin-bottom':'20px'}" 
+                  optionvalue="id"  optionLabel="name" filterBy="name"
+                  [required]="true" placeholder="SELECCIONE EL GRUPO" 
+                  title="SELECCIONE EL GRUPO" (onChange)="getLineProgramGroup()">
+                  <ng-template let-option pTemplate="item" >
+                    <span >{{option.name | titlecase}} </span>
+                </ng-template>
+                </p-dropdown>
+              </ng-template>
+           
+          </p-panel>
+          <br>
+          <p-panel >
+            <ng-template pTemplate="header">
+              Línea de investigación y Temáticas Asociadas al semillero:
+            </ng-template>
+            <ng-template [ngIf]="mostrarlineasProgram==true">
+              <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+              
+                <button pButton type="button" 
+                (click)="addlines($event)" style="margin-right: 15px;" 
+               class="p-button-success p-button-raised p-button-rounded"
+                label="Add Lineas"></button> 
+             </div>
+    
+             <br>
+    
+             <div fxLayout="row" fxLayoutGap="20px">
+               <div class="table-wrapper" >
+                 <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                   <ng-template pTemplate="header">
+                     <tr>
+                         <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
+                     </tr>
+                 </ng-template>
+                 <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                   <tr [pSelectableRow]="rowData">
+                       <td>
+                         <div formArrayName="lines"> 
+                           <div *ngFor="let item of getlines.controls; 
+                           let pointIndex=index" [formGroupName]="pointIndex">
+                             <div class="grupo"> 
+                               
+                                 <div style="width:100%" class="mr-1">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="lines" [filter]="true"
+                                      formControlName="LineId" name="LineId"
+                                     label="SELECCIONE LINEA" 
+                                    [style]="{'width':'100%','margin-bottom':'20px'}"
+                                    optionvalue="id" optionLabel="name" 
+                                    filterBy="name"
+                                    [required]="true" placeholder="SELECCIONE LINEA"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.name  | titlecase}}
+                                        </span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                 </div>
+                               
+                                
+                               
+                             <span class="bottomdelete" style="margin-top: -35px;">
+                               <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
+                               class="p-button-rounded p-button-danger"></button>
+                               <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                               (click)="removeRoles(pointIndex,$event)" 
+                               label="eliminar"></button> -->
+                             </span>
+                             
+                           </div>
+                           </div>
+                         </div> 
+                       </td>
+                   </tr>
+                 </ng-template>
+                 </p-table>
+               </div>
+             </div>
+            </ng-template>
+          
+   
+        </p-panel>
+              <br>
+              <p-panel >
+                <ng-template pTemplate="header">
+                  Misión, Visión
+                </ng-template>
+                <div class="grid p-fluid ml-1 mr-1 mt-1">
+                  <div class="col-12 md:col-6 lg:col-6" >
+                    <div class="p-inputgroup" style="margin-bottom: 10px;">
+                      <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+                      formControlName="Mision" placeholder="ESCRIBIR LA MISION"  required></textarea>
+                      
+                    </div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-6" >
+                    <div class="p-inputgroup"  style="margin-bottom: 10px;">
+                      <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+                      formControlName="Vision" placeholder="ESCRIBIR LA VISION"  required></textarea>
+          
+                    </div>
+                  </div>
+                </div>
+            </p-panel>
+            <br>
+            <p-panel >
+              <ng-template pTemplate="header">
+                Objetivo General y Objetivos Específicos
+              </ng-template>
+              <h5 style="text-align:left;">General:</h5>
+              <div class="p-inputgroup" >
+                <input type="text" class="p-inputtext-lg" pInputText name="name" 
+                placeholder="Objetivo General" formControlName="ObjetivoGeneral" title="Objetivo General" required>         
+              </div>
+  
+              <h5 style="text-align:left;">Especificos:</h5>
+              <div class="p-inputgroup" >
+                <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+                formControlName="ObjetivosEspecificos" required></textarea>
+                      
+              </div>
+     
+          </p-panel>
+          <br>
+          <p-panel >
+            <ng-template pTemplate="header">
+              Estrategias de Trabajo
+            </ng-template>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+              formControlName="estrategias" placeholder="ESCRIBIR LAS ESTRATEGIAS"  required></textarea>
+            </div>
+   
+        </p-panel>
+        <br>
+        <div class="grid p-fluid ml-1 mr-1">
+          <div class="col-12 md:col-4 lg:col-4" >
+            <div class="field ">
+            <label for="name"style="font-weight: bold;">FECHA APROVACIÓN </label>
+          <div class="p-inputgroup" >
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="date" class="p-inputtext-lg" pInputText name="approval_date" 
+               formControlName="approval_date" title="FECHA APROVACIÓN DEL SEMILLERO" required>  
+  
+          </div>
+            </div>
+          </div>
+          
+          <div class="col-12 md:col-4 lg:col-4" >
+            <div class="field ">
+              <label for="name"style="font-weight: bold;">RESOLUCIÓN DEL SEMILLERO</label>
+            <div class="p-inputgroup" >
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" pInputText  
+              class="p-inputtext-lg"  name="resolution"  title="RESOLUCIÓN DEL SEMILLERO"
+              formControlName="resolution" required>         
+          </div>
+            </div>
+          </div>
+          <div class="col-12 md:col-4 lg:col-4" >
+            <div class="field ">
+              <label for="name"style="font-weight: bold;">ARTICULO</label>
+            <div class="p-inputgroup" >
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" pInputText 
+              class="p-inputtext-lg"  name="article"  title="ARTICULO DE LA RESOLUCION"
+              formControlName="article" required>         
+          </div>
+            </div>
+          </div>
+  
+        </div>
+  
+            </div>
+            <div class="bordep">
+              <h3 style="text-align:center;">2. IDENTIFICACIÓN DEL PROFESOR COORDINADOR</h3>
+              <div class="grid p-fluid">
+                <div class="col-12 md:col-12 lg:col-12">
+                  <div class="field">
+                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
+                    <div class="flex">
+                      <div style="width:100%">
+                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                    [options]="teachers" [filter]="true"
+                      name="TeacherId" formControlName="TeacherId" label="DOCENTE" 
+                      [style]="{'width':'100%'}" 
+                      optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
+                       placeholder="SELECCIONE DOCENTE" title="SELECCIONE DOCENTE" [required]="true" (onChange)="SelectTeacher()">
+                      <ng-template let-option pTemplate="item">
+                        <span >{{option.User.fullName  | titlecase}} -
+                          cc: {{option.User.Person.identification }} </span>
+                    </ng-template>
+                    </p-dropdown>
+                    </div>
+                    <!-- <span class="bottomdelete" style="margin-top: -35px;">
+                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                      class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
+                    </span> -->
+                  </div>
+            
+                  </div>
+              </div>
+              </div>
+              <ng-template [ngIf]="mostrarTeacher == true">
+                <br>
+                <p-fieldset legend="Datos del Docente">
+                  <div class="flex" >
+                    <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
+                      <h3 class="fondebabutton">Nombre : {{ form2.User?.fullName | titlecase }}</h3>
+                      <h3 class="fondebabutton">Identificacion : {{ form2.User?.Person?.identification | titlecase }}</h3>
+                      <h3 class="fondebabutton">Correo : {{ form2.User?.email| titlecase }}</h3>
+                      <h3 class="fondebabutton">Horas de Dedicación : {{ form2.hours_of_dedication | titlecase }}</h3>
+                      
+                    </div>
+                    <p-divider layout="vertical" ></p-divider>
+                    <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
+                      <h3 class="fondebabutton">Telefono : {{ form2.User?.Person?.phone }}</h3>
+                      <h3  class="fondebabutton">Categoria Colciencias : {{ form2.ColcienciaCategory?.name| titlecase }}</h3>
+                      <h3  class="fondebabutton">Escalafón : {{ form2.Scale?.name | titlecase }}</h3>
+                      <h3  class="fondebabutton">Vinculacion : {{ form2.LinkType?.name | titlecase }}</h3>
+                      <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
+                    </div>
+                  </div>
+                  </p-fieldset>
+              </ng-template>
+            </div>
+            <div style="border: 1px solid black;">
+              <h3 style="text-align:center;">3. IDENTIFICACIÓN DE LOS INTEGRANTES DEL SEMILLERO</h3>
+              <br>
+              <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+              
+                <button pButton type="button" 
+                (click)="addStudents($event)" style="margin-right: 15px;" 
+               class="p-button-success p-button-raised p-button-rounded"
+                label="Add Estudiantes"></button> 
+             </div>
+    
+             <br>
+    
+             <div fxLayout="row" fxLayoutGap="20px">
+               <div class="table-wrapper" >
+                 <p-table [value]="algo1" *ngIf="mostrar1 == true"> 
+                   <ng-template pTemplate="header">
+                     <tr>
+                         <th pSortableColumn="id">Estudiantes<p-sortIcon field="id"></p-sortIcon></th>
+                     </tr>
+                 </ng-template>
+                 <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                   <tr [pSelectableRow]="rowData">
+                       <td>
+                         <div formArrayName="Students"> 
+                           <div *ngFor="let item of getStudents.controls; 
+                           let pointIndex=index" [formGroupName]="pointIndex">
+                             <!-- <div class="grupo">  -->
+                              <div class="grid">
+                                <div class="col-6">
+                                  <div class="p-inputgroup"  >
+                                    <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                                    <input type="date" class="p-inputtext-lg" pInputText name="date_firt" 
+                                    placeholder="FECHA DE INICIO" formControlName="date_firt" title="FECHA DE INICIO" required>         
+                                    <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE INICIO</h3></label> -->
+                                  </span> 
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="p-inputgroup"  >
+                                    <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                                    <input type="date" class="p-inputtext-lg" pInputText name="date_end" 
+                                    placeholder="FECHA DE FINAL" formControlName="date_end" title="FECHA DE FINAL" required>         
+                                    <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE FINAL</h3></label> -->
+                                  </span> 
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="grid">
+                              
+                                <div class="col-7">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="students" [filter]="true"
+                                      formControlName="StudentId" name="StudentId"
+                                     label="SELECCIONE ESTUDIANTE" 
+                                    [style]="{'width':'100%','margin-bottom':'20px'}"
+                                    optionvalue="StudentId" optionLabel="fullName" 
+                                    filterBy="fullName"
+                                    [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.fullName  | titlecase}} -
+                                        cc: {{option.identification }} </span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                </div>
+                                <div class="col-4">
+                                  <div class="p-inputgroup"  >
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                                    <input class="p-inputtext-lg" type="text" formControlName="Horas"
+                                    pInputText pKeyFilter="num" name="Horas" 
+                                    placeholder="Horas" title="Horas" >         
+                                </div>
+                                </div>
+                                <div class="col-1">
+                                  <span class="bottomdelete" style="margin-top: -35px;">
+                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removeStudents(pointIndex,$event)"  
+                                    class="p-button-rounded p-button-danger"></button>
+                                  </span>
+                                </div>
+                               
+          
+                              <!-- <span class="bottomdelete" style="margin-top: -35px;">
+                                <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
+                              </span> -->
+                         
+                            </div>
+                                 <!-- <div style="width:60%" class="mr-1">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="students" [filter]="true"
+                                      formControlName="StudentId" name="StudentId"
+                                     label="SELECCIONE ESTUDIANTE" 
+                                    [style]="{'width':'100%','margin-bottom':'20px'}"
+                                    optionvalue="id" optionLabel="User.fullName" 
+                                    filterBy="User.fullName"
+                                    [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.User.fullName  | titlecase}} -
+                                        cc: {{option.User.Person.identification }} </span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                 </div> -->
+                                 <!-- <div style="width:40%" class="mr-1">
+                                  
+                                  <div class="p-inputgroup" > 
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                                    <input type="text" pInputText 
+                                    class="p-inputtext-lg"  name="Horas"  title="HORAS DE DEDICACIÓN" placeholder="HORAS DE DEDICACIÓN"
+                                    formControlName="Horas" required>         
+                                 </div>
+                            
+                                  
+                                </div> -->
+   
+                           <!-- </div> -->
+                           </div>
+                         </div> 
+                       </td>
+                   </tr>
+                 </ng-template>
+                 </p-table>
+               </div>
+             </div>
+            </div>
+            <br>
+  <br>
+            <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+              <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+              class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+        </div>
+         
+            <!-- <div fxLayout="row" class="titleCard">
+                <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+              <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Semillero</h2>
+            </div> -->
+  
+        
+         
+         
+        </div>
+      </div>
+        <br>
+            <!-- <ng-template pTemplate="footer">
+              <br> -->
+                
+            <!-- </ng-template> -->
+            
+                
+    </p-dialog>
+  
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>
