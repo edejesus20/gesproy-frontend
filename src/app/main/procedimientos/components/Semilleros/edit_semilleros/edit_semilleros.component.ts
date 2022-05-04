@@ -15,6 +15,10 @@ import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { LineI } from 'src/app/models/projet/line';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 const translate = require('translate');
+import *as moment from 'moment';
+import { ProgramService } from 'src/app/core/services/program/program.service';
+import { LineProgramGroupI } from 'src/app/models/institution/program';
+
 @Component({
   selector: 'app-edit_semilleros',
   templateUrl: './edit_semilleros.component.html',
@@ -73,7 +77,8 @@ private GroupId:number = 0
     private groupService:GroupService,
     private router: Router,
     private lineService: LineService,
-    private studentService:StudentService
+    private studentService:StudentService,
+    private programService:ProgramService
     ) { }
   ngOnInit(): void {
     this.buildForm();
@@ -102,10 +107,11 @@ private GroupId:number = 0
   }
   private buildForm() {
     this.form = this.formBuilder.group({
+      id:[''],
       creation_date:['', [Validators.required]],
-      approval_date:['', [Validators.required]],
-      resolution:['', [Validators.required]],
-      article:['', [Validators.required]],
+      // approval_date:['', [Validators.required]],
+      // resolution:['', [Validators.required]],
+      // article:['', [Validators.required]],
       name: ['', [Validators.required]],
       TeacherId: ['', [Validators.required]],
       ObjetivoGeneral: ['', [Validators.required]],
@@ -116,7 +122,7 @@ private GroupId:number = 0
       estrategias: ['', [Validators.required]],
       HeadquarterProgramId: ['', [Validators.required]],
       GroupId:['', [Validators.required]],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
+      lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
       Students: this.formBuilder.array([this.formBuilder.group({
         date_firt:['',[Validators.required]],
         date_end:['',[Validators.required]],
@@ -140,6 +146,7 @@ private GroupId:number = 0
 
   public getHeadquarterProgram(){
     if(this.form.value.HeadquarterProgramId != ''){
+      // console.log(this.form.value.HeadquarterProgramId,'this.form.value.HeadquarterProgramId')
       this.groupService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
        this.groups= rolesFromApi.groups
         this.mostrarHeadquarterProgram=true
@@ -149,7 +156,7 @@ private GroupId:number = 0
   }
   public getLineProgramGroup(){
     if(this.form.value.GroupId != ''){
-     console.log(this.form.value.GroupId)
+    //  console.log(this.form.value.GroupId)
      this.lines=[]
      if(this.form.value.GroupId.LineProgramGroups.length >0){
        for (let key of this.form.value.GroupId.LineProgramGroups) {
@@ -159,7 +166,7 @@ private GroupId:number = 0
          
        }
        this.mostrarlineasProgram=true
-       console.log(this.lines)
+      //  console.log(this.lines)
      }
     }
   }
@@ -342,18 +349,86 @@ private GroupId:number = 0
 
   getOneCntAccount(id:number) {
     this.seedbedService.getItem(id).subscribe((cnt_groupFromApi) => {
-      console.log(cnt_groupFromApi.seedbed);      
-      if(cnt_groupFromApi.seedbed.id != undefined)
-      this.form.controls['id'].setValue(cnt_groupFromApi.seedbed.id)
-      this.form.controls['name'].setValue(cnt_groupFromApi.seedbed.name)
-      this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
-      if(cnt_groupFromApi.seedbed.lines != undefined && cnt_groupFromApi.seedbed.lines.length > 0){
-        this.agregarThematics(cnt_groupFromApi.seedbed.lines)  
-      } 
+        
+      if(cnt_groupFromApi.seedbed.id != undefined){
+        console.log(cnt_groupFromApi.seedbed);
+        this.form.controls['id'].setValue(cnt_groupFromApi.seedbed.id)
+        this.form.controls['name'].setValue(cnt_groupFromApi.seedbed.name)
+        let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+
+        this.form.controls['creation_date'].setValue(creation_date)
+        this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
+        this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
+        this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
+        this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
+        this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
+        if(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId != undefined){
+          this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
+            if(algo.program.id != undefined && algo.program.FacultyId != undefined){
+              this.facultyService.getItem(algo.program.FacultyId).subscribe(key=>{
+                this.form.controls['Facultad'].setValue(key.faculty)
+                this.headquarterService.getOneFacultadHeadquarterProgram(cnt_groupFromApi.seedbed.HeadquarterProgramId).subscribe(key1=>{
+                  if(key1.FacultadHeadquarterProgram != undefined){
+                    this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
+                  this.groupService.getItemOneHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe(key2=>{
+                    this.form.controls['GroupId'].setValue(key2.group)
+                    if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
+                      this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
+            
+                    }
+                    this.SelectFacultad()
+                    this.getHeadquarterProgram()
+                    this.getLineProgramGroup()
+                  console.log(this.form.value,'formulario')
+                  })
+                  }
+                  
+                })
+              })
+            }
+          })
+
+        }
+        
+
+
+
+       if(cnt_groupFromApi.seedbed.Teacher != undefined)
+        this.form.controls['TeacherId'].setValue(cnt_groupFromApi.seedbed.Teacher)
+      }
+      
+      // if(cnt_groupFromApi.seedbed.lines != undefined && cnt_groupFromApi.seedbed.lines.length > 0){
+      //   this.agregarThematics(cnt_groupFromApi.seedbed.lines)  
+      // } 
+
       this.displayMaximizable2=true
       this.tabla = false
       
     }, error => console.error(error));
+  }
+  agregarLine(LineProgramGroups: LineProgramGroupI[]) {
+    if(LineProgramGroups.length){
+      for (let key of LineProgramGroups) {
+        if(key.id != undefined && key.LineProgram?.LineId != undefined) {
+          // console.log(DiscountLine)
+          
+          let control = <FormArray>this.form.controls['lines']
+          this.lineService.getItem(key.LineProgram?.LineId).subscribe((algo)=>{
+            // this.lines.push(algo.line)
+            if(algo.line && key.id != undefined){
+              control.push(this.formBuilder.group({
+                // ThematicId:[algo.line, [Validators.required]],
+                LineId:[algo.line, [Validators.required]],
+              }))
+            }
+          })
+        }
+      }
+      this.mostrar2= true
+      let control = <FormArray>this.form.controls['lines']
+      control.removeAt(0)
+      console.log(control,'control')
+    }
   }
   agregarThematics(lines: LineI[]) {
     // if(Thematics.length){
@@ -392,7 +467,7 @@ private GroupId:number = 0
     this.displayMaximizable2 = false
   }
   actualizar(id: number){
-    // console.log(id)
+    console.log(id)
     this.getOneCntAccount(id)
   }
 

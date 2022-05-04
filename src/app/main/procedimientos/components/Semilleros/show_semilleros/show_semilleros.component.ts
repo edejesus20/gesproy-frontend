@@ -42,13 +42,15 @@ export class Show_semillerosComponent implements OnInit {
       this.cols = [
       { field: 'name', header: 'Nombre' },
       { field: 'creation_date', header: 'Fecha_de_creacion' },
-      { field: 'approval_date', header: 'Fecha_de_aprovacion' },
+      // { field: 'approval_date', header: 'Fecha_de_aprovacion' },
       { field: 'ObjetivoGeneral', header: 'Objetivo General' },
       // { field: 'thematics', header: 'Tematicas Asociadas' },
-      { field: 'resolution', header: 'Resolución' },
-      { field: 'article', header: 'Articulo' },
+      // { field: 'resolution', header: 'Resolución' },
+      // { field: 'article', header: 'Articulo' },
       { field: 'Mision', header: 'Mision' },
       { field: 'Vision', header: 'Vision' },
+      { field: 'estrategias', header: 'Vision' },
+      
       { field: 'Group.name', header: 'Grupo' },
       { field: 'Teacher.User.fullName', header: 'Docente' },
     ];
@@ -80,7 +82,7 @@ export class Show_semillerosComponent implements OnInit {
               {
                 id:key.id,
                 creation_date: key.creation_date,
-                approval_date:key.approval_date,
+                // approval_date:key.approval_date,
                 name: key.name,
                 TeacherId: key.TeacherId,
                 ObjetivoGeneral: key.ObjetivoGeneral,
@@ -88,10 +90,10 @@ export class Show_semillerosComponent implements OnInit {
                 Mision: key.Mision,
                 Vision: key.Vision,
                 estrategias: key.estrategias,
-                resolution:key.resolution,                
+                // resolution:key.resolution,                
                 HeadquarterProgramId: key.HeadquarterProgramId,
                 GroupId: key.GroupId,
-                article:key.article,                
+                // article:key.article,                
                 Teacher:key.Teacher,
                 SeedbedStudent:key.SeedbedStudent,
                 Students:key.Students,
@@ -117,15 +119,15 @@ export class Show_semillerosComponent implements OnInit {
       array.push({ 
         id:key.id,
         Fecha_de_creacion: key.creation_date,
-        Fecha_de_aprovacion:key.approval_date,
+        // Fecha_de_aprovacion:key.approval_date,
         Nombre: key.name,
         Objetivo_General: key.ObjetivoGeneral,
         Objetivos_Especificos: key.ObjetivosEspecificos,
         Mision: key.Mision,
         Vision: key.Vision,
         Estrategias: key.estrategias,
-        Resolucion:key.resolution,  
-        Articulo:key.article,    
+        // Resolucion:key.resolution,  
+        // Articulo:key.article,    
         Docente:key.Teacher?.User?.fullName,     
         Grupo:key.Group?.name,                     
         // HeadquarterProgramId: key.HeadquarterProgramId,
@@ -172,14 +174,14 @@ export class Show_semillerosComponent implements OnInit {
         fila_0:{
             col_1:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 7 , },
             col_2:{ text: 'CREACIÓN', style: 'tableHeader',fontSize: 7 , },
-            col_3:{ text: 'APROBACIÓN', style: 'tableHeader',fontSize: 7 , },
+            // col_3:{ text: 'APROBACIÓN', style: 'tableHeader',fontSize: 7 , },
             col_5:{ text: 'OBJETIVO GENERAL', style: 'tableHeader',fontSize: 7 , },
             col_6:{ text: 'OBJETIVOS ESPECIFICOS', style: 'tableHeader',fontSize: 7 , },
             col_7:{ text: 'MISION', style: 'tableHeader',fontSize: 7 , },
             col_8:{ text: 'VISION', style: 'tableHeader',fontSize: 7 , },
             col_9:{ text: 'ESTRATEGIAS', style: 'tableHeader',fontSize: 7 , },
-            col_10:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 7 , },
-            col_11:{ text: 'ARTICULO', style: 'tableHeader',fontSize: 7 , },
+            // col_10:{ text: 'RESOLUCION', style: 'tableHeader',fontSize: 7 , },
+            // col_11:{ text: 'ARTICULO', style: 'tableHeader',fontSize: 7 , },
             col_12:{ text: 'DOCENTE', style: 'tableHeader',fontSize: 7 , },
             col_13:{ text: 'GRUPO', style: 'tableHeader',fontSize: 7 , },
         }
@@ -212,14 +214,14 @@ export class Show_semillerosComponent implements OnInit {
               var row:any[] = [ 
                 headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
-              headerU.fila_0.col_3,
+              // headerU.fila_0.col_3,
               headerU.fila_0.col_5,
               headerU.fila_0.col_6,
               headerU.fila_0.col_7,
               headerU.fila_0.col_8,
               headerU.fila_0.col_9,
-              headerU.fila_0.col_10,
-              headerU.fila_0.col_11,
+              // headerU.fila_0.col_10,
+              // headerU.fila_0.col_11,
               headerU.fila_0.col_12,
               headerU.fila_0.col_13,
               ]
@@ -227,47 +229,6 @@ export class Show_semillerosComponent implements OnInit {
           }
       }
 
-    //   for (var key in headers2){
-    //     if (headers2.hasOwnProperty(key)){
-    //         let header = headers2[key];
-    //         var row:any[] = [ 
-    //           header.fila_0.col_1,
-    //           header.fila_0.col_2,
-    //         header.fila_0.col_3,
-    //         header.fila_0.col_5,
-    //         header.fila_0.col_6,
-    //         header.fila_0.col_7,
-    //         ]
-    //         body2.push(row);
-    //     }
-    // }
-  
-    //   for (var key in this.rows2) {
-    //       if (this.rows2.hasOwnProperty(key))
-    //       {
-    //           var data = this.rows2[key];
-    //           var row:any[] = [
-                
-    //             data.name.toString(),
-    //             data.creation_date.toString(),
-    //     data.approval_date?.toString(),
-        
-    //     data.ObjetivoGeneral.toString(),
-    //     data.ObjetivosEspecificos.toString(),
-    //     data.Mision.toString(),
-    //     data.Vision.toString(),
-    //     data.estrategias.toString(),
-    //    data.resolution.toString(),  
-    //  data.article.toString(),    
-    //    data.Teacher?.User?.fullName.toString(),     
-    //    data.Group?.name.toString(), 
-    //           ]
-    //           body.push(row);
-    //           // this.estudiantes.push(=data.Students?.)
-              
-    //       }
-          
-    //   }
       
       for (var key in this.rows2) {
         if (this.rows2.hasOwnProperty(key))
@@ -276,15 +237,15 @@ export class Show_semillerosComponent implements OnInit {
             var row:any[] = [
               data.name.toString(),
               data.creation_date.toString(),
-      data.approval_date?.toString(),
+      // data.approval_date?.toString(),
       
       data.ObjetivoGeneral.toString(),
       data.ObjetivosEspecificos.toString(),
       data.Mision.toString(),
       data.Vision.toString(),
       data.estrategias.toString(),
-     data.resolution.toString(),  
-   data.article.toString(),    
+  //    data.resolution?.toString(),  
+  //  data.article?.toString(),    
      data.Teacher?.User?.fullName.toString(),     
      data.Group?.name.toString(), 
             ]
@@ -321,7 +282,7 @@ export class Show_semillerosComponent implements OnInit {
             fontSize: 7,
             table: {
               headerRows: 1,
-              widths: [ '10%', '7%', '7%', '16%','10%','5%','5%','5%','5%','5%','10%','15%'],
+              widths: [ '17%', '7%', '16%','15%','5%','5%','10%','10%','15%'],
              
                 body: body
             },

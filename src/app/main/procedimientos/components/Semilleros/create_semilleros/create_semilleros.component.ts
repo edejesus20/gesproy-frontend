@@ -102,9 +102,9 @@ private GroupId:number = 0
   private buildForm() {
     this.form = this.formBuilder.group({
       creation_date:['', [Validators.required]],
-      approval_date:['', [Validators.required]],
-      resolution:['', [Validators.required]],
-      article:['', [Validators.required]],
+      // approval_date:['', [Validators.required]],
+      // resolution:['', [Validators.required]],
+      // article:['', [Validators.required]],
       name: ['', [Validators.required]],
       TeacherId: ['', [Validators.required]],
       ObjetivoGeneral: ['', [Validators.required]],
@@ -115,7 +115,7 @@ private GroupId:number = 0
       estrategias: ['', [Validators.required]],
       HeadquarterProgramId: ['', [Validators.required]],
       GroupId:['', [Validators.required]],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
+      lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
       Students: this.formBuilder.array([this.formBuilder.group({
         date_firt:['',[Validators.required]],
         date_end:['',[Validators.required]],
@@ -231,9 +231,9 @@ private GroupId:number = 0
     console.log(formValue)
     if(formValue.TeacherId != 0 && formValue.name != "" &&
     formValue.creation_date != "" && 
-    formValue.approval_date != "" && 
-    formValue.resolution != "" && 
-    formValue.article != "" && 
+    // formValue.approval_date != "" && 
+    // formValue.resolution != "" && 
+    // formValue.article != "" && 
     formValue.ObjetivoGeneral != "" && 
     formValue.ObjetivosEspecificos != "" && 
     formValue.Mision != "" && 

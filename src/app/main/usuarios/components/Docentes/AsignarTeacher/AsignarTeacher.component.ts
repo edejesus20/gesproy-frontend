@@ -57,8 +57,6 @@ public ref:any;
   public Workexperiences:any[] =[]
   public teachers: TeacherI[] =[]
 
-  
-  
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -79,13 +77,13 @@ public ref:any;
       id: [''],
       trainingTeacher: this.formBuilder.array([this.formBuilder.group(
         {
-          name: ['', [Validators.required]],
-          date_graduation: ['', [Validators.required]],
-          name_institution: ['', [Validators.required]],
-          resolution_convalidation: ['', [Validators.required]],
-          degree_certificate: ['', [Validators.required]],
+          name: [''],
+          date_graduation: [''],
+          name_institution: [''],
+          resolution_convalidation: [''],
+          degree_certificate: [''],
           TeacherId:this.form2.id,
-          TrainingId:['', [Validators.required]],
+          TrainingId:[''],
       })]),
       Workexperiences:this.formBuilder.array([this.formBuilder.group(
         {
@@ -235,6 +233,15 @@ public ref:any;
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar2=false
+      control.push(this.formBuilder.group({
+        name: ['', [Validators.required]],
+        date_graduation: ['', [Validators.required]],
+        name_institution: ['', [Validators.required]],
+        resolution_convalidation: ['', [Validators.required]],
+        degree_certificate: ['', [Validators.required]],
+        TeacherId:this.form2.id,
+        TrainingId:['', [Validators.required]]
+      }))
       }
   }
 
@@ -352,6 +359,14 @@ public verificar(){
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar3=false
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          name_institution: [''],
+          position_type: [''],
+          functions:[''],
+          start_date:[''],
+          final_date:[''],
+        }))
         }
     }
 
@@ -361,7 +376,7 @@ public verificar(){
       this.ref = this.dialogService.open(Create_capacitacionComponent, {
         width: '35%',
         height: '50%',
-        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,showHeader:false,
         baseZIndex: 10000,
         data: {
           id: '1'

@@ -154,6 +154,7 @@ export class EditarTeacherComponent implements OnInit {
     this.linkTypeService.getList().subscribe(
       (AdministrativeFromApi) => {
         this.linkTypes = AdministrativeFromApi.linkTypes;
+        // console.log(this.linkTypes)
       }, error => console.error(error));
   }
   // getAllLines() {
@@ -165,7 +166,7 @@ export class EditarTeacherComponent implements OnInit {
 
   public onSubmit() {
 
-    const formValue={
+    let formValue={
       id: this.form.value.id,
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -245,6 +246,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.Workexperiences=[]
 
     }
+    console.log(formValue)
     if(formValue.name != ""&&
       formValue.surname != ""&&
       formValue.DocumentTypeId != ( 0 || undefined)&&
@@ -260,7 +262,7 @@ export class EditarTeacherComponent implements OnInit {
     &&formValue.ColcienciaCategoryId != ("" || undefined) &&
     formValue.LinkTypeId != ("" || undefined)
     ){
-      console.log(formValue)
+      
 
     this.teacherService.updateItem(formValue.id,formValue).subscribe(
       () => {
@@ -421,6 +423,7 @@ getOneCntAccount(id:number) {
             this.form.controls['LinkTypeId'].setValue(algo1.linkType)
 
           })
+            // this.form.controls['LinkTypeId'].setValue(cnt_groupFromApi.teacher.LinkType)
 
 
             }
@@ -459,7 +462,7 @@ getOneCntAccount(id:number) {
         }
         
         if(cnt_groupFromApi.teacher.Workexperiences?.length != undefined && cnt_groupFromApi.teacher.Workexperiences?.length > 0){
-          // console.log(cnt_groupFromApi.teacher.Trainings)
+          console.log(cnt_groupFromApi.teacher.Trainings)
           this.agregarDescuentos2(cnt_groupFromApi.teacher.Workexperiences)    
         }
      }
@@ -550,10 +553,10 @@ getOneCntAccount(id:number) {
           
           let control = <FormArray>this.form.controls['trainingTeacher']
             this.teacherService.getItem(key.TrainingTeacher.TeacherId).subscribe((algo1)=>{
-              if(algo1.teacher.id != undefined && key.TrainingTeacher != undefined) {
+              if(algo1.teacher.id != undefined && key.TrainingTeacher?.TrainingId != undefined) {
                 this.trainingsService.getItem(key.TrainingTeacher.TrainingId).subscribe((algo)=>{
                   if(algo.training.id != undefined){
-                    let any :any=algo.training
+                    // let any :any=algo.training
                     // console.log(algo.training)
                     control.push(this.formBuilder.group({
                       name: [key.TrainingTeacher?.name, [Validators.required]],
@@ -562,7 +565,7 @@ getOneCntAccount(id:number) {
                       resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation, [Validators.required]],
                       degree_certificate: [key.TrainingTeacher?.degree_certificate, [Validators.required]],
                       TeacherId:algo1.teacher.id,
-                      TrainingId:[any, [Validators.required]],
+                      TrainingId:[algo.training, [Validators.required]],
                     }))
                   }
       
@@ -574,6 +577,8 @@ getOneCntAccount(id:number) {
       }
       this.mostrar2= true
       let control = <FormArray>this.form.controls['trainingTeacher']
+      console.log(control,'control')
+
       control.removeAt(0)
     }
 
@@ -616,6 +621,14 @@ getOneCntAccount(id:number) {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar3=false
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          name_institution: [''],
+          position_type: [''],
+          functions:[''],
+          start_date:[''],
+          final_date:[''],
+        }))
         }
     }
 
@@ -657,6 +670,15 @@ getOneCntAccount(id:number) {
         control.removeAt(index)
           if(control.length <= 0){
           this.mostrar2=false
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            name: [''],
+            date_graduation: [''],
+            name_institution: [''],
+            resolution_convalidation: [''],
+            degree_certificate: [''],
+            TrainingId:[''],
+          }))
           }
       }
 

@@ -98,6 +98,17 @@ export class HeadquarterService {
         catchError(this.handleError)
       )
   }
+
+  getOneFacultadHeadquarterProgram(id: number): Observable<{FacultadHeadquarterProgram: any[]}> {
+    return this.http
+      .get<{FacultadHeadquarterProgram: any[]}>(this.API_URI+'/api/OneFacultadHeadquarterProgram' + '/' + id)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  
   
   // Update item by id
   updateItem(id:number, item:HeadquarterI): Observable<{headquarter:HeadquarterI}> {

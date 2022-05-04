@@ -18,7 +18,7 @@
   
               <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
                 
-                <h2 style="text-align: center;">FORMALIZACIÓN DE SEMILLEROS DE INVESTIGACIÓN</h2>
+                <h2 style="text-align: center;">EDITAR SEMILLEROS DE INVESTIGACIÓN</h2>
               </div>
   
               <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
@@ -244,7 +244,7 @@
    
         </p-panel>
         <br>
-        <div class="grid p-fluid ml-1 mr-1">
+        <!-- <div class="grid p-fluid ml-1 mr-1">
           <div class="col-12 md:col-4 lg:col-4" >
             <div class="field ">
             <label for="name"style="font-weight: bold;">FECHA APROVACIÓN </label>
@@ -280,7 +280,7 @@
             </div>
           </div>
   
-        </div>
+        </div> -->
   
             </div>
             <div class="bordep">
@@ -462,11 +462,12 @@
              </div>
             </div>
             <br>
-  <br>
-            <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
-              <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
-              class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
-            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
+            <div fxLayout="row" class="titleCard" >
+              <button pButton type="button" type="submit"  icon="pi pi-check" 
+              [disabled]="!form.valid" 
+             class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
+              <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
         </div>
          
             <!-- <div fxLayout="row" class="titleCard">

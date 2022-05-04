@@ -4,7 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['name','creation_date','approval_date','ObjetivoGeneral','resolution','article'
+    [globalFilterFields]="['name','creation_date','ObjetivoGeneral'
     ,'Group.name','Teacher.User.fullName']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
@@ -39,9 +39,9 @@
           <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="creation_date">CREACIÓN<p-sortIcon field="creation_date"></p-sortIcon></th>
-          <th pSortableColumn="approval_date">APROBACIÓN<p-sortIcon field="approval_date"></p-sortIcon></th>
+          <!-- <th pSortableColumn="approval_date">APROBACIÓN<p-sortIcon field="approval_date"></p-sortIcon></th> -->
           <th pSortableColumn="ObjetivoGeneral">OBJETIVO GENERAL<p-sortIcon field="ObjetivoGeneral"></p-sortIcon></th>
-          <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
+          <!-- <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th> -->
           <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           <th pSortableColumn="Teacher.User.fullName">DOCENTE<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
@@ -62,9 +62,9 @@
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.name  | titlecase}}</td>
           <td>{{item.creation_date | date:'fullDate' | titlecase}}</td>
-          <td>{{item.approval_date | date:'fullDate' | titlecase}}</td>
+          <!-- <td>{{item.approval_date | date:'fullDate' | titlecase}}</td> -->
           <td>{{item.ObjetivoGeneral  }}</td>
-          <td>{{item.resolution }} - Articulo: {{item.article  | titlecase}}</td>
+          <!-- <td>{{item.resolution }} - Articulo: {{item.article  | titlecase}}</td> -->
           <td>{{item.Program?.Faculty?.name | titlecase}}</td>
           <td>{{item.Teacher.User.fullName  | titlecase}}</td>
           <td>{{item.Group.name  | titlecase}}</td>

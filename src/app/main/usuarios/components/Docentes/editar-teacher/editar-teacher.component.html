@@ -113,7 +113,7 @@
                         class="p-button-rounded p-button-outlined" (click)="addGenero($event)" ></button>
                       </span>
                     </div>
-                    <p>Genero Cargado : {{this.form.value.GenderId.name}}</p>
+                    <!-- <p>Genero Cargado : {{this.form.value.GenderId.name}}</p> -->
            
                 </div>
         
@@ -140,7 +140,7 @@
                     class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
                   </span>
                 </div>
-                <p>Tipo de Documento Cargado : {{this.form.value.DocumentTypeId.name}}</p>
+                <!-- <p>Tipo de Documento Cargado : {{this.form.value.DocumentTypeId.name}}</p> -->
           
                 </div>
               </div>
@@ -228,11 +228,11 @@
                         <span >{{option.name | titlecase}}</span>
                     </ng-template>
                     </p-dropdown>
-                    <p>Escalafon Cargado : {{this.form.value.ScaleId.name}}</p>
+                    <!-- <p>Escalafon Cargado : {{this.form.value.ScaleId.name}}</p> -->
                   </div>
                   <span class="bottomdelete" style="margin-top: -35px;">
                     <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
-                    class="p-button-rounded p-button-outlined" (click)="addVinculacion($event)" ></button>
+                    class="p-button-rounded p-button-outlined" (click)="addEscalafon($event)" ></button>
                   </span>
                 </div>
    
@@ -246,19 +246,18 @@
                     [options]="linkTypes" [filter]="true"
                       name="LinkTypeId" formControlName="LinkTypeId" label="SELECCIONE VINCULACION" 
                       [style]="{'width':'100%','margin-bottom':'20px'}"  
-                      optionValue="id"  optionLabel="name" filterBy="name"  
-                      [required]="true"placeholder="SELECCIONE VINCULACION" title="SELECCIONE VINCULACION">
+                      optionvalue="id"  optionLabel="name" filterBy="name"
+                      [required]="true" placeholder="SELECCIONE VINCULACION" title="SELECCIONE VINCULACION">
                       <ng-template let-option pTemplate="item">
-                        <span>{{option.name | titlecase}}</span>
+                        <span >{{option.name | titlecase}}</span>
                     </ng-template>
-                   
                     </p-dropdown>
-                    <p>Vinculación Cargada : {{this.form.value.LinkTypeId.name}}</p>
+                   
                 
                 </div>
                 <span class="bottomdelete" style="margin-top: -35px;">
                   <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
-                  class="p-button-rounded p-button-outlined" (click)="addEscalafon($event)" ></button>
+                  class="p-button-rounded p-button-outlined" (click)="addVinculacion($event)" ></button>
                 </span>
                 </div>
   
@@ -277,7 +276,7 @@
                   <span >{{option.name }}</span>
               </ng-template>
               </p-dropdown>
-              <p>Categoria Cargada : {{this.form.value.ColcienciaCategoryId.name}}</p>
+              <!-- <p>Categoria Cargada : {{this.form.value.ColcienciaCategoryId.name}}</p> -->
 
             </div>
             <span class="bottomdelete" style="margin-top: -35px;">
@@ -323,7 +322,7 @@
                                       Programa: {{option.Programa  | titlecase}}</span>
                                 </ng-template>
                                 </p-dropdown>
-                                <p>Dato Cargado : {{getRoles.value[pointIndex].HeadquarterProgramId.Sede}} - {{getRoles.value[pointIndex].HeadquarterProgramId.Programa}}</p>
+                                <!-- <p>Dato Cargado : {{getRoles.value[pointIndex].HeadquarterProgramId.Sede}} - {{getRoles.value[pointIndex].HeadquarterProgramId.Programa}}</p> -->
 
                               </div>
                               <div class="grupoinput2">
@@ -343,7 +342,7 @@
                                   </ng-template>
                                   </p-dropdown>
                           
-                                  <p>Dato Cargado : {{getRoles.value[pointIndex].RelationshipId.name}}</p>
+                                  <!-- <p>Dato Cargado : {{getRoles.value[pointIndex].RelationshipId.name}}</p> -->
 
                                 </div>
                                 <span class="bottomdelete" style="margin-top: -35px;">
@@ -430,25 +429,23 @@
                                     <div class="flex">
                                       <div style="width:100%">
                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                        [options]="trainings" [filter]="true"
-                                            formControlName="TrainingId" name="TrainingId"
-                                          label="CAPACITACION" 
-                                          [style]="{'width':'100%','margin-top':'10px'}"
-                                          optionvalue="id" optionLabel="name"  filterBy="name"
-                                          [required]="true" placeholder="CAPACITACION"  title="CAPACITACION">
-                                          <ng-template let-option pTemplate="item">
-                                            <span >
-                                              {{option.name  | titlecase}} -
-                                              </span>
-                                        </ng-template>
-                                        </p-dropdown>
+                                          [options]="trainings" [filter]="true"
+                                            name="TrainingId" formControlName="TrainingId" label="CAPACITACION" 
+                                            [style]="{'width':'100%','margin-bottom':'20px'}"  
+                                            optionvalue="id"  optionLabel="name" filterBy="name"
+                                            [required]="true" placeholder="CAPACITACION" title="CAPACITACION">
+                                            <ng-template let-option pTemplate="item">
+                                              <span >{{option.name | titlecase}}</span>
+                                          </ng-template>
+                                          </p-dropdown>
+
                                       </div>
                                       <span class="bottomdelete" style="margin-top: -25px;">
                                         <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                                         class="p-button-rounded p-button-outlined" (click)="addCapacitaciones($event)" ></button>
                                       </span>
                                     </div>
-                                  <p>Dato Cargado: {{gettrainingTeacher.value[pointIndex].TrainingId.name}}</p>
+                                  <!-- <p>Dato Cargado: {{gettrainingTeacher.value[pointIndex].TrainingId.name}}</p> -->
 
                                   </div>
                                 </div>
@@ -496,7 +493,7 @@
                               </div>
           
                              
-                              <span class="bottomdelete"  style="margin-left: 20px ;margin-top: 5px;">
+                              <span class="bottomdelete"  style="margin-left: 40px ;margin-top: 20px;">
                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removetrainingTeacher(pointIndex,$event)"  
                                 class="p-button-rounded p-button-danger"></button>
                                 <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
@@ -568,11 +565,11 @@
                                     </div>
                                   </div>
                                   <div class="grid">
-                                  <div class="col-12 md:col-3 lg:col-3">
+                                  <div class="col-12 md:col-6 lg:col-6">
                                     <div class="p-inputgroup"  style="margin-top: 10px;">
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
-                                      <textarea rows="3" cols="100" 
+                                      <textarea rows="3" cols="200" 
                                       [style]="{'border-radius':'10px'}" 
                                       pInputTextarea [autoResize]="true"
                                       class="p-inputtext-lg"
@@ -583,34 +580,31 @@
                                       </span>       
                                     </div>
                                   </div>
-                                  <div class="col-12 md:col-9 lg:col-9 flex">
-                                 
-                                  <div>
-                                    <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-float-label" 
-                                      [style]="{'width':'100%'}">
-                                      <input type="date" pInputText   class="p-inputtext-lg" title="FECHA DE INICIO"
-                                      inputId="basic" name="start_date" 
-                                      placeholder="FECHA DE INICIO"
-                                      formControlName="start_date" required></span> 
-                                    </div>
-                                  </div>
-                                     <div>
-                                      <div class="p-inputgroup"  style="margin-left: 15px;margin-top: 10px;">
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-                                        <input type="date" pInputText  class="p-inputtext-lg" 
-                                        title="FECHA DE TERMINO"
-                                        inputId="basic" name="final_date"
-                                         placeholder="FECHA DE TERMINO"
-                                        formControlName="final_date" required></span> 
+                                  <div class="col-12 md:col-6 lg:col-6 flex">
+                                    <div class="grid">
+                                      <div class="col-12 md:col-6 lg:col-6 ">
+                                        <div class="p-inputgroup"  style="margin-top: 10px;">
+                                          <span class="p-float-label" 
+                                          [style]="{'width':'100%'}">
+                                          <input type="date" pInputText   class="p-inputtext-lg" title="FECHA DE INICIO"
+                                          inputId="basic" name="start_date" 
+                                          placeholder="FECHA DE INICIO"
+                                          formControlName="start_date" required></span> 
+                                        </div>
                                       </div>
-                                     </div>
-                                   
-                                   
-                                    
-                                   
-                                  
+                                      <div class="col-12 md:col-6 lg:col-6 ">
+                                        <div class="p-inputgroup"  style="margin-left: 15px;margin-top: 10px;">
+                                          <span class="p-float-label" 
+                                          [style]="{'width':'100%'}">
+                                          <input type="date" pInputText  class="p-inputtext-lg" 
+                                          title="FECHA DE TERMINO"
+                                          inputId="basic" name="final_date"
+                                           placeholder="FECHA DE TERMINO"
+                                          formControlName="final_date" required></span> 
+                                        </div>
+                                      </div>
+                                    </div>
+
                                   </div>
                                 </div>
                               </div>

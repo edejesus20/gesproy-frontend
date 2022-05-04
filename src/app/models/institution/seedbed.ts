@@ -7,6 +7,8 @@ export interface SeedbedI {
     id?: number;
     creation_date: string;
     approval_date?:string;
+    resolution?:string
+    article?:string
     name: string;
     TeacherId: number
     ObjetivoGeneral: string;
@@ -14,10 +16,10 @@ export interface SeedbedI {
     Mision: string;
     Vision: string;
     estrategias: string;
-    resolution:string
+
     HeadquarterProgramId: number
     GroupId: number
-    article:string
+    
     Teacher?:TeacherI
     SeedbedStudent?:SeedbedStudentI
     lines?:any[]

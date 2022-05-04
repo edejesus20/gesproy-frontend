@@ -37,7 +37,7 @@ export class Edit_linesComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.thematic()
+    
   }
   thematic() {
     this.thematicService.getList().subscribe(list => {
@@ -121,6 +121,7 @@ export class Edit_linesComponent implements OnInit {
       if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
         this.agregarThematics(cnt_groupFromApi.line.Thematics)  
       } 
+     
       this.displayMaximizable2=true
       this.tabla = false
       
@@ -146,6 +147,7 @@ export class Edit_linesComponent implements OnInit {
       this.mostrar2= true
       let control = <FormArray>this.form.controls['Thematics']
       control.removeAt(0)
+      this.thematic()
       // console.log(control)
     }
   }

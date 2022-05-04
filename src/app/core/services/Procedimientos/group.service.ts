@@ -68,6 +68,15 @@ getItemHeadquarterProgram(id: number): Observable<{groups:GroupI[]}> {
       catchError(this.handleError)
     )
 }
+getItemOneHeadquarterProgram(id: number): Observable<{group:GroupI}> {
+  return this.http
+    .get<{group:GroupI}>(this.base_path_get + '/OneHeadquarterProgram/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
 
 // Get students data
 getList(): Observable<{ groups: GroupI[] }> {
