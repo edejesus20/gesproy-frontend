@@ -1,0 +1,85 @@
+mat-error > span:not(:first-child) {
+    display: none;
+  }
+  
+  :host{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .mat-form-field{
+    width: 100%;
+    min-width: auto;
+  
+  }
+  
+  mat-card{
+    width: 50%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  mat-icon{
+      font-size: 30px;
+  }
+  
+  .titleCard{
+    margin: 0 0 10px 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+  }
+  .imgLogo {
+    width:auto;
+     /* min-height: 250px; */
+      margin-top:25px;
+      /* margin-left: 30px; */
+      /* max-width: 500px; */
+      /* max-height:700px; */
+      border : 1px solid transparent;
+      border-radius: 15px;
+      display:flex;
+      justify-content:center;
+      align-content: center;
+    }
+    .imgLogo2 {
+      width:100%;
+       /* min-height: 250px; */
+        /* margin-left: 30px; */
+        /* max-width: 500px; */
+        /* max-height:700px; */
+        border : 1px solid transparent;
+        border-radius: 15px;
+        display:flex;
+        justify-content:center;
+        align-content: center;
+      }
+    .titleCard2{
+      display:flex;
+      justify-content:center;
+      align-content: center;
+      font-size: 45px;
+      font-weight: bold;
+      /* color:rgba(51,102,0,1); */
+      margin-top: 10px;
+    }
+  mat-card-title{
+    padding-left:10px;
+    padding-top:10px;
+}
+
+  .categ-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    height: 80px;
+  }
+  
+  .categ-margin {
+    margin: 0;
+  }
+  
+  .opcStatus{
+    margin: 0 40px;
+  }

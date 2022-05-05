@@ -56,18 +56,21 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { LandingComponent } from './landing/landing.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuComponent } from './menu/menu.component';
-
+import {BadgeModule} from 'primeng/badge';
+import { AvatarComponent } from './avatar/avatar.component';
+import {DataViewModule} from 'primeng/dataview';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
     LandingComponent,
-    MenuComponent
+    MenuComponent,
+    AvatarComponent
     
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-   
+    DataViewModule,
     DashboardRoutingModule,
     PrivateLayoutRoutingModule,
     ProcedimientosRoutingModule,
@@ -126,7 +129,8 @@ import { MenuComponent } from './menu/menu.component';
     FieldsetModule,
     FileUploadModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    BadgeModule
   ],
   providers: [DynamicDialogRef,DynamicDialogConfig]
 })

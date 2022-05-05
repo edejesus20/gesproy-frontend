@@ -196,7 +196,7 @@ updateUser(user:any){
         'user':userObjeto
       })
     }
-    console.log('aqui')
+    // console.log('aqui')
     return this.http.patch(`${this.base_path}/${user.id}`, user,httpOptions)
     .pipe(retry(2),catchError(this.handleError))
   }else{
@@ -210,6 +210,33 @@ updateUser(user:any){
   // )
 
 }
+
+
+actualzarAvatar(user:any){
+  let token : string | null=localStorage.getItem('token')
+  let userT :string | null= localStorage.getItem('user');
+  if(token != null && userT != null) {
+    // let userObjeto:any = JSON.parse(userT); 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token
+      })
+    }
+    console.log(user)
+  return this.http.patch(`${this.API_URI}/api/Avatar/${user.id}`, user,httpOptions).pipe(
+    retry(2),
+    catchError(this.handleError)
+  )
+}else{
+  return this.http.patch(`${this.API_URI}/api/Avatar/${user.id}`, user).pipe(
+    retry(2),
+    catchError(this.handleError)
+  )
+  }
+
+}
+
 eliminarUser(id:number){
   return this.http.delete(`${this.base_path}/${id}`).pipe(
     retry(2),

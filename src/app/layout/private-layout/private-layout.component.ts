@@ -13,6 +13,7 @@ import { createMenu } from 'src/app/consts/menu';
 import { UserLoginResponseI } from 'src/app/models/authorization/usr_User';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CambicarPasswordUserComponent } from 'src/app/main/usuarios/components/usr_User/cambicar-password-user/cambicar-password-user.component';
+import { AvatarComponent } from './avatar/avatar.component';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -127,7 +128,9 @@ export class PrivateLayoutComponent implements OnInit {
     }
   ];
   this.items = [
-    { label: 'CAngular.io', icon: 'pi pi-times ', url: 'http://angular.io'},
+    { label: 'Avatar', icon: 'pi pi-user ', command: () => {
+      this.modalAvatar(new Event(''));
+  }},
     { label: 'Cambiar Clave', icon: 'pi pi-refresh', command: () => {this.modalCambiarClave(new Event(''))}},
     {label: 'Cerrar Sesion', icon: 'pi pi-power-off', command: () => {
       this.cerrarSesion();
@@ -137,15 +140,38 @@ export class PrivateLayoutComponent implements OnInit {
   ];
 
 }
+  modalAvatar(e:Event) {
+  e.preventDefault()
+    
+    this.ref1 = this.dialogService.open(AvatarComponent, {
+      width: '60%',
+      // height: '55%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+       showHeader:false, 
+      // baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+  this.ref1.onClose.subscribe((person: any) =>{
+    if (person) {
+        this.messageService.add({severity:'warn', summary: 'Avatar Cambiado', detail: person.name,life: 2000});
+      this.ngOnInit()
+this.router.navigateByUrl('/login')
+
+      }
+});
+}
 
 modalCambiarClave(e:Event){
   e.preventDefault()
   
   this.ref1 = this.dialogService.open(CambicarPasswordUserComponent, {
     width: '35%',
-    height: '55%',
-    contentStyle:{'overflow-y': 'auto'} ,closable:false, closeOnEscape:false, showHeader:false, 
-    baseZIndex: 10000,
+    // height: '55%',
+    contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+     showHeader:false, 
+    // baseZIndex: 10000,
     data: {
       id: '1'
   },
@@ -215,17 +241,10 @@ if(token!=null && user!=null && menu != null){
   this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
   this.menu = this.privateMenu;
   this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-  if(user.user.User?.fullName && user.user.Gender?.name){
+  if(user.user.User?.fullName && user.user.User?.avatar != undefined){
     this.nombre = user.user.User?.fullName
-    let sexo=user.user.Gender?.name
-          if(sexo == 'masculino'){
-            this.image3='assets/avatares/avatars-avataaars.png'
-          }else if(sexo == 'femenino'){
-            this.image3='assets/avatares/avataaars-example.png'
-          }else{
-            this.image3='assets/avatares/infiltrado.jpg'
+    this.image3=user.user.User?.avatar
 
-          }
   }     
 })
   this.isLoggedIn=true

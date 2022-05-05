@@ -21,7 +21,7 @@ export interface PersonI {
       password?: string;
       fullName: string;
       Roles?:RoleI[]
-  
+  avatar?:string
     }
     nationality: string;
     date_of_birth: string;

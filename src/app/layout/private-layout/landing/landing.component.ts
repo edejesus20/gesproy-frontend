@@ -33,18 +33,11 @@ export class LandingComponent implements OnInit {
         let userObjeto:any = JSON.parse(user); 
       // console.log(menuObjeto)
         this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-        if(user.user.User?.fullName && user.user.Gender?.name){
-          this.nombre = user.user.User?.fullName
-          let sexo=user.user.Gender?.name
-          if(sexo == 'masculino'){
-            this.image3='assets/avatares/avatars-avataaars.png'
-          }else if(sexo == 'femenino'){
-            this.image3='assets/avatares/avataaars-example.png'
-          }else{
-            this.image3='assets/avatares/infiltrado.jpg'
-
-          }
-        }     
+          if(user.user.User?.fullName && user.user.User?.avatar != undefined){
+            this.nombre = user.user.User?.fullName
+            this.image3=user.user.User?.avatar
+        
+          }    
       })
       }else{
         this.bandera=false

@@ -1,0 +1,117 @@
+
+ <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="mostrarDialogo == false">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+  <br>
+      
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+            <i class="pi pi-key" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Cambiar Avatar</h2>
+          </div>
+
+          <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Actual Avatar">
+              <i class="pi pi-lock-open"></i></span>
+              <div class="titleCard2" >
+                <img class="imgLogo2" width="98%" src="{{image3}}" alt=""  styleClass="p-button-outlined">
+              </div>
+            <!-- <input type="text" class="p-inputtext-lg" pInputText name="oldPassword" 
+            placeholder="Actual Contraseña" formControlName="oldPassword"
+            required>   -->
+       
+        </div>
+
+        <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nueva Contraseña">
+            <i class="pi pi-lock"></i></span>
+          <input type="text" class="p-inputtext-lg" pInputText name="avatar" 
+          placeholder="Nueva Contraseña" formControlName="avatar" required
+          required>  
+     
+      </div>
+      </div>
+      
+              
+          <ng-template pTemplate="footer">
+            <br>
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+                class="p-button-warning p-button-raised p-button-rounded" 
+                label="Modificar Clave" styleClass="mr-2"></button>
+              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          </ng-template>
+          
+              
+  </p-dialog>
+</ng-template>
+<ng-template [ngIf]="mostrarDialogo == true">
+  <br>
+  
+  <div [style]="{'margin-top':'-1px'}" >
+    <div fxLayout="row" class="titleCard">
+      <i class="pi pi-user" style="font-size: 2rem;margin-right: 10px;"></i>
+      <h2 class="fondebabutton" style="margin-top: -1px;">Cambiar Avatar</h2>
+    </div>
+    <div class="grid">
+
+      <div class="col-12 md:col-5" style="border: 1px solid black; border-radius:5px">
+        <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
+          <i class="pi pi-user mr-2"></i>Avatar Actual</span>
+        <!-- <div class="" style="width:100%"> -->
+          <img class="imgLogo2" src="{{image3}}" alt="" title="Avatar Actual"  styleClass="p-button-outlined">
+        <!-- </div> -->
+      </div>
+      <div class="col-12 md:col-7" style="border: 1px solid black; border-radius:5px">
+        <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
+          <i class="pi pi-user mr-2"></i>Avatar Nuevo</span>
+
+          <div class="card">
+            <p-dataView #dv [value]="images" [paginator]="true" [rows]="6" filterBy="name"
+                 layout="grid">
+
+                <ng-template let-product pTemplate="gridItem">
+                    <div class="col-12 md:col-4">
+                        <div class="product-grid-item card">
+                            <div class="product-grid-item-content">
+                              <img src="{{product.src}}" width="100%" class="product-image" />
+     
+                            </div>
+                            <div class="product-grid-item-bottom">
+                              <div fxLayout="row" class="titleCard"style="margin-top: 5px;">
+                                <p-button icon="pi pi-check-circle"  styleClass="p-button-text" 
+                                label="Seleccionar" width="100%" (click)="seleccionar(product.src,$event)"></p-button>
+
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+      </div>
+
+        <input type="hidden" class="p-inputtext-lg" pInputText name="avatar" 
+        placeholder="Nueva Contraseña" formControlName="avatar"
+        required>  
+    </div>
+
+
+
+</div>
+<div fxLayout="row" class="titleCard"style="margin-top: 5px;">
+  <br>
+  <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
+  <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+  class="p-button-warning p-button-raised p-button-rounded" 
+  label="Modificar Clave" styleClass="mr-2"></button>
+</div>
+
+</ng-template>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>
