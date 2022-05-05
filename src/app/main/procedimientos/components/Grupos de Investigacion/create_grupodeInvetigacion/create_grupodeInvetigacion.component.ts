@@ -26,6 +26,8 @@ import { Create_CategoriaGruposComponent } from 'src/app/main/institution/compon
 import { Knowledge_areaService } from 'src/app/core/services/Procedimientos/Knowledge_area.service';
 import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/create_Knowledge_area/create_Knowledge_area.component';
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
+import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
+import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -130,13 +132,13 @@ public Seedbeds1:any[] =[]
   private buildForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
-      group_code:['', [Validators.required]],
+      // group_code:['', [Validators.required]],
       Facultad: ['', [Validators.required]],
       HeadquarterProgramId: ['', [Validators.required]],
       // ident_colciencias:['', [Validators.required]],
-      CategoryGroupId: ['', [Validators.required]],
-      resolution: ['', [Validators.required]],
-      Link_gruplac: ['', [Validators.required]],
+      // CategoryGroupId: ['', [Validators.required]],
+      // resolution: ['', [Validators.required]],
+      // Link_gruplac: ['', [Validators.required]],
       ObjetivoGeneral: ['', [Validators.required]],
       ObjetivosEspecificos: ['', [Validators.required]],
       Mision: ['', [Validators.required]],
@@ -154,7 +156,7 @@ public Seedbeds1:any[] =[]
       knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
       lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
       // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
-      // Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
+      Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
     });
   }  
  public SelectFacultad(e:Event){
@@ -189,14 +191,15 @@ public Seedbeds1:any[] =[]
       // console.log(teachersA.facultys)
     }, error => console.error(error))
   }
-  public getHeadquarterProgram(e:Event){
-    e.preventDefault();
+  public getHeadquarterProgram(e?:Event){
+    if(e)e.preventDefault();
 
     this.teachers=[]
     if(this.form.value.HeadquarterProgramId != ''){
       this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
       //  console.log(rolesFromApi.semilleros)
-       this.lines=rolesFromApi.lines
+       this.teachers=[]
+      this.lines=rolesFromApi.lines
        this.seedbeds= rolesFromApi.semilleros
        for (const key of rolesFromApi.teachers) {
          if(key.TeacherId){
@@ -213,16 +216,17 @@ public Seedbeds1:any[] =[]
       })
     }
   }
-  getTeachers() {
-    this.teacherService.getList().subscribe(teachersA => {
-      this.teachers=teachersA.teachers
-    }, error => console.error(error))
-  }  
+  // getTeachers() {
+  //   this.teacherService.getList().subscribe(teachersA => {
+  //     this.teachers=teachersA.teachers
+  //   }, error => console.error(error))
+  // }  
 
  async getInvestigatorCollaborators() {
 
    
    this.userService.getUserteacherinvestigatorstudent().subscribe(teachersA => {
+     this.users=[]
       for (let key of teachersA.users) {
         if(key.rol == "teacher"){
           key.rol=  "Docente";
@@ -237,7 +241,7 @@ public Seedbeds1:any[] =[]
         // console.log(key.rol.__zone_symbol__value)
         this.users.push(key)
       }
-      this.users=teachersA.users
+      // this.users=teachersA.users
     }, error => console.error(error))
   } 
 
@@ -273,7 +277,7 @@ public Seedbeds1:any[] =[]
     // console.log('aqui1')
     let formValue: GroupI = this.form.value;
     // console.log('aqui2',formValue)
-    formValue.CategoryGroupId=this.form.value.CategoryGroupId.id
+    // formValue.CategoryGroupId=this.form.value.CategoryGroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
     formValue.TeacherId=this.form.value.TeacherId.id
     // console.log('aqui3',formValue)
@@ -356,8 +360,8 @@ public Seedbeds1:any[] =[]
       // console.log(formValue)
     if(this.mostrarFacultad == true && formValue.name != ""&&
     // formValue.ident_colciencias != "" &&
-    formValue.resolution != "" && 
-    formValue.group_code != "" && 
+    // formValue.resolution != "" && 
+    // formValue.group_code != "" && 
     formValue.Sector != "" && 
     formValue.ObjetivoGeneral != "" && 
     formValue.ObjetivosEspecificos != "" && 
@@ -367,9 +371,11 @@ public Seedbeds1:any[] =[]
     formValue.Perfil != "" && 
     formValue.Metas != "" && 
     formValue.TeacherId != ( 0 || undefined)&&
-    formValue.HeadquarterProgramId != ( 0 || undefined)&&
-    formValue.CategoryGroupId != ( 0 || undefined)&&
-    formValue.Link_gruplac != ""){
+    formValue.HeadquarterProgramId != ( 0 || undefined)
+    // &&
+    // formValue.CategoryGroupId != ( 0 || undefined)&&
+    // formValue.Link_gruplac != ""
+    ){
       console.log(formValue,'aqui')
       https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003518 
     this.groupService.createItem(formValue).subscribe(
@@ -458,6 +464,8 @@ public Seedbeds1:any[] =[]
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
+     control.push(this.formBuilder.group({Anexos:['', [Validators.required]]}))//nuevo input
+
     }
   }
 
@@ -485,6 +493,8 @@ public Seedbeds1:any[] =[]
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrarS=false
+     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+
     }
   }
 
@@ -518,6 +528,10 @@ public Seedbeds1:any[] =[]
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrarI=false
+     control.push(this.formBuilder.group({
+      UserId:['', [Validators.required]],
+        RoleId:['', [Validators.required]]
+    }))//nuevo input
     }
   }
 
@@ -562,10 +576,8 @@ public Seedbeds1:any[] =[]
 
     this.ref = this.dialogService.open(Create_InvestigatorCollaboratorComponent, {
       width: '70vw',
-      height: '70vw',
-      contentStyle:{'overflow-y': 'auto'} ,
-      modal:true,
-      closable:true, closeOnEscape:false, showHeader:false,
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+
       // baseZIndex: 10000,
       data: {
         id: '1',
@@ -587,9 +599,8 @@ public Seedbeds1:any[] =[]
 
     this.ref = this.dialogService.open(Create_CategoriaGruposComponent, {
       width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:false, closeOnEscape:false, 
-      showHeader:false, 
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -609,9 +620,7 @@ public Seedbeds1:any[] =[]
 
     this.ref = this.dialogService.open(Create_Knowledge_areaComponent, {
       width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:false, closeOnEscape:false, 
-      showHeader:false, 
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
       baseZIndex: 10000,
       data: {
         id: '1'
@@ -622,6 +631,51 @@ public Seedbeds1:any[] =[]
       if (person) {
           this.messageService.add({severity:'info', summary: 'Area de Conocimiento Creada', detail: person.name,life: 2000});
       this.getKnowledge_area()
+
+        }
+  });
+  }
+
+  addTeacher(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(CreateTeacherComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
+      this.getHeadquarterProgram()
+      this.getInvestigatorCollaborators()
+
+        }
+  });
+  }
+
+  addStudent(e:Event){
+    e.preventDefault()
+
+    this.ref = this.dialogService.open(CreateStudentComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
+          this.getInvestigatorCollaborators()
 
         }
   });

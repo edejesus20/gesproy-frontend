@@ -38,13 +38,13 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
       this.loading = false;
       this.cols = [
       { field: 'name', header: 'Nombre' },
-      { field: 'group_code', header: 'Codigo' },
+      // { field: 'group_code', header: 'Codigo' },
       { field: 'ObjetivoGeneral', header: 'Objetivo General' },
       // { field: 'ident_colciencias', header: 'Identificacion Colciencias' },
       { field: 'Program.Faculty.name', header: 'Facultad' },
-      { field: 'CategoryGroup.name', header: 'Categoria' },
-      { field: 'Link_gruplac', header: 'Link Gruplac' },
-      { field: 'resolution', header: 'Resolución' },
+      // { field: 'CategoryGroup.name', header: 'Categoria' },
+      // { field: 'Link_gruplac', header: 'Link Gruplac' },
+      // { field: 'resolution', header: 'Resolución' },
       { field: 'Teacher.User.fullName', header: 'Lider' },
     ];
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -125,12 +125,12 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
         // Identificacion_Colciencias:key.ident_colciencias,
         // HeadquarterProgramId:key.HeadquarterProgramId,
         Facultad:key.Program?.Faculty?.name,
-        Codigo:key.group_code,
+        // Codigo:key.group_code,
         ObjetivoGeneral:key.ObjetivoGeneral,
         // CategoryGroupId:key.CategoryGroupId,
-        Resolución:key.resolution,
-        Link_Gruplac:key.Link_gruplac,
-        Categoria:key.CategoryGroup?.name,
+        // Resolución:key.resolution,
+        // Link_Gruplac:key.Link_gruplac,
+        // Categoria:key.CategoryGroup?.name,
         Lider:key.Teacher?.User?.fullName,
       })
     }
@@ -170,12 +170,12 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
             // col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_2:{ text: 'NOMBRE', style: 'tableHeader' ,bold: true, },
             // col_3:{ text: 'IDENTIFICACIÓN COLCIENCIAS', style: 'tableHeader' ,bold: true, },
-            col_5:{ text: 'CODIGO', style: 'tableHeader' ,bold: true, },
+            // col_5:{ text: 'CODIGO', style: 'tableHeader' ,bold: true, },
             col_11:{ text: 'FACULTAD', style: 'tableHeader' ,bold: true, },
             col_6:{ text: 'OBJETIVO GENERAL', style: 'tableHeader' ,bold: true, },
-            col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
-            col_8:{ text: 'LINK GRUPLAC', style: 'tableHeader' ,bold: true, },
-            col_9:{ text: 'CATEGORIA', style: 'tableHeader' ,bold: true, },
+            // col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
+            // col_8:{ text: 'LINK GRUPLAC', style: 'tableHeader' ,bold: true, },
+            // col_9:{ text: 'CATEGORIA', style: 'tableHeader' ,bold: true, },
             col_10:{ text: 'LIDER', style: 'tableHeader' ,bold: true, },
         }
       }]
@@ -190,12 +190,12 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
                 // headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
               // headerU.fila_0.col_3,
-              headerU.fila_0.col_5,
+              // headerU.fila_0.col_5,
               headerU.fila_0.col_11,
               headerU.fila_0.col_6,
-              headerU.fila_0.col_7,
-              headerU.fila_0.col_8,
-              headerU.fila_0.col_9,
+              // headerU.fila_0.col_7,
+              // headerU.fila_0.col_8,
+              // headerU.fila_0.col_9,
               headerU.fila_0.col_10,
               ]
               body.push(row);
@@ -216,12 +216,12 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
                 // data.id?.toString(),
                 data.name.toString(),
                 // data.ident_colciencias.toString(),
-                data.group_code.toString(),
+                // data.group_code.toString(),
                 data.Program?.Faculty?.name.toString(),
                 data.ObjetivoGeneral.toString(),
-                data.resolution?.toString(),
-                data.Link_gruplac.toString(),
-                data.CategoryGroup?.name.toString(),
+                // data.resolution?.toString(),
+                // data.Link_gruplac.toString(),
+                // data.CategoryGroup?.name.toString(),
                 data.Teacher?.User?.fullName.toString(),
               ]
               body.push(row);
@@ -257,7 +257,8 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
             fontSize: 8,
             table: {
               headerRows: 1,
-              widths: [ '12%', '12%', '8%','23%','10%','10%','8%','12%'],
+              // widths: [ '12%', '12%', '8%','23%','10%','10%','8%','12%'],
+              widths: [ '25%', '25%','25%','25%'],
              
                 body: body
             },
