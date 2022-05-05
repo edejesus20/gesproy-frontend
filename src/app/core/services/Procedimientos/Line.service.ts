@@ -56,6 +56,15 @@ getItem(id: number): Observable<{line:LineI}> {
     )
 }
 
+AddTeacherLines(id: number): Observable<{ lines: any[],lines2 : any[]}> {
+  return this.http
+    .get<{ lines: any[],lines2 : any[] }>(this.API_URI+'/api/AddTeacherLines' + '/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+ }
+
 // Get students data
 getList(): Observable<{ lines: LineI[] }> {
  return this.http

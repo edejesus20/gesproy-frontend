@@ -260,6 +260,51 @@
             </div>
         </td>
       </tr>
+      <tr>
+        <td colspan="12">
+          <div >
+              <p-table [value]="item.Lines"  dataKey="id" 
+              [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+              currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+               >
+                  <ng-template pTemplate="header" >
+                      <tr style="background: rgba(0, 255, 255, 0.849);">
+                        <!-- <ng-template [ngIf]="mostrar==3">
+                          <th style="width: 3rem"></th>
+                        </ng-template>  -->
+                          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                          <th pSortableColumn="name">Nombre de lineas <p-sortIcon field="name"></p-sortIcon></th>
+                          <th pSortableColumn="objectives">Objetivos <p-sortIcon field="objectives"></p-sortIcon></th>
+                          <th pSortableColumn="tipo">lineas Asociadas a <p-sortIcon field="tipo"></p-sortIcon></th>
+                          
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-order let-expanded="expanded">
+                    <tr>
+                      <!-- <ng-template [ngIf]="mostrar==3">
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                      </ng-template>  -->
+                          <td>{{order.line.id}}</td>
+                          <td>{{order.line.name | titlecase}}</td>
+                          <td>{{order.line.objectives}}</td>
+                          <td>{{order.tipo | titlecase}}</td>
+
+                      </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6" style="text-align: center;">
+                        <h3>No hay registros encontrados</h3>
+                      </td>
+                  </tr>
+                  </ng-template>
+              </p-table>
+          </div>
+      </td>
+    </tr>
   </ng-template>
 
 

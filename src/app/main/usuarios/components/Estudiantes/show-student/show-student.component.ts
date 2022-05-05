@@ -45,6 +45,7 @@ export class ShowStudentComponent implements OnInit {
       { field: 'User.email', header: 'Correo Electronico' },
       { field: 'User.Person.phone', header: 'Telefono' },
       { field: 'User.Person.Gender.name', header: 'Genero' },
+      { field: 'status_seedbed', header: 'Estado' },
   ];
 
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -64,7 +65,8 @@ export class ShowStudentComponent implements OnInit {
               UserId: key.UserId,
               User:key.User,
               Groups:key.Groups,
-              Seedbeds:key.Seedbeds
+              Seedbeds:key.Seedbeds,
+              status_seedbed:key.status_seedbed
             }
           )
           if(key.Groups != undefined){
@@ -103,6 +105,7 @@ export class ShowStudentComponent implements OnInit {
           Correo_Electronico:key.User?.email,
           Telefono:key.User?.Person?.phone,
           Genero:key.User?.Person?.Gender?.name,
+          Estado:key.status_seedbed
         })
       }
     }else{
@@ -114,6 +117,8 @@ export class ShowStudentComponent implements OnInit {
         Correo_Electronico:key.User?.email,
         Telefono:key.User?.Person?.phone,
         Genero:key.User?.Person?.Gender?.name,
+        Estado:key.status_seedbed
+
       })
     }
   }
@@ -144,6 +149,7 @@ export class ShowStudentComponent implements OnInit {
             col_3:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_5:{ text: 'GENERO', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            col_6:{ text: 'ESTADO', style: 'tableHeader',fontSize: 12 ,bold: true, },
         }
       }]
     
@@ -152,7 +158,7 @@ export class ShowStudentComponent implements OnInit {
           if (headers.hasOwnProperty(key)){
               var header = headers[key];
               var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,header.fila_0.col_3,
-                header.fila_0.col_4,header.fila_0.col_5
+                header.fila_0.col_4,header.fila_0.col_5,header.fila_0.col_6
               ]
               body.push(row);
           }
@@ -169,6 +175,8 @@ export class ShowStudentComponent implements OnInit {
                 data.User?.email.toString(),
                 data.User?.Person?.phone?.toString(),
                 data.User?.Person?.Gender?.name.toString(),
+                data.User?.Person?.Gender?.name.toString(),
+                data.status_seedbed?.toString(),
             
               ]
               body.push(row);
@@ -187,6 +195,8 @@ export class ShowStudentComponent implements OnInit {
                 data1.User?.email.toString(),
                 data1.User?.Person?.phone?.toString(),
                 data1.User?.Person?.Gender?.name.toString(),
+                data1.status_seedbed?.toString(),
+
               ]
     
               body.push(row);
@@ -220,7 +230,7 @@ export class ShowStudentComponent implements OnInit {
             style: 'tableExample',
             table: {
               headerRows: 1,
-                widths: [ '20%', '20%','20%','20%','20%'],
+                widths: [ '20%', '20%','20%','20%','10%','10%'],
     
                 body: body
             },

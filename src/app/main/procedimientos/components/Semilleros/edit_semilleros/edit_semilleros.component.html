@@ -12,17 +12,17 @@
   
             <div class="grid p-fluid" style="padding: 10px;">
               <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                <img alt="logo" src="../../../../../../assets/images/images.jpg" 
+                <img alt="logo" src="{{image}}" 
                 style="width: 100%"/>
               </div>
   
               <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
                 
-                <h2 style="text-align: center;">EDITAR SEMILLEROS DE INVESTIGACIÓN</h2>
+                <h2 style="text-align: center;">EDITAR SEMILLERO DE INVESTIGACIÓN</h2>
               </div>
   
               <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                <img alt="logo" src="../../../../../../assets/images/uniguajira_iso.jpg" 
+                <img alt="logo" src="{{image2}}" 
                 style="width: 100%"/>
               </div>
             </div>
@@ -150,34 +150,33 @@
                          <div formArrayName="lines"> 
                            <div *ngFor="let item of getlines.controls; 
                            let pointIndex=index" [formGroupName]="pointIndex">
-                             <div class="grupo"> 
-                               
-                                 <div style="width:100%" class="mr-1">
-                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                  [options]="lines" [filter]="true"
-                                      formControlName="LineId" name="LineId"
-                                     label="SELECCIONE LINEA" 
-                                    [style]="{'width':'100%','margin-bottom':'20px'}"
-                                    optionvalue="id" optionLabel="name" 
-                                    filterBy="name"
-                                    [required]="true" placeholder="SELECCIONE LINEA"  >
-                                    <ng-template let-option pTemplate="item"  >
-                                      <span >{{option.name  | titlecase}}
-                                        </span>
-                                  </ng-template>
-                                  </p-dropdown>
-                                 </div>
-                               
-                                
-                               
-                             <span class="bottomdelete" style="margin-top: -35px;">
-                               <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
-                               class="p-button-rounded p-button-danger"></button>
-                               <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
-                               (click)="removeRoles(pointIndex,$event)" 
-                               label="eliminar"></button> -->
-                             </span>
-                             
+                           <div class="grid ">
+                            <div class="col-12 md:col-11 lg:col-11">
+                                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                [options]="lines" [filter]="true" 
+                                label="SELECCIONE LINEA" 
+                                formControlName="LineId" name="LineId"
+                                  [style]="{'width':'100%'}" 
+                                  optionvalue="id"  optionLabel="name" filterBy="name"
+                                  [required]="true" placeholder="SELECCIONE LINEA" 
+                                  title="SELECCIONE LINEA" >
+                                  <ng-template let-option pTemplate="item" >
+                                    <span >{{option.name | titlecase}} </span>
+                                </ng-template>
+                                </p-dropdown>
+                               <!-- <p>Tematica Cargada: {{getlines.value[pointIndex].LineId.name}}</p> -->
+
+                               </div>
+                               <div class="col-12 md:col-1 lg:col-1">
+                                <span class="bottomdelete" style="margin-top: -35px;">
+                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
+                                  class="p-button-rounded p-button-danger"></button>
+                                  <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                                  (click)="removeRoles(pointIndex,$event)" 
+                                  label="eliminar"></button> -->
+                                </span>
+                              </div>
+
                            </div>
                            </div>
                          </div> 
@@ -295,11 +294,11 @@
                     [options]="teachers" [filter]="true"
                       name="TeacherId" formControlName="TeacherId" label="DOCENTE" 
                       [style]="{'width':'100%'}" 
-                      optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
+                      optionvalue="id"  optionLabel="fullName" filterBy="fullName"
                        placeholder="SELECCIONE DOCENTE" title="SELECCIONE DOCENTE" [required]="true" (onChange)="SelectTeacher()">
                       <ng-template let-option pTemplate="item">
-                        <span >{{option.User.fullName  | titlecase}} -
-                          cc: {{option.User.Person.identification }} </span>
+                        <span >{{option.fullName  | titlecase}} -
+                          cc: {{option.identification }} </span>
                     </ng-template>
                     </p-dropdown>
                     </div>
@@ -406,7 +405,7 @@
                                   <div class="p-inputgroup"  >
                                     <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                                     <input class="p-inputtext-lg" type="text" formControlName="Horas"
-                                    pInputText pKeyFilter="num" name="Horas" 
+                                    pInputText  name="Horas" 
                                     placeholder="Horas" title="Horas" >         
                                 </div>
                                 </div>
@@ -463,7 +462,7 @@
             </div>
             <br>
 
-            <div fxLayout="row" class="titleCard" >
+            <div fxLayout="row" class="titleCard" style="text-align:center">
               <button pButton type="button" type="submit"  icon="pi pi-check" 
               [disabled]="!form.valid" 
              class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>

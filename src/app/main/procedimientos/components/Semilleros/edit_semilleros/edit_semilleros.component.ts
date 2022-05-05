@@ -18,11 +18,16 @@ const translate = require('translate');
 import *as moment from 'moment';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { LineProgramGroupI } from 'src/app/models/institution/program';
+import { StudentI } from 'src/app/models/user/student';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
+import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
 
 @Component({
   selector: 'app-edit_semilleros',
   templateUrl: './edit_semilleros.component.html',
-  styleUrls: ['./edit_semilleros.component.css']
+  styleUrls: ['./edit_semilleros.component.css'],
+  providers: [DialogService]
 })
 export class Edit_semillerosComponent implements OnInit {
   public mostrar:number=1;
@@ -39,9 +44,10 @@ export class Edit_semillerosComponent implements OnInit {
   public algo:number[]=[0];
   public mostrar1:boolean=false;
   public algo1:number[]=[0];
-
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   public form: FormGroup = this.formBuilder.group({});
-  public teachers: TeacherI[] =[]
+  public teachers: any[] =[]
   public facultys: FacultyI[] =[]
   public groups: GroupI[]=[]
   public lines: LineI[] =[]
@@ -67,7 +73,10 @@ public Students:any[] =[]
 private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
 private GroupId:number = 0
-  constructor(
+public ref1:any;
+
+constructor(
+  public dialogService: DialogService,
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,
     private teacherService:TeacherService,
@@ -82,27 +91,45 @@ private GroupId:number = 0
     ) { }
   ngOnInit(): void {
     this.buildForm();
-    this.getAllteachers()
+    // this.getAllteachers()
     this.geFacultad() 
-    this.getstudents()
+    // this.getstudents()
   }
- getstudents() {
-   this.studentService.AddStudentsSemilleros().subscribe(
-      (facultiesFromApi) => {
-        // console.log(facultiesFromApi.students)
-        this.students =  facultiesFromApi.students;
+ getstudents(id:number) {
+   this.studentService.OneAddStudentsSemilleros(id).subscribe(
+      (ApiEstudiante) => {
+        // console.log(ApiEstudiante.students)
+        for (const key of ApiEstudiante.students) {
+          this.students.push(key)
+          //  =  facultiesFromApi.students;
+         }
+        // this.students =  facultiesFromApi.students;
       }, error => console.error(error));
   }
+getstudents2() {
+  this.studentService.AddStudentsSemilleros().subscribe(
+     (ApiSemillero) => {
+       // console.log(ApiSemillero.students)
+       for (const key of ApiSemillero.students) {
+        this.students.push(key)
+        //  =  facultiesFromApi.students;
+       }
+       
+     }, error => console.error(error));
+ }
   geFacultad() {
     this.facultyService.getList().subscribe(teachersA => {
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
   private getAllteachers(selectId?: number) {
-    this.teacherService.getList().subscribe(
+    this.teacherService.AddTeacherSemilleros().subscribe(
       (facultiesFromApi) => {
-        // console.log(facultiesFromApi.teachers)
-        this.teachers = facultiesFromApi.teachers;
+        for (const key of facultiesFromApi.teachers) {
+          this.teachers.push(key)
+        }
+        
+        // this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
   private buildForm() {
@@ -157,8 +184,9 @@ private GroupId:number = 0
   public getLineProgramGroup(){
     if(this.form.value.GroupId != ''){
     //  console.log(this.form.value.GroupId)
-     this.lines=[]
+    
      if(this.form.value.GroupId.LineProgramGroups.length >0){
+      this.lines=[]
        for (let key of this.form.value.GroupId.LineProgramGroups) {
         this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
           this.lines.push(algo.line)
@@ -166,13 +194,13 @@ private GroupId:number = 0
          
        }
        this.mostrarlineasProgram=true
-      //  console.log(this.lines)
+       
      }
     }
   }
   public SelectTeacher(){
     if(this.form.value.TeacherId != ''){
-      this.getOneTeachers(this.form.value.TeacherId.id)
+      this.getOneTeachers(this.form.value.TeacherId.TeacherId)
       this.mostrarTeacher=true
     }
   }
@@ -184,18 +212,13 @@ private GroupId:number = 0
     }, error => console.error(error));
   }
 
-
-
   public onSubmit(): void {
     let formValue: SeedbedI = this.form.value;
-    formValue.TeacherId=this.form.value.TeacherId.id
+    formValue.TeacherId=this.form.value.TeacherId.TeacherId
     formValue.GroupId=this.form.value.GroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
 
-    if(this.HeadquarterProgramId == 0 &&
-      this.TeacherId == 0 &&
-      this.GroupId == 0
-      ){
+    if(this.HeadquarterProgramId == 0 && this.TeacherId == 0 && this.GroupId == 0){
         this.HeadquarterProgramId= formValue.HeadquarterProgramId
         this.TeacherId= formValue.TeacherId
         this.GroupId= formValue.GroupId
@@ -204,8 +227,6 @@ private GroupId:number = 0
         formValue.GroupId=this.GroupId
         formValue.HeadquarterProgramId=this.HeadquarterProgramId
       }
-    
-    
     
     if(this.lines1.length == 0 || this.lines1 == []){
       let control = <FormArray>this.form.controls['lines']
@@ -237,11 +258,13 @@ private GroupId:number = 0
       formValue.Students = this.Students
     }
     console.log(formValue)
-    if(formValue.TeacherId != 0 && formValue.name != "" &&
+    if(
+      formValue.id !=undefined &&
+      formValue.TeacherId != 0 && formValue.name != "" &&
     formValue.creation_date != "" && 
-    formValue.approval_date != "" && 
-    formValue.resolution != "" && 
-    formValue.article != "" && 
+    // formValue.approval_date != "" && 
+    // formValue.resolution != "" && 
+    // formValue.article != "" && 
     formValue.ObjetivoGeneral != "" && 
     formValue.ObjetivosEspecificos != "" && 
     formValue.Mision != "" && 
@@ -251,7 +274,7 @@ private GroupId:number = 0
     formValue.GroupId != ( 0 || undefined)
 
     ){
-      this.seedbedService.createItem(formValue).subscribe(
+      this.seedbedService.updateItem(formValue.id, formValue).subscribe(
         () => {
           var date = new Date('2020-01-01 00:00:03');
             function padLeft(n:any){ 
@@ -263,7 +286,7 @@ private GroupId:number = 0
             // console.log(minutes, seconds);
             if( seconds == '03') {
             this.messageService.add({severity:'success', summary: 'Success', 
-            detail: 'Registro de Semillero Creado con exito'});
+            detail: 'Semillero Actualizado con exito'});
             }
             date = new Date(date.getTime() - 1000);
             if( minutes == '00' && seconds == '01' ) {
@@ -284,8 +307,6 @@ private GroupId:number = 0
         this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
         }
   }
-
-  get name() { return this.form.get('name'); }
   
   get getStudents() {
     return this.form.get('Students') as FormArray;//obtener todos los formularios
@@ -298,16 +319,19 @@ private GroupId:number = 0
       //crear los controles del array
     if(control.length == 0 && this.mostrar1 == false){
       control.push(this.formBuilder.group({
-        StudentId:['', [Validators.required]],
+      StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
-      date_end:['',[Validators.required]]
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
+
     }))
     }
     if(control.length >= 1 && this.mostrar1 == true){
       control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
-      date_end:['',[Validators.required]]
-    }))
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
+      }))
     }
       this.mostrar1=true
   }
@@ -317,6 +341,11 @@ private GroupId:number = 0
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar1=false
+     control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
+     date_firt:['',[Validators.required]],
+     date_end:['',[Validators.required]],
+     Horas:['',[Validators.required]]
+     }))
     }
   }
 
@@ -344,6 +373,8 @@ private GroupId:number = 0
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
+     control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+
     }
   }
 
@@ -351,7 +382,7 @@ private GroupId:number = 0
     this.seedbedService.getItem(id).subscribe((cnt_groupFromApi) => {
         
       if(cnt_groupFromApi.seedbed.id != undefined){
-        console.log(cnt_groupFromApi.seedbed);
+        // console.log(cnt_groupFromApi.seedbed);
         this.form.controls['id'].setValue(cnt_groupFromApi.seedbed.id)
         this.form.controls['name'].setValue(cnt_groupFromApi.seedbed.name)
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
@@ -371,15 +402,19 @@ private GroupId:number = 0
                   if(key1.FacultadHeadquarterProgram != undefined){
                     this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
                   this.groupService.getItemOneHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe(key2=>{
-                    this.form.controls['GroupId'].setValue(key2.group)
+                    if(key2.group.id != undefined){
+                      this.form.controls['GroupId'].setValue(key2.group)
+
+                    }
+                    this.getLineProgramGroup()
                     if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
                       this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
             
                     }
                     this.SelectFacultad()
                     this.getHeadquarterProgram()
-                    this.getLineProgramGroup()
-                  console.log(this.form.value,'formulario')
+                    
+                  
                   })
                   }
                   
@@ -394,64 +429,77 @@ private GroupId:number = 0
 
 
        if(cnt_groupFromApi.seedbed.Teacher != undefined)
-        this.form.controls['TeacherId'].setValue(cnt_groupFromApi.seedbed.Teacher)
-      }
       
-      // if(cnt_groupFromApi.seedbed.lines != undefined && cnt_groupFromApi.seedbed.lines.length > 0){
-      //   this.agregarThematics(cnt_groupFromApi.seedbed.lines)  
-      // } 
+       this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
+        this.teachers=[]
+        this.teachers.push(item.teachers[0]) 
+        this.getAllteachers()
+        this.form.controls['TeacherId'].setValue(item.teachers[0])
+        this.SelectTeacher()
+       })
+       this.getstudents(cnt_groupFromApi.seedbed.id)
+       this.getstudents2()
+       if(cnt_groupFromApi.seedbed.Students != undefined && cnt_groupFromApi.seedbed.Students.length >0){
+      
+        this.agregarEstudiantes(cnt_groupFromApi.seedbed.Students)
+       }
+       
+     
+      }
+      // console.log(cnt_groupFromApi.seedbed,'seedbed')
+      // console.log(this.form.value,'formulario')
 
       this.displayMaximizable2=true
       this.tabla = false
       
     }, error => console.error(error));
   }
+  agregarEstudiantes(Students:StudentI[]) {
+    if(Students.length){
+      for (let key of Students) {
+        if(key.id != undefined && key.SeedbedStudent?.id != undefined) {          
+          let control = <FormArray>this.form.controls['Students']
+          // this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+        let date_firt=moment(key.SeedbedStudent.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+        let date_end=moment(key.SeedbedStudent.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+          this.studentService.OneAddStudentsSemilleros2(key.id).subscribe((student)=>{
+            control.push(this.formBuilder.group({
+              StudentId:[student.students[0], [Validators.required]],
+              date_firt:[date_firt,[Validators.required]],
+              date_end:[date_end,[Validators.required]],
+              Horas:[key.SeedbedStudent?.hours,[Validators.required]]
+
+            }))
+          })
+          
+          // })
+        }
+      }
+      this.mostrar1= true
+      let control = <FormArray>this.form.controls['Students']
+      control.removeAt(0)
+      // console.log(control,'control')
+      // console.log(this.lines,'lines')
+    }
+  }
   agregarLine(LineProgramGroups: LineProgramGroupI[]) {
     if(LineProgramGroups.length){
       for (let key of LineProgramGroups) {
-        if(key.id != undefined && key.LineProgram?.LineId != undefined) {
-          // console.log(DiscountLine)
-          
+        if(key.id != undefined && key.LineProgram?.LineId != undefined) {          
           let control = <FormArray>this.form.controls['lines']
-          this.lineService.getItem(key.LineProgram?.LineId).subscribe((algo)=>{
-            // this.lines.push(algo.line)
-            if(algo.line && key.id != undefined){
-              control.push(this.formBuilder.group({
-                // ThematicId:[algo.line, [Validators.required]],
-                LineId:[algo.line, [Validators.required]],
-              }))
-            }
+          this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+            control.push(this.formBuilder.group({
+              LineId:[algo.line, [Validators.required]],
+            }))
           })
         }
       }
       this.mostrar2= true
       let control = <FormArray>this.form.controls['lines']
       control.removeAt(0)
-      console.log(control,'control')
+      // console.log(control,'control')
+      // console.log(this.lines,'lines')
     }
-  }
-  agregarThematics(lines: LineI[]) {
-    // if(Thematics.length){
-    //   for (let key of Thematics) {
-    //     if(key.id != undefined && key.LineThematic?.ThematicId != undefined) {
-    //       // console.log(DiscountLine)
-          
-    //       let control = <FormArray>this.form.controls['Thematics']
-    //         this.thematicService.getItem(key.LineThematic.ThematicId).subscribe((algo)=>{
-    //           if(algo.thematic && key.id != undefined){
-    //               control.push(this.formBuilder.group({
-    //                 ThematicId:[algo.thematic, [Validators.required]],
-    //                 LineId:[this.form.value.id, [Validators.required]],
-    //               }))
-    //             }
-    //         })
-    //     }
-    //   }
-    //   this.mostrar2= true
-    //   let control = <FormArray>this.form.controls['Thematics']
-    //   control.removeAt(0)
-    //   // console.log(control)
-    // }
   }
 
   public volver(event: Event){
@@ -467,8 +515,59 @@ private GroupId:number = 0
     this.displayMaximizable2 = false
   }
   actualizar(id: number){
-    console.log(id)
+    // console.log(id)
     this.getOneCntAccount(id)
+  }
+
+  addTeacher(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateTeacherComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
+          this.teacherService.OneAddTeacherSemilleros(this.form.value.id).subscribe(item=>{
+            this.teachers=[]
+            this.teachers.push(item.teachers[0]) 
+            this.getAllteachers()
+            this.form.controls['TeacherId'].setValue(item.teachers[0])
+            this.SelectTeacher()
+           })
+
+        }
+  });
+  }
+  addStudent(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateStudentComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
+      this.students=[]
+      this.getstudents(this.form.value.id)
+      this.getstudents2()
+
+        }
+  });
   }
 
 }

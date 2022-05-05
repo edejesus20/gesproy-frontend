@@ -28,6 +28,9 @@ export interface TeacherI {
     LinkType?:LinkTypeI
     trainingTeacher?:TrainingTeacherI[],
     Workexperiences?:WorkexperienceI[]
+
+    // LinesG?:any[]
+    // LinesS?:any[]
 }
 
 export interface WorkexperienceI {

@@ -16,7 +16,7 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 @Component({
@@ -26,6 +26,7 @@ import { SeedbedI } from 'src/app/models/institution/seedbed';
   providers: [DialogService]
 })
 export class CreateStudentComponent implements OnInit {
+  public mostrarDialogo:boolean=false;
 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -80,12 +81,14 @@ export class CreateStudentComponent implements OnInit {
 
    public mostrarUser:boolean=false;
    public users:PersonI[]=[];
-   public ref:any;
+   public ref1:any;
    public seedbeds:SeedbedI[] =[]
   constructor(
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
+    public dialogService: DialogService,
     private studentService:StudentService,
     private router: Router,
-    public dialogService: DialogService,
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
@@ -102,6 +105,16 @@ export class CreateStudentComponent implements OnInit {
     this.getAllheadquarters()
     this.getAllUser()
     this.getSeedbed()
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
+  }
+  public cancelar(){
+    this.ref.close(undefined);
   }
   getSeedbed() {
     this.seedbedService.getList().subscribe(data => {
@@ -185,7 +198,10 @@ export class CreateStudentComponent implements OnInit {
  
     
         this.studentService.createItem(formValue).subscribe(
-          () => {
+          (algo) => {
+            if(this.mostrarDialogo== true){
+              this.ref.close(algo);
+            }else{
                   var date = new Date('2020-01-01 00:00:03');
                     function padLeft(n:any){ 
                        return n ="00".substring(0, "00".length - n.length) + n;
@@ -204,6 +220,7 @@ export class CreateStudentComponent implements OnInit {
                       clearInterval(interval); 
                      }
               }, 1000);
+            }
           },async error => {
             if(error != undefined) {
               // console.log(error);
@@ -324,7 +341,7 @@ export class CreateStudentComponent implements OnInit {
     addGenero(e:Event){
       e.preventDefault()
   
-      this.ref = this.dialogService.open(Create_genderComponent, {
+      this.ref1 = this.dialogService.open(Create_genderComponent, {
         width: '35%',
         height: '50%',
         contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -334,7 +351,7 @@ export class CreateStudentComponent implements OnInit {
       },
     });
   
-    this.ref.onClose.subscribe((person: any) =>{
+    this.ref1.onClose.subscribe((person: any) =>{
         if (person) {
             this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
         this.getAllgenders()
@@ -347,7 +364,7 @@ export class CreateStudentComponent implements OnInit {
     addTipoDocumento(e:Event){
       e.preventDefault()
   
-      this.ref = this.dialogService.open(Create_documentTypeComponent, {
+      this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
         width: '35%',
         height: '50%',
         contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -357,7 +374,7 @@ export class CreateStudentComponent implements OnInit {
       },
     });
   
-    this.ref.onClose.subscribe((person: any) =>{
+    this.ref1.onClose.subscribe((person: any) =>{
         if (person) {
             this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
         this.getAlldocumentTypes()

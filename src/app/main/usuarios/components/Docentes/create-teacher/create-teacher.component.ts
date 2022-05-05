@@ -23,7 +23,7 @@ import { LinkTypeI } from 'src/app/models/user/teacher';
 import { TrainingI } from 'src/app/models/institution/training';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
 import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Create_linkTypeComponent } from '../../Tipo Vinculacion/create_linkType/create_linkType.component';
 import { Create_EscalafonComponent } from 'src/app/main/institution/components/Escalafon/create_Escalafon/create_Escalafon.component';
 import { Create_CategoriaColcienciasComponent } from 'src/app/main/institution/components/CategoriaColciencias/create_CategoriaColciencias/create_CategoriaColciencias.component';
@@ -38,6 +38,8 @@ import { Create_genderComponent } from '../../Genero/create_gender/create_gender
   providers: [DialogService]
 })
 export class CreateTeacherComponent implements OnInit {
+  public mostrarDialogo:boolean=false;
+
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
@@ -111,8 +113,10 @@ export class CreateTeacherComponent implements OnInit {
    public headquarterProgramTeacher1:any[] = []
    public trainingTeachers:any[] = []
    public Workexperiences:any[] =[]
-   public ref:any;
+   public ref1:any;
   constructor(
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
     private linkTypeService:LinkTypeService,
     private teacherService:TeacherService,
     private router: Router,
@@ -141,6 +145,16 @@ export class CreateTeacherComponent implements OnInit {
     this.getAllUser()
     this.getAlltrainings()
     this.getAllLinkTypes()
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
+  }
+  public cancelar(){
+    this.ref.close(undefined);
   }
   getAllLinkTypes() {
     this.linkTypeService.getList().subscribe(
@@ -297,7 +311,10 @@ export class CreateTeacherComponent implements OnInit {
               // console.log(formValue)
 
             this.teacherService.createItem(formValue).subscribe(
-              () => {
+              (algo) => {
+                if(this.mostrarDialogo== true){
+                  this.ref.close(algo);
+                }else{
                       var date = new Date('2020-01-01 00:00:03');
                         function padLeft(n:any){ 
                           return n ="00".substring(0, "00".length - n.length) + n;
@@ -316,6 +333,7 @@ export class CreateTeacherComponent implements OnInit {
                           clearInterval(interval); 
                         }
                   }, 1000);
+                }
               },async error => {
                 if(error != undefined) {
                   let text = await translate(error.error.message, "es");
@@ -497,7 +515,7 @@ get getWorkexperiences() {
   addVinculacion(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_linkTypeComponent, {
+    this.ref1 = this.dialogService.open(Create_linkTypeComponent, {
       width: '40%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -507,7 +525,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Tipo de Vinculacion Creada', detail: person.name,life: 2000});
       this.getAllLinkTypes()
@@ -518,7 +536,7 @@ get getWorkexperiences() {
   addEscalafon(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_EscalafonComponent, {
+    this.ref1 = this.dialogService.open(Create_EscalafonComponent, {
       width: '40%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -528,7 +546,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
       this.getAllscales()
@@ -539,7 +557,7 @@ get getWorkexperiences() {
   addCategoriaColciencias(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_CategoriaColcienciasComponent, {
+    this.ref1 = this.dialogService.open(Create_CategoriaColcienciasComponent, {
       width: '40%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -549,7 +567,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Categoria Colciencias Creada', detail: person.name,life: 2000});
       this.getAllcolcienciaCategorys()
@@ -560,7 +578,7 @@ get getWorkexperiences() {
   addRelaciones(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_RelacionesComponent, {
+    this.ref1 = this.dialogService.open(Create_RelacionesComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -570,7 +588,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Relaciones Creada', detail: person.name,life: 2000});
       this.getAllrelationships()
@@ -581,7 +599,7 @@ get getWorkexperiences() {
   addCapacitaciones(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_capacitacionComponent, {
+    this.ref1 = this.dialogService.open(Create_capacitacionComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,showHeader:false, 
@@ -591,7 +609,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Capacitación Creada', detail: person.name,life: 2000});
       this.getAlltrainings()
@@ -603,7 +621,7 @@ get getWorkexperiences() {
   addGenero(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_genderComponent, {
+    this.ref1 = this.dialogService.open(Create_genderComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -613,7 +631,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
       this.getAllgenders()
@@ -626,7 +644,7 @@ get getWorkexperiences() {
   addTipoDocumento(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_documentTypeComponent, {
+    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -636,7 +654,7 @@ get getWorkexperiences() {
     },
   });
 
-  this.ref.onClose.subscribe((person: any) =>{
+  this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
       this.getAlldocumentTypes()

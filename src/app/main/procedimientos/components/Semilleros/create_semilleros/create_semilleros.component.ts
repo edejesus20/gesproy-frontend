@@ -14,12 +14,16 @@ import { GroupI } from 'src/app/models/institution/group';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { LineI } from 'src/app/models/projet/line';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
+import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
 const translate = require('translate');
 
 @Component({
   selector: 'app-create_semilleros',
   templateUrl: './create_semilleros.component.html',
-  styleUrls: ['./create_semilleros.component.css']
+  styleUrls: ['./create_semilleros.component.css'],
+  providers: [DialogService]
 })
 export class Create_semillerosComponent implements OnInit {
   public seedbeds: any;
@@ -62,7 +66,10 @@ public Students:any[] =[]
 private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
 private GroupId:number = 0
+public ref1:any;
+
   constructor(
+    public dialogService: DialogService,
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,
     private teacherService:TeacherService,
@@ -93,9 +100,12 @@ private GroupId:number = 0
     }, error => console.error(error))
   }
   private getAllteachers(selectId?: number) {
-    this.teacherService.getList().subscribe(
+    this.teacherService.AddTeacherSemilleros().subscribe(
       (facultiesFromApi) => {
-        // console.log(facultiesFromApi.teachers)
+        // for (const key of facultiesFromApi.teachers) {
+        //   this.teachers.push(key)
+        // }
+        
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
@@ -180,7 +190,7 @@ private GroupId:number = 0
 
   public onSubmit(): void {
     let formValue: SeedbedI = this.form.value;
-    formValue.TeacherId=this.form.value.TeacherId.id
+    formValue.TeacherId=this.form.value.TeacherId.TeacherId
     formValue.GroupId=this.form.value.GroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
 
@@ -228,7 +238,7 @@ private GroupId:number = 0
     }else{
       formValue.Students = this.Students
     }
-    console.log(formValue)
+    // console.log(formValue)
     if(formValue.TeacherId != 0 && formValue.name != "" &&
     formValue.creation_date != "" && 
     // formValue.approval_date != "" && 
@@ -276,8 +286,6 @@ private GroupId:number = 0
         this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
         }
   }
-
-  get name() { return this.form.get('name'); }
   
   get getStudents() {
     return this.form.get('Students') as FormArray;//obtener todos los formularios
@@ -292,13 +300,15 @@ private GroupId:number = 0
       control.push(this.formBuilder.group({
         StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
-      date_end:['',[Validators.required]]
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
     }))
     }
     if(control.length >= 1 && this.mostrar1 == true){
       control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
-      date_end:['',[Validators.required]]
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
     }))
     }
       this.mostrar1=true
@@ -309,6 +319,11 @@ private GroupId:number = 0
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar1=false
+     control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
+      date_firt:['',[Validators.required]],
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
+    }))
     }
   }
 
@@ -336,7 +351,50 @@ private GroupId:number = 0
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
+     control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+
     }
   }
+  addTeacher(e:Event){
+    e.preventDefault()
 
+    this.ref1 = this.dialogService.open(CreateTeacherComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
+      this.getAllteachers()
+
+        }
+  });
+  }
+  addStudent(e:Event){
+    e.preventDefault()
+
+    this.ref1 = this.dialogService.open(CreateStudentComponent, {
+      width: '70%',
+      // height: '50%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+      baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
+      this.getstudents()
+
+        }
+  });
+  }
 }

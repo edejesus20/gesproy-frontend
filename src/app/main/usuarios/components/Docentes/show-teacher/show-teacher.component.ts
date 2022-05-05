@@ -6,6 +6,8 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { TeacherI } from 'src/app/models/user/teacher';
+import { SeedbedI } from 'src/app/models/institution/seedbed';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 
 @Component({
   selector: 'app-show-teacher',
@@ -15,7 +17,7 @@ import { TeacherI } from 'src/app/models/user/teacher';
 export class ShowTeacherComponent implements OnInit {
   @Input() mostrar:number=0;
   @Output() modificar= new EventEmitter<number>();
-  public teachers:TeacherI[]=[];
+  public teachers:any[]=[];
   first = 0;
   loading: boolean = true;
  
@@ -28,7 +30,7 @@ export class ShowTeacherComponent implements OnInit {
   selectedProducts: TeacherI[]=[];
   constructor(
     private teacherService:TeacherService,
-
+    private lineService:LineService,
     private primengConfig: PrimeNGConfig,
     ) { 
       (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs
@@ -57,12 +59,52 @@ export class ShowTeacherComponent implements OnInit {
     getUniversitys() {
       this.teacherService.getList().subscribe((instititionsFromApi) => {
         this.teachers =instititionsFromApi.teachers;
+
+        let arrayLinea:any[] = [];
+        for (const newH of  this.teachers) {
+          this.lineService.AddTeacherLines(newH.id).subscribe((item) => {
+            if(item.lines != undefined && item.lines.length > 0){
+              for (const line of item.lines ) {
+                arrayLinea.push({line,tipo:'Grupo'})
+              }
+              
+            }
+            if(item.lines2 != undefined && item.lines2.length > 0){
+              for (const line of item.lines2 ) {
+                arrayLinea.push({line,tipo:'Semillero'})
+              }
+              
+            }
+            
+
+      })
+      if( newH.id != undefined && (newH.Seedbeds != undefined && newH.Seedbeds.length > 0)||(newH.Groups != undefined && newH.Groups.length > 0)) {
+
+        Object.defineProperty( newH, 'Lines', {
+          value:arrayLinea
+          });
+
+    }
+        }
+      //   this.teachers.forEach((newH:TeacherI) => {
+      //     if( newH.id != undefined && newH.Seedbeds != []) {
+
+      //         Object.defineProperty( newH, 'Lines', {
+      //           value:arrayLinea
+      //           });
+
+      //     }
+        
+        
+      // });
+
         // console.log(instititionsFromApi.teachers)
         this.rows2=[]
         if(instititionsFromApi.teachers != undefined){
-          for (const key of instititionsFromApi.teachers) {
+          for (let key of instititionsFromApi.teachers) {
             this.rows2.push(
               {
+                id: key.id,
                 UserId: key.UserId,
                 ScaleId: key.ScaleId,
                 ColcienciaCategoryId: key.ColcienciaCategoryId,
@@ -75,7 +117,11 @@ export class ShowTeacherComponent implements OnInit {
                 LinkTypeId:key.LinkTypeId
               }
             )
+
+
           }
+          // console.log(this.teachers)
+        
         }
       }, error => console.error(error));
     }

@@ -6,7 +6,7 @@
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
     [globalFilterFields]="['User.fullName','User.Person.identification','User.email','User.Person.nationality',
-    'User.Person.phone','User.Person.Gender.name']" 
+    'User.Person.phone','User.Person.Gender.name','status_seedbed']" 
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -44,7 +44,8 @@
           
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
           <th pSortableColumn="User.Person.Gender.name">GENERO<p-sortIcon field="User.Person.Gender.name"></p-sortIcon></th>
-          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+          <th pSortableColumn="status_seedbed">Estado<p-sortIcon field="status_seedbed"></p-sortIcon></th>
+           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
       </tr>
@@ -66,6 +67,7 @@
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
           <td>{{item.User?.Person?.Gender?.name}}</td>
+          <td>{{item.status_seedbed  | titlecase}} </td> 
           <ng-template [ngIf]="mostrar==1">
               
               <td >
@@ -135,7 +137,7 @@
                               <td>{{order.Teacher?.User?.fullName | titlecase}}</td>
                               <td>{{order.SeedbedStudent.date_firt | date:'fullDate' | titlecase}}</td>
                               <td>{{order.SeedbedStudent.date_end | date:'fullDate' | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.Horas}}</td>
+                              <td>{{order.SeedbedStudent.hours}}</td>
                               
                           </tr>
                       </ng-template>

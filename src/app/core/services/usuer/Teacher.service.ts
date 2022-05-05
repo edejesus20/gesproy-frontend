@@ -79,6 +79,24 @@ export class TeacherService {
     )
 }
 
+
+AddTeacherSemilleros(): Observable<{ teachers: any[] }> {
+  return this.http
+    .get<{ teachers: any[] }>(this.API_URI+'/api/AddTeacherSemilleros')
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
+  return this.http
+    .get<{ teachers: any[] }>(this.API_URI+'/api/OneAddTeacherSemilleros/'+id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
  // Get students data
 
  getList(): Observable<{ teachers: TeacherI[] }> {
