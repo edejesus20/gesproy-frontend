@@ -51,7 +51,8 @@ export class EditarTeacherComponent implements OnInit {
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
   public colcienciaCategorys:ColcienciaCategoryI[] =[]
-
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   public algo:number[]=[0];
   public algo2:number[]=[0];
   public lines:LineI[]=[];

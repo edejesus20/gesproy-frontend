@@ -68,6 +68,7 @@ public Students:any[] =[]
 private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
 private GroupId:number = 0
+
   constructor(
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,

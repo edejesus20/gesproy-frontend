@@ -36,7 +36,8 @@ export class Create_semillerosComponent implements OnInit {
   public algo:number[]=[0];
   public mostrar1:boolean=false;
   public algo1:number[]=[0];
-
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public form: FormGroup = this.formBuilder.group({});

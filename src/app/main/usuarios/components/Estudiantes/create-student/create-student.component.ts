@@ -32,7 +32,8 @@ export class CreateStudentComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
   public mostrar2:boolean=false;
-  
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   public algo:number[]=[0];
   public algo1:number[]=[0];
   public documentTypes:DocumentTypeI[]=[]

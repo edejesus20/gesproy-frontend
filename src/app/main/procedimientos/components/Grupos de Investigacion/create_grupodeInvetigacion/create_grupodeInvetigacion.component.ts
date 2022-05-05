@@ -94,7 +94,8 @@ public lines1:any[] =[]
 public InvestigatorCollaborators1:any[] =[]
 public knowledge_areas1:any[] =[]
 public Seedbeds1:any[] =[]
-
+public image:string='assets/images/images.jpg'
+public image2:string='assets/images/uniguajira_iso.jpg'
   constructor(
     private groupService:GroupService,
     private roleInvestigationsService:RoleInvestigationsService,

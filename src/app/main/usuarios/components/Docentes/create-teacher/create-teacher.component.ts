@@ -60,7 +60,8 @@ export class CreateTeacherComponent implements OnInit {
   public linkTypes:LinkTypeI[]=[]
   public trainings: TrainingI[]=[]
  
-
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   public form:FormGroup=this.formBuilder.group({
     name:[''],
     surname:[''],

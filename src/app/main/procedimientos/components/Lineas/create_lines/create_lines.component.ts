@@ -22,6 +22,8 @@ export class Create_linesComponent implements OnInit {
   public thematics:ThematicI[] =[]
   public algo:number[]=[0];
   public ref:any;
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
 
   constructor(
     public dialogService: DialogService,

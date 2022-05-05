@@ -19,6 +19,8 @@ export class Delete_linesComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form: FormGroup = this.formBuilder.group({});
   public Thematics:ThematicI[] = []
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

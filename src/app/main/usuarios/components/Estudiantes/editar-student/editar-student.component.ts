@@ -28,7 +28,8 @@ export class EditarStudentComponent implements OnInit {
   public mostrar:number=1;
   public mostrar2:boolean=false;
   public mostrar3:boolean=false;
-  
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   public algo:number[]=[0];
   public algo1:number[]=[0];
   public tabla:boolean=true;
