@@ -507,10 +507,11 @@
                                       <span class="p-float-label" 
                                       [style]="{'width':'100%'}">
     
-                                      <input type="text" class="p-inputtext-lg"
-                                       pInputText name="degree_certificate" 
-                                       placeholder="CERTIFICADO DE GRADO" title="CERTIFICADO DE GRADO" 
-                                       formControlName="degree_certificate" required>  
+                                      <div class="custom-input-file" style="width: 100%;">
+                                        <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
+                                        name="Anexos" 
+                                        placeholder="CERTIFICADO DE GRADO" formControlName="degree_certificate" title="CERTIFICADO DE GRADO" required>
+                                      </div>
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -1177,11 +1178,15 @@
                                 <div class="p-inputgroup"  style="margin-top: 10px;">
                                   <span class="p-float-label" 
                                   [style]="{'width':'100%'}">
-
-                                  <input type="text" class="p-inputtext-lg"
+                                  <div class="custom-input-file" style="width: 100%;">
+                                    <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
+                                    name="Anexos" 
+                                    placeholder="CERTIFICADO DE GRADO" formControlName="degree_certificate" title="CERTIFICADO DE GRADO" required>
+                                  </div>
+                                  <!-- <input type="text" class="p-inputtext-lg"
                                    pInputText name="degree_certificate" 
                                    placeholder="CERTIFICADO DE GRADO" title="CERTIFICADO DE GRADO" 
-                                   formControlName="degree_certificate" required>  
+                                   formControlName="degree_certificate" >   -->
                                    <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                   </span>       
                                 </div>
