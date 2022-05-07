@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { Router } from '@angular/router';
-import { Research_bondingI } from 'src/app/models/institution/relationship';
+import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
 @Component({
   selector: 'app-show_one_Research_bonding',

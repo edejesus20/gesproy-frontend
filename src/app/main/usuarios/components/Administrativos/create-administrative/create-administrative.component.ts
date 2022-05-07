@@ -10,16 +10,16 @@ const translate = require('translate');
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { OcupationService } from 'src/app/core/services/usuer/Ocupation.service';
-import { OcupationI } from 'src/app/models/user/ocupation';
+import { ChargeI } from 'src/app/models/user/charge';
 import { PersonI } from 'src/app/models/user/person';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.component';
+import { ChargeService } from 'src/app/core/services/investigacion/Charge.service';
 
-import { Create_ocupationComponent } from '../../Ocupacion/create_ocupation/create_ocupation.component';
 let uploadefiles:Array<File>
 @Component({
   selector: 'app-create-administrative',
@@ -45,7 +45,7 @@ export class CreateAdministrativeComponent implements OnInit {
     nationality:[''],
     date_of_birth:[''],
     HeadquarterId:['', [Validators.required]],
-    OcupationId:['', [Validators.required]],
+    ChargeId:['', [Validators.required]],
    });
 
    public mostrarUser:boolean=false;
@@ -54,7 +54,7 @@ export class CreateAdministrativeComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
-  public ocupations:OcupationI[]=[]
+  public charges:ChargeI[]=[]
   public mostrarDialogo:boolean=false;
 
   public ref1:any;
@@ -66,7 +66,7 @@ export class CreateAdministrativeComponent implements OnInit {
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private headquarterService: HeadquarterService,
-    private ocupationService:OcupationService,
+    private chargeService:ChargeService,
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private router: Router,
@@ -125,10 +125,10 @@ export class CreateAdministrativeComponent implements OnInit {
   }
 
   private getAllocupations(selectId?: number) {
-    this.ocupationService.getList().subscribe(
+    this.chargeService.getList().subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
-        this.ocupations = AdministrativeFromApi.ocupations;
+        this.charges = AdministrativeFromApi.charges;
       }, error => console.error(error));
   }
 
@@ -146,7 +146,7 @@ export class CreateAdministrativeComponent implements OnInit {
       username: this.form.value.username,
       email: this.form.value.email,
       UserId:  this.form.value.UserId.UserId,
-      OcupationId: this.form.value.OcupationId.id,
+      ChargeId: this.form.value.ChargeId.id,
     HeadquarterId: this.form.value.HeadquarterId.id,
     nationality: this.form.value.nationality,
     date_of_birth: this.form.value.date_of_birth,
@@ -278,7 +278,7 @@ export class CreateAdministrativeComponent implements OnInit {
   addOcupacion(e:Event){
     e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_ocupationComponent, {
+    this.ref1 = this.dialogService.open(Create_ChargeComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -290,7 +290,7 @@ export class CreateAdministrativeComponent implements OnInit {
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Cargo Creado', detail: person.name,life: 2000});
       this.getAllocupations()
 
         }

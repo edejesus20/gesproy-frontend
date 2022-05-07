@@ -6,7 +6,11 @@ import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
 
 import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
-import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { StudentService } from 'src/app/core/services/usuer/Student.service';
+import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
+import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
+import { LineProgramGroupTeacherI } from 'src/app/models/institution/program';
 
 @Component({
   selector: 'app-show-rol-investigation',
@@ -26,6 +30,10 @@ export class ShowRolInvestigationComponent implements OnInit {
   selectedProducts: RoleInvestigationI[]=[]; 
   constructor(
     private roleInvestigationsService:RoleInvestigationsService,
+    private studentService:StudentService,
+    private teacherService:TeacherService,
+    private investigadorColaboladorService:InvestigadorColaboladorService,
+    
     private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 
@@ -43,7 +51,69 @@ export class ShowRolInvestigationComponent implements OnInit {
     getUsrRoles() {
       this.roleInvestigationsService.getList().subscribe((rolesFromApi) => {
         this.roles =rolesFromApi.roleInvestigations
-        // console.log(rolesFromApi.roles)
+
+        let arrayTeacher:any | null=null
+        let arrayStudiante:any | null=null
+        let arrayColabolador:any | null=null
+        for (let key of this.roles) {
+          if(key.LineProgramGroupTeachers != undefined && key.LineProgramGroupTeachers.length > 0) {
+            key.LineProgramGroupTeachers.forEach((newH:LineProgramGroupTeacherI) => {
+              if( newH?.TeacherId != undefined) {
+                this.teacherService.getItem(newH.TeacherId).subscribe((item) => {
+                  arrayTeacher=item.teacher.User
+                  if(key.Users!= undefined) {
+                    key.Users.push(arrayTeacher)
+      
+                  }else{
+                    Object.defineProperty( key, 'Users', {
+                      value:[arrayTeacher]
+                      });
+                  }
+                })
+                
+              }
+          });
+          }
+
+          if(key.GroupStudents != undefined && key.GroupStudents.length > 0) {
+            key.GroupStudents.forEach((newH:GroupStudentI) => {
+              if( newH?.StudentId != undefined) {
+                this.studentService.getItem(newH.StudentId).subscribe((item) => {
+                  arrayStudiante=item.student.User
+                  if(key.Users!= undefined) {
+                    key.Users.push(arrayStudiante)
+      
+                  }else{
+                  Object.defineProperty( key, 'Users', {
+                    value:[arrayStudiante]
+                    });
+                  }
+                })
+                
+              }
+          });
+          }
+          if(key.GroupInvestigatorCollaborators != undefined && key.GroupInvestigatorCollaborators.length > 0) {
+            key.GroupInvestigatorCollaborators.forEach((newH:GroupInvestigatorCollaboratorI) => {
+              if( newH?.InvestigatorCollaboratorId != undefined) {
+                this.investigadorColaboladorService.getItem(newH.InvestigatorCollaboratorId).subscribe((item) => {
+                  arrayColabolador=item.investigatorCollaborator.User
+                  if(key.Users != undefined) {
+                    key.Users.push(arrayColabolador)
+      
+                  }else{
+                  Object.defineProperty( key, 'Users', {
+                    value:[arrayColabolador]
+                    });
+                  }
+                })
+               
+              }
+          });
+          }
+
+        }
+        // console.log(this.roles)
         this.rows2=[]
         if(rolesFromApi.roleInvestigations != undefined){
           for (const key of rolesFromApi.roleInvestigations) {

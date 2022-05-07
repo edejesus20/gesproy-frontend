@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Research_bondingI } from 'src/app/models/institution/relationship';
+import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { environment } from 'src/environments/environment';
 
 

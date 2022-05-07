@@ -47,7 +47,8 @@ export class ShowTeacherComponent implements OnInit {
         { field: 'User.Person.phone', header: 'Telefono' },
         { field: 'hours_of_dedication', header: 'Horas de dedicación' },
         { field: 'Scale.name', header: 'Escalafon' },
-        { field: 'ColcienciaCategory.name', header: 'Categoria de Colciencia' }
+        { field: 'MincienciaCategory.name', header: 'Categoria de Minciencia' },
+        { field: 'ChargeBonding.name', header: 'Vinculacion de Cargo' }
     ];
   
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -107,14 +108,15 @@ export class ShowTeacherComponent implements OnInit {
                 id: key.id,
                 UserId: key.UserId,
                 ScaleId: key.ScaleId,
-                ColcienciaCategoryId: key.ColcienciaCategoryId,
+                MincienciaCategoryId: key.MincienciaCategoryId,
                 User:key.User,
                 Scale:key.Scale,
                 Groups:key.Groups,
-                ColcienciaCategory:key.ColcienciaCategory,
+                MincienciaCategory:key.MincienciaCategory,
                 TrainingTeacher:key.TrainingTeacher,
                 hours_of_dedication:key.hours_of_dedication,
-                LinkTypeId:key.LinkTypeId
+                ChargeBondingId:key.ChargeBondingId,
+                ChargeBonding:key.ChargeBonding
               }
             )
 
@@ -145,7 +147,7 @@ export class ShowTeacherComponent implements OnInit {
         Telefono:key.User?.Person?.phone,
         Horas_de_dedicación:key.hours_of_dedication,
         Escalafon:key.Scale?.name,
-        Categoria_de_Colciencia:key.ColcienciaCategory?.name
+        Categoria_de_Minciencia:key.MincienciaCategory?.name
       })
     }
   }else{
@@ -158,7 +160,7 @@ export class ShowTeacherComponent implements OnInit {
       Telefono:key.User?.Person?.phone,
       Horas_de_dedicación:key.hours_of_dedication,
       Escalafon:key.Scale?.name,
-      Categoria_de_Colciencia:key.ColcienciaCategory?.name
+      Categoria_de_Minciencia:key.MincienciaCategory?.name
     })
   }
 }
@@ -192,7 +194,7 @@ export class ShowTeacherComponent implements OnInit {
           col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_5:{ text: 'HORAS DE DEDICACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_6:{ text: 'ESCALAFON', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_7:{ text: 'CATEGORIA COLCIENCIAS', style: 'tableHeader',fontSize: 12 ,bold: true, }
+          col_7:{ text: 'CATEGORIA MINCIENCIAS', style: 'tableHeader',fontSize: 12 ,bold: true, }
       }
     }]
   
@@ -221,7 +223,7 @@ export class ShowTeacherComponent implements OnInit {
               data.User?.Person?.phone?.toString(),
               data.hours_of_dedication.toString(),
               data.Scale?.name.toString(),
-              data.ColcienciaCategory?.name?.toString()
+              data.MincienciaCategory?.name?.toString()
           
             ]
             body.push(row);
@@ -241,7 +243,7 @@ export class ShowTeacherComponent implements OnInit {
               data.User?.Person?.phone?.toString(),
               data.hours_of_dedication.toString(),
               data.Scale?.name.toString(),
-              data.ColcienciaCategory?.name?.toString()
+              data.MincienciaCategory?.name?.toString()
             ]
   
             body.push(row);

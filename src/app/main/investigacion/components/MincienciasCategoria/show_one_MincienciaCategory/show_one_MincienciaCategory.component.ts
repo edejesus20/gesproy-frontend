@@ -23,9 +23,9 @@ export class Show_one_MincienciaCategoryComponent implements OnInit {
         id:0,
         UserId: 0,
         ScaleId: 0,
-        ColcienciaCategoryId: 0,
+        MincienciaCategoryId: 0,
         hours_of_dedication:'',
-        LinkTypeId:0,
+        ChargeBondingId:0,
         User:
           {
             username: '',

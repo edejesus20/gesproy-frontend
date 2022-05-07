@@ -243,11 +243,11 @@
                 <div class="grupo"> 
                   <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                    [options]="linkTypes" [filter]="true"
-                      name="LinkTypeId" formControlName="LinkTypeId" label="SELECCIONE VINCULACION" 
+                    [options]="charge_bondings" [filter]="true"
+                      name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
                       [style]="{'width':'100%','margin-bottom':'20px'}"  
                       optionvalue="id"  optionLabel="name" filterBy="name"
-                      [required]="true" placeholder="SELECCIONE VINCULACION" title="SELECCIONE VINCULACION">
+                      [required]="true" placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO">
                       <ng-template let-option pTemplate="item">
                         <span >{{option.name | titlecase}}</span>
                     </ng-template>
@@ -267,16 +267,16 @@
                 <div class="grupo"> 
                   <div style="width:100%">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-              [options]="colcienciaCategorys" [filter]="true"
-                name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
+              [options]="mincienciaCategorys" [filter]="true"
+                name="MincienciaCategoryId" formControlName="MincienciaCategoryId"  label="CATEGORIA MINCIENCIAS" 
                 [style]="{'width':'100%','margin-bottom':'20px'}" 
                 optionvalue="id"  optionLabel="name" filterBy="name"
-                [required]="true" placeholder="CATEGORIA COLCIENCIAS" title="CATEGORIA COLCIENCIAS">
+                [required]="true" placeholder="CATEGORIA MINCIENCIAS" title="CATEGORIA MINCIENCIAS">
                 <ng-template let-option pTemplate="item">
                   <span >{{option.name }}</span>
               </ng-template>
               </p-dropdown>
-              <!-- <p>Categoria Cargada : {{this.form.value.ColcienciaCategoryId.name}}</p> -->
+              <!-- <p>Categoria Cargada : {{this.form.value.MincienciaCategoryId.name}}</p> -->
 
             </div>
             <span class="bottomdelete" style="margin-top: -35px;">
@@ -329,12 +329,12 @@
                               <div class="grupo">
                                 <div style="width:100%">
                                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                  [options]="relationships" [filter]="true"
-                                      formControlName="RelationshipId" name="RelationshipId"
-                                     label="SELECCIONE RELACIONES" 
+                                  [options]="research_bondings" [filter]="true"
+                                      formControlName="ResearchBondingId" name="ResearchBondingId"
+                                     label="VINCULACION INVESTIGATIVA" 
                                     [style]="{'width':'100%','margin-bottom':'20px'}"
                                     optionvalue="id" optionLabel="name"  filterBy="name"
-                                    [required]="true" placeholder="SELECCIONE RELACIONES">
+                                    [required]="true" placeholder="VINCULACION INVESTIGATIVA">
                                     <ng-template let-option pTemplate="item">
                                       <span >
                                         {{option.name  | titlecase}}
@@ -342,7 +342,7 @@
                                   </ng-template>
                                   </p-dropdown>
                           
-                                  <!-- <p>Dato Cargado : {{getRoles.value[pointIndex].RelationshipId.name}}</p> -->
+                                  <!-- <p>Dato Cargado : {{getRoles.value[pointIndex].ResearchBondingId.name}}</p> -->
 
                                 </div>
                                 <span class="bottomdelete" style="margin-top: -35px;">

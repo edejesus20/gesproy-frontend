@@ -31,7 +31,7 @@ public form:FacultyI={
     id:0,
     UserId:0,
     HeadquarterId:'',
-    OcupationId:'',
+    ChargeId:'',
     User:{
       id:0,
       username:'',

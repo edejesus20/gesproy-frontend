@@ -56,15 +56,15 @@ export class Edit_semillerosComponent implements OnInit {
      UserId: 0,
     ScaleId: 0,
     hours_of_dedication:'',
-    ColcienciaCategoryId: 0,
+    MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
     Group:undefined, 
-    ColcienciaCategory:undefined, 
+    MincienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
-    LinkTypeId:0,
-    LinkType:undefined
+    ChargeBondingId:0,
+    ChargeBonding:undefined
 }
 public mostrarTeacher:boolean=false
 public students:any[] =[]

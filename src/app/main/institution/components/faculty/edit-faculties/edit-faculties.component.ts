@@ -44,7 +44,7 @@ constructor(
   ) { }
 
   ngOnInit(): void {
-    this.getAlladministrative()
+    
     this.getAlluniversidades()
     this.primengConfig.ripple = true;
 
@@ -101,10 +101,16 @@ constructor(
 
 
   private getAlladministrative(selectId?: number) {
-    this.administrativeService.getList().subscribe(
+    this.administrativeService.getTipoAdministrative('1').subscribe(
       (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.administratives = AdministrativeFromApi.administratives;
+
+          for (let decano of AdministrativeFromApi.decanos) {
+            if(!decano.Faculties?.length) {
+              this.administratives.push(decano)
+          }   
+        }
+        console.log(this.administratives)
+        // this.administratives = AdministrativeFromApi.administratives;
       }, error => console.error(error));
   }
 
@@ -144,6 +150,9 @@ constructor(
       this.form.controls['name'].setValue(cnt_groupFromApi.faculty.name)
       this.form.controls['AdministrativeId'].setValue(cnt_groupFromApi.faculty.AdministrativeId)
       this.administrativeService.getItem(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
+  
+        this.administratives.push(algo.administrative)
+        this.getAlladministrative()
         this.form.controls['AdministrativeId'].setValue(algo.administrative)
       })
       this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{

@@ -4,8 +4,9 @@ import * as FileSaver from 'file-saver';
 import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
-import { Research_bondingI } from 'src/app/models/institution/relationship';
+import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
+import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 
 @Component({
   selector: 'app-show_Research_bonding',
@@ -28,6 +29,7 @@ export class Show_Research_bondingComponent implements OnInit {
 
   constructor(
     private research_bondingService:Research_bondingService ,
+    private teacherService:TeacherService ,
      private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
  
@@ -55,6 +57,26 @@ export class Show_Research_bondingComponent implements OnInit {
     
     this.research_bondingService.getList().subscribe((research_bondingsApiFrom) => {
       this.research_bondings =research_bondingsApiFrom.research_bondings
+      let arrayTeacher:any[] = []
+      for (let key of this.research_bondings) {
+        if(key.HeadquarterProgramTeachers != undefined && key.HeadquarterProgramTeachers.length > 0) {
+          key.HeadquarterProgramTeachers.forEach((newH:any) => {
+            if( newH?.TeacherId != undefined) {
+              this.teacherService.getItem(newH.TeacherId).subscribe((item) => {
+                arrayTeacher.push(item.teacher);
+              })
+            }
+        });
+        }
+     
+      }
+    
+      for (let key of this.research_bondings) {
+        Object.defineProperty( key, 'Teachers', {
+          value:arrayTeacher
+          });
+      }
+      // console.log(this.research_bondings)
       this.rows2=[]
       if(research_bondingsApiFrom.research_bondings != undefined){
         for (const key of research_bondingsApiFrom.research_bondings) {

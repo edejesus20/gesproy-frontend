@@ -193,11 +193,11 @@
                         <div class="flex">
                           <div style="width:100%">
                             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                            [options]="ocupations" [filter]="true"
-                            name="OcupationId" formControlName="OcupationId" label="SELECCIONE OCUPACIÓN" 
+                            [options]="charges" [filter]="true"
+                            name="ChargeId" formControlName="ChargeId" label="SELECCIONE CARGO" 
                             [style]="{'width':'100%','margin-bottom':'10px'}"  
                             optionvalue="id"  optionLabel="name" filterBy="name"
-                            [required]="true" placeholder="SELECCIONE OCUPACIÓN" title="SELECCIONE OCUPACIÓN">
+                            [required]="true" placeholder="SELECCIONE CARGO" title="SELECCIONE CARGO">
                             <ng-template let-option pTemplate="item">
                               <span >{{option.name | titlecase}}</span>
                           </ng-template>
@@ -213,7 +213,7 @@
                     </div>
                       <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                     [options]="ocupations" [filter]="true"
-                     formControlName="OcupationId" label="SELECCIONE OCUPACIÓN" 
+                     formControlName="ChargeId" label="SELECCIONE OCUPACIÓN" 
                       [style]="{'width':'100%','margin-bottom':'10px'}"  
                       optionvalue="id"  optionLabel="name" filterBy="name"
                       [required]="true" placeholder="SELECCIONE OCUPACIÓN" title="SELECCIONE OCUPACIÓN">

@@ -6,7 +6,7 @@
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
     [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
-    'User.Person.phone','Scale.name','ColcienciaCategory.name']"
+    'User.Person.phone','Scale.name','MincienciaCategory.name']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -44,7 +44,7 @@
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
           <!-- <th pSortableColumn="Group[0].name">GRUPO<p-sortIcon field="Group[0].name"></p-sortIcon></th> -->
           <th pSortableColumn="Scale.name">ESCALAFON<p-sortIcon field="Scale.name"></p-sortIcon></th>
-          <th pSortableColumn="ColcienciaCategory.name">CATEGORIA COLCIENCIAS<p-sortIcon field="ColcienciaCategory.name"></p-sortIcon></th>
+          <th pSortableColumn="MincienciaCategory.name">CATEGORIA COLCIENCIAS<p-sortIcon field="MincienciaCategory.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -66,7 +66,7 @@
           <td>{{item.User?.Person?.phone }}</td>
           <!-- <td>{{item.Groups[0]?.name | titlecase}}</td> -->
           <td>{{item.Scale?.name | titlecase}}</td>
-          <td>{{item.ColcienciaCategory?.name | titlecase}}</td>
+          <td>{{item.MincienciaCategory?.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >

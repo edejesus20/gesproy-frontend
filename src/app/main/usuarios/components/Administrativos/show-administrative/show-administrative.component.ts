@@ -39,7 +39,7 @@ export class ShowAdministrativeComponent implements OnInit {
         { field: 'User.Person.identification', header: 'Identificacion' },
         { field: 'User.email', header: 'Correo Electronico' },
         { field: 'User.Person.phone', header: 'Telefono' },
-        { field: 'Ocupation.name', header: 'Ocupación' },
+        { field: 'Charge.name', header: 'Cargo' },
         { field: 'Headquarter.name', header: 'Sede' },
     ];
   
@@ -56,10 +56,10 @@ export class ShowAdministrativeComponent implements OnInit {
             this.rows2.push(
               {
                 UserId: key.UserId,
-                OcupationId: key.OcupationId,
+                ChargeId: key.ChargeId,
                 HeadquarterId: key.HeadquarterId,
                 User:key.User,
-                Ocupation:key.Ocupation,
+                Charge:key.Charge,
                 Headquarter:key.Headquarter,
               }
             )
@@ -86,7 +86,7 @@ export class ShowAdministrativeComponent implements OnInit {
         Identificacion:key.User?.Person?.identification,
         Correo_Electronico:key.User?.email,
         Telefono:key.User?.Person?.phone,
-        Ocupación:key.Ocupation?.name,
+        Cargo:key.Charge?.name,
         Sede:key.Headquarter?.name
       })
     }
@@ -98,7 +98,7 @@ export class ShowAdministrativeComponent implements OnInit {
       Identificacion:key.User?.Person?.identification,
       Correo_Electronico:key.User?.email,
       Telefono:key.User?.Person?.phone,
-      Ocupación:key.Ocupation?.name,
+      Cargo:key.Charge?.name,
       Sede:key.Headquarter?.name
     })
   }
@@ -131,7 +131,7 @@ export class ShowAdministrativeComponent implements OnInit {
           col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_3:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_5:{ text: 'OCUPACIÓN', style: 'tableHeader',fontSize: 12 ,bold: true, },
+          col_5:{ text: 'CARGO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_6:{ text: 'SEDE', style: 'tableHeader',fontSize: 12 ,bold: true, },
       }
     }]
@@ -157,7 +157,7 @@ export class ShowAdministrativeComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.Ocupation?.name.toString(),
+              data.Charge?.name.toString(),
               data.Headquarter?.name.toString() +' - '+ data.Headquarter?.University?.name.toString()
           
             ]
@@ -176,7 +176,7 @@ export class ShowAdministrativeComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.Ocupation?.name.toString(),
+              data.Charge?.name.toString(),
               data.Headquarter?.name.toString() +' - '+ data.Headquarter?.University?.name.toString()
             ]
   

@@ -81,11 +81,7 @@ import { Create_documentTypeComponent } from './components/TipoDocumento/create_
 import { Edit_documentTypeComponent } from './components/TipoDocumento/edit_documentType/edit_documentType.component';
 import { Show_documentTypeComponent } from './components/TipoDocumento/show_documentType/show_documentType.component';
 import { Show_one_documentTypeComponent } from './components/TipoDocumento/show_one_documentType/show_one_documentType.component';
-import { Create_ocupationComponent } from './components/Ocupacion/create_ocupation/create_ocupation.component';
-import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupation/delete_Ocupation.component';
-import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
-import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
-import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
+
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -94,11 +90,16 @@ import { Delete_InvestigatorCollaboratorComponent } from './components/Investiga
 import { Edit_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/edit_InvestigatorCollaborator/edit_InvestigatorCollaborator.component';
 import { Show_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_InvestigatorCollaborator/show_InvestigatorCollaborator.component';
 import { Show_one_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_one_InvestigatorCollaborator/show_one_InvestigatorCollaborator.component';
-import { Create_linkTypeComponent } from './components/Tipo Vinculacion/create_linkType/create_linkType.component';
-import { Delete_linkTypeComponent } from './components/Tipo Vinculacion/delete_linkType/delete_linkType.component';
-import { Edit_linkTypeComponent } from './components/Tipo Vinculacion/edit_linkType/edit_linkType.component';
-import { Show_linkTypeComponent } from './components/Tipo Vinculacion/show_linkType/show_linkType.component';
-import { Show_one_linkTypeComponent } from './components/Tipo Vinculacion/show_one_linkType/show_one_linkType.component';
+import { Show_Charge_bondingComponent } from './components/Vinculacion Cargo/show_Charge_bonding/show_Charge_bonding.component';
+import { Show_one_Charge_bondingComponent } from './components/Vinculacion Cargo/show_one_Charge_bonding/show_one_Charge_bonding.component';
+import { Create_Charge_bondingComponent } from './components/Vinculacion Cargo/create_Charge_bonding/create_Charge_bonding.component';
+import { Edit_Charge_bondingComponent } from './components/Vinculacion Cargo/edit_Charge_bonding/edit_Charge_bonding.component';
+import { Delete_Charge_bondingComponent } from './components/Vinculacion Cargo/delete_Charge_bonding/delete_Charge_bonding.component';
+import { Show_ChargeComponent } from './components/Cargo/show_Charge/show_Charge.component';
+import { Show_one_ChargeComponent } from './components/Cargo/show_one_Charge/show_one_Charge.component';
+import { Create_ChargeComponent } from './components/Cargo/create_Charge/create_Charge.component';
+import { Edit_ChargeComponent } from './components/Cargo/edit_Charge/edit_Charge.component';
+import { Delete_ChargeComponent } from './components/Cargo/delete_Charge/delete_Charge.component';
 
 @NgModule({
   declarations: [
@@ -152,24 +153,27 @@ import { Show_one_linkTypeComponent } from './components/Tipo Vinculacion/show_o
     Edit_documentTypeComponent,
     Show_documentTypeComponent,
     Show_one_documentTypeComponent,
-    //ocupation
-    Create_ocupationComponent,
-    Delete_OcupationComponent,
-    Edit_OcupationComponent,
-    Show_OcupationComponent,
-    Show_One_OcupationComponent,
-    //tipo de vinculaciones
-    Create_linkTypeComponent,
-    Delete_linkTypeComponent,
-    Edit_linkTypeComponent,
-    Show_linkTypeComponent,
-    Show_one_linkTypeComponent,
+
     //investigador colabolador
     Create_InvestigatorCollaboratorComponent,
     Delete_InvestigatorCollaboratorComponent,
     Edit_InvestigatorCollaboratorComponent,
     Show_InvestigatorCollaboratorComponent,
-    Show_one_InvestigatorCollaboratorComponent
+    Show_one_InvestigatorCollaboratorComponent,
+    // vinculacion de cargo
+     //cargo
+Show_Charge_bondingComponent,
+Show_one_Charge_bondingComponent,
+    Create_Charge_bondingComponent,
+    Edit_Charge_bondingComponent,
+   Delete_Charge_bondingComponent,
+
+   Show_ChargeComponent,
+Show_one_ChargeComponent,
+    Create_ChargeComponent,
+    Edit_ChargeComponent,
+   Delete_ChargeComponent,
+   
   ],
   imports: [
     CommonModule,

@@ -100,18 +100,18 @@
                    >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                              <th pSortableColumn="id">Identificación <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre de Profesores<p-sortIcon field="name"></p-sortIcon></th>
-                              <th pSortableColumn="Scale">Categoria Colciencias <p-sortIcon field="Scale"></p-sortIcon></th>
-                              <th pSortableColumn="Group">Grupo <p-sortIcon field="Group"></p-sortIcon></th>
+                              <th pSortableColumn="MincienciaCategory">Categoria Minciencias <p-sortIcon field="MincienciaCategory"></p-sortIcon></th>
+                              <th pSortableColumn="email">Correo <p-sortIcon field="email"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <td>{{order.id}}</td>
+                              <td>{{order.User.Person.identification}}</td>
                               <td>{{order.User.fullName | titlecase}}</td>
-                              <td>{{order.ColcienciaCategory?.name | titlecase}}</td>
-                              <td>{{order.Group?.name | titlecase}}</td>
+                              <td>{{order.MincienciaCategory?.name | titlecase}}</td>
+                              <td>{{order.User?.email | titlecase}}</td>
                           </tr>
                       </ng-template>
 

@@ -83,7 +83,7 @@ export class ShowStudentComponent implements OnInit {
         }
 
       }
-      // console.log(this.rows2)
+      console.log(this.rows2)
 
     }, error => console.error(error));
   }

@@ -173,11 +173,11 @@
             <div class="col-12 md:col-6 lg:col-6">
               <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'10px'}">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="colcienciaCategorys" [filter]="true"
-                  name="ColcienciaCategoryId" formControlName="ColcienciaCategoryId"  label="CATEGORIA COLCIENCIAS" 
+                [options]="mincienciaCategorys" [filter]="true"
+                  name="MincienciaCategoryId" formControlName="MincienciaCategoryId"  label="CATEGORIA MINCIENCIAS" 
                   [style]="{'width':'100%','margin-top':'20px'}" 
                   optionvalue="id"  optionLabel="name" filterBy="name"
-                  [disabled]="true" placeholder="CATEGORIA COLCIENCIAS" title="CATEGORIA COLCIENCIAS">
+                  [disabled]="true" placeholder="CATEGORIA MINCIENCIAS" title="CATEGORIA MINCIENCIAS">
                   <ng-template let-option pTemplate="item">
                     <span >{{option.name }}</span>
                 </ng-template>

@@ -2,16 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { GenderService } from 'src/app/core/services/usuer/Gender.service';
-import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
-import { DocumentTypeI } from 'src/app/models/user/document_types';
-import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
-import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { OcupationService } from 'src/app/core/services/usuer/Ocupation.service';
-import { OcupationI } from 'src/app/models/user/ocupation';
 @Component({
   selector: 'app-delete-administrative',
   templateUrl: './delete-administrative.component.html',
@@ -33,19 +25,13 @@ export class DeleteAdministrativeComponent implements OnInit {
   phone:'',
   email:'',
   HeadquarterId:'',
-  OcupationId:'',
+  ChargeId:'',
  };
-  public documentTypes:DocumentTypeI[]=[]
-  public genders:GenderI[] =[]
-  public headquarters: HeadquarterI[]=[]
-  public ocupations:OcupationI[]=[]
+
 
   constructor(
     private administrativeService:AdministrativeService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
-    private headquarterService: HeadquarterService,
-    private ocupationService:OcupationService,
+   
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private router: Router,
@@ -63,7 +49,7 @@ export class DeleteAdministrativeComponent implements OnInit {
     phone:'',
     email:'',
     HeadquarterId:'',
-    OcupationId:''
+    ChargeId:''
   }
     }
 
@@ -79,7 +65,7 @@ export class DeleteAdministrativeComponent implements OnInit {
           cnt_groupFromApi.administrative.User?.Person?.phone != undefined &&
           cnt_groupFromApi.administrative.User?.Person?.DocumentType != undefined &&
           cnt_groupFromApi.administrative.User?.Person?.Gender != undefined &&
-          cnt_groupFromApi.administrative.Ocupation != undefined &&
+          cnt_groupFromApi.administrative.Charge != undefined &&
           cnt_groupFromApi.administrative.Headquarter != undefined
           ){
           this.form.name=cnt_groupFromApi.administrative.User.Person.name
@@ -91,7 +77,7 @@ export class DeleteAdministrativeComponent implements OnInit {
           this.form.DocumentTypeId=cnt_groupFromApi.administrative.User?.Person?.DocumentType.name
           this.form.GenderId=(cnt_groupFromApi.administrative.User?.Person?.Gender?.name)
           this.form.HeadquarterId=(cnt_groupFromApi.administrative.Headquarter?.name)
-          this.form.OcupationId=(cnt_groupFromApi.administrative.Ocupation?.name)
+          this.form.ChargeId=(cnt_groupFromApi.administrative.Charge?.name)
           }
       }
       this.displayMaximizable2=true

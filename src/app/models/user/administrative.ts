@@ -1,13 +1,13 @@
 import { UserI } from 'src/app/models/authorization/usr_User';
 import { FacultyI } from '../institution/faculty';
 import { HeadquarterI } from '../institution/headquarter';
-import { OcupationI } from './ocupation';
+import { ChargeI } from './charge';
 export interface AdministrativeI {
     id?:number
     UserId: number;
-    OcupationId: string;
+    ChargeId: string;
     HeadquarterId:string
-    Ocupation?:OcupationI
+    Charge?:ChargeI
     User?:UserI,
     Headquarter?:HeadquarterI
     Faculties?:FacultyI[]

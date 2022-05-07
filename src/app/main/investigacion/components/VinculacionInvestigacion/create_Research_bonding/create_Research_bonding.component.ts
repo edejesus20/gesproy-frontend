@@ -4,7 +4,7 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Research_bondingI } from 'src/app/models/institution/relationship';
+import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
 const translate = require('translate');
 @Component({

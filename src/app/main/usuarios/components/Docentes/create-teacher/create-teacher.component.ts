@@ -9,28 +9,27 @@ import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.se
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
-import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { ScaleI } from 'src/app/models/institution/scale';
-import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
-import { RelationshipI } from 'src/app/models/institution/relationship';
+import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
-
-import { LinkTypeI } from 'src/app/models/user/teacher';
 import { TrainingI } from 'src/app/models/institution/training';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
-import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
-import { Create_linkTypeComponent } from '../../Tipo Vinculacion/create_linkType/create_linkType.component';
 import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { Create_EscalafonComponent } from 'src/app/main/investigacion/components/Escalafon/create_Escalafon/create_Escalafon.component';
 import { Create_MincienciaCategoryComponent } from 'src/app/main/investigacion/components/MincienciasCategoria/create_MincienciaCategory/create_MincienciaCategory.component';
 import { Create_Research_bondingComponent } from 'src/app/main/investigacion/components/VinculacionInvestigacion/create_Research_bonding/create_Research_bonding.component';
+import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_category';
+import { MincienciaCategoryService } from 'src/app/core/services/investigacion/MincienciaCategory.service';
+import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
+import { Create_Charge_bondingComponent } from '../../Vinculacion Cargo/create_Charge_bonding/create_Charge_bonding.component';
+import { Charge_bondingI } from 'src/app/models/user/teacher';
+import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
 @Component({
   selector: 'app-create-teacher',
   templateUrl: './create-teacher.component.html',
@@ -52,12 +51,12 @@ export class CreateTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public colcienciaCategorys:ColcienciaCategoryI[] =[]
+  public mincienciaCategorys:MincienciaCategoryI[] =[]
 
   public mostrarUser:boolean=false;
   public users:PersonI[]=[];
   // public lines:LineI[]=[];
-  public linkTypes:LinkTypeI[]=[]
+  public charge_bondings:Charge_bondingI[]=[]
   public trainings: TrainingI[]=[]
  
   public image:string='assets/images/images.jpg'
@@ -73,13 +72,13 @@ export class CreateTeacherComponent implements OnInit {
     email:[''],
     ScaleId:['', [Validators.required]],
     UserId:[''],
-    ColcienciaCategoryId:['', [Validators.required]],
+    MincienciaCategoryId:['', [Validators.required]],
     hours_of_dedication:['', [Validators.required]],
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
         TeacherId:0,
         HeadquarterProgramId:['', [Validators.required]],
-        RelationshipId:['', [Validators.required]],
+        ResearchBondingId:['', [Validators.required]],
     })]),
     // Lines: this.formBuilder.array([this.formBuilder.group(
     //   {
@@ -107,9 +106,9 @@ export class CreateTeacherComponent implements OnInit {
     })]),
     nationality:[''],
     date_of_birth:[''],
-    LinkTypeId:['',[Validators.required]]
+    ChargeBondingId:['',[Validators.required]]
    });
-   public relationships:RelationshipI[]=[]
+   public research_bondings:Research_bondingI[]=[]
    public headquarterProgram:any[]=[]
    public headquarterProgramTeacher1:any[] = []
    public trainingTeachers:any[] = []
@@ -118,7 +117,7 @@ export class CreateTeacherComponent implements OnInit {
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private linkTypeService:LinkTypeService,
+    private charge_bondingService:Charge_bondingService,
     private teacherService:TeacherService,
     private router: Router,
     public dialogService: DialogService,
@@ -127,9 +126,9 @@ export class CreateTeacherComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
     private formBuilder: FormBuilder,
-    private colcienciaCategoryService:ColcienciaCategoryService,
+    private mincienciaCategoryService:MincienciaCategoryService,
     private headquarterService: HeadquarterService,
-    private relationshipService:RelationshipService,
+    private research_bondingsService:Research_bondingService,
     private userService:UserService,
     private lineService:LineService,
     private trainingsService:TrainingsService,
@@ -158,9 +157,9 @@ export class CreateTeacherComponent implements OnInit {
     this.ref.close(undefined);
   }
   getAllLinkTypes() {
-    this.linkTypeService.getList().subscribe(
+    this.charge_bondingService.getList().subscribe(
       (AdministrativeFromApi) => {
-        this.linkTypes = AdministrativeFromApi.linkTypes;
+        this.charge_bondings = AdministrativeFromApi.charge_bondings;
       }, error => console.error(error));
   }
   getAlltrainings() {
@@ -198,12 +197,12 @@ export class CreateTeacherComponent implements OnInit {
           UserId:  this.form.value.UserId.UserId,
           hours_of_dedication: this.form.value.hours_of_dedication,
           ScaleId: this.form.value.ScaleId.id,
-          ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
+          MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
           headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
           // Lines: this.form.value.Lines,
           nationality: this.form.value.nationality,
           date_of_birth: this.form.value.date_of_birth,
-          LinkTypeId: this.form.value.LinkTypeId.id,
+          ChargeBondingId: this.form.value.ChargeBondingId.id,
           Workexperiences: this.form.value.Workexperiences,
           trainingTeacher:this.form.value.trainingTeacher
         };
@@ -226,12 +225,12 @@ export class CreateTeacherComponent implements OnInit {
         UserId:  undefined,
         hours_of_dedication: this.form.value.hours_of_dedication,
         ScaleId: this.form.value.ScaleId.id,
-        ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
+        MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
         // Lines: this.form.value.Lines,
         nationality: this.form.value.nationality,
         date_of_birth: this.form.value.date_of_birth,
-        LinkTypeId: this.form.value.LinkTypeId.id,
+        ChargeBondingId: this.form.value.ChargeBondingId.id,
         Workexperiences: this.form.value.Workexperiences,
         trainingTeacher:this.form.value.trainingTeacher
       };
@@ -243,11 +242,11 @@ export class CreateTeacherComponent implements OnInit {
       for (const key of control.value) {
 
         key.HeadquarterProgramId=key.HeadquarterProgramId.id
-        key.RelationshipId=key.RelationshipId.id
+        key.    ResearchBondingId=key.    ResearchBondingId.id
         this.headquarterProgramTeacher1.push({
         TeacherId:0,
         HeadquarterProgramId:key.HeadquarterProgramId,
-        RelationshipId:key.RelationshipId,
+            ResearchBondingId:key.    ResearchBondingId,
         })
       }
       formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
@@ -302,13 +301,13 @@ export class CreateTeacherComponent implements OnInit {
     formValue.ScaleId !=("" || undefined) && 
     formValue.nationality != ("" || undefined) && 
     formValue. date_of_birth!= ("" || undefined) && 
-    formValue.ColcienciaCategoryId != ("" || undefined) 
+    formValue.MincienciaCategoryId != ("" || undefined) 
     && formValue.hours_of_dedication != ""
-    && formValue.LinkTypeId != ("" || undefined))
+    && formValue.ChargeBondingId != ("" || undefined))
     ||
     (this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
-    && formValue.ScaleId !=("" || undefined) && formValue.ColcienciaCategoryId != ("" || undefined) &&
-    formValue.LinkTypeId != ("" || undefined))){
+    && formValue.ScaleId !=("" || undefined) && formValue.MincienciaCategoryId != ("" || undefined) &&
+    formValue.ChargeBondingId != ("" || undefined))){
               // console.log(formValue)
 
             this.teacherService.createItem(formValue).subscribe(
@@ -362,14 +361,14 @@ get getRoles() {
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
-          RelationshipId:['', [Validators.required]],
+              ResearchBondingId:['', [Validators.required]],
         }))
       }
       if(control.length >= 1 && this.mostrar == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
-          RelationshipId:['', [Validators.required]],
+              ResearchBondingId:['', [Validators.required]],
         }))
 
       }
@@ -416,16 +415,16 @@ private getAllscales(selectId?: number) {
 }
 
 private getAllcolcienciaCategorys(selectId?: number) {
-  this.colcienciaCategoryService.getList().subscribe(
+  this.mincienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
-      this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
+      this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
     }, error => console.error(error));
 }
 
 private getAllrelationships(selectId?: number) {
-  this.relationshipService.getList().subscribe(
+  this.research_bondingsService.getList().subscribe(
     (AdministrativeFromApi) => {
-      this.relationships = AdministrativeFromApi.relationships;
+      this.research_bondings = AdministrativeFromApi.research_bondings;
     }, error => console.error(error));
 }
 
@@ -516,7 +515,7 @@ get getWorkexperiences() {
   addVinculacion(e:Event){
     e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_linkTypeComponent, {
+    this.ref1 = this.dialogService.open(Create_Charge_bondingComponent, {
       width: '40%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -528,7 +527,7 @@ get getWorkexperiences() {
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Vinculacion Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Vinculacion de Cargo Creada', detail: person.name,life: 2000});
       this.getAllLinkTypes()
 
         }

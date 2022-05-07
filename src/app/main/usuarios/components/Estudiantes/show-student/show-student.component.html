@@ -199,9 +199,10 @@
                     
                             <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                             <th pSortableColumn="name">Nombre de Grupos <p-sortIcon field="name"></p-sortIcon></th>
-                            <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th>
-                            <th pSortableColumn="facultad">FACULTAD <p-sortIcon field="facultad"></p-sortIcon></th>
-                            <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th>
+                            <!-- <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th> -->
+                            <th pSortableColumn="facultad">Facultad <p-sortIcon field="facultad"></p-sortIcon></th>
+                            <th pSortableColumn="Lider">Lider <p-sortIcon field="Lider"></p-sortIcon></th>
+                            <!-- <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th> -->
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-order let-expanded="expanded">
@@ -209,14 +210,15 @@
 
                             <td>{{order.id}}</td>
                             <td>{{order.name | titlecase}}</td>
-                            <td>{{order.group_code }}</td>
+                            <!-- <td>{{order.group_code }}</td> -->
                             <td>{{order.Program?.Faculty?.name | titlecase }}</td>
-                            <td style="max-width:400px" >
+                            <td>{{order.Teacher?.User?.fullName | titlecase }}</td>
+                            <!-- <td style="max-width:400px" >
                               <a pButton 
                               pRipple type="button" class="p-button-outlined p-button-info" 
                               title="Ir a Sitio" 
                                target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
-                              </td>
+                              </td> -->
                         </tr>
                     </ng-template>
 

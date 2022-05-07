@@ -60,14 +60,14 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
      UserId: 0,
     ScaleId: 0,
     hours_of_dedication:'',
-    ColcienciaCategoryId: 0,
+    MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
     Group:undefined, 
-    ColcienciaCategory:undefined, 
+    MincienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
-    LinkTypeId:0
+    ChargeBondingId:0
 }
 public investigatorCollaborators:InvestigatorCollaboratorI[] =[]
 public algoI:number[]=[0];

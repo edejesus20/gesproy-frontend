@@ -33,9 +33,9 @@
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
-        </ng-template>  -->
+        </ng-template> 
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
@@ -48,13 +48,13 @@
 
     <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
       <tr [pSelectableRow]="rowData">
-        <!-- <ng-template [ngIf]="mostrar==3">
+        <ng-template [ngIf]="mostrar==3">
           <td>
               <button type="button" pButton pRipple [pRowToggler]="item" 
               class="p-button-text p-button-rounded p-button-plain" 
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-        </ng-template>  -->
+        </ng-template> 
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
@@ -89,7 +89,7 @@
       </tr>
   </ng-template>
 
-<!--   
+  
     <ng-template pTemplate="rowexpansion" let-item>
       <tr>
           <td colspan="7">
@@ -103,7 +103,7 @@
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre de Profesores<p-sortIcon field="name"></p-sortIcon></th>
                               <th pSortableColumn="Scale">Escalafon <p-sortIcon field="Scale"></p-sortIcon></th>
-                              <th pSortableColumn="Group">Grupo <p-sortIcon field="Group"></p-sortIcon></th>
+                              <th pSortableColumn="MincienciaCategory">Categoria Minciencias <p-sortIcon field="MincienciaCategory"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
@@ -111,7 +111,7 @@
                               <td>{{order.id}}</td>
                               <td>{{order.User.fullName | titlecase}}</td>
                               <td>{{order.Scale?.name | titlecase}}</td>
-                              <td>{{order.Group?.name | titlecase}}</td>
+                              <td>{{order.MincienciaCategory?.name | titlecase}}</td>
                           </tr>
                       </ng-template>
 
@@ -126,7 +126,7 @@
               </div>
           </td>
       </tr>
-  </ng-template> -->
+  </ng-template>
 
 
   <!-- <ng-template pTemplate="summary">

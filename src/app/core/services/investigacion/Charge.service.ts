@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
-import { ChargeI } from 'src/app/models/user/ocupation';
+import { ChargeI } from 'src/app/models/user/charge';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

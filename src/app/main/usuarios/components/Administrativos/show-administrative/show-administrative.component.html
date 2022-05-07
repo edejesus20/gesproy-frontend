@@ -6,7 +6,7 @@
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
     [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
-    'User.Person.phone','Ocupation.name','Headquarter.name']"
+    'User.Person.phone','Charge.name','Headquarter.name']"
     [columns]="cols">
   <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
@@ -43,7 +43,7 @@
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
-          <th pSortableColumn="Ocupation.name">OCUPACIÓN<p-sortIcon field="Ocupation.name"></p-sortIcon></th>
+          <th pSortableColumn="Charge.name">CARGO<p-sortIcon field="Charge.name"></p-sortIcon></th>
           <th pSortableColumn="Headquarter.name">SEDE<p-sortIcon field="Headquarter.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -66,7 +66,7 @@
           <td>{{item.User?.Person?.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
-          <td>{{item.Ocupation?.name | titlecase}}</td>
+          <td>{{item.Charge?.name | titlecase}}</td>
           <td>{{item.Headquarter?.name | titlecase}} - {{item.Headquarter?.University?.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               

@@ -57,6 +57,7 @@ export class Show_EscalafonComponent implements OnInit {
     
     this.scaleService.getList().subscribe((scalesApiFrom) => {
       this.scales =scalesApiFrom.scales
+      // console.log(scalesApiFrom.scales)
       this.rows2=[]
       if(scalesApiFrom.scales != undefined){
         for (const key of scalesApiFrom.scales) {

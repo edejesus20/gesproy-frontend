@@ -3,26 +3,21 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
-import { RelationshipService } from 'src/app/core/services/institution/Relationship.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
-import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { HeadquarterProgramI } from 'src/app/models/institution/headquarter';
-import { RelationshipI } from 'src/app/models/institution/relationship';
+import {  Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { ScaleI } from 'src/app/models/institution/scale';
 import { TrainingI } from 'src/app/models/institution/training';
 import { LineI } from 'src/app/models/projet/line';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
-import { LinkTypeI, WorkexperienceI } from 'src/app/models/user/teacher';
+import { Charge_bondingI, WorkexperienceI } from 'src/app/models/user/teacher';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import { Create_linkTypeComponent } from '../../Tipo Vinculacion/create_linkType/create_linkType.component';
 import { Create_EscalafonComponent } from 'src/app/main/investigacion/components/Escalafon/create_Escalafon/create_Escalafon.component';
 import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
@@ -30,6 +25,11 @@ import { Create_genderComponent } from '../../Genero/create_gender/create_gender
 import *as moment from 'moment';
 import { Create_MincienciaCategoryComponent } from 'src/app/main/investigacion/components/MincienciasCategoria/create_MincienciaCategory/create_MincienciaCategory.component';
 import { Create_Research_bondingComponent } from 'src/app/main/investigacion/components/VinculacionInvestigacion/create_Research_bonding/create_Research_bonding.component';
+import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_category';
+import { MincienciaCategoryService } from 'src/app/core/services/investigacion/MincienciaCategory.service';
+import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
+import { Create_Charge_bondingComponent } from '../../Vinculacion Cargo/create_Charge_bonding/create_Charge_bonding.component';
+import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
 
 @Component({
   selector: 'app-editar-teacher',
@@ -50,13 +50,13 @@ export class EditarTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public colcienciaCategorys:ColcienciaCategoryI[] =[]
+  public mincienciaCategorys:MincienciaCategoryI[] =[]
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
   public algo:number[]=[0];
   public algo2:number[]=[0];
   public lines:LineI[]=[];
-  public linkTypes:LinkTypeI[] = []
+  public charge_bondings:Charge_bondingI[] = []
   public trainings: TrainingI[]=[]
   public Workexperiences:any[] =[]
   public trainingTeachers:any[] =[]
@@ -64,7 +64,7 @@ export class EditarTeacherComponent implements OnInit {
   public algo3:number[]=[0];
   public ref:any;
 
-  public relationships:RelationshipI[]=[]
+  public research_bondings:Research_bondingI[]=[]
    public headquarterProgramStudent1:any[]=[]
    public headquarterProgram:any[]=[]
 
@@ -77,11 +77,11 @@ export class EditarTeacherComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
     private formBuilder: FormBuilder,
-    private colcienciaCategoryService:ColcienciaCategoryService,
+    private mincienciaCategoryService:MincienciaCategoryService,
     private headquarterService: HeadquarterService,
-    private relationshipService:RelationshipService,
+    private research_bondingService:Research_bondingService,
     private lineService:LineService,
-    private linkTypeService:LinkTypeService,
+    private charge_bondingService:Charge_bondingService,
     private trainingsService:TrainingsService,
     public dialogService: DialogService,
   ) { }
@@ -100,12 +100,12 @@ export class EditarTeacherComponent implements OnInit {
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
       hours_of_dedication:['', [Validators.required]],
-      ColcienciaCategoryId:['', [Validators.required]],
+      MincienciaCategoryId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
-          RelationshipId:['', [Validators.required]],
+          ResearchBondingId:['', [Validators.required]],
       })]),
       // Lines: this.formBuilder.array([this.formBuilder.group(
       //   {
@@ -133,7 +133,7 @@ export class EditarTeacherComponent implements OnInit {
       })]),
       nationality:['', [Validators.required]],
       date_of_birth:['', [Validators.required]],
-      LinkTypeId:['', [Validators.required]]
+                      ChargeBondingId:['', [Validators.required]]
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
@@ -152,9 +152,9 @@ export class EditarTeacherComponent implements OnInit {
       }, error => console.error(error));
   }
   getAllLinkTypes() {
-    this.linkTypeService.getList().subscribe(
+    this.charge_bondingService.getList().subscribe(
       (AdministrativeFromApi) => {
-        this.linkTypes = AdministrativeFromApi.linkTypes;
+        this.charge_bondings = AdministrativeFromApi.charge_bondings;
         // console.log(this.linkTypes)
       }, error => console.error(error));
   }
@@ -183,13 +183,13 @@ export class EditarTeacherComponent implements OnInit {
       UserId: 0,
       hours_of_dedication: this.form.value.hours_of_dedication,
       ScaleId: this.form.value.ScaleId.id,
-      ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id,
+      MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
       // Lines: this.form.value.Lines
       nationality: this.form.value.nationality,
       // let a = moment(moment(fechanueva).format("DD-MM-YYYY"));
       date_of_birth:moment(this.form.value.date_of_birth).format("YYYY-MM-DD").toString(),
-      LinkTypeId: this.form.value.LinkTypeId.id,
+                      ChargeBondingId: this.form.value.                ChargeBondingId.id,
       Workexperiences: this.form.value.Workexperiences,
       trainingTeacher:this.form.value.trainingTeacher
     };
@@ -198,12 +198,12 @@ export class EditarTeacherComponent implements OnInit {
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
         key.HeadquarterProgramId=key.HeadquarterProgramId.id
-        key.RelationshipId=key.RelationshipId.id
+        key.ResearchBondingId=key.ResearchBondingId.id
         key.TeacherId=this.form.value.id
         this.headquarterProgramStudent1.push({
           TeacherId:0,
           HeadquarterProgramId:key.HeadquarterProgramId,
-          RelationshipId:key.RelationshipId,
+          ResearchBondingId:key.ResearchBondingId,
         })
       }
       formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
@@ -260,8 +260,8 @@ export class EditarTeacherComponent implements OnInit {
       formValue.nationality != ("" || undefined) && 
       formValue. date_of_birth!= ("" || undefined) && 
      formValue.ScaleId !=("" || undefined)
-    &&formValue.ColcienciaCategoryId != ("" || undefined) &&
-    formValue.LinkTypeId != ("" || undefined)
+    &&formValue.MincienciaCategoryId != ("" || undefined) &&
+    formValue.                ChargeBondingId != ("" || undefined)
     ){
       
 
@@ -310,14 +310,14 @@ get getRoles() {
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
-          RelationshipId:['', [Validators.required]],
+          ResearchBondingId:['', [Validators.required]],
         }))
       }
       if(control.length >= 1 && this.mostrar1 == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
-          RelationshipId:['', [Validators.required]],
+          ResearchBondingId:['', [Validators.required]],
         }))
 
       }
@@ -357,10 +357,10 @@ private getAllscales(selectId?: number) {
 }
 
 private getAllcolcienciaCategorys(selectId?: number) {
-  this.colcienciaCategoryService.getList().subscribe(
+  this.mincienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
-      this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
+      this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
     }, error => console.error(error));
 }
 
@@ -372,10 +372,10 @@ private getAllheadquarters(selectId?: number) {
 }
 
 private getAllrelationships(selectId?: number) {
-  this.relationshipService.getList().subscribe(
+  this.research_bondingService.getList().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
-      this.relationships = AdministrativeFromApi.relationships;
+      this.research_bondings = AdministrativeFromApi.research_bondings;
     }, error => console.error(error));
 }
 public volver(event: Event){
@@ -417,14 +417,14 @@ getOneCntAccount(id:number) {
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
-            if(cnt_groupFromApi.teacher.LinkTypeId != undefined){
+            if(cnt_groupFromApi.teacher.                ChargeBondingId != undefined){
             // console.log(cnt_groupFromApi.teacher.LinkType)
-        this.linkTypeService.getItem(cnt_groupFromApi.teacher.LinkTypeId).subscribe(
+        this.charge_bondingService.getItem(cnt_groupFromApi.teacher.                ChargeBondingId).subscribe(
           (algo1)=>{
-            this.form.controls['LinkTypeId'].setValue(algo1.linkType)
+            this.form.controls['                ChargeBondingId'].setValue(algo1.charge_bonding)
 
           })
-            // this.form.controls['LinkTypeId'].setValue(cnt_groupFromApi.teacher.LinkType)
+            // this.form.controls['                ChargeBondingId'].setValue(cnt_groupFromApi.teacher.LinkType)
 
 
             }
@@ -447,9 +447,9 @@ getOneCntAccount(id:number) {
           this.form.controls['ScaleId'].setValue(algo.scale)
         })
 
-        if(cnt_groupFromApi.teacher.ColcienciaCategoryId != undefined)
-        this.colcienciaCategoryService.getItem((cnt_groupFromApi.teacher.ColcienciaCategoryId)).subscribe((algo)=>{
-          this.form.controls['ColcienciaCategoryId'].setValue(algo.colcienciaCategory)
+        if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
+        this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
+          this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
         })
 
         if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined && cnt_groupFromApi.teacher.HeadquarterPrograms?.length > 0){
@@ -504,13 +504,13 @@ getOneCntAccount(id:number) {
           let control = <FormArray>this.form.controls['headquarterProgramTeacher']
             this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
               if(algo.headquarterProgram && key.HeadquarterProgramTeacher != undefined){
-                    this.relationshipService.getItem(key.HeadquarterProgramTeacher.RelationshipId).subscribe
+                    this.research_bondingService.getItem(key.HeadquarterProgramTeacher.ResearchBondingId).subscribe
                     ((algo2)=>{
-                      if(algo2.relationship && key.HeadquarterProgramTeacher != undefined){
+                      if(algo2.research_bonding && key.HeadquarterProgramTeacher != undefined){
                         control.push(this.formBuilder.group({
                           TeacherId:0,
                             HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
-                            RelationshipId:[algo2.relationship, [Validators.required]],
+                            ResearchBondingId:[algo2.research_bonding, [Validators.required]],
                         }))
                       }
                   })
@@ -688,7 +688,7 @@ getOneCntAccount(id:number) {
   addVinculacion(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_linkTypeComponent, {
+    this.ref = this.dialogService.open(Create_Charge_bondingComponent, {
       width: '40%',
       height: '50%',showHeader:false,
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
@@ -700,7 +700,7 @@ getOneCntAccount(id:number) {
 
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Vinculacion Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Vinculacion de Cargo Creada', detail: person.name,life: 2000});
       this.getAllLinkTypes()
 
         }

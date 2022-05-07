@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { ThematicI } from 'src/app/models/projet/line';
-import { OcupationI } from 'src/app/models/user/ocupation';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'

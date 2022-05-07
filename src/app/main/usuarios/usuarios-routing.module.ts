@@ -45,16 +45,7 @@ import { Show_one_documentTypeComponent } from './components/TipoDocumento/show_
 import { Create_documentTypeComponent } from './components/TipoDocumento/create_documentType/create_documentType.component';
 import { Edit_documentTypeComponent } from './components/TipoDocumento/edit_documentType/edit_documentType.component';
 import { Delete_documentTypeComponent } from './components/TipoDocumento/delete_documentType/delete_documentType.component';
-import { Show_OcupationComponent } from './components/Ocupacion/show_Ocupation/show_Ocupation.component';
-import { Show_One_OcupationComponent } from './components/Ocupacion/Show_One_Ocupation/Show_One_Ocupation.component';
-import { Create_ocupationComponent } from './components/Ocupacion/create_ocupation/create_ocupation.component';
-import { Edit_OcupationComponent } from './components/Ocupacion/edit_Ocupation/edit_Ocupation.component';
-import { Delete_OcupationComponent } from './components/Ocupacion/delete_Ocupation/delete_Ocupation.component';
-import { Show_linkTypeComponent } from './components/Tipo Vinculacion/show_linkType/show_linkType.component';
-import { Show_one_linkTypeComponent } from './components/Tipo Vinculacion/show_one_linkType/show_one_linkType.component';
-import { Create_linkTypeComponent } from './components/Tipo Vinculacion/create_linkType/create_linkType.component';
-import { Edit_linkTypeComponent } from './components/Tipo Vinculacion/edit_linkType/edit_linkType.component';
-import { Delete_linkTypeComponent } from './components/Tipo Vinculacion/delete_linkType/delete_linkType.component';
+
 import { Show_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_InvestigatorCollaborator/show_InvestigatorCollaborator.component';
 import { Show_one_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/show_one_InvestigatorCollaborator/show_one_InvestigatorCollaborator.component';
 import { Create_InvestigatorCollaboratorComponent } from './components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
@@ -65,6 +56,16 @@ import { Show_one_capacitacionComponent } from '../institution/components/Capaci
 import { Create_capacitacionComponent } from '../institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
 import { Edit_capacitacionComponent } from '../institution/components/Capacitacion/edit_capacitacion/edit_capacitacion.component';
 import { Delete_capacitacionComponent } from '../institution/components/Capacitacion/delete_capacitacion/delete_capacitacion.component';
+import { Create_Charge_bondingComponent } from './components/Vinculacion Cargo/create_Charge_bonding/create_Charge_bonding.component';
+import { Show_one_Charge_bondingComponent } from './components/Vinculacion Cargo/show_one_Charge_bonding/show_one_Charge_bonding.component';
+import { Show_Charge_bondingComponent } from './components/Vinculacion Cargo/show_Charge_bonding/show_Charge_bonding.component';
+import { Edit_Charge_bondingComponent } from './components/Vinculacion Cargo/edit_Charge_bonding/edit_Charge_bonding.component';
+import { Delete_Charge_bondingComponent } from './components/Vinculacion Cargo/delete_Charge_bonding/delete_Charge_bonding.component';
+import { Show_ChargeComponent } from './components/Cargo/show_Charge/show_Charge.component';
+import { Show_one_ChargeComponent } from './components/Cargo/show_one_Charge/show_one_Charge.component';
+import { Create_ChargeComponent } from './components/Cargo/create_Charge/create_Charge.component';
+import { Edit_ChargeComponent } from './components/Cargo/edit_Charge/edit_Charge.component';
+import { Delete_ChargeComponent } from './components/Cargo/delete_Charge/delete_Charge.component';
 
 const routes: Routes = [
   {
@@ -259,50 +260,7 @@ const routes: Routes = [
           path: 'documentType_eliminar/:id',
           component:Delete_documentTypeComponent ,
         },
-        //ocupaciones
-        {
-          path: 'Ocupation',
-          component: Show_OcupationComponent,
-        },
-        {
-          path: 'Ocupation/:id',
-          component:Show_One_OcupationComponent ,
-        },
-        {
-          path: 'ocupation_create',
-          component:Create_ocupationComponent ,
-        },   
-        {
-          path: 'ocupation_modificar/:id',
-          component: Edit_OcupationComponent,
-        },
-        {
-          path: 'ocupation_eliminar/:id',
-          component:Delete_OcupationComponent ,
-        },
 
-           //tipo de vinculaciones
-
-           {
-            path: 'LinkType',
-            component: Show_linkTypeComponent,
-          },
-          {
-            path: 'LinkType/:id',
-            component:Show_one_linkTypeComponent ,
-          },
-          {
-            path: 'LinkType_create',
-            component:Create_linkTypeComponent ,
-          },   
-          {
-            path: 'LinkType_modificar/:id',
-            component: Edit_linkTypeComponent,
-          },
-          {
-            path: 'LinkType_eliminar/:id',
-            component:Delete_linkTypeComponent ,
-          },
           //investigador colabolador
           {
             path: 'InvestigatorCollaborator',
@@ -345,7 +303,48 @@ const routes: Routes = [
             path:'delete_training/:id',
             component:Delete_capacitacionComponent
           },
-        
+          //cargo
+          {
+            path:'Charge_bonding',
+            component:Show_Charge_bondingComponent
+          },
+          {
+            path:'Charge_bonding/:id',
+            component:Show_one_Charge_bondingComponent
+          },
+          {
+            path:'Charge_bonding_create',
+            component:Create_Charge_bondingComponent
+          },
+          {
+            path:'Charge_bonding_modificar/:id',
+            component:Edit_Charge_bondingComponent
+          },
+          {
+            path:'Charge_bonding_eliminar/:id',
+            component:Delete_Charge_bondingComponent
+          },
+         //cargo
+         {
+          path:'Charge',
+          component:Show_ChargeComponent
+        },
+        {
+          path:'Charge/:id',
+          component:Show_one_ChargeComponent
+        },
+        {
+          path:'Charge_create',
+          component:Create_ChargeComponent
+        },
+        {
+          path:'Charge_modificar/:id',
+          component:Edit_ChargeComponent
+        },
+        {
+          path:'Charge_eliminar/:id',
+          component:Delete_ChargeComponent
+        },
     ]
   },
   {

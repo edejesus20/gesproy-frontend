@@ -94,8 +94,12 @@ constructor(
   private getAlladministrative(selectId?: number) {
     this.administrativeService.getTipoAdministrative('1').subscribe(
       (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.administratives = AdministrativeFromApi.decanos;
+        for (let decano of AdministrativeFromApi.decanos) {
+          if(!decano.Faculties?.length) {
+            this.administratives.push(decano)
+        }   
+      }
+        // this.administratives = AdministrativeFromApi.decanos;
       }, error => console.error(error));
   }
 

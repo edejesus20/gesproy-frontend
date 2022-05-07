@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
-import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
+import { MincienciaCategoryService } from 'src/app/core/services/investigacion/MincienciaCategory.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
-import { GroupI } from 'src/app/models/institution/group';
+import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { ScaleI } from 'src/app/models/institution/scale';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
@@ -30,7 +28,7 @@ export class DeleteTeacherComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
-  public colcienciaCategorys:ColcienciaCategoryI[] =[]
+  public mincienciaCategorys:MincienciaCategoryI[] =[]
   
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -41,7 +39,7 @@ export class DeleteTeacherComponent implements OnInit {
     private documentTypeService:DocumentTypeService,
     private scaleService:ScaleService,
     private formBuilder: FormBuilder,
-    private colcienciaCategoryService:ColcienciaCategoryService,
+    private mincienciaCategoryService:MincienciaCategoryService,
 
   ) { }
 
@@ -59,8 +57,8 @@ export class DeleteTeacherComponent implements OnInit {
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
-      ColcienciaCategoryId:['', [Validators.required]],
-      LinkTypeId:['', [Validators.required]]
+      MincienciaCategoryId:['', [Validators.required]],
+      ChargeBondingId:['', [Validators.required]]
 
     });
     this.getAllgenders()
@@ -85,7 +83,7 @@ export class DeleteTeacherComponent implements OnInit {
       password:'',
       UserId: 0,
       ScaleId: this.form.value.ScaleId.id,
-      ColcienciaCategoryId: this.form.value.ColcienciaCategoryId.id
+      MincienciaCategoryId: this.form.value.MincienciaCategoryId.id
     };
     // console.log(formValue)
     if(
@@ -98,7 +96,7 @@ export class DeleteTeacherComponent implements OnInit {
       formValue.phone != ""&&
       formValue.email != ""&&
      formValue.ScaleId !=("" || undefined)
-    &&formValue.ColcienciaCategoryId != ("" || undefined)){
+    &&formValue.MincienciaCategoryId != ("" || undefined)){
 
     this.teacherService.deleteItem(formValue.id).subscribe(
       () => {
@@ -161,10 +159,10 @@ private getAllscales(selectId?: number) {
 
 
 private getAllcolcienciaCategorys(selectId?: number) {
-  this.colcienciaCategoryService.getList().subscribe(
+  this.mincienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
-      this.colcienciaCategorys = AdministrativeFromApi.colcienciaCategorys;
+      this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
     }, error => console.error(error));
 }
 
@@ -202,7 +200,7 @@ getOneCntAccount(id:number) {
           this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          this.form.controls['LinkTypeId'].setValue(cnt_groupFromApi.teacher.LinkTypeId),
+          this.form.controls['ChargeBondingId'].setValue(cnt_groupFromApi.teacher.ChargeBondingId),
 
           console.log('aqui')
         }
@@ -226,9 +224,9 @@ getOneCntAccount(id:number) {
           this.form.controls['ScaleId'].setValue(algo.scale)
         })
 
-        if(cnt_groupFromApi.teacher.ColcienciaCategoryId != undefined)
-        this.colcienciaCategoryService.getItem((cnt_groupFromApi.teacher.ColcienciaCategoryId)).subscribe((algo)=>{
-          this.form.controls['ColcienciaCategoryId'].setValue(algo.colcienciaCategory)
+        if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
+        this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
+          this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
         })
 
         // console.log(this.form.value)

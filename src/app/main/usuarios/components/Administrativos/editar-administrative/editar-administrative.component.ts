@@ -10,12 +10,12 @@ const translate = require('translate');
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { OcupationService } from 'src/app/core/services/usuer/Ocupation.service';
-import { OcupationI } from 'src/app/models/user/ocupation';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Create_ocupationComponent } from '../../Ocupacion/create_ocupation/create_ocupation.component';
+import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.component';
+import { ChargeService } from 'src/app/core/services/investigacion/Charge.service';
+import { ChargeI } from 'src/app/models/user/charge';
 @Component({
   selector: 'app-editar-administrative',
   templateUrl: './editar-administrative.component.html',
@@ -32,7 +32,7 @@ export class EditarAdministrativeComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
-  public ocupations:OcupationI[]=[]
+  public charges:ChargeI[]=[]
 
   public ref:any;
   constructor(
@@ -41,7 +41,7 @@ export class EditarAdministrativeComponent implements OnInit {
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
     private headquarterService: HeadquarterService,
-    private ocupationService:OcupationService,
+    private chargeService:ChargeService,
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private router: Router,
@@ -59,7 +59,7 @@ export class EditarAdministrativeComponent implements OnInit {
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
       HeadquarterId:['', [Validators.required]],
-      OcupationId:['', [Validators.required]],
+      ChargeId:['', [Validators.required]],
       nationality:['', [Validators.required]],
       date_of_birth:['', [Validators.required]],
      });
@@ -67,7 +67,7 @@ export class EditarAdministrativeComponent implements OnInit {
       this.getAllgenders()
       this.getAlldocumentTypes()
       this.getAllheadquarters()
-      this.getAllocupations()
+      this.getAllCharges()
     }
 
     private getAllgenders(selectId?: number) {
@@ -94,11 +94,11 @@ export class EditarAdministrativeComponent implements OnInit {
         }, error => console.error(error));
     }
   
-    private getAllocupations(selectId?: number) {
-      this.ocupationService.getList().subscribe(
+    private getAllCharges(selectId?: number) {
+      this.chargeService.getList().subscribe(
         (AdministrativeFromApi) => {
           // console.log(AdministrativeFromApi.administratives)
-          this.ocupations = AdministrativeFromApi.ocupations;
+          this.charges = AdministrativeFromApi.charges;
         }, error => console.error(error));
     }
   getOneCntAccount(id:number) {
@@ -130,9 +130,9 @@ export class EditarAdministrativeComponent implements OnInit {
                 this.form.controls['DocumentTypeId'].setValue(algo3.documentType)
                 this.form.controls['GenderId'].setValue(algo1.gender)
                 this.form.controls['HeadquarterId'].setValue(algo2.headquarter)
-                if(cnt_groupFromApi.administrative.Ocupation != undefined){
-                  this.ocupationService.getItem(parseInt(cnt_groupFromApi.administrative.OcupationId)).subscribe( (algo4)=>{
-                    this.form.controls['OcupationId'].setValue(algo4.ocupation)
+                if(cnt_groupFromApi.administrative.Charge != undefined){
+                  this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
+                    this.form.controls['ChargeId'].setValue(algo4.charge)
                   })
                   
                 }
@@ -185,7 +185,7 @@ export class EditarAdministrativeComponent implements OnInit {
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      OcupationId: this.form.value.OcupationId.id,
+      ChargeId: this.form.value.ChargeId.id,
       HeadquarterId: this.form.value.HeadquarterId.id,
       nationality: this.form.value.nationality,
       date_of_birth: this.form.value.date_of_birth,
@@ -194,7 +194,7 @@ export class EditarAdministrativeComponent implements OnInit {
             if(formValue.name != ""&&
               formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&&
-              formValue.OcupationId != ( 0 || undefined)&&
+              formValue.ChargeId != ( 0 || undefined)&&
               formValue.HeadquarterId != ( 0 || undefined)&&
               formValue.identification != ""&&
               formValue.GenderId != ( 0 || undefined)&&
@@ -287,7 +287,7 @@ export class EditarAdministrativeComponent implements OnInit {
   addOcupacion(e:Event){
     e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_ocupationComponent, {
+    this.ref = this.dialogService.open(Create_ChargeComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
@@ -299,8 +299,8 @@ export class EditarAdministrativeComponent implements OnInit {
 
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
-      this.getAllocupations()
+          this.messageService.add({severity:'info', summary: 'Cargo Creado', detail: person.name,life: 2000});
+      this.getAllCharges()
 
         }
   });

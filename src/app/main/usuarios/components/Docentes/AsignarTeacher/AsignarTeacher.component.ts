@@ -3,20 +3,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { ColcienciaCategoryService } from 'src/app/core/services/institution/ColcienciaCategory.service';
-import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
-import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
-import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
-import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
-import { ColcienciaCategoryI } from 'src/app/models/institution/colciencias_category';
-import { GroupI } from 'src/app/models/institution/group';
-import { ScaleI } from 'src/app/models/institution/scale';
 import { TrainingI, TrainingTeacherI } from 'src/app/models/institution/training';
-import { DocumentTypeI } from 'src/app/models/user/document_types';
-import { GenderI } from 'src/app/models/user/gender';
 import { TeacherI, WorkexperienceI } from 'src/app/models/user/teacher';
 const translate = require('translate');
 @Component({
@@ -40,15 +30,15 @@ export class AsignarTeacherComponent implements OnInit {
      UserId: 0,
     ScaleId: 0,
     hours_of_dedication:'',
-    ColcienciaCategoryId: 0,
+    MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
     Group:undefined, 
-    ColcienciaCategory:undefined, 
+    MincienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
-    LinkTypeId:0,
-    LinkType:undefined
+    ChargeBondingId:0,
+    ChargeBonding:undefined
 
 }
 public ref:any;

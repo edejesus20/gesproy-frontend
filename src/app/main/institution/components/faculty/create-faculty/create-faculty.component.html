@@ -28,7 +28,7 @@
             optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
             [required]="true" placeholder="SELECCIONE AL DECANO">
             <ng-template let-option pTemplate="item">
-              <span >{{option.User.fullName }} - {{option.User?.Person?.identification}} - {{option.Ocupation.name}}</span>
+              <span >{{option.User.fullName }} - {{option.User?.Person?.identification}} - {{option.Charge.name}}</span>
           </ng-template>
         </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
