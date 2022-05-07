@@ -1,6 +1,5 @@
 import { TeacherI } from "../user/teacher";
-
-export interface ColcienciaCategoryI {
+export interface MincienciaCategoryI {
     id?: number;
     name: string;
     createdAt?:string

@@ -25,12 +25,12 @@ import { TrainingsService } from 'src/app/core/services/institution/trainings.se
 import { LinkTypeService } from 'src/app/core/services/usuer/LinkType.service';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Create_linkTypeComponent } from '../../Tipo Vinculacion/create_linkType/create_linkType.component';
-import { Create_EscalafonComponent } from 'src/app/main/institution/components/Escalafon/create_Escalafon/create_Escalafon.component';
-import { Create_CategoriaColcienciasComponent } from 'src/app/main/institution/components/CategoriaColciencias/create_CategoriaColciencias/create_CategoriaColciencias.component';
-import { Create_RelacionesComponent } from 'src/app/main/institution/components/Relaciones/create_Relaciones/create_Relaciones.component';
 import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+import { Create_EscalafonComponent } from 'src/app/main/investigacion/components/Escalafon/create_Escalafon/create_Escalafon.component';
+import { Create_MincienciaCategoryComponent } from 'src/app/main/investigacion/components/MincienciasCategoria/create_MincienciaCategory/create_MincienciaCategory.component';
+import { Create_Research_bondingComponent } from 'src/app/main/investigacion/components/VinculacionInvestigacion/create_Research_bonding/create_Research_bonding.component';
 @Component({
   selector: 'app-create-teacher',
   templateUrl: './create-teacher.component.html',
@@ -558,7 +558,7 @@ get getWorkexperiences() {
   addCategoriaColciencias(e:Event){
     e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_CategoriaColcienciasComponent, {
+    this.ref1 = this.dialogService.open(Create_MincienciaCategoryComponent, {
       width: '40%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -570,7 +570,7 @@ get getWorkexperiences() {
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Categoria Colciencias Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Categoria Minciencias Creada', detail: person.name,life: 2000});
       this.getAllcolcienciaCategorys()
 
         }
@@ -579,7 +579,7 @@ get getWorkexperiences() {
   addRelaciones(e:Event){
     e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_RelacionesComponent, {
+    this.ref1 = this.dialogService.open(Create_Research_bondingComponent, {
       width: '35%',
       height: '50%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
@@ -591,7 +591,7 @@ get getWorkexperiences() {
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Relaciones Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Vinculación Investigativa Creada', detail: person.name,life: 2000});
       this.getAllrelationships()
 
         }

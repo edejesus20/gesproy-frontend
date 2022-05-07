@@ -3,3 +3,10 @@ export interface RelationshipI {
     name: string;
     createdAt?:string
 }
+
+export interface Research_bondingI {
+    id?: number;
+    name: string;
+    createdAt?:string
+
+}

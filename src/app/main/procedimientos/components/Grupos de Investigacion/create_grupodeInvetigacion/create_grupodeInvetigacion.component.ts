@@ -22,7 +22,7 @@ import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { CrearUserComponent } from 'src/app/main/usuarios/components/usr_User/crear-user/crear-user.component';
 import { CategoryGroupI } from 'src/app/models/institution/category';
 import { CategoryGroupService } from 'src/app/core/services/institution/CategoryGroup.service';
-import { Create_CategoriaGruposComponent } from 'src/app/main/institution/components/CategoriaGrupos/create_CategoriaGrupos/create_CategoriaGrupos.component';
+import { Create_CategoriaGruposComponent } from 'src/app/main/investigacion/components/CategoriaGrupos/create_CategoriaGrupos/create_CategoriaGrupos.component';
 import { Knowledge_areaService } from 'src/app/core/services/Procedimientos/Knowledge_area.service';
 import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/create_Knowledge_area/create_Knowledge_area.component';
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';

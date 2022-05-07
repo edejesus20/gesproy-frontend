@@ -50,3 +50,11 @@ export interface LinkTypeI {
     createdAt?:string
     updatedAt?:string
 }
+
+export interface Charge_bondingI {
+    id?: number;
+    name: string;
+    Teachers?:TeacherI[]
+    createdAt?:string
+    updatedAt?:string
+}

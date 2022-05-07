@@ -22,3 +22,13 @@ export interface ThematicI {
     Lines?:LineI[]
     LineThematic?:LineThematicI
 }
+export interface Thematic_axisI {
+    id?:number;
+    name: string;
+    Thematic_axis_Thematic?:Thematic_axis_ThematicI
+}
+
+export interface Thematic_axis_ThematicI {
+    Thematic_axisId:number;
+    ThematicId:number;
+}

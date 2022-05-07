@@ -5,3 +5,9 @@ export interface OcupationI {
     name: string;
     Administratives?:AdministrativeI[]
 }
+
+export interface ChargeI {
+    id?:number;
+    name: string;
+    Administratives?:AdministrativeI[]
+}
