@@ -296,6 +296,11 @@ public datos(position:number){
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar2=false
+      control.push(this.formBuilder.group({
+        ProgramId:0,
+        HeadquarterId:['', [Validators.required]],
+      AdministrativeId:['', [Validators.required]]
+      }))
       }
   }
 

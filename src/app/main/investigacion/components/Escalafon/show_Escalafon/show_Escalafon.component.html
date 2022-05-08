@@ -95,7 +95,7 @@
           <td colspan="7">
               <div >
                   <p-table [value]="item.Teachers"  dataKey="id" [paginator]="true" [rows]="3" 
-                  [showCurrentPageReport]="true"  
+                  [showCurrentPageReport]="true" responsiveLayout="scroll" 
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
                       <ng-template pTemplate="header" >

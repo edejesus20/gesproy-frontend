@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <ng-template [ngIf]="mostrarDialogo == false">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '40vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '55vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
   <br>
       
@@ -16,9 +16,79 @@
               [pKeyFilter]="blockSpecial" pInputText placeholder="NOMBRE"
               formControlName="name" required>         
           </div>
+          <div >
+            <!-- <div class="p-inputgroup" style="margin-bottom: 10px;"> -->
+              <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                <button pButton type="button" (click)="addRoles($event)" 
+                class="p-button-warning p-button-raised p-button-rounded"
+                 label="Add Ejes Temáticos"></button>
+              </div>
+              <br>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <div class="table-wrapper" >
+                    <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                      <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="id">EJES TEMÁTICAS<p-sortIcon field="id"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                      <tr [pSelectableRow]="rowData">
+                          <td>
+                            <div formArrayName="Thematic_axis"> 
+                              <div *ngFor="let item of getThematics.controls; 
+                              let pointIndex=index" [formGroupName]="pointIndex">
+                                <div class="grupo"> 
+                                  <div class="grupoinput1">
+                                    <div class="field">
+                                      <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
+                                      <div class="flex">
+                                        <div style="width:100%">
+                                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                          [options]="thematic_axiss" [filter]="true"
+                                              formControlName="ThematicAxisId" name="ThematicAxisId"
+                                            label="SELECCIONE EJES TEMATICOS" 
+                                            [style]="{'width':'100%','margin-bottom':'20px'}"
+                                            optionvalue="id" optionLabel="name"  filterBy="name"
+                                            [required]="true" placeholder="SELECCIONE EJES TEMATICOS">
+                                            <ng-template let-option pTemplate="item"  >
+                                              <span >{{option.name  | titlecase}}</span>
+                                          </ng-template>
+                                          </p-dropdown>
+                                        </div>
+                                        <span class="bottomdelete" style="margin-top: 5px;">
+                                          <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                          class="p-button-rounded p-button-outlined" (click)="addTematica($event)" ></button>
+                                        </span>
+                  
+                                      </div>
+                             
+                                  </div>
+
+                                    
+                                  </div>
+                                  
+                                <span class="bottomdelete" style="margin-top: 5px;">
+                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                                  class="p-button-rounded p-button-danger"></button>
+                                </span>
+                                
+                              </div>
+                              </div>
+                            </div> 
+                          </td>
+                      </tr>
+                    </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+            <!-- </div>                   -->
+          </div>
+          
       </div>
               
-      <ng-template pTemplate="footer">
+      <!-- <ng-template pTemplate="footer"> -->
+        <br>
         <br>
         <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
           <button pButton type="button" type="submit"  icon="pi pi-check"   [disabled]="!form.valid"
@@ -26,7 +96,7 @@
           label="Enviar Registro" styleClass="mr-2"></button>
         <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
     </div>
-    </ng-template>   
+    <!-- </ng-template>    -->
   </p-dialog>
 </ng-template>
 <ng-template [ngIf]="mostrarDialogo == true">
@@ -42,6 +112,74 @@
           <input type="text" class="p-inputtext-lg"
           [pKeyFilter]="blockSpecial" pInputText placeholder="NOMBRE" 
           formControlName="name"required>         
+      </div>
+      <div >
+        <!-- <div class="p-inputgroup" style="margin-bottom: 10px;"> -->
+          <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+            <button pButton type="button" (click)="addRoles($event)" 
+            class="p-button-warning p-button-raised p-button-rounded"
+             label="Add Ejes Temáticos"></button>
+          </div>
+          <br>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <div class="table-wrapper" >
+                <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                  <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">EJES TEMÁTICAS<p-sortIcon field="id"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                  <tr [pSelectableRow]="rowData">
+                      <td>
+                        <div formArrayName="Thematics"> 
+                          <div *ngFor="let item of getThematics.controls; 
+                          let pointIndex=index" [formGroupName]="pointIndex">
+                            <div class="grupo"> 
+                              <div class="grupoinput1">
+                                <div class="field">
+                                  <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
+                                  <div class="flex">
+                                    <div style="width:100%">
+                                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                      [options]="thematic_axiss" [filter]="true"
+                                          formControlName="ThematicAxisId" name="ThematicAxisId"
+                                        label="SELECCIONE EJES TEMATICOS" 
+                                        [style]="{'width':'100%','margin-bottom':'20px'}"
+                                        optionvalue="id" optionLabel="name"  filterBy="name"
+                                        [required]="true" placeholder="SELECCIONE EJES TEMATICOS">
+                                        <ng-template let-option pTemplate="item"  >
+                                          <span >{{option.name  | titlecase}}</span>
+                                      </ng-template>
+                                      </p-dropdown>
+                                    </div>
+                                    <span class="bottomdelete" style="margin-top: 5px;">
+                                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                      class="p-button-rounded p-button-outlined" (click)="addTematica($event)" ></button>
+                                    </span>
+              
+                                  </div>
+                         
+                              </div>
+
+                                
+                              </div>
+                              
+                            <span class="bottomdelete" style="margin-top: 5px;">
+                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                              class="p-button-rounded p-button-danger"></button>
+                            </span>
+                            
+                          </div>
+                          </div>
+                        </div> 
+                      </td>
+                  </tr>
+                </ng-template>
+                </p-table>
+              </div>
+            </div>
+        <!-- </div>                   -->
       </div>
   </div>
           

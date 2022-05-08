@@ -149,6 +149,10 @@ const routes: Routes = [
             path:'delete_categoryP/:id',
             component:Delete_CategoryComponent
           },
+          {
+            path:'create_VincularLineProgram/:id',
+            component:VincularLineasComponent
+          }
           
         ]
     }

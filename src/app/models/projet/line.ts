@@ -21,14 +21,18 @@ export interface ThematicI {
     name: string;
     Lines?:LineI[]
     LineThematic?:LineThematicI
+    Thematics?:ThematicI[]
+    Thematic_axes?:Thematic_axisI[] | undefined
+
 }
 export interface Thematic_axisI {
     id?:number;
     name: string;
     Thematic_axis_Thematic?:Thematic_axis_ThematicI
+    Thematics?:ThematicI[]
 }
 
 export interface Thematic_axis_ThematicI {
-    Thematic_axisId:number;
+    ThematicAxisId:number;
     ThematicId:number;
 }

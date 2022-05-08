@@ -39,6 +39,7 @@
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="Thematic_axes">EEJES TEMÁTICOS<p-sortIcon field="Thematic_axes"></p-sortIcon></th>
           <!-- <th pSortableColumn="createdAt">FECHA<p-sortIcon field="createdAt"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -58,6 +59,13 @@
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
+          <td >
+            <span *ngFor="let i of item.Thematic_axes">
+              <span style="display: flex;">
+                * {{i.name}} 
+              </span>
+            </span>
+          </td>
           <!-- <td>{{item.createdAt  | date:'fullDate' | titlecase}}</td> -->
           
           <!-- <td>{{item.Faculty.Headquarter.name| titlecase}}</td>
@@ -95,7 +103,7 @@
           <td colspan="7">
               <div >
                   <p-table [value]="item.Lines"  dataKey="id" [paginator]="true" [rows]="3" 
-                  [showCurrentPageReport]="true"  
+                  [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
                       <ng-template pTemplate="header" >

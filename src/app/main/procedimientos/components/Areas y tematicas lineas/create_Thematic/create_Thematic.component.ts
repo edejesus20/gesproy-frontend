@@ -1,26 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ThematicI } from 'src/app/models/projet/line';
+import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ThematicI, Thematic_axisI } from 'src/app/models/projet/line';
 import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
+import { Thematic_axisService } from 'src/app/core/services/investigacion/Thematic_axis.service';
+import { Create_Thematic_axisComponent } from '../../Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
 const translate = require('translate');
-// TODO: Fix with spaces and move to own file
-export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
+
 @Component({
   selector: 'app-create_Thematic',
   templateUrl: './create_Thematic.component.html',
   styleUrls: ['./create_Thematic.component.css']
 })
 export class Create_ThematicComponent implements OnInit {
-
-  blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-  public mostrarDialogo:boolean=false;
   displayMaximizable2:boolean=true
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
+  public algo:number[]=[0];
+
+  public mostrar2:boolean=false;
+  public mostrarDialogo:boolean=false;
+  public ref1:any;
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
+    Thematic_axis: this.formBuilder.array([this.formBuilder.group(
+      {
+        ThematicAxisId:['', [Validators.required]],
+    }
+    )]),
    })
+  public thematic_axiss: Thematic_axisI[]=[];
+
   constructor(
     private formBuilder: FormBuilder,
         private thematicService:ThematicService,
@@ -28,6 +39,9 @@ export class Create_ThematicComponent implements OnInit {
     private router: Router,
     private messageService:MessageService,
     public ref: DynamicDialogRef,
+    public dialogService: DialogService,
+    private thematic_axisService:Thematic_axisService,
+
     public config: DynamicDialogConfig,
  ) { }
 
@@ -40,16 +54,21 @@ export class Create_ThematicComponent implements OnInit {
   }else{
     this.mostrarDialogo= false
   }
-
+  this.getAllthematic()
  }
 
  public cancelar(){
   this.ref.close(undefined);
 }
  public onSubmit() {
-
+  let control = <FormArray>this.form.controls['Thematic_axis']
+  let array:any[] =[]
+  for (let key of control.value) {
+    key.ThematicAxisId=key.ThematicAxisId.id
+    array.push({ThematicAxisId:key.ThematicAxisId})
+  }
   let formValue: ThematicI = this.form.value;
-  if(formValue.name != ''){
+  if(formValue.name != ''&& array.length > 0 ){
   this.thematicService.createItem(formValue).subscribe(
     (algo) => {
       if(this.mostrarDialogo== true){
@@ -65,7 +84,7 @@ export class Create_ThematicComponent implements OnInit {
               // console.log(minutes, seconds);
               if( seconds == '03') {
               this.messageService.add({severity:'success', summary: 'Success', 
-              detail: 'Tematica Creada con exito'});
+              detail: 'Area Tematica Creada con exito'});
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
@@ -87,5 +106,64 @@ export class Create_ThematicComponent implements OnInit {
   this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
 }
 }
-  
+
+get getThematics() {
+  return this.form.get('Thematic_axis') as FormArray;//obtener todos los formularios
+}
+
+addRoles(event: Event){
+  event.preventDefault();
+  const control = <FormArray>this.form.controls['Thematic_axis']
+    if(control.length == 0 && this.mostrar2 == false){
+      control.push(this.formBuilder.group({
+        ThematicAxisId:['', [Validators.required]],
+      }))
+    }
+    if(control.length >= 1 && this.mostrar2 == true){
+      control.push(this.formBuilder.group({
+        ThematicAxisId:['', [Validators.required]],
+      }))
+
+    }
+    this.mostrar2=true
+}
+removeRoles(index: number,event: Event){
+  event.preventDefault();
+  let control = <FormArray>this.form.controls['Thematic_axis']//aceder al control
+  control.removeAt(index)
+    if(control.length <= 0){
+    this.mostrar2=false
+    control.push(this.formBuilder.group({
+      ThematicAxisId:['', [Validators.required]],
+    }))
+    }
+    // console.log(control)
+}
+addTematica(e:Event){
+  e.preventDefault()
+
+  this.ref1 = this.dialogService.open(Create_Thematic_axisComponent, {
+    width: '35%',
+    height: '50%',
+    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+    baseZIndex: 10000,
+    data: {
+      id: '1'
+  },
+});
+
+this.ref1.onClose.subscribe((person: any) =>{
+    if (person) {
+        this.messageService.add({severity:'info', summary: 'Eje Temático Creada', detail: person.name,life: 2000});
+    this.getAllthematic()
+
+      }
+});
+}
+ public getAllthematic() {
+    this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
+      this.thematic_axiss =scalesApiFrom.thematic_axiss
+      // console.log(this.thematic_axiss)
+    })
+  }
 }

@@ -94,7 +94,7 @@
           <td colspan="12">
               <div >
                   <p-table [value]="item.Users"  dataKey="id" 
-                  [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                  [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
                       <ng-template pTemplate="header" >
@@ -134,7 +134,7 @@
                         <tr>
                             <td colspan="7">
                                 <div >
-                                    <p-table [value]="order.Faculties"  dataKey="AdministrativeId" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                                    <p-table [value]="order.Faculties"  responsiveLayout="scroll" dataKey="AdministrativeId" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                                     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                                      >
                                         <ng-template pTemplate="header">

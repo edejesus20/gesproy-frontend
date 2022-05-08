@@ -71,6 +71,11 @@ import { Delete_Knowledge_areaComponent } from './components/Areas de conocimien
 import { Edit_Knowledge_areaComponent } from './components/Areas de conocimiento/edit_Knowledge_area/edit_Knowledge_area.component';
 import { Show_Knowledge_areaComponent } from './components/Areas de conocimiento/show_Knowledge_area/show_Knowledge_area.component';
 import { Show_one_Knowledge_areaComponent } from './components/Areas de conocimiento/show_one_Knowledge_area/show_one_Knowledge_area.component';
+import { Delete_Thematic_axisComponent } from './components/Ejes tematicos/delete_Thematic_axis/delete_Thematic_axis.component';
+import { Edit_Thematic_axisComponent } from './components/Ejes tematicos/edit_Thematic_axis/edit_Thematic_axis.component';
+import { Create_Thematic_axisComponent } from './components/Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
+import { Show_one_Thematic_axisComponent } from './components/Ejes tematicos/show_one_Thematic_axis/show_one_Thematic_axis.component';
+import { Show_Thematic_axisComponent } from './components/Ejes tematicos/show_Thematic_axis/show_Thematic_axis.component';
 const routes: Routes = [
   {
     path: '',
@@ -376,7 +381,27 @@ const routes: Routes = [
               path: 'Knowledge_area_eliminar/:id',
               component: Delete_Knowledge_areaComponent,
             },
-          
+            //Ejes tematicas
+            {
+              path: 'Thematic_axis',
+              component: Show_Thematic_axisComponent,
+            },
+            {
+              path: 'Thematic_axis/:id',
+              component: Show_one_Thematic_axisComponent,
+            },
+            {
+              path: 'Thematic_axis_create',
+              component: Create_Thematic_axisComponent,
+            },
+            {
+              path: 'Thematic_axis_modificar/:id',
+              component: Edit_Thematic_axisComponent,
+            },
+            {
+              path: 'Thematic_axis_eliminar/:id',
+              component: Delete_Thematic_axisComponent,
+            },
         
     ]
   },

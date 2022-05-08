@@ -60,13 +60,14 @@ export class Create_linesComponent implements OnInit {
 
   public onSubmit(e: Event): void {
     e.preventDefault();
-    const formValue: LineI = this.form.value;
+   
     let control = <FormArray>this.form.controls['Thematics']
     let array:LineThematicI[] =[]
-    for (const key of control.value) {
+    for (let key of control.value) {
       key.ThematicId=key.ThematicId.id
       array.push({LineId:key.LineId,ThematicId:key.ThematicId})
     }
+    let formValue: LineI = this.form.value;
     if(formValue.name != "" && formValue.justification != "" && 
     formValue.objectives !="" && array.length > 0 
    

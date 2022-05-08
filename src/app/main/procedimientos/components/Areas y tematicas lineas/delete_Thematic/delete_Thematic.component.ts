@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { ScaleService } from 'src/app/core/services/institution/Scale.service';
-import { ScaleI } from 'src/app/models/institution/scale';
 import { NgForm } from '@angular/forms';
 import { ThematicI } from 'src/app/models/projet/line';
 import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
 const translate = require('translate');
-// TODO: Fix with spaces and move to own file
-export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
+
 @Component({
   selector: 'app-delete_Thematic',
   templateUrl: './delete_Thematic.component.html',
@@ -86,7 +83,7 @@ export class Delete_ThematicComponent implements OnInit {
               // console.log(minutes, seconds);
               if( seconds == '03') {
               this.messageService.add({severity:'success', summary: 'Success', 
-              detail: 'Temartica Eliminada con exito'});
+              detail: 'Area Tematica Eliminada con exito'});
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {

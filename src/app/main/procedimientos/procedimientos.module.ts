@@ -111,6 +111,11 @@ import { Delete_Knowledge_areaComponent } from './components/Areas de conocimien
 import { Edit_Knowledge_areaComponent } from './components/Areas de conocimiento/edit_Knowledge_area/edit_Knowledge_area.component';
 import { Show_Knowledge_areaComponent } from './components/Areas de conocimiento/show_Knowledge_area/show_Knowledge_area.component';
 import { Show_one_Knowledge_areaComponent } from './components/Areas de conocimiento/show_one_Knowledge_area/show_one_Knowledge_area.component';
+import { Show_Thematic_axisComponent } from './components/Ejes tematicos/show_Thematic_axis/show_Thematic_axis.component';
+import { Show_one_Thematic_axisComponent } from './components/Ejes tematicos/show_one_Thematic_axis/show_one_Thematic_axis.component';
+import { Edit_Thematic_axisComponent } from './components/Ejes tematicos/edit_Thematic_axis/edit_Thematic_axis.component';
+import { Delete_Thematic_axisComponent } from './components/Ejes tematicos/delete_Thematic_axis/delete_Thematic_axis.component';
+import { Create_Thematic_axisComponent } from './components/Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
 @NgModule({
   declarations: [
     ProcedimientosComponent,
@@ -196,7 +201,13 @@ import { Show_one_Knowledge_areaComponent } from './components/Areas de conocimi
     Delete_Knowledge_areaComponent,
     Edit_Knowledge_areaComponent,
     Show_Knowledge_areaComponent,
-    Show_one_Knowledge_areaComponent
+    Show_one_Knowledge_areaComponent,
+
+    Create_Thematic_axisComponent,
+    Delete_Thematic_axisComponent,
+    Edit_Thematic_axisComponent,
+    Show_one_Thematic_axisComponent,
+    Show_Thematic_axisComponent
 
     
   ],

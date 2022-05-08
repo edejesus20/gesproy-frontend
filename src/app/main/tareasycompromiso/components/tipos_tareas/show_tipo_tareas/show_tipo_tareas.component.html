@@ -96,7 +96,7 @@ responsiveLayout="scroll" dataKey="id" id="todo"
           <td colspan="7">
               <div >
                   <p-table [value]="item.ProductivitySteps"  dataKey="id" 
-                  [paginator]="true" [rows]="5" 
+                  [paginator]="true" [rows]="5" responsiveLayout="scroll"
                   [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                       <ng-template pTemplate="header" >

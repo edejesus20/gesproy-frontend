@@ -14,8 +14,8 @@ export class Research_bondingService {
   API_URI = environment.API_URI;
 
   // API path
-  base_path_post = `${this.API_URI}/api/research_bonding`;
-  base_path_get = `${this.API_URI}/api/research_bonding`;
+  base_path_post = `${this.API_URI}/api/Research_bonding`;
+  base_path_get = `${this.API_URI}/api/Research_bonding`;
 
 constructor(private http: HttpClient) { }
 

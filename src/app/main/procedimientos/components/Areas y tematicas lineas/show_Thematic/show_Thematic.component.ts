@@ -55,6 +55,7 @@ export class Show_ThematicComponent implements OnInit {
     
     this.thematicService.getList().subscribe((scalesApiFrom) => {
       this.thematics =scalesApiFrom.thematics
+      // console.log(scalesApiFrom.thematics)
       this.rows2=[]
       if(scalesApiFrom.thematics != undefined){
         for (const key of scalesApiFrom.thematics) {
@@ -62,6 +63,7 @@ export class Show_ThematicComponent implements OnInit {
             {
               id:key.id,
               name:  key.name,
+              Thematic_axes:key.Thematic_axes
             }
           )
         }

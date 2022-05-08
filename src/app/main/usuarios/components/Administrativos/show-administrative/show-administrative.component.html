@@ -111,7 +111,7 @@
                   <p-table [value]="item.Faculties"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                   >
+                  responsiveLayout="scroll" >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                             <ng-template [ngIf]="mostrar==3">

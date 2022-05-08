@@ -13,8 +13,8 @@ export class Thematic_axisService {
   API_URI = environment.API_URI;
 
   // API path
- base_path_post = `${this.API_URI}/api/Thematic`;
- base_path_get = `${this.API_URI}/api/Thematic`;
+ base_path_post = `${this.API_URI}/api/Thematic_axis`;
+ base_path_get = `${this.API_URI}/api/Thematic_axis`;
 
  constructor(private http: HttpClient) { }
 
