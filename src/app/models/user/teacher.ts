@@ -25,7 +25,7 @@ export interface TeacherI {
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
     ChargeBondingId:number,
-    ChargeBonding?:Charge_bondingI
+    Charge_bonding?:Charge_bondingI
     trainingTeacher?:TrainingTeacherI[],
     Workexperiences?:WorkexperienceI[]
 

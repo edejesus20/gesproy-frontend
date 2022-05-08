@@ -58,7 +58,7 @@ export class Create_semillerosComponent implements OnInit {
     TrainingTeacher:undefined, 
     Trainings:undefined, 
     ChargeBondingId:0,
-    ChargeBonding:undefined
+    Charge_bonding:undefined
 }
 public mostrarTeacher:boolean=false
 public students:any[] =[]
@@ -183,6 +183,7 @@ public ref1:any;
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
+          console.log(cnt_groupFromApi.teacher)
       }
     }, error => console.error(error));
   }

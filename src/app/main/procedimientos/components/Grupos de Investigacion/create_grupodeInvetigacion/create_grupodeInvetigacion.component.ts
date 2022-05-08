@@ -67,7 +67,8 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     MincienciaCategory:undefined, 
     TrainingTeacher:undefined, 
     Trainings:undefined, 
-    ChargeBondingId:0
+    ChargeBondingId:0,
+    Charge_bonding:undefined
 }
 public investigatorCollaborators:InvestigatorCollaboratorI[] =[]
 public algoI:number[]=[0];

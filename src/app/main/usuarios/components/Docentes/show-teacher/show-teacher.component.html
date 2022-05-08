@@ -37,7 +37,7 @@
         <ng-template [ngIf]="mostrar==3">
           <th style="width: 3rem"></th>
         </ng-template>
-          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="Avatar">Avatar<p-sortIcon field="Avatar"></p-sortIcon></th>
           <th pSortableColumn="User.fullName">NOMBRE<p-sortIcon field="User.fullName"></p-sortIcon></th>
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
@@ -59,7 +59,7 @@
           </td>
         </ng-template> 
        
-          <td>{{item.id}}</td>
+          <td><img src="{{item.User?.avatar}}"  width="50" class="shadow-4" /></td>
           <td>{{item.User.fullName | titlecase}}</td>
           <td>{{item.User?.Person?.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>

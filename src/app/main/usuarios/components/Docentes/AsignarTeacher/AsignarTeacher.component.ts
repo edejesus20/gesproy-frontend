@@ -38,7 +38,7 @@ export class AsignarTeacherComponent implements OnInit {
     TrainingTeacher:undefined, 
     Trainings:undefined, 
     ChargeBondingId:0,
-    ChargeBonding:undefined
+    Charge_bonding:undefined
 
 }
 public ref:any;

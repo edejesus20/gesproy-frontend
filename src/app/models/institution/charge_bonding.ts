@@ -6,5 +6,6 @@ export interface Research_bondingI {
     name: string;
     createdAt?:string
     HeadquarterProgramTeachers?:HeadquarterProgramTeacherI[]
+    Teachers?:undefined | any[]
 
 }

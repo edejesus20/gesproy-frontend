@@ -59,7 +59,7 @@ export class Delete_semillerosComponent implements OnInit {
     TrainingTeacher:undefined, 
     Trainings:undefined, 
     ChargeBondingId:0,
-    ChargeBonding:undefined
+    Charge_bonding:undefined
 }
 public mostrarTeacher:boolean=false
 public students:any[] =[]

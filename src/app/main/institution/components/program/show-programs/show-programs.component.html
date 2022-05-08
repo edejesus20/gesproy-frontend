@@ -1,3 +1,35 @@
+<div class="caption">
+  <div class="flex align-items-center justify-content-center pl-5 pr-5">  
+      <div class="grid p-fluid" style="padding: 10px;">
+        <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+          <img alt="logo" src="{{image}}" 
+          style="width: 100%"/>
+        </div>
+
+        <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8 pt-4">
+          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+          [options]="headquarters" [filter]="true"
+              [(ngModel)]="HeadquarterId"
+              label="SELECCIONE SEDE" 
+            [style]="{'width':'100%','margin-bottom':'20px'}"
+            optionvalue="id" optionLabel="name"  filterBy="name"
+            [required]="true" placeholder="SELECCIONE SEDE" (click)="getHeadquarter($event)">
+            <ng-template let-option pTemplate="item"  >
+              <span >{{option.name  | titlecase}} -
+                {{option.University?.name  | titlecase}}</span>
+          </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+          <img alt="logo" src="{{image2}}" 
+          style="width: 100%"/>
+        </div>
+      </div>  
+ 
+    </div>
+      <!-- <p-button icon="pi pi-refresh"></p-button> -->
+  </div>
 
 
 <p-table  #dt2 [value]="programs" responsiveLayout="scroll" dataKey="id" id="todo"

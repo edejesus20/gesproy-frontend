@@ -7,6 +7,7 @@ import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
+import { HeadquarterProgramTeacherI } from 'src/app/models/institution/headquarter';
 
 @Component({
   selector: 'app-show_Research_bonding',
@@ -57,25 +58,29 @@ export class Show_Research_bondingComponent implements OnInit {
     
     this.research_bondingService.getList().subscribe((research_bondingsApiFrom) => {
       this.research_bondings =research_bondingsApiFrom.research_bondings
-      let arrayTeacher:any[] = []
       for (let key of this.research_bondings) {
         if(key.HeadquarterProgramTeachers != undefined && key.HeadquarterProgramTeachers.length > 0) {
-          key.HeadquarterProgramTeachers.forEach((newH:any) => {
+          key.HeadquarterProgramTeachers.forEach((newH:HeadquarterProgramTeacherI) => {
             if( newH?.TeacherId != undefined) {
               this.teacherService.getItem(newH.TeacherId).subscribe((item) => {
-                arrayTeacher.push(item.teacher);
+                if(key.Teachers != undefined){
+                  key.Teachers.push(item.teacher);
+  
+                }else{
+                  Object.defineProperty( key, 'Teachers', {
+                    value:[item.teacher]
+                    });
+                }
               })
+
+             
+
             }
         });
         }
      
       }
     
-      for (let key of this.research_bondings) {
-        Object.defineProperty( key, 'Teachers', {
-          value:arrayTeacher
-          });
-      }
       // console.log(this.research_bondings)
       this.rows2=[]
       if(research_bondingsApiFrom.research_bondings != undefined){

@@ -8,6 +8,8 @@ import * as pdfMake  from 'pdfMake/build/pdfmake';
 
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { ProgramI } from 'src/app/models/institution/program';
+import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 
 
 
@@ -30,10 +32,15 @@ export class ShowProgramsComponent implements OnInit {
 
   exportColumns: any[]=[];
   selectedProducts: ProgramI[]=[];
-
+  public headquarters: HeadquarterI[]=[]
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
+  public HeadquarterId:any | null=null
   constructor(
     private programService: ProgramService ,
      private primengConfig: PrimeNGConfig,
+    private headquarterService: HeadquarterService,
+
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 
   ngOnInit(): void {
@@ -50,8 +57,29 @@ export class ShowProgramsComponent implements OnInit {
   
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getAllProgram()
+    this.getAllheadquarters()
+  }
+  private getAllheadquarters() {
+    this.headquarterService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.headquarters = AdministrativeFromApi.headquarters;
+      }, error => console.error(error));
   }
 
+  getHeadquarter(e:Event){
+    e.preventDefault();
+    if(this.HeadquarterId != null){
+      this.headquarterService.getItem(this.HeadquarterId.id).subscribe(
+        (AdministrativeFromApi) => {
+          if(AdministrativeFromApi.headquarter.Programs){
+            this.programs = AdministrativeFromApi.headquarter.Programs;
+          }
+     
+        }, error => console.error(error));
+
+    }
+
+  }
 Buscar(event: Event, dt1:any){
     event.preventDefault();
     

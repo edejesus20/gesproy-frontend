@@ -47,7 +47,7 @@ export class Show_MincienciaCategoryComponent implements OnInit {
   getAllScale() {
     this.mincienciaCategoryService.getList().subscribe((mincienciaCategorysApiFrom) => {
       this.mincienciaCategorys =mincienciaCategorysApiFrom.mincienciaCategorys
-           console.log(mincienciaCategorysApiFrom.mincienciaCategorys)
+          //  console.log(mincienciaCategorysApiFrom.mincienciaCategorys)
 
       this.rows2=[]
       if(mincienciaCategorysApiFrom.mincienciaCategorys != undefined){

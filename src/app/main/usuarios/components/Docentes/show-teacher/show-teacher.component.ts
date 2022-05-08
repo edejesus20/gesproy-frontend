@@ -48,7 +48,7 @@ export class ShowTeacherComponent implements OnInit {
         { field: 'hours_of_dedication', header: 'Horas de dedicación' },
         { field: 'Scale.name', header: 'Escalafon' },
         { field: 'MincienciaCategory.name', header: 'Categoria de Minciencia' },
-        { field: 'ChargeBonding.name', header: 'Vinculacion de Cargo' }
+        { field: 'Charge_bonding.name', header: 'Vinculacion de Cargo' }
     ];
   
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
@@ -116,7 +116,7 @@ export class ShowTeacherComponent implements OnInit {
                 TrainingTeacher:key.TrainingTeacher,
                 hours_of_dedication:key.hours_of_dedication,
                 ChargeBondingId:key.ChargeBondingId,
-                ChargeBonding:key.ChargeBonding
+                Charge_bonding:key.Charge_bonding
               }
             )
 
