@@ -54,7 +54,7 @@ export class Show_Thematic_axisComponent implements OnInit {
     
     this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
       this.thematic_axiss =scalesApiFrom.thematic_axiss
-      // console.log(scalesApiFrom.thematic_axiss)
+      console.log(scalesApiFrom.thematic_axiss)
       this.rows2=[]
       if(scalesApiFrom.thematic_axiss != undefined){
         for (const key of scalesApiFrom.thematic_axiss) {

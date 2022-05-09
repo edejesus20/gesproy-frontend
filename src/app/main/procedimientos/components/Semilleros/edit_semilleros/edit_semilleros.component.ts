@@ -122,8 +122,8 @@ getstudents2() {
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
-  private getAllteachers(selectId?: number) {
-    this.teacherService.AddTeacherSemilleros().subscribe(
+  private getAllteachers(id: number) {
+    this.teacherService.AddTeacherSemilleros(id).subscribe(
       (facultiesFromApi) => {
         for (const key of facultiesFromApi.teachers) {
           this.teachers.push(key)
@@ -177,6 +177,7 @@ getstudents2() {
       this.groupService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
        this.groups= rolesFromApi.groups
         this.mostrarHeadquarterProgram=true
+        // this.getAllteachers(this.form.value.HeadquarterProgramId.id)
 
       })
     }
@@ -433,7 +434,7 @@ getstudents2() {
        this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
         this.teachers=[]
         this.teachers.push(item.teachers[0]) 
-        this.getAllteachers()
+        this.getAllteachers(this.form.value.HeadquarterProgramId.id)
         this.form.controls['TeacherId'].setValue(item.teachers[0])
         this.SelectTeacher()
        })
@@ -538,7 +539,7 @@ getstudents2() {
           this.teacherService.OneAddTeacherSemilleros(this.form.value.id).subscribe(item=>{
             this.teachers=[]
             this.teachers.push(item.teachers[0]) 
-            this.getAllteachers()
+            this.getAllteachers(this.form.value.HeadquarterProgramId.id)
             this.form.controls['TeacherId'].setValue(item.teachers[0])
             this.SelectTeacher()
            })

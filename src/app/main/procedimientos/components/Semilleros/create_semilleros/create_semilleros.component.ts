@@ -84,7 +84,7 @@ public ref1:any;
     ) { }
   ngOnInit(): void {
     this.buildForm();
-    this.getAllteachers()
+    // this.getAllteachers()
     this.geFacultad() 
     this.getstudents()
   }
@@ -100,8 +100,8 @@ public ref1:any;
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
-  private getAllteachers(selectId?: number) {
-    this.teacherService.AddTeacherSemilleros().subscribe(
+  private getAllteachers(id: number) {
+    this.teacherService.AddTeacherSemilleros(id).subscribe(
       (facultiesFromApi) => {
         // for (const key of facultiesFromApi.teachers) {
         //   this.teachers.push(key)
@@ -153,6 +153,7 @@ public ref1:any;
       this.groupService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
        this.groups= rolesFromApi.groups
         this.mostrarHeadquarterProgram=true
+        this.getAllteachers(this.form.value.HeadquarterProgramId.id)
 
       })
     }
@@ -169,13 +170,13 @@ public ref1:any;
          
        }
        this.mostrarlineasProgram=true
-       console.log(this.lines)
+      //  console.log(this.lines)
      }
     }
   }
   public SelectTeacher(){
     if(this.form.value.TeacherId != ''){
-      this.getOneTeachers(this.form.value.TeacherId.id)
+      this.getOneTeachers(this.form.value.TeacherId.TeacherId)
       this.mostrarTeacher=true
     }
   }
@@ -183,7 +184,7 @@ public ref1:any;
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
-          console.log(cnt_groupFromApi.teacher)
+          // console.log(cnt_groupFromApi.teacher)
       }
     }, error => console.error(error));
   }
@@ -373,7 +374,7 @@ public ref1:any;
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
-      this.getAllteachers()
+          this.getAllteachers(this.form.value.HeadquarterProgramId.id)
 
         }
   });

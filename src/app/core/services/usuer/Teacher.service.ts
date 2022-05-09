@@ -80,9 +80,9 @@ export class TeacherService {
 }
 
 
-AddTeacherSemilleros(): Observable<{ teachers: any[] }> {
+AddTeacherSemilleros(id:number): Observable<{ teachers: any[] }> {
   return this.http
-    .get<{ teachers: any[] }>(this.API_URI+'/api/AddTeacherSemilleros')
+    .get<{ teachers: any[] }>(this.API_URI+'/api/AddTeacherSemilleros/'+id)
     .pipe(
       retry(2),
       catchError(this.handleError)

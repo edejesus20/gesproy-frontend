@@ -102,7 +102,7 @@
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                               <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
                               <th pSortableColumn="name">Nombre de Areas Temáticas<p-sortIcon field="name"></p-sortIcon></th>
-                              <th pSortableColumn="Lines">Lineas <p-sortIcon field="Lines"></p-sortIcon></th>
+                              <th pSortableColumn="Lines1">Lineas <p-sortIcon field="Lines1"></p-sortIcon></th>
                               <!-- <th pSortableColumn="resolution">Resolución <p-sortIcon field="resolution"></p-sortIcon></th> -->
                               <!-- <th pSortableColumn="Programs.name">Programa <p-sortIcon field="Programs.name"></p-sortIcon></th> -->
                           </tr>
@@ -112,7 +112,7 @@
                               <!-- <td>{{order.id}}</td> -->
                               <td>{{order.name | titlecase}}</td>
                               <td >
-                                <span *ngFor="let i of item.Lines">
+                                <span *ngFor="let i of order.Lines">
                                   <span style="display: flex;">
                                     * {{i.name}} 
                                   </span>

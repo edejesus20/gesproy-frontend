@@ -133,7 +133,7 @@ export class Edit_linesComponent implements OnInit {
     e.preventDefault();
     let control = <FormArray>this.form.controls['Thematics']
 
-    const formValue: LineI = this.form.value;
+    let formValue: LineI = this.form.value;
     if(this.Thematics1.length == 0 || this.Thematics1 == []){
       for (let key of control.value) {
 
@@ -221,7 +221,7 @@ export class Edit_linesComponent implements OnInit {
             this.thematicService.getItem(key.LineThematic.ThematicId).subscribe((algo)=>{
               if(algo.thematic && key.id != undefined && algo.thematic.Thematic_axes != undefined && key.LineThematic?.id != undefined){
                 this.lineService.getOnelineThematic(key.LineThematic.id).subscribe((algo2)=>{
-                  console.log(algo2.thematic_axis,'thematic_axis')
+                  // console.log(algo2.thematic_axis,'thematic_axis')
                   control.push(this.formBuilder.group({
                     ThematicId:[algo.thematic, [Validators.required]],
                     Thematic_axis:[algo2.thematic_axis, [Validators.required]],
