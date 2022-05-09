@@ -242,12 +242,27 @@
                 <br>
                 <p-panel >
                   <ng-template pTemplate="header">
-                    Investigadores Secundarios o Coinvestigadores:
+                    Investigadores o Coinvestigadores:
                   </ng-template>
                   <br>
                   <ng-template [ngIf]="mostrarHeadquarterProgram==true">
                     <!-- <h5 style="text-align:left;">Director y/o Investigador Principal:</h5> -->
-                  
+                    <div style="width:100%" class="pl-4 pr-4">
+                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                      [options]="roles" [filter]="true"
+                      formControlName="RoleInvestigador" name="RoleInvestigador"
+
+                          label="ROL DE INVESTIGACIÓN" 
+                        [style]="{'width':'100%','margin-bottom':'20px'}"
+                        optionvalue="id" optionLabel="name"  filterBy="name"
+                        [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
+                        <ng-template let-option pTemplate="item"  >
+                          <span >{{option.name  | titlecase}} </span>
+                      </ng-template>
+                      </p-dropdown>
+                    </div>
+                           
+  
                     <div fxLayout="row" fxLayoutGap="20px">
       
                       <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
@@ -269,7 +284,7 @@
                        <p-table [value]="algoI" *ngIf="mostrarI == true"> 
                          <ng-template pTemplate="header">
                            <tr>
-                               <th pSortableColumn="id">Investigadores Secundarios<p-sortIcon field="id"></p-sortIcon></th>
+                               <th pSortableColumn="id">Investigadores<p-sortIcon field="id"></p-sortIcon></th>
                            </tr>
                        </ng-template>
                        <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">

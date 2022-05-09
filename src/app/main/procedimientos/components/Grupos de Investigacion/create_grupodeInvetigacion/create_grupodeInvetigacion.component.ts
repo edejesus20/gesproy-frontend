@@ -130,6 +130,13 @@ public image2:string='assets/images/uniguajira_iso.jpg'
         this.categoryGroups=categoryGroups.categoryGroups
   }, error => console.error(error))
   }
+  public getRoleInvestigador(event: Event){
+    event.preventDefault()
+    if(this.form.value.RoleInvestigador != ''){
+      console.log(this.form.value.RoleInvestigador.name)      
+    }
+
+  }
 
   private buildForm() {
     this.form = this.formBuilder.group({
@@ -141,6 +148,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
       // CategoryGroupId: ['', [Validators.required]],
       // resolution: ['', [Validators.required]],
       // Link_gruplac: ['', [Validators.required]],
+      RoleInvestigador: ['', [Validators.required]],
       ObjetivoGeneral: ['', [Validators.required]],
       ObjetivosEspecificos: ['', [Validators.required]],
       Mision: ['', [Validators.required]],
