@@ -262,12 +262,12 @@
                       </p-dropdown>
                     </div>
                            
-  
-                    <div fxLayout="row" fxLayoutGap="20px">
+                    <ng-template [ngIf]="mostrarIntegrantes==true">
+                    <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
       
                       <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
-                     class="p-button-success p-button-raised p-button-rounded mr-3"
-                      label="Add Investigadores Secundarios"></button> 
+                     class="p-button-success p-button-raised p-button-rounded mr-3 "
+                      label="Add Investigadores"></button> 
    
                       <button pButton type="button" (click)="addInvestigator($event)" 
                       class="p-button-info p-button-raised p-button-rounded mr-3"
@@ -294,9 +294,38 @@
                                  <div *ngFor="let item of getInvestigatorCollaborator.controls; 
                                  let pointIndex=index" [formGroupName]="pointIndex">
                                    <div class="grupo"> 
-                                     <div class="grupoinput1">
+                                    <div class="grupoinput"> 
+                                      <div class="field">
+                                        <div class="flex">
+                                          <div style="width:100%">
+                                      <span class="p-fluid">
+                                          <p-autoComplete formControlName="Usuarios" 
+                                          class=" p-inputtext-lg" 
+                                          [suggestions]="filteredCountries"
+                                          title="SELECCIONE USUARIO"
+                                           placeholder="SELECCIONE USUARIO"
+                                          (input)="llenar($event)"
+                                          (completeMethod)="filterCountry($event)" 
+                                          field="todo" [multiple]="true">
+                                          </p-autoComplete>
+                                      </span>
+                                          </div>
+                                          <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
+                                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
+                                            class="p-button-rounded p-button-danger"></button>
+       
+                                          </span>
+                                          <!-- <span class="bottomdelete" style="margin-top: 5px;">
+                                            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                            class="p-button-rounded p-button-outlined" (click)="addeJES($event)" ></button>
+                                          </span> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                       <!-- <ng-template [ngIf]="users.Docentes != []">
+                                       
                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                       [options]="users" [filter]="true"
+                                       [options]="users.Docentes" [filter]="true"
                                            formControlName="UserId" name="UserId"
                                           label="SELECCIONE INVESTIGADOR" 
                                          [style]="{'width':'100%','margin-bottom':'20px'}"
@@ -307,8 +336,11 @@
                                              CC: {{option.identification }}  Rol : {{option.rol }}
                                              </span>
                                        </ng-template>
-                                       </p-dropdown></div>
-                                       <div class="grupoinput1">
+                                       </p-dropdown>
+                                      </ng-template> -->
+                                     
+                             
+                                       <!-- <div class="grupoinput1">
                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                        [options]="roles" [filter]="true"
                                            formControlName="RoleId" name="RoleId"
@@ -325,15 +357,9 @@
                                            
                                        </ng-template>
                                        </p-dropdown>
-                                     </div>
+                                     </div> -->
                                      
-                                   <span class="bottomdelete" style="margin-top: 5px;">
-                                     <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
-                                     class="p-button-rounded p-button-danger"></button>
-                                     <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
-                                     (click)="removeRoles(pointIndex,$event)" 
-                                     label="eliminar"></button> -->
-                                   </span>
+                             
                                    
                                  </div>
                                  </div>
@@ -346,7 +372,7 @@
                    </div>
    
                    <p><b>Nota: </b>Todos los integrantes del grupo deben diligenciar el CVLAC, donde será verificable la trayectoria académica de cada uno y el GRUPLAC del grupo.</p> 
-                    
+                   </ng-template>
    
                   </ng-template>
   

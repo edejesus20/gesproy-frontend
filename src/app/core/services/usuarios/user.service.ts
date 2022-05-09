@@ -64,7 +64,7 @@ getUser(): Observable<{users: UserI[]}> {
   }
 }
 
-getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
+getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
   let token : string | null=localStorage.getItem('token')
   if(token != null) {
     let httpOptions = {
@@ -75,14 +75,14 @@ getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
     }
     // console.log(httpOptions)
     return this.http
-      .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent',httpOptions)
+      .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/'+id,httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
       )
   }else{
     return this.http
-    .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent')
+    .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/'+id)
     .pipe(
       retry(2),
       catchError(this.handleError)

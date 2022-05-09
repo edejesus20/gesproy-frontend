@@ -28,7 +28,11 @@ import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/crea
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
-
+// interface userI{
+//   Docentes:any[],
+//   Colaboladores:any[],
+//   Estudiantes:any[],
+// }
 @Component({
   selector: 'app-create_grupodeInvetigacion',
   templateUrl: './create_grupodeInvetigacion.component.html',
@@ -97,6 +101,9 @@ public knowledge_areas1:any[] =[]
 public Seedbeds1:any[] =[]
 public image:string='assets/images/images.jpg'
 public image2:string='assets/images/uniguajira_iso.jpg'
+filteredCountries: any[]=[];
+public mostrarIntegrantes:boolean=false
+
   constructor(
     private groupService:GroupService,
     private roleInvestigationsService:RoleInvestigationsService,
@@ -114,7 +121,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
     this.buildForm();
     // this.getTeachers();
     this.geFacultad();
-    this.getInvestigatorCollaborators()
+    // this.getInvestigatorCollaborators()
     this.getRoles()
     this.getCateghoria()
     this.getKnowledge_area()
@@ -130,12 +137,25 @@ public image2:string='assets/images/uniguajira_iso.jpg'
         this.categoryGroups=categoryGroups.categoryGroups
   }, error => console.error(error))
   }
-  public getRoleInvestigador(event: Event){
-    event.preventDefault()
+  public getRoleInvestigador(event?: Event){
+  if(event)event.preventDefault();
+    // console.log("AreaSeleccionada")
     if(this.form.value.RoleInvestigador != ''){
-      console.log(this.form.value.RoleInvestigador.name)      
-    }
+      // this.getInvestigatorCollaborators(this.form.value.RoleInvestigador.id)
 
+      this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+      .subscribe(teachersA => {
+
+        if(teachersA.users !== undefined && teachersA.users.length > 0){
+          this.users=teachersA.users
+          }else{
+            this.users=[{todo:'No hay registros'}]
+          }
+          console.log(this.users)  
+          this.mostrarIntegrantes= true
+      })
+          
+    }
   }
 
   private buildForm() {
@@ -160,8 +180,11 @@ public image2:string='assets/images/uniguajira_iso.jpg'
 
       TeacherId:['', [Validators.required]],
      
-      InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group({UserId:['', [Validators.required]],
-          RoleId:['', [Validators.required]]}) ]),
+      InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
+        {Usuarios:['', [Validators.required]],
+          // RoleId:['', [Validators.required]]
+        }) 
+        ]),
 
       knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
       lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
@@ -232,28 +255,31 @@ public image2:string='assets/images/uniguajira_iso.jpg'
   //   }, error => console.error(error))
   // }  
 
- async getInvestigatorCollaborators() {
 
-   
-   this.userService.getUserteacherinvestigatorstudent().subscribe(teachersA => {
-     this.users=[]
-      for (let key of teachersA.users) {
-        if(key.rol == "teacher"){
-          key.rol=  "Docente";
-        }
-        if(key.rol == "student"){
-          key.rol=  "Estudiante";
-        }
-        if(key.rol == "investigator"){
-          key.rol=  "Investigador";
-        }
-        
-        // console.log(key.rol.__zone_symbol__value)
-        this.users.push(key)
+  llenar(event:Event){
+    let filterValue = (event.target as HTMLInputElement).value;
+    this.filterCountry(event,filterValue)
+
+  }
+  filterCountry(event:Event,filterValue?:string){
+    if(filterValue != undefined){
+      let filtered : any[] = [];
+      let query = filterValue;
+  
+      for(let i = 0; i < this.users.length; i++) {
+          let country = this.users[i];
+          if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+              filtered.push(country);
+          }
       }
-      // this.users=teachersA.users
-    }, error => console.error(error))
-  } 
+      this.filteredCountries = filtered;
+    }
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+  
+
+    
+}
+
 
   getRoles() {
     this.roleInvestigationsService.getList().subscribe(teachersA => {
@@ -353,11 +379,11 @@ public image2:string='assets/images/uniguajira_iso.jpg'
       if(this.InvestigatorCollaborators1.length == 0 || this.InvestigatorCollaborators1 == []){
         let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
         for (const key of control1.value) {
-          key.RoleId=key.RoleId.id 
-          key.UserId=key.UserId.UserId 
+          // key.RoleId=key.RoleId.id 
+          key.Usuarios=key.Usuarios 
           this.InvestigatorCollaborators1.push({
-            RoleId:key.RoleId,
-            UserId:key.UserId,
+            // RoleId:key.RoleId,
+            Usuarios:key.Usuarios,
           })
         }
         formValue.InvestigatorCollaborators = this.form.value.InvestigatorCollaborators
@@ -367,7 +393,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
       }
 
 
-      // console.log(formValue)
+      console.log(formValue)
     if(this.mostrarFacultad == true && formValue.name != ""&&
     // formValue.ident_colciencias != "" &&
     // formValue.resolution != "" && 
@@ -519,17 +545,19 @@ public image2:string='assets/images/uniguajira_iso.jpg'
       //crear los controles del array
     if(control.length == 0 && this.mostrarI == false){
       control.push(this.formBuilder.group({
-        UserId:['', [Validators.required]],
-          RoleId:['', [Validators.required]]
+        Usuarios:['', [Validators.required]],
+          // RoleId:['', [Validators.required]]
       }))//nuevo input
+      // control.removeAt(0)
     }
     if(control.length >= 1 && this.mostrarI == true){
       control.push(this.formBuilder.group({
-        UserId:['', [Validators.required]],
-          RoleId:['', [Validators.required]]
+        Usuarios:['', [Validators.required]],
+          // RoleId:['', [Validators.required]]
       }))//nuevo input
 
     }
+   
       this.mostrarI=true
   }
   removeInvestigatorCollaborators(index: number,event: Event){
@@ -539,8 +567,8 @@ public image2:string='assets/images/uniguajira_iso.jpg'
     if(control.length <= 0){
      this.mostrarI=false
      control.push(this.formBuilder.group({
-      UserId:['', [Validators.required]],
-        RoleId:['', [Validators.required]]
+      Usuarios:['', [Validators.required]],
+        // RoleId:['', [Validators.required]]
     }))//nuevo input
     }
   }
@@ -598,7 +626,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
   this.ref.onClose.subscribe((person: PersonI) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Usuario Creado', detail: person.User?.fullName});
-      this.getInvestigatorCollaborators()
+          this.getRoleInvestigador()
 
         }
   });
@@ -663,7 +691,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
       if (person) {
           this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
       this.getHeadquarterProgram()
-      this.getInvestigatorCollaborators()
+      this.getRoleInvestigador()
 
         }
   });
@@ -685,7 +713,7 @@ public image2:string='assets/images/uniguajira_iso.jpg'
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
-          this.getInvestigatorCollaborators()
+          this.getRoleInvestigador()
 
         }
   });
