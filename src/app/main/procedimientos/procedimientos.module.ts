@@ -100,6 +100,7 @@ import { Edit_linesComponent } from './components/Lineas/edit_lines/edit_lines.c
 import { Show_one_linesComponent } from './components/Lineas/show_one_lines/show_one_lines.component';
 import { Show_linesComponent } from './components/Lineas/show_lines/show_lines.component';
 import {PanelModule} from 'primeng/panel';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 import {DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Show_ThematicComponent } from './components/Areas y tematicas lineas/show_Thematic/show_Thematic.component';
 import { Show_one_ThematicComponent } from './components/Areas y tematicas lineas/show_one_Thematic/show_one_Thematic.component';
@@ -216,6 +217,7 @@ import { Create_Thematic_axisComponent } from './components/Ejes tematicos/creat
     ProcedimientosRoutingModule,
     InputTextareaModule,
     SharedModule,
+    AutoCompleteModule,
     
     ReactiveFormsModule,
     ScrollingModule,

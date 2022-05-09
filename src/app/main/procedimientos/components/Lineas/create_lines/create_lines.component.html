@@ -63,7 +63,7 @@
                   <br>
                     <div fxLayout="row" fxLayoutGap="20px">
                       <div class="table-wrapper" >
-                        <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+                        <p-table [value]="algo" *ngIf="mostrar2 == true" #dt1> 
                           <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="id">AREAS Y TEMATICAS<p-sortIcon field="id"></p-sortIcon></th>
@@ -87,8 +87,10 @@
                                                 label="SELECCIONE AREAS Y TEMATICAS" 
                                                 [style]="{'width':'100%','margin-bottom':'20px'}"
                                                 optionvalue="id" optionLabel="name"  filterBy="name"
-                                                [required]="true" placeholder="SELECCIONE AREAS Y TEMATICAS">
-                                                <ng-template let-option pTemplate="item"  >
+                                              title="SELECCIONE AREAS Y TEMATICAS"
+                                                [required]="true" 
+                                                placeholder="SELECCIONE AREAS Y TEMATICAS" (click)="AreaSeleccionada(pointIndex,$event)"   >
+                                                <ng-template let-option pTemplate="item">
                                                   <span >{{option.name  | titlecase}}</span>
                                               </ng-template>
                                               </p-dropdown>
@@ -99,13 +101,32 @@
                                             </span>
                       
                                           </div>
+                                          <br>
+                                          <div class="flex">
+                                            <div style="width:100%">
+                                        <span class="p-fluid">
+                                            <p-autoComplete formControlName="Thematic_axis" class=" p-inputtext-lg" 
+                                            [suggestions]="filteredCountries"
+                                            title="SELECCIONE EJES TEMATICOS"
+                                             placeholder="SELECCIONE EJES TEMATICOS"
+                                            (input)="llenar($event)"
+                                            (completeMethod)="filterCountry($event)" 
+                                            field="name" [multiple]="true">
+                                            </p-autoComplete>
+                                        </span>
+                                            </div>
+                                            <!-- <span class="bottomdelete" style="margin-top: 5px;">
+                                              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                              class="p-button-rounded p-button-outlined" (click)="addeJES($event)" ></button>
+                                            </span> -->
+                                          </div>
                                  
                                       </div>
 
                                         
                                       </div>
                                       
-                                    <span class="bottomdelete" style="margin-top: 5px;">
+                                    <span class="bottomdelete" style="margin-top: 35px;">
                                       <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                       class="p-button-rounded p-button-danger"></button>
                                     </span>

@@ -56,6 +56,15 @@ getItem(id: number): Observable<{line:LineI}> {
     )
 }
 
+getOnelineThematic(id: number): Observable<{thematic_axis:any[]}> {
+  return this.http
+    .get<{thematic_axis:any[]}>(this.API_URI + '/api/lineThematic/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
 AddTeacherLines(id: number): Observable<{ lines: any[],lines2 : any[]}> {
   return this.http
     .get<{ lines: any[],lines2 : any[] }>(this.API_URI+'/api/AddTeacherLines' + '/' + id)
