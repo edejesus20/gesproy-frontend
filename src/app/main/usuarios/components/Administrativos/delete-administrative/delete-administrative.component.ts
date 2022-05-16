@@ -20,9 +20,9 @@ export class DeleteAdministrativeComponent implements OnInit {
   surname:'',
   DocumentTypeId:'',
   identification:'',
-  GenderId:'',
-  address:'',
-  phone:'',
+  // GenderId:'',
+  // address:'',
+  // phone:'',
   email:'',
   HeadquarterId:'',
   ChargeId:'',
@@ -44,9 +44,9 @@ export class DeleteAdministrativeComponent implements OnInit {
     surname:'',
     DocumentTypeId:'',
     identification:'',
-    GenderId:'',
-    address:'',
-    phone:'',
+    // GenderId:'',
+    // address:'',
+    // phone:'',
     email:'',
     HeadquarterId:'',
     ChargeId:''
@@ -58,24 +58,24 @@ export class DeleteAdministrativeComponent implements OnInit {
     this.administrativeService.getItem(id).subscribe((cnt_groupFromApi) => {
        if(cnt_groupFromApi.administrative.id != undefined
       ){
-      // console.log(cnt_groupFromApi.administrative)
+      console.log(cnt_groupFromApi.administrative)
         this.form.id=cnt_groupFromApi.administrative.id
         if(cnt_groupFromApi.administrative.User?.Person?.surname != undefined &&
-          cnt_groupFromApi.administrative.User?.Person?.address != undefined &&
-          cnt_groupFromApi.administrative.User?.Person?.phone != undefined &&
+        //   cnt_groupFromApi.administrative.User?.Person?.address != undefined &&
+        //   cnt_groupFromApi.administrative.User?.Person?.phone != undefined &&
           cnt_groupFromApi.administrative.User?.Person?.DocumentType != undefined &&
-          cnt_groupFromApi.administrative.User?.Person?.Gender != undefined &&
+        //   cnt_groupFromApi.administrative.User?.Person?.Gender != undefined &&
           cnt_groupFromApi.administrative.Charge != undefined &&
           cnt_groupFromApi.administrative.Headquarter != undefined
           ){
           this.form.name=cnt_groupFromApi.administrative.User.Person.name
           this.form.surname=cnt_groupFromApi.administrative.User.Person.surname
           this.form.identification=cnt_groupFromApi.administrative.User.Person.identification
-          this.form.address=cnt_groupFromApi.administrative.User.Person.address
-          this.form.phone=cnt_groupFromApi.administrative.User.Person.phone
+          // this.form.address=cnt_groupFromApi.administrative.User.Person.address
+          // this.form.phone=cnt_groupFromApi.administrative.User.Person.phone
           this.form.email=cnt_groupFromApi.administrative.User.email
           this.form.DocumentTypeId=cnt_groupFromApi.administrative.User?.Person?.DocumentType.name
-          this.form.GenderId=(cnt_groupFromApi.administrative.User?.Person?.Gender?.name)
+          // this.form.GenderId=(cnt_groupFromApi.administrative.User?.Person?.Gender?.name)
           this.form.HeadquarterId=(cnt_groupFromApi.administrative.Headquarter?.name)
           this.form.ChargeId=(cnt_groupFromApi.administrative.Charge?.name)
           }

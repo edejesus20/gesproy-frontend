@@ -49,7 +49,7 @@ export class Create_semillerosComponent implements OnInit {
     id:0,   
      UserId: 0,
     ScaleId: 0,
-    hours_of_dedication:'',
+    // hours_of_dedication:'',
     MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
@@ -212,7 +212,7 @@ public ref1:any;
     
     
     
-    if(this.lines1.length == 0 || this.lines1 == []){
+    if(this.lines1.length == 0 ){
       let control = <FormArray>this.form.controls['lines']
       for (const key of control.value) {
         key.LineId=key.LineId.id 
@@ -225,7 +225,7 @@ public ref1:any;
     }else{
       formValue.lines = this.lines1
     }
-    if(this.Students.length == 0 || this.Students == []){
+    if(this.Students.length == 0 ){
       let control = <FormArray>this.form.controls['Students']
       for (const key of control.value) {
         key.StudentId=key.StudentId.StudentId 
@@ -240,6 +240,16 @@ public ref1:any;
       // console.log('aqui')
     }else{
       formValue.Students = this.Students
+    }
+    
+    if(this.form.value.Students[0].Horas == ''){
+      // this.form.value.trainingTeacher=[]
+      formValue.Students=[]
+    }
+    if(this.form.value.lines[0].LineId == ''){
+      // this.form.value.Workexperiences=[]
+      formValue.lines=[]
+
     }
     // console.log(formValue)
     if(formValue.TeacherId != 0 && formValue.name != "" &&

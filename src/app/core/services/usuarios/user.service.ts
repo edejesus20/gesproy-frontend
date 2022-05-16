@@ -47,7 +47,7 @@ getUser(): Observable<{users: UserI[]}> {
         'x-token':token
       })
     }
-    console.log(httpOptions)
+    // console.log(httpOptions)
     return this.http
       .get<{users: UserI[]}>(this.base_path,httpOptions)
       .pipe(
@@ -223,7 +223,7 @@ actualzarAvatar(user:any){
         'x-token':token
       })
     }
-    console.log(user)
+    // console.log(user)
   return this.http.patch(`${this.API_URI}/api/Avatar/${user.id}`, user,httpOptions).pipe(
     retry(2),
     catchError(this.handleError)

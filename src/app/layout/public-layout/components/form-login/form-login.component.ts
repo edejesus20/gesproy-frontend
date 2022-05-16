@@ -20,6 +20,8 @@ export class FormLoginComponent implements OnInit {
     username:['', [Validators.required]],
     password:['', [Validators.required]],
    });
+   public motrar:boolean = false
+
    public image3:string='assets/img/logo-uniguajira.png'
    public images: any[]=[
     
@@ -104,7 +106,9 @@ public responsiveOptions:any[] = [
     let form :UserLoginI= this.form.value
     this.authService.login(form).subscribe(
       (result) => {
-        var date = new Date('2020-01-01 00:00:03');
+        this.motrar=true
+
+        var date = new Date('2020-01-01 00:00:04');
         function padLeft(n:any){ 
           return n ="00".substring(0, "00".length - n.length) + n;
         }
@@ -112,18 +116,43 @@ public responsiveOptions:any[] = [
         var minutes = padLeft(date.getMinutes() + "");
         var seconds = padLeft(date.getSeconds() + "");
         // console.log(minutes, seconds);
-        if( seconds == '03') {
+ 
+        if( seconds == '02') {
           this.messageService.add({severity:'success', summary: 'Bienvenido', detail: `${result.user.username}`});
+
         }
         date = new Date(date.getTime() - 1000);
-        if( minutes == '00' && seconds == '02' ) {
+        if(minutes == '00' && seconds == '01'){
+          // console.log('aqui',seconds);
+        // }
+        // if( minutes == '00' && seconds == '03' ) {
           this.router.navigateByUrl('/landing');
           clearInterval(interval); 
         }
+
+        // var date = new Date('2020-01-01 00:00:03');
+        // function padLeft(n:any){ 
+        //   return n ="00".substring(0, "00".length - n.length) + n;
+        // }
+        // var interval = setInterval(() => {
+        // var minutes = padLeft(date.getMinutes() + "");
+        // var seconds = padLeft(date.getSeconds() + "");
+        // // console.log(minutes, seconds);
+        // if( seconds == '03') {
+        //   this.messageService.add({severity:'success', summary: 'Bienvenido', detail: `${result.user.username}`});
+        // }
+        // date = new Date(date.getTime() - 1000);
+        // if( minutes == '00' && seconds == '02' ) {
+          // this.router.navigateByUrl('/landing');
+        //   clearInterval(interval); 
+        // }
   }, 1000)
         
     },async error => {
+      this.motrar=false
+
       if(error != undefined) {
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");

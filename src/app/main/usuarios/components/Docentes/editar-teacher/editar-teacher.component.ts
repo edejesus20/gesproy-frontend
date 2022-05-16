@@ -94,12 +94,12 @@ export class EditarTeacherComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
-      hours_of_dedication:['', [Validators.required]],
+      // hours_of_dedication:['', [Validators.required]],
       MincienciaCategoryId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
@@ -131,12 +131,12 @@ export class EditarTeacherComponent implements OnInit {
           start_date:[''],
           final_date:[''],
       })]),
-      nationality:['', [Validators.required]],
-      date_of_birth:['', [Validators.required]],
+      // nationality:['', [Validators.required]],
+      // date_of_birth:['', [Validators.required]],
                       ChargeBondingId:['', [Validators.required]]
     });
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
     this.getAllscales()
   
     this.getAllcolcienciaCategorys()
@@ -173,28 +173,28 @@ export class EditarTeacherComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      hours_of_dedication: this.form.value.hours_of_dedication,
+      // hours_of_dedication: this.form.value.hours_of_dedication,
       ScaleId: this.form.value.ScaleId.id,
       MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
       headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
       // Lines: this.form.value.Lines
-      nationality: this.form.value.nationality,
+      // nationality: this.form.value.nationality,
       // let a = moment(moment(fechanueva).format("DD-MM-YYYY"));
-      date_of_birth:moment(this.form.value.date_of_birth).format("YYYY-MM-DD").toString(),
+      // date_of_birth:moment(this.form.value.date_of_birth).format("YYYY-MM-DD").toString(),
                       ChargeBondingId: this.form.value.                ChargeBondingId.id,
       Workexperiences: this.form.value.Workexperiences,
       trainingTeacher:this.form.value.trainingTeacher
     };
 
-    if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
+    if(this.headquarterProgramStudent1.length == 0 ){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
         key.HeadquarterProgramId=key.HeadquarterProgramId.id
@@ -211,7 +211,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
     }
   
-    if(this.trainingTeachers.length == 0 || this.trainingTeachers == []){
+    if(this.trainingTeachers.length == 0 ){
       let control = <FormArray>this.form.controls['trainingTeacher']
       for (const key of control.value) {
 
@@ -231,7 +231,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.trainingTeacher = this.trainingTeachers
     }
 
-    if(this.Workexperiences.length == 0 || this.Workexperiences == []){
+    if(this.Workexperiences.length == 0 ){
       this.Workexperiences = this.form.value.Workexperiences 
       formValue.Workexperiences = this.form.value.Workexperiences
     }else{
@@ -252,13 +252,13 @@ export class EditarTeacherComponent implements OnInit {
       formValue.surname != ""&&
       formValue.DocumentTypeId != ( 0 || undefined)&&
       formValue.identification != ""&&
-      formValue.GenderId != ( 0 || undefined)&&
-      formValue.address != ""&&
-      formValue.phone != ""&&
+      // formValue.GenderId != ( 0 || undefined)&&
+      // formValue.address != ""&&
+      // formValue.phone != ""&&
       formValue.email != ""&&
-      formValue.hours_of_dedication != ""&&
-      formValue.nationality != ("" || undefined) && 
-      formValue. date_of_birth!= ("" || undefined) && 
+      // formValue.hours_of_dedication != ""&&
+      // formValue.nationality != ("" || undefined) && 
+      // formValue. date_of_birth!= ("" || undefined) && 
      formValue.ScaleId !=("" || undefined)
     &&formValue.MincienciaCategoryId != ("" || undefined) &&
     formValue.                ChargeBondingId != ("" || undefined)
@@ -329,6 +329,11 @@ get getRoles() {
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar1=false
+      control.push(this.formBuilder.group({
+        TeacherId:0,
+        HeadquarterProgramId:['', [Validators.required]],
+        ResearchBondingId:['', [Validators.required]],
+      }))
       }
   }
  
@@ -407,38 +412,31 @@ getOneCntAccount(id:number) {
           // console.log(cnt_groupFromApi.teacher)
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
-        if(cnt_groupFromApi.teacher.User?.Person != undefined &&
-          cnt_groupFromApi.teacher.User?.Person?.Gender != undefined
+        if(cnt_groupFromApi.teacher.User?.Person != undefined 
+          // cnt_groupFromApi.teacher.User?.Person?.Gender != undefined
           ){
           this.form.controls['name'].setValue(cnt_groupFromApi.teacher.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.teacher.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.teacher.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
+          // this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
             if(cnt_groupFromApi.teacher.                ChargeBondingId != undefined){
             // console.log(cnt_groupFromApi.teacher.LinkType)
-        this.charge_bondingService.getItem(cnt_groupFromApi.teacher.                ChargeBondingId).subscribe(
-          (algo1)=>{
-            this.form.controls['                ChargeBondingId'].setValue(algo1.charge_bonding)
-
-          })
-            // this.form.controls['                ChargeBondingId'].setValue(cnt_groupFromApi.teacher.LinkType)
-
-
-            }
+        this.charge_bondingService.getItem(cnt_groupFromApi.teacher.ChargeBondingId).subscribe(
+          (algo1)=>{this.form.controls['ChargeBondingId'].setValue(algo1.charge_bonding)})}
               
-          this.form.controls['nationality'].setValue(cnt_groupFromApi.teacher.User.Person.nationality)
-            this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.teacher.User.Person.date_of_birth)
-          if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo1)=>{
-           if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
-        this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
-          this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-          this.form.controls['GenderId'].setValue(algo1.gender)
-          }) 
-        })
+          // this.form.controls['nationality'].setValue(cnt_groupFromApi.teacher.User.Person.nationality)
+            // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.teacher.User.Person.date_of_birth)
+          // if(cnt_groupFromApi.teacher.User.Person.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.GenderId)).subscribe((algo1)=>{
+          //  if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
+        // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User.Person.DocumentTypeId)).subscribe((algo)=>{
+          this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.teacher.User.Person.DocumentType)
+          // this.form.controls['GenderId'].setValue(algo1.gender)
+          // }) 
+        // })
 
         }
 

@@ -51,9 +51,9 @@ export class EliminarUserComponent implements OnInit {
       surname:[''],
       DocumentTypeId:[''],
       identification:[''],
-      GenderId:[''],
-      address:[''],
-      phone:[''],
+      // GenderId:[''],
+      //  address:[''],
+      // phone:[''],
       email:[''],
       Roles: this.formBuilder.array([this.formBuilder.group({
         UserId:0,RoleId:['']})]),
@@ -61,8 +61,8 @@ export class EliminarUserComponent implements OnInit {
   
       this.getUsrRoles()
   
-      this.getAllgenders()
-      this.getAlldocumentTypes()
+      // this.getAllgenders()
+      // this.getAlldocumentTypes()
     }
     getUsrRoles() {
       this.rolesService.getRole().subscribe((rolesFromApi) => {
@@ -70,21 +70,7 @@ export class EliminarUserComponent implements OnInit {
         //console.log(this.roles);
       }, error => console.error(error));
     }
-    private getAllgenders(selectId?: number) {
-      this.genderService.getList().subscribe(
-        (AdministrativeFromApi) => {
-          // console.log(AdministrativeFromApi.administratives)
-          this.genders = AdministrativeFromApi.genders;
-        }, error => console.error(error));
-    }
-    
-    private getAlldocumentTypes(selectId?: number) {
-      this.documentTypeService.getList().subscribe(
-        (AdministrativeFromApi) => {
-          this.documentTypes = AdministrativeFromApi.documentTypes;
-    
-        }, error => console.error(error));
-    }
+
   
 
   public onSubmit(e:Event) {
@@ -95,9 +81,9 @@ export class EliminarUserComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
@@ -175,24 +161,24 @@ getOneCntAccount(id:number) {
           this.form.controls['name'].setValue(cnt_groupFromApi.user.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.user.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.user.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.user.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.user.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.user.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.user.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.user.User.email)
           // console.log('aqui')
        
           }
 
-          if(cnt_groupFromApi.user.DocumentTypeId != undefined)
-          this.documentTypeService.getItem(parseInt(cnt_groupFromApi.user.DocumentTypeId)).subscribe((algo)=>{
-            this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-          })
+          // if(cnt_groupFromApi.user.DocumentTypeId != undefined)
+          // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.user.DocumentTypeId)).subscribe((algo)=>{
+            this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.user.DocumentType)
+          // })
   
    
 
-        if(cnt_groupFromApi.user.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.user.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
+        // if(cnt_groupFromApi.user.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.user.GenderId)).subscribe((algo)=>{
+        //   this.form.controls['GenderId'].setValue(algo.gender)
+        // })
 
         if(cnt_groupFromApi.user.User?.Roles != undefined){
           
@@ -252,6 +238,8 @@ getOneCntAccount(id:number) {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar2=false
+        control.push(this.formBuilder.group({UserId:this.form.value.id,
+          RoleId:['']}))
         }
     }
 

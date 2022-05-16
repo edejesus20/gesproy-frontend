@@ -63,7 +63,7 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     id:0,   
      UserId: 0,
     ScaleId: 0,
-    hours_of_dedication:'',
+    // hours_of_dedication:'',
     MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
@@ -330,7 +330,7 @@ public mostrarIntegrantes:boolean=false
 
       // console.log('aqui4',formValue,this.TeacherId,this.CategoryGroupId,)
 
-      if(this.lines1.length == 0 || this.lines1 == []){
+      if(this.lines1.length == 0 ){
         let control = <FormArray>this.form.controls['lines']
         for (const key of control.value) {
           key.LineId=key.LineId.id 
@@ -346,21 +346,8 @@ public mostrarIntegrantes:boolean=false
 
       
 
-      // if(this.Seedbeds1.length == 0 || this.Seedbeds1 == []){
-      //   let control = <FormArray>this.form.controls['Seedbeds']
-      //   for (const key of control.value) {
-      //     key.SeedbedId=key.SeedbedId.id 
-      //     this.Seedbeds1.push({
-      //       SeedbedId:key.SeedbedId,
-      //     })
-      //   }
-      //   formValue.Seedbeds = this.form.value.Seedbeds
-      //   // console.log('aqui')
-      // }else{
-      //   formValue.Seedbeds = this.Seedbeds1
-      // }
 
-      if(this.knowledge_areas1.length == 0 || this.knowledge_areas1 == []){
+      if(this.knowledge_areas1.length == 0 ){
         let control = <FormArray>this.form.controls['knowledge_areas']
         for (const key of control.value) {
           key.Knowledge_areaId=key.Knowledge_areaId.id 
@@ -376,7 +363,7 @@ public mostrarIntegrantes:boolean=false
       // console.log('aqui5',formValue)
 
 
-      if(this.InvestigatorCollaborators1.length == 0 || this.InvestigatorCollaborators1 == []){
+      if(this.InvestigatorCollaborators1.length == 0 ){
         let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
         for (const key of control1.value) {
           // key.RoleId=key.RoleId.id 
@@ -392,7 +379,19 @@ public mostrarIntegrantes:boolean=false
         formValue.InvestigatorCollaborators = this.InvestigatorCollaborators1
       }
 
-
+      if(this.form.value.lines[0].LineId == ''){
+        // this.form.value.trainingTeacher=[]
+        formValue.lines=[]
+      }
+      if(this.form.value.knowledge_areas[0].Knowledge_areaId == ''){
+        // this.form.value.trainingTeacher=[]
+        formValue.knowledge_areas=[]
+      }
+      if(this.form.value.InvestigatorCollaborators[0].Usuarios == ''){
+        // this.form.value.Workexperiences=[]
+        formValue.InvestigatorCollaborators=[]
+  
+      }
       console.log(formValue)
     if(this.mostrarFacultad == true && formValue.name != ""&&
     // formValue.ident_colciencias != "" &&

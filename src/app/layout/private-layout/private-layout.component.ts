@@ -59,6 +59,7 @@ export class PrivateLayoutComponent implements OnInit {
   public ref1:any;
   public image3:string='assets/avatares/avatars-avataaars.png'
   public image2:string='assets/images/logoGrupoSem2.png'
+  public Dialog:boolean =false
 
   constructor(
     private messageService: MessageService,
@@ -133,7 +134,7 @@ export class PrivateLayoutComponent implements OnInit {
   }},
     { label: 'Cambiar Clave', icon: 'pi pi-refresh', command: () => {this.modalCambiarClave(new Event(''))}},
     {label: 'Cerrar Sesion', icon: 'pi pi-power-off', command: () => {
-      this.cerrarSesion();
+      this.showConfirm();
   }},
     {separator: true},
     {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
@@ -188,13 +189,8 @@ this.ref1.onClose.subscribe((person: any) =>{
 ocultarMenu(boolean: boolean){
 this.display=boolean
 }
-update() {
-  this.messageService.add({severity:'success', summary:'Success', detail:'Data Updated'});
-}
 
-delete() {
-  this.messageService.add({severity:'warn', summary:'Delete', detail:'Data Deleted'});
-}
+
 
 setLogin(value: boolean): void {
 this.authService.setLogin(value);
@@ -225,7 +221,15 @@ this.setLogin(false)
 this.authService.logout()
 this.ngOnInit()
 this.router.navigateByUrl('/login')
+}
 
+showConfirm() {
+  this.Dialog = true;
+  
+}
+
+hideDialog() {
+  this.Dialog = false;
 }
 
  public verificar(){

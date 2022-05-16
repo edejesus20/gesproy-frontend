@@ -45,7 +45,7 @@ export class ShowTeacherComponent implements OnInit {
         { field: 'User.Person.identification', header: 'Identificacion' },
         { field: 'User.email', header: 'Correo Electronico' },
         { field: 'User.Person.phone', header: 'Telefono' },
-        { field: 'hours_of_dedication', header: 'Horas de dedicación' },
+        // { field: 'hours_of_dedication', header: 'Horas de dedicación' },
         { field: 'Scale.name', header: 'Escalafon' },
         { field: 'MincienciaCategory.name', header: 'Categoria de Minciencia' },
         { field: 'Charge_bonding.name', header: 'Vinculacion de Cargo' }
@@ -114,7 +114,7 @@ export class ShowTeacherComponent implements OnInit {
                 Groups:key.Groups,
                 MincienciaCategory:key.MincienciaCategory,
                 TrainingTeacher:key.TrainingTeacher,
-                hours_of_dedication:key.hours_of_dedication,
+                // hours_of_dedication:key.hours_of_dedication,
                 ChargeBondingId:key.ChargeBondingId,
                 Charge_bonding:key.Charge_bonding
               }
@@ -145,7 +145,7 @@ export class ShowTeacherComponent implements OnInit {
         Identificacion:key.User?.Person?.identification,
         Correo_Electronico:key.User?.email,
         Telefono:key.User?.Person?.phone,
-        Horas_de_dedicación:key.hours_of_dedication,
+        // Horas_de_dedicación:key.hours_of_dedication,
         Escalafon:key.Scale?.name,
         Categoria_de_Minciencia:key.MincienciaCategory?.name
       })
@@ -158,7 +158,7 @@ export class ShowTeacherComponent implements OnInit {
       Identificacion:key.User?.Person?.identification,
       Correo_Electronico:key.User?.email,
       Telefono:key.User?.Person?.phone,
-      Horas_de_dedicación:key.hours_of_dedication,
+      // Horas_de_dedicación:key.hours_of_dedication,
       Escalafon:key.Scale?.name,
       Categoria_de_Minciencia:key.MincienciaCategory?.name
     })
@@ -221,7 +221,7 @@ export class ShowTeacherComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.hours_of_dedication.toString(),
+              // data.hours_of_dedication.toString(),
               data.Scale?.name.toString(),
               data.MincienciaCategory?.name?.toString()
           
@@ -241,7 +241,7 @@ export class ShowTeacherComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.hours_of_dedication.toString(),
+              // data.hours_of_dedication.toString(),
               data.Scale?.name.toString(),
               data.MincienciaCategory?.name?.toString()
             ]
@@ -278,7 +278,7 @@ export class ShowTeacherComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '15%', '15%','15%','15%','15%','10%','10%'],
+              widths: [ '15%', '15%','15%','20%','15%','15%'],
   
               body: body
           },

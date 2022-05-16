@@ -26,25 +26,24 @@ export class CrearUserComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
   public algo:number[]=[0];
-  public documentTypes:DocumentTypeI[]=[]
-  public genders:GenderI[] =[]
+
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     surname:['', [Validators.required]],
-    DocumentTypeId:['', [Validators.required]],
+    DocumentTypeId:[1],
     identification:['', [Validators.required]],
-    GenderId:['', [Validators.required]],
-    address:['', [Validators.required]],
-    phone:['', [Validators.required]],
+    // GenderId:['', [Validators.required]],
+    // address:['', [Validators.required]],
+  //  phone:['', [Validators.required]],
     email:['', [Validators.required]],
-    nationality: ['', [Validators.required]],
-    date_of_birth: ['', [Validators.required]],
+    // nationality: ['', [Validators.required]],
+    // date_of_birth: ['', [Validators.required]],
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
   });
   public mostrarDialogo:boolean=false;
-  public TipoUser:string=''
+  // public TipoUser:string=''
   public ref1:any;
   constructor(
     public dialogService: DialogService,
@@ -53,8 +52,7 @@ export class CrearUserComponent implements OnInit {
     private rolesService: RolesService,
     private router: Router,
     private messageService:MessageService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
+
     public ref: DynamicDialogRef,
  public config: DynamicDialogConfig,
     
@@ -67,17 +65,15 @@ export class CrearUserComponent implements OnInit {
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
       }
-      if(this.config.data.Tipo=='I'){
-        this.TipoUser='I'
-      }
+
     }else{
       this.mostrarDialogo= false
 
     }
     
     this.getUsrRoles()
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -88,21 +84,7 @@ export class CrearUserComponent implements OnInit {
       //console.log(this.roles);
     }, error => console.error(error));
   }
-  private getAllgenders(selectId?: number) {
-    this.genderService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.genders = AdministrativeFromApi.genders;
-      }, error => console.error(error));
-  }
-  
-  private getAlldocumentTypes(selectId?: number) {
-    this.documentTypeService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.documentTypes = AdministrativeFromApi.documentTypes;
-  
-      }, error => console.error(error));
-  }
+
 
 
      //metodos para agregar controles de Roles
@@ -130,6 +112,8 @@ export class CrearUserComponent implements OnInit {
       control.removeAt(index)
       if(control.length <= 0){
        this.mostrar=false
+       control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
+
       }
     }
 
@@ -137,28 +121,29 @@ export class CrearUserComponent implements OnInit {
       e.preventDefault()
   
       let formValue:any
-      if(this.mostrarDialogo!= true){
+      // if(this.mostrarDialogo!= true){
         formValue={
           name: this.form.value.name,
           surname: this.form.value.surname,
-          DocumentTypeId: this.form.value.DocumentTypeId.id,
+          DocumentTypeId: this.form.value.DocumentTypeId,
           identification: this.form.value.identification,
-          GenderId: this.form.value.GenderId.id,
-          address: this.form.value.address,
-          phone: this.form.value.phone,
+          // GenderId: this.form.value.GenderId.id,
+          // address: this.form.value.address,
+          // phone: this.form.value.phone,
           username:'',
           fullName:'',
           email:this.form.value.email,
           password:this.form.value.identification,
           UserId: 0,
           Roles:this.form.value.Roles,
-          nationality: this.form.value.nationality,
-          date_of_birth: this.form.value.date_of_birth,
+          // nationality: this.form.value.nationality,
+          // date_of_birth: this.form.value.date_of_birth,
         };
 
 
               
-      if(this.Roles1.length == 0 || this.Roles1 == []){
+      if(this.Roles1.length == 0 || this.Roles1.length == undefined){
+        this.Roles1=[]
         let control = <FormArray>this.form.controls['Roles']
         for (const key of control.value) {
           key.RoleId=key.RoleId.id 
@@ -174,25 +159,12 @@ export class CrearUserComponent implements OnInit {
 
       }
 
-      }else{
-        formValue={
-          name: this.form.value.name,
-          surname: this.form.value.surname,
-          DocumentTypeId: this.form.value.DocumentTypeId.id,
-          identification: this.form.value.identification,
-          GenderId: this.form.value.GenderId.id,
-          address: this.form.value.address,
-          phone: this.form.value.phone,
-          username:'',
-          fullName:'',
-          email:this.form.value.email,
-          password:this.form.value.identification,
-          UserId: 0,
-          Roles:[],
-          nationality: this.form.value.nationality,
-          date_of_birth: this.form.value.date_of_birth,
-          TipoUser:this.TipoUser
-        };
+
+      if(this.form.value.Roles[0].RoleId == '' ||
+      this.form.value.Roles[0].RoleId == undefined ||this.Roles1.length == undefined){
+        // this.form.value.Workexperiences=[]
+        formValue.Roles=[]
+  
       }
 
 
@@ -201,12 +173,14 @@ export class CrearUserComponent implements OnInit {
                 formValue.surname != ""&&
                 formValue.DocumentTypeId != ( 0 || undefined)&&
                 formValue.identification != ""&&
-                formValue.GenderId != ( 0 || undefined)&&
-                formValue.address != ""&&
-                formValue.phone != ""&&
-                formValue.email != "" && 
-                formValue.nationality != "" && 
-                formValue. date_of_birth!= ""){
+                // formValue.GenderId != ( 0 || undefined)&&
+                // formValue.address != ""&&
+                // formValue.phone != ""&&
+                formValue.email != ""
+                //  && 
+                // formValue.nationality != "" && 
+                // formValue. date_of_birth!= ""
+                ){
   
               this.userService.createUser(formValue).subscribe(
                 (algo) => {
@@ -248,50 +222,9 @@ export class CrearUserComponent implements OnInit {
             }
   }
 
-  addGenero(e:Event){
-    e.preventDefault()
+
   
-    this.ref1 = this.dialogService.open(Create_genderComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-  
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
-  
-        }
-  });
-  }
-  
-  
-  addTipoDocumento(e:Event){
-    e.preventDefault()
-  
-    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-  
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
-  
-        }
-  });
-  }
+
   addroles(e:Event){
     e.preventDefault()
   

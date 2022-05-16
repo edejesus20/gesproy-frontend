@@ -54,37 +54,22 @@ export class EditarAdministrativeComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
       HeadquarterId:['', [Validators.required]],
       ChargeId:['', [Validators.required]],
-      nationality:['', [Validators.required]],
-      date_of_birth:['', [Validators.required]],
+      // nationality:['', [Validators.required]],
+      // date_of_birth:['', [Validators.required]],
      });
   
-      this.getAllgenders()
-      this.getAlldocumentTypes()
+      // this.getAllgenders()
+      // this.getAlldocumentTypes()
       this.getAllheadquarters()
       this.getAllCharges()
     }
 
-    private getAllgenders(selectId?: number) {
-      this.genderService.getList().subscribe(
-        (AdministrativeFromApi) => {
-          // console.log(AdministrativeFromApi.administratives)
-          this.genders = AdministrativeFromApi.genders;
-        }, error => console.error(error));
-    }
-    
-    private getAlldocumentTypes(selectId?: number) {
-      this.documentTypeService.getList().subscribe(
-        (AdministrativeFromApi) => {
-          this.documentTypes = AdministrativeFromApi.documentTypes;
-    
-        }, error => console.error(error));
-    }
     
     private getAllheadquarters(selectId?: number) {
       this.headquarterService.getList().subscribe(
@@ -112,38 +97,42 @@ export class EditarAdministrativeComponent implements OnInit {
           this.form.controls['name'].setValue(cnt_groupFromApi.administrative.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.administrative.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.administrative.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.administrative.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.administrative.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.administrative.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.administrative.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.administrative.User.email)
-            this.form.controls['nationality'].setValue(cnt_groupFromApi.administrative.User.Person.nationality)
-            this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.administrative.User.Person.date_of_birth)
-          }
+            // this.form.controls['nationality'].setValue(cnt_groupFromApi.administrative.User.Person.nationality)
+            // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.administrative.User.Person.date_of_birth)
+         
 
-        if(cnt_groupFromApi.administrative.User?.Person?.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.GenderId)).subscribe((algo1)=>{
+        // if(cnt_groupFromApi.administrative.User?.Person?.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.GenderId)).subscribe((algo1)=>{
+        
           if(cnt_groupFromApi.administrative.Headquarter != undefined)
           this.headquarterService.getItem(parseInt(cnt_groupFromApi.administrative.HeadquarterId)).subscribe((algo2)=>{
-            
-            if(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId != undefined){
-              this.documentTypeService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId)).subscribe((algo3)=>{
+            this.form.controls['HeadquarterId'].setValue(algo2.headquarter)   
+           }) 
+            // if(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId != undefined){
+            //   this.documentTypeService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId)).subscribe((algo3)=>{
                 
-                this.form.controls['DocumentTypeId'].setValue(algo3.documentType)
-                this.form.controls['GenderId'].setValue(algo1.gender)
-                this.form.controls['HeadquarterId'].setValue(algo2.headquarter)
-                if(cnt_groupFromApi.administrative.Charge != undefined){
-                  this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
-                    this.form.controls['ChargeId'].setValue(algo4.charge)
-                  })
-                  
-                }
+                // this.form.controls['GenderId'].setValue(algo1.gender)
+          
+
                 // console.log(cnt_groupFromApi.administrative);
         // console.log(this.form.value);
-                })
-              }
-          }) 
-        })
+                // })
+              // }
+      
+        // })
+        this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.administrative.User?.Person?.DocumentType)
 
-        
+
+        if(cnt_groupFromApi.administrative.Charge != undefined){
+          this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
+            this.form.controls['ChargeId'].setValue(algo4.charge)
+          })
+          
+        }
+      }
       }
       this.displayMaximizable2=true
       this.tabla = false
@@ -177,9 +166,9 @@ export class EditarAdministrativeComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
@@ -187,8 +176,8 @@ export class EditarAdministrativeComponent implements OnInit {
       UserId: 0,
       ChargeId: this.form.value.ChargeId.id,
       HeadquarterId: this.form.value.HeadquarterId.id,
-      nationality: this.form.value.nationality,
-      date_of_birth: this.form.value.date_of_birth,
+      // nationality: this.form.value.nationality,
+      // date_of_birth: this.form.value.date_of_birth,
     };
 
             if(formValue.name != ""&&
@@ -197,12 +186,15 @@ export class EditarAdministrativeComponent implements OnInit {
               formValue.ChargeId != ( 0 || undefined)&&
               formValue.HeadquarterId != ( 0 || undefined)&&
               formValue.identification != ""&&
-              formValue.GenderId != ( 0 || undefined)&&
-              formValue.address != ""&&
-              formValue.phone != ""&&
-              formValue.email != ""&&
-              formValue.nationality != ("" || undefined) && 
-              formValue. date_of_birth!= ("" || undefined)){
+              // formValue.GenderId != ( 0 || undefined)&&
+              // formValue.address != ""&&
+              // formValue.phone != ""&&
+              formValue.email != ""
+              // &&
+              // formValue.nationality != ("" || undefined) 
+              // && 
+              // formValue. date_of_birth!= ("" || undefined)
+              ){
 
 
             this.administrativeService.updateItem(formValue.id,formValue).subscribe(
@@ -239,50 +231,6 @@ export class EditarAdministrativeComponent implements OnInit {
           }
   }
 
-  addGenero(e:Event){
-    e.preventDefault()
-
-    this.ref = this.dialogService.open(Create_genderComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
-
-        }
-  });
-  }
-
-
-  addTipoDocumento(e:Event){
-    e.preventDefault()
-
-    this.ref = this.dialogService.open(Create_documentTypeComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
-
-        }
-  });
-  }
 
   addOcupacion(e:Event){
     e.preventDefault()

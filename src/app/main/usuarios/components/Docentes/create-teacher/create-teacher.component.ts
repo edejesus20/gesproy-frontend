@@ -41,7 +41,7 @@ export class CreateTeacherComponent implements OnInit {
 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public mostrar2:boolean=false;
   public mostrar3:boolean=false;
   
@@ -64,16 +64,16 @@ export class CreateTeacherComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:[''],
     surname:[''],
-    DocumentTypeId:[''],
+    DocumentTypeId:[1],
     identification:[''],
-    GenderId:[''],
-    address:[''],
-    phone:[''],
+    // GenderId:[''],
+    // address:[''],
+    // phone:[''],
     email:[''],
     ScaleId:['', [Validators.required]],
     UserId:[''],
     MincienciaCategoryId:['', [Validators.required]],
-    hours_of_dedication:['', [Validators.required]],
+    // hours_of_dedication:['', [Validators.required]],
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
         TeacherId:0,
@@ -104,8 +104,8 @@ export class CreateTeacherComponent implements OnInit {
         start_date:[''],
         final_date:[''],
     })]),
-    nationality:[''],
-    date_of_birth:[''],
+    // nationality:[''],
+    // date_of_birth:[''],
     ChargeBondingId:['',[Validators.required]]
    });
    public research_bondings:Research_bondingI[]=[]
@@ -136,8 +136,8 @@ export class CreateTeacherComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
     this.getAllscales()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
@@ -187,21 +187,21 @@ export class CreateTeacherComponent implements OnInit {
           surname: '',
           DocumentTypeId: '',
           identification: '',
-          GenderId: '',
-          address: '',
-          phone: '',
+          // GenderId: '',
+          // address: '',
+          // phone: '',
           username:'',
           fullName:'',
           email:'',
           password:null,
           UserId:  this.form.value.UserId.UserId,
-          hours_of_dedication: this.form.value.hours_of_dedication,
+          // hours_of_dedication: this.form.value.hours_of_dedication,
           ScaleId: this.form.value.ScaleId.id,
           MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
           headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
           // Lines: this.form.value.Lines,
-          nationality: this.form.value.nationality,
-          date_of_birth: this.form.value.date_of_birth,
+          // nationality: this.form.value.nationality,
+          // date_of_birth: this.form.value.date_of_birth,
           ChargeBondingId: this.form.value.ChargeBondingId.id,
           Workexperiences: this.form.value.Workexperiences,
           trainingTeacher:this.form.value.trainingTeacher
@@ -213,23 +213,23 @@ export class CreateTeacherComponent implements OnInit {
       formValue={
         name: this.form.value.name,
         surname: this.form.value.surname,
-        DocumentTypeId: this.form.value.DocumentTypeId.id,
+        DocumentTypeId: this.form.value.DocumentTypeId,
         identification: this.form.value.identification,
-        GenderId: this.form.value.GenderId.id,
-        address: this.form.value.address,
-        phone: this.form.value.phone,
+        // GenderId: this.form.value.GenderId.id,
+        // address: this.form.value.address,
+        // phone: this.form.value.phone,
         // username:this.form.value.,
         // fullName:this.form.value.,
         email:this.form.value.email,
         password:this.form.value.identification,
         UserId:  undefined,
-        hours_of_dedication: this.form.value.hours_of_dedication,
+        // hours_of_dedication: this.form.value.hours_of_dedication,
         ScaleId: this.form.value.ScaleId.id,
         MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
         // Lines: this.form.value.Lines,
-        nationality: this.form.value.nationality,
-        date_of_birth: this.form.value.date_of_birth,
+        // nationality: this.form.value.nationality,
+        // date_of_birth: this.form.value.date_of_birth,
         ChargeBondingId: this.form.value.ChargeBondingId.id,
         Workexperiences: this.form.value.Workexperiences,
         trainingTeacher:this.form.value.trainingTeacher
@@ -237,7 +237,7 @@ export class CreateTeacherComponent implements OnInit {
      
     }
 
-    if(this.headquarterProgramTeacher1.length == 0 || this.headquarterProgramTeacher1 == []){
+    if(this.headquarterProgramTeacher1.length == 0 ){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       for (const key of control.value) {
 
@@ -254,7 +254,7 @@ export class CreateTeacherComponent implements OnInit {
       formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
     }
 
-    if(this.trainingTeachers.length == 0 || this.trainingTeachers == []){
+    if(this.trainingTeachers.length == 0 ){
       let control = <FormArray>this.form.controls['trainingTeacher']
       for (const key of control.value) {
 
@@ -274,7 +274,7 @@ export class CreateTeacherComponent implements OnInit {
       formValue.trainingTeacher = this.trainingTeachers
     }
 
-    if(this.Workexperiences.length == 0 || this.Workexperiences == []){
+    if(this.Workexperiences.length == 0 ){
       this.Workexperiences = this.form.value.Workexperiences 
       formValue.Workexperiences = this.form.value.Workexperiences
     }else{
@@ -291,21 +291,23 @@ export class CreateTeacherComponent implements OnInit {
 
     }
     
-              console.log(formValue)
+              // console.log(formValue)
 
   if(
     (this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
-    formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
-    formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-    formValue.phone != ""&& formValue.email != ""&&
+    formValue.DocumentTypeId != ( 0 || undefined)
+    && formValue.identification != ""&&
+    // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+    // formValue.phone != ""&& formValue.email != ""&&
     formValue.ScaleId !=("" || undefined) && 
-    formValue.nationality != ("" || undefined) && 
-    formValue. date_of_birth!= ("" || undefined) && 
+    // formValue.nationality != ("" || undefined) && 
+    // formValue. date_of_birth!= ("" || undefined) && 
     formValue.MincienciaCategoryId != ("" || undefined) 
-    && formValue.hours_of_dedication != ""
+    // && formValue.hours_of_dedication != ""
     && formValue.ChargeBondingId != ("" || undefined))
     ||
-    (this.mostrarUser == false && formValue.UserId != ( 0 || undefined) && formValue.hours_of_dedication != ""
+    (this.mostrarUser == false && formValue.UserId != ( 0 || undefined) 
+    // && formValue.hours_of_dedication != ""
     && formValue.ScaleId !=("" || undefined) && formValue.MincienciaCategoryId != ("" || undefined) &&
     formValue.ChargeBondingId != ("" || undefined))){
               // console.log(formValue)
@@ -357,22 +359,23 @@ get getRoles() {
   addRoles(event: Event){
     event.preventDefault();
     const control = <FormArray>this.form.controls['headquarterProgramTeacher']
-      if(control.length == 0 && this.mostrar == false){
-        control.push(this.formBuilder.group({
-          TeacherId:0,
-          HeadquarterProgramId:['', [Validators.required]],
-              ResearchBondingId:['', [Validators.required]],
-        }))
-      }
-      if(control.length >= 1 && this.mostrar == true){
+    this.mostrar=true
+      // if(control.length == 0 && this.mostrar == false){
+      //   control.push(this.formBuilder.group({
+      //     TeacherId:0,
+      //     HeadquarterProgramId:['', [Validators.required]],
+      //         ResearchBondingId:['', [Validators.required]],
+      //   }))
+      // }
+      // if(control.length >= 1 && this.mostrar == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
               ResearchBondingId:['', [Validators.required]],
         }))
 
-      }
-      this.mostrar=true
+      // }
+      
   }
   removeRoles(index: number,event: Event){
     event.preventDefault();
@@ -380,24 +383,15 @@ get getRoles() {
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar=false
+      // control.push(this.formBuilder.group({
+      //   TeacherId:0,
+      //   HeadquarterProgramId:['', [Validators.required]],
+      //       ResearchBondingId:['', [Validators.required]],
+      // }))
       }
   }
 
-private getAllgenders(selectId?: number) {
-  this.genderService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.genders = AdministrativeFromApi.genders;
-    }, error => console.error(error));
-}
 
-private getAlldocumentTypes(selectId?: number) {
-  this.documentTypeService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.documentTypes = AdministrativeFromApi.documentTypes;
-
-    }, error => console.error(error));
-}
 
 private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
@@ -465,6 +459,14 @@ get getWorkexperiences() {
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar3=false
+      control.push(this.formBuilder.group({
+        TeacherId:0,
+        name_institution: [''],
+        position_type: [''],
+        functions:[''],
+        start_date:[''],
+        final_date:[''],
+      }))
       }
   }
 
@@ -507,6 +509,15 @@ get getWorkexperiences() {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar2=false
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          name: [''],
+          date_graduation: [''],
+          name_institution: [''],
+          resolution_convalidation: [''],
+          degree_certificate: [''],
+          TrainingId:[''],
+        }))
         }
     }
 
@@ -618,48 +629,5 @@ get getWorkexperiences() {
   });
   }
 
-  addGenero(e:Event){
-    e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_genderComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
-
-        }
-  });
-  }
-
-
-  addTipoDocumento(e:Event){
-    e.preventDefault()
-
-    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
-
-        }
-  });
-  }
 }

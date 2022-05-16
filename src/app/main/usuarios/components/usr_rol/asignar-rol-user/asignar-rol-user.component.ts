@@ -80,6 +80,7 @@ export class AsignarRolUserComponent implements OnInit {
   public onSelectionChange(value = []) {
     this.selectAll = value.length === this.totalRecords;
     this.selectedProducts = value;
+    console.log(this.selectedProducts)
 }
 
 public onSelectAllChange(event:any) {
@@ -108,7 +109,7 @@ Buscar(event: Event, dt1:any){
     const array:any=[]
     let arrRoles:any=[]=this.form.value.Roles
 
-    if(this.Roles1.length == 0 || this.Roles1 == []){
+    if(this.Roles1.length == 0 ){
 
       let control = <FormArray>this.form.controls['Roles']
       for (const key of control.value) {
@@ -140,7 +141,7 @@ Buscar(event: Event, dt1:any){
     
     console.log(formValue)
 
-    if(this.selectedProducts != [] && formValue.UsersRoles.length > 0){
+    if(formValue.UsersRoles.length > 0){
 
       this.rolesService.assinRole(formValue).subscribe(
     () => {
@@ -200,6 +201,7 @@ Buscar(event: Event, dt1:any){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
+     control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
     }
   }
 

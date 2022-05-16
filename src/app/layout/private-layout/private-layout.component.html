@@ -82,3 +82,34 @@
     </div>  
 
 </ng-template>
+
+
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+            <h4>Esta seguro de Cerrar la Sesion?</h4>
+            <p>Confirmar para continuar</p>
+        </div>
+    </div>
+
+<!-- <div class="flex">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!producto.nombre || !producto.tipo_producto || !producto.unidad" (click)="saveProduct()"></button>
+</div> -->
+<ng-template pTemplate="footer" class="titleCard" >
+  <div style="text-align: center;">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+    class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save"  style="background: rgb(31, 45, 64);" 
+    class=" p-button-raised p-button-rounded" 
+    icon="pi pi-check"  (click)="cerrarSesion()"  ></button>
+  </div>
+  
+
+</ng-template>
+</p-dialog>

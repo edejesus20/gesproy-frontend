@@ -38,6 +38,7 @@
           <th style="width: 3rem"></th>
         </ng-template>
           <th pSortableColumn="id">AVATAR<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="id">Id<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
           <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
@@ -61,13 +62,14 @@
        
         <td><img src="{{item.User?.avatar}}"  width="40" class="shadow-4" /></td>
 
+          <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
           <td>{{item.surname | titlecase}}</td>
           <td>{{item.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.phone }}</td>
           <td>{{item.address | titlecase}}</td>
-          <td>{{item.Gender.name | titlecase}}</td>
+          <td>{{item.Gender?.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >
@@ -103,8 +105,8 @@
       </tr>
   </ng-template>
 
-  
-    <ng-template pTemplate="rowexpansion" let-item>
+  <ng-template [ngIf]="mostrar==3">
+    <ng-template pTemplate="rowexpansion" let-item >
       <tr>
           <td colspan="12">
               <div >
@@ -181,6 +183,7 @@
           </td>
       </tr>
   </ng-template>
+</ng-template>
 
 
   <!-- <ng-template pTemplate="summary">

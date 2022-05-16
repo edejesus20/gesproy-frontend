@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { GenderService } from 'src/app/core/services/usuer/Gender.service';
-import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
+
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
@@ -13,8 +12,7 @@ import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { ChargeI } from 'src/app/models/user/charge';
 import { PersonI } from 'src/app/models/user/person';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
-import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
-import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
+
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.component';
@@ -35,15 +33,15 @@ export class CreateAdministrativeComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:[''],
     surname:[''],
-    DocumentTypeId:[''],
+    DocumentTypeId:[1],
     identification:[''],
-    GenderId:[''],
-    address:[''],
-    phone:[''],
+    // GenderId:[''],
+    // address:[''],
+    // phone:[''],
     email:[''],
     UserId:[''],
-    nationality:[''],
-    date_of_birth:[''],
+    // nationality:[''],
+    // date_of_birth:[''],
     HeadquarterId:['', [Validators.required]],
     ChargeId:['', [Validators.required]],
    });
@@ -63,8 +61,7 @@ export class CreateAdministrativeComponent implements OnInit {
 
     public dialogService: DialogService,
     private administrativeService:AdministrativeService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
+
     private headquarterService: HeadquarterService,
     private chargeService:ChargeService,
     private formBuilder: FormBuilder,
@@ -77,8 +74,8 @@ export class CreateAdministrativeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getAllocupations()
     this.getAllUser()
@@ -100,21 +97,7 @@ export class CreateAdministrativeComponent implements OnInit {
         // console.log(this.users)
       }, error => console.error(error));
   }
-  private getAllgenders(selectId?: number) {
-    this.genderService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.genders = AdministrativeFromApi.genders;
-      }, error => console.error(error));
-  }
-  
-  private getAlldocumentTypes(selectId?: number) {
-    this.documentTypeService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.documentTypes = AdministrativeFromApi.documentTypes;
-  
-      }, error => console.error(error));
-  }
+
   
   private getAllheadquarters(selectId?: number) {
     this.headquarterService.getList().subscribe(
@@ -138,18 +121,18 @@ export class CreateAdministrativeComponent implements OnInit {
     formValue={
       name:  this.form.value.name,
       surname:  this.form.value.surname,
-      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      DocumentTypeId: this.form.value.DocumentTypeId,
       identification:  this.form.value.identification,
-      GenderId:  this.form.value.GenderId.id,
-      address:  this.form.value.address,
-      phone:  this.form.value.phone,
+      // GenderId:  this.form.value.GenderId.id,
+      // address:  this.form.value.address,
+      // phone:  this.form.value.phone,
       username: this.form.value.username,
       email: this.form.value.email,
       UserId:  this.form.value.UserId.UserId,
       ChargeId: this.form.value.ChargeId.id,
     HeadquarterId: this.form.value.HeadquarterId.id,
-    nationality: this.form.value.nationality,
-    date_of_birth: this.form.value.date_of_birth,
+    // nationality: this.form.value.nationality,
+    // date_of_birth: this.form.value.date_of_birth,
     };
 
     if(this.mostrarUser == false){
@@ -161,10 +144,11 @@ export class CreateAdministrativeComponent implements OnInit {
     }
     if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
-    formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-    formValue.phone != ""&& formValue.email != ""&&
-      formValue.nationality != ("" || undefined) && 
-      formValue. date_of_birth!= ("" || undefined)
+    // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+    // formValue.phone != ""&& 
+    formValue.email != ""
+      // formValue.nationality != ("" || undefined) && 
+      // formValue. date_of_birth!= ("" || undefined)
       )
     ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
     ){
@@ -230,50 +214,7 @@ export class CreateAdministrativeComponent implements OnInit {
   //   )
   // }
 
-  addGenero(e:Event){
-    e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_genderComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
-
-        }
-  });
-  }
-
-
-  addTipoDocumento(e:Event){
-    e.preventDefault()
-
-    this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
-
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
-
-        }
-  });
-  }
 
   addOcupacion(e:Event){
     e.preventDefault()

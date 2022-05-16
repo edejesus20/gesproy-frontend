@@ -52,9 +52,9 @@ export class DeleteTeacherComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
       ScaleId:['', [Validators.required]],
       MincienciaCategoryId:['', [Validators.required]],
@@ -74,9 +74,9 @@ export class DeleteTeacherComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
@@ -91,9 +91,9 @@ export class DeleteTeacherComponent implements OnInit {
       formValue.surname != ""&&
       formValue.DocumentTypeId != ( 0 || undefined)&&
       formValue.identification != ""&&
-      formValue.GenderId != ( 0 || undefined)&&
-      formValue.address != ""&&
-      formValue.phone != ""&&
+      // formValue.GenderId != ( 0 || undefined)&&
+      // formValue.address != ""&&
+      // formValue.phone != ""&&
       formValue.email != ""&&
      formValue.ScaleId !=("" || undefined)
     &&formValue.MincienciaCategoryId != ("" || undefined)){
@@ -197,25 +197,25 @@ getOneCntAccount(id:number) {
           this.form.controls['name'].setValue(cnt_groupFromApi.teacher.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.teacher.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.teacher.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           this.form.controls['ChargeBondingId'].setValue(cnt_groupFromApi.teacher.ChargeBondingId),
 
-          console.log('aqui')
-        }
+          // console.log('aqui')
+        // }
 
 
-        if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
-        this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
-          this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-        })
+        // if(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId != undefined)
+        // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
+          this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.teacher.User?.Person?.DocumentType)
+        // })
 
 
-        if(cnt_groupFromApi.teacher.User?.Person?.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
+        // if(cnt_groupFromApi.teacher.User?.Person?.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.teacher.User?.Person?.GenderId)).subscribe((algo)=>{
+        //   this.form.controls['GenderId'].setValue(algo.gender)
+        // })
 
   
 
@@ -234,6 +234,7 @@ getOneCntAccount(id:number) {
       // this.form.Administrative.User.fullName=cnt_groupFromApi.teacher.Administrative?.User?.fullName
     }
 
+    }
     this.displayMaximizable2=true
     this.tabla = false
   }, error => console.error(error));

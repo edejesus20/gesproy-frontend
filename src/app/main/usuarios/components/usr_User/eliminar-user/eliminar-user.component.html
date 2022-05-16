@@ -47,7 +47,7 @@
   
             
             <div class="grid p-fluid">
-              <div class="col-12 md:col-6 lg:col-6">
+              <!-- <div class="col-12 md:col-6 lg:col-6">
   
                   <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
                     <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
@@ -65,6 +65,19 @@
                       <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">GENERO</h3></label>
                   </span>       
                 </div>
+              </div> -->
+              <div class="col-12 md:col-6 lg:col-6">
+  
+                <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
+                  <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <input class="p-inputtext-lg" [value]="form.value.identification" 
+                      type="text" pInputText pKeyFilter="num" name="identification" 
+                      placeholder="IDENTIFICACIÓN" [disabled]="true" title="IDENTIFICACIÓN">       
+                    <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">IDENTIFICACIÓN</h3></label>
+                  </span>       
+                </div>
+              
               </div>
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
@@ -81,7 +94,7 @@
   
             </div>
   
-            <div class="grid p-fluid">
+            <!-- <div class="grid p-fluid">
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup">
                   <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
@@ -116,9 +129,9 @@
               
               </div>
   
-            </div>
+            </div> -->
   
-            <div class="grid p-fluid">
+            <!-- <div class="grid p-fluid">
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup" >
                   <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
@@ -144,7 +157,7 @@
                 </div>
               </div>
   
-            </div>
+            </div> -->
   
               <br>
               <div fxLayout="row" fxLayoutGap="20px">
@@ -188,7 +201,7 @@
                 </div>
               </div>
         </div>
-  
+  <br>
         <div fxLayout="row" class="titleCard" >
             <button pButton type="button" type="submit"  icon="pi pi-check"
              (click)="onSubmit($event)"

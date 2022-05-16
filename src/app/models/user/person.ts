@@ -8,10 +8,10 @@ export interface PersonI {
     surname: string;
     DocumentTypeId: string;
     identification: string;
-    GenderId: string;
+    GenderId?: string;
     UserId: number;
-    address: string;
-    phone: string;
+    address?: string;
+    phone?: string;
     Gender?:GenderI;
     DocumentType?:DocumentTypeI;
     User?:{
@@ -23,6 +23,6 @@ export interface PersonI {
       Roles?:RoleI[]
   avatar?:string
     }
-    nationality: string;
-    date_of_birth: string;
+    nationality?: string;
+    date_of_birth?: string;
   }

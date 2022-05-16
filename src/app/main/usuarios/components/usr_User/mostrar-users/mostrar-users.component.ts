@@ -128,8 +128,8 @@ export class MostrarUsersComponent implements OnInit {
                 data.surname.toString(),
                 data.identification.toString(),
                 data.User?.email?.toString(),
-                data.phone.toString(),
-                data.address.toString(),
+                data.phone?.toString(),
+                data.address?.toString(),
                 data.Gender?.name?.toString(),
               ]
               body.push(row);
@@ -148,8 +148,8 @@ export class MostrarUsersComponent implements OnInit {
                 data.surname.toString(),
                 data.identification.toString(),
                 data.User?.email?.toString(),
-                data.phone.toString(),
-                data.address.toString(),
+                data.phone?.toString(),
+                data.address?.toString(),
                 data.Gender?.name?.toString(),
               ]
     
@@ -249,6 +249,7 @@ export class MostrarUsersComponent implements OnInit {
   
     editar(id: number){
       this.modificar.emit(id)
+      console.log(id)
     }
     
     delet(id: number){

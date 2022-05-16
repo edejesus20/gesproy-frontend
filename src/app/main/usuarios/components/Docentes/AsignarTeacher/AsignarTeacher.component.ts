@@ -29,7 +29,7 @@ export class AsignarTeacherComponent implements OnInit {
     id:0,   
      UserId: 0,
     ScaleId: 0,
-    hours_of_dedication:'',
+    // hours_of_dedication:'',
     MincienciaCategoryId: 0,
     User:undefined, 
     Scale:undefined, 
@@ -266,7 +266,7 @@ public verificar(){
     console.log(bandera);
     if(bandera == true){
       let formValue = this.form.value;
-      if(this.Workexperiences.length == 0 || this.Workexperiences == []){
+      if(this.Workexperiences.length == 0 ){
         this.Workexperiences = this.form.value.Workexperiences 
         formValue.Workexperiences = this.form.value.Workexperiences
       }else{

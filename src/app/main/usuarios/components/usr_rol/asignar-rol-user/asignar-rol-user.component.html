@@ -52,9 +52,9 @@
                             <th  style="min-width:100px"pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
                             <th style="min-width:200px" pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
                             <th style="min-width:190px" pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="address">DIRECCION<p-sortIcon field="address"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="Gender.name">GENERO<p-sortIcon field="Gender.name"></p-sortIcon></th>
+                            <!-- <th style="min-width:100px" pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th> -->
+                            <!-- <th style="min-width:100px" pSortableColumn="address">DIRECCION<p-sortIcon field="address"></p-sortIcon></th> -->
+                            <th style="min-width:100px" pSortableColumn="Gender.name">Roles<p-sortIcon field="Gender.name"></p-sortIcon></th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-item>
@@ -66,9 +66,16 @@
                             <td style="min-width:100px">{{item.surname | titlecase}}</td>
                             <td style="min-width:200px">{{item.identification}}</td>
                             <td style="min-width:190px">{{item.User?.email | titlecase}}</td>
-                            <td style="min-width:100px">{{item.phone }}</td>
-                            <td style="min-width:100px">{{item.address | titlecase}}</td>
-                            <td style="min-width:100px">{{item.Gender.name | titlecase}}</td>
+                            <!-- <td style="min-width:100px">{{item.phone }}</td> -->
+                            <!-- <td style="min-width:100px">{{item.address | titlecase}}</td> -->
+                            <td >
+                              <span *ngFor="let i of item.User?.Roles">
+                                <span style="display: flex;">
+                                {{i.name | titlecase}}, 
+                                </span>
+                              </span>
+                            </td>
+                            <!-- <td style="min-width:100px">{{item.User?.Roles | titlecase}}</td> -->
                         </tr>
                     </ng-template>
                 </p-table>
@@ -76,7 +83,7 @@
                 </div>
 
 
-                <div fxLayout="row" fxLayoutGap="20px">
+                <div fxLayout="row" fxLayoutGap="20px" style="text-align: center">
                   <button pButton type="button" (click)="addRoles($event)" 
                   class="p-button-warning p-button-raised p-button-rounded"
                    label="Add Roles"></button>  

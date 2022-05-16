@@ -67,7 +67,7 @@
                 </div>
     
               </div>
-              <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+              <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup"  style="margin-bottom: 20px;">
                     <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -85,12 +85,11 @@
                 </div>
                 </div>
     
-              </div>
+              </div> -->
               
-              <div class="grid p-fluid">
+              <!-- <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="field">
-                    <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
                     <div class="flex">
                       <div style="width:100%">
                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -111,15 +110,6 @@
                     </div>
            
                 </div>
-                  <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-                  [style]="{'width':'100%','margin-bottom':'20px'}" 
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                   placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO">
-                  <ng-template let-option pTemplate="item">
-                    <span >{{option.name }}</span>
-                </ng-template>
-                </p-dropdown> -->
     
                 </div>
                 <div class="col-12 md:col-6 lg:col-6">
@@ -131,14 +121,13 @@
     
                 </div>
     
-              </div>
+              </div> -->
     
     
     
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
-                  <div class="field">
-                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
+                  <!-- <div class="field">
                     <div class="flex">
                       <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -158,7 +147,12 @@
                     </span>
                   </div>
             
-                  </div>
+                  </div> -->
+                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
+                    placeholder="CORREO"  title="CORREO ELECTRONICO">         
+                </div>
                   <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="documentTypes" [filter]="true"
                     name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
@@ -183,7 +177,7 @@
     
               </div>
     
-              <div class="grid p-fluid">
+              <!-- <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
                   
                   <div class="p-inputgroup" >
@@ -205,7 +199,7 @@
     
                 </div>
     
-              </div>
+              </div> -->
     
              
               
@@ -269,7 +263,7 @@
                 </div>
       </div>
 
-            
+            <br>
             <div fxLayout="row" class="titleCard">
               <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
@@ -342,7 +336,7 @@
           </div>
 
         </div>
-        <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+        <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
           <div class="col-12 md:col-6 lg:col-6">
             <div class="p-inputgroup"  style="margin-bottom: 20px;">
               <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -360,12 +354,11 @@
           </div>
           </div>
 
-        </div>
+        </div> -->
         
-        <div class="grid p-fluid">
+        <!-- <div class="grid p-fluid">
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
-              <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
               <div class="flex">
                 <div style="width:100%">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -386,15 +379,6 @@
               </div>
      
           </div>
-            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-          [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-            [style]="{'width':'100%','margin-bottom':'20px'}" 
-            optionvalue="id"  optionLabel="name" filterBy="name"
-             placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO">
-            <ng-template let-option pTemplate="item">
-              <span >{{option.name }}</span>
-          </ng-template>
-          </p-dropdown> -->
 
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -406,44 +390,21 @@
 
           </div>
 
-        </div>
+        </div> -->
 
 
 
         <div class="grid p-fluid">
           <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
-              <div class="flex">
-                <div style="width:100%">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-              [options]="documentTypes" [filter]="true"
-                name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-                [style]="{'width':'100%'}" 
-                optionvalue="id"  optionLabel="name" filterBy="name"
-                 placeholder="SELECCIONE TIPO DE DOCUMENTO" title="SELECCIONE TIPO DE DOCUMENTO">
-                <ng-template let-option pTemplate="item">
-                  <span >{{option.name}}</span>
-              </ng-template>
-              </p-dropdown>
-              </div>
-              <span class="bottomdelete" style="margin-top: -35px;">
-                <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
-              </span>
-            </div>
-      
-            </div>
-            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="documentTypes" [filter]="true"
-              name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-              [style]="{'width':'100%','margin-bottom':'20px'}" 
-              optionvalue="id"  optionLabel="name" filterBy="name"
-               placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO">
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name}}</span>
-            </ng-template>
-            </p-dropdown> -->
+
+
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
+              placeholder="CORREO"  title="CORREO ELECTRONICO">         
+          </div>
+
+
           </div>
           
           <div class="col-12 md:col-6 lg:col-6">
@@ -458,29 +419,6 @@
 
         </div>
 
-        <div class="grid p-fluid">
-          <div class="col-12 md:col-6 lg:col-6">
-            
-            <div class="p-inputgroup" >
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-              class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
-                title="DIRECCION" >         
-          </div>
-
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="p-inputgroup"  style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input class="p-inputtext-lg" type="text" formControlName="phone"
-              pInputText pKeyFilter="num" name="phone" 
-              placeholder="TELEFONO" title="TELEFONO"
-              >         
-          </div>
-
-          </div>
-
-        </div>
 
        
         
@@ -544,6 +482,7 @@
           </div>
 </div>
 <br>
+
 <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
   <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
 

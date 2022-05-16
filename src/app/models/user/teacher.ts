@@ -12,7 +12,7 @@ export interface TeacherI {
     UserId: number;
     ScaleId: number;
     MincienciaCategoryId: number;
-    hours_of_dedication:string;
+    // hours_of_dedication:string;
     User?:UserI
     Scale?:ScaleI
     Group?:GroupI
