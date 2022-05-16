@@ -21,9 +21,9 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
   surname:'',
   DocumentTypeId:'',
   identification:'',
-  GenderId:'',
-  address:'',
-  phone:'',
+  // GenderId:'',
+  // address:'',
+  // phone:'',
   email:'',
  };
 
@@ -40,9 +40,9 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
     surname:'',
     DocumentTypeId:'',
     identification:'',
-    GenderId:'',
-    address:'',
-    phone:'',
+    // GenderId:'',
+    // address:'',
+    // phone:'',
     email:'',
   }
     }
@@ -55,19 +55,19 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
       // console.log(cnt_groupFromApi.investigatorCollaborator)
         this.form.id=cnt_groupFromApi.investigatorCollaborator.id
         if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.surname != undefined &&
-          cnt_groupFromApi.investigatorCollaborator.User?.Person?.address != undefined &&
-          cnt_groupFromApi.investigatorCollaborator.User?.Person?.phone != undefined &&
-          cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentType != undefined &&
-          cnt_groupFromApi.investigatorCollaborator.User?.Person?.Gender != undefined
+          // cnt_groupFromApi.investigatorCollaborator.User?.Person?.address != undefined &&
+          // cnt_groupFromApi.investigatorCollaborator.User?.Person?.phone != undefined &&
+          cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentType != undefined
+          // cnt_groupFromApi.investigatorCollaborator.User?.Person?.Gender != undefined
           ){
           this.form.name=cnt_groupFromApi.investigatorCollaborator.User.Person.name
           this.form.surname=cnt_groupFromApi.investigatorCollaborator.User.Person.surname
           this.form.identification=cnt_groupFromApi.investigatorCollaborator.User.Person.identification
-          this.form.address=cnt_groupFromApi.investigatorCollaborator.User.Person.address
-          this.form.phone=cnt_groupFromApi.investigatorCollaborator.User.Person.phone
+          // this.form.address=cnt_groupFromApi.investigatorCollaborator.User.Person.address
+          // this.form.phone=cnt_groupFromApi.investigatorCollaborator.User.Person.phone
           this.form.email=cnt_groupFromApi.investigatorCollaborator.User.email
           this.form.DocumentTypeId=cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentType.name
-          this.form.GenderId=(cnt_groupFromApi.investigatorCollaborator.User?.Person?.Gender?.name)
+          // this.form.GenderId=(cnt_groupFromApi.investigatorCollaborator.User?.Person?.Gender?.name)
           }
       }
       this.displayMaximizable2=true

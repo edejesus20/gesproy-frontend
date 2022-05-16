@@ -19,16 +19,14 @@ export class DeleteStudentComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form:FormGroup=this.formBuilder.group({});
-  public documentTypes:DocumentTypeI[]=[]
-  public genders:GenderI[] =[]
+
 
   constructor(
     private primengConfig: PrimeNGConfig,
     private studentService:StudentService,
     private router: Router,
     private messageService:MessageService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
+
     private formBuilder: FormBuilder,
   ) { }
 
@@ -41,13 +39,13 @@ export class DeleteStudentComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
     });
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
   }
 
   public onSubmit() {
@@ -57,9 +55,9 @@ export class DeleteStudentComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
@@ -98,19 +96,19 @@ export class DeleteStudentComponent implements OnInit {
 }
 
 
-private getAllgenders(selectId?: number) {
-  this.genderService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.genders = AdministrativeFromApi.genders;
-    }, error => console.error(error));
-}
+// private getAllgenders(selectId?: number) {
+//   this.genderService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       this.genders = AdministrativeFromApi.genders;
+//     }, error => console.error(error));
+// }
 
-private getAlldocumentTypes(selectId?: number) {
-  this.documentTypeService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.documentTypes = AdministrativeFromApi.documentTypes;
-    }, error => console.error(error));
-}
+// private getAlldocumentTypes(selectId?: number) {
+//   this.documentTypeService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       this.documentTypes = AdministrativeFromApi.documentTypes;
+//     }, error => console.error(error));
+// }
 
 
 public volver(event: Event){
@@ -142,23 +140,23 @@ getOneCntAccount(id:number) {
           this.form.controls['name'].setValue(cnt_groupFromApi.student.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.student.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.student.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.student.User.email)
           // console.log('aqui')
         }
 
 
-        if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
-        this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
-          this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-        })
+        // if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
+        // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
+          this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
+        // })
 
 
-        if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
+        // if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
+        //   this.form.controls['GenderId'].setValue(algo.gender)
+        // })
     }
 
     this.displayMaximizable2=true

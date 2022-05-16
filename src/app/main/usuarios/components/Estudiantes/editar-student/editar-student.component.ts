@@ -63,14 +63,14 @@ export class EditarStudentComponent implements OnInit {
       id: [''],
       name:['', [Validators.required]],
       surname:['', [Validators.required]],
-      DocumentTypeId:['', [Validators.required]],
+      DocumentTypeId:[''],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      nationality:['', [Validators.required]],
-      date_of_birth:['', [Validators.required]],
+      // nationality:['', [Validators.required]],
+      // date_of_birth:['', [Validators.required]],
       headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group(
         {
           StudentId:0,
@@ -99,8 +99,8 @@ export class EditarStudentComponent implements OnInit {
     date_firt:[''],
     date_end:[''],
     });
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getSeedbed()
   }
@@ -117,17 +117,17 @@ export class EditarStudentComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
       password:'',
       UserId: 0,
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
-      nationality: this.form.value.nationality,
-      date_of_birth: this.form.value.date_of_birth,
+      // nationality: this.form.value.nationality,
+      // date_of_birth: this.form.value.date_of_birth,
       SeedbedId:this.form.value.SeedbedId.id,
       Horas: this.form.value.Horas,
       date_firt:this.form.value.date_firt,
@@ -143,7 +143,7 @@ export class EditarStudentComponent implements OnInit {
     if(this.mostrar3==false){
       formValue.StudentInternship=[]
     }
-    if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
+    if(this.headquarterProgramStudent1.length == 0 ){
       let control = <FormArray>this.form.controls['headquarterProgramStudent']
       for (const key of control.value) {
         key.HeadquarterProgramId=key.HeadquarterProgramId.id 
@@ -164,14 +164,15 @@ export class EditarStudentComponent implements OnInit {
     formValue.name != ""&&
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
+    formValue.id != ( 0 || undefined)&&
     // formValue.SeedbedId != ( 0 || undefined)&&
     // formValue.Horas != ""&&
     formValue.identification != ""&&
-    formValue.GenderId != ( 0 || undefined)&&
-    formValue.address != ""&&
-    formValue.phone != ""&&
-    formValue.nationality != ("" || undefined) && 
-    formValue. date_of_birth!= ("" || undefined) && 
+    // formValue.GenderId != ( 0 || undefined)&&
+    // formValue.address != ""&&
+    // formValue.phone != ""&&
+    // formValue.nationality != ("" || undefined) && 
+    // formValue. date_of_birth!= ("" || undefined) && 
     formValue.email != ""
     // && 
     // formValue.current_semester  != "" && formValue.current_average  != ""
@@ -220,21 +221,21 @@ private getAllheadquarters(selectId?: number) {
     }, error => console.error(error));
 }
 
-private getAllgenders(selectId?: number) {
-  this.genderService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.genders = AdministrativeFromApi.genders;
-    }, error => console.error(error));
-}
+// private getAllgenders(selectId?: number) {
+//   this.genderService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       // console.log(AdministrativeFromApi.administratives)
+//       this.genders = AdministrativeFromApi.genders;
+//     }, error => console.error(error));
+// }
 
-private getAlldocumentTypes(selectId?: number) {
-  this.documentTypeService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.documentTypes = AdministrativeFromApi.documentTypes;
+// private getAlldocumentTypes(selectId?: number) {
+//   this.documentTypeService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       this.documentTypes = AdministrativeFromApi.documentTypes;
 
-    }, error => console.error(error));
-}
+//     }, error => console.error(error));
+// }
 
 
 public volver(event: Event){
@@ -260,17 +261,16 @@ getOneCntAccount(id:number) {
     if(cnt_groupFromApi.student.id != undefined
       ){
       console.log(cnt_groupFromApi.student)
-        this.form.controls['id'].setValue(cnt_groupFromApi.student.id)
-        if(cnt_groupFromApi.student.User?.Person != undefined
-          ){
+        this.form.controls['id'].setValue(id)
+        if(cnt_groupFromApi.student.User?.Person != undefined){
           this.form.controls['name'].setValue(cnt_groupFromApi.student.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.student.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.student.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.student.User.email)
-          this.form.controls['nationality'].setValue(cnt_groupFromApi.student.User.Person.nationality)
-          this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
+          // this.form.controls['nationality'].setValue(cnt_groupFromApi.student.User.Person.nationality)
+          // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
           // this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
           // this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
           // this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
@@ -278,19 +278,19 @@ getOneCntAccount(id:number) {
           // this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
           // this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
        
-          }
+         
 
-          if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
-          this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
-            this.form.controls['DocumentTypeId'].setValue(algo.documentType)
-          })
+          // if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
+          // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
+            this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
+          // })
   
    
 
-        if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
-        this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
-          this.form.controls['GenderId'].setValue(algo.gender)
-        })
+        // if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
+        //   this.form.controls['GenderId'].setValue(algo.gender)
+        // })
         if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
           let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
           let nuevo =algo?.SeedbedStudent?.hours
@@ -328,6 +328,7 @@ getOneCntAccount(id:number) {
           this.agregarStudentInternships(cnt_groupFromApi.student.StudentInternships)
           
         }
+      }
         // console.log(this.form.value)
       
       // this.form.Administrative.User.fullName=cnt_groupFromApi.teacher.Administrative?.User?.fullName
@@ -456,51 +457,51 @@ getOneCntAccount(id:number) {
       let control = <FormArray>this.form.controls['StudentInternship']//aceder al control
       control.removeAt(index)
         if(control.length <= 0){
-          console.log('aqui')
+          // console.log('aqui')
         this.mostrar3=false
         }
     }
     
-    addTipoDocumento(e:Event){
-      e.preventDefault()
+  //   addTipoDocumento(e:Event){
+  //     e.preventDefault()
   
-      this.ref = this.dialogService.open(Create_documentTypeComponent, {
-        width: '35%',
-        height: '50%',
-        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-        baseZIndex: 10000,
-        data: {
-          id: '1'
-      },
-    });
+  //     this.ref = this.dialogService.open(Create_documentTypeComponent, {
+  //       width: '35%',
+  //       height: '50%',
+  //       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+  //       baseZIndex: 10000,
+  //       data: {
+  //         id: '1'
+  //     },
+  //   });
   
-    this.ref.onClose.subscribe((person: any) =>{
-        if (person) {
-            this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-        this.getAlldocumentTypes()
+  //   this.ref.onClose.subscribe((person: any) =>{
+  //       if (person) {
+  //           this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+  //       this.getAlldocumentTypes()
   
-          }
-    });
-    }
-    addGenero(e:Event){
-      e.preventDefault()
+  //         }
+  //   });
+  //   }
+  //   addGenero(e:Event){
+  //     e.preventDefault()
   
-      this.ref = this.dialogService.open(Create_genderComponent, {
-        width: '35%',
-        height: '50%',
-        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-        baseZIndex: 10000,
-        data: {
-          id: '1'
-      },
-    });
+  //     this.ref = this.dialogService.open(Create_genderComponent, {
+  //       width: '35%',
+  //       height: '50%',
+  //       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+  //       baseZIndex: 10000,
+  //       data: {
+  //         id: '1'
+  //     },
+  //   });
      
-    this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
+  //   this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+  //     this.getAllgenders()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
 }

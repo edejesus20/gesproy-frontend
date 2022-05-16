@@ -29,15 +29,16 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:[''],
     surname:[''],
-    DocumentTypeId:[''],
+    DocumentTypeId:[1],
     identification:[''],
-    GenderId:[''],
-    address:[''],
-    phone:[''],
+    // GenderId:[''],
+    // address:[''],
+    // phone:[''],
+    
     email:[''],
     UserId:[''],
-    nationality:[''],
-    date_of_birth:[''],
+    // nationality:[''],
+    // date_of_birth:[''],
    });
 
   public mostrarUser:boolean=false;
@@ -49,8 +50,8 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     public dialogService: DialogService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
+    // private genderService:GenderService,
+    // private documentTypeService:DocumentTypeService,
     private investigadorColaboladorService:InvestigadorColaboladorService,
     private formBuilder: FormBuilder,
     private messageService:MessageService,
@@ -58,9 +59,9 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     private userService:UserService,
   ) { }
   ngOnInit() {
-    this.getAllgenders()
+    // this.getAllgenders()
     this.getAllUser()
-    this.getAlldocumentTypes()
+    // this.getAlldocumentTypes()
     if(this.config.data){
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
@@ -79,21 +80,21 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
         // console.log(this.users)
       }, error => console.error(error));
   }
-  private getAllgenders(selectId?: number) {
-    this.genderService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.genders = AdministrativeFromApi.genders;
-      }, error => console.error(error));
-  }
+  // private getAllgenders(selectId?: number) {
+  //   this.genderService.getList().subscribe(
+  //     (AdministrativeFromApi) => {
+  //       // console.log(AdministrativeFromApi.administratives)
+  //       this.genders = AdministrativeFromApi.genders;
+  //     }, error => console.error(error));
+  // }
 
-  private getAlldocumentTypes(selectId?: number) {
-    this.documentTypeService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.documentTypes = AdministrativeFromApi.documentTypes;
+  // private getAlldocumentTypes(selectId?: number) {
+  //   this.documentTypeService.getList().subscribe(
+  //     (AdministrativeFromApi) => {
+  //       this.documentTypes = AdministrativeFromApi.documentTypes;
   
-      }, error => console.error(error));
-  }
+  //     }, error => console.error(error));
+  // }
 
   public onSubmit(e: Event) {
     e.preventDefault()
@@ -101,16 +102,16 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     formValue={
       name:  this.form.value.name,
       surname:  this.form.value.surname,
-      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      DocumentTypeId: this.form.value.DocumentTypeId,
       identification:  this.form.value.identification,
-      GenderId:  this.form.value.GenderId.id,
-      address:  this.form.value.address,
-      phone:  this.form.value.phone,
+      // GenderId:  this.form.value.GenderId.id,
+      // address:  this.form.value.address,
+      // phone:  this.form.value.phone,
       username: this.form.value.username,
       email: this.form.value.email,
       UserId:  this.form.value.UserId.UserId,
-    nationality: this.form.value.nationality,
-    date_of_birth: this.form.value.date_of_birth,
+    // nationality: this.form.value.nationality,
+    // date_of_birth: this.form.value.date_of_birth,
     };
 
     if(this.mostrarUser == false){
@@ -122,10 +123,11 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     }
     if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
-    formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-    formValue.phone != ""&& formValue.email != ""&&
-      formValue.nationality != ("" || undefined) && 
-      formValue. date_of_birth!= ("" || undefined)
+    // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+    // formValue.phone != ""&& 
+    formValue.email != ""
+      // formValue.nationality != ("" || undefined) && 
+      // formValue. date_of_birth!= ("" || undefined)
       )||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
     ){
     // console.log(formValue)
@@ -170,48 +172,48 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
           }
 }
 
-addGenero(e:Event){
-  e.preventDefault()
+// addGenero(e:Event){
+//   e.preventDefault()
 
-  this.ref1 = this.dialogService.open(Create_genderComponent, {
-    width: '35%',
-    height: '50%',
-    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-    baseZIndex: 10000,
-    data: {
-      id: '1'
-  },
-});
+//   this.ref1 = this.dialogService.open(Create_genderComponent, {
+//     width: '35%',
+//     height: '50%',
+//     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+//     baseZIndex: 10000,
+//     data: {
+//       id: '1'
+//   },
+// });
 
-this.ref1.onClose.subscribe((person: any) =>{
-    if (person) {
-        this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-    this.getAllgenders()
+// this.ref1.onClose.subscribe((person: any) =>{
+//     if (person) {
+//         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+//     this.getAllgenders()
 
-      }
-});
-}
+//       }
+// });
+// }
 
 
-addTipoDocumento(e:Event){
-  e.preventDefault()
+// addTipoDocumento(e:Event){
+//   e.preventDefault()
 
-  this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-    width: '35%',
-    height: '50%',
-    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-    baseZIndex: 10000,
-    data: {
-      id: '1'
-  },
-});
+//   this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
+//     width: '35%',
+//     height: '50%',
+//     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+//     baseZIndex: 10000,
+//     data: {
+//       id: '1'
+//   },
+// });
 
-this.ref1.onClose.subscribe((person: any) =>{
-    if (person) {
-        this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-    this.getAlldocumentTypes()
+// this.ref1.onClose.subscribe((person: any) =>{
+//     if (person) {
+//         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+//     this.getAlldocumentTypes()
 
-      }
-});
-}
+//       }
+// });
+// }
 }

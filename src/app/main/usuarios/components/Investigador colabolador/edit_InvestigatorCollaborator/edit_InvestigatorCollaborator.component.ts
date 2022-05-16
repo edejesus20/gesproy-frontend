@@ -46,65 +46,66 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      GenderId:['', [Validators.required]],
-      address:['', [Validators.required]],
-      phone:['', [Validators.required]],
+      // GenderId:['', [Validators.required]],
+      // address:['', [Validators.required]],
+      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      nationality:['', [Validators.required]],
-      date_of_birth:['', [Validators.required]],
+      // nationality:['', [Validators.required]],
+      // date_of_birth:['', [Validators.required]],
      });
   
-     this.getAllgenders()
-     this.getAlldocumentTypes()
+    //  this.getAllgenders()
+    //  this.getAlldocumentTypes()
    }
 
-   private getAllgenders(selectId?: number) {
-     this.genderService.getList().subscribe(
-       (AdministrativeFromApi) => {
-         // console.log(AdministrativeFromApi.administratives)
-         this.genders = AdministrativeFromApi.genders;
-       }, error => console.error(error));
-   }
+  //  private getAllgenders(selectId?: number) {
+  //    this.genderService.getList().subscribe(
+  //      (AdministrativeFromApi) => {
+  //        // console.log(AdministrativeFromApi.administratives)
+  //        this.genders = AdministrativeFromApi.genders;
+  //      }, error => console.error(error));
+  //  }
  
-   private getAlldocumentTypes(selectId?: number) {
-     this.documentTypeService.getList().subscribe(
-       (AdministrativeFromApi) => {
-         this.documentTypes = AdministrativeFromApi.documentTypes;
+  //  private getAlldocumentTypes(selectId?: number) {
+  //    this.documentTypeService.getList().subscribe(
+  //      (AdministrativeFromApi) => {
+  //        this.documentTypes = AdministrativeFromApi.documentTypes;
    
-       }, error => console.error(error));
-   }
+  //      }, error => console.error(error));
+  //  }
  
   getOneCntAccount(id:number) {
     this.investigadorColaboladorService.getItem(id).subscribe((cnt_groupFromApi) => {
        if(cnt_groupFromApi.investigatorCollaborator.id != undefined
       ){
       // console.log(cnt_groupFromApi.administrative)
-        this.form.controls['id'].setValue(cnt_groupFromApi.investigatorCollaborator.id)
+        this.form.controls['id'].setValue(id)
         if(cnt_groupFromApi.investigatorCollaborator.User?.Person != undefined
           ){
           this.form.controls['name'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.identification)
-          this.form.controls['address'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.address)
-          this.form.controls['phone'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.phone)
+          // this.form.controls['address'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.address)
+          // this.form.controls['phone'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.investigatorCollaborator.User.email)
-            this.form.controls['nationality'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.nationality)
-            this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.date_of_birth)
-          }
+            // this.form.controls['nationality'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.nationality)
+            // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.date_of_birth)
+          
 
-        if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId != undefined){
-        this.genderService.getItem(parseInt(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId)).subscribe((algo1)=>{
-            if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentTypeId != undefined){
-              this.documentTypeService.getItem(parseInt(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentTypeId)).subscribe((algo3)=>{
+        // if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId != undefined){
+        // this.genderService.getItem(parseInt(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId)).subscribe((algo1)=>{
+        //     if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentTypeId != undefined){
+        //       this.documentTypeService.getItem(parseInt(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentTypeId)).subscribe((algo3)=>{
                 
-                this.form.controls['DocumentTypeId'].setValue(algo3.documentType)
-                this.form.controls['GenderId'].setValue(algo1.gender)
+                this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentType)
+                // this.form.controls['GenderId'].setValue(algo1.gender)
                
-                })
-              }
+        //         })
+        //       }
       
-        })
-      }
+        // })
+      // }
+          }
     }
 
         
@@ -141,16 +142,16 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      nationality: this.form.value.nationality,
-      date_of_birth: this.form.value.date_of_birth,
+      // nationality: this.form.value.nationality,
+      // date_of_birth: this.form.value.date_of_birth,
     };
     // console.log(formValue)
 
@@ -158,12 +159,15 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
               formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&&
               formValue.identification != ""&&
-              formValue.GenderId != ( 0 || undefined)&&
-              formValue.address != ""&&
-              formValue.phone != ""&&
-              formValue.email != ""&&
-              formValue.nationality != ("" || undefined) && 
-              formValue. date_of_birth!= ("" || undefined)){
+              // formValue.GenderId != ( 0 || undefined)&&
+              formValue.id != ( 0 || undefined)&&
+              // formValue.address != ""&&
+              // formValue.phone != ""&&
+              formValue.email != ""
+              // &&
+              // formValue.nationality != ("" || undefined) && 
+              // formValue. date_of_birth!= ("" || undefined)
+              ){
 
 
             this.investigadorColaboladorService.updateItem(formValue.id,formValue).subscribe(
@@ -200,48 +204,48 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
           }
   }
 
-  addGenero(e:Event){
-    e.preventDefault()
+  // addGenero(e:Event){
+  //   e.preventDefault()
   
-    this.ref = this.dialogService.open(Create_genderComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(Create_genderComponent, {
+  //     width: '35%',
+  //     height: '50%',
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
   
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+  //     this.getAllgenders()
   
-        }
-  });
-  }
+  //       }
+  // });
+  // }
   
   
-  addTipoDocumento(e:Event){
-    e.preventDefault()
+  // addTipoDocumento(e:Event){
+  //   e.preventDefault()
   
-    this.ref = this.dialogService.open(Create_documentTypeComponent, {
-      width: '35%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(Create_documentTypeComponent, {
+  //     width: '35%',
+  //     height: '50%',
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
   
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+  //     this.getAlldocumentTypes()
   
-        }
-  });
-  }
+  //       }
+  // });
+  // }
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <ng-template [ngIf]="mostrarDialogo == false">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '70vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '30vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
   [closable]="false" [closeOnEscape]="false" 
@@ -68,7 +68,7 @@
                 </div>
     
               </div>
-              <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+              <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup"  style="margin-bottom: 20px;">
                     <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -87,12 +87,11 @@
                 </div>
                 </div>
     
-              </div>
+              </div> -->
               
               <div class="grid p-fluid">
-                <div class="col-12 md:col-6 lg:col-6">
+                <!-- <div class="col-12 md:col-6 lg:col-6">
                   <div class="field">
-                    <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
                     <div class="flex">
                       <div style="width:100%">
                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -113,17 +112,8 @@
                     </div>
            
                 </div>
-                  <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-                  [style]="{'width':'100%','margin-bottom':'20px'}" 
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                   placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO" >
-                  <ng-template let-option pTemplate="item">
-                    <span >{{option.name }}</span>
-                </ng-template>
-                </p-dropdown> -->
     
-                </div>
+                </div> -->
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup"  style="margin-bottom: 20px;">
                     <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -132,15 +122,24 @@
                 </div>
     
                 </div>
+                <div class="col-12 md:col-6 lg:col-6">
+                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <input class="p-inputtext-lg" formControlName="identification" 
+                    type="text" pInputText pKeyFilter="num" name="identification" 
+                    placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN" >         
+                </div>
+    
+                </div>
+    
     
               </div>
     
     
     
-              <div class="grid p-fluid">
+              <!-- <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="field">
-                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
                     <div class="flex">
                       <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -161,16 +160,6 @@
                   </div>
             
                   </div>
-                  <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                  [options]="documentTypes" [filter]="true"
-                    name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-                    [style]="{'width':'100%','margin-bottom':'20px'}" 
-                    optionvalue="id"  optionLabel="name" filterBy="name"
-                     placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO" >
-                    <ng-template let-option pTemplate="item">
-                      <span >{{option.name}}</span>
-                  </ng-template>
-                  </p-dropdown> -->
                 </div>
                 
                 <div class="col-12 md:col-6 lg:col-6">
@@ -183,8 +172,8 @@
     
                 </div>
     
-              </div>
-    
+              </div> -->
+<!--     
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
                   
@@ -207,7 +196,7 @@
     
                 </div>
     
-              </div>
+              </div> -->
     
              
               
@@ -292,7 +281,7 @@
           </div>
 
         </div>
-        <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
+        <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
           <div class="col-12 md:col-6 lg:col-6">
             <div class="p-inputgroup"  style="margin-bottom: 20px;">
               <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -311,12 +300,11 @@
           </div>
           </div>
 
-        </div>
+        </div> -->
         
         <div class="grid p-fluid">
-          <div class="col-12 md:col-6 lg:col-6">
+          <!-- <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
-              <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
               <div class="flex">
                 <div style="width:100%">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -337,17 +325,8 @@
               </div>
      
           </div>
-            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-          [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-            [style]="{'width':'100%','margin-bottom':'20px'}" 
-            optionvalue="id"  optionLabel="name" filterBy="name"
-             placeholder="SELECCIONE EL GENERO" title="SELECCIONE EL GENERO" >
-            <ng-template let-option pTemplate="item">
-              <span >{{option.name }}</span>
-          </ng-template>
-          </p-dropdown> -->
 
-          </div>
+          </div> -->
           <div class="col-12 md:col-6 lg:col-6">
             <div class="p-inputgroup"  style="margin-bottom: 20px;">
               <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
@@ -356,15 +335,23 @@
           </div>
 
           </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+              <input class="p-inputtext-lg" formControlName="identification" 
+              type="text" pInputText pKeyFilter="num" name="identification" 
+              placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN" >         
+          </div>
+
+          </div>
 
         </div>
 
 
 
-        <div class="grid p-fluid">
+        <!-- <div class="grid p-fluid">
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
-              <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
               <div class="flex">
                 <div style="width:100%">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -385,16 +372,6 @@
             </div>
       
             </div>
-            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="documentTypes" [filter]="true"
-              name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-              [style]="{'width':'100%','margin-bottom':'20px'}" 
-              optionvalue="id"  optionLabel="name" filterBy="name"
-               placeholder="TIPO DE DOCUMENTO" title="TIPO DE DOCUMENTO" >
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name}}</span>
-            </ng-template>
-            </p-dropdown> -->
           </div>
           
           <div class="col-12 md:col-6 lg:col-6">
@@ -407,9 +384,9 @@
 
           </div>
 
-        </div>
+        </div> -->
 
-        <div class="grid p-fluid">
+        <!-- <div class="grid p-fluid">
           <div class="col-12 md:col-6 lg:col-6">
             
             <div class="p-inputgroup" >
@@ -431,7 +408,7 @@
 
           </div>
 
-        </div>
+        </div> -->
 
        
         

@@ -9,9 +9,7 @@ import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
-import { ProgramService } from 'src/app/core/services/program/program.service';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
-import { ProgramI } from 'src/app/models/institution/program';
+
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
@@ -30,7 +28,7 @@ export class CreateStudentComponent implements OnInit {
 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public mostrar2:boolean=false;
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
@@ -41,15 +39,15 @@ export class CreateStudentComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     surname:['', [Validators.required]],
-    DocumentTypeId:['', [Validators.required]],
+    DocumentTypeId:[1],
     identification:['', [Validators.required]],
-    GenderId:['', [Validators.required]],
-    address:['', [Validators.required]],
-    phone:['', [Validators.required]],
+    // GenderId:['', [Validators.required]],
+    // address:['', [Validators.required]],
+    // phone:['', [Validators.required]],
     email:['', [Validators.required]],
     UserId:[''],
-    nationality:['', [Validators.required]],
-    date_of_birth:['', [Validators.required]],
+    // nationality:['', [Validators.required]],
+    // date_of_birth:['', [Validators.required]],
     headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
         StudentId:0,
         HeadquarterProgramId:['', [Validators.required]],
@@ -101,8 +99,8 @@ export class CreateStudentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllgenders()
-    this.getAlldocumentTypes()
+    // this.getAllgenders()
+    // this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getAllUser()
     this.getSeedbed()
@@ -137,19 +135,19 @@ export class CreateStudentComponent implements OnInit {
     formValue={
       name: this.form.value.name,
       surname: this.form.value.surname,
-      DocumentTypeId: this.form.value.DocumentTypeId.id,
+      DocumentTypeId: this.form.value.DocumentTypeId,
       identification: this.form.value.identification,
-      GenderId: this.form.value.GenderId.id,
-      address: this.form.value.address,
-      phone: this.form.value.phone,
+      // GenderId: this.form.value.GenderId.id,
+      // address: this.form.value.address,
+      // phone: this.form.value.phone,
       username:'',
       fullName:'',
       email:this.form.value.email,
       password:'',
       UserId: undefined,
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
-      nationality: this.form.value.nationality,
-      date_of_birth: this.form.value.date_of_birth,
+      // nationality: this.form.value.nationality,
+      // date_of_birth: this.form.value.date_of_birth,
       SeedbedId:this.form.value.SeedbedId.id,
       Horas: this.form.value.Horas,
       date_firt:this.form.value.date_firt,
@@ -167,7 +165,7 @@ export class CreateStudentComponent implements OnInit {
     }
 
     // console.log(formValue)
-      if(this.headquarterProgramStudent1.length == 0 || this.headquarterProgramStudent1 == []){
+      if(this.headquarterProgramStudent1.length == 0 ){
             let control = <FormArray>this.form.controls['headquarterProgramStudent']
             for (const key of control.value) {
               key.HeadquarterProgramId=key.HeadquarterProgramId.id 
@@ -184,12 +182,14 @@ export class CreateStudentComponent implements OnInit {
 
       // if((this.mostrarUser == true && 
         if(  formValue.name != ""&& formValue.surname != ""&&
-      formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
-      formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
-      formValue.nationality != ("" || undefined) && 
+      formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""
+      // &&
+      // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
+      // formValue.nationality != ("" || undefined) && 
       // formValue.SeedbedId != ( 0 || undefined)&& formValue.Horas != ""&&
-      formValue. date_of_birth!= ("" || undefined) && 
-      formValue.phone != ""&& formValue.email != "" 
+      // formValue. date_of_birth!= ("" || undefined) && 
+      // formValue.phone != ""
+      && formValue.email != "" 
       // && 
       // formValue.current_semester  != "" && formValue.current_average  != "" 
       // )
@@ -237,21 +237,21 @@ export class CreateStudentComponent implements OnInit {
       } 
   }
 
-  private getAllgenders(selectId?: number) {
-    this.genderService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        // console.log(AdministrativeFromApi.administratives)
-        this.genders = AdministrativeFromApi.genders;
-      }, error => console.error(error));
-  }
+  // private getAllgenders(selectId?: number) {
+  //   this.genderService.getList().subscribe(
+  //     (AdministrativeFromApi) => {
+  //       // console.log(AdministrativeFromApi.administratives)
+  //       this.genders = AdministrativeFromApi.genders;
+  //     }, error => console.error(error));
+  // }
   
-  private getAlldocumentTypes(selectId?: number) {
-    this.documentTypeService.getList().subscribe(
-      (AdministrativeFromApi) => {
-        this.documentTypes = AdministrativeFromApi.documentTypes;
+  // private getAlldocumentTypes(selectId?: number) {
+  //   this.documentTypeService.getList().subscribe(
+  //     (AdministrativeFromApi) => {
+  //       this.documentTypes = AdministrativeFromApi.documentTypes;
   
-      }, error => console.error(error));
-  }
+  //     }, error => console.error(error));
+  // }
 
   private getAllheadquarters(selectId?: number) {
     this.headquarterService.HeadquarterProgram().subscribe(
@@ -267,21 +267,22 @@ export class CreateStudentComponent implements OnInit {
   
     addRoles(event: Event){
       event.preventDefault();
+      this.mostrar=true
       const control = <FormArray>this.form.controls['headquarterProgramStudent']
-        if(control.length == 0 && this.mostrar == false){
-          control.push(this.formBuilder.group({
-            StudentId:0,
-            HeadquarterProgramId:['', [Validators.required]],
-          }))
-        }
-        if(control.length >= 1 && this.mostrar == true){
+        // if(control.length == 0 && this.mostrar == false){
+        //   control.push(this.formBuilder.group({
+        //     StudentId:0,
+        //     HeadquarterProgramId:['', [Validators.required]],
+        //   }))
+        // }
+        // if(control.length >= 1 && this.mostrar == true){
           control.push(this.formBuilder.group({
             StudentId:0,
             HeadquarterProgramId:['', [Validators.required]],
           }))
   
-        }
-        this.mostrar=true
+        // }
+        // this.mostrar=true
     }
     removeRoles(index: number,event: Event){
       event.preventDefault();
@@ -289,6 +290,10 @@ export class CreateStudentComponent implements OnInit {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar=false
+        // control.push(this.formBuilder.group({
+        //   StudentId:0,
+        //   HeadquarterProgramId:['', [Validators.required]],
+        // }))
         }
     }
     get getStudentInternships() {
@@ -336,51 +341,63 @@ export class CreateStudentComponent implements OnInit {
         if(control.length <= 0){
           console.log('aqui')
         this.mostrar2=false
+        control.push(this.formBuilder.group({
+          StudentId:0,
+          nameP:[''],
+          start_date:[''],
+          final_date:[''],
+          name_institution:[''],
+          internship_certificate:[''],
+          practice_hours:[''],
+          area:[''],
+          post:[''],
+          functions:[''],
+        }))
         }
     }
     
-    addGenero(e:Event){
-      e.preventDefault()
+    // addGenero(e:Event){
+    //   e.preventDefault()
   
-      this.ref1 = this.dialogService.open(Create_genderComponent, {
-        width: '35%',
-        height: '50%',
-        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-        baseZIndex: 10000,
-        data: {
-          id: '1'
-      },
-    });
+    //   this.ref1 = this.dialogService.open(Create_genderComponent, {
+    //     width: '35%',
+    //     height: '50%',
+    //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+    //     baseZIndex: 10000,
+    //     data: {
+    //       id: '1'
+    //   },
+    // });
   
-    this.ref1.onClose.subscribe((person: any) =>{
-        if (person) {
-            this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-        this.getAllgenders()
+    // this.ref1.onClose.subscribe((person: any) =>{
+    //     if (person) {
+    //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+    //     this.getAllgenders()
   
-          }
-    });
-    }
+    //       }
+    // });
+    // }
   
   
-    addTipoDocumento(e:Event){
-      e.preventDefault()
+    // addTipoDocumento(e:Event){
+    //   e.preventDefault()
   
-      this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-        width: '35%',
-        height: '50%',
-        contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-        baseZIndex: 10000,
-        data: {
-          id: '1'
-      },
-    });
+    //   this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
+    //     width: '35%',
+    //     height: '50%',
+    //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
+    //     baseZIndex: 10000,
+    //     data: {
+    //       id: '1'
+    //   },
+    // });
   
-    this.ref1.onClose.subscribe((person: any) =>{
-        if (person) {
-            this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-        this.getAlldocumentTypes()
+    // this.ref1.onClose.subscribe((person: any) =>{
+    //     if (person) {
+    //         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+    //     this.getAlldocumentTypes()
   
-          }
-    });
-    }
+    //       }
+    // });
+    // }
 }

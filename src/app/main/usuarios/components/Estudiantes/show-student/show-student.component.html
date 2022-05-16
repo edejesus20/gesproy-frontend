@@ -40,7 +40,7 @@
           <th pSortableColumn="User.fullName">NOMBRE<p-sortIcon field="User.fullName"></p-sortIcon></th>
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
-          <th pSortableColumn="User.Person.nationality">NACIONALIDAD<p-sortIcon field="User.Person.nationality"></p-sortIcon></th>
+          <!-- <th pSortableColumn="User.Person.nationality">NACIONALIDAD<p-sortIcon field="User.Person.nationality"></p-sortIcon></th> -->
           
           <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th>
           <th pSortableColumn="User.Person.Gender.name">GENERO<p-sortIcon field="User.Person.Gender.name"></p-sortIcon></th>
@@ -62,7 +62,7 @@
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.User.fullName | titlecase}}</td>
           <td>{{item.User?.Person?.identification}}</td>
-          <td>{{item.User.Person.nationality | titlecase}}</td>
+          <!-- <td>{{item.User.Person.nationality | titlecase}}</td> -->
           
           <td>{{item.User?.email | titlecase}}</td>
           <td>{{item.User?.Person?.phone }}</td>
