@@ -178,6 +178,7 @@ constructor(
     this.ngOnInit()
     this.id =0
     this.mostrar2=false
+    this.administratives=[]
     //console.log(event)
   }
 
@@ -215,11 +216,15 @@ getOneCntAccount(id:number) {
 
       for (const key of this.categorys) {
         if(key.id == cnt_groupFromApi.program.CategoryId){
-          this.form.controls['CategoryId'].setValue(key)
-
+         this.form.controls['CategoryId'].setValue(key)
         }
-     
       } 
+      // this.administrativeService.getItem(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
+  
+      //   this.administratives.push(algo.administrative)
+       
+      //   this.form.controls['AdministrativeId'].setValue(algo.administrative)
+      // })
 
     //   this.categoryService.getItem(cnt_groupFromApi.program.CategoryId).subscribe((algo)=>{
     //   this.form.controls['CategoryId'].setValue(algo.category)
@@ -244,21 +249,43 @@ getOneCntAccount(id:number) {
         // console.log(DiscountLine)
         
         let control = <FormArray>this.form.controls['Headquarters']
-          this.headquarterService.getItem(key.HeadquarterProgram.HeadquarterId).subscribe((algo1)=>{
-            if(algo1.headquarter && key.HeadquarterProgram != undefined){
-              this.administrativeService.getItem(key.HeadquarterProgram.AdministrativeId).subscribe((algo)=>{
-                if(algo.administrative && key.HeadquarterProgram != undefined){
-                  control.push(this.formBuilder.group({
-                    ProgramId:[key.HeadquarterProgram.ProgramId, [Validators.required]],
-                    HeadquarterId:[algo1.headquarter, [Validators.required]],
-                    AdministrativeId:[algo.administrative, [Validators.required]],
-                  }))
-                }
+        let  HeadquarterId:any
+        for (const key2 of this.headquarters) {
+          if(key2.id == key.HeadquarterProgram.HeadquarterId){
+           HeadquarterId=key2
+          }
+        } 
+        let AdministrativeId:any
+        let ProgramId=key.HeadquarterProgram.ProgramId
+        // this.administratives.push(algo.administrative)
+      this.administrativeService.getItem(key.HeadquarterProgram.AdministrativeId).subscribe((algo)=>{
+        this.administratives.push(algo.administrative)
+
+        // for (const key2 of this.administratives) {
+        //   if(key2.id == key.HeadquarterProgram.AdministrativeId){
+            AdministrativeId=algo.administrative
+        //   }
+        // } 
+
+        control.push(this.formBuilder.group({
+          ProgramId:[ProgramId, [Validators.required]],
+          HeadquarterId:[HeadquarterId, [Validators.required]],
+          AdministrativeId:[AdministrativeId, [Validators.required]],
+        }))
+      })
+
+   
+          // this.headquarterService.getItem(key.HeadquarterProgram.HeadquarterId).subscribe((algo1)=>{
+            // if(algo1.headquarter && key.HeadquarterProgram != undefined){
+              // this.administrativeService.getItem(key.HeadquarterProgram.AdministrativeId).subscribe((algo)=>{
+                // if(algo.administrative && key.HeadquarterProgram != undefined){
+                 
+                // }
     
-              })
-            }
+              // })
+            // }
             
-          })
+          // })
       }
     }
     this.mostrar2= true
@@ -321,10 +348,21 @@ public datos(position:number){
   }
 
   private getAlladministratives() {
-    this.administrativeService.getList().subscribe(
+    this.administrativeService.getTipoAdministrative('2').subscribe(
       (AdministrativeFromApi) => {
-        this.administratives = AdministrativeFromApi.administratives;
+
+          for (let decano of AdministrativeFromApi.coordinadores) {
+            if(!decano.Faculties?.length) {
+              this.administratives.push(decano)
+          }   
+        }
+        // console.log(this.administratives)
+        // this.administratives = AdministrativeFromApi.administratives;
       }, error => console.error(error));
+    // this.administrativeService.getList().subscribe(
+    //   (AdministrativeFromApi) => {
+    //     this.administratives = AdministrativeFromApi.administratives;
+    //   }, error => console.error(error));
   }
 
   private getAllheadquarters() {

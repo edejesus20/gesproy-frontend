@@ -186,9 +186,20 @@ public datos(position:number){
   }
 
   private getAlladministratives() {
-    this.administrativeService.getList().subscribe(
+    // this.administrativeService.getList().subscribe(
+    //   (AdministrativeFromApi) => {
+    //     this.administratives = AdministrativeFromApi.administratives;
+    //   }, error => console.error(error));
+    this.administrativeService.getTipoAdministrative('2').subscribe(
       (AdministrativeFromApi) => {
-        this.administratives = AdministrativeFromApi.administratives;
+
+          for (let decano of AdministrativeFromApi.coordinadores) {
+            if(!decano.Faculties?.length) {
+              this.administratives.push(decano)
+          }   
+        }
+        // console.log(this.administratives)
+        // this.administratives = AdministrativeFromApi.administratives;
       }, error => console.error(error));
   }
 

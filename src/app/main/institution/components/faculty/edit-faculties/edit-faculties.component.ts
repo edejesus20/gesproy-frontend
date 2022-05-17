@@ -110,7 +110,7 @@ constructor(
               this.administratives.push(decano)
           }   
         }
-        console.log(this.administratives)
+        // console.log(this.administratives)
         // this.administratives = AdministrativeFromApi.administratives;
       }, error => console.error(error));
   }

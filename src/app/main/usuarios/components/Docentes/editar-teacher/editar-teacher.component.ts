@@ -517,20 +517,35 @@ getOneCntAccount(id:number) {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
-              if(algo.headquarterProgram && key.HeadquarterProgramTeacher != undefined){
-                    this.research_bondingService.getItem(key.HeadquarterProgramTeacher.ResearchBondingId).subscribe
-                    ((algo2)=>{
-                      if(algo2.research_bonding && key.HeadquarterProgramTeacher != undefined){
+          let  HeadquarterId:any
+          for (const key2 of this.headquarterProgram) {
+            if(key2.id == key.HeadquarterProgramTeacher.HeadquarterProgramId){
+             HeadquarterId=key2
+            }
+          } 
+
+          let  ResearchBondingId:any
+          for (const key2 of this.research_bondings) {
+            if(key2.id == key.HeadquarterProgramTeacher.ResearchBondingId){
+              ResearchBondingId=key2
+            }
+          } 
+          // this.headquarterProgram
+
+            // this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
+              // if(algo.headquarterProgram && key.HeadquarterProgramTeacher != undefined){
+                    // this.research_bondingService.getItem(key.HeadquarterProgramTeacher.ResearchBondingId).subscribe
+                    // ((algo2)=>{
+                    //   if(algo2.research_bonding && key.HeadquarterProgramTeacher != undefined){
                         control.push(this.formBuilder.group({
                           TeacherId:0,
-                            HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
-                            ResearchBondingId:[algo2.research_bonding, [Validators.required]],
+                            HeadquarterProgramId:[HeadquarterId, [Validators.required]],
+                            ResearchBondingId:[ResearchBondingId, [Validators.required]],
                         }))
-                      }
-                  })
-              }
-            })
+                  //     }
+                  // })
+            //   }
+            // })
         }
       }
       this.mostrar1= true

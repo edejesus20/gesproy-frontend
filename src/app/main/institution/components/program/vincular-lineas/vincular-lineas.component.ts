@@ -178,15 +178,21 @@ getOneCntAccount(id:number) {
         // console.log(DiscountLine)
         
         let control = <FormArray>this.form.controls['Lines']
-          this.lineService.getItem(key.id).subscribe((algo1)=>{
-            if(algo1.line && key.id != undefined){
+        let  LineId:any
+        for (const key2 of this.lines) {
+          if(key2.id == key.id){
+            LineId=key2
+          }
+        }
+          // this.lineService.getItem(key.id).subscribe((algo1)=>{
+          //   if(algo1.line && key.id != undefined){
 
                   control.push(this.formBuilder.group({
                     ProgramId:[this.id, [Validators.required]],
-                    LineId:[algo1.line, [Validators.required]],
+                    LineId:[LineId, [Validators.required]],
                   }))
-                }           
-          })
+          //       }           
+          // })
       }
     }
     this.mostrar2= true

@@ -371,14 +371,22 @@ getOneCntAccount(id:number) {
         if(key.HeadquarterProgramStudent != undefined) {
           // console.log(DiscountLine)
           let control = <FormArray>this.form.controls['headquarterProgramStudent']
-            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramStudent.HeadquarterProgramId).subscribe((algo)=>{
-              if(algo.headquarterProgram && key.HeadquarterProgramStudent != undefined){
+
+          let  HeadquarterId:any
+          for (const key2 of this.headquarterProgram) {
+            if(key2.id == key.HeadquarterProgramStudent.HeadquarterProgramId){
+             HeadquarterId=key2
+            }
+          }
+
+            // this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramStudent.HeadquarterProgramId).subscribe((algo)=>{
+            //   if(algo.headquarterProgram && key.HeadquarterProgramStudent != undefined){
                 control.push(this.formBuilder.group({
                   StudentId:0,
-                  HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
+                  HeadquarterProgramId:[HeadquarterId, [Validators.required]],
                 }))
-              }
-            })
+            //   }
+            // })
         }
       }
       this.mostrar2= true
