@@ -122,7 +122,8 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
       formValue.UserId= undefined
     }
     if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
-    formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""&&
+    formValue.DocumentTypeId != ( 0 || undefined)&& 
+    // formValue.identification != ""&&
     // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
     // formValue.phone != ""&& 
     formValue.email != ""

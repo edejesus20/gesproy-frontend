@@ -40,7 +40,7 @@ export class CreateStudentComponent implements OnInit {
     name:['', [Validators.required]],
     surname:['', [Validators.required]],
     DocumentTypeId:[1],
-    identification:['', [Validators.required]],
+    identification:[''],
     // GenderId:['', [Validators.required]],
     // address:['', [Validators.required]],
     // phone:['', [Validators.required]],
@@ -182,14 +182,15 @@ export class CreateStudentComponent implements OnInit {
 
       // if((this.mostrarUser == true && 
         if(  formValue.name != ""&& formValue.surname != ""&&
-      formValue.DocumentTypeId != ( 0 || undefined)&& formValue.identification != ""
+      formValue.DocumentTypeId != ( 0 || undefined)&& 
+      // formValue.identification != ""&&
       // &&
       // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
       // formValue.nationality != ("" || undefined) && 
       // formValue.SeedbedId != ( 0 || undefined)&& formValue.Horas != ""&&
       // formValue. date_of_birth!= ("" || undefined) && 
       // formValue.phone != ""
-      && formValue.email != "" 
+       formValue.email != "" 
       // && 
       // formValue.current_semester  != "" && formValue.current_average  != "" 
       // )

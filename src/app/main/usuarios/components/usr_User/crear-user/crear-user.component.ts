@@ -33,7 +33,7 @@ export class CrearUserComponent implements OnInit {
     name:['', [Validators.required]],
     surname:['', [Validators.required]],
     DocumentTypeId:[1],
-    identification:['', [Validators.required]],
+    identification:[''],
     // GenderId:['', [Validators.required]],
     // address:['', [Validators.required]],
   //  phone:['', [Validators.required]],
@@ -172,7 +172,7 @@ export class CrearUserComponent implements OnInit {
               if(formValue.name != ""&&
                 formValue.surname != ""&&
                 formValue.DocumentTypeId != ( 0 || undefined)&&
-                formValue.identification != ""&&
+                // formValue.identification != ""&&
                 // formValue.GenderId != ( 0 || undefined)&&
                 // formValue.address != ""&&
                 // formValue.phone != ""&&
