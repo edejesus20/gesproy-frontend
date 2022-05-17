@@ -71,10 +71,14 @@
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <ng-template [ngIf]="mostrar!=3">
+
+          <th pSortableColumn="Sedes">SEDES<p-sortIcon field="Sedes"></p-sortIcon></th>
+          </ng-template>
           <th pSortableColumn="Faculty.name">FACULTAD<p-sortIcon field="Faculty.name"></p-sortIcon></th>
-          <th pSortableColumn="Faculty.Administrative.User.fullName">DECANATURA<p-sortIcon field="Faculty.Administrative.User.fullName"></p-sortIcon></th>
+
           <th pSortableColumn="Category.name">CATEGORIA<p-sortIcon field="Category.name"></p-sortIcon></th>
-          <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
+          <!-- <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -91,10 +95,18 @@
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
+          <ng-template [ngIf]="mostrar!=3">
+          <td >
+            <span *ngFor="let i of item.Headquarters">
+              <span style="display: flex;">
+                * {{i.name}} 
+              </span>
+            </span>
+          </td>
+          </ng-template>
           <td>{{item.Faculty.name | titlecase}}</td>
-          <td>{{item.Faculty.Administrative.User.fullName| titlecase}}</td>
           <td>{{item.Category.name| titlecase}}</td>
-          <td>{{item.createdAt | date:'fullDate' | titlecase}}</td>
+          <!-- <td>{{item.createdAt | date:'fullDate' | titlecase}}</td> -->
           <ng-template [ngIf]="mostrar==1">
               
               <td >

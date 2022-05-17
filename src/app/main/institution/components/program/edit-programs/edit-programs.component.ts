@@ -201,13 +201,29 @@ getOneCntAccount(id:number) {
       this.id=cnt_groupFromApi.program.id
       this.form.controls['id'].setValue(cnt_groupFromApi.program.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.program.name)
-      this.form.controls['FacultyId'].setValue(cnt_groupFromApi.program.FacultyId)
-      this.facultyService.getItem(cnt_groupFromApi.program.FacultyId).subscribe((algo)=>{
-        this.form.controls['FacultyId'].setValue(algo.faculty)
-      })
-      this.categoryService.getItem(cnt_groupFromApi.program.CategoryId).subscribe((algo)=>{
-      this.form.controls['CategoryId'].setValue(algo.category)
-    })
+      // this.form.controls['FacultyId'].setValue(cnt_groupFromApi.program.FacultyId)
+      // this.facultyService.getItem(cnt_groupFromApi.program.FacultyId).subscribe((algo)=>{
+      //   this.form.controls['FacultyId'].setValue(algo.faculty)
+      // })
+      for (const key of this.faculties) {
+        if(key.id == cnt_groupFromApi.program.FacultyId){
+          this.form.controls['FacultyId'].setValue(key)
+
+        }
+     
+      } 
+
+      for (const key of this.categorys) {
+        if(key.id == cnt_groupFromApi.program.CategoryId){
+          this.form.controls['CategoryId'].setValue(key)
+
+        }
+     
+      } 
+
+    //   this.categoryService.getItem(cnt_groupFromApi.program.CategoryId).subscribe((algo)=>{
+    //   this.form.controls['CategoryId'].setValue(algo.category)
+    // })
       this.form2=cnt_groupFromApi.program
       }
 

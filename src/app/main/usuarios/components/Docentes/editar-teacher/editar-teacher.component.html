@@ -44,7 +44,7 @@
               <div class="p-inputgroup" >
                 <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                   <input type="text" class="p-inputtext-lg" pInputText name="name" 
-                   formControlName="name" title="NOMBRES" >  
+                   formControlName="name" title="NOMBRES" required >  
 
               </div>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="p-inputgroup" >
                   <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                   <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                  class="p-inputtext-lg"  name="surname"  title="APELLIDO"
+                  class="p-inputtext-lg"  name="surname"  title="APELLIDO" required
                   formControlName="surname">         
               </div>
                 </div>
@@ -400,7 +400,7 @@
     
                                       <input type="text" class="p-inputtext-lg" title="NOMBRE DE FORMACIÓN" 
                                        pInputText name="name" placeholder="NOMBRE DE FORMACIÓN"
-                                       formControlName="name" required>  
+                                       formControlName="name" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -412,7 +412,7 @@
                                       <input type="date"class="p-inputtext-lg"  title="FECHA DE GRADUACION"
                                        inputId="basic" name="date_graduation" pInputText
                                        placeholder="FECHA DE GRADUACION"
-                                      formControlName="date_graduation" required />
+                                      formControlName="date_graduation"  />
                                       <!-- <input type="text" class="p-inputtext-lg"
                                        pInputText name="date_graduation" placeholder="FECHA DE GRADUACION"
                                        formControlName="date_graduation" required>   -->
@@ -428,7 +428,7 @@
                                             name="TrainingId" formControlName="TrainingId" label="CAPACITACION" 
                                             [style]="{'width':'100%','margin-bottom':'20px'}"  
                                             optionvalue="id"  optionLabel="name" filterBy="name"
-                                            [required]="true" placeholder="CAPACITACION" title="CAPACITACION">
+                                            placeholder="CAPACITACION" title="CAPACITACION">
                                             <ng-template let-option pTemplate="item">
                                               <span >{{option.name | titlecase}}</span>
                                           </ng-template>
@@ -453,7 +453,7 @@
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="name_institution" placeholder="INSTITUCIÓN"
                                        title="INSTITUCIÓN"
-                                       formControlName="name_institution" required>  
+                                       formControlName="name_institution" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -466,7 +466,7 @@
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="resolution_convalidation" 
                                        placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION" 
-                                       formControlName="resolution_convalidation" required>  
+                                       formControlName="resolution_convalidation" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -479,7 +479,7 @@
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="degree_certificate" 
                                        placeholder="CERTIFICADO DE GRADO" title="CERTIFICADO DE GRADO" 
-                                       formControlName="degree_certificate" required>  
+                                       formControlName="degree_certificate" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -540,7 +540,7 @@
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="name_institution" title="NOMBRE DE INSTITUCIÓN"
                                        placeholder="NOMBRE DE INSTITUCIÓN"
-                                       formControlName="name_institution" required>  
+                                       formControlName="name_institution" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -553,7 +553,7 @@
                                       <input type="text" class="p-inputtext-lg"
                                        pInputText name="position_type" 
                                        placeholder="TIPO DE POSICIÓN" title="TIPO DE POSICIÓN"
-                                       formControlName="position_type" required>  
+                                       formControlName="position_type" >  
                                        <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
                                       </span>       
                                     </div>
@@ -570,7 +570,7 @@
                                         class="p-inputtext-lg"
                                          pInputText name="functions" 
                                          placeholder="FUNCIONES" title="FUNCIONES"
-                                        formControlName="functions" required></textarea>
+                                        formControlName="functions" ></textarea>
                                         <!-- <input type="text" class="p-inputtext-lg"
                                          pInputText name="functions" 
                                          placeholder="FUNCIONES" title="FUNCIONES"
@@ -588,7 +588,7 @@
                                         <input type="date" pInputText   class="p-inputtext-lg" title="FECHA DE INICIO"
                                         inputId="basic" name="start_date" 
                                         placeholder="FECHA DE INICIO"
-                                        formControlName="start_date" required></span> 
+                                        formControlName="start_date" ></span> 
                                       </div>
                                     </div>
                                        <div>
@@ -599,7 +599,7 @@
                                           title="FECHA DE TERMINO"
                                           inputId="basic" name="final_date"
                                            placeholder="FECHA DE TERMINO"
-                                          formControlName="final_date" required></span> 
+                                          formControlName="final_date" ></span> 
                                         </div>
                                        </div>
                                   

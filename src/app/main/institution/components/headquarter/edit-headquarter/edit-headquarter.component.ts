@@ -139,9 +139,15 @@ getOneCntAccount(id:number) {
       this.form.controls['id'].setValue(cnt_groupFromApi.headquarter.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.headquarter.name)
       this.form.controls['cordinatorInvestigation'].setValue(cnt_groupFromApi.headquarter.cordinatorInvestigation)
-      this.universityService.getItem(cnt_groupFromApi.headquarter.UniversityId).subscribe((algo)=>{
-        this.form.controls['UniversityId'].setValue(algo.university)
-      })
+      for (const key of this.universitys) {
+        if(key.id == cnt_groupFromApi.headquarter.UniversityId){
+          this.form.controls['UniversityId'].setValue(key)
+
+        }
+     
+      } 
+      // this.universityService.getItem(cnt_groupFromApi.headquarter.UniversityId).subscribe((algo)=>{
+      // })
       }
 
     this.displayMaximizable2=true

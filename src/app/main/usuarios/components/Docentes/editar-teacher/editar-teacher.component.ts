@@ -337,21 +337,21 @@ get getRoles() {
       }
   }
  
-private getAllgenders(selectId?: number) {
-  this.genderService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.genders = AdministrativeFromApi.genders;
-    }, error => console.error(error));
-}
+// private getAllgenders(selectId?: number) {
+//   this.genderService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       // console.log(AdministrativeFromApi.administratives)
+//       this.genders = AdministrativeFromApi.genders;
+//     }, error => console.error(error));
+// }
 
-private getAlldocumentTypes(selectId?: number) {
-  this.documentTypeService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      this.documentTypes = AdministrativeFromApi.documentTypes;
+// private getAlldocumentTypes(selectId?: number) {
+//   this.documentTypeService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       this.documentTypes = AdministrativeFromApi.documentTypes;
 
-    }, error => console.error(error));
-}
+//     }, error => console.error(error));
+// }
 
 private getAllscales(selectId?: number) {
   this.scaleService.getList().subscribe(
@@ -422,10 +422,17 @@ getOneCntAccount(id:number) {
           // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           // this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
-            if(cnt_groupFromApi.teacher.                ChargeBondingId != undefined){
+            if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
             // console.log(cnt_groupFromApi.teacher.LinkType)
-        this.charge_bondingService.getItem(cnt_groupFromApi.teacher.ChargeBondingId).subscribe(
-          (algo1)=>{this.form.controls['ChargeBondingId'].setValue(algo1.charge_bonding)})}
+            for (const key of this.charge_bondings) {
+              if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ChargeBondingId)){
+                this.form.controls['ChargeBondingId'].setValue(key)
+              }
+            }
+
+        // this.charge_bondingService.getItem(cnt_groupFromApi.teacher.ChargeBondingId).subscribe(
+        //   (algo1)=>{this.form.controls['ChargeBondingId'].setValue(algo1.charge_bonding)})
+        }
               
           // this.form.controls['nationality'].setValue(cnt_groupFromApi.teacher.User.Person.nationality)
             // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.teacher.User.Person.date_of_birth)
@@ -439,16 +446,26 @@ getOneCntAccount(id:number) {
         // })
 
         }
+        for (const key of this.scales) {
+          if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ScaleId)){
+            this.form.controls['ScaleId'].setValue(key)
+          }
+        }
+        // if(cnt_groupFromApi.teacher.ScaleId != undefined)
+        // this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
+        //   this.form.controls['ScaleId'].setValue(algo.scale)
+        // })
 
-        if(cnt_groupFromApi.teacher.ScaleId != undefined)
-        this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
-          this.form.controls['ScaleId'].setValue(algo.scale)
-        })
+        for (const key of this.mincienciaCategorys) {
+          if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.MincienciaCategoryId)){
+            this.form.controls['MincienciaCategoryId'].setValue(key)
+          }
+        }
 
-        if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
-        this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
-          this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
-        })
+        // if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
+        // this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
+        //   this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
+        // })
 
         if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined && cnt_groupFromApi.teacher.HeadquarterPrograms?.length > 0){
           
@@ -461,7 +478,7 @@ getOneCntAccount(id:number) {
         }
         
         if(cnt_groupFromApi.teacher.Workexperiences?.length != undefined && cnt_groupFromApi.teacher.Workexperiences?.length > 0){
-          console.log(cnt_groupFromApi.teacher.Trainings)
+          // console.log(cnt_groupFromApi.teacher.Trainings)
           this.agregarDescuentos2(cnt_groupFromApi.teacher.Workexperiences)    
         }
      }
@@ -470,29 +487,29 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
-  agregarLines(Lines: LineI[]) {
-    if(Lines.length){
-      for (let key of Lines) {
-        if(key.id != undefined) {
-          // console.log(DiscountLine)
+  // agregarLines(Lines: LineI[]) {
+  //   if(Lines.length){
+  //     for (let key of Lines) {
+  //       if(key.id != undefined) {
+  //         // console.log(DiscountLine)
           
-          let control = <FormArray>this.form.controls['Lines']
-            this.lineService.getItem(key.id).subscribe((algo)=>{
-              if(algo.line && key.id != undefined){
-                  control.push(this.formBuilder.group({
-                    TeacherId:0,
-                      LineId:[algo.line, [Validators.required]]
-                  }))
-                }
-            })
-        }
-      }
-      this.mostrar3= true
-      let control = <FormArray>this.form.controls['Lines']
-      control.removeAt(0)
-      // console.log(control)
-    }
-  }
+  //         let control = <FormArray>this.form.controls['Lines']
+  //           this.lineService.getItem(key.id).subscribe((algo)=>{
+  //             if(algo.line && key.id != undefined){
+  //                 control.push(this.formBuilder.group({
+  //                   TeacherId:0,
+  //                     LineId:[algo.line, [Validators.required]]
+  //                 }))
+  //               }
+  //           })
+  //       }
+  //     }
+  //     this.mostrar3= true
+  //     let control = <FormArray>this.form.controls['Lines']
+  //     control.removeAt(0)
+  //     // console.log(control)
+  //   }
+  // }
   agregarHeadquarterPrograms(HeadquarterPrograms: HeadquarterProgramI[]) {
     if(HeadquarterPrograms.length){
       for (let key of HeadquarterPrograms) {
@@ -558,13 +575,13 @@ getOneCntAccount(id:number) {
                     // let any :any=algo.training
                     // console.log(algo.training)
                     control.push(this.formBuilder.group({
-                      name: [key.TrainingTeacher?.name, [Validators.required]],
-                      date_graduation: [key.TrainingTeacher?.date_graduation, [Validators.required]],
-                      name_institution: [key.TrainingTeacher?.name_institution, [Validators.required]],
-                      resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation, [Validators.required]],
-                      degree_certificate: [key.TrainingTeacher?.degree_certificate, [Validators.required]],
+                      name: [key.TrainingTeacher?.name],
+                      date_graduation: [key.TrainingTeacher?.date_graduation],
+                      name_institution: [key.TrainingTeacher?.name_institution],
+                      resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation],
+                      degree_certificate: [key.TrainingTeacher?.degree_certificate],
                       TeacherId:algo1.teacher.id,
-                      TrainingId:[algo.training, [Validators.required]],
+                      TrainingId:[algo.training],
                     }))
                   }
       
@@ -789,49 +806,49 @@ getOneCntAccount(id:number) {
   });
   }
 
-  addGenero(e:Event){
-    e.preventDefault()
+  // addGenero(e:Event){
+  //   e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_genderComponent, {
-      width: '40%',
-      height: '52%',showHeader:false,
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(Create_genderComponent, {
+  //     width: '40%',
+  //     height: '52%',showHeader:false,
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
 
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-      this.getAllgenders()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
+  //     this.getAllgenders()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
 
 
-  addTipoDocumento(e:Event){
-    e.preventDefault()
+  // addTipoDocumento(e:Event){
+  //   e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_documentTypeComponent, {
-      width: '40%',
-      height: '50%',showHeader:false,
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(Create_documentTypeComponent, {
+  //     width: '40%',
+  //     height: '50%',showHeader:false,
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
 
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-      this.getAlldocumentTypes()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
+  //     this.getAlldocumentTypes()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
 
 }

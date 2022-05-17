@@ -46,6 +46,7 @@ constructor(
   ngOnInit(): void {
     
     this.getAlluniversidades()
+    this.getAlladministrative()
     this.primengConfig.ripple = true;
 
     this.form=this.formBuilder.group({
@@ -148,16 +149,30 @@ constructor(
           this.id=cnt_groupFromApi.faculty.id 
           this.form.controls['id'].setValue(cnt_groupFromApi.faculty.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.faculty.name)
-      this.form.controls['AdministrativeId'].setValue(cnt_groupFromApi.faculty.AdministrativeId)
+      // this.form.controls['AdministrativeId'].setValue(cnt_groupFromApi.faculty.AdministrativeId)
+
+      for (const key of this.administratives) {
+        if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
+          this.form.controls['AdministrativeId'].setValue(key)
+        }
+      } 
+
+      for (const key of this.universitys) {
+        if(key.id == cnt_groupFromApi.faculty.UniversityId){
+          this.form.controls['UniversityId'].setValue(key)
+
+        }
+     
+      } 
       this.administrativeService.getItem(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
   
         this.administratives.push(algo.administrative)
-        this.getAlladministrative()
+       
         this.form.controls['AdministrativeId'].setValue(algo.administrative)
       })
-      this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{
-        this.form.controls['UniversityId'].setValue(algo.university)
-      })
+      // this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{
+      //   this.form.controls['UniversityId'].setValue(algo.university)
+      // })
         
         // this.form.Administrative.User.fullName=cnt_groupFromApi.faculty.Administrative?.User?.fullName
       }

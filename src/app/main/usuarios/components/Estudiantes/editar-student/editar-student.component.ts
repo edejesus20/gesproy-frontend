@@ -260,7 +260,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.student.id != undefined
       ){
-      console.log(cnt_groupFromApi.student)
+      // console.log(cnt_groupFromApi.student)
         this.form.controls['id'].setValue(id)
         if(cnt_groupFromApi.student.User?.Person != undefined){
           this.form.controls['name'].setValue(cnt_groupFromApi.student.User.Person.name)
@@ -304,10 +304,15 @@ getOneCntAccount(id:number) {
             console.log(date_end)
 
           if(algo?.id != undefined)
-          this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
-            this.form.controls['SeedbedId'].setValue(algo1.seedbed)
-            // console.log(algo1.seedbed)
-          })
+          for (const key of this.seedbeds) {
+            if(key.id != undefined && key.id == (algo?.id)){
+              this.form.controls['SeedbedId'].setValue(key)
+            }
+          }
+          // this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
+          //   this.form.controls['SeedbedId'].setValue(algo1.seedbed)
+          //   // console.log(algo1.seedbed)
+          // })
         }
         
        

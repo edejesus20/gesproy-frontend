@@ -106,11 +106,15 @@ export class EditarAdministrativeComponent implements OnInit {
 
         // if(cnt_groupFromApi.administrative.User?.Person?.GenderId != undefined)
         // this.genderService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.GenderId)).subscribe((algo1)=>{
-        
-          if(cnt_groupFromApi.administrative.Headquarter != undefined)
-          this.headquarterService.getItem(parseInt(cnt_groupFromApi.administrative.HeadquarterId)).subscribe((algo2)=>{
-            this.form.controls['HeadquarterId'].setValue(algo2.headquarter)   
-           }) 
+          for (const key of this.headquarters) {
+            if(key.id != undefined && key.id == parseInt(cnt_groupFromApi.administrative.HeadquarterId)){
+              this.form.controls['HeadquarterId'].setValue(key)
+            }
+          }
+          // if(cnt_groupFromApi.administrative.Headquarter != undefined)
+          // this.headquarterService.getItem(parseInt(cnt_groupFromApi.administrative.HeadquarterId)).subscribe((algo2)=>{
+          //   this.form.controls['HeadquarterId'].setValue(algo2.headquarter)   
+          //  }) 
             // if(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId != undefined){
             //   this.documentTypeService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.DocumentTypeId)).subscribe((algo3)=>{
                 
@@ -124,14 +128,18 @@ export class EditarAdministrativeComponent implements OnInit {
       
         // })
         this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.administrative.User?.Person?.DocumentType)
-
-
-        if(cnt_groupFromApi.administrative.Charge != undefined){
-          this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
-            this.form.controls['ChargeId'].setValue(algo4.charge)
-          })
-          
+        for (const key of this.charges) {
+          if(key.id != undefined && key.id == parseInt(cnt_groupFromApi.administrative.ChargeId)){
+            this.form.controls['ChargeId'].setValue(key)
+          }
         }
+
+        // if(cnt_groupFromApi.administrative.Charge != undefined){
+        //   this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
+        //     this.form.controls['ChargeId'].setValue(algo4.charge)
+        //   })
+          
+        // }
       }
       }
       this.displayMaximizable2=true
