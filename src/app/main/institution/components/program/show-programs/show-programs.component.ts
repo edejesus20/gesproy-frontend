@@ -69,10 +69,13 @@ export class ShowProgramsComponent implements OnInit {
   getHeadquarter(e:Event){
     e.preventDefault();
     if(this.HeadquarterId != null){
-      this.headquarterService.getItem(this.HeadquarterId.id).subscribe(
+      this.headquarterService.getHeadquarterProgramas(this.HeadquarterId.id).subscribe(
         (AdministrativeFromApi) => {
-          if(AdministrativeFromApi.headquarter.Programs){
-            this.programs = AdministrativeFromApi.headquarter.Programs;
+          if(AdministrativeFromApi.programs){
+              this.programs=AdministrativeFromApi.programs
+
+            console.log(this.programs)
+
           }
      
         }, error => console.error(error));
@@ -91,6 +94,8 @@ Buscar(event: Event, dt1:any){
     this.programService.getList().subscribe((programsFromApi) => {
       this.programs =programsFromApi.programs
       this.rows2=[]
+      console.log(programsFromApi.programs,'programs')
+
       if(programsFromApi.programs != undefined){
         for (const key of programsFromApi.programs) {
           this.rows2.push(

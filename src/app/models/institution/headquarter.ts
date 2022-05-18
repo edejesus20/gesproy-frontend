@@ -14,6 +14,7 @@ export interface HeadquarterI {
    Programs?:ProgramI[]
    Administratives?:AdministrativeI[]
    HeadquarterProgram?:HeadquarterProgramI
+   HeadquarterPrograms?:HeadquarterProgramI[]
 
 }
 
@@ -23,8 +24,9 @@ export interface HeadquarterProgramI {
    HeadquarterId:number;
    AdministrativeId:number;
    Programs?:ProgramI[]
-   Program?:ProgramI[]
+   Program?:ProgramI
    Headquarters?:HeadquarterI[]
+   Headquarter?:HeadquarterI
    Administratives?:AdministrativeI[]
    HeadquarterProgramTeacher?:HeadquarterProgramTeacherI
    HeadquarterProgramStudent?:HeadquarterProgramStudentI

@@ -40,7 +40,7 @@
           <th pSortableColumn="justification">JUSTIFICACIÓN<p-sortIcon field="justification"></p-sortIcon></th>
           <th pSortableColumn="objectives">OBJETIVOS<p-sortIcon field="objectives"></p-sortIcon></th>
           <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
-          <!-- <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th> -->
+          <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -66,7 +66,7 @@
               </span>
             </span>
           </td>
-          <!-- <td>{{item.resolution | titlecase}}</td> -->
+          <td>{{item.resolution | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >
@@ -109,7 +109,7 @@
               <div >
             
                   
-                  <p-table [value]="item.Programs"  dataKey="id" 
+                  <p-table [value]="item.LinePrograms"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                       <ng-template pTemplate="header" >
@@ -123,10 +123,10 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <td>{{order.name | titlecase}}</td> 
-                          <td>{{order.Faculty.name | titlecase}}</td> 
-                          <td>{{order.Faculty.Administrative.User.fullName | titlecase}}</td> 
-                          <td>{{order.Faculty.University.name | titlecase}}</td> 
+                          <td>{{order.Program.name | titlecase}}</td> 
+                          <td>{{order.Program.Faculty.name | titlecase}}</td> 
+                          <td>{{order.Program.Faculty.Administrative.User.fullName | titlecase}}</td> 
+                          <td>{{order.Program.Faculty.University.name | titlecase}}</td> 
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">

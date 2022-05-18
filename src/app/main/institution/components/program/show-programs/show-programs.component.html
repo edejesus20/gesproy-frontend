@@ -74,6 +74,7 @@
           <ng-template [ngIf]="mostrar!=3">
 
           <th pSortableColumn="Sedes">SEDES<p-sortIcon field="Sedes"></p-sortIcon></th>
+          <th pSortableColumn="Administrativos">ADMINISTRATIVOS<p-sortIcon field="Administrativos"></p-sortIcon></th>
           </ng-template>
           <th pSortableColumn="Faculty.name">FACULTAD<p-sortIcon field="Faculty.name"></p-sortIcon></th>
 
@@ -97,9 +98,16 @@
           <td>{{item.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar!=3">
           <td >
-            <span *ngFor="let i of item.Headquarters">
+            <span *ngFor="let i of item.HeadquarterPrograms">
               <span style="display: flex;">
-                * {{i.name}} 
+                * {{i.Headquarter.name}} 
+              </span>
+            </span>
+          </td>
+          <td >
+            <span *ngFor="let i of item.HeadquarterPrograms">
+              <span style="display: flex;">
+                * {{i.Administrative.User.fullName}}-{{i.Administrative.Charge.name}}  
               </span>
             </span>
           </td>
@@ -148,7 +156,7 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Headquarters"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.HeadquarterPrograms"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -164,10 +172,10 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <td>{{order.id}}</td>
-                              <td>{{order.name | titlecase}}</td>
-                              <td>{{order.cordinatorInvestigation }}</td>
-                              <td>{{order.University.name | titlecase}}</td>
+                              <td>{{order.Headquarter.id}}</td>
+                              <td>{{order.Headquarter.name | titlecase}}</td>
+                              <td>{{order.Headquarter.cordinatorInvestigation }}</td>
+                              <td>{{order.Headquarter.University.name | titlecase}}</td>
                           </tr>
                       </ng-template>
 
@@ -181,7 +189,7 @@
                   </p-table>
     <br>
 
-                <p-table [value]="item.Lines"  dataKey="id" [paginator]="true" [rows]="3" 
+                <p-table [value]="item.LinePrograms"  dataKey="id" [paginator]="true" [rows]="3" 
                 [showCurrentPageReport]="true"  responsiveLayout="scroll"
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                  >
@@ -197,8 +205,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-order >
                       <tr>
-                            <td>{{order.id}}</td>
-                            <td>{{order.name | titlecase}}</td>
+                            <td>{{order.Line.id}}</td>
+                            <td>{{order.Line.name | titlecase}}</td>
                             <!-- <td>{{order.cordinatorInvestigation }}</td> -->
                             <!-- <td>{{order.University.name | titlecase}}</td> -->
                         </tr>

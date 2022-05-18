@@ -121,7 +121,7 @@
                         <tr>
                             <td colspan="7">
                                 <div >
-                                    <p-table responsiveLayout="scroll" [value]="order.Programs"  dataKey="id" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                                    <p-table responsiveLayout="scroll" [value]="order.HeadquarterPrograms"  dataKey="id" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                                     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                                      >
                                      <ng-template pTemplate="header">
@@ -133,9 +133,9 @@
                                   </ng-template>
                                   <ng-template pTemplate="body" let-ok>
                                     <tr>
-                                          <td>{{ok.id}}</td>
-                                          <td>{{ok.name | titlecase}}</td>
-                                          <td>{{ok.Category?.name | titlecase}}</td>
+                                          <td>{{ok.Program.id}}</td>
+                                          <td>{{ok.Program.name | titlecase}}</td>
+                                          <td>{{ok.Program.Category?.name | titlecase}}</td>
                                       </tr>
                                   </ng-template>
                                   <ng-template pTemplate="emptymessage">

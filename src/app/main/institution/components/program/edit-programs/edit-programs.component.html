@@ -4,8 +4,10 @@
 <ng-template [ngIf]="tabla == false">
 
   <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '60vw'}" 
-    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
+    [style]="{'width': '70vw','height': '60vw'}" 
+    [closable]="false" [closeOnEscape]="false" 
+    [showHeader]="false"   >
     <br>
         
         <div [style]="{'margin-top':'-1px'}" >
@@ -135,14 +137,11 @@
                                 formControlName="AdministrativeId"
                                label="SELECCIONE DIRECTOR" 
                               [style]="{'width':'100%','margin-bottom':'20px'}"
-                              optionvalue="id" optionLabel="User.fullName"  filterBy="User.fullName"
+                              optionvalue="UserId" optionLabel="todo"  filterBy="todo"
                               [required]="true" placeholder="SELECCIONE DIRECTOR">
                               <ng-template let-option pTemplate="item">
                                 <span >
-                                  {{option.Charge?.name  | titlecase}} -
-                                  {{option.User.fullName  | titlecase}} - 
-                                  {{option.User.Person.identification }}-
-                                  {{option.Headquarter.name | titlecase}}
+                                  {{option.todo | titlecase}}
                                   </span>
                             </ng-template>
                             </p-dropdown>

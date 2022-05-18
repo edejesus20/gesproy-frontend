@@ -115,7 +115,7 @@ export class Create_linesComponent implements OnInit {
           ThematicId:['', [Validators.required]],
           Thematic_axis: ['', [Validators.required]],
       })]),
-      // resolution: ['', [Validators.required]],
+      resolution: [''],
     });
   }  
 
@@ -127,7 +127,7 @@ export class Create_linesComponent implements OnInit {
     let formValue: LineI = this.form.value;
 
     
-    if(this.Thematics1.length == 0 || this.Thematics1 == []){
+    if(this.Thematics1.length == 0 ){
       for (let key of control.value) {
 
         key.ThematicId=key.ThematicId.id

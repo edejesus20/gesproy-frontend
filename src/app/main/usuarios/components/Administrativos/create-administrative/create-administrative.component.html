@@ -1,7 +1,8 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <ng-template [ngIf]="mostrarDialogo == false">
 
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '70vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
+  [style]="{'width': '70vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
   
   [closable]="false" [closeOnEscape]="false" 
@@ -208,9 +209,9 @@
           </ng-template>
           
              
-                <div class="grid p-fluid">
+                <div class="grid ">
                   <div class="col-12 md:col-6 lg:col-6">
-                    <div class="field">
+                    <!-- <div class="field"> -->
                       <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
                       <div class="flex">
                         <div style="width:100%">
@@ -225,14 +226,14 @@
                         </ng-template>
                           </p-dropdown>
                         </div>
-                        <span class="bottomdelete" style="margin-top: -35px;">
+                        <span class="bottomdelete" style="margin-top: -35px;margin-left: 7px;">
                           <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                           class="p-button-rounded p-button-outlined" (click)="addOcupacion($event)" ></button>
                         </span>
   
                       </div>
              
-                  </div>
+                  <!-- </div> -->
                     <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="ocupations" [filter]="true"
                     name="OcupationId" formControlName="OcupationId" label="SELECCIONE OCUPACIÓN" 
@@ -247,16 +248,19 @@
                   </div>
                   
                   <div class="col-12 md:col-6 lg:col-6">
-                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                  [options]="headquarters" [filter]="true"
-                    name="HeadquarterId" formControlName="HeadquarterId" label="SELECCIONE LA SEDE" 
-                    [style]="{'width':'100%','margin-bottom':'10px'}"
-                    optionvalue="id"  optionLabel="name" filterBy="name"
-                    [required]="true" placeholder="SELECCIONE LA SEDE" title="SEDE">
-                    <ng-template let-option pTemplate="item">
-                      <span >{{option.name | titlecase}} - {{option.University.name | titlecase}}</span>
-                  </ng-template>
-                  </p-dropdown>
+                    <div style="width:100%">
+                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                      [options]="headquarters" [filter]="true"
+                        name="HeadquarterId" formControlName="HeadquarterId" label="SELECCIONE LA SEDE" 
+                        [style]="{'width':'100%','margin-bottom':'10px'}"
+                        optionvalue="id"  optionLabel="name" filterBy="name"
+                        [required]="true" placeholder="SELECCIONE LA SEDE" title="SEDE">
+                        <ng-template let-option pTemplate="item">
+                          <span >{{option.name | titlecase}} - {{option.University.name | titlecase}}</span>
+                      </ng-template>
+                      </p-dropdown>
+                    </div>
+                
       
                   </div>
       
@@ -427,11 +431,11 @@
     </ng-template>
     
        
-          <div class="grid p-fluid">
+          <div class="grid ">
             <div class="col-12 md:col-6 lg:col-6">
-              <div class="field">
+              <div class="field ">
                 <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
-                <div class="flex">
+                <div class="flex  " >
                   <div style="width:100%">
                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                     [options]="charges" [filter]="true"
@@ -481,6 +485,7 @@
 
           </div>
 </div>
+<br>
 <br>
 
 <div fxLayout="row" class="titleCard"style="margin-top: -10px;">

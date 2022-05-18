@@ -71,14 +71,24 @@ export class AdministrativeService {
        catchError(this.handleError)
      )
  }
- getTipoAdministrative(tipo:string): Observable<{ decanos: AdministrativeI[], coordinadores:AdministrativeI[] }> {
+ getTipoAdministrative(tipo:string): Observable<{ administrativos: any[]}> {
   return this.http
-    .get<{ decanos: AdministrativeI[], coordinadores:AdministrativeI[] }>(this.base_path_get+ '/tipo/' + tipo)
+    .get<{ administrativos: any[]}>(this.base_path_get+ '/tipo/' + tipo)
     .pipe(
       retry(2),
       catchError(this.handleError)
     )
 }
+getAdministrativesOneTipo(id:number): Observable<{ administrativos: any[]}> {
+  return this.http
+    .get<{ administrativos: any[]}>(this.base_path_get+ '/tipoOne/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
+
  // Update item by id
  updateItem(id:number, administrative:AdministrativeI): Observable<AdministrativeI> {
    return this.http

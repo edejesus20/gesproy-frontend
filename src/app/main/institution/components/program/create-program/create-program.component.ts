@@ -49,7 +49,10 @@ export class CreateProgramComponent implements OnInit {
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+private CategoryId:number=0
+private FacultyId:number=0
 public ref1:any;
+private Headquarters1:any[] = [];
 constructor(
   public dialogService: DialogService,
     private router: Router,
@@ -85,20 +88,38 @@ constructor(
   }
 
   public onSubmit() {
+    if(this.CategoryId == 0){
+      this.CategoryId =this.form.value.CategoryId.id
+    }
+    if(this.FacultyId == 0){
+      this.FacultyId =this.form.value.FacultyId.id
+    }
     let formValue: ProgramI = this.form.value;
-    formValue.FacultyId=this.form.value.FacultyId.id
-    formValue.CategoryId=this.form.value.CategoryId.id
+    formValue.FacultyId=this.FacultyId
+    formValue.CategoryId=this.CategoryId
 
+    if(this.Headquarters1.length == 0 ){
+      let control = <FormArray>this.form.controls['Headquarters']
+      for (const key of control.value) {
+        // key.ProgramId=this.id,
+        key.HeadquarterId=key.HeadquarterId.id
+        key.AdministrativeId=key.AdministrativeId.AdministrativeId
+        this.Headquarters1.push({
+          ProgramId:0,
+        HeadquarterId:key.HeadquarterId,
+        AdministrativeId:key.    AdministrativeId,
+        })
+      }
+      this.Headquarters1 = this.form.value.Headquarters 
+
+      formValue.Headquarters = this.form.value.Headquarters
+    }else{
+      formValue.Headquarters = this.Headquarters1
+    }
     if(formValue.name != '' &&
     formValue.CategoryId != ( 0 )&&
     formValue.FacultyId != ( 0 )
     ){
-    let control = <FormArray>this.form.controls['Headquarters']
-
-    for (const key of control.value) {
-      key.HeadquarterId=key.HeadquarterId.id
-      key.AdministrativeId=key.AdministrativeId.id
-    }
 
     this.programService.createItem(formValue).subscribe(
       () => {
@@ -186,20 +207,15 @@ public datos(position:number){
   }
 
   private getAlladministratives() {
-    // this.administrativeService.getList().subscribe(
-    //   (AdministrativeFromApi) => {
-    //     this.administratives = AdministrativeFromApi.administratives;
-    //   }, error => console.error(error));
     this.administrativeService.getTipoAdministrative('2').subscribe(
       (AdministrativeFromApi) => {
 
-          for (let decano of AdministrativeFromApi.coordinadores) {
+          for (let decano of AdministrativeFromApi.administrativos) {
             if(!decano.Faculties?.length) {
               this.administratives.push(decano)
           }   
         }
-        // console.log(this.administratives)
-        // this.administratives = AdministrativeFromApi.administratives;
+        console.log(this.administratives)
       }, error => console.error(error));
   }
 
@@ -246,11 +262,14 @@ public datos(position:number){
   });
 
   this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
-      this.getAlladministratives()
+    if (person) {
+      this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+      this.administrativeService.getAdministrativesOneTipo(person.administrative.id).subscribe((algo)=>{
+        this.administratives.push(algo.administrativos[0])
+      })
+      
 
-        }
+    }
   });
   }
 }

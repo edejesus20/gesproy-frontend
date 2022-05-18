@@ -50,7 +50,7 @@ constructor(
 
   public onSubmit() {
     let formValue: FacultyI = this.form.value;
-    formValue.AdministrativeId=this.form.value.AdministrativeId.id
+    formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
     formValue.UniversityId=this.form.value.UniversityId.id
     if(formValue.name != '' && 
     formValue.AdministrativeId != ( 0 ) &&
@@ -94,7 +94,7 @@ constructor(
   private getAlladministrative(selectId?: number) {
     this.administrativeService.getTipoAdministrative('1').subscribe(
       (AdministrativeFromApi) => {
-        for (let decano of AdministrativeFromApi.decanos) {
+        for (let decano of AdministrativeFromApi.administrativos) {
           if(!decano.Faculties?.length) {
             this.administratives.push(decano)
         }   
@@ -129,7 +129,16 @@ constructor(
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
-      this.getAlladministrative()
+          if (person) {
+            console.log(person)
+
+            this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+            this.administrativeService.getAdministrativesOneTipo(person.administrative.id).subscribe((algo)=>{
+              this.administratives.push(algo.administrativos[0])
+            })
+            
+  
+          }
 
         }
   });

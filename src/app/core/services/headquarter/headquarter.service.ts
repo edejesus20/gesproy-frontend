@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
 import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { ProgramI } from 'src/app/models/institution/program';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,16 @@ export class HeadquarterService {
         catchError(this.handleError)
       )
   }
+  getHeadquarterProgramas(id: number): Observable<{programs:ProgramI[]}> {
+    return this.http
+      .get<{programs:ProgramI[]}>(this.base_path_get + '/HeadquarterProgramas/' + id)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  
 
   // Get students data
 

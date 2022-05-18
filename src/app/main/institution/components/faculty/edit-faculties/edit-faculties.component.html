@@ -31,10 +31,10 @@
           formControlName="AdministrativeId" name="AdministrativeId"
           [options]="administratives" [filter]="true" label="SELECCIONE AL DECANO" 
             [style]="{'width':'100%'}"
-            optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
+            optionvalue="UserId"  optionLabel="todo" filterBy="todo"
             [required]="true" placeholder="SELECCIONE AL DECANO">
             <ng-template let-option pTemplate="item">
-              <span >{{option.User.fullName }} - {{option.User?.Person?.identification}} - {{option.Charge.name}}</span>
+              <span >{{option.todo}}</span>
           </ng-template>
         </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>

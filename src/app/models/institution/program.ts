@@ -14,6 +14,9 @@ export interface ProgramI {
    Headquarters?:HeadquarterI[]
    HeadquarterProgram?:HeadquarterProgramI
    Lines?:LineI[]
+   LinePrograms?:LineProgramI[]
+   HeadquarterPrograms?:HeadquarterProgramI[]
+
 }
 
 export interface LineProgramI {

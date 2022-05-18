@@ -160,10 +160,10 @@ getOneCntAccount(id:number) {
       this.form2=cnt_groupFromApi.program
       }
 
-      if(cnt_groupFromApi.program.Lines != undefined &&
-        cnt_groupFromApi.program.Lines.length > 0){
+      if(cnt_groupFromApi.program.LinePrograms != undefined &&
+        cnt_groupFromApi.program.LinePrograms.length > 0){
     
-        this.agregarLines(cnt_groupFromApi.program.Lines)
+        this.agregarLines(cnt_groupFromApi.program.LinePrograms)
         
       }
    
@@ -171,16 +171,16 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
-  agregarLines(Lines: LineI[]) {
-    if(Lines.length){
-    for (let key of Lines) {
-      if(key.id != undefined) {
+  agregarLines(LinePrograms: LineProgramI[]) {
+    if(LinePrograms.length){
+    for (let key of LinePrograms) {
+      if(key.LineId != undefined) {
         // console.log(DiscountLine)
         
         let control = <FormArray>this.form.controls['Lines']
         let  LineId:any
         for (const key2 of this.lines) {
-          if(key2.id == key.id){
+          if(key2.id == key.LineId){
             LineId=key2
           }
         }

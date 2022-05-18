@@ -46,7 +46,7 @@ constructor(
   ngOnInit(): void {
     
     this.getAlluniversidades()
-    this.getAlladministrative()
+ 
     this.primengConfig.ripple = true;
 
     this.form=this.formBuilder.group({
@@ -61,7 +61,7 @@ constructor(
 
   public onSubmit() {
       let formValue: FacultyI = this.form.value;
-      formValue.AdministrativeId=this.form.value.AdministrativeId.id
+      formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
       formValue.UniversityId=this.form.value.UniversityId.id
       if(formValue.name != '' && 
       formValue.AdministrativeId != ( 0 ) &&
@@ -105,13 +105,12 @@ constructor(
     this.administrativeService.getTipoAdministrative('1').subscribe(
       (AdministrativeFromApi) => {
 
-          for (let decano of AdministrativeFromApi.decanos) {
+          for (let decano of AdministrativeFromApi.administrativos) {
             if(!decano.Faculties?.length) {
               this.administratives.push(decano)
           }   
         }
-        // console.log(this.administratives)
-        // this.administratives = AdministrativeFromApi.administratives;
+        console.log(this.administratives)
       }, error => console.error(error));
   }
 
@@ -128,6 +127,8 @@ constructor(
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.administratives=[]
+
     //console.log(event)
   }
 
@@ -135,6 +136,7 @@ constructor(
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.administratives=[]
   }
   actualizar(id: number){
     // console.log(id)
@@ -151,11 +153,7 @@ constructor(
       this.form.controls['name'].setValue(cnt_groupFromApi.faculty.name)
       // this.form.controls['AdministrativeId'].setValue(cnt_groupFromApi.faculty.AdministrativeId)
 
-      for (const key of this.administratives) {
-        if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
-          this.form.controls['AdministrativeId'].setValue(key)
-        }
-      } 
+      this.getAlladministrative()
 
       for (const key of this.universitys) {
         if(key.id == cnt_groupFromApi.faculty.UniversityId){
@@ -164,12 +162,25 @@ constructor(
         }
      
       } 
-      this.administrativeService.getItem(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
+      let AdministrativeId:any=''
+      for (const key of this.administratives) {
+        if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
+
+          AdministrativeId=key
+          this.form.controls['AdministrativeId'].setValue(AdministrativeId)
+        }
+      } 
+      if(AdministrativeId == ''){
+        this.administrativeService.getAdministrativesOneTipo(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
   
-        this.administratives.push(algo.administrative)
-       
-        this.form.controls['AdministrativeId'].setValue(algo.administrative)
-      })
+          this.administratives.push(algo.administrativos[0])
+         
+          this.form.controls['AdministrativeId'].setValue(algo.administrativos[0])
+        })
+      }
+    
+
+   
       // this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{
       //   this.form.controls['UniversityId'].setValue(algo.university)
       // })
@@ -197,11 +208,15 @@ constructor(
   });
 
   this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
-      this.getAlladministrative()
+    if (person) {
+      this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+      this.administrativeService.getAdministrativesOneTipo(person.administrative.id).subscribe((algo)=>{
+        
+        this.administratives.push(algo.administrativos[0])
+      })
+      
 
-        }
+    }
   });
   }
 }

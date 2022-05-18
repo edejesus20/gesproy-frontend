@@ -12,7 +12,7 @@ import { ProgramI } from 'src/app/models/institution/program';
 import { CategoryService } from 'src/app/core/services/institution/category.service';
 import { CategoryI } from 'src/app/models/institution/category';
 import { MessageService } from 'primeng/api';
-import { HeadquarterI } from 'src/app/models/institution/headquarter';
+import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/headquarter';
 import { AdministrativeI } from 'src/app/models/user/administrative';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
@@ -74,7 +74,10 @@ public form2:ProgramI={
   Headquarters:undefined,
   HeadquarterProgram:undefined,
 }
+private CategoryId:number=0
+private FacultyId:number=0
 public ref1:any;
+private Headquarters1:any[] = [];
 constructor(
   public dialogService: DialogService,
     private messageService:MessageService,
@@ -98,14 +101,14 @@ constructor(
       Headquarters: this.formBuilder.array([this.formBuilder.group(
         {
           ProgramId:0,
-           HeadquarterId:['', [Validators.required]],
+          HeadquarterId:['', [Validators.required]],
           AdministrativeId:['', [Validators.required]]
       })]),
     });
 
     this.getAllFaculty();
     this.getAllCategorys();
-    this.getAlladministratives()
+
     this.getAllheadquarters()
   }
 
@@ -123,20 +126,46 @@ constructor(
   }
 
   public onSubmit() {
+    if(this.CategoryId == 0){
+      this.CategoryId =this.form.value.CategoryId.id
+    }
+    if(this.FacultyId == 0){
+      this.FacultyId =this.form.value.FacultyId.id
+    }
     let formValue: ProgramI = this.form.value;
-    formValue.FacultyId=this.form.value.FacultyId.id
-    formValue.CategoryId=this.form.value.CategoryId.id
+    formValue.FacultyId=this.FacultyId
+    formValue.CategoryId=this.CategoryId
+
+    if(this.Headquarters1.length == 0 ){
+      let control = <FormArray>this.form.controls['Headquarters']
+      for (const key of control.value) {
+        key.ProgramId=this.id,
+        key.HeadquarterId=key.HeadquarterId.id
+        key.AdministrativeId=key.AdministrativeId.AdministrativeId
+        this.Headquarters1.push({
+          ProgramId:this.id,
+        HeadquarterId:key.HeadquarterId,
+        AdministrativeId:key.    AdministrativeId,
+        })
+      }
+      this.Headquarters1 = this.form.value.Headquarters 
+
+      formValue.Headquarters = this.form.value.Headquarters
+    }else{
+      formValue.Headquarters = this.Headquarters1
+    }
+
 
     if(formValue.name != '' &&
     formValue.CategoryId != ( 0 )&&
     formValue.FacultyId != ( 0 )
     ){
-    let control = <FormArray>this.form.controls['Headquarters']
+    
 
-    for (const key of control.value) {
-      key.HeadquarterId=key.HeadquarterId.id
-      key.AdministrativeId=key.AdministrativeId.id
-    }
+    
+
+
+    console.log(formValue)
     this.programService.updateItem(this.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -195,7 +224,7 @@ actualizar(id: number){
 
 getOneCntAccount(id:number) {
   this.programService.getItem(id).subscribe((cnt_groupFromApi) => {
-   
+   console.log(cnt_groupFromApi.program)
     if(cnt_groupFromApi.program.id != undefined && cnt_groupFromApi.program.CategoryId != undefined
       && cnt_groupFromApi.program.FacultyId != undefined
       ){
@@ -231,10 +260,11 @@ getOneCntAccount(id:number) {
     // })
       this.form2=cnt_groupFromApi.program
       }
+      this.getAlladministratives()
 
-      if(cnt_groupFromApi.program.Headquarters != undefined){
-        console.log(cnt_groupFromApi.program.Headquarters)
-        this.agregarDescuentos(cnt_groupFromApi.program.Headquarters)
+      if(cnt_groupFromApi.program.HeadquarterPrograms != undefined){
+        console.log(cnt_groupFromApi.program.HeadquarterPrograms)
+        this.agregarDescuentos(cnt_groupFromApi.program.HeadquarterPrograms)
         
       }
    
@@ -242,37 +272,46 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
-  agregarDescuentos(Headquarters: HeadquarterI[]) {
-    if(Headquarters.length){
-    for (let key of Headquarters) {
-      if(key.HeadquarterProgram != undefined) {
+  agregarDescuentos(HeadquarterPrograms: HeadquarterProgramI[]) {
+    if(HeadquarterPrograms.length){
+    for (let key of HeadquarterPrograms) {
+      if(key.Headquarter != undefined) {
         // console.log(DiscountLine)
         
         let control = <FormArray>this.form.controls['Headquarters']
         let  HeadquarterId:any
         for (const key2 of this.headquarters) {
-          if(key2.id == key.HeadquarterProgram.HeadquarterId){
+          if(key2.id == key.Headquarter.id ){
            HeadquarterId=key2
           }
         } 
-        let AdministrativeId:any
-        let ProgramId=key.HeadquarterProgram.ProgramId
+        let AdministrativeId:any=''
+        let ProgramId=key.ProgramId
         // this.administratives.push(algo.administrative)
-      this.administrativeService.getItem(key.HeadquarterProgram.AdministrativeId).subscribe((algo)=>{
-        this.administratives.push(algo.administrative)
+          for (const key2 of this.administratives) {
+          if(key2.UserId == key.AdministrativeId){
+          AdministrativeId=key2
+          control.push(this.formBuilder.group({
+            ProgramId:[ProgramId, [Validators.required]],
+            HeadquarterId:[HeadquarterId, [Validators.required]],
+            AdministrativeId:[AdministrativeId, [Validators.required]],
+          }))
 
-        // for (const key2 of this.administratives) {
-        //   if(key2.id == key.HeadquarterProgram.AdministrativeId){
-            AdministrativeId=algo.administrative
-        //   }
-        // } 
+            }
+          } 
+        if(AdministrativeId == ''){
+          this.administrativeService.getAdministrativesOneTipo(key.AdministrativeId).subscribe((algo)=>{
+            this.administratives.push(algo.administrativos[0])
+                AdministrativeId=algo.administrativos[0]
 
-        control.push(this.formBuilder.group({
-          ProgramId:[ProgramId, [Validators.required]],
-          HeadquarterId:[HeadquarterId, [Validators.required]],
-          AdministrativeId:[AdministrativeId, [Validators.required]],
-        }))
-      })
+            control.push(this.formBuilder.group({
+              ProgramId:[ProgramId, [Validators.required]],
+              HeadquarterId:[HeadquarterId, [Validators.required]],
+              AdministrativeId:[AdministrativeId, [Validators.required]],
+            }))
+          })
+        }
+
 
    
           // this.headquarterService.getItem(key.HeadquarterProgram.HeadquarterId).subscribe((algo1)=>{
@@ -348,21 +387,18 @@ public datos(position:number){
   }
 
   private getAlladministratives() {
+    // this.administratives=[]
     this.administrativeService.getTipoAdministrative('2').subscribe(
       (AdministrativeFromApi) => {
 
-          for (let decano of AdministrativeFromApi.coordinadores) {
+          for (let decano of AdministrativeFromApi.administrativos) {
             if(!decano.Faculties?.length) {
               this.administratives.push(decano)
           }   
         }
-        // console.log(this.administratives)
-        // this.administratives = AdministrativeFromApi.administratives;
+        console.log(this.administratives)
       }, error => console.error(error));
-    // this.administrativeService.getList().subscribe(
-    //   (AdministrativeFromApi) => {
-    //     this.administratives = AdministrativeFromApi.administratives;
-    //   }, error => console.error(error));
+
   }
 
   private getAllheadquarters() {
@@ -399,10 +435,11 @@ public datos(position:number){
 
     this.ref1 = this.dialogService.open(CreateAdministrativeComponent, {
       width: '60%',
-      // height: '70vw',
-      contentStyle:{'padding': '10px','overflow-y': 'auto'} ,
+      height: '70%',
+      // contentStyle:{'padding': '5px','overflow-y': 'auto'} ,
       closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
+      modal:true,
+      // baseZIndex: 10000,
       data: {
         id: '1'
     },
@@ -411,7 +448,10 @@ public datos(position:number){
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
-      this.getAlladministratives()
+          this.administrativeService.getAdministrativesOneTipo(person.administrative.id).subscribe((algo)=>{
+            this.administratives.push(algo.administrativos[0])
+          })
+          
 
         }
   });

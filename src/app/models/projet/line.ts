@@ -1,4 +1,4 @@
-import { ProgramI } from "../institution/program";
+import { LineProgramI, ProgramI } from "../institution/program";
 
 export interface LineI {
     id?:number;
@@ -9,6 +9,7 @@ export interface LineI {
     resolution?: string;
     Thematics?:ThematicI[]
     Programs?:ProgramI[]
+    LinePrograms?:LineProgramI[]
 }
 export interface LineThematicI {
     id?:number;
