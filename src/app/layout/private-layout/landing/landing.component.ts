@@ -33,9 +33,9 @@ export class LandingComponent implements OnInit {
         let userObjeto:any = JSON.parse(user); 
       // console.log(menuObjeto)
         this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-          if(user.user.User?.fullName && user.user.User?.avatar != undefined){
-            this.nombre = user.user.User?.fullName
-            this.image3=user.user.User?.avatar
+          if(user.user.fullName && user.user.avatar != undefined){
+            this.nombre = user.user.fullName
+            this.image3=user.user.avatar
         
           }    
       })

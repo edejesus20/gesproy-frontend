@@ -40,9 +40,9 @@ handleError(res: Response) {
 };
 
 // Get students data
-getRole(): Observable<{roles: RoleI[]}> {
+getRole(): Observable<{roles: RoleI[],rolesUsers:any[]}> {
   return this.http
-    .get<{roles: RoleI[]}>(this.base_path)
+    .get<{roles: RoleI[],rolesUsers:any[]}>(this.base_path)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -50,9 +50,9 @@ getRole(): Observable<{roles: RoleI[]}> {
 }
 
 // Get single student data by ID
-getOneRole(id: number): Observable<{ role: RoleI }> {
+getOneRole(id: number): Observable<{ role: RoleI,rolesUsers:any[] }> {
   return this.http
-    .get<{ role: RoleI }>(this.base_path + '/' + id)
+    .get<{ role: RoleI,rolesUsers:any[]}>(this.base_path + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)

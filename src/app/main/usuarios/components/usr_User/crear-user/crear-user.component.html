@@ -228,7 +228,7 @@
       <br>
             
             <div fxLayout="row" class="titleCard">
-              <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
+              <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid || mostrar==false"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                label="Enviar Registro" styleClass="mr-2"></button>
             <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
@@ -437,7 +437,7 @@
       <div fxLayout="row" class="titleCard">
         <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
         
-        <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
+        <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid || mostrar==false"
          icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
          label="Enviar Registro" styleClass="mr-2"></button>
       <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->

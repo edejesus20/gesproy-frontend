@@ -24,7 +24,7 @@ const translate = require('translate');
 export class CrearUserComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public algo:number[]=[0];
 
   public roles: RoleI[]=[];
@@ -81,7 +81,7 @@ export class CrearUserComponent implements OnInit {
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
       this.roles = rolesFromApi.roles;
-      //console.log(this.roles);
+      console.log(this.roles);
     }, error => console.error(error));
   }
 
@@ -95,16 +95,16 @@ export class CrearUserComponent implements OnInit {
     addRoles(event: Event){
       event.preventDefault();
       const control = <FormArray>this.form.controls['Roles']
+      this.mostrar=true
       //console.log(control)      
         //crear los controles del array
-      if(control.length == 0 && this.mostrar == false){
+      // if(control.length == 0 && this.mostrar == false){
         control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
-      }
-      if(control.length >= 1 && this.mostrar == true){
-        control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
-  
-      }
-        this.mostrar=true
+      // }
+      // if(control.length >= 1 && this.mostrar == true){
+      //   control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
+      // }
+       
     }
     removeRoles(index: number,event: Event){
       event.preventDefault();
@@ -112,7 +112,7 @@ export class CrearUserComponent implements OnInit {
       control.removeAt(index)
       if(control.length <= 0){
        this.mostrar=false
-       control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
+      //  control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
 
       }
     }
@@ -221,9 +221,6 @@ export class CrearUserComponent implements OnInit {
               this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
             }
   }
-
-
-  
 
   addroles(e:Event){
     e.preventDefault()

@@ -111,7 +111,7 @@ public onSelectAllChange(event:any) {
       const array:any=[]
       let arrRoles:any=[]=this.form.value.Roles
 
-      if(this.Roles1.length == 0 || this.Roles1 == []){
+      if(this.Roles1.length == 0 ){
 
         let control = <FormArray>this.form.controls['Roles']
         for (const key of control.value) {
@@ -143,7 +143,7 @@ public onSelectAllChange(event:any) {
       
       // console.log(formValue)
 
-      if(this.selectedProducts != [] && formValue.RecursosRoles.length > 0){
+      if(this.selectedProducts.length > 0 && formValue.RecursosRoles.length > 0){
 
     this.rolesService.assinRoleResource(formValue).subscribe(
       () => {

@@ -156,21 +156,22 @@ getOneCntAccount(id:number) {
       ){
       // console.log(cnt_groupFromApi.user)
         this.form.controls['id'].setValue(cnt_groupFromApi.user.id)
-        if(cnt_groupFromApi.user?.User != undefined
+        if(cnt_groupFromApi.user?.Person != undefined
           ){
-          this.form.controls['name'].setValue(cnt_groupFromApi.user.name)
-          this.form.controls['surname'].setValue(cnt_groupFromApi.user.surname)
-          this.form.controls['identification'].setValue(cnt_groupFromApi.user.identification)
+          this.form.controls['name'].setValue(cnt_groupFromApi.user.Person.name)
+          this.form.controls['surname'].setValue(cnt_groupFromApi.user.Person.surname)
+          this.form.controls['identification'].setValue(cnt_groupFromApi.user.Person.identification)
           // this.form.controls['address'].setValue(cnt_groupFromApi.user.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.user.phone)
-          this.form.controls['email'].setValue(cnt_groupFromApi.user.User.email)
+          this.form.controls['email'].setValue(cnt_groupFromApi.user.email)
+          this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.user.Person.DocumentType)
+
           // console.log('aqui')
        
           }
 
           // if(cnt_groupFromApi.user.DocumentTypeId != undefined)
           // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.user.DocumentTypeId)).subscribe((algo)=>{
-            this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.user.DocumentType)
           // })
   
    
@@ -180,11 +181,12 @@ getOneCntAccount(id:number) {
         //   this.form.controls['GenderId'].setValue(algo.gender)
         // })
 
-        if(cnt_groupFromApi.user.User?.Roles != undefined){
+        if(cnt_groupFromApi.rolesUsers.length != undefined && cnt_groupFromApi.rolesUsers.length > 0){
           
-          this.agregarDescuentos(cnt_groupFromApi.user.User?.Roles)
+          this.agregarDescuentos(cnt_groupFromApi.rolesUsers)
           
         }
+        
         // console.log(this.form.value)
       
     }
@@ -193,19 +195,23 @@ getOneCntAccount(id:number) {
     this.tabla = false
   }, error => console.error(error));
 }
-  agregarDescuentos(Roles: RoleI[]) {
-    if(Roles.length){
-      for (let key of Roles) {
-        if(key.id != undefined) {
+  agregarDescuentos(rolesUsers: any[]) {
+    if(rolesUsers.length){
+      for (let key of rolesUsers) {
+        if(key.RoleId != undefined) {
           // console.log(DiscountLine)
           let control = <FormArray>this.form.controls['Roles']
-            this.rolesService.getOneRole(key.id).subscribe((algo)=>{
-              if(algo.role && key.name != undefined){
-                control.push(this.formBuilder.group({UserId:this.form.value.id,RoleId:[algo.role, [Validators.required]]}))
-              }
-            })
+          for (const key2 of this.roles) {
+            if(key2.id == key.RoleId){
+              control.push(this.formBuilder.group({
+                UserId:this.form.value.id,RoleId:[key2, [Validators.required]]}))
+
+            }
+            
+          }
         }
       }
+    
       this.mostrar2= true
       let control = <FormArray>this.form.controls['Roles']
       control.removeAt(0)

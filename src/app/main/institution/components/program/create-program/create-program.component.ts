@@ -27,7 +27,7 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
   providers: [DialogService]
 })
 export class CreateProgramComponent implements OnInit {
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public algo:number[]=[0];
   public faculties: FacultyI[]=[];
   public categorys:CategoryI[] = []
@@ -174,23 +174,24 @@ public datos(position:number){
 
   addRoles(event: Event){
     event.preventDefault();
+    this.mostrar=true
+
     const control = <FormArray>this.form.controls['Headquarters']
-      if(control.length == 0 && this.mostrar == false){
-        control.push(this.formBuilder.group({
-          ProgramId:0,
-          HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['', [Validators.required]]
-        }))
-      }
-      if(control.length >= 1 && this.mostrar == true){
+      // if(control.length == 0 && this.mostrar == false){
+      //   control.push(this.formBuilder.group({
+      //     ProgramId:0,
+      //     HeadquarterId:['', [Validators.required]],
+      //   AdministrativeId:['', [Validators.required]]
+      //   }))
+      // }
+      // if(control.length >= 1 && this.mostrar == true){
         control.push(this.formBuilder.group({
           ProgramId:0,
           HeadquarterId:['', [Validators.required]],
         AdministrativeId:['', [Validators.required]]
         }))
 
-      }
-      this.mostrar=true
+      // }
   }
   removeRoles(index: number,event: Event){
     event.preventDefault();
@@ -198,11 +199,11 @@ public datos(position:number){
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar=false
-      control.push(this.formBuilder.group({
-        ProgramId:0,
-        HeadquarterId:['', [Validators.required]],
-      AdministrativeId:['', [Validators.required]]
-      }))
+      // control.push(this.formBuilder.group({
+      //   ProgramId:0,
+      //   HeadquarterId:['', [Validators.required]],
+      // AdministrativeId:['', [Validators.required]]
+      // }))
       }
   }
 

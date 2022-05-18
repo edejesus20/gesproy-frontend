@@ -25,4 +25,5 @@ export interface PersonI {
     }
     nationality?: string;
     date_of_birth?: string;
+    rolesUsers?:any[]
   }

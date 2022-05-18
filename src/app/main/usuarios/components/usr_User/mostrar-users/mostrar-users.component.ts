@@ -17,14 +17,14 @@ import { PersonI } from 'src/app/models/user/person';
   styleUrls: ['./mostrar-users.component.css']
 })
 export class MostrarUsersComponent implements OnInit {
-  public users:PersonI[]=[]
+  public users:PersonI[] =[]
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;
   @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
-  public rows2:PersonI[] = []
+  public rows2:any[] = []
   exportColumns: any[]=[];
   selectedProducts: PersonI[]=[]; 
 
@@ -54,10 +54,17 @@ export class MostrarUsersComponent implements OnInit {
     getAllScale() {
       this.userService.getUser().subscribe((categoryGroupsApiFrom) => {
         this.rows2=[]
+        // console.log(categoryGroupsApiFrom.users)
         if(categoryGroupsApiFrom.users != undefined){
           for (const key of categoryGroupsApiFrom.users) {
             if(key.Person != undefined){
               this.users.push(key.Person)
+              let rolesUsers=[]
+              for (const key2 of categoryGroupsApiFrom.rolesUsers) {
+                if(key.Person.UserId==key2.UserId){
+                  rolesUsers.push(key2)
+                }
+              }
 
               this.rows2.push(
                 {
@@ -74,12 +81,17 @@ export class MostrarUsersComponent implements OnInit {
                   DocumentType:key.Person.DocumentType,
                   User:key.Person.User,
                   nationality: key.Person.nationality,
-                  date_of_birth: key.Person.date_of_birth
+                  date_of_birth: key.Person.date_of_birth,
+                  // avatar: key.avatar,
+                  // email: key.email,
+                  rolesUsers:rolesUsers
                 }
               )
             }
        
           }
+         
+          // console.log(this.rows2)
         }
       }, error => console.error(error));
     }
@@ -137,20 +149,20 @@ export class MostrarUsersComponent implements OnInit {
           }
         }
       }else{
-      for (var key in this.rows2) 
+      for (var key in this.users) 
       {
           if (this.rows2.hasOwnProperty(key))
           {
-              var data = this.rows2[key];
+              var data1 = this.rows2[key];
               var row:any[] = [
-                data.id?.toString(),
-                data.name.toString(),
-                data.surname.toString(),
-                data.identification.toString(),
-                data.User?.email?.toString(),
-                data.phone?.toString(),
-                data.address?.toString(),
-                data.Gender?.name?.toString(),
+                data1.id?.toString(),
+                data1.name.toString(),
+                data1.surname.toString(),
+                data1.identification.toString(),
+                data1.User?.email?.toString(),
+                data1.phone?.toString(),
+                data1.address?.toString(),
+                data1.Gender?.name?.toString(),
               ]
     
               body.push(row);

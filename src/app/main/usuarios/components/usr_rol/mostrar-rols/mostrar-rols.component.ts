@@ -23,7 +23,7 @@ export class MostrarRolsComponent implements OnInit {
   @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
-  private rows2:RoleI[] = []
+  public rows2:RoleI[] = []
   exportColumns: any[]=[];
   selectedProducts: RoleI[]=[]; 
   constructor(
@@ -45,21 +45,30 @@ export class MostrarRolsComponent implements OnInit {
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
       this.roles =rolesFromApi.roles
-      // console.log(rolesFromApi.roles)
       this.rows2=[]
       if(rolesFromApi.roles != undefined){
         for (const key of rolesFromApi.roles) {
-          if(rolesFromApi.roles[0].Users){
+
+          let rolesUsers=[]
+              for (const key2 of rolesFromApi.rolesUsers) {
+                if(key.id==key2.RoleId){
+                  rolesUsers.push(key2)
+                }
+              }
+
+          // if(rolesFromApi.roles[0].Users){
             this.rows2.push(
               {
                 id:key.id,
                 name: key.name,
-                Users:key.Users
+                // Users:key.Users,
+                rolesUsers:rolesUsers
               }
             )
-          }
-
+          // }
         }
+        console.log(this.rows2)
+
       }
     }, error => console.error(error));
   }

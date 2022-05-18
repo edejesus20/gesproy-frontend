@@ -244,10 +244,10 @@ if(token!=null && user!=null && menu != null){
 // console.log(menuObjeto)
   this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
   this.menu = this.privateMenu;
-  this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-  if(user.user.User?.fullName && user.user.User?.avatar != undefined){
-    this.nombre = user.user.User?.fullName
-    this.image3=user.user.User?.avatar
+  this.userService.getOneUser(userObjeto.id).subscribe((data)=>{
+  if(data.user.fullName && data.user.avatar != undefined){
+    this.nombre = data.user.fullName
+    this.image3=data.user.avatar
 
   }     
 })

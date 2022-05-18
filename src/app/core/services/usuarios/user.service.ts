@@ -38,7 +38,7 @@ handleError(res: Response) {
 
 };
 // Get students data
-getUser(): Observable<{users: UserI[]}> {
+getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
   let token : string | null=localStorage.getItem('token')
   if(token != null) {
     let httpOptions = {
@@ -49,14 +49,14 @@ getUser(): Observable<{users: UserI[]}> {
     }
     // console.log(httpOptions)
     return this.http
-      .get<{users: UserI[]}>(this.base_path,httpOptions)
+      .get<{users: UserI[],rolesUsers:any[]}>(this.base_path,httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
       )
   }else{
     return this.http
-    .get<{users: UserI[]}>(this.base_path)
+    .get<{users: UserI[],rolesUsers:any[]}>(this.base_path)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -89,9 +89,6 @@ getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
     )
   }
 }
-
-
-
 
 
 userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}> {
@@ -130,9 +127,9 @@ getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
 }
 
 // Get single student data by ID
-getOneUser(id: number): Observable<{ user: PersonI }> {
+getOneUser(id: number): Observable<{ user: UserI ,rolesUsers:any[]}> {
   return this.http
-    .get<{ user: PersonI }>(this.base_path + '/' + id)
+    .get<{ user: UserI ,rolesUsers:any[]}>(this.base_path + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)

@@ -59,9 +59,9 @@ export class AvatarComponent implements OnInit {
   if(user!=null ){
   let userObjeto:any = JSON.parse(user); 
   this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
-    if(user.user.User?.fullName && user.user.User?.avatar != undefined){
-      this.image3=user.user.User?.avatar
-    this.form.controls['id'].setValue(user.user.User.id)
+    if(user.user.fullName && user.user.avatar != undefined){
+      this.image3=user.user.avatar
+    this.form.controls['id'].setValue(user.user.id)
     }     
   })
   }

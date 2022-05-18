@@ -16,7 +16,7 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 })
 export class AsignarRolUserComponent implements OnInit {
   public users:PersonI[]=[]
-  public mostrar:boolean = false
+  public mostrar:boolean = true
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
   displayMaximizable2:boolean=true
@@ -69,11 +69,22 @@ export class AsignarRolUserComponent implements OnInit {
   }
   getUser() {
     this.userService.getUser().subscribe((userFromApi) => {
-      for (const key of userFromApi.users) {
+      for (let key of userFromApi.users) {
         if(key.Person != undefined){
+
+          let rolesUsers=[]
+          for (const key2 of userFromApi.rolesUsers) {
+            if(key.Person.UserId==key2.UserId){
+              rolesUsers.push(key2)
+            }
+          }
+          key.Person.rolesUsers=rolesUsers
+
           this.users.push(key.Person)
         }
       }
+      console.log(this.users);
+
       // this.users = userFromApi.users;
     }, error => console.error(error));
   }
@@ -186,14 +197,15 @@ Buscar(event: Event, dt1:any){
   addRoles(event: Event){
     event.preventDefault();
     const control = <FormArray>this.form.controls['Roles']
-    if(control.length == 0 && this.mostrar == false){
-      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
-    }
-    if(control.length >= 1 && this.mostrar == true){
+    this.mostrar=true
+    // if(control.length == 0 && this.mostrar == false){
+    //   control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+    // }
+    // if(control.length >= 1 && this.mostrar == true){
       control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
 
-    }
-      this.mostrar=true
+    // }
+      
   }
   removeRoles(index: number,event: Event){
     event.preventDefault();
@@ -201,7 +213,7 @@ Buscar(event: Event, dt1:any){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
-     control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+    //  control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
     }
   }
 
