@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
+import { ScaleI } from 'src/app/models/institution/scale';
 import { Charge_bondingI } from 'src/app/models/user/teacher';
 
 const translate = require('translate');
@@ -17,6 +18,9 @@ export class Delete_Charge_bondingComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   public form:FormGroup=this.formBuilder.group({ });
+  public scales: ScaleI[]=[];
+
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -35,6 +39,9 @@ export class Delete_Charge_bondingComponent implements OnInit {
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.ngOnInit()
+    this.scales=[]
+    
     //console.log(event)
   }
 
@@ -56,9 +63,27 @@ export class Delete_Charge_bondingComponent implements OnInit {
       this.form.controls['name'].setValue(cnt_groupFromApi.charge_bonding.name)
       // console.log(this.form)
           }
+
+          if(cnt_groupFromApi.charge_bonding?.ChargebondingScales?.length  != undefined
+            && cnt_groupFromApi.charge_bonding.ChargebondingScales.length > 0){
+              this.agregar(cnt_groupFromApi.charge_bonding.ChargebondingScales)
+      
+
+
+          }
     this.displayMaximizable2=true
     this.tabla = false
   }, error => console.error(error));
+  }
+  agregar(ChargebondingScales: any[]) {
+    if(ChargebondingScales.length){
+      this.scales=[]
+      for (let key of ChargebondingScales) {
+        if(key.Scale != undefined && key.status == true) {
+            this.scales.push(key.Scale)
+        }
+      }
+    }
   }
 
   public onSubmit() {

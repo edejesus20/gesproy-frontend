@@ -11,28 +11,37 @@
           </div>
 
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" class="p-inputtext-lg" 
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" 
               pInputText name="name" placeholder="NOMBRE" [pKeyFilter]="blockSpecial"
               formControlName="name" required>         
           </div>
 
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
             <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
             placeholder="CORDINADOR DE INVESTIGACIÓN" 
             formControlName="cordinatorInvestigation" required>         
         </div>
-
+        <div class="grid m-fluid">
+          <div class="col-1 md:col-1">
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            </div>
+          </div>
+          <div class="col-11 md:col-11">
             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
             [options]="universitys" [filter]="true" formControlName="UniversityId"
-              [style]="{'width':'100%','margin-bottom':'20px'}"
+              [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-13px'}"
               optionvalue="id" optionLabel="name"  filterBy="name"
               [required]="true" placeholder="SELECCIONE UNIVERSIDAD">
               <ng-template let-option pTemplate="item">
                 <span >{{option.name }} - Nit: {{option.nit}}</span>
             </ng-template>
             </p-dropdown>
+          </div>
+        </div>
+
       </div>
               
           <ng-template pTemplate="footer">

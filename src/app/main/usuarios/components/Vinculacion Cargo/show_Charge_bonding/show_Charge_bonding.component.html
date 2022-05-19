@@ -39,8 +39,8 @@
       
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <!-- <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
-          <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th> -->
+          <th pSortableColumn="escalafon">ESCALAFON<p-sortIcon field="escalafon"></p-sortIcon></th>
+          <!-- <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -57,12 +57,21 @@
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
+          <td >
+            <span *ngFor="let i of item.ChargebondingScales">
+              <span style="display: flex;" *ngIf="i.status == true">
+                * {{i.Scale.name }} 
+              </span>
+            </span>
+          </td>
           <!-- <td>{{item.Group.name| titlecase}}</td>
           <td>{{item.date  | date:'fullDate' | titlecase}}</td> -->
           
           <!-- <td>{{item.Faculty.Headquarter.name| titlecase}}</td>
           <td>{{item.Category.name| titlecase}}</td>
           <td>{{item.createdAt | date:'fullDate' | titlecase}}</td> -->
+
+          
           <ng-template [ngIf]="mostrar==1">
               
               <td >

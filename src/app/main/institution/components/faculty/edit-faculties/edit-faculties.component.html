@@ -5,7 +5,7 @@
 
   
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '45vw','height': '60vw'}"
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '60vw'}"
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"
   [showHeader]="false"   >
   <br>
@@ -16,39 +16,52 @@
             <h2 class="fondebabutton" style="margin-top: -1px;">Editar Facultad</h2>
           </div>
 
-          <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
-            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" class="p-inputtext-lg" pInputText name="name" 
-              placeholder="NOMBRE" formControlName="name"[pKeyFilter]="blockSpecial" required>  
-              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label>
-          </span>       
+          <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg" pInputText name="name" [pKeyFilter]="blockSpecial"
+             formControlName="name" placeholder="NOMBRE" required>  
+       
         </div>
-        <div class="flex">
-          <div style="width:100%">
-        <span class="p-float-label" [style]="{'width':'100%'}">
-          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-          formControlName="AdministrativeId" name="AdministrativeId"
-          [options]="administratives" [filter]="true" label="SELECCIONE AL DECANO" 
-            [style]="{'width':'100%'}"
-            optionvalue="UserId"  optionLabel="todo" filterBy="todo"
-            [required]="true" placeholder="SELECCIONE AL DECANO">
-            <ng-template let-option pTemplate="item">
-              <span >{{option.todo}}</span>
-          </ng-template>
-        </p-dropdown>
-          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
-        </span>
-        <!-- <p>Valor Cargado: {{form.value.AdministrativeId.User.fullName}}</p> -->
-      </div>
-      <span class="bottomdelete" style="margin-top: 5px;">
-        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-        class="p-button-rounded p-button-outlined" (click)="addAdministrative($event)" ></button>
-      </span>
-      </div>
-      <br> <br>
+        <div class="grid m-fluid">
+          <div class="col-1 md:col-1">
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            </div>
+          </div>
+          <div class="col-11 md:col-11">
+            <div class="flex" style="margin-left:-13px">
+              <div style="width:100%">
+            <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
+              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+              formControlName="AdministrativeId" name="AdministrativeId"
+              [options]="administratives" [filter]="true" label="SELECCIONE AL DECANO" 
+                [style]="{'width':'100%','margin-bottom':'20px'}"
+                optionvalue="UserId"  optionLabel="todo" filterBy="todo"
+                [required]="true" placeholder="SELECCIONE AL DECANO">
+                <ng-template let-option pTemplate="item">
+                  <span >{{option.todo}}</span>
+              </ng-template>
+            </p-dropdown>
+              <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">DECANATURA</h3></label>
+            </span>
 
-        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+          </div>
+          <span class="bottomdelete" style="margin-top: 5px;">
+            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+            class="p-button-rounded p-button-outlined" (click)="addAdministrative($event)" ></button>
+          </span>
+          </div>
+          </div>
+        </div>
+        
+        <div class="grid m-fluid">
+          <div class="col-1 md:col-1">
+            <div class="p-inputgroup"  style="margin-bottom: 20px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            </div>
+          </div>
+          <div class="col-11 md:col-11">
+        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px','margin-left':'-13px'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
           formControlName="UniversityId" name="UniversityId"
           [options]="universitys" [filter]="true" label="SELECCIONE LA UNIVERSIDAD" 
@@ -60,7 +73,9 @@
           </ng-template>
           </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD</h3></label>
-        </span> 
+        </span>
+          </div>
+        </div>
 
     </div>
             

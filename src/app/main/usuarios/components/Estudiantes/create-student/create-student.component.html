@@ -32,7 +32,7 @@
               <div class="grid p-fluid">
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="text" class="p-inputtext-lg" pInputText name="name" 
                     placeholder="NOMBRE" formControlName="name" title="NOMBRES" required>         
                 </div>
@@ -40,7 +40,7 @@
                 
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup" >
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                     class="p-inputtext-lg"  name="surname" placeholder="APELLIDOS" title="APELLIDO"
                     formControlName="surname" required>         
@@ -49,59 +49,11 @@
     
               </div>
 
-              <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
-                <div class="col-12 md:col-6 lg:col-6">
-                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input type="date" class="p-inputtext-lg" pInputText name="date_of_birth" 
-                    placeholder="FECHA DE NACIMIENTO" formControlName="date_of_birth" 
-                    title="FECHA DE NACIMIENTO" required>         
-                </div>
-                </div>
-                
-                <div class="col-12 md:col-6 lg:col-6">
-                  <div class="p-inputgroup" >
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                    class="p-inputtext-lg"  name="nationality" placeholder="NACIONALIDAD" title="NACIONALIDAD"
-                    formControlName="nationality" required  >         
-                </div>
-                </div>
-    
-              </div> -->
-    
-              
               <div class="grid p-fluid">
-                <!-- <div class="col-12 md:col-6 lg:col-6">
-                  <div class="field">
-                    <div class="flex">
-                      <div style="width:100%">
-                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                        [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-                          [style]="{'width':'100%'}" 
-                          optionvalue="id"  optionLabel="name" filterBy="name"
-                           placeholder="SELECCIONE GENERO" title="SELECCIONE GENERO">
-                          <ng-template let-option pTemplate="item">
-                            <span >{{option.name }}</span>
-                        </ng-template>
-                        </p-dropdown>
-                      </div>
-                      <span class="bottomdelete" style="margin-top: -35px;">
-                        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                        class="p-button-rounded p-button-outlined" (click)="addGenero($event)" ></button>
-                      </span>
 
-                    </div>
-           
-                </div>
-
-    
-                </div> -->
-
-            
                 <div class="col-12 md:col-6 lg:col-6">
                   <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
                     placeholder="CORREO"  title="CORREO ELECTRONICO" required>         
                 </div>
@@ -118,71 +70,7 @@
                 </div>
     
               </div>
-    
-    
-    
-              <!-- <div class="grid p-fluid">
-                <div class="col-12 md:col-6 lg:col-6">
-                  <div class="field">
-                    <div class="flex">
-                      <div style="width:100%">
-                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                    [options]="documentTypes" [filter]="true"
-                      name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-                      [style]="{'width':'100%'}" 
-                      optionvalue="id"  optionLabel="name" filterBy="name"
-                       placeholder="SELECCIONE TIPO DE DOCUMENTO" title="SELECCIONE TIPO DE DOCUMENTO">
-                      <ng-template let-option pTemplate="item">
-                        <span >{{option.name}}</span>
-                    </ng-template>
-                    </p-dropdown>
-                    </div>
-                    <span class="bottomdelete" style="margin-top: -35px;">
-                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                      class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
-                    </span>
-                  </div>
-            
-                  </div>
-
-                </div>
-                
-                <div class="col-12 md:col-6 lg:col-6">
-                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input class="p-inputtext-lg" formControlName="identification" 
-                    type="text" pInputText pKeyFilter="num" name="identification" 
-                    placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN" required>         
-                </div>
-    
-                </div>
-    
-              </div> -->
-    
-              <!-- <div class="grid p-fluid">
-                <div class="col-12 md:col-6 lg:col-6">
-                  
-                  <div class="p-inputgroup" >
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                    class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
-                      title="DIRECCION" required>         
-                </div>
-    
-                </div>
-                <div class="col-12 md:col-6 lg:col-6">
-                  <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input class="p-inputtext-lg" type="text" formControlName="phone"
-                    pInputText pKeyFilter="num" name="phone" 
-                    placeholder="TELEFONO" title="TELEFONO" required>         
-                </div>
-    
-                </div>
-    
-              </div> -->
-         
-          <!-- </ng-template> -->
+  
               </div>
 
               <div class="bordep">
@@ -269,8 +157,15 @@
                             <div formArrayName="headquarterProgramStudent"> 
                               <div *ngFor="let item of getRoles.controls; 
                               let pointIndex=index" [formGroupName]="pointIndex">
-                                <div class="grupo"> 
-                                  <div class="grupoinput1">
+                              <div class="grid ">
+                                <div class="col-11 md:col-11">
+                              <div class="grid ">
+                                <div class="col-1 md:col-1">
+                                  <div class="p-inputgroup"  >
+                                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                  </div>
+                                </div>
+                                <div class="col-11 md:col-11" style="margin-left: -25px;">
                                     <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                     [options]="headquarterProgram" [filter]="true"
                                         formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
@@ -283,16 +178,20 @@
                                           Programa: {{option.Programa  | titlecase}}</span>
                                     </ng-template>
                                     </p-dropdown>
-                                  </div>
+                                  <!-- </div>
+                                </div> -->
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col-1 md:col-1">
+                                  <span class="bottomdelete" style="margin-top: -35px;">
+                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                                    class="p-button-rounded p-button-danger"></button>
+                                  </span>
                                   
-                                <span class="bottomdelete" style="margin-top: -35px;">
-                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
-                                  class="p-button-rounded p-button-danger"></button>
-                                  <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
-                                  (click)="removeRoles(pointIndex,$event)" 
-                                  label="eliminar"></button> -->
-                                </span>
-                                
+                                </div>
+                                  
+                             
                               </div>
                               </div>
                             </div> 
@@ -429,7 +328,7 @@
     <br>
 
     <div style="border: 1px solid black;padding: 10px;">
-
+    
       <div class="grid p-fluid" style="padding: 10px;">
         <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
           <img alt="logo" src="{{image}}" 
@@ -452,7 +351,7 @@
       <div class="grid p-fluid">
         <div class="col-12 md:col-6 lg:col-6">
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
             <input type="text" class="p-inputtext-lg" pInputText name="name" 
             placeholder="NOMBRE" formControlName="name" title="NOMBRES" required>         
         </div>
@@ -460,7 +359,7 @@
         
         <div class="col-12 md:col-6 lg:col-6">
           <div class="p-inputgroup" >
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
             <input type="text" pInputText [pKeyFilter]="blockSpecial" 
             class="p-inputtext-lg"  name="surname" placeholder="APELLIDOS" title="APELLIDO"
             formControlName="surname" required>         
@@ -469,57 +368,11 @@
 
       </div>
 
-      <!-- <div class="grid p-fluid" [style]="{'margin-top':'-20px'}" >
-        <div class="col-12 md:col-6 lg:col-6">
-          <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="date" class="p-inputtext-lg" pInputText name="date_of_birth" 
-            placeholder="FECHA DE NACIMIENTO" formControlName="date_of_birth" 
-            title="FECHA DE NACIMIENTO" required>         
-        </div>
-        </div>
-        
-        <div class="col-12 md:col-6 lg:col-6">
-          <div class="p-inputgroup" >
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-            class="p-inputtext-lg"  name="nationality" placeholder="NACIONALIDAD" title="NACIONALIDAD"
-            formControlName="nationality" required  >         
-        </div>
-        </div>
-
-      </div> -->
-
-      
       <div class="grid p-fluid">
-        <!-- <div class="col-12 md:col-6 lg:col-6">
-          <div class="field">
-            <div class="flex">
-              <div style="width:100%">
-                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="genders" [filter]="true" formControlName="GenderId" label="SELECCIONE EL GENERO" 
-                  [style]="{'width':'100%'}" 
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                   placeholder="SELECCIONE GENERO" title="SELECCIONE GENERO">
-                  <ng-template let-option pTemplate="item">
-                    <span >{{option.name }}</span>
-                </ng-template>
-                </p-dropdown>
-              </div>
-              <span class="bottomdelete" style="margin-top: -35px;">
-                <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                class="p-button-rounded p-button-outlined" (click)="addGenero($event)" ></button>
-              </span>
 
-            </div>
-   
-        </div>
-
-
-        </div> -->
         <div class="col-12 md:col-6 lg:col-6">
           <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
             <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
             placeholder="CORREO"  title="CORREO ELECTRONICO" required>         
         </div>
@@ -537,70 +390,6 @@
 
       </div>
 
-
-<!-- 
-      <div class="grid p-fluid">
-        <div class="col-12 md:col-6 lg:col-6">
-          <div class="field">
-            <div class="flex">
-              <div style="width:100%">
-            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-            [options]="documentTypes" [filter]="true"
-              name="DocumentTypeId" formControlName="DocumentTypeId" label="TIPO DE DOCUMENTO" 
-              [style]="{'width':'100%'}" 
-              optionvalue="id"  optionLabel="name" filterBy="name"
-               placeholder="SELECCIONE TIPO DE DOCUMENTO" title="SELECCIONE TIPO DE DOCUMENTO">
-              <ng-template let-option pTemplate="item">
-                <span >{{option.name}}</span>
-            </ng-template>
-            </p-dropdown>
-            </div>
-            <span class="bottomdelete" style="margin-top: -35px;">
-              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-              class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
-            </span>
-          </div>
-    
-          </div>
-
-        </div>
-        
-        <div class="col-12 md:col-6 lg:col-6">
-          <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input class="p-inputtext-lg" formControlName="identification" 
-            type="text" pInputText pKeyFilter="num" name="identification" 
-            placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN" required>         
-        </div>
-
-        </div>
-
-      </div> -->
-
-      <!-- <div class="grid p-fluid">
-        <div class="col-12 md:col-6 lg:col-6">
-          
-          <div class="p-inputgroup" >
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-            class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" formControlName="address"
-              title="DIRECCION" required>         
-        </div>
-
-        </div>
-        <div class="col-12 md:col-6 lg:col-6">
-          <div class="p-inputgroup"  style="margin-bottom: 20px;">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-            <input class="p-inputtext-lg" type="text" formControlName="phone"
-            pInputText pKeyFilter="num" name="phone" 
-            placeholder="TELEFONO" title="TELEFONO" required>         
-        </div>
-
-        </div>
-
-      </div> -->
- 
-  <!-- </ng-template> -->
       </div>
 
       <div class="bordep">
@@ -656,7 +445,7 @@
                   <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                   <input class="p-inputtext-lg" type="text" formControlName="Horas"
                   pInputText pKeyFilter="num" name="Horas" 
-                  placeholder="Horas dedicadas" title="Horas dedicadas" >         
+                  placeholder="Horas dedicadas" title="Horas dedicadas" >        
               </div>
               </div>
             </div>
@@ -687,8 +476,15 @@
                     <div formArrayName="headquarterProgramStudent"> 
                       <div *ngFor="let item of getRoles.controls; 
                       let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="grupo"> 
-                          <div class="grupoinput1">
+                      <div class="grid ">
+                        <div class="col-11 md:col-11">
+                      <div class="grid ">
+                        <div class="col-1 md:col-1">
+                          <div class="p-inputgroup"  >
+                            <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                          </div>
+                        </div>
+                        <div class="col-11 md:col-11" style="margin-left: -25px;">
                             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                             [options]="headquarterProgram" [filter]="true"
                                 formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
@@ -701,16 +497,20 @@
                                   Programa: {{option.Programa  | titlecase}}</span>
                             </ng-template>
                             </p-dropdown>
-                          </div>
+                          <!-- </div>
+                        </div> -->
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-1 md:col-1">
+                          <span class="bottomdelete" style="margin-top: -35px;">
+                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                            class="p-button-rounded p-button-danger"></button>
+                          </span>
                           
-                        <span class="bottomdelete" style="margin-top: -35px;">
-                          <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
-                          class="p-button-rounded p-button-danger"></button>
-                          <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
-                          (click)="removeRoles(pointIndex,$event)" 
-                          label="eliminar"></button> -->
-                        </span>
-                        
+                        </div>
+                          
+                     
                       </div>
                       </div>
                     </div> 

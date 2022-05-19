@@ -14,7 +14,7 @@
         </div>
         <div class="p-inputgroup">
           <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
           <input type="text" class="p-inputtext-lg" 
           pInputText name="name" placeholder="NOMBRE" [pKeyFilter]="blockSpecial"
           formControlName="name" required>   
@@ -24,16 +24,22 @@
        
           <div class="p-inputgroup">
             <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-            <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+              <input type="text" class="p-inputtext-lg" pInputText name="cordinatorInvestigation" 
             placeholder="CORDINADOR DE INVESTIGACIÓN" 
             formControlName="cordinatorInvestigation" required>
             <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORDINADOR DE INVESTIGACIÓN</h3></label>
           </span>         
           </div>
 
-
-        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px'}">
+          <div class="grid m-fluid">
+            <div class="col-1 md:col-1">
+              <div class="p-inputgroup"  style="margin-bottom: 20px;">
+                <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+              </div>
+            </div>
+            <div class="col-11 md:col-11">
+        <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'40px','margin-left':'-13px'}">
           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
           [options]="universitys" [filter]="true" formControlName="UniversityId" name="UniversityId"
             [style]="{'width':'100%','margin-bottom':'20px'}"
@@ -45,6 +51,8 @@
           </p-dropdown>
           <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">UNIVERSIDAD</h3></label>
         </span>
+            </div>
+          </div>
     </div>
                 
             <ng-template pTemplate="footer">

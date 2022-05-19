@@ -15,177 +15,183 @@
             <i class="pi  pi-pencil" style="font-size: 2rem;margin-right: 10px;"></i>
           <h2 class="fondebabutton" style="margin-top: -1px;">Editar Programa</h2>
         </div>
+        <div class="p-inputgroup"  style="margin-top: 10px;margin-bottom: 10px;">
+          <span class="p-float-label" 
+          [style]="{'width':'100%'}">
+          <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
 
-        <div class="grid p-fluid">
-          <div class="col-12 md:col-6 lg:col-6">
-            
-            <div class="p-inputgroup"  style="margin-top: 10px;">
-              <span class="p-float-label" 
-              [style]="{'width':'100%'}">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre">
-                <i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" class="p-inputtext-lg"
-               pInputText name="name" placeholder="NOMBRE" [pKeyFilter]="blockSpecial"
-               formControlName="name" required>  
-               <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label>
-              </span>       
+          <input type="text" class="p-inputtext-lg"
+           pInputText name="name" placeholder="NOMBRE" [pKeyFilter]="blockSpecial"
+           formControlName="name" required>  
+           <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label> -->
+          </span>       
+      </div>
+      <br>
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-6 lg:col-6">
+          <div class="grid m-fluid">
+            <div class="col-1 md:col-1">
+              <div class="p-inputgroup"  >
+                <span class="p-inputgroup-addon"  style="margin-top:10px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+              </div>
+            </div>
+            <div class="col-11 md:col-11">
+              <div class="flex" >
+            <div style="width:100%">
+          <span class="p-float-label" [style]="{'width':'100%','margin-top':'10px'}"> <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+          [options]="faculties" [filter]="true"
+          formControlName="FacultyId" label="SELECCIONE LA FACULTAD" 
+            [style]="{'width':'100%','margin-bottom':'20px'}" 
+            optionvalue="id" optionLabel="name"  filterBy="name"
+            [required]="true" placeholder="SELECCIONE LA FACULTAD">
+            <ng-template let-option pTemplate="item">
+              <span >{{option.name  | titlecase}} -  {{option.University.name  | titlecase}}</span>
+          </ng-template>
+          </p-dropdown>
+          <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FACULTAD</h3></label>
+        </span>
+                </div>
+              </div>
+            </div>
           </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="grid m-fluid">
+          <div class="col-1 md:col-1">
+            <div class="p-inputgroup"  >
+              <span class="p-inputgroup-addon"  style="margin-top:10px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            </div>
+          </div>
+          <div class="col-11 md:col-11">
+            <div class="flex" >
+          <div style="width:100%">
+        <span class="p-float-label" [style]="{'width':'100%','margin-top':'10px'}">
+          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+          [options]="categorys" [filter]="true"
+            formControlName="CategoryId"  label="SELECCIONE LA CATEGORIA" 
+            [style]="{'width':'100%'}" 
+            optionvalue="id" optionLabel="name"  filterBy="name"
+            [required]="true" placeholder="SELECCIONE LA CATEGORIA">
+            <ng-template let-option pTemplate="item">
+              <span >{{option.name  | titlecase}}</span>
+          </ng-template>
+          </p-dropdown>
+            <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA</h3></label>
+        </span>
 
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="flex">
-              <div style="width:100%">
-            <span class="p-float-label" [style]="{'width':'100%','margin-top':'10px'}">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-              [options]="categorys" [filter]="true"
-                formControlName="CategoryId"  label="SELECCIONE LA CATEGORIA" 
-                [style]="{'width':'100%'}" 
-                optionvalue="id" optionLabel="name"  filterBy="name"
-                [required]="true" placeholder="SELECCIONE LA CATEGORIA">
-                <ng-template let-option pTemplate="item">
-                  <span >{{option.name  | titlecase}}</span>
-              </ng-template>
-              </p-dropdown>
-                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA</h3></label>
-            </span>
-    
-          </div>
-          <span class="bottomdelete" style="margin-top: 15px;">
-            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-            class="p-button-rounded p-button-outlined" (click)="addCategoria($event)" ></button>
-          </span>
-          </div>
-             <!-- <span class="p-float-label" 
-              [style]="{'width':'100%','margin-top':'10px'}">
-              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-              [options]="categorys" [filter]="true"
-                formControlName="CategoryId"  label="SELECCIONE LA CATEGORIA" 
-                [style]="{'width':'100%'}" [(ngModel)]="selectedCategoryI" 
-                optionvalue="id" optionLabel="name"  filterBy="name"
-                [required]="true" placeholder="SELECCIONE LA CATEGORIA">
-                <ng-template let-option pTemplate="item">
-                  <span >{{option.name  | titlecase}}</span>
-              </ng-template>
-              </p-dropdown>
-                <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CATEGORIA</h3></label>
-              </span> -->
-          </div>
-
-        </div>
-        <span class="p-float-label" 
-        [style]="{'width':'100%','margin-top':'30px'}">
-        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-        [options]="faculties" [filter]="true"
-        formControlName="FacultyId" label="SELECCIONE LA FACULTAD" 
-          [style]="{'width':'100%','margin-bottom':'20px'}" 
-          optionvalue="id" optionLabel="name"  filterBy="name"
-          [required]="true" placeholder="SELECCIONE LA FACULTAD">
-          <ng-template let-option pTemplate="item">
-            <span >{{option.name  | titlecase}} - Universidad: {{option.University.name  | titlecase}}</span>
-        </ng-template>
-        </p-dropdown>
-        <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FACULTAD</h3></label>
+      </div>
+      <span class="bottomdelete" style="margin-top: 15px;">
+        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+        class="p-button-rounded p-button-outlined" (click)="addCategoria($event)" ></button>
       </span>
-
-
-
-        <div fxLayout="row" fxLayoutGap="20px" style="text-align: center;">
-          <button pButton type="button" (click)="addRoles($event)" 
-          class="p-button-warning p-button-raised p-button-rounded"
-           label="Add Sedes"></button>
-
-          
+      </div>
+          </div>
         </div>
-        <br>
-        <div fxLayout="row" fxLayoutGap="20px">
-          <div class="table-wrapper" >
-            <p-table [value]="algo" *ngIf="mostrar2 == true"> 
-              <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="id">Sedes<p-sortIcon field="id"></p-sortIcon></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
-              <tr [pSelectableRow]="rowData">
-                  <td>
-                    <div formArrayName="Headquarters"> 
-                      <div *ngFor="let item of getRoles.controls; 
-                      let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="grupo"> 
-                          <div class="grupoinput1">
-                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                            [options]="headquarters" [filter]="true"
-                                formControlName="HeadquarterId" name="HeadquarterId"
-                               label="SELECCIONE SEDE" 
-                              [style]="{'width':'100%','margin-bottom':'20px'}"
-                              optionvalue="id" optionLabel="name"  filterBy="name"
-                              [required]="true" placeholder="SELECCIONE SEDE">
-                              <ng-template let-option pTemplate="item"  >
-                                <span >
-                                  {{option.name  | titlecase}} -
-                                  {{option.University?.name  | titlecase}}</span>
-                            </ng-template>
-                            </p-dropdown>
-                          </div>
+      </div>
 
-                          <div class="grupoinput2">
-                            <div class="flex">
-                              <div style="width:100%">
-                            <span class="p-float-label" [style]="{'width':'100%'}">
-                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                            [options]="administratives" [filter]="true"
-                                formControlName="AdministrativeId"
-                               label="SELECCIONE DIRECTOR" 
-                              [style]="{'width':'100%','margin-bottom':'20px'}"
-                              optionvalue="UserId" optionLabel="todo"  filterBy="todo"
-                              [required]="true" placeholder="SELECCIONE DIRECTOR">
-                              <ng-template let-option pTemplate="item">
-                                <span >
-                                  {{option.todo | titlecase}}
-                                  </span>
-                            </ng-template>
-                            </p-dropdown>
-                                <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">ADMIN</h3></label> -->
-                            </span>
-                    
+    </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+        <button pButton type="button" (click)="addRoles($event)" 
+        class="p-button-warning p-button-raised p-button-rounded"
+         label="Add Sedes"></button>
+      </div>
+      <br>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div class="table-wrapper" >
+          <p-table [value]="algo" *ngIf="mostrar2 == true"> 
+            <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="id">Sedes<p-sortIcon field="id"></p-sortIcon></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+            <tr [pSelectableRow]="rowData">
+                <td>
+                  <div formArrayName="Headquarters"> 
+                    <div *ngFor="let item of getRoles.controls; 
+                    let pointIndex=index" [formGroupName]="pointIndex">
+                      <div class="grid"> 
+                        <div class="col-12 md:col-5">
+                            <div class="grid m-fluid">
+                              <div class="col-1 md:col-1">
+                                <div class="p-inputgroup"  >
+                                  <span class="p-inputgroup-addon"  style=" color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                </div>
+                              </div>
+                              <div class="col-11 md:col-11">
+                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                          [options]="headquarters" [filter]="true"
+                              formControlName="HeadquarterId"
+                             label="SELECCIONE SEDE" 
+                            [style]="{'width':'100%','margin-bottom':'10px'}"
+                            optionvalue="id" optionLabel="name"  filterBy="name"
+                            [required]="true" placeholder="SELECCIONE SEDE" >
+                            <ng-template let-option pTemplate="item"  >
+                              <span >{{option.name  | titlecase}} -
+                                {{option.University?.name  | titlecase}}</span>
+                          </ng-template>
+                          </p-dropdown>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-5">
+                          <div class="grid m-fluid">
+                            <div class="col-1 md:col-1">
+                              <div class="p-inputgroup"  >
+                                <span class="p-inputgroup-addon"  style=" color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                              </div>
+                            </div>
+                            <div class="col-11 md:col-11">
+                              <div class="flex">
+                                <div style="width:100%">
+                              <span class="p-float-label" [style]="{'width':'100%'}">
+                                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="administratives" [filter]="true"
+                                  formControlName="AdministrativeId"
+                                label="SELECCIONE DIRECTOR" 
+                                [style]="{'width':'100%','margin-bottom':'10px'}"
+                                optionvalue="UserId" optionLabel="todo"  filterBy="todo"
+                                [required]="true" placeholder="SELECCIONE DIRECTOR">
+                                <ng-template let-option pTemplate="item">
+                                  <span >
+                                    {{option.todo}}
+                                    </span>
+                              </ng-template>
+                              </p-dropdown>
+                                  <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">ADMIN</h3></label> -->
+                              </span>
+                      
+                            </div>
+                            
+                            </div>
+                            </div>
                           </div>
-                          <span class="bottomdelete" style="margin-top: 5px;">
+                          
+                        </div>
+                        <div class="col-12 md:col-2">
+                          <span class="bottomdelete" style="margin-top: 5px;" class="mr-1">
                             <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                             class="p-button-rounded p-button-outlined" (click)="addAdministrativos($event)" ></button>
                           </span>
-                          </div>
-                            <!-- <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                            [options]="administratives" [filter]="true"
-                                formControlName="AdministrativeId" name="AdministrativeId"
-                               label="SELECCIONE DIRECTOR" 
-                              [style]="{'width':'100%','margin-bottom':'20px'}"
-                              optionvalue="id" optionLabel="User.fullName"  filterBy="User.fullName"
-                              [required]="true" placeholder="SELECCIONE DIRECTOR">
-                              <ng-template let-option pTemplate="item">
-                                <span >
-                                  {{option.Charge?.name  | titlecase}} -
-                                  {{option.User.fullName  | titlecase}} - 
-                                  {{option.User.Person.identification }} -
-                                  {{option.Headquarter.name | titlecase}}
-                                  </span>
-                            </ng-template>
-                            </p-dropdown> -->
-                          </div>
-                          
-                        <span class="bottomdelete" style="margin-top: 5px;">
-                          <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
-                          class="p-button-rounded p-button-danger"></button>
-                        </span>
+                          <span class="bottomdelete" style="margin-top: 5px;">
+                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
+                            class="p-button-rounded p-button-danger"></button>
+                          </span>
+                        </div>
                         
-                      </div>
-                      </div>
-                    </div> 
-                  </td>
-              </tr>
-            </ng-template>
-            </p-table>
-          </div>
+                  
+                      
+                    </div>
+                    </div>
+                  </div> 
+                </td>
+            </tr>
+          </ng-template>
+          </p-table>
         </div>
+      </div>
 
         </div>
                 

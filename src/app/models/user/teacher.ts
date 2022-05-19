@@ -73,4 +73,6 @@ export interface Charge_bondingI {
     Teachers?:TeacherI[]
     createdAt?:string
     updatedAt?:string
+    Scales?:any[]
+    ChargebondingScales?:ChargebondingScaleI[]
 }

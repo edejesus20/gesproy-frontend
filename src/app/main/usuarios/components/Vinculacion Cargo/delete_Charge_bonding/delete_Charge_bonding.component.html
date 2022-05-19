@@ -22,6 +22,25 @@
       [value]="form.value.name" disabled>
       <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRE</h3></label>
     </span>
+    <br>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div class="table-wrapper" >
+        <p-table [value]="scales" > 
+          <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">Escalafon<p-sortIcon field="id"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+          <tr [pSelectableRow]="rowData">
+              <td>
+                  {{item.name | titlecase}}
+              </td>
+          </tr>
+        </ng-template>
+        </p-table>
+      </div>
+    </div>
         </div>
                 
         <ng-template pTemplate="footer">
