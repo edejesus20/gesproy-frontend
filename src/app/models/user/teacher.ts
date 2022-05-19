@@ -12,7 +12,7 @@ import { ProjetTeacherI } from "../projet/projet-teacher";
 export interface TeacherI {
     id?:number
     UserId: number;
-    ScaleId: number;
+    ScaleId?: number;
     MincienciaCategoryId: number;
     // hours_of_dedication:string;
     User?:UserI
@@ -35,8 +35,26 @@ export interface TeacherI {
     TrainingTeachers?:TrainingTeacherI[],
     LineProgramGroupTeachers?:LineProgramGroupTeacherI[],
 
+    ChargebondingScaleTeachers?:ChargebondingScaleTeacherI[]
+
     // LinesG?:any[]
     // LinesS?:any[]
+}
+
+export interface ChargebondingScaleTeacherI {
+    id?:number
+    ChargebondingScaleId: number
+    TeacherId: number
+    Teacher?:TeacherI
+    ChargebondingScale?:ChargebondingScaleI
+}
+export interface ChargebondingScaleI {
+    id?:number
+    ChargeBondingId: number
+    ScaleId: number
+    Charge_bonding?:Charge_bondingI
+    Scale?:ScaleI
+
 }
 
 export interface WorkexperienceI {
