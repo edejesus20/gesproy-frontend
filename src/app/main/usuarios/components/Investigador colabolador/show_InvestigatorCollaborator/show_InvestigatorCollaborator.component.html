@@ -105,7 +105,7 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Groups"  dataKey="id" responsiveLayout="scroll"
+                  <p-table [value]="item.GroupInvestigatorCollaborators"  dataKey="id" responsiveLayout="scroll"
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -117,7 +117,7 @@
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre de Grupos <p-sortIcon field="name"></p-sortIcon></th>
                               <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th>
-                              <th pSortableColumn="facultad">FACULTAD <p-sortIcon field="facultad"></p-sortIcon></th>
+                              <!-- <th pSortableColumn="facultad">FACULTAD <p-sortIcon field="facultad"></p-sortIcon></th> -->
                               <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th>
                           </tr>
                       </ng-template>
@@ -128,10 +128,10 @@
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
                           </ng-template>  -->
-                              <td>{{order.id}}</td>
-                              <td>{{order.name | titlecase}}</td>
-                              <td>{{order.group_code }}</td>
-                              <td>{{order.Program?.Faculty?.name | titlecase }}</td>
+                              <td>{{order.Group.id}}</td>
+                              <td>{{order.Group.name | titlecase}}</td>
+                              <td>{{order.Group.group_code }}</td>
+                              <!-- <td>{{order.Group.Program?.Faculty?.name | titlecase }}</td> -->
                               <td style="max-width:400px" >
                                 <a pButton 
                                 pRipple type="button" class="p-button-outlined p-button-info" 

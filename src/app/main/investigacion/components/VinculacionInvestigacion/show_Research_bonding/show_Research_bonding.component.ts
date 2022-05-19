@@ -30,7 +30,7 @@ export class Show_Research_bondingComponent implements OnInit {
 
   constructor(
     private research_bondingService:Research_bondingService ,
-    private teacherService:TeacherService ,
+    // private teacherService:TeacherService ,
      private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
  
@@ -58,30 +58,9 @@ export class Show_Research_bondingComponent implements OnInit {
     
     this.research_bondingService.getList().subscribe((research_bondingsApiFrom) => {
       this.research_bondings =research_bondingsApiFrom.research_bondings
-      for (let key of this.research_bondings) {
-        if(key.HeadquarterProgramTeachers != undefined && key.HeadquarterProgramTeachers.length > 0) {
-          key.HeadquarterProgramTeachers.forEach((newH:HeadquarterProgramTeacherI) => {
-            if( newH?.TeacherId != undefined) {
-              this.teacherService.getItem(newH.TeacherId).subscribe((item) => {
-                if(key.Teachers != undefined){
-                  key.Teachers.push(item.teacher);
-  
-                }else{
-                  Object.defineProperty( key, 'Teachers', {
-                    value:[item.teacher]
-                    });
-                }
-              })
 
-             
-
-            }
-        });
-        }
-     
-      }
     
-      // console.log(this.research_bondings)
+      console.log(this.research_bondings)
       this.rows2=[]
       if(research_bondingsApiFrom.research_bondings != undefined){
         for (const key of research_bondingsApiFrom.research_bondings) {

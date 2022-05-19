@@ -11,7 +11,7 @@ import { GenderI } from 'src/app/models/user/gender';
 const translate = require('translate');
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
-import {  HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import {  HeadquarterProgramI, HeadquarterProgramStudentI } from 'src/app/models/institution/headquarter';
 import { StudentInternshipsI } from 'src/app/models/user/student';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
@@ -101,6 +101,7 @@ export class EditarStudentComponent implements OnInit {
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()
+    // this.getAllheadquarters()
     this.getAllheadquarters()
     this.getSeedbed()
   }
@@ -218,6 +219,8 @@ private getAllheadquarters(selectId?: number) {
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
+      console.log(this.headquarterProgram)
+
     }, error => console.error(error));
 }
 
@@ -260,7 +263,7 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.student.id != undefined
       ){
-      // console.log(cnt_groupFromApi.student)
+      console.log(cnt_groupFromApi.student)
         this.form.controls['id'].setValue(id)
         if(cnt_groupFromApi.student.User?.Person != undefined){
           this.form.controls['name'].setValue(cnt_groupFromApi.student.User.Person.name)
@@ -285,17 +288,18 @@ getOneCntAccount(id:number) {
             this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
           // })
   
-   
+     
 
         // if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
         // this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
         //   this.form.controls['GenderId'].setValue(algo.gender)
         // })
-        if(cnt_groupFromApi.student.Seedbeds != undefined && cnt_groupFromApi.student.Seedbeds.length > 0){
-          let algo=cnt_groupFromApi.student?.Seedbeds?.[0]
-          let nuevo =algo?.SeedbedStudent?.hours
-          let date_firt=moment(algo?.SeedbedStudent?.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
-          let date_end=moment(algo?.SeedbedStudent?.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+        
+        if(cnt_groupFromApi.student.SeedbedStudents != undefined && cnt_groupFromApi.student.SeedbedStudents.length > 0){
+          let algo=cnt_groupFromApi.student?.SeedbedStudents?.[0]
+          let nuevo =algo?.hours
+          let date_firt=moment(algo?.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+          let date_end=moment(algo?.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
           
           this.form.controls['Horas'].setValue(nuevo)
           this.form.controls['date_firt'].setValue(date_firt)
@@ -305,7 +309,7 @@ getOneCntAccount(id:number) {
 
           if(algo?.id != undefined)
           for (const key of this.seedbeds) {
-            if(key.id != undefined && key.id == (algo?.id)){
+            if(key.id != undefined && key.id == (algo?.Seedbed?.id)){
               this.form.controls['SeedbedId'].setValue(key)
             }
           }
@@ -321,10 +325,10 @@ getOneCntAccount(id:number) {
 
         
 
-        if(cnt_groupFromApi.student.HeadquarterPrograms != undefined
-          && cnt_groupFromApi.student.HeadquarterPrograms.length > 0){
+        if(cnt_groupFromApi.student.HeadquarterProgramStudents != undefined
+          && cnt_groupFromApi.student.HeadquarterProgramStudents.length > 0){
           
-          this.agregarDescuentos(cnt_groupFromApi.student.HeadquarterPrograms)
+          this.agregarDescuentos(cnt_groupFromApi.student.HeadquarterProgramStudents)
           
         }
         if(cnt_groupFromApi.student.StudentInternships != undefined 
@@ -365,28 +369,44 @@ getOneCntAccount(id:number) {
       control.removeAt(0)
     }
   }
-  agregarDescuentos(HeadquarterPrograms:HeadquarterProgramI[]) {
-    if(HeadquarterPrograms.length){
-      for (let key of HeadquarterPrograms) {
-        if(key.HeadquarterProgramStudent != undefined) {
+  agregarDescuentos(HeadquarterProgramStudents:HeadquarterProgramStudentI[]) {
+    if(HeadquarterProgramStudents.length){
+      for (let key of HeadquarterProgramStudents) {
+        if(key.HeadquarterProgramId != undefined ) {
           // console.log(DiscountLine)
           let control = <FormArray>this.form.controls['headquarterProgramStudent']
 
-          let  HeadquarterId:any
-          for (const key2 of this.headquarterProgram) {
-            if(key2.id == key.HeadquarterProgramStudent.HeadquarterProgramId){
-             HeadquarterId=key2
+          let  HeadquarterProgram:any | null=null
+          if(key.HeadquarterProgram?.HeadquarterId != undefined
+            &&  key.HeadquarterProgram?.ProgramId != undefined){
+              for (let key2 of this.headquarterProgram) {
+                if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
+                  && key2.ProgramId== key.HeadquarterProgram.ProgramId){
+                    // console.log('aqui')
+                 HeadquarterProgram=key2
+                }
+              }
             }
-          }
+        
 
-            // this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramStudent.HeadquarterProgramId).subscribe((algo)=>{
-            //   if(algo.headquarterProgram && key.HeadquarterProgramStudent != undefined){
+          if(HeadquarterProgram != null){
+            control.push(this.formBuilder.group({
+              StudentId:0,
+              HeadquarterProgramId:[HeadquarterProgram, [Validators.required]],
+            }))
+          }else{
+            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramId).subscribe((algo)=>{
+              if(algo.headquarterProgram != undefined && algo.headquarterProgram != null){
+                console.log(algo.headquarterProgram[0])
                 control.push(this.formBuilder.group({
                   StudentId:0,
-                  HeadquarterProgramId:[HeadquarterId, [Validators.required]],
+                  HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
                 }))
-            //   }
-            // })
+              }
+            })
+          }
+
+           
         }
       }
       this.mostrar2= true

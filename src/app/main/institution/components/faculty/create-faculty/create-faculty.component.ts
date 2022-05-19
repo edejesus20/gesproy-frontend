@@ -128,7 +128,7 @@ constructor(
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
+          // this.messageService.add({severity:'info', summary: 'Ocupación Creada', detail: person.name,life: 2000});
           if (person) {
             console.log(person)
 

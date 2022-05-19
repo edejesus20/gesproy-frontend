@@ -56,7 +56,7 @@ export class ShowStudentComponent implements OnInit {
     this.studentService.getList().subscribe((instititionsFromApi) => {
       this.students =instititionsFromApi.students;
       this.rows2=[]
-
+      console.log(instititionsFromApi.students)
       if(instititionsFromApi.students != undefined){
         for (let key of instititionsFromApi.students) {
           this.rows2.push(
@@ -66,20 +66,12 @@ export class ShowStudentComponent implements OnInit {
               User:key.User,
               Groups:key.Groups,
               Seedbeds:key.Seedbeds,
-              status_seedbed:key.status_seedbed
+              status_seedbed:key.status_seedbed,
+              HeadquarterProgramStudents:key.HeadquarterProgramStudents,
+              SeedbedStudents:key.SeedbedStudents,
+              GroupStudents:key.GroupStudents
             }
           )
-          if(key.Groups != undefined){
-            for (let index = 0; index < key.Groups.length; index++) {
-              let element = key.Groups[index];
-              this.programService.getItem(element.HeadquarterProgramId).subscribe((item) => {
-                Object.defineProperty( element, 'Program', {
-                  value:item.program
-                  });
-    
-              })
-            }
-          }
         }
 
       }

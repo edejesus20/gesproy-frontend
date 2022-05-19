@@ -107,7 +107,7 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Trainings"  dataKey="id" responsiveLayout="scroll"
+                  <p-table [value]="item.TrainingTeachers"  dataKey="id" responsiveLayout="scroll"
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -130,11 +130,11 @@
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
                           </ng-template>  -->
-                              <td>{{order.id}}</td>
+                              <td>{{order.Training.id}}</td>
+                              <td>{{order.Training.name | titlecase}}</td>
                               <td>{{order.name | titlecase}}</td>
-                              <td>{{order.TrainingTeacher.name | titlecase}}</td>
-                              <td>{{order.TrainingTeacher.date_graduation | date:'fullDate' | titlecase}}</td>
-                              <td>{{order.TrainingTeacher.name_institution | titlecase}}</td>
+                              <td>{{order.date_graduation | date:'fullDate' | titlecase}}</td>
+                              <td>{{order.name_institution | titlecase}}</td>
                           </tr>
                       </ng-template>
 <!-- 
@@ -263,7 +263,7 @@
       <tr>
         <td colspan="12">
           <div >
-              <p-table [value]="item.Lines"  dataKey="id" responsiveLayout="scroll"
+              <p-table [value]="item.LineProgramGroupTeachers"  dataKey="id" responsiveLayout="scroll"
               [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
               currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                >
@@ -272,10 +272,10 @@
                         <!-- <ng-template [ngIf]="mostrar==3">
                           <th style="width: 3rem"></th>
                         </ng-template>  -->
-                          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                          <th pSortableColumn="name">Nombre de lineas <p-sortIcon field="name"></p-sortIcon></th>
-                          <th pSortableColumn="objectives">Objetivos <p-sortIcon field="objectives"></p-sortIcon></th>
-                          <th pSortableColumn="tipo">lineas Asociadas a <p-sortIcon field="tipo"></p-sortIcon></th>
+                          <th pSortableColumn="LineProgramGroup.LineProgram.Line.id">Id <p-sortIcon field="LineProgramGroup.LineProgram.Line.id"></p-sortIcon></th>
+                          <th pSortableColumn="LineProgramGroup.LineProgram.Line.name">Nombre de lineas <p-sortIcon field="LineProgramGroup.LineProgram.Line.name"></p-sortIcon></th>
+                          <th pSortableColumn="LineProgramGroup.LineProgram.Line.objectives">Objetivos <p-sortIcon field="LineProgramGroup.LineProgram.Line.objectives"></p-sortIcon></th>
+                          <th pSortableColumn="LineProgramGroup.LineProgram.Line.resolution">Resolución <p-sortIcon field="LineProgramGroup.LineProgram.Line.resolution"></p-sortIcon></th>
                           
                       </tr>
                   </ng-template>
@@ -286,10 +286,11 @@
                             <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
                       </ng-template>  -->
-                          <td>{{order.line.id}}</td>
-                          <td>{{order.line.name | titlecase}}</td>
-                          <td>{{order.line.objectives}}</td>
-                          <td>{{order.tipo | titlecase}}</td>
+                          <td>{{order.LineProgramGroup.LineProgram.Line.id}}</td>
+                          <td>{{order.LineProgramGroup.LineProgram.Line.name | titlecase}}</td>
+                          <td>{{order.LineProgramGroup.LineProgram.Line.objectives}}</td>
+                          <td>{{order.LineProgramGroup.LineProgram.Line.resolution}}</td>
+                          <!-- <td>{{order.LineProgramGroup.LineProgram.tipo | titlecase}}</td> -->
 
                       </tr>
                   </ng-template>

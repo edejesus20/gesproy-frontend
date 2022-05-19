@@ -38,10 +38,12 @@ export interface HeadquarterProgramTeacherI {
    HeadquarterProgramId:number;
    ResearchBondingId:number,
    Teacher?:TeacherI
+   HeadquarterProgram?:HeadquarterProgramI
 
 }
 export interface HeadquarterProgramStudentI {
    id?: number;
    StudentId:number;
    HeadquarterProgramId:number;
+   HeadquarterProgram?:HeadquarterProgramI
 }

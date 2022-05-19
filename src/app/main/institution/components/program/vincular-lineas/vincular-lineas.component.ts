@@ -142,6 +142,9 @@ actualizar(id: number){
 }
 
 getOneCntAccount(id:number) {
+
+ 
+
   this.programService.getItem(id).subscribe((cnt_groupFromApi) => {
     console.log(cnt_groupFromApi.program)
     if(cnt_groupFromApi.program.id != undefined && cnt_groupFromApi.program.CategoryId != undefined
@@ -159,13 +162,19 @@ getOneCntAccount(id:number) {
     // })
       this.form2=cnt_groupFromApi.program
       }
-
-      if(cnt_groupFromApi.program.LinePrograms != undefined &&
-        cnt_groupFromApi.program.LinePrograms.length > 0){
-    
-        this.agregarLines(cnt_groupFromApi.program.LinePrograms)
+      this.programService.OneProgram(id).subscribe((algo)=>{
+        // console.log(algo.program)
+        if(algo.program != null){
+          if(algo.program.LinePrograms != undefined &&
+            algo.program.LinePrograms.length > 0){
         
-      }
+            this.agregarLines(algo.program.LinePrograms)
+            
+          }
+        }
+      
+      })
+ 
    
     this.displayMaximizable2=true
     this.tabla = false

@@ -108,7 +108,7 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Seedbeds"  dataKey="id" responsiveLayout="scroll"
+                  <p-table [value]="item.SeedbedStudents"  dataKey="id" responsiveLayout="scroll"
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -120,9 +120,9 @@
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre de Semillero <p-sortIcon field="name"></p-sortIcon></th>
                               <th pSortableColumn="Docente">Docente <p-sortIcon field="Docente"></p-sortIcon></th>
-                              <th pSortableColumn="SeedbedStudent.date_firt">Fecha inicial<p-sortIcon field="SeedbedStudent.date_firt"></p-sortIcon></th>
-                              <th pSortableColumn="SeedbedStudent.date_end">Fecha final <p-sortIcon field="SeedbedStudent.date_end"></p-sortIcon></th>
-                              <th pSortableColumn="SeedbedStudent.Horas">Horas<p-sortIcon field="SeedbedStudent.Horas"></p-sortIcon></th>
+                              <th pSortableColumn="date_firt">Fecha inicial<p-sortIcon field="date_firt"></p-sortIcon></th>
+                              <th pSortableColumn="date_end">Fecha final <p-sortIcon field="date_end"></p-sortIcon></th>
+                              <th pSortableColumn="Horas">Horas<p-sortIcon field="Horas"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
@@ -132,12 +132,12 @@
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
                           </ng-template>  -->
-                              <td>{{order.id}}</td>
-                              <td>{{order.name | titlecase}}</td>
-                              <td>{{order.Teacher?.User?.fullName | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.date_firt | date:'fullDate' | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.date_end | date:'fullDate' | titlecase}}</td>
-                              <td>{{order.SeedbedStudent.hours}}</td>
+                              <td>{{order.Seedbed.id}}</td>
+                              <td>{{order.Seedbed.name | titlecase}}</td>
+                              <td>{{order.Seedbed.Teacher?.User?.fullName | titlecase}}</td>
+                              <td>{{order.date_firt | date:'fullDate' | titlecase}}</td>
+                              <td>{{order.date_end | date:'fullDate' | titlecase}}</td>
+                              <td>{{order.hours}}</td>
                               
                           </tr>
                       </ng-template>
@@ -190,7 +190,7 @@
       <tr>
           <td colspan="12">
             <div >
-                <p-table [value]="item.Groups"  dataKey="id" responsiveLayout="scroll"
+                <p-table [value]="item.GroupStudents"  dataKey="id" responsiveLayout="scroll"
                 [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                  >
@@ -199,20 +199,22 @@
                     
                             <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                             <th pSortableColumn="name">Nombre de Grupos <p-sortIcon field="name"></p-sortIcon></th>
-                            <!-- <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th> -->
-                            <th pSortableColumn="facultad">Facultad <p-sortIcon field="facultad"></p-sortIcon></th>
+                            <th pSortableColumn="Codigo">Codigo <p-sortIcon field="Codigo"></p-sortIcon></th>
+                            <!-- <th pSortableColumn="facultad">Facultad <p-sortIcon field="facultad"></p-sortIcon></th> -->
                             <th pSortableColumn="Lider">Lider <p-sortIcon field="Lider"></p-sortIcon></th>
+                            <th pSortableColumn="Correo">Correo <p-sortIcon field="Correo"></p-sortIcon></th>
                             <!-- <th pSortableColumn="Link_gruplac">LINK GRUPLAC <p-sortIcon field="Link_gruplac"></p-sortIcon></th> -->
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-order let-expanded="expanded">
                       <tr>
 
-                            <td>{{order.id}}</td>
-                            <td>{{order.name | titlecase}}</td>
-                            <!-- <td>{{order.group_code }}</td> -->
-                            <td>{{order.Program?.Faculty?.name | titlecase }}</td>
-                            <td>{{order.Teacher?.User?.fullName | titlecase }}</td>
+                            <td>{{order.Group.id}}</td>
+                            <td>{{order.Group.name | titlecase}}</td>
+                            <td>{{order.Group.group_code }}</td>
+                            <!-- <td>{{order.Group.Program?.Faculty?.name | titlecase }}</td> -->
+                            <td>{{order.Group.Teacher?.User?.fullName | titlecase }}</td>
+                            <td>{{order.Group.Teacher?.User?.email | titlecase }}</td>
                             <!-- <td style="max-width:400px" >
                               <a pButton 
                               pRipple type="button" class="p-button-outlined p-button-info" 

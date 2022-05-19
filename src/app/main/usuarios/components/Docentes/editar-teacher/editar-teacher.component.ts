@@ -9,10 +9,10 @@ import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { HeadquarterProgramI } from 'src/app/models/institution/headquarter';
+import { HeadquarterProgramI, HeadquarterProgramTeacherI } from 'src/app/models/institution/headquarter';
 import {  Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { ScaleI } from 'src/app/models/institution/scale';
-import { TrainingI } from 'src/app/models/institution/training';
+import { TrainingI, TrainingTeacherI } from 'src/app/models/institution/training';
 import { LineI } from 'src/app/models/projet/line';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
@@ -406,10 +406,10 @@ actualizar(id: number){
 
 getOneCntAccount(id:number) {
   this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
-   
+    console.log(cnt_groupFromApi.teacher)
     if(cnt_groupFromApi.teacher.id != undefined
       ){
-          // console.log(cnt_groupFromApi.teacher)
+         
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
         if(cnt_groupFromApi.teacher.User?.Person != undefined 
@@ -421,6 +421,7 @@ getOneCntAccount(id:number) {
           // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
+          
           // this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
             if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
             // console.log(cnt_groupFromApi.teacher.LinkType)
@@ -467,14 +468,14 @@ getOneCntAccount(id:number) {
         //   this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
         // })
 
-        if(cnt_groupFromApi.teacher.HeadquarterPrograms != undefined && cnt_groupFromApi.teacher.HeadquarterPrograms?.length > 0){
+        if(cnt_groupFromApi.teacher.HeadquarterProgramTeachers != undefined && cnt_groupFromApi.teacher.HeadquarterProgramTeachers?.length > 0){
           
-          this.agregarHeadquarterPrograms(cnt_groupFromApi.teacher.HeadquarterPrograms)
+          this.agregarHeadquarterPrograms(cnt_groupFromApi.teacher.HeadquarterProgramTeachers)
           
         }
-        if(cnt_groupFromApi.teacher.Trainings?.length != undefined && cnt_groupFromApi.teacher.Trainings?.length > 0){
+        if(cnt_groupFromApi.teacher.TrainingTeachers?.length != undefined && cnt_groupFromApi.teacher.TrainingTeachers?.length > 0){
           // console.log(cnt_groupFromApi.teacher.Trainings)
-          this.agregarDescuentos(cnt_groupFromApi.teacher.Trainings)    
+          this.agregarDescuentos(cnt_groupFromApi.teacher.TrainingTeachers)    
         }
         
         if(cnt_groupFromApi.teacher.Workexperiences?.length != undefined && cnt_groupFromApi.teacher.Workexperiences?.length > 0){
@@ -510,26 +511,47 @@ getOneCntAccount(id:number) {
   //     // console.log(control)
   //   }
   // }
-  agregarHeadquarterPrograms(HeadquarterPrograms: HeadquarterProgramI[]) {
-    if(HeadquarterPrograms.length){
-      for (let key of HeadquarterPrograms) {
-        if(key.HeadquarterProgramTeacher?.HeadquarterProgramId != undefined) {
+  agregarHeadquarterPrograms(HeadquarterProgramTeachers: HeadquarterProgramTeacherI[]) {
+    if(HeadquarterProgramTeachers.length){
+      for (let key of HeadquarterProgramTeachers) {
+        if(key.HeadquarterProgramId != undefined) {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-          let  HeadquarterId:any
-          for (const key2 of this.headquarterProgram) {
-            if(key2.id == key.HeadquarterProgramTeacher.HeadquarterProgramId){
-             HeadquarterId=key2
+          
+          let  HeadquarterId:any | null=null
+          if(key.HeadquarterProgram?.HeadquarterId != undefined
+            &&  key.HeadquarterProgram?.ProgramId != undefined){
+              for (let key2 of this.headquarterProgram) {
+                if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
+                  && key2.ProgramId== key.HeadquarterProgram.ProgramId){
+                    // console.log('aqui')
+                    HeadquarterId=key2
+                }
+              }
             }
-          } 
+            let  ResearchBondingId:any | null=null
+            for (const key2 of this.research_bondings) {
+              if(key2.id == key.ResearchBondingId){
+                ResearchBondingId=key2
+              }
+            } 
 
-          let  ResearchBondingId:any
-          for (const key2 of this.research_bondings) {
-            if(key2.id == key.HeadquarterProgramTeacher.ResearchBondingId){
-              ResearchBondingId=key2
-            }
-          } 
+          if(HeadquarterId != null && ResearchBondingId != null){
+            control.push(this.formBuilder.group({
+              TeacherId:0,
+                HeadquarterProgramId:[HeadquarterId, [Validators.required]],
+                ResearchBondingId:[ResearchBondingId, [Validators.required]],
+            }))
+          }else{}
+          // aqui
+          // for (const key2 of this.headquarterProgram) {
+          //   if(key2.id == key.HeadquarterProgramTeacher.HeadquarterProgramId){
+          //    HeadquarterId=key2
+          //   }
+          // } 
+
+        
           // this.headquarterProgram
 
             // this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
@@ -537,11 +559,11 @@ getOneCntAccount(id:number) {
                     // this.research_bondingService.getItem(key.HeadquarterProgramTeacher.ResearchBondingId).subscribe
                     // ((algo2)=>{
                     //   if(algo2.research_bonding && key.HeadquarterProgramTeacher != undefined){
-                        control.push(this.formBuilder.group({
-                          TeacherId:0,
-                            HeadquarterProgramId:[HeadquarterId, [Validators.required]],
-                            ResearchBondingId:[ResearchBondingId, [Validators.required]],
-                        }))
+                        // control.push(this.formBuilder.group({
+                        //   TeacherId:0,
+                        //     HeadquarterProgramId:[HeadquarterId, [Validators.required]],
+                        //     ResearchBondingId:[ResearchBondingId, [Validators.required]],
+                        // }))
                   //     }
                   // })
             //   }
@@ -576,25 +598,25 @@ getOneCntAccount(id:number) {
       control.removeAt(0)
     }
   }
-  agregarDescuentos(Trainings: TrainingI[]) {
-    if(Trainings.length){
-      for (let key of Trainings) {
-        if(key.TrainingTeacher != undefined) {
+  agregarDescuentos(TrainingTeachers: TrainingTeacherI[]) {
+    if(TrainingTeachers.length){
+      for (let key of TrainingTeachers) {
+        if(key.TrainingId != undefined) {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form.controls['trainingTeacher']
-            this.teacherService.getItem(key.TrainingTeacher.TeacherId).subscribe((algo1)=>{
-              if(algo1.teacher.id != undefined && key.TrainingTeacher?.TrainingId != undefined) {
-                this.trainingsService.getItem(key.TrainingTeacher.TrainingId).subscribe((algo)=>{
+            this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+              if(algo1.teacher.id != undefined && key.TrainingId != undefined) {
+                this.trainingsService.getItem(key.TrainingId).subscribe((algo)=>{
                   if(algo.training.id != undefined){
                     // let any :any=algo.training
                     // console.log(algo.training)
                     control.push(this.formBuilder.group({
-                      name: [key.TrainingTeacher?.name],
-                      date_graduation: [key.TrainingTeacher?.date_graduation],
-                      name_institution: [key.TrainingTeacher?.name_institution],
-                      resolution_convalidation: [key.TrainingTeacher?.resolution_convalidation],
-                      degree_certificate: [key.TrainingTeacher?.degree_certificate],
+                      name: [key?.name],
+                      date_graduation: [key?.date_graduation],
+                      name_institution: [key?.name_institution],
+                      resolution_convalidation: [key?.resolution_convalidation],
+                      degree_certificate: [key?.degree_certificate],
                       TeacherId:algo1.teacher.id,
                       TrainingId:[algo.training],
                     }))

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
-import { SeedbedI } from 'src/app/models/institution/seedbed';
+import { SeedbedI, SeedbedStudentI } from 'src/app/models/institution/seedbed';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { MessageService } from 'primeng/api';
@@ -425,8 +425,8 @@ getstudents2() {
        })
        this.getstudents(cnt_groupFromApi.seedbed.id)
        this.getstudents2()
-       if(cnt_groupFromApi.seedbed.Students != undefined && cnt_groupFromApi.seedbed.Students.length >0){
-         this.agregarEstudiantes(cnt_groupFromApi.seedbed.Students)
+       if(cnt_groupFromApi.seedbed.SeedbedStudents != undefined && cnt_groupFromApi.seedbed.SeedbedStudents.length >0){
+         this.agregarEstudiantes(cnt_groupFromApi.seedbed.SeedbedStudents)
        }
        
      
@@ -439,20 +439,20 @@ getstudents2() {
       
     }, error => console.error(error));
   }
-  agregarEstudiantes(Students:StudentI[]) {
-    if(Students.length){
-      for (let key of Students) {
-        if(key.id != undefined && key.SeedbedStudent?.id != undefined) {          
+  agregarEstudiantes(SeedbedStudents:SeedbedStudentI[]) {
+    if(SeedbedStudents.length){
+      for (let key of SeedbedStudents) {
+        if(key.Student != undefined && key.Student?.id != undefined) {          
           let control = <FormArray>this.form.controls['Students']
           // this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-        let date_firt=moment(key.SeedbedStudent.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
-        let date_end=moment(key.SeedbedStudent.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
-          this.studentService.OneAddStudentsSemilleros2(key.id).subscribe((student)=>{
+        let date_firt=moment(key.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+        let date_end=moment(key.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+          this.studentService.OneAddStudentsSemilleros2(key.Student.id).subscribe((student)=>{
             control.push(this.formBuilder.group({
               StudentId:[student.students[0], [Validators.required]],
               date_firt:[date_firt,[Validators.required]],
               date_end:[date_end,[Validators.required]],
-              Horas:[key.SeedbedStudent?.hours,[Validators.required]]
+              Horas:[key.hours,[Validators.required]]
 
             }))
           })

@@ -20,7 +20,7 @@
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
                   <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="text" class="p-inputtext-lg" pInputText name="name" 
                     placeholder="NOMBRE" formControlName="name" required>  
                     <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">NOMBRES</h3></label>
@@ -32,7 +32,7 @@
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup" [style]="{'margin-top':'20px'}">
                   <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                   class="p-inputtext-lg"  name="surname" placeholder="APELLIDOS" title="APELLIDO"
                   formControlName="surname" required  >     
@@ -131,7 +131,7 @@
               <div class="col-12 md:col-6 lg:col-6">
                 <div class="p-inputgroup" >
                   <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'20px'}">
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="email" class="p-inputtext-lg" pInputText name="email" formControlName="email"
                     placeholder="CORREO" required title="CORREO ELECTRONICO">        
                     <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">CORREO ELECTRONICO</h3></label>
@@ -206,6 +206,10 @@
                             let pointIndex=index" [formGroupName]="pointIndex">
                               <div class="grupo"> 
                                 <div class="grupoinput1">
+                                  <div class="p-inputgroup"  >
+                                    <span class="p-inputgroup-addon"  
+                                    style="margin-top:-1px; color:#F16257;height:47px">
+                                    <i class="pi pi-bookmark-fill"></i></span>
                                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                   [options]="roles" [filter]="true"
                                       formControlName="RoleId" name="RoleId"
@@ -217,6 +221,7 @@
                                       <span >{{option.name  | titlecase}}</span>
                                   </ng-template>
                                   </p-dropdown>
+                                  </div>
                                 </div>
                                 
                               <span class="bottomdelete" style="margin-top: -35px;">

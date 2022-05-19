@@ -200,14 +200,14 @@
                             <!-- <th pSortableColumn="cordinatorInvestigation">Cordinador de Investigacion
                                <p-sortIcon field="cordinatorInvestigation"></p-sortIcon>
                             </th> -->
-                            <!-- <th pSortableColumn="University">Universidad<p-sortIcon field="University"></p-sortIcon></th> -->
+                            <th pSortableColumn="Line.resolution">Resolución<p-sortIcon field="Line.resolution"></p-sortIcon></th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-order >
                       <tr>
                             <td>{{order.Line.id}}</td>
                             <td>{{order.Line.name | titlecase}}</td>
-                            <!-- <td>{{order.cordinatorInvestigation }}</td> -->
+                            <td>{{order.Line.resolution }}</td>
                             <!-- <td>{{order.University.name | titlecase}}</td> -->
                         </tr>
                     </ng-template>

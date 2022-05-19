@@ -40,8 +40,11 @@
           <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="cordinatorInvestigation">CORDINADOR DE INVESTIGACIÓN<p-sortIcon field="cordinatorInvestigation"></p-sortIcon></th>
+
           <th pSortableColumn="University.name">UNIVERSIDAD<p-sortIcon field="University.name"></p-sortIcon></th>
-          <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th>
+          <th pSortableColumn="Administratives">ADMINISTRATIVOS<p-sortIcon field="Administratives"></p-sortIcon></th>
+
+          <!-- <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -58,9 +61,17 @@
        
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
+         
           <td>{{item.cordinatorInvestigation | titlecase}}</td>
           <td>{{item.University?.name | titlecase}}</td>
-          <td>{{item.createdAt | date:'fullDate' | titlecase}}</td>
+          <td >
+            <span *ngFor="let i of item.Administratives">
+              <span style="display: flex;">
+                * {{i.User.fullName}} Cargo : {{i.Charge.name}}  
+              </span>
+            </span>
+          </td>
+          <!-- <td>{{item.createdAt | date:'fullDate' | titlecase}}</td> -->
           <ng-template [ngIf]="mostrar==1">
               
               <td >
@@ -92,7 +103,7 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Programs"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.HeadquarterPrograms"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -100,6 +111,8 @@
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre de Programas<p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="Administrative">Directores<p-sortIcon field="Administrative"></p-sortIcon></th>
+                              
                               <th pSortableColumn="FacultyId">Facultad <p-sortIcon field="FacultyId"></p-sortIcon></th>
                               <th pSortableColumn="decanatura">Decanatura <p-sortIcon field="decanatura"></p-sortIcon></th>
                               <th pSortableColumn="CategoryId">Categoria <p-sortIcon field="CategoryId"></p-sortIcon></th>
@@ -107,11 +120,13 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <td>{{order.id}}</td>
-                              <td>{{order.name | titlecase}}</td>
-                              <td>{{order.Faculty?.name| titlecase}}</td>
-                              <td>{{order.Faculty?.Administrative?.User.fullName| titlecase}}</td>
-                              <td>{{order.Category?.name | titlecase}}</td>
+                              <td>{{order.Program.id}}</td>
+                              <td>{{order.Program.name | titlecase}}</td>
+                              <td>{{order.Administrative.User.fullName | titlecase}}</td>
+           
+                              <td>{{order.Program.Faculty?.name| titlecase}}</td>
+                              <td>{{order.Program.Faculty?.Administrative?.User.fullName| titlecase}}</td>
+                              <td>{{order.Program.Category?.name | titlecase}}</td>
                           </tr>
                       </ng-template>
 

@@ -60,33 +60,34 @@ export class ShowTeacherComponent implements OnInit {
     getUniversitys() {
       this.teacherService.getList().subscribe((instititionsFromApi) => {
         this.teachers =instititionsFromApi.teachers;
+        console.log(instititionsFromApi.teachers)
 
-        let arrayLinea:any[] = [];
-        for (const newH of  this.teachers) {
-          this.lineService.AddTeacherLines(newH.id).subscribe((item) => {
-            if(item.lines != undefined && item.lines.length > 0){
-              for (const line of item.lines ) {
-                arrayLinea.push({line,tipo:'Grupo'})
-              }
+    //     let arrayLinea:any[] = [];
+    //     for (const newH of  this.teachers) {
+    //       this.lineService.AddTeacherLines(newH.id).subscribe((item) => {
+    //         if(item.lines != undefined && item.lines.length > 0){
+    //           for (const line of item.lines ) {
+    //             arrayLinea.push({line,tipo:'Grupo'})
+    //           }
               
-            }
-            if(item.lines2 != undefined && item.lines2.length > 0){
-              for (const line of item.lines2 ) {
-                arrayLinea.push({line,tipo:'Semillero'})
-              }
+    //         }
+    //         if(item.lines2 != undefined && item.lines2.length > 0){
+    //           for (const line of item.lines2 ) {
+    //             arrayLinea.push({line,tipo:'Semillero'})
+    //           }
               
-            }
+    //         }
             
 
-      })
-      if( newH.id != undefined && (newH.Seedbeds != undefined && newH.Seedbeds.length > 0)||(newH.Groups != undefined && newH.Groups.length > 0)) {
+    //   })
+    //   if( newH.id != undefined && (newH.Seedbeds != undefined && newH.Seedbeds.length > 0)||(newH.Groups != undefined && newH.Groups.length > 0)) {
 
-        Object.defineProperty( newH, 'Lines', {
-          value:arrayLinea
-          });
+    //     Object.defineProperty( newH, 'Lines', {
+    //       value:arrayLinea
+    //       });
 
-    }
-        }
+    // }
+    //     }
       //   this.teachers.forEach((newH:TeacherI) => {
       //     if( newH.id != undefined && newH.Seedbeds != []) {
 

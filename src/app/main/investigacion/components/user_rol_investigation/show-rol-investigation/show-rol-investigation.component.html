@@ -93,7 +93,7 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Users"  dataKey="id" 
+                  <p-table [value]="item.LineProgramGroupTeachers"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -119,13 +119,13 @@
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
                           </ng-template>  -->
-                          <td>{{order.Person?.name | titlecase}}</td>
-                          <td>{{order.Person?.surname | titlecase}}</td>
-                          <td>{{order.Person?.identification}}</td>
-                          <td>{{order.email | titlecase}}</td>
-                          <td>{{order.Person?.phone }}</td>
-                          <td>{{order.Person?.address | titlecase}}</td>
-                          <td>{{order.Person?.Gender?.name | titlecase}}</td>
+                          <td>{{order.Teacher.User.Person?.name | titlecase}}</td>
+                          <td>{{order.Teacher.User.Person?.surname | titlecase}}</td>
+                          <td>{{order.Teacher.User.Person?.identification}}</td>
+                          <td>{{order.Teacher.User.email | titlecase}}</td>
+                          <td>{{order.Teacher.User.Person?.phone }}</td>
+                          <td>{{order.Teacher.User.Person?.address | titlecase}}</td>
+                          <td>{{order.Teacher.User.Person?.Gender?.name | titlecase}}</td>
                               
                           </tr>
                       </ng-template>

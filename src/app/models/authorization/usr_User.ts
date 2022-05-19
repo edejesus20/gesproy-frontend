@@ -15,6 +15,7 @@ export interface UserI {
   ]
   Person?:PersonI
   avatar?:string
+  People?:PersonI[]
 }
 
 

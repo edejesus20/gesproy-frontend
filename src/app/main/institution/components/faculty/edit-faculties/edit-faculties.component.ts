@@ -209,7 +209,7 @@ constructor(
 
   this.ref1.onClose.subscribe((person: any) =>{
     if (person) {
-      this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
+      // this.messageService.add({severity:'info', summary: 'Administrativo Creado', detail: person.name,life: 2000});
       this.administrativeService.getAdministrativesOneTipo(person.administrative.id).subscribe((algo)=>{
         
         this.administratives.push(algo.administrativos[0])

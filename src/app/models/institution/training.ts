@@ -6,6 +6,8 @@ export interface TrainingI {
     createdAt?:string
     Teachers?:TeacherI[]
     TrainingTeacher?:TrainingTeacherI
+    TrainingTeachers?:TrainingTeacherI[],
+
     
 }
 
@@ -18,4 +20,7 @@ export interface TrainingTeacherI {
     degree_certificate: string;
     TeacherId:number;
     TrainingId:number
+    Teacher?:TeacherI
+    Training?:TeacherI
+
 }

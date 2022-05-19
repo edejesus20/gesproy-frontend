@@ -94,7 +94,7 @@ export class HeadquarterService {
 
   getHeadquarterProgramId(id: number): Observable<{headquarterProgram: HeadquarterProgramI[]}> {
     return this.http
-      .get<{headquarterProgram: HeadquarterProgramI[]}>(this.API_URI+'/api/HeadquarterProgram' + '/' + id)
+      .get<{headquarterProgram: HeadquarterProgramI[]}>(this.API_URI+'/api/HeadquarterProgramOne/' + id)
       .pipe(
         retry(2),
         catchError(this.handleError)

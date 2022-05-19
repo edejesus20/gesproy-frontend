@@ -1,4 +1,5 @@
 import { LineI } from "../projet/line";
+import { TeacherI } from "../user/teacher";
 import { CategoryI } from "./category";
 import { FacultyI } from "./faculty";
 import { HeadquarterI, HeadquarterProgramI } from "./headquarter";
@@ -37,4 +38,6 @@ export interface LineProgramGroupTeacherI {
    id?: number;
    LineProgramGroupId:number;
    TeacherId:number;
+   Teacher?:TeacherI
+   LineProgramGroup?:LineProgramGroupI
 }

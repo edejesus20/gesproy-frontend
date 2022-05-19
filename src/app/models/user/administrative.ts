@@ -1,6 +1,6 @@
 import { UserI } from 'src/app/models/authorization/usr_User';
 import { FacultyI } from '../institution/faculty';
-import { HeadquarterI } from '../institution/headquarter';
+import { HeadquarterI, HeadquarterProgramI } from '../institution/headquarter';
 import { ChargeI } from './charge';
 export interface AdministrativeI {
     id?:number
@@ -11,4 +11,5 @@ export interface AdministrativeI {
     User?:UserI,
     Headquarter?:HeadquarterI
     Faculties?:FacultyI[]
+    HeadquarterPrograms?:HeadquarterProgramI[]
 }

@@ -27,6 +27,8 @@ export interface SeedbedI {
     Group?:GroupI
     HeadquarterProgram?:HeadquarterProgramI
     Program?:any
+    SeedbedStudents?:SeedbedStudentI[]
+
 }
 
 export interface SeedbedStudentI {
@@ -35,4 +37,6 @@ export interface SeedbedStudentI {
     date_firt: string;
     date_end: string;
     hours:string
+    Seedbed?:SeedbedI
+    Student?:StudentI
 }

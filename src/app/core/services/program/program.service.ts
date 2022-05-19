@@ -67,6 +67,16 @@ createItem(program: ProgramI): Observable<ProgramI> {
      )
  }
 
+ OneProgram(id: number): Observable<{program:ProgramI}> {
+  return this.http
+    .get<{program:ProgramI}>(this.API_URI + '/api/OneProgram/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
+ 
  // Get students data
  getList(): Observable<{ programs: ProgramI[] }> {
    return this.http

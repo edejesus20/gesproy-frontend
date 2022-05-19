@@ -58,6 +58,8 @@ export class ShowFacultiesComponent implements OnInit {
     
     this.facultyService.getList().subscribe((facultiesFromApi) => {
       this.faculties =facultiesFromApi.facultys
+      console.log(facultiesFromApi.facultys) 
+
       this.rows2=[]
       if(facultiesFromApi.facultys != undefined){
         for (const key of facultiesFromApi.facultys) {

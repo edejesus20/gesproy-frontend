@@ -80,7 +80,7 @@ export class Delete_CategoriaGruposComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_categorys');
+                  this.router.navigateByUrl('/Investigation/mostrar_categorys');
                   clearInterval(interval); 
                  }
           }, 1000);

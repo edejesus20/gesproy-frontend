@@ -50,6 +50,7 @@ export class ShowAdministrativeComponent implements OnInit {
     getUniversitys() {
       this.administrativeService.getList().subscribe((instititionsFromApi) => {
         this.administratives =instititionsFromApi.administratives;
+        // console.log(instititionsFromApi.administratives)
         this.rows2=[]
         if(instititionsFromApi.administratives != undefined){
           for (const key of instititionsFromApi.administratives) {

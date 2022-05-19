@@ -2,10 +2,12 @@ import { UserI } from "../authorization/usr_User";
 import { MincienciaCategoryI } from "../institution/colciencias_category";
 import { GroupI } from "../institution/group";
 import { HeadquarterProgramI, HeadquarterProgramTeacherI } from "../institution/headquarter";
+import { LineProgramGroupTeacherI } from "../institution/program";
 import { ScaleI } from "../institution/scale";
 import { SeedbedI } from "../institution/seedbed";
 import { TrainingI, TrainingTeacherI } from "../institution/training";
 import { LineI } from "../projet/line";
+import { ProjetTeacherI } from "../projet/projet-teacher";
 
 export interface TeacherI {
     id?:number
@@ -28,6 +30,10 @@ export interface TeacherI {
     Charge_bonding?:Charge_bondingI
     trainingTeacher?:TrainingTeacherI[],
     Workexperiences?:WorkexperienceI[]
+    HeadquarterProgramTeachers?:HeadquarterProgramTeacherI[]
+    ProjetTeachers?:ProjetTeacherI[]
+    TrainingTeachers?:TrainingTeacherI[],
+    LineProgramGroupTeachers?:LineProgramGroupTeacherI[],
 
     // LinesG?:any[]
     // LinesS?:any[]

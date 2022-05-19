@@ -72,7 +72,7 @@ export class Show_semillerosComponent implements OnInit {
         
         
       });
-      // console.log(this.seedbeds)
+      console.log(this.seedbeds)
       this.rows2=[]
       if(rolesFromApi.seedbeds != undefined){
         for (const key of rolesFromApi.seedbeds) {
@@ -98,6 +98,7 @@ export class Show_semillerosComponent implements OnInit {
                 SeedbedStudent:key.SeedbedStudent,
                 Students:key.Students,
                 Group:key.Group,
+                SeedbedStudents:key.SeedbedStudents,
                 HeadquarterProgram:key.HeadquarterProgram
               }
             )
