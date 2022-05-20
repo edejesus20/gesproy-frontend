@@ -47,6 +47,8 @@ export interface ChargebondingScaleTeacherI {
     TeacherId: number
     Teacher?:TeacherI
     ChargebondingScale?:ChargebondingScaleI
+    status?:boolean
+
 }
 export interface ChargebondingScaleI {
     id?:number
@@ -54,6 +56,8 @@ export interface ChargebondingScaleI {
     ScaleId: number
     Charge_bonding?:Charge_bondingI
     Scale?:ScaleI
+    ChargebondingScaleTeachers?:ChargebondingScaleTeacherI[]
+    status?:boolean
 
 }
 
@@ -75,4 +79,6 @@ export interface Charge_bondingI {
     updatedAt?:string
     Scales?:any[]
     ChargebondingScales?:ChargebondingScaleI[]
+    status?:boolean
+
 }

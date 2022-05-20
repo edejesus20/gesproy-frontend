@@ -133,7 +133,7 @@ export class EditarTeacherComponent implements OnInit {
       })]),
       // nationality:['', [Validators.required]],
       // date_of_birth:['', [Validators.required]],
-                      ChargeBondingId:['', [Validators.required]]
+      ChargeBondingId:['', [Validators.required]]
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()

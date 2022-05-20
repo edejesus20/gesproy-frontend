@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
+import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
 import { MincienciaCategoryService } from 'src/app/core/services/investigacion/MincienciaCategory.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
@@ -11,6 +12,7 @@ import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_cate
 import { ScaleI } from 'src/app/models/institution/scale';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
+import { Charge_bondingI } from 'src/app/models/user/teacher';
 const translate = require('translate');
 @Component({
   selector: 'app-delete-teacher',
@@ -29,7 +31,7 @@ export class DeleteTeacherComponent implements OnInit {
   public genders:GenderI[] =[]
   public scales:ScaleI[] =[]
   public mincienciaCategorys:MincienciaCategoryI[] =[]
-  
+  public charge_bondings:Charge_bondingI[]=[]
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -37,7 +39,7 @@ export class DeleteTeacherComponent implements OnInit {
     private messageService:MessageService,
     private genderService:GenderService,
     private documentTypeService:DocumentTypeService,
-    private scaleService:ScaleService,
+    private charge_bondingService:Charge_bondingService,
     private formBuilder: FormBuilder,
     private mincienciaCategoryService:MincienciaCategoryService,
 
@@ -56,17 +58,24 @@ export class DeleteTeacherComponent implements OnInit {
       // address:['', [Validators.required]],
       // phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      ScaleId:['', [Validators.required]],
+      // ScaleId:['', [Validators.required]],
       MincienciaCategoryId:['', [Validators.required]],
       ChargeBondingId:['', [Validators.required]]
 
     });
     this.getAllgenders()
     this.getAlldocumentTypes()
-    this.getAllscales()
+    // this.getAllscales()
     this.getAllcolcienciaCategorys()
+    this.getAllLinkTypes()
   }
-
+  getAllLinkTypes() {
+    this.charge_bondingService.getList().subscribe(
+      (AdministrativeFromApi) => {
+        this.charge_bondings = AdministrativeFromApi.charge_bondings;
+        // console.log(this.linkTypes)
+      }, error => console.error(error));
+  }
   public onSubmit() {
     const formValue={
       id: this.form.value.id,
@@ -95,8 +104,8 @@ export class DeleteTeacherComponent implements OnInit {
       // formValue.address != ""&&
       // formValue.phone != ""&&
       formValue.email != ""&&
-     formValue.ScaleId !=("" || undefined)
-    &&formValue.MincienciaCategoryId != ("" || undefined)){
+    //  formValue.ScaleId !=("" || undefined) &&
+   formValue.MincienciaCategoryId != ("" || undefined)){
 
     this.teacherService.deleteItem(formValue.id).subscribe(
       () => {
@@ -149,13 +158,13 @@ private getAlldocumentTypes(selectId?: number) {
     }, error => console.error(error));
 }
 
-private getAllscales(selectId?: number) {
-  this.scaleService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.scales = AdministrativeFromApi.scales;
-    }, error => console.error(error));
-}
+// private getAllscales(selectId?: number) {
+//   this.scaleService.getList().subscribe(
+//     (AdministrativeFromApi) => {
+//       // console.log(AdministrativeFromApi.administratives)
+//       this.scales = AdministrativeFromApi.scales;
+//     }, error => console.error(error));
+// }
 
 
 private getAllcolcienciaCategorys(selectId?: number) {
@@ -200,7 +209,14 @@ getOneCntAccount(id:number) {
           // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          this.form.controls['ChargeBondingId'].setValue(cnt_groupFromApi.teacher.ChargeBondingId),
+          if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
+            // console.log(cnt_groupFromApi.teacher.LinkType)
+            for (const key of this.charge_bondings) {
+              if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ChargeBondingId)){
+                this.form.controls['ChargeBondingId'].setValue(key)
+              }
+            }
+           }
 
           // console.log('aqui')
         // }
@@ -219,10 +235,10 @@ getOneCntAccount(id:number) {
 
   
 
-        if(cnt_groupFromApi.teacher.ScaleId != undefined)
-        this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
-          this.form.controls['ScaleId'].setValue(algo.scale)
-        })
+        // if(cnt_groupFromApi.teacher.ScaleId != undefined)
+        // this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
+        //   this.form.controls['ScaleId'].setValue(algo.scale)
+        // })
 
         if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
         this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{

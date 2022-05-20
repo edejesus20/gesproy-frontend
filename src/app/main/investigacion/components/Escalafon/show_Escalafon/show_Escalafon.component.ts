@@ -6,6 +6,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { ScaleI } from 'src/app/models/institution/scale';
+import { TeacherI } from 'src/app/models/user/teacher';
 
 @Component({
   selector: 'app-show_Escalafon',
@@ -59,8 +60,24 @@ export class Show_EscalafonComponent implements OnInit {
       this.scales =scalesApiFrom.scales
       // console.log(scalesApiFrom.scales)
       this.rows2=[]
+  
       if(scalesApiFrom.scales != undefined){
-        for (const key of scalesApiFrom.scales) {
+        for (let key of this.scales) {
+          if(key.ChargebondingScales?.length != undefined && key.ChargebondingScales.length > 0){
+            
+            for (let key2 of key.ChargebondingScales) {
+              if(key2.ChargebondingScaleTeachers?.length != undefined && 
+                key2.ChargebondingScaleTeachers.length > 0){
+                  let arrayTeacher:TeacherI[] = []
+                  for (let aja of key2.ChargebondingScaleTeachers) {
+                    if(aja.Teacher != undefined && aja.status != false)
+                    arrayTeacher.push(aja.Teacher)
+                  }
+                  key.Teachers=arrayTeacher
+                }
+            }
+          }
+          
           this.rows2.push(
             {
               id:key.id,
