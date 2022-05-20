@@ -20,7 +20,7 @@ export class Create_linesComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({});
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-  public mostrar2:boolean=false;
+  public mostrar2:boolean=true;
   public thematics:ThematicI[] =[]
   public algo:number[]=[0];
   public ref:any;
