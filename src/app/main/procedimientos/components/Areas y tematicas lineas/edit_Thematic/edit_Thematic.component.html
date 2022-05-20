@@ -15,12 +15,11 @@
             <h2 class="fondebabutton" style="margin-top: -1px;">Editar Area o Tematica</h2>
           </div>
 
-              <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nombre"><i class="pi pi-bookmark-fill"></i></span>
-                  <input type="text" class="p-inputtext-lg" 
-                   pInputText placeholder="NOMBRE" name="name" pInputText 
-                   formControlName="name" required>       
-              </div>
+          <div class="p-inputgroup"  style="margin-bottom: 20px;">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+            <input type="text" class="p-inputtext-lg"
+               pInputText placeholder="NOMBRE"
+              formControlName="name" required>         
           </div>
           <div >
             <!-- <div class="p-inputgroup" style="margin-bottom: 10px;"> -->
@@ -44,11 +43,17 @@
                             <div formArrayName="Thematic_axis"> 
                               <div *ngFor="let item of getThematics.controls; 
                               let pointIndex=index" [formGroupName]="pointIndex">
-                                <div class="grupo"> 
-                                  <div class="grupoinput1">
-                                    <div class="field">
+                              <div class="grid"> 
+                                <div class="col-11 sm:col-11 md:col-11">
+                                  <div class="grid ">
+                                    <div class="col-1 md:col-1">
+                                      <div class="p-inputgroup"  >
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                      </div>
+                                    </div>
+                                    <div class="col-10 md:col-10">
                                       <!-- <label for="name"style="font-weight: bold;">GENERO</label> -->
-                                      <div class="flex">
+                                      <div class="flex" style="margin-left: -13px;">
                                         <div style="width:100%">
                                           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                           [options]="thematic_axiss" [filter]="true"
@@ -62,24 +67,33 @@
                                           </ng-template>
                                           </p-dropdown>
                                         </div>
-                                        <span class="bottomdelete" style="margin-top: 5px;">
-                                          <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                                          class="p-button-rounded p-button-outlined" (click)="addTematica($event)" ></button>
-                                        </span>
+                                   
                   
                                       </div>
-                             
+                                    </div>
+                                    <div class="col-1 md:col-1">
+                                      <span class="bottomdelete" style="margin-top: 5px;">
+                                        <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                        class="p-button-rounded p-button-outlined" (click)="addTematica($event)" ></button>
+                                      </span>
+                                    </div>
+                                      
                                   </div>
-
-                                    
-                                  </div>
-                                  
+                               
+                              </div>
+                              <div class="col-1 sm:col-1 md:col-1">
                                 <span class="bottomdelete" style="margin-top: 5px;">
                                   <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                   class="p-button-rounded p-button-danger"></button>
                                 </span>
-                                
                               </div>
+
+                                    
+                                  </div>
+                              
+                                  
+                             
+                           
                               </div>
                             </div> 
                           </td>
@@ -89,6 +103,7 @@
                   </div>
                 </div>
             <!-- </div>                   -->
+          </div>
           </div>
               <!-- <ng-template pTemplate="footer"> -->
                 <br>

@@ -60,9 +60,9 @@
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
           <td >
-            <span *ngFor="let i of item.Thematic_axes">
-              <span style="display: flex;">
-                * {{i.name}} 
+            <span *ngFor="let i of item.Thematic_axis_Thematics">
+              <span style="display: flex;" *ngIf="i.status == true">
+                * {{i.Thematic_axis.name}} 
               </span>
             </span>
           </td>
@@ -102,7 +102,7 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Lines"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.LineThematics"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -117,11 +117,11 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <!-- <td>{{order.id}}</td> -->
-                              <td>{{order.name | titlecase}}</td>
-                              <td>{{order.objectives }}</td>
-                              <td>{{order.resolution}}</td>
-                              <!-- <td>{{order.Programs.name | titlecase}}</td> -->
+                              <!-- <td>{{order.Line.id}}</td> -->
+                              <td>{{order.Line.name | titlecase}}</td>
+                              <td>{{order.Line.objectives }}</td>
+                              <td>{{order.Line.resolution}}</td>
+                              <!-- <td>{{order.Line.Programs.name | titlecase}}</td> -->
                           </tr>
                       </ng-template>
 

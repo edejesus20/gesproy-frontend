@@ -51,10 +51,16 @@ export class Create_linesComponent implements OnInit {
     // console.log("AreaSeleccionada")
     let control = <FormArray>this.form.controls['Thematics']
     let algo =control.controls[pointIndex].value.ThematicId
+    this.thematic_axiss=[]
     if(algo != undefined && algo != ''){
       this.thematicService.getItem(algo.id).subscribe(data=>{
-        if(data.thematic.Thematic_axes !== undefined && data.thematic.Thematic_axes.length > 0){
-        this.thematic_axiss=data.thematic.Thematic_axes
+        if(data.thematic.Thematic_axis_Thematics !== undefined && data.thematic.Thematic_axis_Thematics.length > 0){
+       
+          for (const key of data.thematic.Thematic_axis_Thematics) {
+          if(key.Thematic_axis != undefined && key.status == true)
+          this.thematic_axiss.push(key.Thematic_axis)
+        }
+         
         }else{
           this.thematic_axiss=[{name:'No hay registros'}]
         }
@@ -88,7 +94,7 @@ export class Create_linesComponent implements OnInit {
   thematic() {
     this.thematicService.getList().subscribe(list => {
       for (const key of list.thematics) {
-        if(key.Thematic_axes !== undefined && key.Thematic_axes.length > 0){
+        if(key.Thematic_axis_Thematics !== undefined && key.Thematic_axis_Thematics.length > 0){
 
         this.thematics.push(key);
       }
@@ -99,7 +105,7 @@ export class Create_linesComponent implements OnInit {
   public getAllthematic() {
     this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
       this.thematic_axiss =scalesApiFrom.thematic_axiss
-      console.log(this.thematic_axiss)
+      // console.log(this.thematic_axiss)
     })
   }
 

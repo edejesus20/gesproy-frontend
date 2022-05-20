@@ -56,6 +56,7 @@ export class Show_Knowledge_areaComponent implements OnInit {
     
     this.knowledge_areaService.getList().subscribe((scalesApiFrom) => {
       this.knowledge_areas =scalesApiFrom.knowledge_areas
+      console.log(scalesApiFrom.knowledge_areas)
       this.rows2=[]
       if(scalesApiFrom.knowledge_areas != undefined){
         for (const key of scalesApiFrom.knowledge_areas) {

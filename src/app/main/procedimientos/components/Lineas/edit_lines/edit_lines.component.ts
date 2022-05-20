@@ -45,6 +45,7 @@ export class Edit_linesComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+   
     
   }
   AreaSeleccionada(pointIndex:number,event:Event){
@@ -53,16 +54,19 @@ export class Edit_linesComponent implements OnInit {
     let control = <FormArray>this.form.controls['Thematics']
     let algo =control.controls[pointIndex].value.ThematicId
     if(algo != undefined && algo != ''){
-     
-    //  let nuevo= control.controls[pointIndex].get('Thematic_axis')?.setValue('')
-    //  console.log(nuevo)
+    this.thematic_axiss=[]
+
       this.thematicService.getItem(algo.id).subscribe(data=>{
-        if(data.thematic.Thematic_axes !== undefined && data.thematic.Thematic_axes.length > 0){
-        this.thematic_axiss=data.thematic.Thematic_axes
+        if(data.thematic.Thematic_axis_Thematics !== undefined && data.thematic.Thematic_axis_Thematics.length > 0){
+    
+          for (const key of data.thematic.Thematic_axis_Thematics) {
+          if(key.Thematic_axis != undefined && key.status == true)
+          this.thematic_axiss.push(key.Thematic_axis)
+        }
+         
         }else{
           this.thematic_axiss=[{name:'No hay registros'}]
         }
-        // control.controls[pointIndex].get('Thematic_axis')?.setValue('')
       })
 
     }
@@ -109,8 +113,14 @@ export class Edit_linesComponent implements OnInit {
   }
 
   thematic() {
+    this.thematics=[]
     this.thematicService.getList().subscribe(list => {
-      this.thematics=list.thematics
+      for (const key of list.thematics) {
+        if(key.Thematic_axis_Thematics !== undefined && key.Thematic_axis_Thematics.length > 0){
+
+        this.thematics.push(key);
+      }
+      }
     })
   }
   private buildForm() {
@@ -201,41 +211,68 @@ export class Edit_linesComponent implements OnInit {
       this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
       this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
-      // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
-      if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
-        this.agregarThematics(cnt_groupFromApi.line.Thematics)  
-      } 
+      this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+      // this.thematic()
+      this.thematicService.getList().subscribe(list => {
+        for (const key of list.thematics) {
+          if(key.Thematic_axis_Thematics !== undefined && key.Thematic_axis_Thematics.length > 0){
+  
+          this.thematics.push(key);
+        }
+        }
+      console.log(this.thematics,'this.thematics');      
+      // this.getAllthematic()
+      this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
+        this.thematic_axiss =scalesApiFrom.thematic_axiss
+        console.log(this.thematic_axiss,'this.thematic_axiss');  
+        if(cnt_groupFromApi.line.LineThematics?.length != undefined && cnt_groupFromApi.line.LineThematics.length > 0){
+          this.agregarThematics(cnt_groupFromApi.line.LineThematics)  
+        }
+      })
+
+          
+
+         
+      })
+
+     
      
       this.displayMaximizable2=true
       this.tabla = false
       
     }, error => console.error(error));
   }
-  agregarThematics(Thematics: ThematicI[]) {
-    if(Thematics.length){
-      for (let key of Thematics) {
-        if(key.id != undefined && key.LineThematic?.ThematicId != undefined ) {
-          // console.log(DiscountLine)
-          
+  agregarThematics(LineThematics: LineThematicI[]) {
+    
+    if(LineThematics.length){
+      for (let key of LineThematics) {
+        if(key.id != undefined && key.ThematicId != undefined ) {
           let control = <FormArray>this.form.controls['Thematics']
-            this.thematicService.getItem(key.LineThematic.ThematicId).subscribe((algo)=>{
-              if(algo.thematic && key.id != undefined && algo.thematic.Thematic_axes != undefined && key.LineThematic?.id != undefined){
-                this.lineService.getOnelineThematic(key.LineThematic.id).subscribe((algo2)=>{
-                  // console.log(algo2.thematic_axis,'thematic_axis')
-                  control.push(this.formBuilder.group({
-                    ThematicId:[algo.thematic, [Validators.required]],
-                    Thematic_axis:[algo2.thematic_axis, [Validators.required]],
-                  }))
-                })
+          for (const key2 of this.thematics) {
+            console.log('aqui,ok')
+            if(key2.id == key.ThematicId && key.status == true){
+              console.log('aqui')
+              this.lineService.getOnelineThematic(key.id).subscribe((algo2)=>{
+                // console.log(algo2.thematic_axis,'thematic_axis')
+                control.push(this.formBuilder.group({
+                  ThematicId:[key2, [Validators.required]],
+                  Thematic_axis:[algo2.thematic_axis, [Validators.required]],
+                }))
+              })
+            }
+            
+          }
+        
+            
+         
 
-                }
-            })
+
         }
       }
       this.mostrar2= true
       let control = <FormArray>this.form.controls['Thematics']
       control.removeAt(0)
-      this.thematic()
+    
       // console.log(control)
     }
   }
@@ -245,6 +282,8 @@ export class Edit_linesComponent implements OnInit {
     this.tabla = true
     this.ngOnInit()
     this.displayMaximizable2 = false
+    this.thematic_axiss=[]
+    this.thematics=[]
     //console.log(event)
   }
 

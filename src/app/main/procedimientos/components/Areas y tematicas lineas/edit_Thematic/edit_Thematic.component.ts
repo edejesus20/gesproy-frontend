@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ThematicI, Thematic_axisI } from 'src/app/models/projet/line';
+import { ThematicI, Thematic_axisI, Thematic_axis_ThematicI } from 'src/app/models/projet/line';
 import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
 import { Thematic_axisService } from 'src/app/core/services/investigacion/Thematic_axis.service';
 import { Create_Thematic_axisComponent } from '../../Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
@@ -77,9 +77,9 @@ export class Edit_ThematicComponent implements OnInit {
        
      this.form.controls['id'].setValue(cnt_groupFromApi.thematic.id)
      this.form.controls['name'].setValue(cnt_groupFromApi.thematic.name)
-     if(cnt_groupFromApi.thematic.Thematic_axes != undefined && 
-      cnt_groupFromApi.thematic.Thematic_axes.length > 0){
-      this.agregarEjes(cnt_groupFromApi.thematic.Thematic_axes)
+     if(cnt_groupFromApi.thematic.Thematic_axis_Thematics?.length!= undefined && 
+      cnt_groupFromApi.thematic.Thematic_axis_Thematics.length > 0){
+      this.agregarEjes(cnt_groupFromApi.thematic.Thematic_axis_Thematics)
       // console.log(cnt_groupFromApi.thematic.Thematic_axes)
 
      }
@@ -89,24 +89,35 @@ export class Edit_ThematicComponent implements OnInit {
    this.tabla = false
  }, error => console.error(error));
  }
-  agregarEjes(Thematic_axes: Thematic_axisI[]) {
-    if(Thematic_axes.length){
+  agregarEjes(Thematic_axis_Thematics: Thematic_axis_ThematicI[]) {
+
+    if(Thematic_axis_Thematics.length){
       // console.log(Thematic_axes)
-
-      for (let key of Thematic_axes) {
-        if(key.id != undefined ) {
-          // console.log(DiscountLine)
-          
+  
+      for (let key of Thematic_axis_Thematics) {
+        if(key.Thematic_axis != undefined && key.status != false) {
           let control = <FormArray>this.form.controls['Thematic_axis']
-            this.thematic_axisService.getItem(key.id).subscribe((algo)=>{
-              if(algo.thematic_axis && key.id != undefined){
-                  control.push(this.formBuilder.group({
-                    ThematicAxisId:[algo.thematic_axis, [Validators.required]],
-                    // ThematicAxisId:[key, [Validators.required]],
+          for (const key2 of this.thematic_axiss) {
+            if(key2.id == key.ThematicAxisId){
+              control.push(this.formBuilder.group({
+                ThematicAxisId:[key2, [Validators.required]],
+                // ThematicAxisId:[key, [Validators.required]],
 
-                  }))
-                }
-            })
+              }))
+            }
+            
+          }
+          
+       
+            // this.thematic_axisService.getItem(key.id).subscribe((algo)=>{
+            //   if(algo.thematic_axis && key.id != undefined){
+            //       control.push(this.formBuilder.group({
+            //         ThematicAxisId:[algo.thematic_axis, [Validators.required]],
+            //         // ThematicAxisId:[key, [Validators.required]],
+
+            //       }))
+            //     }
+            // })
         }
       }
       this.mostrar2= true

@@ -94,7 +94,7 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Thematics"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.Thematic_axis_Thematics"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"   responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
@@ -110,11 +110,11 @@
                       <ng-template pTemplate="body" let-order >
                         <tr>
                               <!-- <td>{{order.id}}</td> -->
-                              <td>{{order.name | titlecase}}</td>
+                              <td>{{order.Thematic.name | titlecase}}</td>
                               <td >
-                                <span *ngFor="let i of order.Lines">
+                                <span *ngFor="let i of order.Thematic.LineThematics">
                                   <span style="display: flex;">
-                                    * {{i.name}} 
+                                    * {{i.Line.name | titlecase}} 
                                   </span>
                                 </span>
                               </td>

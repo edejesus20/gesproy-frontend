@@ -19,7 +19,7 @@ export class Create_ThematicComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public algo:number[]=[0];
 
-  public mostrar2:boolean=false;
+  public mostrar2:boolean=true;
   public mostrarDialogo:boolean=false;
   public ref1:any;
   public form:FormGroup=this.formBuilder.group({
@@ -115,6 +115,7 @@ addRoles(event: Event){
   event.preventDefault();
   const control = <FormArray>this.form.controls['Thematic_axis']
     if(control.length == 0 && this.mostrar2 == false){
+    
       control.push(this.formBuilder.group({
         ThematicAxisId:['', [Validators.required]],
       }))
@@ -126,6 +127,7 @@ addRoles(event: Event){
 
     }
     this.mostrar2=true
+    
 }
 removeRoles(index: number,event: Event){
   event.preventDefault();

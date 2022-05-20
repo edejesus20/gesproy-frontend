@@ -60,9 +60,9 @@
           <td>{{item.justification }}</td>
           <td>{{item.objectives }}</td>
           <td >
-            <span *ngFor="let i of item.Thematics">
-              <span style="display: flex;">
-                * {{i.name}} 
+            <span *ngFor="let i of item.LineThematics">
+              <span style="display: flex;" *ngIf="i.status == true">
+                * {{i.Thematic.name}} 
               </span>
             </span>
           </td>
