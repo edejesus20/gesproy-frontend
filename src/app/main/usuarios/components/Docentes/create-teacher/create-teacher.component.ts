@@ -70,7 +70,7 @@ export class CreateTeacherComponent implements OnInit {
     // address:[''],
     // phone:[''],
     email:[''],
-    ScaleId:['', [Validators.required]],
+    ScaleId:[''],
     UserId:[''],
     MincienciaCategoryId:['', [Validators.required]],
     // hours_of_dedication:['', [Validators.required]],
@@ -138,7 +138,7 @@ export class CreateTeacherComponent implements OnInit {
   ngOnInit() {
     // this.getAllgenders()
     // this.getAlldocumentTypes()
-    this.getAllscales()
+    // this.getAllscales()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
@@ -400,12 +400,29 @@ private getAllheadquarters(selectId?: number) {
     }, error => console.error(error));
 }
 
-private getAllscales(selectId?: number) {
-  this.scaleService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.scales = AdministrativeFromApi.scales;
-    }, error => console.error(error));
+public getAllscales(event: Event) {
+  event.preventDefault()
+  if(this.form.value.ChargeBondingId != ''){
+    this.scales=[]
+    this.charge_bondingService.getItem(this.form.value.ChargeBondingId.id).subscribe(algo=>{
+      if(algo.charge_bonding.ChargebondingScales?.length != undefined
+        && algo.charge_bonding.ChargebondingScales.length > 0){
+        
+          for (const key of algo.charge_bonding.ChargebondingScales) {
+            if(key.Scale!= undefined){
+              this.scales.push(key.Scale)
+            }
+            
+          }
+        }
+    })
+
+  }
+  // this.scaleService.getList().subscribe(
+  //   (AdministrativeFromApi) => {
+  //     // console.log(AdministrativeFromApi.administratives)
+  //     this.scales = AdministrativeFromApi.scales;
+  //   }, error => console.error(error));
 }
 
 private getAllcolcienciaCategorys(selectId?: number) {
@@ -544,27 +561,27 @@ get getWorkexperiences() {
         }
   });
   }
-  addEscalafon(e:Event){
-    e.preventDefault()
+  // addEscalafon(e:Event){
+  //   e.preventDefault()
 
-    this.ref1 = this.dialogService.open(Create_EscalafonComponent, {
-      width: '40%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref1 = this.dialogService.open(Create_EscalafonComponent, {
+  //     width: '40%',
+  //     height: '50%',
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
 
-  this.ref1.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
-      this.getAllscales()
+  // this.ref1.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
+  //     this.getAllscales()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
   addCategoriaColciencias(e:Event){
     e.preventDefault()
 

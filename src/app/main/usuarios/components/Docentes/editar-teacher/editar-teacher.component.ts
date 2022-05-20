@@ -49,7 +49,7 @@ export class EditarTeacherComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({});
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
-  public scales:ScaleI[] =[]
+  public scales:any[] =[]
   public mincienciaCategorys:MincienciaCategoryI[] =[]
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
@@ -98,7 +98,7 @@ export class EditarTeacherComponent implements OnInit {
       // address:['', [Validators.required]],
       // phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      ScaleId:['', [Validators.required]],
+      ScaleId:[''],
       // hours_of_dedication:['', [Validators.required]],
       MincienciaCategoryId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
@@ -137,7 +137,7 @@ export class EditarTeacherComponent implements OnInit {
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()
-    this.getAllscales()
+    // this.getAllscales()
   
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
@@ -193,6 +193,10 @@ export class EditarTeacherComponent implements OnInit {
       Workexperiences: this.form.value.Workexperiences,
       trainingTeacher:this.form.value.trainingTeacher
     };
+
+    if(this.scales.length == 0){
+      formValue.ScaleId=''
+    }
 
     if(this.headquarterProgramStudent1.length == 0 ){
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
@@ -259,8 +263,8 @@ export class EditarTeacherComponent implements OnInit {
       // formValue.hours_of_dedication != ""&&
       // formValue.nationality != ("" || undefined) && 
       // formValue. date_of_birth!= ("" || undefined) && 
-     formValue.ScaleId !=("" || undefined)
-    &&formValue.MincienciaCategoryId != ("" || undefined) &&
+    //  formValue.ScaleId !=("" || undefined)  &&
+  formValue.MincienciaCategoryId != ("" || undefined) &&
     formValue.                ChargeBondingId != ("" || undefined)
     ){
       
@@ -337,29 +341,34 @@ get getRoles() {
       }
   }
  
-// private getAllgenders(selectId?: number) {
-//   this.genderService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       // console.log(AdministrativeFromApi.administratives)
-//       this.genders = AdministrativeFromApi.genders;
-//     }, error => console.error(error));
-// }
 
-// private getAlldocumentTypes(selectId?: number) {
-//   this.documentTypeService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       this.documentTypes = AdministrativeFromApi.documentTypes;
+public getAllscales(event?: Event) {
+  if(event)event.preventDefault()
+  if(this.form.value.ChargeBondingId != ''){
+    this.scales=[]
+    this.charge_bondingService.getItem(this.form.value.ChargeBondingId.id).subscribe(algo=>{
+      if(algo.charge_bonding.ChargebondingScales?.length != undefined
+        && algo.charge_bonding.ChargebondingScales.length > 0){
+        
+          for (const key of algo.charge_bonding.ChargebondingScales) {
+            if(key.Scale!= undefined){
+              this.scales.push(key.Scale)
+            }
+            
+          }
+      console.log(this.scales)
 
-//     }, error => console.error(error));
-// }
+        }
+    })
 
-private getAllscales(selectId?: number) {
-  this.scaleService.getList().subscribe(
-    (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
-      this.scales = AdministrativeFromApi.scales;
-    }, error => console.error(error));
+  }
+  // this.scaleService.getList().subscribe(
+  //   (AdministrativeFromApi) => {
+  //     // console.log(AdministrativeFromApi.administratives)
+  //     this.scales = AdministrativeFromApi.scales;
+  //   }, error => console.error(error));
 }
+
 
 private getAllcolcienciaCategorys(selectId?: number) {
   this.mincienciaCategoryService.getList().subscribe(
@@ -398,6 +407,7 @@ ngOnDestroy() {
   this.ngOnInit()
   this.mostrar2= false
   this.mostrar3= false
+  this.scales=[]
 }
 actualizar(id: number){
   // console.log(id)
@@ -431,6 +441,49 @@ getOneCntAccount(id:number) {
               }
             }
 
+            // this.getAllscales()
+            
+            
+
+            if(this.form.value.ChargeBondingId != ''){
+              this.scales=[]
+              this.charge_bondingService.getItem(this.form.value.ChargeBondingId.id).subscribe(algo=>{
+                if(algo.charge_bonding.ChargebondingScales?.length != undefined
+                  && algo.charge_bonding.ChargebondingScales.length > 0){
+                    // console.log('ChargeBondingId',this.form.value.ChargeBondingId)
+                    for (const key of algo.charge_bonding.ChargebondingScales) {
+                      if(key.Scale != undefined){
+                        this.scales.push(key.Scale)
+                      }
+                      
+                    }
+
+                    if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers?.length != undefined
+                      && cnt_groupFromApi.teacher.ChargebondingScaleTeachers.length > 0){
+                       
+                       
+                        if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId != undefined){
+                          let algo=cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId
+                          for (const key of this.scales) {
+                            // console.log(key.id,'==',algo)
+                            if(key.id != undefined && key.id == algo){
+                            this.form.controls['ScaleId'].setValue(key)
+        
+                            }
+                          }
+                        }
+        
+                       
+        
+                    }
+                    // console.log('this.scales',this.scales)
+                  }
+              })
+          
+            }
+
+
+
         // this.charge_bondingService.getItem(cnt_groupFromApi.teacher.ChargeBondingId).subscribe(
         //   (algo1)=>{this.form.controls['ChargeBondingId'].setValue(algo1.charge_bonding)})
         }
@@ -447,11 +500,11 @@ getOneCntAccount(id:number) {
         // })
 
         }
-        for (const key of this.scales) {
-          if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ScaleId)){
-            this.form.controls['ScaleId'].setValue(key)
-          }
-        }
+        // for (const key of this.scales) {
+        //   if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ScaleId)){
+        //     this.form.controls['ScaleId'].setValue(key)
+        //   }
+        // }
         // if(cnt_groupFromApi.teacher.ScaleId != undefined)
         // this.scaleService.getItem((cnt_groupFromApi.teacher.ScaleId)).subscribe((algo)=>{
         //   this.form.controls['ScaleId'].setValue(algo.scale)
@@ -758,27 +811,27 @@ getOneCntAccount(id:number) {
         }
   });
   }
-  addEscalafon(e:Event){
-    e.preventDefault()
+  // addEscalafon(e:Event){
+  //   e.preventDefault()
 
-    this.ref = this.dialogService.open(Create_EscalafonComponent, {
-      width: '40%',
-      height: '50%',showHeader:false,
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(Create_EscalafonComponent, {
+  //     width: '40%',
+  //     height: '50%',showHeader:false,
+  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
 
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
-      this.getAllscales()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
+  //     this.getAllscales()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
   addCategoriaColciencias(e:Event){
     e.preventDefault()
 

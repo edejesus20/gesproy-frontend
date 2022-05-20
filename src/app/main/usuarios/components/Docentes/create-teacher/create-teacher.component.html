@@ -140,7 +140,13 @@
         
           <div class="grid p-fluid">
             <div class="col-12 md:col-6 lg:col-6">
-
+              <div class="grid ">
+                <div class="col-1 md:col-1">
+                  <div class="p-inputgroup"  >
+                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                  </div>
+                </div>
+                <div class="col-11 md:col-11">
               <div class="flex"> 
                 <div style="width:100%">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -148,7 +154,7 @@
                   name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
                   [style]="{'width':'100%','margin-bottom':'20px'}"  
                   optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
-                   placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO">
+                   placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO" (click)="getAllscales($event)">
                   <ng-template let-option pTemplate="item">
                     <span >{{option.name  | titlecase}}
                     </span>
@@ -160,9 +166,18 @@
                   class="p-button-rounded p-button-outlined" (click)="addVinculacion($event)" ></button>
                 </span>
               </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-12 md:col-6 lg:col-6">
+              <div class="grid ">
+                <div class="col-1 md:col-1">
+                  <div class="p-inputgroup"  >
+                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                  </div>
+                </div>
+                <div class="col-11 md:col-11">
               <div class="flex"> 
                 <div style="width:100%">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
@@ -181,26 +196,34 @@
             class="p-button-rounded p-button-outlined" (click)="addCategoriaColciencias($event)" ></button>
           </span>
             </div>
+                </div>
+              </div>
           </div>
           </div>
           <ng-template [ngIf]="scales.length > 0">
-            <div class="flex"> 
-              <div style="width:100%">
+     
+                <div class="grid p-fluid">
+                  <div class="col-1 sm:col-1 md:col-1">
+                    <div class="p-inputgroup"  >
+                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                    </div>
+                  </div>
+                  <div class="col-11 sm:col-11 md:col-11">
+                    <div class="flex"> 
+                      <div style="width:100%">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="scales" [filter]="true"
                 name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-                [style]="{'width':'100%','margin-bottom':'20px'}"  
+                [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-40px'}"  
                 optionvalue="id"  optionLabel="name" filterBy="name"
-                [required]="true" placeholder="ESCALAFON" title="ESCALAFON">
+                 placeholder="ESCALAFON" title="ESCALAFON">
                 <ng-template let-option pTemplate="item">
                   <span >{{option.name }}</span>
               </ng-template>
               </p-dropdown>
+                  </div>
+                </div>
             </div>
-            <span class="bottomdelete" style="margin-top: -35px;">
-              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
-              class="p-button-rounded p-button-outlined" (click)="addEscalafon($event)" ></button>
-            </span>
             </div>
           </ng-template>
           
@@ -257,7 +280,7 @@
                                     <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
                                   </div>
                                 </div>
-                                <div class="col-1 md:col-10">
+                                <div class="col-10 md:col-10">
                             <div class="flex">
                               <div style="width:100%">
 
@@ -740,16 +763,16 @@
               name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
               [style]="{'width':'100%','margin-bottom':'20px'}"  
               optionvalue="id"  optionLabel="name" filterBy="name"
-              [required]="true" placeholder="ESCALAFON" title="ESCALAFON">
+               placeholder="ESCALAFON" title="ESCALAFON">
               <ng-template let-option pTemplate="item">
                 <span >{{option.name }}</span>
             </ng-template>
             </p-dropdown>
           </div>
-          <span class="bottomdelete" style="margin-top: -35px;">
+          <!-- <span class="bottomdelete" style="margin-top: -35px;">
             <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
             class="p-button-rounded p-button-outlined" (click)="addEscalafon($event)" ></button>
-          </span>
+          </span> -->
           </div>
 
         </div>

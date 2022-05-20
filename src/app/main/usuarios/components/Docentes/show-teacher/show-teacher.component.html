@@ -65,7 +65,14 @@
           <td>{{item.User?.email | titlecase}}</td>
           <!-- <td>{{item.User?.Person?.phone }}</td> -->
           <!-- <td>{{item.Groups[0]?.name | titlecase}}</td> -->
-          <td>{{item.Scale?.name | titlecase}}</td>
+          <td>
+            <span *ngIf="item.ChargebondingScaleTeachers.length != undefined
+            && item.ChargebondingScaleTeachers.length > 0 && 
+            item.ChargebondingScaleTeachers[0].status == true">
+              {{item.ChargebondingScaleTeachers[0].ChargebondingScale?.Scale?.name}}
+            </span>
+            
+          </td>
           <td>{{item.MincienciaCategory?.name}}</td>
           <ng-template [ngIf]="mostrar==1">
               
