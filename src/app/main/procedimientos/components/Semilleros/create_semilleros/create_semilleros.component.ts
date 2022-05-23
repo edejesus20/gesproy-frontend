@@ -32,9 +32,9 @@ export class Create_semillerosComponent implements OnInit {
   public mostrarHeadquarterProgram:boolean=false;
   public mostrarlineasProgram:boolean=false;
   public FacultadHeadquarterProgram:any[]=[]
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public algo:number[]=[0];
-  public mostrar1:boolean=false;
+  public mostrar1:boolean=true;
   public algo1:number[]=[0];
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
@@ -184,7 +184,7 @@ public ref1:any;
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
-          // console.log(cnt_groupFromApi.teacher)
+          console.log(cnt_groupFromApi.teacher)
       }
     }, error => console.error(error));
   }

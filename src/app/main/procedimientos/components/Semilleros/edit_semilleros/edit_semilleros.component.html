@@ -27,15 +27,15 @@
               </div>
             </div>
             <div class="bordep">
-             
+           
               <h3 style="text-align:center;">1. IDENTIFICACIÓN DEL SEMILLERO</h3>
               <div class="grid p-fluid ml-1 mr-1">
                 <div class="col-12 md:col-6 lg:col-6" style="border: 1px solid black;">
                   <div class="field ">
                   <label for="name"style="font-weight: bold;">FECHA CREACIÓN DEL SEMILLERO</label>
                 <div class="p-inputgroup" >
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                    <input type="date" class="p-inputtext-lg" pInputText name="creation_date" 
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                  <input type="date" class="p-inputtext-lg" pInputText name="creation_date" 
                      formControlName="creation_date" title="FECHA CREACIÓN DEL SEMILLERO" required>  
   
                 </div>
@@ -46,7 +46,7 @@
                   <div class="field ">
                     <label for="name"style="font-weight: bold;">NOMBRE DEL SEMILLERO</label>
                   <div class="p-inputgroup" >
-                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                     <input type="text" pInputText [pKeyFilter]="blockSpecial" 
                     class="p-inputtext-lg"  name="name"  title="NOMBRE DEL SEMILLERO"
                     formControlName="name" required>         
@@ -60,43 +60,63 @@
                 <ng-template pTemplate="header">
                   Facultad y programa a la que está adscrito el semillero:
                 </ng-template>
-                <div class="grid p-fluid ">
-                  <div class="col-12 md:col-6 lg:col-6" >
+                <div class="grid p-fluid">
+                  <div class="col-12 md:col-6 lg:col-6">
                     <h5 style="text-align:left;">FACULTAD:</h5>
-                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                    [options]="facultys" [filter]="true" label="SELECCIONE LA FACULTAD"
-                    formControlName="Facultad" name="Facultad"
-                      [style]="{'width':'100%','margin-bottom':'20px'}" 
-                      optionvalue="id"  optionLabel="name" filterBy="name"
-                      [required]="true" placeholder="SELECCIONE LA FACULTAD" title="SELECCIONE LA FACULTAD" (onChange)="SelectFacultad()">
-                      <ng-template let-option pTemplate="item" >
-                        <span >{{option.name | titlecase}}</span>
-                    </ng-template>
-                    </p-dropdown>
+
+                    <div class="grid ">
+                      <div class="col-1 md:col-1">
+                        <div class="p-inputgroup"  >
+                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;
+                          "><i class="pi pi-bookmark-fill"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-11 md:col-11">
+                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                        [options]="facultys" [filter]="true" label="SELECCIONE LA FACULTAD"
+                        formControlName="Facultad" name="Facultad"
+                          [style]="{'width':'100%','margin-bottom':'20px'}" 
+                          optionvalue="id"  optionLabel="name" filterBy="name"
+                          [required]="true" placeholder="SELECCIONE LA FACULTAD" title="SELECCIONE LA FACULTAD" (onChange)="SelectFacultad()">
+                          <ng-template let-option pTemplate="item" >
+                            <span >{{option.name | titlecase}}</span>
+                        </ng-template>
+                        </p-dropdown>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-12 md:col-6 lg:col-6" >
-                    <ng-template [ngIf]="mostrarFacultad==true">
-                      <h5 style="text-align:left;">PROGRAMA:</h5>
-                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                      [options]="FacultadHeadquarterProgram" [filter]="true" 
-                      label="SELECCIONE EL PROGRAMA" 
-                      formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
-                        [style]="{'width':'100%','margin-bottom':'20px'}" 
-                        optionvalue="id"  optionLabel="name" filterBy="name"
-                        [required]="true" placeholder="SELECCIONE EL PROGRAMA" 
-                        title="SELECCIONE EL PROGRAMA" (onChange)="getHeadquarterProgram()">
-                        <ng-template let-option pTemplate="item" >
-                          <span >Sede: {{option.Sede | titlecase}} -
-                            Programa: {{option.Programa | titlecase}}</span>
-                      </ng-template>
-                      </p-dropdown>
-                    </ng-template>
-                  </div>
+      
+                  <div class="col-12 md:col-6 lg:col-6">
+                    <h5 style="text-align:left;">PROGRAMA:</h5>
+
+                    <div class="grid ">
+
+                      <div class="col-1 md:col-1">
+                        <div class="p-inputgroup"  >
+                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;
+                        "><i class="pi pi-bookmark-fill"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-11 md:col-11">
+                        <ng-template [ngIf]="mostrarFacultad==true">
+                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                          [options]="FacultadHeadquarterProgram" [filter]="true" 
+                          label="SELECCIONE EL PROGRAMA" 
+                          formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
+                            [style]="{'width':'100%','margin-bottom':'20px'}" 
+                            optionvalue="id"  optionLabel="name" filterBy="name"
+                            [required]="true" placeholder="SELECCIONE EL PROGRAMA" 
+                            title="SELECCIONE EL PROGRAMA" (onChange)="getHeadquarterProgram()">
+                            <ng-template let-option pTemplate="item" >
+                              <span >Sede: {{option.Sede | titlecase}} -
+                                Programa: {{option.Programa | titlecase}}</span>
+                          </ng-template>
+                          </p-dropdown>
+                        </ng-template>
+                      </div>
+                    </div>
                 </div>
-           
-  
-                
-          
+                </div>
             </p-panel>
             <br>
             <p-panel >
@@ -104,19 +124,30 @@
                 Grupo de investigación al cual estará articulado el semillero:
               </ng-template>
               <ng-template [ngIf]="mostrarHeadquarterProgram==true">
-                <h5 style="text-align:left;">GRUPOS:</h5>
-                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="groups" [filter]="true" 
-                label="SELECCIONE EL GRUPO" 
-                formControlName="GroupId" name="GroupId"
-                  [style]="{'width':'100%','margin-bottom':'20px'}" 
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                  [required]="true" placeholder="SELECCIONE EL GRUPO" 
-                  title="SELECCIONE EL GRUPO" (onChange)="getLineProgramGroup()">
-                  <ng-template let-option pTemplate="item" >
-                    <span >{{option.name | titlecase}} </span>
-                </ng-template>
-                </p-dropdown>
+                <div class="grid p-fluid">
+                  <div class="col-12 md:col-12 lg:col-12">
+                    <h5 style="text-align:left;">SELECCIONE EL GRUPO DE INVESTIGACIÓN:</h5>
+  
+                    <div class="flex">
+                      <span class="p-inputgroup-addon flex mr-4"  style=" 
+                      color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                      <div style="width: 100%">
+                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                          [options]="groups" [filter]="true" 
+                          label="SELECCIONE EL GRUPO" 
+                          formControlName="GroupId" name="GroupId"
+                            [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-20px'}" 
+                            optionvalue="id"  optionLabel="name" filterBy="name"
+                            [required]="true" placeholder="SELECCIONE EL GRUPO" 
+                            title="SELECCIONE EL GRUPO" (onChange)="getLineProgramGroup()">
+                            <ng-template let-option pTemplate="item" >
+                              <span >{{option.name | titlecase}} </span>
+                          </ng-template>
+                          </p-dropdown>
+                    </div>
+                    </div>
+                  </div>
+                </div>
               </ng-template>
            
           </p-panel>
@@ -150,36 +181,46 @@
                          <div formArrayName="lines"> 
                            <div *ngFor="let item of getlines.controls; 
                            let pointIndex=index" [formGroupName]="pointIndex">
-                           <div class="grid ">
-                            <div class="col-12 md:col-11 lg:col-11">
-                                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                [options]="lines" [filter]="true" 
-                                label="SELECCIONE LINEA" 
-                                formControlName="LineId" name="LineId"
-                                  [style]="{'width':'100%'}" 
-                                  optionvalue="id"  optionLabel="name" filterBy="name"
-                                  [required]="true" placeholder="SELECCIONE LINEA" 
-                                  title="SELECCIONE LINEA" >
-                                  <ng-template let-option pTemplate="item" >
-                                    <span >{{option.name | titlecase}} </span>
-                                </ng-template>
-                                </p-dropdown>
-                               <!-- <p>Tematica Cargada: {{getlines.value[pointIndex].LineId.name}}</p> -->
-
-                               </div>
-                               <div class="col-12 md:col-1 lg:col-1">
-                                <span class="bottomdelete" style="margin-top: -35px;">
-                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
-                                  class="p-button-rounded p-button-danger"></button>
-                                  <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
-                                  (click)="removeRoles(pointIndex,$event)" 
-                                  label="eliminar"></button> -->
-                                </span>
+                    
+                              <div class="grid p-fluid">
+                                <div class="col-10 md:col-10 lg:col-10">
+                                  <div class="flex">
+                                    <span class="p-inputgroup-addon flex mr-4"  style=" 
+                                    color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                    <div style="width: 100%">
+                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                  [options]="lines" [filter]="true"
+                                      formControlName="LineId" name="LineId"
+                                     label="SELECCIONE LINEA" 
+                                    [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-15px'}"
+                                    optionvalue="id" optionLabel="name" 
+                                    filterBy="name"
+                                    [required]="true" placeholder="SELECCIONE LINEA"  >
+                                    <ng-template let-option pTemplate="item"  >
+                                      <span >{{option.name  | titlecase}}
+                                        </span>
+                                  </ng-template>
+                                  </p-dropdown>
+                                 </div>
+                                 <div class="col-1 md:col-1" >
+                                  <span class="bottomdelete" style="margin-top: -35px;">
+                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removelines(pointIndex,$event)"  
+                                    class="p-button-rounded p-button-danger"></button>
+                                    <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
+                                    (click)="removeRoles(pointIndex,$event)" 
+                                    label="eliminar"></button> -->
+                                  </span>
+                                 </div>
+  
+  
                               </div>
-
+                              <hr>
                            </div>
                            </div>
-                         </div> 
+                          
+                           </div>
+                         </div>
+                   
                        </td>
                    </tr>
                  </ng-template>
@@ -198,6 +239,8 @@
                 <div class="grid p-fluid ml-1 mr-1 mt-1">
                   <div class="col-12 md:col-6 lg:col-6" >
                     <div class="p-inputgroup" style="margin-bottom: 10px;">
+                      <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
                       <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
                       formControlName="Mision" placeholder="ESCRIBIR LA MISION"  required></textarea>
                       
@@ -205,6 +248,8 @@
                   </div>
                   <div class="col-12 md:col-6 lg:col-6" >
                     <div class="p-inputgroup"  style="margin-bottom: 10px;">
+                      <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
                       <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
                       formControlName="Vision" placeholder="ESCRIBIR LA VISION"  required></textarea>
           
@@ -219,12 +264,16 @@
               </ng-template>
               <h5 style="text-align:left;">General:</h5>
               <div class="p-inputgroup" >
+                <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
                 <input type="text" class="p-inputtext-lg" pInputText name="name" 
                 placeholder="Objetivo General" formControlName="ObjetivoGeneral" title="Objetivo General" required>         
               </div>
   
               <h5 style="text-align:left;">Especificos:</h5>
               <div class="p-inputgroup" >
+                <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
                 <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
                 formControlName="ObjetivosEspecificos" required></textarea>
                       
@@ -237,103 +286,83 @@
               Estrategias de Trabajo
             </ng-template>
             <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
               <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
               formControlName="estrategias" placeholder="ESCRIBIR LAS ESTRATEGIAS"  required></textarea>
             </div>
    
         </p-panel>
         <br>
-        <!-- <div class="grid p-fluid ml-1 mr-1">
-          <div class="col-12 md:col-4 lg:col-4" >
-            <div class="field ">
-            <label for="name"style="font-weight: bold;">FECHA APROVACIÓN </label>
-          <div class="p-inputgroup" >
-            <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="date" class="p-inputtext-lg" pInputText name="approval_date" 
-               formControlName="approval_date" title="FECHA APROVACIÓN DEL SEMILLERO" required>  
-  
-          </div>
+        
             </div>
-          </div>
-          
-          <div class="col-12 md:col-4 lg:col-4" >
-            <div class="field ">
-              <label for="name"style="font-weight: bold;">RESOLUCIÓN DEL SEMILLERO</label>
-            <div class="p-inputgroup" >
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" pInputText  
-              class="p-inputtext-lg"  name="resolution"  title="RESOLUCIÓN DEL SEMILLERO"
-              formControlName="resolution" required>         
-          </div>
-            </div>
-          </div>
-          <div class="col-12 md:col-4 lg:col-4" >
-            <div class="field ">
-              <label for="name"style="font-weight: bold;">ARTICULO</label>
-            <div class="p-inputgroup" >
-              <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-              <input type="text" pInputText 
-              class="p-inputtext-lg"  name="article"  title="ARTICULO DE LA RESOLUCION"
-              formControlName="article" required>         
-          </div>
-            </div>
-          </div>
-  
-        </div> -->
-  
-            </div>
+        
+
             <div class="bordep">
               <h3 style="text-align:center;">2. IDENTIFICACIÓN DEL PROFESOR COORDINADOR</h3>
-              <div class="grid p-fluid">
-                <div class="col-12 md:col-12 lg:col-12">
-                  <div class="field">
-                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
-                    <div class="flex">
-                      <div style="width:100%">
-                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                    [options]="teachers" [filter]="true"
-                      name="TeacherId" formControlName="TeacherId" label="DOCENTE" 
-                      [style]="{'width':'100%'}" 
-                      optionvalue="id"  optionLabel="fullName" filterBy="fullName"
-                       placeholder="SELECCIONE DOCENTE" title="SELECCIONE DOCENTE" [required]="true" (onChange)="SelectTeacher()">
-                      <ng-template let-option pTemplate="item">
-                        <span >{{option.fullName  | titlecase}} -
-                          cc: {{option.identification }} </span>
-                    </ng-template>
-                    </p-dropdown>
+              <ng-template [ngIf]="mostrarHeadquarterProgram==true">
+  
+                <div class="grid p-fluid">
+                  <div class="col-12 md:col-12 lg:col-12">
+                    <div class="grid ">
+                      <div class="col-11 md:col-11" >
+                        <div class="flex">
+                          <span class="p-inputgroup-addon flex"  style="margin-top:-1px; 
+                          color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                          <div style="width: 100%">
+                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                            [options]="teachers" [filter]="true"
+                              name="TeacherId" formControlName="TeacherId" label="DOCENTE" 
+                              [style]="{'width':'100%'}" 
+                              optionvalue="id"  optionLabel="fullName" filterBy="fullName"
+                               placeholder="SELECCIONE DOCENTE" title="SELECCIONE DOCENTE" [required]="true" (onChange)="SelectTeacher()">
+                              <ng-template let-option pTemplate="item">
+                                <span >{{option.fullName  | titlecase}} -
+                                  cc: {{option.identification }} </span>
+                            </ng-template>
+                            </p-dropdown>
+                          </div>
+                       
+                        </div>
+                      </div>
+                      <div class="col-1 md:col-1" >
+                        <span class="bottomdelete" style="margin-top: -35px;">
+                          <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                          class="p-button-rounded p-button-outlined" (click)="addTeacher($event)" ></button>
+                        </span>
+                      </div>
+                      </div>
+              
                     </div>
-                    <!-- <span class="bottomdelete" style="margin-top: -35px;">
-                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                      class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
-                    </span> -->
-                  </div>
-            
-                  </div>
-              </div>
-              </div>
-              <ng-template [ngIf]="mostrarTeacher == true">
-                <br>
-                <p-fieldset legend="Datos del Docente">
-                  <div class="flex" >
-                    <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
-                      <h3 class="fondebabutton">Nombre : {{ form2.User?.fullName | titlecase }}</h3>
-                      <h3 class="fondebabutton">Identificacion : {{ form2.User?.Person?.identification | titlecase }}</h3>
-                      <h3 class="fondebabutton">Correo : {{ form2.User?.email| titlecase }}</h3>
-                      <!-- <h3 class="fondebabutton">Horas de Dedicación : {{ form2.hours_of_dedication | titlecase }}</h3> -->
-                      
+                </div>
+      
+                <ng-template [ngIf]="mostrarTeacher == true">
+                  <br>
+                  <p-fieldset legend="Datos del Docente">
+                    <div class="flex" >
+                      <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
+                        <h3 class="fondebabutton">Nombre : {{ form2.User?.fullName | titlecase }}</h3>
+                        <h3 class="fondebabutton">Identificacion : {{ form2.User?.Person?.identification | titlecase }}</h3>
+                        <h3 class="fondebabutton">Correo : {{ form2.User?.email| titlecase }}</h3>
+                        <!-- <h3 class="fondebabutton">Horas de Dedicación : {{ form2.hours_of_dedication | titlecase }}</h3> -->
+                        
+                      </div>
+                      <p-divider layout="vertical" ></p-divider>
+                      <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
+                        <h3 class="fondebabutton">Telefono : {{ form2.User?.Person?.phone }}</h3>
+                        <h3  class="fondebabutton">Categoria Minciencias : {{ form2.MincienciaCategory?.name| titlecase }}</h3>
+                        <h3  class="fondebabutton">Escalafón : {{ form2.Charge_bonding?.ChargebondingScales?.[0]?.Scale?.name | titlecase }}</h3>
+                        <h3  class="fondebabutton">Vinculacion de Cargo: {{ form2.Charge_bonding?.name | titlecase }}</h3>
+                        <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
+                      </div>
                     </div>
-                    <p-divider layout="vertical" ></p-divider>
-                    <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
-                      <h3 class="fondebabutton">Telefono : {{ form2.User?.Person?.phone }}</h3>
-                      <h3  class="fondebabutton">Categoria Minciencias : {{ form2.MincienciaCategory?.name| titlecase }}</h3>
-                      <h3  class="fondebabutton">Escalafón : {{ form2.Scale?.name | titlecase }}</h3>
-                      <h3  class="fondebabutton">Vinculacion de Cargo: {{ form2.Charge_bonding?.name | titlecase }}</h3>
-                      <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
-                    </div>
-                  </div>
-                  </p-fieldset>
+                    </p-fieldset>
+                </ng-template>
               </ng-template>
+              
+              
             </div>
+
             <div style="border: 1px solid black;">
               <h3 style="text-align:center;">3. IDENTIFICACIÓN DE LOS INTEGRANTES DEL SEMILLERO</h3>
               <br>
@@ -366,8 +395,8 @@
                                 <div class="col-6">
                                   <div class="p-inputgroup"  >
                                     <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
-                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                                    <input type="date" class="p-inputtext-lg" pInputText name="date_firt" 
+                                      <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                      <input type="date" class="p-inputtext-lg" pInputText name="date_firt" 
                                     placeholder="FECHA DE INICIO" formControlName="date_firt" title="FECHA DE INICIO" required>         
                                     <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE INICIO</h3></label> -->
                                   </span> 
@@ -376,8 +405,8 @@
                                 <div class="col-6">
                                   <div class="p-inputgroup"  >
                                     <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
-                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                                    <input type="date" class="p-inputtext-lg" pInputText name="date_end" 
+                                      <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                      <input type="date" class="p-inputtext-lg" pInputText name="date_end" 
                                     placeholder="FECHA DE FINAL" formControlName="date_end" title="FECHA DE FINAL" required>         
                                     <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE FINAL</h3></label> -->
                                   </span> 
@@ -387,25 +416,42 @@
                               <div class="grid">
                               
                                 <div class="col-7">
-                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                  [options]="students" [filter]="true"
-                                      formControlName="StudentId" name="StudentId"
-                                     label="SELECCIONE ESTUDIANTE" 
-                                    [style]="{'width':'100%','margin-bottom':'20px'}"
-                                    optionvalue="StudentId" optionLabel="fullName" 
-                                    filterBy="fullName"
-                                    [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
-                                    <ng-template let-option pTemplate="item"  >
-                                      <span >{{option.fullName  | titlecase}} -
-                                        cc: {{option.identification }} </span>
-                                  </ng-template>
-                                  </p-dropdown>
+                                  <div class="field">
+                                    <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
+                                    <div class="flex">
+                                      <span class="p-inputgroup-addon flex"  style="margin-top:-1px; 
+                                      color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                      <div style="width:100%">
+                                        
+                                          
+                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                        [options]="students" [filter]="true"
+                                            formControlName="StudentId" name="StudentId"
+                                           label="SELECCIONE ESTUDIANTE" 
+                                          [style]="{'width':'100%','margin-bottom':'20px'}"
+                                          optionvalue="StudentId" optionLabel="fullName" 
+                                          filterBy="fullName"
+                                          [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
+                                          <ng-template let-option pTemplate="item"  >
+                                            <span >{{option.fullName  | titlecase}} -
+                                              cc: {{option.identification }} </span>
+                                        </ng-template>
+                                        </p-dropdown>
+                                       
+                                    </div>
+                                    <span class="bottomdelete" style="margin-top: -35px;">
+                                      <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                      class="p-button-rounded p-button-outlined" (click)="addStudent($event)" ></button>
+                                    </span>
+                                  </div>
+                                  </div>
                                 </div>
                                 <div class="col-4">
                                   <div class="p-inputgroup"  >
-                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                                     <input class="p-inputtext-lg" type="text" formControlName="Horas"
-                                    pInputText  name="Horas" 
+                                    pInputText pKeyFilter="num" name="Horas" 
                                     placeholder="Horas" title="Horas" >         
                                 </div>
                                 </div>
@@ -415,42 +461,9 @@
                                     class="p-button-rounded p-button-danger"></button>
                                   </span>
                                 </div>
-                               
-          
-                              <!-- <span class="bottomdelete" style="margin-top: -35px;">
-                                <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                                class="p-button-rounded p-button-outlined" (click)="addTipoDocumento($event)" ></button>
-                              </span> -->
                          
                             </div>
-                                 <!-- <div style="width:60%" class="mr-1">
-                                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                  [options]="students" [filter]="true"
-                                      formControlName="StudentId" name="StudentId"
-                                     label="SELECCIONE ESTUDIANTE" 
-                                    [style]="{'width':'100%','margin-bottom':'20px'}"
-                                    optionvalue="id" optionLabel="User.fullName" 
-                                    filterBy="User.fullName"
-                                    [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
-                                    <ng-template let-option pTemplate="item"  >
-                                      <span >{{option.User.fullName  | titlecase}} -
-                                        cc: {{option.User.Person.identification }} </span>
-                                  </ng-template>
-                                  </p-dropdown>
-                                 </div> -->
-                                 <!-- <div style="width:40%" class="mr-1">
-                                  
-                                  <div class="p-inputgroup" > 
-                                    <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                                    <input type="text" pInputText 
-                                    class="p-inputtext-lg"  name="Horas"  title="HORAS DE DEDICACIÓN" placeholder="HORAS DE DEDICACIÓN"
-                                    formControlName="Horas" required>         
-                                 </div>
-                            
-                                  
-                                </div> -->
-   
-                           <!-- </div> -->
+      
                            </div>
                          </div> 
                        </td>

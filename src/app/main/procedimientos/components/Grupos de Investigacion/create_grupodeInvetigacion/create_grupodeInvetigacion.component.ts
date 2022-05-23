@@ -41,11 +41,11 @@ import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudia
 })
 export class Create_grupodeInvetigacionComponent implements OnInit {
   public seedbeds: any[] = [];
-  public mostrar:boolean=false;
+  public mostrar:boolean=true;
   public algo:number[]=[0];
-  public mostrar2:boolean=false;
+  public mostrar2:boolean=true;
   public algo2:number[]=[0];
-  public mostrar3:boolean=false;
+  public mostrar3:boolean=true;
   public algo3:number[]=[0];
 
   public FacultadHeadquarterProgram:any[]=[]

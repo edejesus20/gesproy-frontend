@@ -54,34 +54,34 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
     this.groupService.getList().subscribe((rolesFromApi) => {
       this.groups =rolesFromApi.groups
       console.log(this.groups)
-      this.groups.forEach((newH:GroupI) => {
+      // this.groups.forEach((newH:GroupI) => {
 
-      Object.defineProperty( newH, 'lines', {
-        value:[]
-        });
-      });
-      this.groups.forEach((newH:GroupI) => {
-        if( newH.HeadquarterProgram?.ProgramId != undefined) {
-          this.programService.getItem(newH.HeadquarterProgram?.ProgramId).subscribe((item) => {
-            Object.defineProperty( newH, 'Program', {
-              value:item.program
-              });
+      // Object.defineProperty( newH, 'lines', {
+      //   value:[]
+      //   });
+      // });
+    //   this.groups.forEach((newH:GroupI) => {
+    //     if( newH.HeadquarterProgram?.ProgramId != undefined) {
+    //       this.programService.getItem(newH.HeadquarterProgram?.ProgramId).subscribe((item) => {
+    //         Object.defineProperty( newH, 'Program', {
+    //           value:item.program
+    //           });
 
-          })
-        }
-        if(newH.LineProgramGroups != undefined && newH.LineProgramGroups.length > 0) {
+    //       })
+    //     }
+    //     if(newH.LineProgramGroups != undefined && newH.LineProgramGroups.length > 0) {
         
-            for (let key of newH.LineProgramGroups) {
-            if(key.LineProgram?.LineId != undefined) {
+    //         for (let key of newH.LineProgramGroups) {
+    //         if(key.LineProgram?.LineId != undefined) {
                     
-              this.lineService.getItem(key.LineProgram?.LineId).subscribe((item) => {
-                if(newH.lines)newH.lines.push(item.line)
-              })
-            }
-          }
-        }
+    //           this.lineService.getItem(key.LineProgram?.LineId).subscribe((item) => {
+    //             if(newH.lines)newH.lines.push(item.line)
+    //           })
+    //         }
+    //       }
+    //     }
       
-    });
+    // });
     // console.log(this.groups)
       
       this.rows2=[]

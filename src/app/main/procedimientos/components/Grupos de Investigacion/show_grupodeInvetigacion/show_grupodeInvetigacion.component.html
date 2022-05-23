@@ -82,9 +82,9 @@
              target="blank" href="{{item.Link_gruplac}}" style="text-decoration: none;">Ir a Sitio</a>
             </td> -->
             <td >
-              <span *ngFor="let i of item.Knowledge_areas">
+              <span *ngFor="let i of item.GroupKnowledge_areas">
                 <span style="display: flex;">
-                  * {{i.name}} 
+                  * {{i.Knowledge_area.name}} 
                 </span>
               </span>
             </td>
@@ -130,7 +130,7 @@
               <div >
             
                   
-                  <p-table [value]="item.lines"  dataKey="id" 
+                  <p-table [value]="item.LineProgramGroups"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                       <ng-template pTemplate="header" >
@@ -144,9 +144,9 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <td>{{order.name | titlecase}}</td> 
-                          <td>{{order.objectives }}</td> 
-                          <td>{{order.resolution }}</td> 
+                          <td>{{order.LineProgram.Line.name | titlecase}}</td> 
+                          <td>{{order.LineProgram.Line.objectives }}</td> 
+                          <td>{{order.LineProgram.Line.resolution }}</td> 
                           <!-- <td >
                             <span *ngFor="let i of order.Thematics">
                               <span style="display: flex;">
