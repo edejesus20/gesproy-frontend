@@ -22,4 +22,5 @@ export interface ChargeAdministrativeI {
     Charge?:ChargeI
     Administrative?:AdministrativeI
     status?:boolean
+    HeadquarterPrograms?:HeadquarterProgramI[]
 }

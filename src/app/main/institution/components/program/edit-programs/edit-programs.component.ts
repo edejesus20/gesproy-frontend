@@ -289,7 +289,7 @@ getOneCntAccount(id:number) {
         let ProgramId=key.ProgramId
         // this.administratives.push(algo.administrative)
           for (const key2 of this.administratives) {
-          if(key2.UserId == key.AdministrativeId){
+          if(key2.UserId == key.ChargeAdministrative?.AdministrativeId){
           AdministrativeId=key2
           control.push(this.formBuilder.group({
             ProgramId:[ProgramId, [Validators.required]],
@@ -299,8 +299,8 @@ getOneCntAccount(id:number) {
 
             }
           } 
-        if(AdministrativeId == ''){
-          this.administrativeService.getAdministrativesOneTipo(key.AdministrativeId).subscribe((algo)=>{
+        if(AdministrativeId == '' && key.ChargeAdministrative != undefined){
+          this.administrativeService.getAdministrativesOneTipo(key.ChargeAdministrative?.AdministrativeId).subscribe((algo)=>{
             this.administratives.push(algo.administrativos[0])
                 AdministrativeId=algo.administrativos[0]
 

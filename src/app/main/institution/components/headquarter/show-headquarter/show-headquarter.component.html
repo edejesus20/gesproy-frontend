@@ -67,7 +67,12 @@
           <td >
             <span *ngFor="let i of item.Administratives">
               <span style="display: flex;">
-                * {{i.User.fullName}} Cargo : {{i.Charge.name}}  
+                * {{i.User.fullName}} Cargos : 
+                <span *ngFor="let a of i.ChargeAdministratives">
+                  <span style="display: flex;">
+                    {{a.Charge.name}}  
+                  </span>
+                </span>
               </span>
             </span>
           </td>
@@ -122,7 +127,7 @@
                         <tr>
                               <td>{{order.Program.id}}</td>
                               <td>{{order.Program.name | titlecase}}</td>
-                              <td>{{order.Administrative.User.fullName | titlecase}}</td>
+                              <td>{{order.ChargeAdministrative.Administrative.User.fullName | titlecase}}</td>
            
                               <td>{{order.Program.Faculty?.name| titlecase}}</td>
                               <td>{{order.Program.Faculty?.Administrative?.User.fullName| titlecase}}</td>

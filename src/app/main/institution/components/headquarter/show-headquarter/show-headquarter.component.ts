@@ -54,7 +54,7 @@ export class ShowHeadquarterComponent implements OnInit {
     
     this.headquarterService.getList().subscribe((headquartersFromApi) => {
       this.headquarters = headquartersFromApi.headquarters
-      // console.log(headquartersFromApi.headquarters) 
+      console.log(headquartersFromApi.headquarters) 
       this.rows2=[]
       if(headquartersFromApi.headquarters != undefined){
         for (const key of headquartersFromApi.headquarters) {

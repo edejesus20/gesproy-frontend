@@ -1,4 +1,4 @@
-import { AdministrativeI } from "../user/administrative";
+import { AdministrativeI, ChargeAdministrativeI } from "../user/administrative";
 import { TeacherI } from "../user/teacher";
 import { FacultyI } from "./faculty";
 import { ProgramI } from "./program";
@@ -15,6 +15,7 @@ export interface HeadquarterI {
    Administratives?:AdministrativeI[]
    HeadquarterProgram?:HeadquarterProgramI
    HeadquarterPrograms?:HeadquarterProgramI[]
+   // ChargeAdministratives?:ChargeAdministrativeI[]
 
 }
 
@@ -22,15 +23,18 @@ export interface HeadquarterProgramI {
    id?: number;
    ProgramId:number;
    HeadquarterId:number;
-   AdministrativeId:number;
+   ChargeAdministrativeId:number
+   // AdministrativeId:number;
    Programs?:ProgramI[]
    Program?:ProgramI
    Headquarters?:HeadquarterI[]
    Headquarter?:HeadquarterI
-   Administratives?:AdministrativeI[]
+   // Administratives?:AdministrativeI[]
    HeadquarterProgramTeacher?:HeadquarterProgramTeacherI
    HeadquarterProgramStudent?:HeadquarterProgramStudentI
-   Administrative?:AdministrativeI
+   // Administrative?:AdministrativeI
+   ChargeAdministratives?:ChargeAdministrativeI[]
+   ChargeAdministrative?:ChargeAdministrativeI
 }
 export interface HeadquarterProgramTeacherI {
    id?: number;
