@@ -24,10 +24,10 @@ export class DeleteAdministrativeComponent implements OnInit {
   // address:'',
   // phone:'',
   email:'',
-  HeadquarterId:'',
-  ChargeId:'',
+  HeadquarterId:''
+   
  };
-
+public ChargeAdministratives:any[] = [];
 
   constructor(
     private administrativeService:AdministrativeService,
@@ -49,7 +49,7 @@ export class DeleteAdministrativeComponent implements OnInit {
     // phone:'',
     email:'',
     HeadquarterId:'',
-    ChargeId:''
+
   }
     }
 
@@ -65,7 +65,7 @@ export class DeleteAdministrativeComponent implements OnInit {
         //   cnt_groupFromApi.administrative.User?.Person?.phone != undefined &&
           cnt_groupFromApi.administrative.User?.Person?.DocumentType != undefined &&
         //   cnt_groupFromApi.administrative.User?.Person?.Gender != undefined &&
-          cnt_groupFromApi.administrative.Charge != undefined &&
+          // cnt_groupFromApi.administrative.Charge != undefined &&
           cnt_groupFromApi.administrative.Headquarter != undefined
           ){
           this.form.name=cnt_groupFromApi.administrative.User.Person.name
@@ -77,7 +77,11 @@ export class DeleteAdministrativeComponent implements OnInit {
           this.form.DocumentTypeId=cnt_groupFromApi.administrative.User?.Person?.DocumentType.name
           // this.form.GenderId=(cnt_groupFromApi.administrative.User?.Person?.Gender?.name)
           this.form.HeadquarterId=(cnt_groupFromApi.administrative.Headquarter?.name)
-          this.form.ChargeId=(cnt_groupFromApi.administrative.Charge?.name)
+          if(cnt_groupFromApi.administrative.ChargeAdministratives?.length != undefined
+            && cnt_groupFromApi.administrative.ChargeAdministratives.length > 0){
+              this.ChargeAdministratives=cnt_groupFromApi.administrative.ChargeAdministratives
+
+          }
           }
       }
       this.displayMaximizable2=true

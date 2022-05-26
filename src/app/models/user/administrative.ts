@@ -5,11 +5,21 @@ import { ChargeI } from './charge';
 export interface AdministrativeI {
     id?:number
     UserId: number;
-    ChargeId: string;
+    // ChargeId: string;
     HeadquarterId:string
-    Charge?:ChargeI
+    Charges?:ChargeI[]
     User?:UserI,
     Headquarter?:HeadquarterI
     Faculties?:FacultyI[]
     HeadquarterPrograms?:HeadquarterProgramI[]
+    ChargeAdministratives?:ChargeAdministrativeI[]
+}
+export interface ChargeAdministrativeI {
+    id?:number
+    date:string
+    ChargeId: number
+    AdministrativeId: number
+    Charge?:ChargeI
+    Administrative?:AdministrativeI
+    status?:boolean
 }

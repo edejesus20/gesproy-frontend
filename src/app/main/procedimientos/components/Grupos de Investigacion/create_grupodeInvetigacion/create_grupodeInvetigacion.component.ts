@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 const translate = require('translate');
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { UserI } from 'src/app/models/authorization/usr_User';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { GroupI, Knowledge_areaI } from 'src/app/models/institution/group';
 import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
@@ -18,8 +16,7 @@ import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';
 import { TeacherI } from 'src/app/models/user/teacher';
 
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import { CrearUserComponent } from 'src/app/main/usuarios/components/usr_User/crear-user/crear-user.component';
+import {DialogService} from 'primeng/dynamicdialog';
 import { CategoryGroupI } from 'src/app/models/institution/category';
 import { CategoryGroupService } from 'src/app/core/services/institution/CategoryGroup.service';
 import { Create_CategoriaGruposComponent } from 'src/app/main/investigacion/components/CategoriaGrupos/create_CategoriaGrupos/create_CategoriaGrupos.component';
@@ -28,11 +25,7 @@ import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/crea
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
-// interface userI{
-//   Docentes:any[],
-//   Colaboladores:any[],
-//   Estudiantes:any[],
-// }
+
 @Component({
   selector: 'app-create_grupodeInvetigacion',
   templateUrl: './create_grupodeInvetigacion.component.html',

@@ -6,7 +6,7 @@
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
 
     [globalFilterFields]="['id','User.fullName','User.Person.identification','User.email',
-    'User.Person.phone','Charge.name','Headquarter.name']"
+    'User.Person.phone','Headquarter.name']"
     [columns]="cols">
   <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
@@ -43,7 +43,7 @@
           <th pSortableColumn="User.Person.identification">IDENTIFICACIÓN<p-sortIcon field="User.Person.identification"></p-sortIcon></th>
           <th pSortableColumn="User.email">CORREO<p-sortIcon field="User.email"></p-sortIcon></th>
           <!-- <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th> -->
-          <th pSortableColumn="Charge.name">CARGO<p-sortIcon field="Charge.name"></p-sortIcon></th>
+          <!-- <th pSortableColumn="Charge.name">CARGO<p-sortIcon field="Charge.name"></p-sortIcon></th> -->
           <th pSortableColumn="Headquarter.name">SEDE<p-sortIcon field="Headquarter.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -66,7 +66,14 @@
           <td>{{item.User?.Person?.identification}}</td>
           <td>{{item.User?.email | titlecase}}</td>
           <!-- <td>{{item.User?.Person?.phone }}</td> -->
-          <td>{{item.Charge?.name | titlecase}}</td>
+          <!-- <td >
+            <span *ngFor="let i of item.ChargeAdministratives">
+              <span style="display: flex;" *ngIf="i.status == true">
+                * {{i.Charge.name}} 
+              </span>
+            </span>
+          </td> -->
+          <!-- <td>{{item.Charge?.name | titlecase}}</td> -->
           <td>{{item.Headquarter?.name | titlecase}} - {{item.Headquarter?.University?.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar==1">
               
@@ -108,32 +115,34 @@
       <tr>
           <td colspan="12">
               <div >
-                  <p-table [value]="item.Faculties"  dataKey="id" 
+                  <p-table [value]="item.ChargeAdministratives"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                   responsiveLayout="scroll" >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                            <ng-template [ngIf]="mostrar==3">
+                            <!-- <ng-template [ngIf]="mostrar==3">
                               <th style="width: 3rem"></th>
-                            </ng-template> 
+                            </ng-template>  -->
                               <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                              <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="name">Nombre de Cargo <p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="date">Fecha<p-sortIcon field="date"></p-sortIcon></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
-                        <tr>
-                          <ng-template [ngIf]="mostrar==3">
+                        <tr *ngIf="order.status ==true">
+                          <!-- <ng-template [ngIf]="mostrar==3">
                             <td>
                                 <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                             </td>
-                          </ng-template> 
-                              <td>{{order.id}}</td>
-                              <td>{{order.name | titlecase}}</td>
+                          </ng-template>  -->
+                              <td>{{order.Charge.id}}</td>
+                              <td>{{order.Charge.name | titlecase}}</td>
+                              <td>{{order.date }}</td>
                           </tr>
                       </ng-template>
 
-                      <ng-template pTemplate="rowexpansion" let-order>
+                      <!-- <ng-template pTemplate="rowexpansion" let-order.Charge>
                         <tr>
                             <td colspan="7">
                                 <div >
@@ -167,7 +176,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </ng-template>
+                    </ng-template> -->
                       <ng-template pTemplate="emptymessage">
                         <tr>
                           <td colspan="6" style="text-align: center;">

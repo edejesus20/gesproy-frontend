@@ -3,7 +3,7 @@
 </ng-template>
 <ng-template [ngIf]="tabla == false">
   <form novalidate  enctype="multipart/form-data" >
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '30vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '35vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"
   
     [closable]="false" [closeOnEscape]="false" 
@@ -118,20 +118,8 @@
                     </div>
         
                   </div> -->
-        
-                  <div class="grid p-fluid">
-                    <div class="col-12 md:col-6 lg:col-6">
-                      <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                        <input class="p-inputtext-lg" type="text"[value]="form.ChargeId | titlecase" disabled
-                        pInputText  name="phone" 
-                        placeholder="SELECCIONE CARGO" title="SELECCIONE CARGO"
-                        required>   
-        
-                    </div>
-                    </div>
-                    
-                    <div class="col-12 md:col-6 lg:col-6">
+                  <div class="grid ">            
+                    <div class="col-12 md:col-12 lg:col-12">
                       <div class="p-inputgroup"  style="margin-bottom: 20px;">
                         <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
                         <input class="p-inputtext-lg" type="text"[value]="form.HeadquarterId | titlecase" disabled
@@ -141,15 +129,36 @@
         
                     </div>
 
-
-        
-                    </div>
+                
         
                   </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <div class="table-wrapper" >
+                    <p-table [value]="ChargeAdministratives"> 
+                      <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="id">Cargos<p-sortIcon field="id"></p-sortIcon></th>
+                            <th pSortableColumn="id">Fecha<p-sortIcon field="id"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                      <tr [pSelectableRow]="rowData">
+                          <td>
+                            {{item.Charge.name}}
+                          </td>
+                          <td>
+                            {{item.date}}
+                          </td>
+                      </tr>
+                    </ng-template>
+                    </p-table>
+                  </div>
+                </div>
           </div>
        
   
-              
+              <br>
         <div fxLayout="row" class="titleCard" >
           <button pButton type="button"  icon="pi pi-check" 
           (click)="onSubmit($event)"

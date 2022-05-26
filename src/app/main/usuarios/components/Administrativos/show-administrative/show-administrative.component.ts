@@ -39,7 +39,7 @@ export class ShowAdministrativeComponent implements OnInit {
         { field: 'User.Person.identification', header: 'Identificacion' },
         { field: 'User.email', header: 'Correo Electronico' },
         { field: 'User.Person.phone', header: 'Telefono' },
-        { field: 'Charge.name', header: 'Cargo' },
+        // { field: 'Charge.name', header: 'Cargo' },
         { field: 'Headquarter.name', header: 'Sede' },
     ];
   
@@ -50,17 +50,17 @@ export class ShowAdministrativeComponent implements OnInit {
     getUniversitys() {
       this.administrativeService.getList().subscribe((instititionsFromApi) => {
         this.administratives =instititionsFromApi.administratives;
-        // console.log(instititionsFromApi.administratives)
+        console.log(instititionsFromApi.administratives)
         this.rows2=[]
         if(instititionsFromApi.administratives != undefined){
           for (const key of instititionsFromApi.administratives) {
             this.rows2.push(
               {
                 UserId: key.UserId,
-                ChargeId: key.ChargeId,
+                // ChargeId: key.ChargeId,
                 HeadquarterId: key.HeadquarterId,
                 User:key.User,
-                Charge:key.Charge,
+                // Charge:key.Charge,
                 Headquarter:key.Headquarter,
               }
             )
@@ -87,7 +87,7 @@ export class ShowAdministrativeComponent implements OnInit {
         Identificacion:key.User?.Person?.identification,
         Correo_Electronico:key.User?.email,
         Telefono:key.User?.Person?.phone,
-        Cargo:key.Charge?.name,
+        // Cargo:key.Charge?.name,
         Sede:key.Headquarter?.name
       })
     }
@@ -99,7 +99,7 @@ export class ShowAdministrativeComponent implements OnInit {
       Identificacion:key.User?.Person?.identification,
       Correo_Electronico:key.User?.email,
       Telefono:key.User?.Person?.phone,
-      Cargo:key.Charge?.name,
+      // Cargo:key.Charge?.name,
       Sede:key.Headquarter?.name
     })
   }
@@ -132,7 +132,7 @@ export class ShowAdministrativeComponent implements OnInit {
           col_2:{ text: 'NOMBRE', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_3:{ text: 'CORREO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_4:{ text: 'TELEFONO', style: 'tableHeader',fontSize: 12 ,bold: true, },
-          col_5:{ text: 'CARGO', style: 'tableHeader',fontSize: 12 ,bold: true, },
+          // col_5:{ text: 'CARGO', style: 'tableHeader',fontSize: 12 ,bold: true, },
           col_6:{ text: 'SEDE', style: 'tableHeader',fontSize: 12 ,bold: true, },
       }
     }]
@@ -142,7 +142,9 @@ export class ShowAdministrativeComponent implements OnInit {
         if (headers.hasOwnProperty(key)){
             var header = headers[key];
             var row:any[] = [ header.fila_0.col_1,header.fila_0.col_2,header.fila_0.col_3,
-              header.fila_0.col_4,header.fila_0.col_5,header.fila_0.col_6
+              header.fila_0.col_4,
+              // header.fila_0.col_5,
+              header.fila_0.col_6
             ]
             body.push(row);
         }
@@ -158,7 +160,7 @@ export class ShowAdministrativeComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.Charge?.name.toString(),
+              // data.Charge?.name.toString(),
               data.Headquarter?.name.toString() +' - '+ data.Headquarter?.University?.name.toString()
           
             ]
@@ -177,7 +179,7 @@ export class ShowAdministrativeComponent implements OnInit {
               data.User?.fullName.toString(),
               data.User?.email.toString(),
               data.User?.Person?.phone?.toString(),
-              data.Charge?.name.toString(),
+              // data.Charge?.name.toString(),
               data.Headquarter?.name.toString() +' - '+ data.Headquarter?.University?.name.toString()
             ]
   
@@ -213,7 +215,7 @@ export class ShowAdministrativeComponent implements OnInit {
           style: 'tableExample',
           table: {
             headerRows: 1,
-              widths: [ '15%', '15%','20%','15%','15%','20%'],
+              widths: [ '15%', '25%','20%','15%','25%'],
   
               body: body
           },

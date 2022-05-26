@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import {  FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
@@ -29,7 +29,8 @@ let uploadefiles:Array<File>
 export class CreateAdministrativeComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
-
+  public mostrar:boolean=true;
+  public algo:number[]=[0];
   public form:FormGroup=this.formBuilder.group({
     name:[''],
     surname:[''],
@@ -43,12 +44,15 @@ export class CreateAdministrativeComponent implements OnInit {
     // nationality:[''],
     // date_of_birth:[''],
     HeadquarterId:['', [Validators.required]],
-    ChargeId:['', [Validators.required]],
+    Charges: this.formBuilder.array([this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+      date:['', [Validators.required]]})]),
+
    });
 
    public mostrarUser:boolean=false;
    public users:PersonI[]=[];
-   
+   public Charges1:any[] = [];
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
@@ -129,11 +133,40 @@ export class CreateAdministrativeComponent implements OnInit {
       username: this.form.value.username,
       email: this.form.value.email,
       UserId:  this.form.value.UserId.UserId,
-      ChargeId: this.form.value.ChargeId.id,
+      Charges: this.form.value.Charges,
     HeadquarterId: this.form.value.HeadquarterId.id,
     // nationality: this.form.value.nationality,
     // date_of_birth: this.form.value.date_of_birth,
     };
+
+    if(this.Charges1.length == 0 || this.Charges1.length == undefined){
+      this.Charges1=[]
+      let control = <FormArray>this.form.controls['Charges']
+      for (const key of control.value) {
+        key.ChargeId=key.ChargeId.id 
+        this.Charges1.push({
+          date:key.date,
+        ChargeId:key.ChargeId,
+        })
+      }
+      formValue.Charges = this.form.value.Charges
+      // console.log('aqui')
+    }else{
+      formValue.Charges = this.Charges1
+      // console.log('aqui2')
+
+    }
+
+
+    if(this.form.value.Charges[0].ChargeId == '' ||
+    this.form.value.Charges[0].ChargeId == undefined ||this.Charges1.length == undefined){
+      // this.form.value.Workexperiences=[]
+      formValue.Charges=[]
+
+    }
+
+
+    console.log(formValue)
 
     if(this.mostrarUser == false){
       formValue.UserId=  this.form.value.UserId.UserId
@@ -142,7 +175,8 @@ export class CreateAdministrativeComponent implements OnInit {
     if(this.mostrarUser == true){
       formValue.UserId= undefined
     }
-    if((this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
+    if((this.mostrarUser == true && formValue.name != ""&& 
+    formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&& 
     // formValue.identification != ""&&
     // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
@@ -237,6 +271,47 @@ export class CreateAdministrativeComponent implements OnInit {
 
         }
   });
+  }
+
+  //metodos para agregar controles de Roles
+  get getRoles() {
+    return this.form.get('Charges') as FormArray;//obtener todos los formularios
+  }
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Charges']
+    
+    //console.log(control)      
+      //crear los controles del array
+    if(control.length == 0 && this.mostrar == false){
+      control.push(this.formBuilder.group({
+        ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]],
+      }))//nuevo input
+    }
+    if(control.length >= 1 && this.mostrar == true){
+      control.push(this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]],
+    }))
+    this.mostrar=true
+    //nuevo input
+    }
+     
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Charges']//aceder al control
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrar=false
+     control.push(this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+      date:['', [Validators.required]],
+     }))//nuevo input
+
+    }
   }
 
 }

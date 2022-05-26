@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import {  FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
@@ -16,6 +16,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.component';
 import { ChargeService } from 'src/app/core/services/investigacion/Charge.service';
 import { ChargeI } from 'src/app/models/user/charge';
+import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
 @Component({
   selector: 'app-editar-administrative',
   templateUrl: './editar-administrative.component.html',
@@ -25,6 +26,10 @@ import { ChargeI } from 'src/app/models/user/charge';
 export class EditarAdministrativeComponent implements OnInit {
 
   public mostrar:number=1;
+
+  public mostrar2:boolean=true;
+  public algo:number[]=[0];
+
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -33,6 +38,7 @@ export class EditarAdministrativeComponent implements OnInit {
   public genders:GenderI[] =[]
   public headquarters: HeadquarterI[]=[]
   public charges:ChargeI[]=[]
+  public Charges1:any[] = [];
 
   public ref:any;
   constructor(
@@ -59,9 +65,9 @@ export class EditarAdministrativeComponent implements OnInit {
       // phone:['', [Validators.required]],
       email:['', [Validators.required]],
       HeadquarterId:['', [Validators.required]],
-      ChargeId:['', [Validators.required]],
-      // nationality:['', [Validators.required]],
-      // date_of_birth:['', [Validators.required]],
+      Charges: this.formBuilder.array([this.formBuilder.group({
+        ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]]})]),
      });
   
       // this.getAllgenders()
@@ -128,18 +134,16 @@ export class EditarAdministrativeComponent implements OnInit {
       
         // })
         this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.administrative.User?.Person?.DocumentType)
-        for (const key of this.charges) {
-          if(key.id != undefined && key.id == parseInt(cnt_groupFromApi.administrative.ChargeId)){
-            this.form.controls['ChargeId'].setValue(key)
-          }
-        }
 
-        // if(cnt_groupFromApi.administrative.Charge != undefined){
-        //   this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
-        //     this.form.controls['ChargeId'].setValue(algo4.charge)
-        //   })
+
+        if(cnt_groupFromApi.administrative.ChargeAdministratives?.length != undefined
+          && cnt_groupFromApi.administrative.ChargeAdministratives.length > 0){
+            this.agregar(cnt_groupFromApi.administrative.ChargeAdministratives)
+          // this.chargeService.getItem(parseInt(cnt_groupFromApi.administrative.ChargeId)).subscribe( (algo4)=>{
+          //   this.form.controls['ChargeId'].setValue(algo4.charge)
+          // })
           
-        // }
+        }
       }
       }
       this.displayMaximizable2=true
@@ -147,12 +151,43 @@ export class EditarAdministrativeComponent implements OnInit {
       
     }, error => console.error(error));
   }
+  agregar(ChargeAdministratives:ChargeAdministrativeI[]) {
+    if(ChargeAdministratives.length){
+      for (let key of ChargeAdministratives) {
+        if(key.ChargeId != undefined) {
+          // console.log(DiscountLine)
+          let control = <FormArray>this.form.controls['Charges']
+          let Charge:any | null=null
+
+          for (const key2 of this.charges) {
+            if(key2.id == key.ChargeId && key.status == true) {
+              Charge=key2
+          }
+        }
+          if(Charge != null){
+            control.push(this.formBuilder.group({UserId:this.form.value.id,ChargeId:[Charge, 
+              [Validators.required]],
+            date:[key.date, [Validators.required]]}))
+
+          }
+
+            // this.rolesService.getOneRole(key.RoleId).subscribe((algo)=>{
+            //   if(algo.role && key.name != undefined){
+            //   }
+            // })
+        }
+      }
+      this.mostrar2= true
+      let control = <FormArray>this.form.controls['Charges']
+      control.removeAt(0)
+    }
+  }
 
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
-    //console.log(event)
+    this.ngOnInit()
   }
 
   ngOnDestroy() {
@@ -168,7 +203,7 @@ export class EditarAdministrativeComponent implements OnInit {
   public onSubmit(e: Event) {
     e.preventDefault()
 
-    const formValue={
+    let formValue={
       id: this.form.value.id,
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -182,16 +217,42 @@ export class EditarAdministrativeComponent implements OnInit {
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      ChargeId: this.form.value.ChargeId.id,
+      Charges: this.form.value.Charges,
       HeadquarterId: this.form.value.HeadquarterId.id,
       // nationality: this.form.value.nationality,
       // date_of_birth: this.form.value.date_of_birth,
     };
 
+    if(this.Charges1.length == 0 || this.Charges1.length == undefined){
+      this.Charges1=[]
+      let control = <FormArray>this.form.controls['Charges']
+      for (const key of control.value) {
+        key.ChargeId=key.ChargeId.id 
+        this.Charges1.push({
+          date:key.date,
+        ChargeId:key.ChargeId,
+        })
+      }
+      formValue.Charges = this.form.value.Charges
+      // console.log('aqui')
+    }else{
+      formValue.Charges = this.Charges1
+      // console.log('aqui2')
+
+    }
+
+
+    if(this.form.value.Charges[0].ChargeId == '' ||
+    this.form.value.Charges[0].ChargeId == undefined ||this.Charges1.length == undefined){
+      // this.form.value.Workexperiences=[]
+      formValue.Charges=[]
+
+    }
+
             if(formValue.name != ""&&
               formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&&
-              formValue.ChargeId != ( 0 || undefined)&&
+              // formValue.ChargeId != ( 0 || undefined)&&
               formValue.HeadquarterId != ( 0 || undefined)&&
               formValue.identification != ""&&
               // formValue.GenderId != ( 0 || undefined)&&
@@ -260,5 +321,45 @@ export class EditarAdministrativeComponent implements OnInit {
 
         }
   });
+  }
+
+  get getRoles() {
+    return this.form.get('Charges') as FormArray;//obtener todos los formularios
+  }
+
+  addRoles(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Charges']
+    
+    //console.log(control)      
+      //crear los controles del array
+    if(control.length == 0 && this.mostrar2 == false){
+      control.push(this.formBuilder.group({
+        ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]],
+      }))//nuevo input
+    }
+    if(control.length >= 1 && this.mostrar2 == true){
+      control.push(this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]],
+    }))
+    this.mostrar2=true
+    //nuevo input
+    }
+     
+  }
+  removeRoles(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Charges']//aceder al control
+    control.removeAt(index)
+    if(control.length <= 0){
+     this.mostrar2=false
+     control.push(this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+      date:['', [Validators.required]],
+     }))//nuevo input
+
+    }
   }
 }
