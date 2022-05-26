@@ -50,7 +50,12 @@ constructor(
 
   public onSubmit() {
     let formValue: FacultyI = this.form.value;
-    formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
+    if(this.form.value.AdministrativeId != ''){
+      formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
+
+    }else{
+      formValue.AdministrativeId=undefined;
+    }
     formValue.UniversityId=this.form.value.UniversityId.id
     if(formValue.name != '' && 
     // formValue.AdministrativeId != ( 0 ) &&

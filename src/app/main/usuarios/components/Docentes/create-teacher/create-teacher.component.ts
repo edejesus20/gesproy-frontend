@@ -396,7 +396,9 @@ get getRoles() {
 private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
+      console.log( AdministrativeFromApi.headquarterProgram)
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
+      console.log(this.headquarterProgram)
     }, error => console.error(error));
 }
 

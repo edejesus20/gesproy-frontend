@@ -40,7 +40,7 @@ import { Charge_bondingService } from 'src/app/core/services/investigacion/Charg
 export class EditarTeacherComponent implements OnInit {
   public mostrar:number=1;
   public mostrar2:boolean=false;
-  public mostrar1:boolean=false;
+  public mostrar1:boolean=true;
   
   public mostrar3:boolean=false;
   public tabla:boolean=true;
