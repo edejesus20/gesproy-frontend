@@ -27,7 +27,7 @@ blockSpecial: RegExp = /^[^<>*!0123456789]+$/
 
 public form:FormGroup=this.formBuilder.group({
  name:['', [Validators.required]],
- AdministrativeId:['', [Validators.required]],
+ AdministrativeId:[''],
  UniversityId:['', [Validators.required]],
 });
 public ref1:any;
@@ -53,7 +53,7 @@ constructor(
     formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
     formValue.UniversityId=this.form.value.UniversityId.id
     if(formValue.name != '' && 
-    formValue.AdministrativeId != ( 0 ) &&
+    // formValue.AdministrativeId != ( 0 ) &&
     formValue.UniversityId != ( 0 )){
 
     this.facultyService.createItem(formValue).subscribe(

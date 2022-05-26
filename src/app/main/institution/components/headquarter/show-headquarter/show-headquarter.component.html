@@ -65,7 +65,7 @@
           <td>{{item.cordinatorInvestigation | titlecase}}</td>
           <td>{{item.University?.name | titlecase}}</td>
           <td >
-            <span *ngFor="let i of item.Administratives">
+            <span *ngFor="let i of item?.Administratives">
               <span style="display: flex;">
                 * {{i.User.fullName}} Cargos : 
                 <span *ngFor="let a of i.ChargeAdministratives">
@@ -127,7 +127,7 @@
                         <tr>
                               <td>{{order.Program.id}}</td>
                               <td>{{order.Program.name | titlecase}}</td>
-                              <td>{{order.ChargeAdministrative.Administrative.User.fullName | titlecase}}</td>
+                              <td>{{order.ChargeAdministrative?.Administrative?.User.fullName | titlecase}}</td>
            
                               <td>{{order.Program.Faculty?.name| titlecase}}</td>
                               <td>{{order.Program.Faculty?.Administrative?.User.fullName| titlecase}}</td>

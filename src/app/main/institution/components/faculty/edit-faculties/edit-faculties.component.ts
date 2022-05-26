@@ -52,7 +52,7 @@ constructor(
     this.form=this.formBuilder.group({
       id: [''],
      name:['', [Validators.required]],
-     AdministrativeId:['', [Validators.required]],
+     AdministrativeId:[''],
      UniversityId:['', [Validators.required]],
     });
   
@@ -64,7 +64,7 @@ constructor(
       formValue.AdministrativeId=this.form.value.AdministrativeId.AdministrativeId
       formValue.UniversityId=this.form.value.UniversityId.id
       if(formValue.name != '' && 
-      formValue.AdministrativeId != ( 0 ) &&
+      // formValue.AdministrativeId != ( 0 ) &&
       formValue.UniversityId != ( 0 )){
     this.facultyService.updateItem(this.id,formValue).subscribe(
       () => {
@@ -163,22 +163,25 @@ constructor(
      
       } 
       let AdministrativeId:any=''
-      for (const key of this.administratives) {
-        if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
-
-          AdministrativeId=key
-          this.form.controls['AdministrativeId'].setValue(AdministrativeId)
-        }
-      } 
-      if(AdministrativeId == ''){
-        this.administrativeService.getAdministrativesOneTipo(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
+      if(cnt_groupFromApi.faculty.AdministrativeId){
+        for (const key of this.administratives) {
+          if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
   
-          this.administratives.push(algo.administrativos[0])
-         
-          this.form.controls['AdministrativeId'].setValue(algo.administrativos[0])
-        })
-      }
+            AdministrativeId=key
+            this.form.controls['AdministrativeId'].setValue(AdministrativeId)
+          }
+        } 
+        if(AdministrativeId == ''){
+          this.administrativeService.getAdministrativesOneTipo(cnt_groupFromApi.faculty?.AdministrativeId).subscribe((algo)=>{
     
+            this.administratives.push(algo.administrativos[0])
+           
+            this.form.controls['AdministrativeId'].setValue(algo.administrativos[0])
+          })
+        }
+      
+      }
+
 
    
       // this.universityService.getItem(cnt_groupFromApi.faculty.UniversityId).subscribe((algo)=>{

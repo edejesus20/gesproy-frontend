@@ -102,7 +102,7 @@ constructor(
         {
           ProgramId:0,
           HeadquarterId:['', [Validators.required]],
-          AdministrativeId:['', [Validators.required]]
+          AdministrativeId:['']
       })]),
     });
 
@@ -141,7 +141,12 @@ constructor(
       for (const key of control.value) {
         key.ProgramId=this.id,
         key.HeadquarterId=key.HeadquarterId.id
-        key.AdministrativeId=key.AdministrativeId.AdministrativeId
+        if(key.AdministrativeId != ''){
+          key.AdministrativeId=key.AdministrativeId?.AdministrativeId
+        }else{
+          key.AdministrativeId=null
+        }
+        // key.AdministrativeId=key.AdministrativeId?.AdministrativeId
         this.Headquarters1.push({
           ProgramId:this.id,
         HeadquarterId:key.HeadquarterId,
@@ -294,12 +299,12 @@ getOneCntAccount(id:number) {
           control.push(this.formBuilder.group({
             ProgramId:[ProgramId, [Validators.required]],
             HeadquarterId:[HeadquarterId, [Validators.required]],
-            AdministrativeId:[AdministrativeId, [Validators.required]],
+            AdministrativeId:[AdministrativeId],
           }))
 
             }
           } 
-        if(AdministrativeId == '' && key.ChargeAdministrative != undefined){
+        if(AdministrativeId == '' && key.ChargeAdministrative != undefined && key.ChargeAdministrative != null){
           this.administrativeService.getAdministrativesOneTipo(key.ChargeAdministrative?.AdministrativeId).subscribe((algo)=>{
             this.administratives.push(algo.administrativos[0])
                 AdministrativeId=algo.administrativos[0]
@@ -307,9 +312,15 @@ getOneCntAccount(id:number) {
             control.push(this.formBuilder.group({
               ProgramId:[ProgramId, [Validators.required]],
               HeadquarterId:[HeadquarterId, [Validators.required]],
-              AdministrativeId:[AdministrativeId, [Validators.required]],
+              AdministrativeId:[AdministrativeId],
             }))
           })
+        }else{
+          control.push(this.formBuilder.group({
+            ProgramId:[ProgramId, [Validators.required]],
+            HeadquarterId:[HeadquarterId, [Validators.required]],
+            AdministrativeId:[''],
+          }))
         }
 
 
@@ -359,14 +370,14 @@ public datos(position:number){
         control.push(this.formBuilder.group({
           ProgramId:0,
           HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['', [Validators.required]]
+        AdministrativeId:['']
         }))
       }
       if(control.length >= 1 && this.mostrar2 == true){
         control.push(this.formBuilder.group({
           ProgramId:0,
           HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['', [Validators.required]]
+        AdministrativeId:['']
         }))
 
       }
@@ -381,14 +392,14 @@ public datos(position:number){
       control.push(this.formBuilder.group({
         ProgramId:0,
         HeadquarterId:['', [Validators.required]],
-      AdministrativeId:['', [Validators.required]]
+      AdministrativeId:['']
       }))
       }
   }
 
   private getAlladministratives() {
     // this.administratives=[]
-    this.administrativeService.getTipoAdministrative('2').subscribe(
+    this.administrativeService.getTipoAdministrative('6').subscribe(
       (AdministrativeFromApi) => {
 
           for (let decano of AdministrativeFromApi.administrativos) {

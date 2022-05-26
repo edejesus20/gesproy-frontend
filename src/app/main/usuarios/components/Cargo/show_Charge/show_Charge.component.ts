@@ -46,6 +46,7 @@ export class Show_ChargeComponent implements OnInit {
     getAllScale() {
       this.chargeService.getList().subscribe((categoryGroupsApiFrom) => {
         this.charges =categoryGroupsApiFrom.charges
+      //  console.log(categoryGroupsApiFrom.charges)
         this.rows2=[]
         if(categoryGroupsApiFrom.charges != undefined){
           for (const key of categoryGroupsApiFrom.charges) {

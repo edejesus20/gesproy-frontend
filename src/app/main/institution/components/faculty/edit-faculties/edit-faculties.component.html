@@ -25,7 +25,7 @@
         <div class="grid m-fluid">
           <div class="col-1 md:col-1">
             <div class="p-inputgroup"  style="margin-bottom: 20px;">
-              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; height:47px"><i class="pi pi-bookmark-fill"></i></span>
             </div>
           </div>
           <div class="col-11 md:col-11">
@@ -37,7 +37,7 @@
               [options]="administratives" [filter]="true" label="SELECCIONE AL DECANO" 
                 [style]="{'width':'100%','margin-bottom':'20px'}"
                 optionvalue="UserId"  optionLabel="todo" filterBy="todo"
-                [required]="true" placeholder="SELECCIONE AL DECANO">
+                 placeholder="SELECCIONE AL DECANO">
                 <ng-template let-option pTemplate="item">
                   <span >{{option.todo}}</span>
               </ng-template>

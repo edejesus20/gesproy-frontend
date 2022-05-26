@@ -94,13 +94,13 @@
       <tr>
           <td colspan="7">
               <div >
-                  <p-table [value]="item.Administratives"  dataKey="id" [paginator]="true" [rows]="3" 
+                  <p-table [value]="item.ChargeAdministratives"  dataKey="id" [paginator]="true" [rows]="3" 
                   [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                    >
                       <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                              <th pSortableColumn="id">Fecha <p-sortIcon field="id"></p-sortIcon></th>
                               <th pSortableColumn="name">Nombre del Administrativo<p-sortIcon field="name"></p-sortIcon></th>
                               <th pSortableColumn="identification">Identificacion <p-sortIcon field="identification"></p-sortIcon>
                               </th>
@@ -110,11 +110,11 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order >
                         <tr>
-                              <td>{{order.id}}</td>
-                              <td>{{order.User?.fullName | titlecase}}</td>
-                              <td>{{order.User?.Person?.identification }}</td>
-                              <td>{{order.User?.email | titlecase}}</td>
-                              <td>{{order.Headquarter?.name | titlecase}}</td>
+                              <td>{{order.date}}</td>
+                              <td>{{order.Administrative.User?.fullName | titlecase}}</td>
+                              <td>{{order.Administrative.User?.Person?.identification }}</td>
+                              <td>{{order.Administrative.User?.email | titlecase}}</td>
+                              <td>{{order.Administrative.Headquarter?.name | titlecase}}</td>
                           </tr>
                       </ng-template>
 

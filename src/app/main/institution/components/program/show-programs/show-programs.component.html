@@ -73,7 +73,7 @@
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar!=3">
 
-          <th pSortableColumn="Sedes">SEDES<p-sortIcon field="Sedes"></p-sortIcon></th>
+          <th style="min-width:150px" pSortableColumn="Sedes">SEDES<p-sortIcon field="Sedes"></p-sortIcon></th>
           <th pSortableColumn="Administrativos">ADMINISTRATIVOS<p-sortIcon field="Administrativos"></p-sortIcon></th>
           </ng-template>
           <th pSortableColumn="Faculty.name">FACULTAD<p-sortIcon field="Faculty.name"></p-sortIcon></th>
@@ -97,7 +97,7 @@
           <td>{{item.id}}</td>
           <td>{{item.name | titlecase}}</td>
           <ng-template [ngIf]="mostrar!=3">
-          <td >
+          <td style="min-width:150px">
             <span *ngFor="let i of item.HeadquarterPrograms">
               <span style="display: flex;">
                 * {{i.Headquarter.name}} 
@@ -105,9 +105,9 @@
             </span>
           </td>
           <td >
-            <span *ngFor="let i of item.HeadquarterPrograms">
-              <span style="display: flex;">
-                * {{i.ChargeAdministrative.Administrative.User.fullName}}-{{i.ChargeAdministrative.Charge.name}}  
+            <span *ngFor="let i of item.HeadquarterPrograms" >
+              <span style="display: flex;" *ngIf="i.ChargeAdministrative != null">
+                * {{i.ChargeAdministrative?.Administrative?.User.fullName}}-{{i.ChargeAdministrative?.Charge.name}}  
               </span>
             </span>
           </td>

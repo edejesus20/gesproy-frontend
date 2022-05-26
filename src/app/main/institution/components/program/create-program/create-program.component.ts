@@ -42,7 +42,7 @@ export class CreateProgramComponent implements OnInit {
       {
         ProgramId:0,
          HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['', [Validators.required]]
+        AdministrativeId:['']
     })]),
   });
 
@@ -103,7 +103,11 @@ constructor(
       for (const key of control.value) {
         // key.ProgramId=this.id,
         key.HeadquarterId=key.HeadquarterId.id
-        key.AdministrativeId=key.AdministrativeId.AdministrativeId
+        if(key.AdministrativeId != ''){
+          key.AdministrativeId=key.AdministrativeId?.AdministrativeId
+        }else{
+          key.AdministrativeId=null
+        }
         this.Headquarters1.push({
           ProgramId:0,
         HeadquarterId:key.HeadquarterId,
@@ -116,6 +120,7 @@ constructor(
     }else{
       formValue.Headquarters = this.Headquarters1
     }
+    console.log(formValue)
     if(formValue.name != '' &&
     formValue.CategoryId != ( 0 )&&
     formValue.FacultyId != ( 0 )
@@ -174,24 +179,24 @@ public datos(position:number){
 
   addRoles(event: Event){
     event.preventDefault();
-    this.mostrar=true
+
 
     const control = <FormArray>this.form.controls['Headquarters']
-      // if(control.length == 0 && this.mostrar == false){
-      //   control.push(this.formBuilder.group({
-      //     ProgramId:0,
-      //     HeadquarterId:['', [Validators.required]],
-      //   AdministrativeId:['', [Validators.required]]
-      //   }))
-      // }
-      // if(control.length >= 1 && this.mostrar == true){
+      if(control.length == 0 && this.mostrar == false){
         control.push(this.formBuilder.group({
           ProgramId:0,
           HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['', [Validators.required]]
+        AdministrativeId:['']
         }))
-
-      // }
+      }
+      if(control.length >= 1 && this.mostrar == true){
+        control.push(this.formBuilder.group({
+          ProgramId:0,
+          HeadquarterId:['', [Validators.required]],
+        AdministrativeId:['']
+        }))
+      }
+      this.mostrar=true
   }
   removeRoles(index: number,event: Event){
     event.preventDefault();
@@ -199,16 +204,16 @@ public datos(position:number){
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar=false
-      // control.push(this.formBuilder.group({
-      //   ProgramId:0,
-      //   HeadquarterId:['', [Validators.required]],
-      // AdministrativeId:['', [Validators.required]]
-      // }))
+      control.push(this.formBuilder.group({
+        ProgramId:0,
+        HeadquarterId:['', [Validators.required]],
+      AdministrativeId:['']
+      }))
       }
   }
 
   private getAlladministratives() {
-    this.administrativeService.getTipoAdministrative('2').subscribe(
+    this.administrativeService.getTipoAdministrative('6').subscribe(
       (AdministrativeFromApi) => {
 
           for (let decano of AdministrativeFromApi.administrativos) {

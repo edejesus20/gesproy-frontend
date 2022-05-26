@@ -5,7 +5,7 @@ import { UniversityI } from './university';
 export interface FacultyI {
     id?: number;
     name: string;
-    AdministrativeId: number;
+    AdministrativeId?: number;
     createdAt?: string;
     updatedAt?: string;
     Administrative?:AdministrativeI
