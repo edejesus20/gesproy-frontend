@@ -40,11 +40,14 @@ handleError(res: Response) {
 // Get students data
 getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
   let token : string | null=localStorage.getItem('token')
-  if(token != null) {
+  let user : string | null=localStorage.getItem('user')
+  if(token != null && user != null) {
+    let userObjeto:any = JSON.parse(user); 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'x-token':token
+        'x-token':token,
+        'user':userObjeto.id
       })
     }
     // console.log(httpOptions)
@@ -66,11 +69,14 @@ getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
 
 getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
   let token : string | null=localStorage.getItem('token')
-  if(token != null) {
+  let user : string | null=localStorage.getItem('user')
+  if(token != null && user != null) {
+    let userObjeto:any = JSON.parse(user); 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token':token
+        'x-token':token,
+        'user':userObjeto.id
       })
     }
     // console.log(httpOptions)
@@ -93,13 +99,16 @@ getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
 
 userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}> {
   let token : string | null=localStorage.getItem('token')
-  if(token != null) {
+  let user : string | null=localStorage.getItem('user')
+  if(token != null && user != null) {
+    let userObjeto:any = JSON.parse(user); 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token':token
+        'x-token':token,
+        'user':userObjeto.id
       })
-    }
+    } 
     // console.log(httpOptions)
     return this.http
       .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}>(this.API_URI + '/api/userteacher',httpOptions)
@@ -190,7 +199,7 @@ updateUser(user:any){
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto
+        'user':userObjeto.id
       })
     }
     // console.log('aqui')
@@ -213,11 +222,12 @@ actualzarAvatar(user:any){
   let token : string | null=localStorage.getItem('token')
   let userT :string | null= localStorage.getItem('user');
   if(token != null && userT != null) {
-    // let userObjeto:any = JSON.parse(userT); 
+    let userObjeto:any = JSON.parse(userT); 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'x-token':token
+        'x-token':token,
+        'user':userObjeto.id
       })
     }
     // console.log(user)

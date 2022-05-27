@@ -224,6 +224,7 @@ public mostrarIntegrantes:boolean=false
     if(this.form.value.HeadquarterProgramId != ''){
       this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
       //  console.log(rolesFromApi.semilleros)
+      
        this.teachers=[]
       this.lines=rolesFromApi.lines
        this.seedbeds= rolesFromApi.semilleros

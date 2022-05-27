@@ -386,8 +386,18 @@ getstudents2() {
         if(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId != undefined){
           this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
             if(algo.program.id != undefined && algo.program.FacultyId != undefined){
-              this.facultyService.getItem(algo.program.FacultyId).subscribe(key=>{
-                this.form.controls['Facultad'].setValue(key.faculty)
+
+              for (const clave of this.facultys) {
+                if(algo.program.FacultyId == clave.id){
+                  this.form.controls['Facultad'].setValue(clave)
+                  // console.log(clave,'algo.program.FacultyId')
+                  // console.log(this.form.controls['Facultad'],'this.form.controls[Facultad]')
+                }
+                
+              }
+
+              // this.facultyService.getItem(algo.program.FacultyId).subscribe(key=>{
+              //   this.form.controls['Facultad'].setValue(key.faculty)
                 this.headquarterService.getOneFacultadHeadquarterProgram(cnt_groupFromApi.seedbed.HeadquarterProgramId).subscribe(key1=>{
                   if(key1.FacultadHeadquarterProgram != undefined){
                     this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
@@ -409,7 +419,7 @@ getstudents2() {
                   }
                   
                 })
-              })
+              // })
             }
           })
 

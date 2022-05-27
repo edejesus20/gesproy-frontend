@@ -26,7 +26,7 @@ import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.ser
 })
 export class EditarStudentComponent implements OnInit {
   public mostrar:number=1;
-  public mostrar2:boolean=false;
+  public mostrar2:boolean=true;
   public mostrar3:boolean=false;
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'

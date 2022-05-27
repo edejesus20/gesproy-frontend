@@ -120,6 +120,8 @@ getstudents2() {
   geFacultad() {
     this.facultyService.getList().subscribe(teachersA => {
       this.facultys=teachersA.facultys
+      // console.log(teachersA.facultys,'teachersA.facultys')
+
     }, error => console.error(error))
   }
   private getAllteachers(id: number) {
@@ -395,7 +397,7 @@ getstudents2() {
     this.seedbedService.getItem(id).subscribe((cnt_groupFromApi) => {
         
       if(cnt_groupFromApi.seedbed.id != undefined){
-        // console.log(cnt_groupFromApi.seedbed);
+        console.log(cnt_groupFromApi.seedbed);
         this.form.controls['id'].setValue(cnt_groupFromApi.seedbed.id)
         this.form.controls['name'].setValue(cnt_groupFromApi.seedbed.name)
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
@@ -406,11 +408,20 @@ getstudents2() {
         this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
         this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
         this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
-        if(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId != undefined){
+
+        if(cnt_groupFromApi.seedbed.HeadquarterProgram?.Program != undefined){
           this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
             if(algo.program.id != undefined && algo.program.FacultyId != undefined){
-              this.facultyService.getItem(algo.program.FacultyId).subscribe(key=>{
-                this.form.controls['Facultad'].setValue(key.faculty)
+
+              for (const clave of this.facultys) {
+                if(algo.program.FacultyId == clave.id){
+                  this.form.controls['Facultad'].setValue(clave)
+                  // console.log(clave,'algo.program.FacultyId')
+                  // console.log(this.form.controls['Facultad'],'this.form.controls[Facultad]')
+                }
+                
+              }
+              
                 this.headquarterService.getOneFacultadHeadquarterProgram(cnt_groupFromApi.seedbed.HeadquarterProgramId).subscribe(key1=>{
                   if(key1.FacultadHeadquarterProgram != undefined){
                     this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
@@ -432,7 +443,7 @@ getstudents2() {
                   }
                   
                 })
-              })
+           
             }
           })
 
