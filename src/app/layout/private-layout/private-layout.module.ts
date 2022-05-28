@@ -59,12 +59,15 @@ import { MenuComponent } from './menu/menu.component';
 import {BadgeModule} from 'primeng/badge';
 import { AvatarComponent } from './avatar/avatar.component';
 import {DataViewModule} from 'primeng/dataview';
+import { PerfilComponent } from './perfil/perfil.component';
+import {AccordionModule} from 'primeng/accordion';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
     LandingComponent,
     MenuComponent,
-    AvatarComponent
+    AvatarComponent,
+    PerfilComponent
     
   ],
   imports: [
@@ -79,7 +82,7 @@ import {DataViewModule} from 'primeng/dataview';
     VisualizarConvocatoriasRoutingModule,
     TareasycompromisoRoutingModule,
     IndicadoresRoutingModule,
-
+    AccordionModule,
     HttpClientModule,
     FormsModule,
     BrowserModule,

@@ -14,6 +14,7 @@ import { UserLoginResponseI } from 'src/app/models/authorization/usr_User';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CambicarPasswordUserComponent } from 'src/app/main/usuarios/components/usr_User/cambicar-password-user/cambicar-password-user.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { PerfilComponent } from './perfil/perfil.component';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -137,10 +138,31 @@ export class PrivateLayoutComponent implements OnInit {
       this.showConfirm();
   }},
     {separator: true},
-    {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
+    {label: 'Perfil', icon: 'pi pi-cog',  command: () => {this.modalPerfil(new Event(''))}}
   ];
 
 }
+  modalPerfil(e: Event) {
+    e.preventDefault()
+  
+    this.ref1 = this.dialogService.open(PerfilComponent, {
+      width: '60%',
+      // height: '55%',
+      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+       showHeader:false, 
+      // baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
+  
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+          this.messageService.add({severity:'successs', summary: 'Perfil Editado', detail: person.name,life: 2000});
+        this.ngOnInit()
+        }
+  });
+  }
   modalAvatar(e:Event) {
   e.preventDefault()
     

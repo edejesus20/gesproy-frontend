@@ -1,6 +1,7 @@
 import { DocumentTypeI } from "../user/document_types";
 import { GenderI } from "../user/gender";
 import { PersonI } from "../user/person";
+import { RoleI } from "./usr_roles";
 
 export interface UserI {
   id?:number;
@@ -16,8 +17,13 @@ export interface UserI {
   Person?:PersonI
   avatar?:string
   People?:PersonI[]
+  UserRoles?:UserRoleI[]
 }
-
+export interface UserRoleI {
+  UserId:number,
+  RoleId:number,
+  Role?:RoleI
+}
 
 
 export interface UserLoginI {

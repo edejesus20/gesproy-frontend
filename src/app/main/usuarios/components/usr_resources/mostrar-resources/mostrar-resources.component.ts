@@ -47,6 +47,8 @@ export class MostrarResourcesComponent implements OnInit {
   getUsrResource() {
     this.resourcesService.getResource().subscribe((ResourceFromApi) => {
       this.resources = ResourceFromApi.resources
+      console.log(ResourceFromApi.resources)
+      
       this.rows2=[]
       if(ResourceFromApi.resources != undefined){
         for (const key of ResourceFromApi.resources) {

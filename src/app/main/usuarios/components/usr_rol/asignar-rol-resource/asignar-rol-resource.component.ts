@@ -89,6 +89,8 @@ public onSelectAllChange(event:any) {
   getUsrResource() {
   this.resourcesService.getResource().subscribe((ResourceFromApi) => {
     this.resources = ResourceFromApi.resources;
+    console.log(ResourceFromApi.resources)
+
   }, error => console.error(error));
   }
   getUsrRoles() {
