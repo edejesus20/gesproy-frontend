@@ -196,7 +196,7 @@ export class CreateTeacherComponent implements OnInit {
           password:null,
           UserId:  this.form.value.UserId.UserId,
           // hours_of_dedication: this.form.value.hours_of_dedication,
-          ScaleId: this.form.value.ScaleId.id,
+          ScaleId: null,
           MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
           headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
           // Lines: this.form.value.Lines,
@@ -224,7 +224,7 @@ export class CreateTeacherComponent implements OnInit {
         password:this.form.value.identification,
         UserId:  undefined,
         // hours_of_dedication: this.form.value.hours_of_dedication,
-        ScaleId: this.form.value.ScaleId.id,
+        ScaleId: null,
         MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
         headquarterProgramTeacher: this.form.value.headquarterProgramTeacher,
         // Lines: this.form.value.Lines,
@@ -235,6 +235,13 @@ export class CreateTeacherComponent implements OnInit {
         trainingTeacher:this.form.value.trainingTeacher
       };
      
+    }
+    if(this.form.value.ScaleId.id){
+      formValue.ScaleId=this.form.value.ScaleId.id
+    }
+
+    if(this.scales.length == 0){
+      formValue.ScaleId=''
     }
 
     if(this.headquarterProgramTeacher1.length == 0 ){
@@ -291,7 +298,7 @@ export class CreateTeacherComponent implements OnInit {
 
     }
     
-              // console.log(formValue)
+              console.log(formValue)
 
   if(
     (this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
@@ -299,16 +306,18 @@ export class CreateTeacherComponent implements OnInit {
 //  formValue.identification != ""&&
     // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
     // formValue.phone != ""&& formValue.email != ""&&
-    formValue.ScaleId !=("" || undefined) && 
+    // formValue.ScaleId !=("" || undefined) && 
     // formValue.nationality != ("" || undefined) && 
     // formValue. date_of_birth!= ("" || undefined) && 
     formValue.MincienciaCategoryId != ("" || undefined) 
     // && formValue.hours_of_dedication != ""
     && formValue.ChargeBondingId != ("" || undefined))
     ||
-    (this.mostrarUser == false && formValue.UserId != ( 0 || undefined) 
+    (this.mostrarUser == false && 
+      formValue.UserId != ( 0 || undefined) 
     // && formValue.hours_of_dedication != ""
-    && formValue.ScaleId !=("" || undefined) && formValue.MincienciaCategoryId != ("" || undefined) &&
+    && formValue.ScaleId !=("" || undefined) 
+    && formValue.MincienciaCategoryId != ("" || undefined) &&
     formValue.ChargeBondingId != ("" || undefined))){
               // console.log(formValue)
 

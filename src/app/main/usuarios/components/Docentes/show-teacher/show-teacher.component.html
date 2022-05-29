@@ -44,7 +44,8 @@
           <!-- <th pSortableColumn="User.Person.phone">TELEFONO<p-sortIcon field="User.Person.phone"></p-sortIcon></th> -->
           <!-- <th pSortableColumn="Group[0].name">GRUPO<p-sortIcon field="Group[0].name"></p-sortIcon></th> -->
           <th pSortableColumn="Scale.name">ESCALAFON<p-sortIcon field="Scale.name"></p-sortIcon></th>
-          <th pSortableColumn="MincienciaCategory.name">CATEGORIA COLCIENCIAS<p-sortIcon field="MincienciaCategory.name"></p-sortIcon></th>
+          <th pSortableColumn="MincienciaCategory.name">CATEGORIA INVESTIGADOR<p-sortIcon field="MincienciaCategory.name"></p-sortIcon></th>
+          <th pSortableColumn="MincienciaCategory.name">VINCULACIÓN DE CARGO<p-sortIcon field="MincienciaCategory.name"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -74,6 +75,7 @@
             
           </td>
           <td>{{item.MincienciaCategory?.name}}</td>
+          <td>{{item.Charge_bonding?.name}}</td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >

@@ -434,49 +434,33 @@ getOneCntAccount(id:number) {
           
           // this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
             if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
-            // console.log(cnt_groupFromApi.teacher.LinkType)
             for (const key of this.charge_bondings) {
               if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.ChargeBondingId)){
                 this.form.controls['ChargeBondingId'].setValue(key)
               }
             }
 
-            // this.getAllscales()
-            
-            
-
             if(this.form.value.ChargeBondingId != ''){
               this.scales=[]
               this.charge_bondingService.getItem(this.form.value.ChargeBondingId.id).subscribe(algo=>{
                 if(algo.charge_bonding.ChargebondingScales?.length != undefined
                   && algo.charge_bonding.ChargebondingScales.length > 0){
-                    // console.log('ChargeBondingId',this.form.value.ChargeBondingId)
                     for (const key of algo.charge_bonding.ChargebondingScales) {
                       if(key.Scale != undefined){
                         this.scales.push(key.Scale)
                       }
-                      
                     }
-
                     if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers?.length != undefined
                       && cnt_groupFromApi.teacher.ChargebondingScaleTeachers.length > 0){
-                       
-                       
                         if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId != undefined){
                           let algo=cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId
                           for (const key of this.scales) {
-                            // console.log(key.id,'==',algo)
                             if(key.id != undefined && key.id == algo){
                             this.form.controls['ScaleId'].setValue(key)
-        
                             }
                           }
                         }
-        
-                       
-        
                     }
-                    // console.log('this.scales',this.scales)
                   }
               })
           
@@ -516,23 +500,16 @@ getOneCntAccount(id:number) {
           }
         }
 
-        // if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
-        // this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
-        //   this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
-        // })
-
         if(cnt_groupFromApi.teacher.HeadquarterProgramTeachers != undefined && cnt_groupFromApi.teacher.HeadquarterProgramTeachers?.length > 0){
           
           this.agregarHeadquarterPrograms(cnt_groupFromApi.teacher.HeadquarterProgramTeachers)
           
         }
         if(cnt_groupFromApi.teacher.TrainingTeachers?.length != undefined && cnt_groupFromApi.teacher.TrainingTeachers?.length > 0){
-          // console.log(cnt_groupFromApi.teacher.Trainings)
           this.agregarDescuentos(cnt_groupFromApi.teacher.TrainingTeachers)    
         }
         
         if(cnt_groupFromApi.teacher.Workexperiences?.length != undefined && cnt_groupFromApi.teacher.Workexperiences?.length > 0){
-          // console.log(cnt_groupFromApi.teacher.Trainings)
           this.agregarDescuentos2(cnt_groupFromApi.teacher.Workexperiences)    
         }
      }
@@ -568,17 +545,13 @@ getOneCntAccount(id:number) {
     if(HeadquarterProgramTeachers.length){
       for (let key of HeadquarterProgramTeachers) {
         if(key.HeadquarterProgramId != undefined) {
-          // console.log(DiscountLine)
-          
           let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-          
           let  HeadquarterId:any | null=null
           if(key.HeadquarterProgram?.HeadquarterId != undefined
             &&  key.HeadquarterProgram?.ProgramId != undefined){
               for (let key2 of this.headquarterProgram) {
                 if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
                   && key2.ProgramId== key.HeadquarterProgram.ProgramId){
-                    // console.log('aqui')
                     HeadquarterId=key2
                 }
               }
@@ -597,36 +570,12 @@ getOneCntAccount(id:number) {
                 ResearchBondingId:[ResearchBondingId, [Validators.required]],
             }))
           }else{}
-          // aqui
-          // for (const key2 of this.headquarterProgram) {
-          //   if(key2.id == key.HeadquarterProgramTeacher.HeadquarterProgramId){
-          //    HeadquarterId=key2
-          //   }
-          // } 
 
-        
-          // this.headquarterProgram
-
-            // this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramTeacher.HeadquarterProgramId).subscribe((algo)=>{
-              // if(algo.headquarterProgram && key.HeadquarterProgramTeacher != undefined){
-                    // this.research_bondingService.getItem(key.HeadquarterProgramTeacher.ResearchBondingId).subscribe
-                    // ((algo2)=>{
-                    //   if(algo2.research_bonding && key.HeadquarterProgramTeacher != undefined){
-                        // control.push(this.formBuilder.group({
-                        //   TeacherId:0,
-                        //     HeadquarterProgramId:[HeadquarterId, [Validators.required]],
-                        //     ResearchBondingId:[ResearchBondingId, [Validators.required]],
-                        // }))
-                  //     }
-                  // })
-            //   }
-            // })
         }
       }
       this.mostrar1= true
       let control = <FormArray>this.form.controls['headquarterProgramTeacher']
       control.removeAt(0)
-      // console.log(control)
     }
   }
 

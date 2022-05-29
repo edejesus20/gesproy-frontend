@@ -1,4 +1,5 @@
 import { AdministrativeI, ChargeAdministrativeI } from "../user/administrative";
+import { StudentI } from "../user/student";
 import { TeacherI } from "../user/teacher";
 import { FacultyI } from "./faculty";
 import { ProgramI } from "./program";
@@ -43,11 +44,14 @@ export interface HeadquarterProgramTeacherI {
    ResearchBondingId:number,
    Teacher?:TeacherI
    HeadquarterProgram?:HeadquarterProgramI
+   status?:boolean;
 
 }
 export interface HeadquarterProgramStudentI {
    id?: number;
    StudentId:number;
+   Student?:StudentI
    HeadquarterProgramId:number;
    HeadquarterProgram?:HeadquarterProgramI
+   status?:boolean
 }

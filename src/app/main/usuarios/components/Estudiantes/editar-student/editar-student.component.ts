@@ -112,7 +112,7 @@ export class EditarStudentComponent implements OnInit {
   }
 
   public onSubmit() {
-    const formValue={
+    let formValue={
       id: this.form.value.id,
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -378,10 +378,10 @@ getOneCntAccount(id:number) {
 
           let  HeadquarterProgram:any | null=null
           if(key.HeadquarterProgram?.HeadquarterId != undefined
-            &&  key.HeadquarterProgram?.ProgramId != undefined){
+            &&  key.HeadquarterProgram?.ProgramId != undefined ){
               for (let key2 of this.headquarterProgram) {
                 if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
-                  && key2.ProgramId== key.HeadquarterProgram.ProgramId){
+                  && key2.ProgramId== key.HeadquarterProgram.ProgramId && key.status==true){
                     // console.log('aqui')
                  HeadquarterProgram=key2
                 }
@@ -394,17 +394,18 @@ getOneCntAccount(id:number) {
               StudentId:0,
               HeadquarterProgramId:[HeadquarterProgram, [Validators.required]],
             }))
-          }else{
-            this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramId).subscribe((algo)=>{
-              if(algo.headquarterProgram != undefined && algo.headquarterProgram != null){
-                console.log(algo.headquarterProgram[0])
-                control.push(this.formBuilder.group({
-                  StudentId:0,
-                  HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
-                }))
-              }
-            })
           }
+          // else{
+          //   this.headquarterService.getHeadquarterProgramId(key.HeadquarterProgramId).subscribe((algo)=>{
+          //     if(algo.headquarterProgram != undefined && algo.headquarterProgram != null){
+          //       console.log(algo.headquarterProgram[0])
+          //       control.push(this.formBuilder.group({
+          //         StudentId:0,
+          //         HeadquarterProgramId:[algo.headquarterProgram[0], [Validators.required]],
+          //       }))
+          //     }
+          //   })
+          // }
 
            
         }

@@ -35,7 +35,7 @@ export class PrivateLayoutComponent implements OnInit {
   items2: MenuItem[]=[];
 
   public isLoggedIn = false;
-  public menu: listaMenuI[] = [];
+  public menu1: listaMenuI[] = [];
   public algo:listaMenuI[] = [];
   public publicMenu: listaMenuI[] = [];
   public privateMenu: listaMenuI[] = [];
@@ -146,7 +146,7 @@ export class PrivateLayoutComponent implements OnInit {
     e.preventDefault()
   
     this.ref1 = this.dialogService.open(PerfilComponent, {
-      width: '60%',
+      width: '65%',
       // height: '55%',
       contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
        showHeader:false, 
@@ -265,7 +265,7 @@ if(token!=null && user!=null && menu != null){
   let menuObjeto:any = JSON.parse(menu);
 // console.log(menuObjeto)
   this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
-  this.menu = this.privateMenu;
+  this.menu1 = this.privateMenu;
   this.userService.getOneUser(userObjeto.id).subscribe((data)=>{
   if(data.user.fullName && data.user.avatar != undefined){
     this.nombre = data.user.fullName
@@ -278,7 +278,7 @@ if(token!=null && user!=null && menu != null){
   }else{
     this.isLoggedIn=false
     this.setLogin(false) 
-    this.menu = [];
+    this.menu1 = [];
     // console.log(this.isLoggedIn,'aqui')
     this.router.navigateByUrl('/login');
   }
