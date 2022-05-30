@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { NotificationI } from 'src/app/models/desk/notifications';
+import { NotificationI, RecipientI } from 'src/app/models/desk/notifications';
 @Injectable({
   providedIn: 'root'
 })
@@ -64,6 +64,15 @@ getList(): Observable<{ notifications: NotificationI[] }> {
      retry(2),
      catchError(this.handleError)
    )
+}
+
+getUserNotification(id: number): Observable<{recipients:RecipientI[]}> {
+  return this.http
+    .get<{recipients:RecipientI[]}>(this.base_path_get + '/User/' + id)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
 }
 
 // Update item by id

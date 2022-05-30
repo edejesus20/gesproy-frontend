@@ -17,9 +17,18 @@
    
     style="padding-top: 8px;padding-bottom:0px"
     class="p-button-rounded p-button-text"> -->
-     <i class="pi pi-bell mr-4 " 
-     pBadge style="font-size: 1.5rem" value="2" 
-     (click)="op.toggle($event)"></i>
+    <ng-template [ngIf]="notifications.length > 0">
+      <i class="pi pi-bell mr-4 " 
+      pBadge style="font-size: 1.5rem" value="{{notifications.length}}" 
+      (click)="op.toggle($event)"></i>
+    </ng-template>
+    <ng-template [ngIf]="notifications.length == 0">
+      <i class="pi pi-bell mr-4 " 
+       style="font-size: 1.5rem" value="" 
+      (click)="op.toggle($event)"></i>
+    </ng-template>
+    
+     
     <!-- </button> -->
    
     <button pButton pRipple type="button"  [disabled]="true"
@@ -56,11 +65,52 @@
   
   <p-overlayPanel #op [showCloseIcon]="false" [dismissable]="true"[style]="{width: '450px'}">
     <ng-template pTemplate>
-      <span *ngFor="let item of items">
-        <p-card [style]="{'margin-bottom':'5px'}">
-          Content
-      </p-card>
-      </span>
+      <ng-template [ngIf]="recipients.length">
+        <span *ngFor="let item of recipients" >
+            <div class="grid">
+              <div class="col-12 ">
+                  <div class="surface-card shadow-2 p-3 border-round">
+                      <div class="flex justify-content-between mb-3">
+                          <div>
+                              <span class="block text-500 font-medium mb-3"> {{item.Notification?.title | titlecase}}</span>
+                              <div class="text-900 font-medium text-xl">{{item.Notification?.abstract}}</div>
+                          </div>
+                          <div class="flex align-items-center 
+                          justify-content-center " 
+                          style="width:3.5rem;height:3.5rem">
+                          <p-avatar image="{{item.Notification?.User?.avatar}}" 
+                          styleClass="ml-3" size="xlarge" shape="circle"></p-avatar>
+                          </div>
+                      </div>
+                      <span class="text-green-500 font-medium">
+                        {{item.Notification?.User?.fullName}}
+                      </span>
+                      <span class="text-500">{{item.Notification?.date_firt}}</span>
+                  </div>
+              </div>
+            </div>
+            <hr>
+
+        </span>
+        <div class="flex justify-content-center align-items-center  mb-3" *ngIf="notifications.length > 3">
+          <span class="text-900 font-medium text-xl" 
+          style="text-align: center;margin-top: -15px;"> Ver Mas</span>
+        </div>
+      </ng-template>
+
+         <ng-template [ngIf]="!recipients.length">
+                  <p-card [style]="{'height':'70px',
+                  'text-aling':'center','padding': '0px'}">
+                  <div class="flex justify-content-center align-items-center  mb-3">
+                    <span class="text-900 font-medium text-xl" 
+                    style="text-align: center;margin-top: -15px;"> No hay Anuncios</span>
+                  </div>
+
+        </p-card>
+
+      </ng-template>
+      
+      
      
     </ng-template>
 </p-overlayPanel>

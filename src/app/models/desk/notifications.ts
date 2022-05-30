@@ -13,6 +13,7 @@ export interface NotificationI {
     User?:UserI
     Users?:any[]
     Roles?:any[]
+    abstract:string
     Recipients?:RecipientI[]
 }
 
@@ -22,6 +23,7 @@ export interface RecipientI{
     User?:UserI
     NotificationId: number
     status_recipients: string;
+    Notification?:NotificationI
 }
 export interface RoleNotificationI{
     id?: number;

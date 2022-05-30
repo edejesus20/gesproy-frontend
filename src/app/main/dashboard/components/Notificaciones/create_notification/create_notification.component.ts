@@ -21,6 +21,7 @@ export class Create_notificationComponent implements OnInit {
     date_firt: [''],
     date_end: ['', [Validators.required]],
     title: ['', [Validators.required]],
+    abstract:['', [Validators.required]],
     description: ['', [Validators.required]],
     UserId: ['', [Validators.required]],
     Users:[''],
@@ -158,6 +159,7 @@ public Users1:any[] =[]
     formValue.date_firt != ( 0 || '' || undefined)&&
     formValue.date_end != ( 0 || '' || undefined)&&
     formValue.title != ( 0 || '' || undefined)&&
+    formValue.abstract != ( 0 || '' || undefined)&&
     formValue.description != ( 0 || '' || undefined) &&
     formValue.UserId != ( 0 || '' || undefined) 
     ){

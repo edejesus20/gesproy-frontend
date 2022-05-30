@@ -5,7 +5,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','date_firt','date_end','title','description',
+    [globalFilterFields]="['id','date_firt','date_end','title','abstract','description',
     'User.fullName','status_notification']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
@@ -41,7 +41,8 @@
           <th pSortableColumn="date_firt">FECHA PUBLICADO<p-sortIcon field="date_firt"></p-sortIcon></th>
           <th pSortableColumn="date_end">FECHA DE VENCIMIENTO<p-sortIcon field="date_end"></p-sortIcon></th>
           <th pSortableColumn="title">TITULO<p-sortIcon field="title"></p-sortIcon></th>
-          <th pSortableColumn="description">DESCRICIÓN<p-sortIcon field="description"></p-sortIcon></th>
+          <th pSortableColumn="abstract">RESUMEN<p-sortIcon field="abstract"></p-sortIcon></th>
+           <th pSortableColumn="description">DESCRICIÓN<p-sortIcon field="description"></p-sortIcon></th>
           <th pSortableColumn="User.fullName">PUBICADO POR<p-sortIcon field="User.fullName"></p-sortIcon></th>
           <th pSortableColumn="status_notification">ESTADO<p-sortIcon field="status_notification"></p-sortIcon></th>
           <!-- <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th> -->
@@ -62,7 +63,9 @@
           <td>{{item.id}}</td>
           <td>{{item.date_firt }}</td>
           <td>{{item.date_end }}</td>
-          <td>{{item.title }}</td>
+          <td>{{item.title | titlecase}}</td>
+          <td>{{item.abstract }}</td>
+          
           <td>{{item.description }}</td>
           <td>{{item.User.fullName }}</td>
           <td>{{item.status_notification }}</td>

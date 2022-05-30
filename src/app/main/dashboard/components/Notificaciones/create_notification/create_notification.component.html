@@ -18,6 +18,16 @@
                formControlName="title" placeholder="Titulo" required>  
             </div>
           </div>
+          
+          <div class="bordep">
+            <h4 style="text-align:center;">RESUMEN</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+              formControlName="abstract" placeholder="ESCRIBIR RESUMEN"  required></textarea>
+            </div>
+          </div>
           <div class="bordep">
             <h4 style="text-align:center;">DESCRIPCIÓN</h4>
             <div class="p-inputgroup" style="margin-bottom: 10px;">

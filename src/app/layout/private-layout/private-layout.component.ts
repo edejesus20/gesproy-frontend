@@ -15,6 +15,8 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { CambicarPasswordUserComponent } from 'src/app/main/usuarios/components/usr_User/cambicar-password-user/cambicar-password-user.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { NotificationService } from 'src/app/core/services/dashboard/Notification.service';
+import { RecipientI } from 'src/app/models/desk/notifications';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -61,11 +63,13 @@ export class PrivateLayoutComponent implements OnInit {
   public image3:string='assets/avatares/avatars-avataaars.png'
   public image2:string='assets/images/logoGrupoSem2.png'
   public Dialog:boolean =false
+  public recipients:RecipientI[]=[]
+  public notifications:RecipientI[]=[]
 
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
-    private anonimoService: AnonimoService,
+    private notificationService: NotificationService,
     private authService: AuthService, 
     private userService:UserService,
     private router:Router,
@@ -266,6 +270,21 @@ if(token!=null && user!=null && menu != null){
 // console.log(menuObjeto)
   this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
   this.menu1 = this.privateMenu;
+
+  this.notificationService.getUserNotification(userObjeto.id).subscribe(algo => {
+    this.notifications=algo.recipients;
+    for (let index = 0; index < algo.recipients.length; index++) {
+      if(index < 3){
+        const key = algo.recipients[index];
+        this.recipients.push(key)
+      }
+     
+    }
+  
+    console.log(this.recipients)
+  })
+
+  
   this.userService.getOneUser(userObjeto.id).subscribe((data)=>{
   if(data.user.fullName && data.user.avatar != undefined){
     this.nombre = data.user.fullName

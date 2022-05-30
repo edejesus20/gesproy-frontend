@@ -42,6 +42,8 @@ export class Show_notificationComponent implements OnInit {
         { field: 'date_end', header: 'Fecha de Vencimiento' },
         { field: 'title', header: 'Titulo' },
         { field: 'description', header: 'Descripcion' },
+        { field: 'abstract', header: 'Resumen' },
+        
         { field: 'User.fullName', header: 'Publicado por' },
         { field: 'status_notification', header: 'Estado' },
     ];
@@ -65,7 +67,8 @@ export class Show_notificationComponent implements OnInit {
                 description: key.description,
                 UserId: key.UserId,
                 status_notification: key.status_notification,
-                User:key.User
+                User:key.User,
+                abstract:key.abstract
               }
             )
           }
@@ -201,19 +204,23 @@ export class Show_notificationComponent implements OnInit {
                 Titulo: key.title,
                 Descripcion: key.description,
                 Publicado_por: key.User?.fullName,
-                Estado: key.status_notification
+                Estado: key.status_notification,
+                Resumen:key.abstract
+
           })
         }
       }else{
       for (const key of this.notifications) {
         array.push({ 
           id: key.id,
-           Fecha_publicacion: key.date_firt,
-                Fecha_vencimiento: key.date_end,
-                Titulo: key.title,
-                Descripcion: key.description,
-                Publicado_por: key.User?.fullName,
-                status_notification: key.status_notification
+          Fecha_publicacion: key.date_firt,
+          Fecha_vencimiento: key.date_end,
+          Titulo: key.title,
+          Descripcion: key.description,
+          Publicado_por: key.User?.fullName,
+          Estado: key.status_notification,
+          Resumen:key.abstract
+
         })
       }
     }
