@@ -62,6 +62,8 @@ import {DataViewModule} from 'primeng/dataview';
 import { PerfilComponent } from './perfil/perfil.component';
 import {AccordionModule} from 'primeng/accordion';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {StyleClassModule} from 'primeng/styleclass';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
@@ -90,14 +92,14 @@ import {MultiSelectModule} from 'primeng/multiselect';
     BrowserAnimationsModule,
     InstitutionRoutingModule,
     MultiSelectModule,
-    
+    StyleClassModule,
     DividerModule,
     ButtonModule,
     CheckboxModule,
     RadioButtonModule,
     RippleModule,
     InputTextModule,
-  
+    OverlayPanelModule,
     CardModule,
     MenuModule,
     MessagesModule,

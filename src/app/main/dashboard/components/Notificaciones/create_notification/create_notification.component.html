@@ -1,0 +1,120 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="mostrarDialogo == false">
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw'}" 
+  [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+  <br>
+
+      <div [style]="{'margin-top':'-1px'}" >
+          <div fxLayout="row" class="titleCard">
+              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Anuncio</h2>
+          </div>
+          <div class="bordep">
+            <h4 style="text-align:center;">TITULO DEL ANUNCIO</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+
+              <input type="text" class="p-inputtext-lg" pInputText name="title" 
+               formControlName="title" placeholder="Titulo" required>  
+            </div>
+          </div>
+          <div class="bordep">
+            <h4 style="text-align:center;">DESCRIPCIÓN</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+
+              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
+              formControlName="description" placeholder="ESCRIBIR DESCRIPCIÓN"  required></textarea>
+            </div>
+          </div>
+          <div class="bordep">
+            <h4 style="text-align:center;">FECHA DE VENCIMIENTO</h4>
+            <div class="p-inputgroup" style="margin-bottom: 10px;">
+              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+  
+              <input type="date" class="p-inputtext-lg mr-1" pInputText name="date_end" 
+              placeholder="FECHA DE VENCIMIENTO" formControlName="date_end" 
+              title="FECHA DE VENCIMIENTO" required> 
+              <input type="time" class="p-inputtext-lg" pInputText name="date_end" 
+              placeholder="HORA" formControlName="time" 
+              title="HORA" required> 
+            </div>
+          </div>
+        <div class="bordep">
+          <h4 style="text-align:center;margin-bottom: 1px;">DESTINATARIOS</h4>
+            <div class="">
+              <h5 style="text-align:center;">Todos los Usuarios de Roles</h5>
+              <div class=" titleCard" style="margin:0px;text-align:center">
+              
+                <span class="p-inputgroup-addon" style="height:37px"><i class="pi pi-users"></i></span>
+              <p-multiSelect [options]="roles" formControlName="Roles" 
+              defaultLabel="Seleccione el tipo de usuario" [style]="{'width': '100%'}"
+              optionLabel="name" display="chip"></p-multiSelect>
+              <!-- </div> -->
+            </div>
+            </div>
+
+            <div class="">
+              <h5 style="text-align:center;">Usuarios Especificos</h5>
+              <div class=" titleCard" style="margin:0px;text-align:center">
+              
+                <span class="p-inputgroup-addon" style="height:37px"><i class="pi pi-users"></i></span>
+              <p-multiSelect [options]="users" formControlName="Users" filterBy="todo"
+              defaultLabel="Seleccione el usuario" [style]="{'width': '100%'}"
+              optionLabel="todo" display="chip"></p-multiSelect>
+              <!-- </div> -->
+            </div>
+            </div>
+          </div>
+        
+
+        
+
+      </div>
+              
+          <!-- <ng-template pTemplate="footer"> -->
+            <br>
+            <br>
+              <div fxLayout="row" class="titleCard"style="margin-top: -20px; text-align: center">
+                <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+                class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+                  <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+          <!-- </ng-template> -->
+          
+              
+  </p-dialog>
+
+</ng-template>
+<ng-template [ngIf]="mostrarDialogo == true">
+  <div [style]="{'margin-top':'-1px'}" >
+    <div fxLayout="row" class="titleCard">
+        <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
+      <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Vinculación de Cargo</h2>
+    </div>
+
+  <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+
+            <input type="text" class="p-inputtext-lg" pInputText name="name" [pKeyFilter]="blockSpecial"
+             formControlName="name" placeholder="NOMBRE" required>  
+       
+        </div>
+        <br>
+
+       
+</div>
+      
+        <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+          <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
+          <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+          class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
+    </div>
+   
+    
+</ng-template>
+</form>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

@@ -183,23 +183,25 @@ this.rolesService.getRole().subscribe(role => {
 
     if(this.Roles1.length == 0 || this.Roles1.length == undefined){
       this.Roles1=[]
-      let control = <FormArray>this.form.controls['Roles']
-      for (const key of control.value) {
+      // let control = <FormArray>this.form.controls['Roles']
+      for (const key of this.form.value.Roles) {
         this.Roles1.push({
         RoleId:key.id,
         })
       }
       formValue.Roles = this.Roles1
       console.log('aqui')
+    }else{
+      formValue.Roles = this.Roles1
     }
 
 
-    if(formValue.Roles[0].RoleId == '' ||
-    formValue.Roles[0].RoleId == undefined ||this.Roles1.length == undefined){
-      // this.form.value.Workexperiences=[]
-      formValue.Roles=[]
+    // if(formValue.Roles[0].RoleId == '' ||
+    // formValue.Roles[0].RoleId == undefined ||this.Roles1.length == undefined){
+    //   // this.form.value.Workexperiences=[]
+    //   formValue.Roles=[]
 
-    }
+    // }
 
     if(this.form.value.password !== this.form.value.password2){
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Contraseñas No Coinciden'});

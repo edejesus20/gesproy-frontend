@@ -37,18 +37,31 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog/dynamicdialog-ref';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog/dynamicdialog-config';
+import { Create_notificationComponent } from './components/Notificaciones/create_notification/create_notification.component';
+import { Delete_notificationComponent } from './components/Notificaciones/delete_notification/delete_notification.component';
+import { Edit_notificationComponent } from './components/Notificaciones/edit_notification/edit_notification.component';
+import { Show_notificationComponent } from './components/Notificaciones/show_notification/show_notification.component';
+import { GeneralComponent } from './components/escritorio/general/general.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    Create_notificationComponent,
+    Delete_notificationComponent,
+    Edit_notificationComponent,
+    Show_notificationComponent,
+    GeneralComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     HttpClientModule,
     FormsModule,
+    MultiSelectModule,
     ReactiveFormsModule,
-    
+    InputTextareaModule,
     DividerModule,
     ButtonModule,
     CheckboxModule,

@@ -13,8 +13,15 @@
   </div>
   <div class="col-12 sm:col-2 md:col-3 lg:col-4 xl:col-5"></div>
   <div class="col-12 sm:col-7 md:col-6 lg:col-5 xl:col-4">
-
-    <i class="pi pi-bell mr-4 mb-1" pBadge style="font-size: 1.5rem" value="2"></i>
+    <!-- <button type="button" pButton pRipple  
+   
+    style="padding-top: 8px;padding-bottom:0px"
+    class="p-button-rounded p-button-text"> -->
+     <i class="pi pi-bell mr-4 " 
+     pBadge style="font-size: 1.5rem" value="2" 
+     (click)="op.toggle($event)"></i>
+    <!-- </button> -->
+   
     <button pButton pRipple type="button"  [disabled]="true"
     class="p-button-outlined  p-button-warning"
     style="padding: 7px;">
@@ -31,12 +38,34 @@
        styleClass="ml-3" size="large" shape="circle"></p-avatar>
      </button>
 
-     <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'200px','margin-top':'5px'}"></p-menu>
+     <p-menu #menu [popup]="true"  [model]="items" 
+     [style]="{'width':'200px','margin-top':'5px'}"></p-menu>
+
+
+     <div #menu2 class="box hidden" header="Anuncios" 
+     style="display: inline-block;margin:0px">
+
+    </div>
+  
 
   </div>
 
 
   </div>
+  
+  
+  <p-overlayPanel #op [showCloseIcon]="false" [dismissable]="true"[style]="{width: '450px'}">
+    <ng-template pTemplate>
+      <span *ngFor="let item of items">
+        <p-card [style]="{'margin-bottom':'5px'}">
+          Content
+      </p-card>
+      </span>
+     
+    </ng-template>
+</p-overlayPanel>
+
+
 
     <!-- <p-menubar  [autoDisplay]="false"
      

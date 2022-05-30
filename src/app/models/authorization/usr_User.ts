@@ -18,6 +18,7 @@ export interface UserI {
   avatar?:string
   People?:PersonI[]
   UserRoles?:UserRoleI[]
+  todo?:string
 }
 export interface UserRoleI {
   UserId:number,

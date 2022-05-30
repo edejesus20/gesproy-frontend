@@ -1,0 +1,160 @@
+
+
+<p-table  #dt2 [value]="notifications" responsiveLayout="scroll" dataKey="id" id="todo"
+[paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+   [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+    [globalFilterFields]="['id','date_firt','date_end','title','description',
+    'User.fullName','status_notification']"
+    [columns]="cols"
+   ><!-- styleClass="p-datatable-gridlines" -->
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Anuncios</h2>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+            (input)="Buscar($event, dt2)" placeholder="Buscar la palabra clave.." />
+        </span> 
+        
+       
+          <div class="mb-3 ml-3 mt-3">
+
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt2.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt2.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
+
+          <!-- <p-button icon="pi pi-refresh"></p-button> -->
+      </div>
+
+      
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+        <ng-template [ngIf]="mostrar==0">
+          <th style="width: 3rem"></th>
+        </ng-template> 
+          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="date_firt">FECHA PUBLICADO<p-sortIcon field="date_firt"></p-sortIcon></th>
+          <th pSortableColumn="date_end">FECHA DE VENCIMIENTO<p-sortIcon field="date_end"></p-sortIcon></th>
+          <th pSortableColumn="title">TITULO<p-sortIcon field="title"></p-sortIcon></th>
+          <th pSortableColumn="description">DESCRICIÓN<p-sortIcon field="description"></p-sortIcon></th>
+          <th pSortableColumn="User.fullName">PUBICADO POR<p-sortIcon field="User.fullName"></p-sortIcon></th>
+          <th pSortableColumn="status_notification">ESTADO<p-sortIcon field="status_notification"></p-sortIcon></th>
+          <!-- <th pSortableColumn="date">FECHA<p-sortIcon field="date"></p-sortIcon></th> -->
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+            <th > ACCIONES </th>
+          </ng-template>
+      </tr>
+  </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+      <tr [pSelectableRow]="rowData">
+        <ng-template [ngIf]="mostrar==0">
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+        </ng-template> 
+       
+          <td>{{item.id}}</td>
+          <td>{{item.date_firt }}</td>
+          <td>{{item.date_end }}</td>
+          <td>{{item.title }}</td>
+          <td>{{item.description }}</td>
+          <td>{{item.User.fullName }}</td>
+          <td>{{item.status_notification }}</td>
+          <!-- <td >
+            <span *ngFor="let i of item.ChargebondingScales">
+              <span style="display: flex;" *ngIf="i.status == true">
+                * {{i.Scale.name }} 
+              </span>
+            </span>
+          </td> -->
+          <!-- <td>{{item.Group.name| titlecase}}</td>
+          <td>{{item.date  | date:'fullDate' | titlecase}}</td> -->
+          
+          <!-- <td>{{item.Faculty.Headquarter.name| titlecase}}</td>
+          <td>{{item.Category.name| titlecase}}</td>
+          <td>{{item.createdAt | date:'fullDate' | titlecase}}</td> -->
+
+          
+          <ng-template [ngIf]="mostrar==1">
+              
+              <td >
+                <button pButton pRipple  type="button"class="editar" title="Editar" 
+                  icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(item.id)"></button>
+              </td>
+          
+          </ng-template>
+          <ng-template [ngIf]="mostrar==2">
+            
+              <td >
+                <button pButton pRipple  type="button" title="Eliminar" 
+                  icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(item.id)"></button>
+              </td>
+          
+          </ng-template>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="9" style="text-align: center;">
+            <h3>No hay registros encontrados</h3>
+          </td>
+      </tr>
+  </ng-template>
+
+  
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+          <td colspan="8">
+              <div >
+                  <p-table [value]="item.Recipients"  dataKey="id" [paginator]="true" [rows]="3" 
+                  [showCurrentPageReport]="true"  responsiveLayout="scroll"
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                   >
+                      <ng-template pTemplate="header" >
+                          <tr style="background: rgba(0, 255, 255, 0.849);">
+                              <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
+                              <th pSortableColumn="name">Nombre de Destinatarios<p-sortIcon field="name"></p-sortIcon></th>
+                              <th pSortableColumn="identification">Identificacion <p-sortIcon field="identification"></p-sortIcon></th>
+                              <th pSortableColumn="nationality">Nacionalidad <p-sortIcon field="nationality"></p-sortIcon></th>
+                              <th pSortableColumn="correo">Correo <p-sortIcon field="correo"></p-sortIcon></th>
+                              <th pSortableColumn="phone">Estado de Anuncio <p-sortIcon field="phone"></p-sortIcon></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-order >
+                        <tr>
+                              <!-- <td>{{order.id}}</td> -->
+                              <td>{{order.User?.fullName | titlecase}}</td>
+                              <td>{{order.User?.Person?.identification }}</td>
+                              <td>{{order.User?.Person?.nationality | titlecase}}</td>
+                              <td>{{order.User?.email | titlecase}}</td>
+                              <td>{{order.status_recipients | titlecase}}</td>
+
+                          </tr>
+                      </ng-template>
+
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="6" style="text-align: center;">
+                            <h3>No hay registros encontrados</h3>
+                          </td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+  </ng-template>
+
+
+  <!-- <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total hay {{ universitys ? universitys.length : 0 }} universidades.
+    </div>
+</ng-template> -->
+</p-table>
