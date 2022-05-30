@@ -41,6 +41,7 @@ export class XsegundoService {
          segundo: t.getSeconds() < 10 ? '0' + t.getSeconds() : t.getSeconds().toString()
 
        }
+      //  console.log(this.vr)
        this.infofecha$.next(this.vr);
      });
      return this.infofecha$.asObservable();

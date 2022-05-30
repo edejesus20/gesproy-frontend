@@ -61,6 +61,7 @@ import { AvatarComponent } from './avatar/avatar.component';
 import {DataViewModule} from 'primeng/dataview';
 import { PerfilComponent } from './perfil/perfil.component';
 import {AccordionModule} from 'primeng/accordion';
+import {MultiSelectModule} from 'primeng/multiselect';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
@@ -88,7 +89,7 @@ import {AccordionModule} from 'primeng/accordion';
     BrowserModule,
     BrowserAnimationsModule,
     InstitutionRoutingModule,
-   
+    MultiSelectModule,
     
     DividerModule,
     ButtonModule,

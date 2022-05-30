@@ -8,6 +8,7 @@ import { LandingComponent } from '../private-layout/landing/landing.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormRegisterComponent } from './components/form-register/form-register.component';
@@ -70,7 +71,7 @@ import {PasswordModule} from 'primeng/password';
     CarouselModule,
     GalleriaModule,
     HttpClientModule,
-
+    MultiSelectModule,
     ConfirmPopupModule,
     ToastModule,
     // RouterModule,

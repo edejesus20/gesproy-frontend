@@ -29,12 +29,23 @@
             
         <div [style]="{'margin-top':'-5px'}" >
           <br>
-          <div fxLayout="row" class="titleCard">
+          <div fxLayout="row" class="titleCard mb-1">
               <i class="pi pi-shield" style="font-size: 2rem;margin-right: 10px;margin-top: -10px;"></i>
             <h2 class="fondebabutton" style="margin-top: -10px;">Registro de Usuario</h2>
           </div>
+          
+          
+            <div class=" titleCard mb-2" style="margin:0px;text-align:center">
+                <span class="p-inputgroup-addon" style="height:37px"><i class="pi pi-user"></i></span>
+              <p-multiSelect [options]="cities" formControlName="Roles"
+              defaultLabel="Seleccione el tipo de usuario" [style]="{'width': '100%'}"
+              optionLabel="name" display="chip"></p-multiSelect>
+              <!-- </div> -->
+            </div>
+         
+      
           <div class="grid">
-            <div class="col-6">
+            <div class="col-12 sm:col-6">
               <div class="p-inputgroup mr-2 mb-2 ">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText formControlName="name" placeholder="Nombre"  title="Nombre">         
@@ -84,7 +95,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-12 sm:col-6">
               <div class="p-inputgroup mb-2 ">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText formControlName="surname" placeholder="Apellido" title="Apellido" >          
@@ -121,7 +132,7 @@
                 </div>
             </div>
           
-            
+
           </div>
    
         </div>
