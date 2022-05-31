@@ -78,7 +78,7 @@
                           <div class="flex align-items-center 
                           justify-content-center " 
                           style="width:3.5rem;height:3.5rem">
-                          <p-avatar image="{{item.Notification?.User?.avatar}}" 
+                          <p-avatar image="{{item.Notification?.User?.avatar}}" [title]="item.Notification?.User?.email"
                           styleClass="ml-3" size="xlarge" shape="circle"></p-avatar>
                           </div>
                       </div>
@@ -86,6 +86,11 @@
                         {{item.Notification?.User?.fullName}}
                       </span>
                       <span class="text-500">{{item.Notification?.date_firt}}</span>
+                      <span class="text-blue-500 font-medium ml-1"
+                      style="cursor:pointer; cursor: hand"
+                       (click)="mostrarNOtificaciones($event)">
+                        Detalle
+                      </span>
                   </div>
               </div>
             </div>
@@ -209,10 +214,6 @@
         </div>
     </div>
 
-<!-- <div class="flex">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!producto.nombre || !producto.tipo_producto || !producto.unidad" (click)="saveProduct()"></button>
-</div> -->
 <ng-template pTemplate="footer" class="titleCard" >
   <div style="text-align: center;">
     <button pButton pRipple label="Cancel" icon="pi pi-times" style="color: rgb(31, 45, 64);" 

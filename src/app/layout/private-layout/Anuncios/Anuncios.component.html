@@ -1,0 +1,191 @@
+<div style="padding: 10px">
+
+  <div [style]="{'margin-top':'-1px'}" >
+
+    <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
+  
+      <div class="grid p-fluid mb-3" style="padding: 8px; height:50px;">
+
+        <div class="col-9 md:col-9 lg:col-9">
+          <span class="block text-2xl font-bold mb-4" style="color:#F16257">
+            <i class="pi pi-bell" 
+            style="font-size: 1.8rem;margin-right: 10px;"></i>
+            TODOS LOS ANUNCIOS</span>
+        
+        </div>
+
+        <div 
+        class="col-3 md:col-3 lg:col-3">
+          <div fxLayout="row" class="titleCard "style="text-align: center;">
+            <p-button (click)="cancelar()" icon="pi pi-times" 
+            [style]="{'border': '1px solid #F16257','border-radius':'5px'}"
+            styleClass="p-button-text" label="Cancelar"></p-button>
+          </div>
+        </div>
+      </div>
+     
+      <div class="card">
+        <p-tabView styleClass="tabview-custom">
+            <p-tabPanel >
+                <ng-template pTemplate = "header">
+                    <i class="pi pi-eye-slash mr-1"></i>
+                    <span>No Leidos</span>
+                </ng-template>
+                  <ng-template [ngIf]="notifications_noleidos.length">
+                    <span *ngFor="let item of notifications_noleidos" >
+                      <div class="grid" >
+                        <div class="col-12 ">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-500 font-medium mb-3"> {{item.Notification?.title | titlecase}}</span>
+                                        <div class="text-900 font-medium text-xl">{{item.Notification?.abstract}}</div>
+                                    </div>
+                                    <div class="flex align-items-center 
+                                    justify-content-center " 
+                                    style="width:3.5rem;height:3.5rem">
+                                    <p-avatar image="{{item.Notification?.User?.avatar}}" [title]="item.Notification?.User?.email"
+                                    styleClass="ml-3" size="xlarge" shape="circle"></p-avatar>
+                                    </div>
+                                </div>
+                                <span class="text-green-500 font-medium">
+                                  {{item.Notification?.User?.fullName}}
+                                </span>
+                                <span class="text-500">{{item.Notification?.date_firt}}</span>
+                                <span class="text-blue-500 font-medium ml-1"
+                                style="cursor:pointer; cursor: hand"
+                                 (click)="OneNOtificaciones(item,$event)">
+                                  Ver mas Detalle
+                                </span>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                    </span>
+              
+                  </ng-template>
+                  <ng-template [ngIf]="!notifications_noleidos.length">
+                    <p-card [style]="{'height':'70px',
+                    'text-aling':'center','padding': '0px'}">
+                    <div class="flex justify-content-center align-items-center  mb-3">
+                      <span class="text-900 font-medium text-xl" 
+                      style="text-align: center;margin-top: -15px;"> No hay Anuncios</span>
+                    </div>
+                  </p-card>
+                </ng-template>
+               
+            </p-tabPanel>
+            <p-tabPanel header="Header II">
+                <ng-template pTemplate = "header">
+                    <i class="pi pi-eye mr-1"></i>
+                    <span>Leidos</span>
+                </ng-template>
+                <ng-template [ngIf]="notifications_leidos.length">
+                  <span *ngFor="let item of notifications_leidos" >
+                    <div class="grid" >
+                      <div class="col-12 ">
+                          <div class="surface-card shadow-2 p-3 border-round">
+                              <div class="flex justify-content-between mb-3">
+                                  <div>
+                                      <span class="block text-500 font-medium mb-3"> {{item.Notification?.title | titlecase}}</span>
+                                      <div class="text-900 font-medium text-xl">{{item.Notification?.abstract}}</div>
+                                  </div>
+                                  <div class="flex align-items-center 
+                                  justify-content-center " 
+                                  style="width:3.5rem;height:3.5rem">
+                                  <p-avatar image="{{item.Notification?.User?.avatar}}" [title]="item.Notification?.User?.email"
+                                  styleClass="ml-3" size="xlarge" shape="circle"></p-avatar>
+                                  </div>
+                              </div>
+                              <span class="text-green-500 font-medium">
+                                {{item.Notification?.User?.fullName}}
+                              </span>
+                              <span class="text-500">{{item.Notification?.date_firt}}</span>
+                              <span class="text-blue-500 font-medium ml-1"
+                              style="cursor:pointer; cursor: hand"
+                               (click)="OneNOtificaciones(item,$event)">
+                                Ver mas Detalle
+                              </span>
+                          </div>
+                      </div>
+                    </div>
+                    <hr>
+                  </span>
+            
+                </ng-template>
+                <ng-template [ngIf]="!notifications_leidos.length">
+                  <p-card [style]="{'height':'70px',
+                  'text-aling':'center','padding': '0px'}">
+                  <div class="flex justify-content-center align-items-center  mb-3">
+                    <span class="text-900 font-medium text-xl" 
+                    style="text-align: center;margin-top: -15px;"> No hay Anuncios</span>
+                  </div>
+                </p-card>
+              </ng-template>
+            </p-tabPanel>
+            <!-- <p-tabPanel header="Header III">
+                <ng-template pTemplate = "header">
+                    <i class="pi pi-search"></i>
+                    <span>Header III</span>
+                    <i class="pi pi-cog"></i>
+                </ng-template>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+                    cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                    Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+            </p-tabPanel> -->
+        </p-tabView>
+        </div>
+  
+
+
+    </div>
+
+  </div>
+</div>
+
+<p-dialog [(visible)]="mostrarModal" 
+[style]="{'height': '60vw','width': '53vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+          <div class="grid">
+            <div class="col-6">
+              <i class="pi pi-bell" style="font-size: 3rem"></i>
+              <div class="block text-2xl font-bold" style="color:#F16257">{{Notificacion?.title | titlecase}}</div>
+            </div>
+            <div class="col-6">
+              Publicado Por: 
+              <span class="block text-green-500 font-medium ">
+                
+                {{Notificacion?.User?.email}}
+              </span>
+              <span class="text-500">Fecha: {{Notificacion?.date_firt}}</span>
+            </div>
+          </div>
+            
+            <div class="surface-card shadow-2 p-3 border-round mt-1">
+              <p>{{Notificacion?.description}}</p>
+            </div>
+
+        </div>
+    </div>
+
+<ng-template pTemplate="footer" class="titleCard" >
+  <div style="text-align: center;">
+    <button pButton pRipple label="Volver" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+    class="p-button-text" (click)="mostrarModal = false"></button>
+    <button pButton pRipple label="Marcar Como leido"  *ngIf="Recipient?.status_recipients != 'leido'"
+    style="background: rgb(31, 45, 64);" 
+    class=" p-button-raised p-button-rounded" 
+    icon="pi pi-check"  (click)="marcar(Notificacion,$event)"  ></button>
+  </div>
+  
+
+</ng-template>
+</p-dialog>
+
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

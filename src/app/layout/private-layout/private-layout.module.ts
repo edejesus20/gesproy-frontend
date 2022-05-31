@@ -64,13 +64,17 @@ import {AccordionModule} from 'primeng/accordion';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {StyleClassModule} from 'primeng/styleclass';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { AnunciosComponent } from './Anuncios/Anuncios.component';
+import {TabMenuModule} from 'primeng/tabmenu';
+import {TabViewModule} from 'primeng/tabview';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
     LandingComponent,
     MenuComponent,
     AvatarComponent,
-    PerfilComponent
+    PerfilComponent,
+    AnunciosComponent
     
   ],
   imports: [
@@ -88,6 +92,9 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     AccordionModule,
     HttpClientModule,
     FormsModule,
+    TabMenuModule,
+    TabViewModule,
+    
     BrowserModule,
     BrowserAnimationsModule,
     InstitutionRoutingModule,

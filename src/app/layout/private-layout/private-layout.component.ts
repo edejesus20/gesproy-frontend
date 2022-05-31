@@ -17,6 +17,7 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { NotificationService } from 'src/app/core/services/dashboard/Notification.service';
 import { RecipientI } from 'src/app/models/desk/notifications';
+import { AnunciosComponent } from './Anuncios/Anuncios.component';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -301,5 +302,27 @@ if(token!=null && user!=null && menu != null){
     // console.log(this.isLoggedIn,'aqui')
     this.router.navigateByUrl('/login');
   }
+}
+
+mostrarNOtificaciones(event: Event){
+  event.preventDefault()
+  this.ref1 = this.dialogService.open(AnunciosComponent, {
+    width: '45%',
+    // height: '55%',
+    contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+     showHeader:false, 
+    // baseZIndex: 10000,
+    data: {
+      id: '1'
+  },
+});
+
+this.ref1.onClose.subscribe((person: any) =>{
+    if (person) {
+        // this.messageService.add({severity:'successs', summary: 'Perfil Editado', detail: person.name,life: 2000});
+      this.ngOnInit()
+      }
+});
+
 }
 }

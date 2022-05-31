@@ -84,6 +84,14 @@ updateItem(id:number, item:NotificationI): Observable<{notification:Notification
       catchError(this.handleError)
     )
 }
+marcar(id:number, item:any): Observable<{notification:NotificationI}> {
+  return this.http
+    .patch<{notification:NotificationI}>(this.base_path_get + '/Marcar/' + id, JSON.stringify(item), this.httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
 
 // Delete item by id
 deleteItem(id:number) {

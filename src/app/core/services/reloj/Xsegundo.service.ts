@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, shareReplay, Subject, timer } from 'rxjs';
+import { NotificationService } from '../dashboard/Notification.service';
+const KEY_ANUNCIOS = 'anuncios';
 export interface valorReloj {
   hora?: number;
   minutos?: string;
@@ -22,9 +24,11 @@ export class XsegundoService {
   minute: string='';
   weekday: string='';
   months: string='';
+  verificar:any
 
-
-  constructor() {
+  constructor(
+    private notificationService:NotificationService,
+  ) {
     this.clock = timer(0,1000).pipe(map(t => new Date()),shareReplay(1));
 
    }
@@ -41,8 +45,29 @@ export class XsegundoService {
          segundo: t.getSeconds() < 10 ? '0' + t.getSeconds() : t.getSeconds().toString()
 
        }
-      //  console.log(this.vr)
+      //  if(this.vr?.minutos){
+        
+      //   console.log(this.verificar,'valor')
+      //   if(parseInt(this.verificar) == parseInt(this.vr.minutos)){
+      //     var user :string | null= localStorage.getItem('user');
+      //     if ( user!=null) {
+      //       let userObjeto:any = JSON.parse(user); 
+      //     this.notificationService.getUserNotification(userObjeto.id).subscribe(algo => {
+      //       localStorage.removeItem(KEY_ANUNCIOS);
+      //       localStorage.setItem(KEY_ANUNCIOS, JSON.stringify(algo.recipients))
+      //     })
+
+      //   //  console.log(this.vr,'aqui---')
+      //     }
+      //   }
+      //     this.verificar=`${parseInt(this.vr.minutos) + 1}`
+      //  }
+      
+
+    
+     
        this.infofecha$.next(this.vr);
+       
      });
      return this.infofecha$.asObservable();
 
