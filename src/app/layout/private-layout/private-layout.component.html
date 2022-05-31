@@ -17,12 +17,12 @@
    
     style="padding-top: 8px;padding-bottom:0px"
     class="p-button-rounded p-button-text"> -->
-    <ng-template [ngIf]="notifications.length > 0">
+    <ng-template [ngIf]="notifications_noleidos.length > 0">
       <i class="pi pi-bell mr-4 " 
-      pBadge style="font-size: 1.5rem" value="{{notifications.length}}" 
+      pBadge style="font-size: 1.5rem" value="{{notifications_noleidos.length}}" 
       (click)="op.toggle($event)"></i>
     </ng-template>
-    <ng-template [ngIf]="notifications.length == 0">
+    <ng-template [ngIf]="notifications_noleidos.length == 0">
       <i class="pi pi-bell mr-4 " 
        style="font-size: 1.5rem" value="" 
       (click)="op.toggle($event)"></i>

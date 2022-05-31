@@ -66,7 +66,8 @@ export class PrivateLayoutComponent implements OnInit {
   public Dialog:boolean =false
   public recipients:RecipientI[]=[]
   public notifications:RecipientI[]=[]
-
+  public notifications_noleidos:RecipientI[]=[]
+ 
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
@@ -277,6 +278,10 @@ if(token!=null && user!=null && menu != null){
     for (let index = 0; index < algo.recipients.length; index++) {
       if(index < 3){
         const key = algo.recipients[index];
+        if(key.status_recipients == 'no leido'){
+          this.notifications_noleidos.push(key)
+        }
+
         this.recipients.push(key)
       }
      
