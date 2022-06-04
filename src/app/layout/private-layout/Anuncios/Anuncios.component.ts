@@ -98,7 +98,7 @@ if( user!=null ){
             // if( minutes == '00' && seconds == '03' ) {
               this.mostrarModal=true
             this.Recipient=''
-              this.cancelar()
+            this.ref.close(algo);
               clearInterval(interval); 
             }
         }, 1000)

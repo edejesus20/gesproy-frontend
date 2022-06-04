@@ -368,22 +368,23 @@ get getRoles() {
   addRoles(event: Event){
     event.preventDefault();
     const control = <FormArray>this.form.controls['headquarterProgramTeacher']
-    this.mostrar=true
-      // if(control.length == 0 && this.mostrar == false){
-      //   control.push(this.formBuilder.group({
-      //     TeacherId:0,
-      //     HeadquarterProgramId:['', [Validators.required]],
-      //         ResearchBondingId:['', [Validators.required]],
-      //   }))
-      // }
-      // if(control.length >= 1 && this.mostrar == true){
+    
+      if(control.length == 0 && this.mostrar == false){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          HeadquarterProgramId:['', [Validators.required]],
+              ResearchBondingId:['', [Validators.required]],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar == true){
         control.push(this.formBuilder.group({
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
               ResearchBondingId:['', [Validators.required]],
         }))
 
-      // }
+      }
+      this.mostrar=true
       
   }
   removeRoles(index: number,event: Event){
@@ -392,11 +393,11 @@ get getRoles() {
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar=false
-      // control.push(this.formBuilder.group({
-      //   TeacherId:0,
-      //   HeadquarterProgramId:['', [Validators.required]],
-      //       ResearchBondingId:['', [Validators.required]],
-      // }))
+      control.push(this.formBuilder.group({
+        TeacherId:0,
+        HeadquarterProgramId:['', [Validators.required]],
+            ResearchBondingId:['', [Validators.required]],
+      }))
       }
   }
 

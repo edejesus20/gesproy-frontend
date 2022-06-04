@@ -15,6 +15,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class CambicarPasswordUserComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
+    id:[''],
     oldPassword: ['', [Validators.required]],
     newPassword: ['', [Validators.required]],
   });
@@ -38,6 +39,11 @@ export class CambicarPasswordUserComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
+    let userT :string | null= localStorage.getItem('user');
+  if(userT != null) {
+    let userObjeto:any = JSON.parse(userT); 
+    this.form.controls['id'].setValue(userObjeto.id)
+  }
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -47,9 +53,11 @@ export class CambicarPasswordUserComponent implements OnInit {
     const formValue: CambiarPasswordI = this.form.value;
     this.userService.actualzarContraseña(formValue).subscribe(
       (algo) => {
-        if(this.mostrarDialogo== true){
-          this.ref.close(algo);
-        }else{
+        // if(this.mostrarDialogo== true){
+        //   this.messageService.add({severity:'success', summary: 'Success', 
+        //   detail: 'Contraseña Cambiada con exito',life: 2000});
+          
+        // }else{
           var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -64,11 +72,11 @@ export class CambicarPasswordUserComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/users');
+                  this.ref.close(algo);
                   clearInterval(interval); 
                  }
                 })
-              }
+              // }
     }
       ,async error => {
         if(error != undefined) {

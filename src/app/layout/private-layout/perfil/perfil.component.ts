@@ -52,7 +52,7 @@ export class PerfilComponent implements OnInit {
     address:[''],
     phone:[''],
     email:['', [Validators.required]],
-    nationality: [''],
+    nationality: ['Colombiano'],
     date_of_birth: [''],
   });
   public form2:FormGroup=this.formBuilder.group({
@@ -89,6 +89,11 @@ export class PerfilComponent implements OnInit {
       date:['', [Validators.required]]})]),
   });
 
+  // docentes
+  public resolution_convalidations:any[]=[
+    {value:'Si'},{value:'No'}]
+  public validandoCertificado:boolean[]=[]
+
   public form4:FormGroup=this.formBuilder.group({
     id: [''],
     ScaleId:[''],
@@ -105,7 +110,7 @@ export class PerfilComponent implements OnInit {
           name: [''],
           date_graduation: [''],
           name_institution: [''],
-          resolution_convalidation: [''],
+          resolution_convalidation: '',
           degree_certificate: [''],
           TrainingId:[''],
       })]),
@@ -117,6 +122,7 @@ export class PerfilComponent implements OnInit {
         functions:[''],
         start_date:[''],
         final_date:[''],
+        constancy:['']
     })]),
     ChargeBondingId:['',[Validators.required]]
   });
@@ -162,7 +168,8 @@ export class PerfilComponent implements OnInit {
   public mincienciaCategorys:MincienciaCategoryI[] =[]
 
   public Charges1:any[] = [];
-
+  images:any;
+  FilesFormaciones:any[] =[]
 
   constructor(
     private userService:UserService,
@@ -246,6 +253,31 @@ export class PerfilComponent implements OnInit {
       }, error => console.error(error));
   }
 
+  resolucion(e:Event,pointIndex:number) {
+    e.preventDefault();
+    const control = <FormArray>this.form4.controls['trainingTeacher']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(control.value[pointIndex].resolution_convalidation.value == 'Si'){
+      if(this.validandoCertificado.length == 0){
+        this.validandoCertificado.push(true)
+      }else{
+        this.validandoCertificado[pointIndex]=true
+      }
+      // control.value[pointIndex].degree_certificate
+    
+    }
+    if(control.value[pointIndex].resolution_convalidation.value == 'No'){
+      if(this.validandoCertificado.length == 0){
+        this.validandoCertificado.push(false)
+      }else{
+        this.validandoCertificado[pointIndex]=false
+      }
+    }
+    console.log('aja')
+    console.log(this.validandoCertificado)
+    console.log(control.value[pointIndex].degree_certificate)
+  }
+
   public verificar(){
     var user :string | null= localStorage.getItem('user');
   
@@ -269,7 +301,14 @@ export class PerfilComponent implements OnInit {
         this.form.controls['email'].setValue(data.user.email)
         this.form.controls['phone'].setValue(data.user.Person?.phone)
         this.form.controls['address'].setValue(data.user.Person?.address)
-        this.form.controls['nationality'].setValue(data.user.Person?.nationality)
+        if(data.user.Person?.nationality != undefined){
+          this.form.controls['nationality'].setValue(data.user.Person?.nationality)
+        }
+        else{
+          this.form.controls['nationality'].setValue('Colombiano')
+
+        }
+        
         this.form.controls['date_of_birth'].setValue(data.user.Person?.date_of_birth)
         this.image3=data.user.avatar
         if(data.user.Person?.GenderId != undefined){
@@ -293,18 +332,53 @@ export class PerfilComponent implements OnInit {
         this.UserRoles=data.user.UserRoles
         for (const key of this.UserRoles) {
           if(key.Role != undefined){
-            this.verificarRol(key.Role)
+            this.verificarRol(key.Role,data.user.id)
           }
           
         }
+      }
+    }     
+  })
+    }
+  }
 
-         // estudiantes
-         this.form2.controls['id'].setValue(data.user.id)
+  // datos administrativos
+  agregar(ChargeAdministratives:ChargeAdministrativeI[]) {
+    if(ChargeAdministratives.length){
+      for (let key of ChargeAdministratives) {
+        if(key.ChargeId != undefined) {
+          // console.log(DiscountLine)
+          let control = <FormArray>this.form3.controls['Charges']
+          let Charge:any | null=null
+
+          for (const key2 of this.charges) {
+            if(key2.id == key.ChargeId && key.status == true) {
+              Charge=key2
+          }
+        }
+          if(Charge != null){
+            control.push(this.formBuilder.group({UserId:this.form3.value.id,ChargeId:[Charge, 
+              [Validators.required]],
+            date:[key.date, [Validators.required]]}))
+
+          }
+        }
+      }
+      this.mostrar3= true
+      let control = <FormArray>this.form3.controls['Charges']
+      control.removeAt(0)
+    }
+  }
+
+  verificarRol(Role:RoleI,id:number){
+    // console.log(Role)
+    if(Role.name.toLocaleLowerCase() === 'estudiante'){
+      
+        //  estudiantes
+         this.form2.controls['id'].setValue(id)
          
-         this.perfilService.getItemStudent(data.user.id).subscribe(data1=>{
+         this.perfilService.getItemStudent(id).subscribe(data1=>{
           if(data1.student.id != undefined){
-            // console.log(data1.student,'studentnd')
-
             if(data1.student.SeedbedStudents != undefined && data1.student.SeedbedStudents.length > 0){
               let algo=data1.student?.SeedbedStudents?.[0]
               let nuevo =algo?.hours
@@ -314,8 +388,7 @@ export class PerfilComponent implements OnInit {
               this.form2.controls['Horas'].setValue(nuevo)
               this.form2.controls['date_firt'].setValue(date_firt)
               this.form2.controls['date_end'].setValue(date_end)
-                // console.log(date_firt)
-                // console.log(date_end)
+  
     
               if(algo?.id != undefined){
                 for (const key of this.seedbeds) {
@@ -326,43 +399,28 @@ export class PerfilComponent implements OnInit {
 
               }
             }
-            // console.log(data1.student.HeadquarterProgramStudents,'data1.student.HeadquarterProgramStudents')
 
               if(data1.student.HeadquarterProgramStudents != undefined
                 && data1.student.HeadquarterProgramStudents.length > 0){
-                  // console.log('aqui1-----***')
                 this.agregarDescuentosA(data1.student.HeadquarterProgramStudents)
                 
               }
               if(data1.student.StudentInternships?.length != undefined 
                 && data1.student.StudentInternships.length > 0){
-                
                 this.agregarStudentInternships(data1.student.StudentInternships)
                 
               }
             
           }})
-        // administrativos
-        this.form3.controls['id'].setValue(data.user.id)
-        this.perfilService.getItemAdministrative(data.user.id).subscribe(data=>{
-          if(data.administrative.id != undefined){
+      this.estudiante=true
 
-            for (const key of this.headquarters) {
-              if(key.id != undefined && key.id == parseInt(data.administrative.HeadquarterId)){
-                this.form3.controls['HeadquarterId'].setValue(key)
-              }
-            }
-            if(data.administrative.ChargeAdministratives?.length != undefined
-              && data.administrative.ChargeAdministratives.length > 0){
-                this.agregar(data.administrative.ChargeAdministratives)
-            }
-          }
-        })
+    }
+    if(Role.name.toLocaleLowerCase() === 'docente'){
         // docentes
-        this.form4.controls['id'].setValue(data.user.id)
-        this.perfilService.getItemTeacher(data.user.id).subscribe(data=>{
+        this.form4.controls['id'].setValue(id)
+        this.perfilService.getItemTeacher(id).subscribe(data=>{
           if(data.teacher.id != undefined){
-            // console.log(data.teacher,'docente')
+            console.log(data.teacher,'docente')
           
             for (const key of this.mincienciaCategorys) {
               if(key.id != undefined && key.id == (data.teacher.MincienciaCategoryId)){
@@ -417,12 +475,31 @@ export class PerfilComponent implements OnInit {
             }
           }
         })
-      }
-    }     
-  })
+      this.docente=true
+
+    }
+    if(Role.name.toLocaleLowerCase() === 'administrativo'){
+        // administrativos
+        this.form3.controls['id'].setValue(id)
+        this.perfilService.getItemAdministrative(id).subscribe(data=>{
+          if(data.administrative.id != undefined){
+
+            for (const key of this.headquarters) {
+              if(key.id != undefined && key.id == parseInt(data.administrative.HeadquarterId)){
+                this.form3.controls['HeadquarterId'].setValue(key)
+              }
+            }
+            if(data.administrative.ChargeAdministratives?.length != undefined
+              && data.administrative.ChargeAdministratives.length > 0){
+                this.agregar(data.administrative.ChargeAdministratives)
+            }
+          }
+        })
+      this.administrativo=true
     }
   }
-// datos de docentes 
+
+  // datos de docentes 
   agregarHeadquarterPrograms(HeadquarterProgramTeachers: HeadquarterProgramTeacherI[]) {
     if(HeadquarterProgramTeachers.length){
       for (let key of HeadquarterProgramTeachers) {
@@ -473,7 +550,8 @@ export class PerfilComponent implements OnInit {
                       functions: key.functions,
                       name_institution:key.name_institution,
                       position_type:key.position_type,
-                      start_date:key.start_date
+                      start_date:key.start_date,
+                      constancy:key.constancy
                     }))
       }
     }
@@ -484,26 +562,35 @@ export class PerfilComponent implements OnInit {
   }
   agregarDescuentos(TrainingTeachers: TrainingTeacherI[]) {
     if(TrainingTeachers.length){
-      for (let key of TrainingTeachers) {
+      for (let index = 0; index < TrainingTeachers.length; index++) {
+        const key = TrainingTeachers[index];
+      // for (let key of TrainingTeachers) {
         if(key.TrainingId != undefined) {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form4.controls['trainingTeacher']
+          let AnexoId:any | null = null
+          if(key.AnexosTrainingTeachers?.[0].Anexo != undefined){
+            AnexoId=key.AnexosTrainingTeachers?.[0].Anexo
+          }
+
             this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
               if(algo1.teacher.id != undefined && key.TrainingId != undefined) {
                 this.trainingsService.getItem(key.TrainingId).subscribe((algo)=>{
                   if(algo.training.id != undefined){
                     // let any :any=algo.training
-                    // console.log(algo.training)
+                   
                     control.push(this.formBuilder.group({
                       name: [key?.name],
                       date_graduation: [key?.date_graduation],
                       name_institution: [key?.name_institution],
-                      resolution_convalidation: [key?.resolution_convalidation],
-                      degree_certificate: [key?.degree_certificate],
+                      resolution_convalidation: [{value:key?.resolution_convalidation}],
+                      degree_certificate: AnexoId,
                       TeacherId:algo1.teacher.id,
                       TrainingId:[algo.training],
                     }))
+                    console.log(control,'control')
+                    this.resolucion(new Event(''),index)
                   }
       
                 })
@@ -519,48 +606,6 @@ export class PerfilComponent implements OnInit {
       control.removeAt(0)
     }
 
-  }
-  // datos administrativos
-  agregar(ChargeAdministratives:ChargeAdministrativeI[]) {
-    if(ChargeAdministratives.length){
-      for (let key of ChargeAdministratives) {
-        if(key.ChargeId != undefined) {
-          // console.log(DiscountLine)
-          let control = <FormArray>this.form3.controls['Charges']
-          let Charge:any | null=null
-
-          for (const key2 of this.charges) {
-            if(key2.id == key.ChargeId && key.status == true) {
-              Charge=key2
-          }
-        }
-          if(Charge != null){
-            control.push(this.formBuilder.group({UserId:this.form3.value.id,ChargeId:[Charge, 
-              [Validators.required]],
-            date:[key.date, [Validators.required]]}))
-
-          }
-        }
-      }
-      this.mostrar3= true
-      let control = <FormArray>this.form3.controls['Charges']
-      control.removeAt(0)
-    }
-  }
-
-  verificarRol(Role:RoleI){
-    // console.log(Role)
-    if(Role.name.toLocaleLowerCase() === 'estudiante'){
-      this.estudiante=true
-
-    }
-    if(Role.name.toLocaleLowerCase() === 'docente'){
-      this.docente=true
-
-    }
-    if(Role.name.toLocaleLowerCase() === 'administrativo'){
-      this.administrativo=true
-    }
   }
 
   public cancelar(){
@@ -583,6 +628,7 @@ export class PerfilComponent implements OnInit {
           area:[key.area],
           post:[key.post],
           functions:[key.functions],
+          
         }))
       }
       this.mostrar2= true
@@ -755,8 +801,7 @@ export class PerfilComponent implements OnInit {
   addRoles2(event: Event){
     event.preventDefault();
     const control = <FormArray>this.form3.controls['Charges']
-    
-    //console.log(control)      
+    // console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar3 == false){
       control.push(this.formBuilder.group({
@@ -769,9 +814,10 @@ export class PerfilComponent implements OnInit {
       ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
     }))
-    this.mostrar3=true
+    
     //nuevo input
     }
+    this.mostrar3=true
      
   }
   removeRoles2(index: number,event: Event){
@@ -877,38 +923,10 @@ export class PerfilComponent implements OnInit {
     return this.form4.get('Workexperiences') as FormArray;//obtener todos los formularios
   }
   
-    addWorkexperiences(event: Event){
-      event.preventDefault();
-      const control = <FormArray>this.form4.controls['Workexperiences']
-        if(control.length == 0 && this.mostrar6 == false){
-          control.push(this.formBuilder.group({
-            TeacherId:0,
-            name_institution: [''],
-            position_type: [''],
-            functions:[''],
-            start_date:[''],
-            final_date:[''],
-          }))
-        }
-        if(control.length >= 1 && this.mostrar6 == true){
-          control.push(this.formBuilder.group({
-            TeacherId:0,
-            name_institution: [''],
-            position_type: [''],
-            functions:[''],
-            start_date:[''],
-            final_date:[''],
-          }))
-  
-        }
-        this.mostrar6=true
-    }
-    removeWorkexperiences(index: number,event: Event){
-      event.preventDefault();
-      let control = <FormArray>this.form4.controls['Workexperiences']//aceder al control
-      control.removeAt(index)
-        if(control.length <= 0){
-        this.mostrar6=false
+  addWorkexperiences(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form4.controls['Workexperiences']
+      if(control.length == 0 && this.mostrar6 == false){
         control.push(this.formBuilder.group({
           TeacherId:0,
           name_institution: [''],
@@ -916,49 +934,50 @@ export class PerfilComponent implements OnInit {
           functions:[''],
           start_date:[''],
           final_date:[''],
+          constancy:[''],
         }))
-        }
-    }
-  
-  
-    get gettrainingTeacher() {
-      return this.form4.get('trainingTeacher') as FormArray;//obtener todos los formularios
-    }
-    
-      addtrainingTeacher(event: Event){
-        event.preventDefault();
-        const control = <FormArray>this.form4.controls['trainingTeacher']
-          if(control.length == 0 && this.mostrar5 == false){
-            control.push(this.formBuilder.group({
-              TeacherId:0,
-              name: [''],
-              date_graduation: [''],
-              name_institution: [''],
-              resolution_convalidation: [''],
-              degree_certificate: [''],
-              TrainingId:[''],
-            }))
-          }
-          if(control.length >= 1 && this.mostrar5 == true){
-            control.push(this.formBuilder.group({
-              TeacherId:0,
-              name: [''],
-              date_graduation: [''],
-              name_institution: [''],
-              resolution_convalidation: [''],
-              degree_certificate: [''],
-              TrainingId:[''],
-            }))
-    
-          }
-          this.mostrar5=true
       }
-      removetrainingTeacher(index: number,event: Event){
-        event.preventDefault();
-        let control = <FormArray>this.form4.controls['trainingTeacher']//aceder al control
-        control.removeAt(index)
-          if(control.length <= 0){
-          this.mostrar5=false
+      if(control.length >= 1 && this.mostrar6 == true){
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          name_institution: [''],
+          position_type: [''],
+          functions:[''],
+          start_date:[''],
+          final_date:[''],
+          constancy:[''],
+        }))
+
+      }
+      this.mostrar6=true
+  }
+  removeWorkexperiences(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form4.controls['Workexperiences']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar6=false
+      control.push(this.formBuilder.group({
+        TeacherId:0,
+        name_institution: [''],
+        position_type: [''],
+        functions:[''],
+        start_date:[''],
+        final_date:[''],
+        constancy:[''],
+      }))
+      }
+  }
+
+  
+  get gettrainingTeacher() {
+    return this.form4.get('trainingTeacher') as FormArray;//obtener todos los formularios
+  }
+  
+    addtrainingTeacher(event: Event){
+      event.preventDefault();
+      const control = <FormArray>this.form4.controls['trainingTeacher']
+        if(control.length == 0 && this.mostrar5 == false){
           control.push(this.formBuilder.group({
             TeacherId:0,
             name: [''],
@@ -968,8 +987,40 @@ export class PerfilComponent implements OnInit {
             degree_certificate: [''],
             TrainingId:[''],
           }))
-          }
-      }
+        }
+        if(control.length >= 1 && this.mostrar5 == true){
+          control.push(this.formBuilder.group({
+            TeacherId:0,
+            name: [''],
+            date_graduation: [''],
+            name_institution: [''],
+            resolution_convalidation: [''],
+            degree_certificate: [''],
+            TrainingId:[''],
+          }))
+  
+        }
+        this.mostrar5=true
+    }
+    removetrainingTeacher(index: number,event: Event){
+      event.preventDefault();
+      let control = <FormArray>this.form4.controls['trainingTeacher']//aceder al control
+      control.removeAt(index)
+      // al eliminar un registro, se debe quitar el file del array
+      // this.FilesFormaciones.(index)
+        if(control.length <= 0){
+        this.mostrar5=false
+        control.push(this.formBuilder.group({
+          TeacherId:0,
+          name: [''],
+          date_graduation: [''],
+          name_institution: [''],
+          resolution_convalidation: [''],
+          degree_certificate: [''],
+          TrainingId:[''],
+        }))
+        }
+    }
 
       // envio de datos
       public onSubmit(event: Event){
@@ -1251,7 +1302,7 @@ export class PerfilComponent implements OnInit {
             TrainingId:key.TrainingId,
             })
           }
-          formValue.trainingTeacher = this.form.value.trainingTeacher
+          formValue.trainingTeacher = this.form4.value.trainingTeacher
         }else{
           formValue.trainingTeacher = this.trainingTeachers
         }
@@ -1272,32 +1323,93 @@ export class PerfilComponent implements OnInit {
           formValue.Workexperiences=[]
     
         }
-      // console.log(formValue,'docente')
+      console.log(formValue,'docente')
   if(formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined) && 
     formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined)){
             this.perfilService.updateDocente(formValue.id,formValue).subscribe(
               (algo) => {
-                      var date = new Date('2020-01-01 00:00:03');
-                        function padLeft(n:any){ 
-                          return n ="00".substring(0, "00".length - n.length) + n;
+
+                let array:any[] = []
+                console.log(algo.teacher,'algo.teacher')
+                  if(algo.teacher.id != undefined){
+
+                    console.log(algo.teacher,'algo.teacher')
+                    if(algo.teacher?.TrainingTeachers?.length != undefined && algo.teacher.TrainingTeachers.length >0){
+                      console.log('algo.teacher?.TrainingTeachers')
+                      for (const key of algo.teacher.TrainingTeachers) {
+                        if(key.id){
+                          array.push({
+                            UserId:this.form4.value.id,
+                            TrainingTeacherId:key.id,
+                            name:'certificado'+key.Training?.name, 
+                            file:null
+                            }
+                            )
                         }
-                        var interval = setInterval(() => {
-                        var minutes = padLeft(date.getMinutes() + "");
-                        var seconds = padLeft(date.getSeconds() + "");
-                        // console.log(minutes, seconds);
-                        if( seconds == '03') {
-                        this.messageService.add({severity:'success', summary: 'Success', 
-                        detail: 'Registro de Docente Actualizado con exito'});
-                        }
-                        date = new Date(date.getTime() - 1000);
-                        if( minutes == '00' && seconds == '01' ) {
-                          this.ref.close(algo);
-                          // this.router.navigateByUrl('/landing');
-                          clearInterval(interval); 
-                        }
-                  }, 1000);
+                      }
+                      console.log(array,'array')
+                      for (let index = 0; index < array.length; index++) {
+                        const element = array[index];
+
+                        for (const key of algo.teacher.TrainingTeachers) {
+                          if(key.id == element.TrainingTeacherId){
+                            if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+
+                            }else{
+
+                              for (const key2 of this.FilesFormaciones) {
+
+                                if(key2.position == index){
+                                  array[index].file=key2.file
+
+                                  this.teacherService.FormacionDocente(
+                                    array[index].UserId.toString(),array[index].TrainingTeacherId.toString(),
+                                    array[index].name.toString(),array[index].file).subscribe(result=>{
+          
+                                      console.log(result,'result')
+                                      var date = new Date('2020-01-01 00:00:03');
+                                      function padLeft(n:any){ 
+                                        return n ="00".substring(0, "00".length - n.length) + n;
+                                      }
+                                      var interval = setInterval(() => {
+                                      var minutes = padLeft(date.getMinutes() + "");
+                                      var seconds = padLeft(date.getSeconds() + "");
+                                      // console.log(minutes, seconds);
+                                      if( seconds == '03') {
+                                      this.messageService.add({severity:'success', summary: 'Success', 
+                                      detail: 'Registro de Docente Actualizado con exito'});
+                                      }
+                                      date = new Date(date.getTime() - 1000);
+                                      if( minutes == '00' && seconds == '01' ) {
+                                        this.ref.close(algo);
+                                        // this.router.navigateByUrl('/landing');
+                                        clearInterval(interval); 
+                                      }
+                                }, 1000);
+                                  })
+                                }
+                              }
+                              
+                            }
+                          }
+                        
+                      }
+                      // console.log(this.FilesFormaciones,'this.FilesFormaciones')
+                      // for (let index = 0; index < this.FilesFormaciones.length; index++) {
+                      //   const element = this.FilesFormaciones[index];
+                      //   array[index].file=element.file
+
+                   
+                      // }
+
+                     
+                     
+                    }
+
+                  }
                 
-              },async error => {
+              }
+            },async error => {
                 if(error != undefined) {
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
@@ -1311,4 +1423,33 @@ export class PerfilComponent implements OnInit {
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
           }
       }
+
+    // files
+
+    onFileChange(event:any,pointIndex:number) {
+      event.preventDefault();
+      const control = <FormArray>this.form4.controls['trainingTeacher']
+      // console.log(control.value[pointIndex].resolution_convalidation)
+      if(control.value[pointIndex].degree_certificate != ''){
+        console.log('aquii')
+        if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+          const file=event.target.files[0];
+          console.log('aquii-222')
+          // if(file.type.includes("degree_certificate")){//Evaluar si es una imagen
+              // const reader= new FileReader();
+              // reader.readAsDataURL(file);
+              // reader.onload=function load(){
+              //    let images=reader.result; //Asignar al thumbnail
+              // }.bind(this);
+              // this.file=file;
+              this.FilesFormaciones.push({position:pointIndex,file:file})
+              // console.log(this.file)
+              // console.log(reader,'reader')
+          // }
+      }
+      }
+     
+
+    
+  }
 }

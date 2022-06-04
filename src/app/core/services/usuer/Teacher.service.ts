@@ -49,6 +49,49 @@ export class TeacherService {
      }),
      catchError(this.handleError))
  }
+ FormacionDocente(UserId: string,TrainingTeacherId:string,name:string,file:any): Observable<any> {
+  let token : string | null=localStorage.getItem('token')
+  let user : string | null=localStorage.getItem('user')
+  // let httpOptions:any
+  // if(token != null && user != null) {
+  //   let userObjeto:any = JSON.parse(user); 
+  //   httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'x-token':token,
+  //       'user':userObjeto.id
+  //     })
+  //   }
+  // }
+  const form= new FormData();//Crea un formulario
+  form.append('name',name);
+  form.append('UserId',UserId);
+  form.append('TrainingTeacherId',TrainingTeacherId);
+  form.append('file',file);//Asigna el campo File
+console.log(form,'FormData')
+let body={
+  UserId: UserId,TrainingTeacherId:TrainingTeacherId,name:name,file:file
+}
+  // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+    return this.http.post<any>(this.API_URI + '/api/subir',form).pipe(
+    tap((res: any) => {
+      if (res) {
+        // Crear usuario
+        // console.log('registro insertado');
+      }
+    }),
+    catchError(this.handleError))
+}
+// addPicture(name:string,file:File):Observable<Object>{
+//   const form= new FormData();//Crea un formulario
+//   form.append('name',name);
+//   form.append('file',file,'form-data');//Asigna el campo File
+//   return this.http.post<Object>(this.api,form).
+//   pipe(
+//       catchError(this.handleError)
+//   );
+// }
+ 
 
  AsignarTeacher(teacher: any): Observable<any> {
   return this.http.post<any>(this.API_URI+'/api/AsignarTeacher', teacher).pipe(

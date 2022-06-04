@@ -40,7 +40,17 @@ export interface TeacherI {
     // LinesG?:any[]
     // LinesS?:any[]
 }
-
+export interface AnexosTrainingTeacherI {
+    id?:number
+    TrainingTeacherId:number;
+    AnexoId:number;
+    UserId:number
+    Anexo?:AnexosI
+}
+export interface AnexosI {
+    name: string;
+    url: string;
+}
 export interface ChargebondingScaleTeacherI {
     id?:number
     ChargebondingScaleId: number
@@ -69,6 +79,7 @@ export interface WorkexperienceI {
     TeacherId?:number;
     start_date:string
     final_date:string
+    constancy?:string
 }
 
 export interface Charge_bondingI {

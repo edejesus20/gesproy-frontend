@@ -67,6 +67,7 @@ export class PrivateLayoutComponent implements OnInit {
   public recipients:RecipientI[]=[]
   public notifications:RecipientI[]=[]
   public notifications_noleidos:RecipientI[]=[]
+  private UserId:number=0
  
   constructor(
     private messageService: MessageService,
@@ -152,9 +153,9 @@ export class PrivateLayoutComponent implements OnInit {
     e.preventDefault()
   
     this.ref1 = this.dialogService.open(PerfilComponent, {
-      width: '65%',
+      width: '90%',
       // height: '55%',
-      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+      contentStyle:{'padding':'20px'} ,closable:false, closeOnEscape:false,
        showHeader:false, 
       // baseZIndex: 10000,
       data: {
@@ -175,7 +176,7 @@ export class PrivateLayoutComponent implements OnInit {
     this.ref1 = this.dialogService.open(AvatarComponent, {
       width: '60%',
       // height: '55%',
-      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+      contentStyle:{'padding':'20px'} ,closable:false, closeOnEscape:false,
        showHeader:false, 
       // baseZIndex: 10000,
       data: {
@@ -260,21 +261,12 @@ hideDialog() {
   this.Dialog = false;
 }
 
- public verificar(){
-  var token :string | null= localStorage.getItem('token');
-  var user :string | null= localStorage.getItem('user');
-  var menu :string | null= localStorage.getItem('menu');
+private notificaciones(id:number){
 
-if(token!=null && user!=null && menu != null){
-    this.showSuccess()
-  let userObjeto:any = JSON.parse(user); 
-  let menuObjeto:any = JSON.parse(menu);
-// console.log(menuObjeto)
-  this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
-  this.menu1 = this.privateMenu;
-
-  this.notificationService.getUserNotification(userObjeto.id).subscribe(algo => {
+  this.notificationService.getUserNotification(id).subscribe(algo => {
     this.notifications=algo.recipients;
+    this.notifications_noleidos=[]
+    this.recipients=[]
     for (let index = 0; index < algo.recipients.length; index++) {
       if(index < 3){
         const key = algo.recipients[index];
@@ -289,7 +281,22 @@ if(token!=null && user!=null && menu != null){
   
     console.log(this.recipients)
   })
+}
 
+ public verificar(){
+  var token :string | null= localStorage.getItem('token');
+  var user :string | null= localStorage.getItem('user');
+  var menu :string | null= localStorage.getItem('menu');
+
+if(token!=null && user!=null && menu != null){
+    this.showSuccess()
+  let userObjeto:any = JSON.parse(user); 
+  let menuObjeto:any = JSON.parse(menu);
+// console.log(menuObjeto)
+  this.privateMenu=createMenu(menuObjeto.mainSesion) as any;
+  this.menu1 = this.privateMenu;
+  this.UserId=userObjeto.id
+this.notificaciones(this.UserId)
   
   this.userService.getOneUser(userObjeto.id).subscribe((data)=>{
   if(data.user.fullName && data.user.avatar != undefined){
@@ -314,7 +321,7 @@ mostrarNOtificaciones(event: Event){
   this.ref1 = this.dialogService.open(AnunciosComponent, {
     width: '45%',
     // height: '55%',
-    contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+    contentStyle:{'padding':'20px'} ,closable:false, closeOnEscape:false,
      showHeader:false, 
     // baseZIndex: 10000,
     data: {
@@ -324,6 +331,7 @@ mostrarNOtificaciones(event: Event){
 
 this.ref1.onClose.subscribe((person: any) =>{
     if (person) {
+      this.notificaciones(this.UserId)
         // this.messageService.add({severity:'successs', summary: 'Perfil Editado', detail: person.name,life: 2000});
       this.ngOnInit()
       }

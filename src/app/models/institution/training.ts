@@ -1,4 +1,4 @@
-import { TeacherI } from "../user/teacher";
+import { AnexosTrainingTeacherI, TeacherI } from "../user/teacher";
 
 export interface TrainingI {
     id?: number;
@@ -21,6 +21,7 @@ export interface TrainingTeacherI {
     TeacherId:number;
     TrainingId:number
     Teacher?:TeacherI
-    Training?:TeacherI
+    Training?:TrainingI
+    AnexosTrainingTeachers?:AnexosTrainingTeacherI[]
 
 }

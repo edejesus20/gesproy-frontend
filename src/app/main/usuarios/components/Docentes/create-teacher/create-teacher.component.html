@@ -133,16 +133,11 @@
             <h3 style="text-align:center;">2. Datos Secundarios:</h3>
         
           <div class="grid p-fluid">
-            <div class="col-12 md:col-6 lg:col-6">
-              <div class="grid ">
-                <div class="col-1 md:col-1">
-                  <div class="p-inputgroup"  >
-                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                  </div>
-                </div>
-                <div class="col-11 md:col-11">
+            <div class="col-12 sm:col-12 md:col-12 lg:col-6">
               <div class="flex"> 
-                <div style="width:100%">
+                <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
+                <div style="width:90%">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                 [options]="charge_bondings" [filter]="true"
                   name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
@@ -156,24 +151,17 @@
                 </p-dropdown>
                 </div>
                 <span class="bottomdelete" style="margin-top: -35px;">
-                  <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
+                  <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 10px;"
                   class="p-button-rounded p-button-outlined" (click)="addVinculacion($event)" ></button>
                 </span>
               </div>
-                </div>
-              </div>
             </div>
 
-            <div class="col-12 md:col-6 lg:col-6">
-              <div class="grid ">
-                <div class="col-1 md:col-1">
-                  <div class="p-inputgroup"  >
-                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                  </div>
-                </div>
-                <div class="col-11 md:col-11">
+            <div class="col-12 sm:col-12 md:col-12 lg:col-6">
               <div class="flex"> 
-                <div style="width:100%">
+                <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
+                <div style="width:90%">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="mincienciaCategorys" [filter]="true"
                 name="MincienciaCategoryId" formControlName="MincienciaCategoryId"  label="CATEGORIA INVESTIGADOR" 
@@ -186,24 +174,20 @@
               </p-dropdown>
           </div>
           <span class="bottomdelete" style="margin-top: -35px;">
-            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
+            <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 10px;"
             class="p-button-rounded p-button-outlined" (click)="addCategoriaColciencias($event)" ></button>
           </span>
             </div>
-                </div>
-              </div>
+            </div>
           </div>
-          </div>
+        
           <ng-template [ngIf]="scales.length > 0">
      
                 <div class="grid p-fluid">
-                  <div class="col-1 sm:col-1 md:col-1">
-                    <div class="p-inputgroup"  >
-                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                    </div>
-                  </div>
-                  <div class="col-11 sm:col-11 md:col-11">
+                  <div class="col-1 sm:col-12 md:col-12 lg:col-12">
                     <div class="flex"> 
+                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                       <div style="width:100%">
               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
               [options]="scales" [filter]="true"
@@ -244,14 +228,10 @@
                         <div *ngFor="let item of getRoles.controls; 
                         let pointIndex=index" [formGroupName]="pointIndex">
                           <div class="grid"> 
-                            <div class="col-12 sm:col-5 md:col-5">
-                              <div class="grid ">
-                                <div class="col-1 md:col-1">
-                                  <div class="p-inputgroup"  >
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-5">
+                                  <div class="flex"> 
                                     <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                                  </div>
-                                </div>
-                                <div class="col-11 md:col-11">
+                                    <div style="width:90%">
                               <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                               [options]="headquarterProgram" [filter]="true"
                                   formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
@@ -264,56 +244,48 @@
                                     Programa: {{option.Programa  | titlecase}}</span>
                               </ng-template>
                               </p-dropdown>
+                                    </div>
+                 
                             </div>
-                              </div>
                             </div>
-                            <div class="col-12 sm:col-6 md:col-6">
-                              <div class="grid ">
-                                <div class="col-1 md:col-1">
-                                  <div class="p-inputgroup"  >
-                                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                                  </div>
-                                </div>
-                                <div class="col-10 md:col-10">
-                            <div class="flex">
-                              <div style="width:100%">
+                            <div class="col-12 sm:col-10 md:col-10 lg:col-5">
+                                <div class="flex">
+                                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
 
-                                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                [options]="research_bondings" [filter]="true"
-                                    formControlName="ResearchBondingId" name="ResearchBondingId"
-                                   label="VINCULACION INVESTIGATIVA" 
-                                  [style]="{'width':'100%','margin-bottom':'20px'}"
-                                  optionvalue="id" optionLabel="name"  filterBy="name"
-                                  [required]="true" placeholder="VINCULACION INVESTIGATIVA">
-                                  <ng-template let-option pTemplate="item">
-                                    <span >
-                                      {{option.name  | titlecase}}
-                                      </span>
-                                </ng-template>
-                                </p-dropdown>
-                              </div>
-                              
-                            </div>
+                                  <div style="width:90%">
+                                    <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                    [options]="research_bondings" [filter]="true"
+                                        formControlName="ResearchBondingId" name="ResearchBondingId"
+                                      label="VINCULACION INVESTIGATIVA" 
+                                      [style]="{'width':'100%','margin-bottom':'20px'}"
+                                      optionvalue="id" optionLabel="name"  filterBy="name"
+                                      [required]="true" placeholder="VINCULACION INVESTIGATIVA">
+                                      <ng-template let-option pTemplate="item">
+                                        <span >
+                                          {{option.name  | titlecase}}
+                                          </span>
+                                    </ng-template>
+                                    </p-dropdown>
+                                  </div>
+                                  
                                 </div>
-                                <div class="col-1 md:col-1">
-                                  <span class="bottomdelete" style="margin-top: -35px;">
+                              </div>
+                            <div class="col-12 sm:col-2 md:col-2 lg:col-2">
+                              <span class="bottomdelete mr-1" style="margin-top: -35px;">
                                     <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: -5px;"
                                     class="p-button-rounded p-button-outlined" (click)="addRelaciones($event)" ></button>
                                   </span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-12 sm:col-1 md:col-1">
                               <span class="bottomdelete" style="margin-top: -35px;">
                                 <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles(pointIndex,$event)"  
                                 class="p-button-rounded p-button-danger"></button>
                               </span>
                             </div>
-                      
-                          
-                        </div>
-                        </div>
+                    
+                     
+            
                       </div> 
+                        </div>
+                      </div>
                     </td>
                 </tr>
               </ng-template>
@@ -538,31 +510,31 @@
                                         </span>       
                                       </div>
                                     </div>
-                                    <div class="col-12 md:col-6 lg:col-6 flex">
-                                   
-                                    <div>
+                                    <div class="col-12 md:col-6 lg:col-6">
+                                   <div class="grid">
+                                    <div class="col-12 md:col-12 lg:col-6">
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
                                         <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
+                                        [style]="{'width':'90%'}">
                                         <input type="date" pInputText   class="p-inputtext-lg" title="FECHA DE INICIO"
                                         inputId="basic" name="start_date" 
                                         placeholder="FECHA DE INICIO"
                                         formControlName="start_date" required></span> 
                                       </div>
                                     </div>
-                                       <div>
-                                        <div class="p-inputgroup"  style="margin-left: 15px;margin-top: 10px;">
-                                          <span class="p-float-label" 
-                                          [style]="{'width':'100%'}">
-                                          <input type="date" pInputText  class="p-inputtext-lg" 
-                                          title="FECHA DE TERMINO"
-                                          inputId="basic" name="final_date"
-                                           placeholder="FECHA DE TERMINO"
-                                          formControlName="final_date" required></span> 
-                                        </div>
-                                       </div>
-                                  
-                                    
+                                    <div class="col-12 md:col-12 lg:col-6">
+                                      <div class="p-inputgroup"  style="margin-top: 10px;">
+                                        <span class="p-float-label" 
+                                        [style]="{'width':'90%'}">
+                                        <input type="date" pInputText  class="p-inputtext-lg" 
+                                        title="FECHA DE TERMINO"
+                                        inputId="basic" name="final_date"
+                                         placeholder="FECHA DE TERMINO"
+                                        formControlName="final_date" required></span> 
+                                      </div>
+                                    </div>
+                                   </div>
+
                                     </div>
                                   </div>
                               </div>

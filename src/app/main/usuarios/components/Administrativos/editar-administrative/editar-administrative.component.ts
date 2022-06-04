@@ -344,9 +344,10 @@ export class EditarAdministrativeComponent implements OnInit {
       ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
     }))
-    this.mostrar2=true
+   
     //nuevo input
     }
+    this.mostrar2=true
      
   }
   removeRoles(index: number,event: Event){

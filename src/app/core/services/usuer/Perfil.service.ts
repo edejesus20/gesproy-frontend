@@ -45,9 +45,9 @@ export class PerfilService {
 };
 
  // Update item by id
- updateDocente(id:number, deleteTeacher:any): Observable<any> {
+ updateDocente(id:number, deleteTeacher:TeacherI): Observable<{teacher:TeacherI}> {
    return this.http
-     .patch<any>(this.base_path_docente + '/' + id, JSON.stringify(deleteTeacher), this.httpOptions)
+     .patch<{teacher:TeacherI}>(this.base_path_docente + '/' + id, JSON.stringify(deleteTeacher), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

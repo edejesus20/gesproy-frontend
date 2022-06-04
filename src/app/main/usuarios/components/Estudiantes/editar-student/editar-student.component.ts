@@ -445,6 +445,10 @@ getOneCntAccount(id:number) {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar2=false
+        control.push(this.formBuilder.group({
+          StudentId:0,
+          HeadquarterProgramId:['', [Validators.required]],
+        }))
         }
     }
 
@@ -493,6 +497,18 @@ getOneCntAccount(id:number) {
         if(control.length <= 0){
           // console.log('aqui')
         this.mostrar3=false
+        control.push(this.formBuilder.group({
+          StudentId:0,
+          nameP:[''],
+          start_date:[''],
+          final_date:[''],
+          name_institution:[''],
+          internship_certificate:[''],
+          practice_hours:[''],
+          area:[''],
+          post:[''],
+          functions:[''],
+        }))
         }
     }
     

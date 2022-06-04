@@ -137,12 +137,31 @@ getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
 
 // Get single student data by ID
 getOneUser(id: number): Observable<{ user: UserI ,rolesUsers:any[]}> {
+  let user : string | null=localStorage.getItem('user')
+  let token : string | null=localStorage.getItem('token')
+  if(token != null && user != null) {
+    let userObjeto:any = JSON.parse(user); 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':userObjeto.id
+      })
+    }
   return this.http
+    .get<{ user: UserI ,rolesUsers:any[]}>(this.base_path + '/' + id,httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }else{
+    return this.http
     .get<{ user: UserI ,rolesUsers:any[]}>(this.base_path + '/' + id)
     .pipe(
       retry(2),
       catchError(this.handleError)
     )
+  }
 }
 
 
@@ -181,11 +200,11 @@ actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPassword
       })
     }
     return this.http
-    .put<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user),httpOptions)
+    .patch<{ user: CambiarPasswordI }>(this.base+'/'+user.id, JSON.stringify(user),httpOptions)
     .pipe(retry(2),catchError(this.handleError))
   }else{
       return this.http
-      .put<{ user: CambiarPasswordI }>(this.base, JSON.stringify(user))
+      .patch<{ user: CambiarPasswordI }>(this.base+'/'+user.id, JSON.stringify(user))
       .pipe(retry(2),catchError(this.handleError)) 
     }
 }

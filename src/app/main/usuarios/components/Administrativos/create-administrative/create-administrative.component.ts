@@ -295,9 +295,10 @@ export class CreateAdministrativeComponent implements OnInit {
       ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
     }))
-    this.mostrar=true
+   
     //nuevo input
     }
+    this.mostrar=true
      
   }
   removeRoles(index: number,event: Event){

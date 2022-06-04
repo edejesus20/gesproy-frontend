@@ -268,22 +268,22 @@ export class CreateStudentComponent implements OnInit {
   
     addRoles(event: Event){
       event.preventDefault();
-      this.mostrar=true
+      // this.mostrar=true
       const control = <FormArray>this.form.controls['headquarterProgramStudent']
-        // if(control.length == 0 && this.mostrar == false){
-        //   control.push(this.formBuilder.group({
-        //     StudentId:0,
-        //     HeadquarterProgramId:['', [Validators.required]],
-        //   }))
-        // }
-        // if(control.length >= 1 && this.mostrar == true){
+        if(control.length == 0 && this.mostrar == false){
+          control.push(this.formBuilder.group({
+            StudentId:0,
+            HeadquarterProgramId:['', [Validators.required]],
+          }))
+        }
+        if(control.length >= 1 && this.mostrar == true){
           control.push(this.formBuilder.group({
             StudentId:0,
             HeadquarterProgramId:['', [Validators.required]],
           }))
   
-        // }
-        // this.mostrar=true
+        }
+        this.mostrar=true
     }
     removeRoles(index: number,event: Event){
       event.preventDefault();
@@ -291,10 +291,10 @@ export class CreateStudentComponent implements OnInit {
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar=false
-        // control.push(this.formBuilder.group({
-        //   StudentId:0,
-        //   HeadquarterProgramId:['', [Validators.required]],
-        // }))
+        control.push(this.formBuilder.group({
+          StudentId:0,
+          HeadquarterProgramId:['', [Validators.required]],
+        }))
         }
     }
     get getStudentInternships() {
