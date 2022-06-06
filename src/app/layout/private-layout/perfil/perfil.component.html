@@ -441,6 +441,8 @@
                                         <label for="name"style="font-weight: bold;">NOMBRE DE FORMACIÓN</label>
                                          
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
                                         <input type="text" class="p-inputtext-lg" title="NOMBRE DE FORMACIÓN" 
@@ -455,6 +457,8 @@
                                           <label for="name"style="font-weight: bold;">FECHA DE GRADUACION</label>
                                            
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
                                         <input type="date"class="p-inputtext-lg"  title="FECHA DE GRADUACION"
@@ -467,10 +471,15 @@
                                     </div>
                                     </div>
                                     <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+
+                                      <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+
                                       <div class="field ">
                                         <label for="name"style="font-weight: bold;">CAPACITACIÓN</label>
                                          
                                       <div class="flex">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <div style="width:100%">
                                           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                           [options]="trainings" [filter]="true"
@@ -478,7 +487,7 @@
                                             label="CAPACITACIÓN" 
                                             [style]="{'width':'100%','margin-top':'10px'}"
                                             optionvalue="id" optionLabel="name"  filterBy="name"
-                                            [required]="true" placeholder="CAPACITACIÓN"  title="CAPACITACIÓN">
+                                            [disabled]="true" placeholder="CAPACITACIÓN"  title="CAPACITACIÓN">
                                             <ng-template let-option pTemplate="item">
                                               <span >
                                                 {{option.name  | titlecase}}
@@ -489,6 +498,33 @@
                                       </div>
 
                                       </div>
+                                      </ng-template>
+                                      <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+                                        <div class="field ">
+                                          <label for="name"style="font-weight: bold;">CAPACITACIÓN</label>
+                                           
+                                        <div class="flex">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                          <div style="width:100%">
+                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                            [options]="trainings" [filter]="true"
+                                                formControlName="TrainingId" name="TrainingId"
+                                              label="CAPACITACIÓN" 
+                                              [style]="{'width':'100%','margin-top':'10px'}"
+                                              optionvalue="id" optionLabel="name"  filterBy="name"
+                                              [required]="true" placeholder="CAPACITACIÓN"  title="CAPACITACIÓN">
+                                              <ng-template let-option pTemplate="item">
+                                                <span >
+                                                  {{option.name  | titlecase}}
+                                                  </span>
+                                            </ng-template>
+                                            </p-dropdown>
+                                          </div>
+                                        </div>
+  
+                                        </div>
+                                      </ng-template>
                                     </div>
                                   </div>
                                   <div class="grid ">
@@ -496,6 +532,8 @@
                                       <div class="field ">
                                         <label for="name"style="font-weight: bold;">INSTITUCIÓN</label>
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
          
@@ -508,28 +546,59 @@
                                     </div>
                                   </div>
                                     <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-                                      <div class="field ">
-                                        <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
-                                      <div class="flex">
-                                        <div style="width:100%">
-                                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                          [options]="resolution_convalidations" [filter]="true"
-                                              formControlName="resolution_convalidation" name="resolution_convalidation"
-                                            label="RESOLUCION DE CONVALIDACION" 
-                                            [style]="{'width':'100%','margin-top':'10px'}"
-                                            optionvalue="value" optionLabel="value"  filterBy="value"
-                                            [required]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
-                                            (click)="resolucion($event,pointIndex)">
-                                            <ng-template let-option pTemplate="item">
-                                              <span >
-                                                {{option.value  | titlecase}}
-                                                </span>
-                                          </ng-template>
-                                          </p-dropdown>
-                                        </div>
-                                      </div>
+                                      <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+                                        <div class="field ">
+                                          <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
+                                        <div class="flex">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
 
-                                      </div>
+                                          <div style="width:100%">
+                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                            [options]="resolution_convalidations" [filter]="true"
+                                                formControlName="resolution_convalidation" name="resolution_convalidation"
+                                              label="RESOLUCION DE CONVALIDACION" 
+                                              [style]="{'width':'100%','margin-top':'10px'}"
+                                              optionvalue="value" optionLabel="value"  filterBy="value"
+                                              [disabled]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
+                                              (click)="resolucion($event,pointIndex)">
+                                              <ng-template let-option pTemplate="item">
+                                                <span >
+                                                  {{option.value  | titlecase}}
+                                                  </span>
+                                            </ng-template>
+                                            </p-dropdown>
+                                          </div>
+                                        </div>
+  
+                                        </div>
+                                      </ng-template>
+                                      <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+                                        <div class="field ">
+                                          <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
+                                        <div class="flex">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+
+                                          <div style="width:100%">
+                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                            [options]="resolution_convalidations" [filter]="true"
+                                                formControlName="resolution_convalidation" name="resolution_convalidation"
+                                              label="RESOLUCION DE CONVALIDACION" 
+                                              [style]="{'width':'100%','margin-top':'10px'}"
+                                              optionvalue="value" optionLabel="value"  filterBy="value"
+                                              [required]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
+                                              (click)="resolucion($event,pointIndex)">
+                                              <ng-template let-option pTemplate="item">
+                                                <span >
+                                                  {{option.value  | titlecase}}
+                                                  </span>
+                                            </ng-template>
+                                            </p-dropdown>
+                                          </div>
+                                        </div>
+  
+                                        </div>
+                                      </ng-template>
+                                 
                                       <!-- <div class="p-inputgroup"  style="margin-top: 10px;">
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
@@ -546,7 +615,6 @@
                                         <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate.name">
                                           <div class="field ">
                                             <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
-                                          
                                           <div class="p-inputgroup">
                                             <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
@@ -558,7 +626,7 @@
                                               name="Anexos" 
                                               placeholder="CERTIFICADO DE GRADO" 
                                               formControlName="degree_certificate" 
-                                              title="CERTIFICADO DE GRADO" (change)="onFileChange($event,pointIndex)">
+                                              title="CERTIFICADO DE GRADO" (click)="onFileChange($event,pointIndex)">
                                               <a pInputText
                                               class="input-file p-inputtext-lg mt-4" 
                                               style="margin-bottom: 15px;" target="back" href="http://localhost:3000{{form4.value.trainingTeacher[pointIndex].degree_certificate.url}}">
@@ -574,6 +642,8 @@
                                             <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
                                           
                                           <div class="p-inputgroup">
+                                      <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px;"><i class="pi pi-bookmark-fill"></i></span>
+
                                             <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
           

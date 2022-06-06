@@ -93,7 +93,7 @@ export class PerfilComponent implements OnInit {
   public resolution_convalidations:any[]=[
     {value:'Si'},{value:'No'}]
   public validandoCertificado:boolean[]=[]
-
+    private deletetrainingTeachers:any[]=[]
   public form4:FormGroup=this.formBuilder.group({
     id: [''],
     ScaleId:[''],
@@ -106,13 +106,14 @@ export class PerfilComponent implements OnInit {
     })]),
     trainingTeacher: this.formBuilder.array([this.formBuilder.group(
         {
+          id:0,
           TeacherId:0,
-          name: [''],
-          date_graduation: [''],
-          name_institution: [''],
-          resolution_convalidation: '',
+          name: ['',[Validators.required]],
+          date_graduation: ['',[Validators.required]],
+          name_institution: ['',[Validators.required]],
+          resolution_convalidation: ['',[Validators.required]],
           degree_certificate: [''],
-          TrainingId:[''],
+          TrainingId:['',[Validators.required]],
       })]),
     Workexperiences:this.formBuilder.array([this.formBuilder.group(
       {
@@ -124,7 +125,8 @@ export class PerfilComponent implements OnInit {
         final_date:[''],
         constancy:['']
     })]),
-    ChargeBondingId:['',[Validators.required]]
+    ChargeBondingId:['',[Validators.required]],
+    deletetrainingTeachers:['']
   });
   public charge_bondings:Charge_bondingI[]=[]
   public trainings: TrainingI[]=[]
@@ -153,7 +155,7 @@ export class PerfilComponent implements OnInit {
   
   public mostrar4:boolean=true;
   public algo4:number[]=[0];
-  public mostrar5:boolean=false;
+  public mostrar5:boolean=true;
   public algo5:number[]=[0];
   public mostrar6:boolean=false;
   public algo6:number[]=[0];
@@ -273,9 +275,9 @@ export class PerfilComponent implements OnInit {
         this.validandoCertificado[pointIndex]=false
       }
     }
-    console.log('aja')
-    console.log(this.validandoCertificado)
-    console.log(control.value[pointIndex].degree_certificate)
+    // console.log('aja')
+    // console.log(this.validandoCertificado)
+    // console.log(control.value[pointIndex].degree_certificate)
   }
 
   public verificar(){
@@ -569,9 +571,9 @@ export class PerfilComponent implements OnInit {
           // console.log(DiscountLine)
           
           let control = <FormArray>this.form4.controls['trainingTeacher']
-          let AnexoId:any | null = null
-          if(key.AnexosTrainingTeachers?.[0].Anexo != undefined){
-            AnexoId=key.AnexosTrainingTeachers?.[0].Anexo
+          let AnexoId:any | string = ''
+          if(key.AnexosTrainingTeachers?.length != undefined && key.AnexosTrainingTeachers?.length >0){
+            AnexoId=key.AnexosTrainingTeachers[0].Anexo
           }
 
             this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
@@ -581,15 +583,16 @@ export class PerfilComponent implements OnInit {
                     // let any :any=algo.training
                    
                     control.push(this.formBuilder.group({
-                      name: [key?.name],
-                      date_graduation: [key?.date_graduation],
-                      name_institution: [key?.name_institution],
-                      resolution_convalidation: [{value:key?.resolution_convalidation}],
+                      id:key.id,
+                      name: [key?.name,[Validators.required]],
+                      date_graduation: [key?.date_graduation,[Validators.required]],
+                      name_institution: [key?.name_institution,[Validators.required]],
+                      resolution_convalidation: [{value:key?.resolution_convalidation},[Validators.required]],
                       degree_certificate: AnexoId,
                       TeacherId:algo1.teacher.id,
-                      TrainingId:[algo.training],
+                      TrainingId:[algo.training,[Validators.required]],
                     }))
-                    console.log(control,'control')
+                    // console.log(control,'control')
                     this.resolucion(new Event(''),index)
                   }
       
@@ -601,7 +604,7 @@ export class PerfilComponent implements OnInit {
       }
       this.mostrar5= true
       let control = <FormArray>this.form4.controls['trainingTeacher']
-      console.log(control,'control')
+      // console.log(control,'control')
 
       control.removeAt(0)
     }
@@ -979,24 +982,26 @@ export class PerfilComponent implements OnInit {
       const control = <FormArray>this.form4.controls['trainingTeacher']
         if(control.length == 0 && this.mostrar5 == false){
           control.push(this.formBuilder.group({
+            id:0,
             TeacherId:0,
-            name: [''],
-            date_graduation: [''],
-            name_institution: [''],
-            resolution_convalidation: [''],
+            name: ['',[Validators.required]],
+            date_graduation: ['',[Validators.required]],
+            name_institution: ['',[Validators.required]],
+            resolution_convalidation: ['',[Validators.required]],
             degree_certificate: [''],
-            TrainingId:[''],
+            TrainingId:['',[Validators.required]],
           }))
         }
         if(control.length >= 1 && this.mostrar5 == true){
           control.push(this.formBuilder.group({
+            id:0,
             TeacherId:0,
-            name: [''],
-            date_graduation: [''],
-            name_institution: [''],
-            resolution_convalidation: [''],
+            name: ['',[Validators.required]],
+            date_graduation: ['',[Validators.required]],
+            name_institution: ['',[Validators.required]],
+            resolution_convalidation: ['',[Validators.required]],
             degree_certificate: [''],
-            TrainingId:[''],
+            TrainingId:['',[Validators.required]],
           }))
   
         }
@@ -1005,19 +1010,25 @@ export class PerfilComponent implements OnInit {
     removetrainingTeacher(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form4.controls['trainingTeacher']//aceder al control
+
+      if(control.value[index].id !== undefined && control.value[index].id != ''){
+        this.deletetrainingTeachers.push(control.value[index]);
+
+      }
       control.removeAt(index)
       // al eliminar un registro, se debe quitar el file del array
       // this.FilesFormaciones.(index)
         if(control.length <= 0){
         this.mostrar5=false
         control.push(this.formBuilder.group({
+          id:0,
           TeacherId:0,
-          name: [''],
-          date_graduation: [''],
-          name_institution: [''],
-          resolution_convalidation: [''],
+          name: ['',[Validators.required]],
+          date_graduation: ['',[Validators.required]],
+          name_institution: ['',[Validators.required]],
+          resolution_convalidation: ['',[Validators.required]],
           degree_certificate: [''],
-          TrainingId:[''],
+          TrainingId:['',[Validators.required]],
         }))
         }
     }
@@ -1260,7 +1271,8 @@ export class PerfilComponent implements OnInit {
           headquarterProgramTeacher: this.form4.value.headquarterProgramTeacher,
           ChargeBondingId: this.form4.value.ChargeBondingId.id,
           Workexperiences: this.form4.value.Workexperiences,
-          trainingTeacher:this.form4.value.trainingTeacher
+          trainingTeacher:this.form4.value.trainingTeacher,
+          deletetrainingTeachers:this.deletetrainingTeachers
         };
         if(this.form4.value.ScaleId.id){
           formValue.ScaleId=this.form4.value.ScaleId.id
@@ -1268,160 +1280,205 @@ export class PerfilComponent implements OnInit {
         if(this.scales.length == 0){
           formValue.ScaleId=''
         }
-    
 
-        if(this.headquarterProgramTeacher1.length == 0 ){
-          let control = <FormArray>this.form4.controls['headquarterProgramTeacher']
-          for (const key of control.value) {
-    
-            key.HeadquarterProgramId=key.HeadquarterProgramId.id
-            key.ResearchBondingId=key.ResearchBondingId.id
-            this.headquarterProgramTeacher1.push({
-            TeacherId:0,
-            HeadquarterProgramId:key.HeadquarterProgramId,
-            ResearchBondingId:key.ResearchBondingId,
-            })
+        let boolean:boolean = false
+        for (const clave of formValue.trainingTeacher) {
+          console.log(clave,'clave')
+          if(clave.resolution_convalidation.value == 'Si' && clave.degree_certificate == ""){
+            boolean=true
           }
-          formValue.headquarterProgramTeacher = this.form4.value.headquarterProgramTeacher
-        }else{
-          formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
-        }
-    
-        if(this.trainingTeachers.length == 0 ){
-          let control = <FormArray>this.form4.controls['trainingTeacher']
-          for (const key of control.value) {
-    
-            key.TrainingId=key.TrainingId.id
-            this.trainingTeachers.push({
-            TeacherId:0,
-            name:key.name,
-            date_graduation:key.date_graduation,
-            name_institution:key.name_institution,
-            resolution_convalidation:key.resolution_convalidation,
-            degree_certificate:key.degree_certificate,
-            TrainingId:key.TrainingId,
-            })
-          }
-          formValue.trainingTeacher = this.form4.value.trainingTeacher
-        }else{
-          formValue.trainingTeacher = this.trainingTeachers
-        }
-    
-        if(this.Workexperiences.length == 0 ){
-          this.Workexperiences = this.form4.value.Workexperiences 
-          formValue.Workexperiences = this.form4.value.Workexperiences
-        }else{
-          formValue.Workexperiences = this.Workexperiences
-        }
-    
-        if(this.form4.value.trainingTeacher[0].name == ''){
-          // this.form.value.trainingTeacher=[]
-          formValue.trainingTeacher=[]
-        }
-        if(this.form4.value.Workexperiences[0].name_institution == ''){
-          // this.form.value.Workexperiences=[]
-          formValue.Workexperiences=[]
-    
-        }
-      console.log(formValue,'docente')
-  if(formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined) && 
-    formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined)){
-            this.perfilService.updateDocente(formValue.id,formValue).subscribe(
-              (algo) => {
-
-                let array:any[] = []
-                console.log(algo.teacher,'algo.teacher')
-                  if(algo.teacher.id != undefined){
-
-                    console.log(algo.teacher,'algo.teacher')
-                    if(algo.teacher?.TrainingTeachers?.length != undefined && algo.teacher.TrainingTeachers.length >0){
-                      console.log('algo.teacher?.TrainingTeachers')
-                      for (const key of algo.teacher.TrainingTeachers) {
-                        if(key.id){
-                          array.push({
-                            UserId:this.form4.value.id,
-                            TrainingTeacherId:key.id,
-                            name:'certificado'+key.Training?.name, 
-                            file:null
-                            }
-                            )
-                        }
-                      }
-                      console.log(array,'array')
-                      for (let index = 0; index < array.length; index++) {
-                        const element = array[index];
-
-                        for (const key of algo.teacher.TrainingTeachers) {
-                          if(key.id == element.TrainingTeacherId){
-                            if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
-
-                            }else{
-
-                              for (const key2 of this.FilesFormaciones) {
-
-                                if(key2.position == index){
-                                  array[index].file=key2.file
-
-                                  this.teacherService.FormacionDocente(
-                                    array[index].UserId.toString(),array[index].TrainingTeacherId.toString(),
-                                    array[index].name.toString(),array[index].file).subscribe(result=>{
           
-                                      console.log(result,'result')
-                                      var date = new Date('2020-01-01 00:00:03');
-                                      function padLeft(n:any){ 
-                                        return n ="00".substring(0, "00".length - n.length) + n;
-                                      }
-                                      var interval = setInterval(() => {
-                                      var minutes = padLeft(date.getMinutes() + "");
-                                      var seconds = padLeft(date.getSeconds() + "");
-                                      // console.log(minutes, seconds);
-                                      if( seconds == '03') {
-                                      this.messageService.add({severity:'success', summary: 'Success', 
-                                      detail: 'Registro de Docente Actualizado con exito'});
-                                      }
-                                      date = new Date(date.getTime() - 1000);
-                                      if( minutes == '00' && seconds == '01' ) {
-                                        this.ref.close(algo);
-                                        // this.router.navigateByUrl('/landing');
-                                        clearInterval(interval); 
-                                      }
-                                }, 1000);
-                                  })
+        }
+        // console.log(boolean,'boolean')
+        if(boolean == false){
+          if(this.headquarterProgramTeacher1.length == 0 ){
+            let control = <FormArray>this.form4.controls['headquarterProgramTeacher']
+            for (const key of control.value) {
+      
+              key.HeadquarterProgramId=key.HeadquarterProgramId.id
+              key.ResearchBondingId=key.ResearchBondingId.id
+              this.headquarterProgramTeacher1.push({
+              TeacherId:0,
+              HeadquarterProgramId:key.HeadquarterProgramId,
+              ResearchBondingId:key.ResearchBondingId,
+              })
+            }
+            formValue.headquarterProgramTeacher = this.form4.value.headquarterProgramTeacher
+          }else{
+            formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
+          }
+      
+          if(this.trainingTeachers.length == 0 ){
+            let control = <FormArray>this.form4.controls['trainingTeacher']
+            for (const key of control.value) {
+      
+              key.TrainingId=key.TrainingId.id
+              this.trainingTeachers.push({
+              TeacherId:0,
+              name:key.name,
+              date_graduation:key.date_graduation,
+              name_institution:key.name_institution,
+              resolution_convalidation:key.resolution_convalidation,
+              degree_certificate:key.degree_certificate,
+              TrainingId:key.TrainingId,
+              })
+            }
+            formValue.trainingTeacher = this.form4.value.trainingTeacher
+          }else{
+            formValue.trainingTeacher = this.trainingTeachers
+          }
+      
+          if(this.Workexperiences.length == 0 ){
+            this.Workexperiences = this.form4.value.Workexperiences 
+            formValue.Workexperiences = this.form4.value.Workexperiences
+          }else{
+            formValue.Workexperiences = this.Workexperiences
+          }
+      
+          if(this.form4.value.trainingTeacher[0].name == ''){
+            // this.form.value.trainingTeacher=[]
+            formValue.trainingTeacher=[]
+          }
+          if(this.form4.value.Workexperiences[0].name_institution == ''){
+            // this.form.value.Workexperiences=[]
+            formValue.Workexperiences=[]
+      
+          }
+          
+        // console.log(formValue,'docente nuevo')
+    if(formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined) && 
+      formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined)){
+              this.perfilService.updateDocente(formValue.id,formValue).subscribe(
+                (algo) => {
+  
+                  let array:any[] = []
+                  // console.log(algo.teacherOne,'algo.teacher')
+                    if(algo.teacherOne.id != undefined){
+  
+                      console.log(algo.teacherOne,'algo.teacher')
+                      if(algo.teacherOne?.TrainingTeachers?.length != undefined && algo.teacherOne.TrainingTeachers.length >0){
+                        // console.log('algo.teacher?.TrainingTeachers')
+                        for (const key of algo.teacherOne.TrainingTeachers) {
+                          if(key.id){
+                            array.push({
+                              UserId:this.form4.value.id,
+                              TrainingTeacherId:key.id,
+                              name:'certificado'+key.Training?.name, 
+                              file:null
+                              }
+                              )
+                          }
+                        }
+                        // console.log(array,'array')
+  
+                        let cont=0
+                        for (let index = 0; index < array.length; index++) {
+                          const element = array[index];
+  
+                          for (const key of algo.teacherOne.TrainingTeachers) {
+                            if(key.id == element.TrainingTeacherId){
+                              if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+  
+                              }else{
+                                if(this.FilesFormaciones.length > 0){
+                                  for (const key2 of this.FilesFormaciones) {
+                                    // cont=cont + 1
+                                    // console.log(key2.position + '=='+index,'position y index')
+                                    if( key2.id==0 && key2.position == index){
+                                      console.log(' key2.id==0 && key2.position == index')
+                                      array[index].file=key2.file
+                                    }
+                                    // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                                    if(key2.id == array[index].TrainingTeacherId){
+  
+                                      console.log(' key2.id == array[index].TrainingTeacherId')
+                                      array[index].file=key2.file
+                                    }
+                                 
                                 }
                               }
-                              
                             }
                           }
-                        
+                        }
                       }
-                      // console.log(this.FilesFormaciones,'this.FilesFormaciones')
-                      // for (let index = 0; index < this.FilesFormaciones.length; index++) {
-                      //   const element = this.FilesFormaciones[index];
-                      //   array[index].file=element.file
-
-                   
-                      // }
-
-                     
-                     
+                      if(this.FilesFormaciones.length > 0){
+                        console.log(array,'array')
+                      for (let key1 of array) {
+                        console.log(key1.UserId.toString(),key1.TrainingTeacherId.toString(),
+                        key1.name.toString(),key1.file,'datos enviados')
+                        this.teacherService.FormacionDocente(
+                          key1.UserId.toString(),key1.TrainingTeacherId.toString(),
+                          key1.name.toString(),key1.file).subscribe(result=>{
+                            cont=cont + 1
+                            if(cont == this.FilesFormaciones.length){
+                              var date = new Date('2020-01-01 00:00:03');
+                              function padLeft(n:any){ 
+                                return n ="00".substring(0, "00".length - n.length) + n;
+                              }
+                              var interval = setInterval(() => {
+                              var minutes = padLeft(date.getMinutes() + "");
+                              var seconds = padLeft(date.getSeconds() + "");
+                              if( seconds == '03') {
+                              this.messageService.add({severity:'success', summary: 'Success', 
+                              detail: 'Registro de Docente Actualizado con exito'});
+                              }
+                              date = new Date(date.getTime() - 1000);
+                              if( minutes == '00' && seconds == '01' ) {
+                                this.ref.close(algo);
+                                clearInterval(interval); 
+                              }
+                        }, 1000);
+                            }
+                           
+                        },error => console.error(error))
+                      }
+                                // aqui enviar datos
+  
+                               
+                              }else{
+                                  var date = new Date('2020-01-01 00:00:03');
+                                          function padLeft(n:any){ 
+                                            return n ="00".substring(0, "00".length - n.length) + n;
+                                          }
+                                          var interval = setInterval(() => {
+                                          var minutes = padLeft(date.getMinutes() + "");
+                                          var seconds = padLeft(date.getSeconds() + "");
+                                          if( seconds == '03') {
+                                          this.messageService.add({severity:'success', summary: 'Success', 
+                                          detail: 'Registro de Docente Actualizado con exito'});
+                                          }
+                                          date = new Date(date.getTime() - 1000);
+                                          if( minutes == '00' && seconds == '01' ) {
+                                            this.ref.close(algo);
+                                            clearInterval(interval); 
+                                          }
+                                    }, 1000);
+                                }
+                               
+                                
+                        }
+  
                     }
-
+              },async error => {
+                  if(error != undefined) {
+                    let text = await translate(error.error.message, "es");
+                    if(error.error.dataErros){
+                      text = await translate(error.error.dataErros[0].message, "es");
+                    }
+                    this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
                   }
-                
+                });
               }
-            },async error => {
-                if(error != undefined) {
-                  let text = await translate(error.error.message, "es");
-                  if(error.error.dataErros){
-                    text = await translate(error.error.dataErros[0].message, "es");
-                  }
-                  this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-                }
-              });
+            else{
+              this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
             }
-          else{
-            this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-          }
+        
+        }else{
+          this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Certificados por adjuntar'});
+
+        }
+    
+
       }
 
     // files
@@ -1431,10 +1488,10 @@ export class PerfilComponent implements OnInit {
       const control = <FormArray>this.form4.controls['trainingTeacher']
       // console.log(control.value[pointIndex].resolution_convalidation)
       if(control.value[pointIndex].degree_certificate != ''){
-        console.log('aquii')
+        // console.log('aquii')
         if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
           const file=event.target.files[0];
-          console.log('aquii-222')
+        
           // if(file.type.includes("degree_certificate")){//Evaluar si es una imagen
               // const reader= new FileReader();
               // reader.readAsDataURL(file);
@@ -1442,7 +1499,21 @@ export class PerfilComponent implements OnInit {
               //    let images=reader.result; //Asignar al thumbnail
               // }.bind(this);
               // this.file=file;
-              this.FilesFormaciones.push({position:pointIndex,file:file})
+              
+              if( this.FilesFormaciones[pointIndex] != undefined){
+                console.log('aquii-actualizado file')
+
+                this.FilesFormaciones[pointIndex]={
+                  id:control.value[pointIndex].id,
+                  position:pointIndex,
+                  file:file}
+
+              }else{
+                console.log('aquii-nuevo file')
+                this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
+
+              }
+              console.log(this.FilesFormaciones[pointIndex],'this.FilesFormaciones[pointIndex].position')
               // console.log(this.file)
               // console.log(reader,'reader')
           // }

@@ -63,7 +63,7 @@ export class TeacherService {
   //     })
   //   }
   // }
-  const form= new FormData();//Crea un formulario
+  let form= new FormData();//Crea un formulario
   form.append('name',name);
   form.append('UserId',UserId);
   form.append('TrainingTeacherId',TrainingTeacherId);
