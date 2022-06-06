@@ -303,16 +303,16 @@
                       <div class="flex"> 
                         <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
                         <div style="width:100%">
-                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="scales" [filter]="true"
-                  name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-                  [style]="{'width':'100%'}"  
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                   placeholder="ESCALAFON" title="ESCALAFON">
-                  <ng-template let-option pTemplate="item">
-                    <span >{{option.name }}</span>
-                </ng-template>
-                </p-dropdown>
+                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                        [options]="scales" [filter]="true"
+                          name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
+                          [style]="{'width':'100%'}"  
+                          optionvalue="id"  optionLabel="name" filterBy="name"
+                          placeholder="ESCALAFON" title="ESCALAFON">
+                          <ng-template let-option pTemplate="item">
+                            <span >{{option.name }}</span>
+                        </ng-template>
+                        </p-dropdown>
                     </div>
                   </div>
                 </div>
