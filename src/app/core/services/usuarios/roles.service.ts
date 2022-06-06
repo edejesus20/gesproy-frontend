@@ -72,23 +72,61 @@ createRole(role: RoleI): Observable<{ role: RoleI }> {
 }
 
 assinRole(role: assinRoleUserI): Observable<{ role: assinRoleUserI }> {
-  //console.log(role,'----------------');
+  let token : string | null=localStorage.getItem('token')
+  let userT :string | null= localStorage.getItem('user');
+  if(token != null && userT != null) {
+    let userObjeto:any = JSON.parse(userT); 
+     let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':userObjeto.id
+      })
+    }
   return this.http
-    .post<{ role: assinRoleUserI }>(this.base + 'assinRole', JSON.stringify(role), this.httpOptions)
+    .post<{ role: assinRoleUserI }>(this.base + 'assinRole', JSON.stringify(role), httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
     )
+  }else{
+    return this.http
+    .post<{ role: assinRoleUserI }>(this.base + 'assinRole', JSON.stringify(role))
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
 }
 
 assinRoleResource(array: assinRoleResourceI): Observable<{ array: assinRoleResourceI }> {
-  //console.log(role,'----------------');
-  return this.http
-    .post<{ array: assinRoleResourceI }>(this.base + 'assinResourceRole', JSON.stringify(array), this.httpOptions)
+  let token : string | null=localStorage.getItem('token')
+  let userT :string | null= localStorage.getItem('user');
+  if(token != null && userT != null) {
+    let userObjeto:any = JSON.parse(userT); 
+     let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':userObjeto.id
+      })
+    }
+    return this.http
+    .post<{ array: assinRoleResourceI }>(this.base + 'assinResourceRole', JSON.stringify(array), httpOptions)
     .pipe(
       retry(2),
       catchError(this.handleError)
     )
+  }else{
+    return this.http
+    .post<{ array: assinRoleResourceI }>(this.base + 'assinResourceRole', JSON.stringify(array))
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+  //console.log(role,'----------------');
+ 
 }
 
 updateRole(role:RoleI){

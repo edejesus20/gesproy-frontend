@@ -1449,7 +1449,8 @@ export class PerfilComponent implements OnInit {
                             Bandera=true
                           }
                         }
-                                // aqui enviar datos
+                        Bandera=true
+                        // aqui enviar datos
                       }else{
 
                         Bandera=true
@@ -1528,6 +1529,8 @@ export class PerfilComponent implements OnInit {
 
                           
                           }
+                        Bandera=true
+
 
                         }else{
                           Bandera=true
