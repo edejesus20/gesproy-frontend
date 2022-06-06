@@ -4,14 +4,19 @@
   contentStyleClass="overflow-y-hidden"
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"   [showHeader]="false">
   <!-- <p-header width="auto" [style]="{'text-aling':'center'}">
-    <span [style]="{'width':'100%','text-aling':'center'}">SISTEMA PARA LA GESTIÓN DE LA INVESTIGACIÓN (GESPROY)</span>
+    <span [style]="{'width':'100%','text-aling':'center'}">SISTEMA PARA LA GESTIÓN DE LA INVESTIGACIÓN (SIGINV)</span>
 </p-header>   -->
 
 <div class="grid grid-nogutter surface-section text-800 " >
-  <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-4 pl-3 pr-3 pb-6 text-center md:text-center  align-items-center ">
-      <section class="mr-1 mt-4">
-            <span class="block text-6xl font-bold mb-3" style="color:#F16257">GESPROY</span>
-            <!-- <div class="text-6xl text-primary font-bold mb-3">GESPROY</div>
+  <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-4 
+  pl-3 pr-3 pb-6 text-center md:text-center align-items-center ">
+      <section class="mr-1 md:mt-4 md:mb-3">
+            <span class="block text-6xl font-bold mb-3" style="color:#F16257">SIGINV
+              <strong class="block" style="color:gray;font-size: 0.8rem;">
+                Sistema de Gestion de la Investigación
+                </strong></span>
+            
+            <!-- <div class="text-6xl text-primary font-bold mb-3">SIGINV</div>
             <p class="mt-0 mb-4 text-700 line-height-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
             <p-avatar image="{{image3}}" styleClass="mr-2 "  
             shape="circle" size="xlarge"></p-avatar> 
@@ -45,9 +50,9 @@
           <ng-template [ngIf]="motrar == false">
           <div fxLayout="row" class="titleCard ">
           <button pButton pRipple  type="submit"  icon="pi pi-check" label="Entrar" 
-          [disabled]="!form.valid" styleClass="mr-2" class="mr-3 p-button-raised mt-3"></button>
+          [disabled]="!form.valid" style="width:auto" styleClass="mr-2" class="mr-3 p-button-raised mt-3"></button>
           <button pButton pRipple  type="button" routerLink="/register"  icon="pi pi-users"
-           styleClass="p-button-text" label="Registrarse"class="p-button-outlined mt-3"></button>
+           styleClass="p-button-text" style="width:auto" label="Registrarse"class="p-button-outlined mt-3"></button>
           </div>
           </ng-template>
           <ng-template [ngIf]="motrar == true">
@@ -70,7 +75,7 @@
 </div>
 
     
-    <p-footer >
+    <p-footer styleClass="display-none sm:display-block">
       <section class="redes_sociales ">
         <div class="container ">
           <div class="row">
