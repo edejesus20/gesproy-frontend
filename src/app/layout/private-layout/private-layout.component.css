@@ -266,6 +266,7 @@ li {
 
 .clock {
   display: flex;
+  margin: 0px;
   /* grid-gap: 1px 5px;
   grid-template-columns: auto auto auto;
   justify-content: center;
@@ -289,6 +290,7 @@ li {
 
 .horas {
   display: flex;
+  margin: 0px;
   flex-wrap: nowrap;
   flex-direction: column-reverse;
   justify-content: center;
@@ -300,14 +302,14 @@ li {
 } */
 
 .mishoras {
-margin-left:3px;
+margin-left:2px;
   font-weight: bold;
   font-size: 1rem;
 }
 
 .ampm {
-margin-left:3px;
-margin-right:3px;
+margin-left:2px;
+margin-right:2px;
   font-size: 1rem;
   /* font-weight: 20; */
 }

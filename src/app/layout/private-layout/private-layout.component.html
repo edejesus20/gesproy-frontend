@@ -13,39 +13,49 @@
   </div>
   <div class="col-12 sm:col-2 md:col-3 lg:col-4 xl:col-5"></div>
   <div class="col-12 sm:col-7 md:col-6 lg:col-5 xl:col-4">
+
+    <div class="grid">
+      <div class="col-12 sm:col-12 md:col-2 lg:col-2 xl:col-2">
+        <ng-template [ngIf]="notifications_noleidos.length > 0">
+          <i class="pi pi-bell ml-4 mt-2" 
+          pBadge style="font-size: 1.5rem" value="{{notifications_noleidos.length}}" 
+          (click)="op.toggle($event)"></i>
+        </ng-template>
+        <ng-template [ngIf]="notifications_noleidos.length == 0">
+          <i class="pi pi-bell ml-4 mt-2 " 
+           style="font-size: 1.5rem" value="" 
+          (click)="op.toggle($event)"></i>
+        </ng-template>
+      </div>
+      <div class="col-12 sm:col-12 md:col-8 lg:col-8 xl:col-8">
+        <button pButton pRipple type="button"  [disabled]="true"
+        class="p-button-outlined  p-button-warning ml-3"
+        style="padding: 7px;">
+        <div class="clock" style="color:#FBC02D;font-weight:bold">
+          {{dia | titlecase}} {{fecha | titlecase}} [<span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span><span class="ampm">{{ampm}}</span>]
+        </div>
+         </button>
+      </div>
+      <div class="col-12 sm:col-12 md:col-2 lg:col-2 xl:col-2">
+        <button type="button" pButton pRipple 
+        class="p-button-rounded p-button-text"
+         icon="pi pi-plus" (click)="menu.toggle($event)">
+          <p-avatar image="{{image3}}" 
+          styleClass="ml-3" size="large" shape="circle"></p-avatar>
+        </button>
+      </div>
+    </div>
     <!-- <button type="button" pButton pRipple  
    
     style="padding-top: 8px;padding-bottom:0px"
     class="p-button-rounded p-button-text"> -->
-    <ng-template [ngIf]="notifications_noleidos.length > 0">
-      <i class="pi pi-bell mr-4 " 
-      pBadge style="font-size: 1.5rem" value="{{notifications_noleidos.length}}" 
-      (click)="op.toggle($event)"></i>
-    </ng-template>
-    <ng-template [ngIf]="notifications_noleidos.length == 0">
-      <i class="pi pi-bell mr-4 " 
-       style="font-size: 1.5rem" value="" 
-      (click)="op.toggle($event)"></i>
-    </ng-template>
+  
     
      
     <!-- </button> -->
    
-    <button pButton pRipple type="button"  [disabled]="true"
-    class="p-button-outlined  p-button-warning"
-    style="padding: 7px;">
-   <div class="clock" style="color:#FBC02D;font-weight:bold">
-     {{dia | titlecase}} - {{fecha | titlecase}} [
-        <span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span>
-     <span class="ampm"> {{ampm}}</span> ]
-   </div>
-     </button>
-     <button type="button" pButton pRipple 
-     class="p-button-rounded p-button-text ml-3"
-      icon="pi pi-plus" (click)="menu.toggle($event)">
-       <p-avatar image="{{image3}}" 
-       styleClass="ml-3" size="large" shape="circle"></p-avatar>
-     </button>
+
+    
 
      <p-menu #menu [popup]="true"  [model]="items" 
      [style]="{'width':'200px','margin-top':'5px'}"></p-menu>

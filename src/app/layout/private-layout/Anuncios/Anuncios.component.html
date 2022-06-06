@@ -15,12 +15,12 @@
         </div>
 
         <div 
-        class="col-3 md:col-3 lg:col-3">
-          <div fxLayout="row" class="titleCard "style="text-align: center;">
+        class="col-3 md:col-3 lg:col-3 " style="text-align:center">
+          <!-- <div fxLayout="row" class="titleCard "style="text-align: center;"> -->
             <p-button (click)="cancelar()" icon="pi pi-times" 
             [style]="{'border': '1px solid #F16257','border-radius':'5px'}"
-            styleClass="p-button-text" label="Cancelar"></p-button>
-          </div>
+            styleClass="p-button-text mt-3" label="Cancelar"></p-button>
+          <!-- </div> -->
         </div>
       </div>
      
@@ -144,7 +144,7 @@
 </div>
 
 <p-dialog [(visible)]="mostrarModal" 
-[style]="{'height': '60vw','width': '53vw'}"[resizable]="false" zindex="10000"
+[style]="{'height': '80%'}"[resizable]="false" zindex="10000"
  [showHeader]="false" [closeOnEscape]="false" [closable]="false"
 [modal]="true" >
 

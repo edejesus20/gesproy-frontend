@@ -7,24 +7,24 @@
       <div class="grid p-fluid mb-3" style="padding: 8px;">
         <div style="border: 1px solid black;  height:80px"class="col-2 md:col-2 lg:col-2">
           <img alt="logo" src="{{image}}" 
-          style="width: 80%"/>
+          style="width: 80%;height: 60px;"/>
         </div>
 
         <div style="border: 1px solid black;  height:80px"class="col-7 md:col-7 lg:col-7">
-          <h2 style="text-align: center; margin-top:10px"> <i class="pi pi-pencil" 
+          <h2 class="text-2xl md:text-4xl font-bold mb-3" style="color:#F16257" style="text-align: center; margin-top:10px"> <i class="pi pi-pencil" 
             style="font-size: 1.8rem;margin-right: 10px;"></i>
             EDITAR PERFIL</h2>
         </div>
 
-        <div style="border: 1px solid black;  height:80px;"
+        <div style="border: 1px solid black;  height:80px;text-align: center;"
         class="col-3 md:col-3 lg:col-3">
           <!-- <img alt="logo" src="{{image2}}" 
           style="width: 90%"/> -->
-          <div fxLayout="row" class="titleCard mt-3"style="text-align: center;">
+          <!-- <div fxLayout="row" class="titleCard mt-3"style="text-align: center;"> -->
             <p-button (click)="cancelar()" icon="pi pi-times" 
-            [style]="{'border': '1px solid #F16257','border-radius':'5px'}"
-            styleClass="p-button-text" label="Cancelar"></p-button>
-          </div>
+            [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+            styleClass="p-button-text  mt-3" label="Cancelar"></p-button>
+          <!-- </div> -->
         </div>
       </div>
     <p-accordion>
