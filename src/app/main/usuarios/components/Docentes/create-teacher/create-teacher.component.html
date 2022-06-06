@@ -133,11 +133,10 @@
             <h3 style="text-align:center;">2. Datos Secundarios:</h3>
         
             <div class="grid p-fluid">
-              <div class="col-12 md:col-12 lg:col-6 xl:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">VINCULACION DE CARGO</label>
+              <div class="col-12 md:col-12 lg:col-6">
                 <div class="flex"> 
                   <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                   <div style="width:100%">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="charge_bondings" [filter]="true"
@@ -151,16 +150,16 @@
                   </ng-template>
                   </p-dropdown>
                   </div>
-                </div>
+                  <span class="bottomdelete" style="margin-top: -35px;">
+                    <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
+                    class="p-button-rounded p-button-outlined" (click)="addVinculacion($event)" ></button>
+                  </span>
                 </div>
               </div>
   
-              <div class="col-12 md:col-12 lg:col-6 xl:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">CATEGORIA INVESTIGADOR</label>
+              <div class="col-12 md:col-12 lg:col-6">
                 <div class="flex"> 
                   <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
                   <div style="width:100%">
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                 [options]="mincienciaCategorys" [filter]="true"
@@ -172,35 +171,36 @@
                     <span >{{option.name }}</span>
                 </ng-template>
                 </p-dropdown>
-                  </div>
-                </div>
-                </div>
             </div>
+            <span class="bottomdelete" style="margin-top: -35px;">
+              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 20px;"
+              class="p-button-rounded p-button-outlined" (click)="addCategoriaColciencias($event)" ></button>
+            </span>
+                </div>
+              </div>
             </div>
             <ng-template [ngIf]="scales.length > 0">
        
                   <div class="grid p-fluid">
-                    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                      <div class="field ">
-                        <label for="name"style="font-weight: bold;">ESCALAFON</label>
+                    <div class="col-12 sm:col-12 md:col-12">
                       <div class="flex"> 
                         <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                         <div style="width:100%">
-                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                        [options]="scales" [filter]="true"
-                          name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-                          [style]="{'width':'100%'}"  
-                          optionvalue="id"  optionLabel="name" filterBy="name"
-                          placeholder="ESCALAFON" title="ESCALAFON">
-                          <ng-template let-option pTemplate="item">
-                            <span >{{option.name }}</span>
-                        </ng-template>
-                        </p-dropdown>
+                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                [options]="scales" [filter]="true"
+                  name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
+                  [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-40px'}"  
+                  optionvalue="id"  optionLabel="name" filterBy="name"
+                   placeholder="ESCALAFON" title="ESCALAFON">
+                  <ng-template let-option pTemplate="item">
+                    <span >{{option.name }}</span>
+                </ng-template>
+                </p-dropdown>
                     </div>
                   </div>
-                </div>
               </div>
-            </div>
+              </div>
             </ng-template>
           
           
@@ -513,7 +513,7 @@
                                             title="CERTIFICADO DE GRADO" (click)="onFileChange($event,pointIndex)">
                                             <a pInputText
                                             class="input-file p-inputtext-lg mt-4" 
-                                            style="margin-bottom: 15px;" target="back" href="http://localhost:3000{{form.value.trainingTeacher[pointIndex].degree_certificate?.url}}">
+                                            style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{form.value.trainingTeacher[pointIndex].degree_certificate?.url}}">
                                             {{form.value.trainingTeacher[pointIndex].degree_certificate?.name}}</a>
                                             <!-- <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
                                               <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo(form.value.trainingTeacher[pointIndex].degree_certificate,$event,pointIndex)"  
@@ -727,7 +727,7 @@
                                             title="CONSTANCIA" (click)="onFileChange1($event,pointIndex)">
                                             <a pInputText
                                             class="input-file p-inputtext-lg " 
-                                            style="margin-top: -10px;" target="back" href="http://localhost:3000{{form.value.Workexperiences[pointIndex].constancy.url}}">
+                                            style="margin-top: -10px;" target="back" href="{{API_URI}}{{form.value.Workexperiences[pointIndex].constancy.url}}">
                                             {{form.value.Workexperiences[pointIndex].constancy.name}}</a>
                                             <!-- <span class="bottomdelete mt-6"  
                                             style="margin-left: 20px ;">

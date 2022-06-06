@@ -4,24 +4,17 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 const translate = require('translate');
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { GenderService } from 'src/app/core/services/usuer/Gender.service';
-import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
-import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { ScaleI } from 'src/app/models/institution/scale';
 import { Research_bondingI } from 'src/app/models/institution/charge_bonding';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { PersonI } from 'src/app/models/user/person';
-import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { TrainingI } from 'src/app/models/institution/training';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Create_capacitacionComponent } from 'src/app/main/institution/components/Capacitacion/create_capacitacion/create_capacitacion.component';
-import { Create_documentTypeComponent } from '../../TipoDocumento/create_documentType/create_documentType.component';
-import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
-import { Create_EscalafonComponent } from 'src/app/main/investigacion/components/Escalafon/create_Escalafon/create_Escalafon.component';
 import { Create_MincienciaCategoryComponent } from 'src/app/main/investigacion/components/MincienciasCategoria/create_MincienciaCategory/create_MincienciaCategory.component';
 import { Create_Research_bondingComponent } from 'src/app/main/investigacion/components/VinculacionInvestigacion/create_Research_bonding/create_Research_bonding.component';
 import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_category';
@@ -31,6 +24,7 @@ import { Create_Charge_bondingComponent } from '../../Vinculacion Cargo/create_C
 import { Charge_bondingI } from 'src/app/models/user/teacher';
 import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
 import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-create-teacher',
   templateUrl: './create-teacher.component.html',
@@ -39,7 +33,7 @@ import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
 })
 export class CreateTeacherComponent implements OnInit {
   public mostrarDialogo:boolean=false;
-
+  API_URI = environment.API_URI;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=true;

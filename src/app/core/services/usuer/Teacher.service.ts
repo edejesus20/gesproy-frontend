@@ -171,9 +171,9 @@ OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
  }
 
  // Update item by id
- updateItem(id:number, teacher:any): Observable<any> {
+ updateItem(id:number, teacher:any): Observable<{teacherOne:TeacherI}> {
    return this.http
-     .patch<any>(this.base_path_get + '/' + id, JSON.stringify(teacher), this.httpOptions)
+     .patch<{teacherOne:TeacherI}>(this.base_path_get + '/' + id, JSON.stringify(teacher), this.httpOptions)
      .pipe(
        retry(2),
        catchError(this.handleError)

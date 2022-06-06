@@ -30,6 +30,7 @@ import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
 import * as moment from 'moment';
 import { StudentInternshipsI } from 'src/app/models/user/student';
+import { environment } from 'src/environments/environment';
 const translate = require('translate');
 export interface Archivo{
   id:number,
@@ -43,6 +44,7 @@ export interface Archivo{
   providers: [DialogService]
 })
 export class PerfilComponent implements OnInit {
+  API_URI = environment.API_URI;
   public UserRoles:UserRoleI[] = []
   public estudiante:boolean=false
   public docente:boolean=false

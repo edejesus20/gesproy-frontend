@@ -8,6 +8,7 @@ import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show-teacher',
@@ -20,7 +21,7 @@ export class ShowTeacherComponent implements OnInit {
   public teachers:any[]=[];
   first = 0;
   loading: boolean = true;
- 
+  API_URI = environment.API_URI;
   rows = 1;
   cols: any[]=[];
 

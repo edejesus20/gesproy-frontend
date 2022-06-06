@@ -30,6 +30,8 @@ import { MincienciaCategoryService } from 'src/app/core/services/investigacion/M
 import { Research_bondingService } from 'src/app/core/services/investigacion/Research_bonding.service';
 import { Create_Charge_bondingComponent } from '../../Vinculacion Cargo/create_Charge_bonding/create_Charge_bonding.component';
 import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
+import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editar-teacher',
@@ -38,6 +40,7 @@ import { Charge_bondingService } from 'src/app/core/services/investigacion/Charg
   providers: [DialogService]
 })
 export class EditarTeacherComponent implements OnInit {
+  API_URI = environment.API_URI;
   public mostrar:number=1;
   public mostrar2:boolean=false;
   public mostrar1:boolean=true;
@@ -67,6 +70,18 @@ export class EditarTeacherComponent implements OnInit {
   public research_bondings:Research_bondingI[]=[]
    public headquarterProgramStudent1:any[]=[]
    public headquarterProgram:any[]=[]
+
+   public resolution_convalidations:any[]=[
+    {value:'Si'},{value:'No'}]
+    public validandoCertificado:boolean[]=[]
+
+   FilesFormaciones:Archivo[] =[]
+  FilesExperinecia:Archivo[] =[]
+
+  private deletetrainingTeachers:any[]=[]
+  private deleteWorkexperiences:any[] = []
+
+  ArchivosEliminados:any[] =[]
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -114,6 +129,7 @@ export class EditarTeacherComponent implements OnInit {
       // })]),
       trainingTeacher: this.formBuilder.array([this.formBuilder.group(
         {
+          id:0,
           name: [''],
           date_graduation: [''],
           name_institution: [''],
@@ -124,16 +140,21 @@ export class EditarTeacherComponent implements OnInit {
       })]),
       Workexperiences:this.formBuilder.array([this.formBuilder.group(
         {
+          id:0,
           TeacherId:this.form.value.id,
           name_institution: [''],
           position_type: [''],
           functions:[''],
           start_date:[''],
           final_date:[''],
+          constancy:['']
       })]),
       // nationality:['', [Validators.required]],
       // date_of_birth:['', [Validators.required]],
-      ChargeBondingId:['', [Validators.required]]
+      ChargeBondingId:['', [Validators.required]],
+      deletetrainingTeachers:[''],
+    deleteWorkexperiences:[''],
+    ArchivosEliminados:['']
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()
@@ -158,12 +179,6 @@ export class EditarTeacherComponent implements OnInit {
         // console.log(this.linkTypes)
       }, error => console.error(error));
   }
-  // getAllLines() {
-  //   this.lineService.getList().subscribe(
-  //     (AdministrativeFromApi) => {
-  //       this.lines = AdministrativeFromApi.lines;
-  //     }, error => console.error(error));
-  // }
 
   public onSubmit() {
 
@@ -189,118 +204,321 @@ export class EditarTeacherComponent implements OnInit {
       // nationality: this.form.value.nationality,
       // let a = moment(moment(fechanueva).format("DD-MM-YYYY"));
       // date_of_birth:moment(this.form.value.date_of_birth).format("YYYY-MM-DD").toString(),
-                      ChargeBondingId: this.form.value.                ChargeBondingId.id,
+      ChargeBondingId: this.form.value.ChargeBondingId.id,
       Workexperiences: this.form.value.Workexperiences,
-      trainingTeacher:this.form.value.trainingTeacher
+      trainingTeacher:this.form.value.trainingTeacher,
+      deletetrainingTeachers:this.deletetrainingTeachers,
+      deleteWorkexperiences:this.deleteWorkexperiences,
+      ArchivosEliminados:this.ArchivosEliminados
     };
-
-    if(this.scales.length == 0){
-      formValue.ScaleId=''
-    }
-
-    if(this.headquarterProgramStudent1.length == 0 ){
-      let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-      for (const key of control.value) {
-        key.HeadquarterProgramId=key.HeadquarterProgramId.id
-        key.ResearchBondingId=key.ResearchBondingId.id
-        key.TeacherId=this.form.value.id
-        this.headquarterProgramStudent1.push({
-          TeacherId:0,
-          HeadquarterProgramId:key.HeadquarterProgramId,
-          ResearchBondingId:key.ResearchBondingId,
-        })
+    let boolean:boolean = false
+    for (const clave of formValue.trainingTeacher) {
+      // console.log(clave,'clave')
+      if(clave.resolution_convalidation.value == 'Si' && clave.degree_certificate == ""){
+        boolean=true
       }
-      formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
-    }else{
-      formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
-    }
-  
-    if(this.trainingTeachers.length == 0 ){
-      let control = <FormArray>this.form.controls['trainingTeacher']
-      for (const key of control.value) {
-
-        key.TrainingId=key.TrainingId.id
-        this.trainingTeachers.push({
-        TeacherId:0,
-        name:key.name,
-        date_graduation:moment(key.date_graduation).format("YYYY-MM-DD").toString(),
-        name_institution:key.name_institution,
-        resolution_convalidation:key.resolution_convalidation,
-        degree_certificate:key.degree_certificate,
-        TrainingId:key.TrainingId,
-        })
-      }
-      formValue.trainingTeacher = this.form.value.trainingTeacher
-    }else{
-      formValue.trainingTeacher = this.trainingTeachers
-    }
-
-    if(this.Workexperiences.length == 0 ){
-      this.Workexperiences = this.form.value.Workexperiences 
-      formValue.Workexperiences = this.form.value.Workexperiences
-    }else{
-      formValue.Workexperiences = this.Workexperiences
-    }
-
-    if(this.form.value.trainingTeacher[0].name == ''){
-      // this.form.value.trainingTeacher=[]
-      formValue.trainingTeacher=[]
-    }
-    if(this.form.value.Workexperiences[0].name_institution == ''){
-      // this.form.value.Workexperiences=[]
-      formValue.Workexperiences=[]
-
-    }
-    console.log(formValue)
-    if(formValue.name != ""&&
-      formValue.surname != ""&&
-      formValue.DocumentTypeId != ( 0 || undefined)&&
-      formValue.identification != ""&&
-      // formValue.GenderId != ( 0 || undefined)&&
-      // formValue.address != ""&&
-      // formValue.phone != ""&&
-      formValue.email != ""&&
-      // formValue.hours_of_dedication != ""&&
-      // formValue.nationality != ("" || undefined) && 
-      // formValue. date_of_birth!= ("" || undefined) && 
-    //  formValue.ScaleId !=("" || undefined)  &&
-  formValue.MincienciaCategoryId != ("" || undefined) &&
-    formValue.                ChargeBondingId != ("" || undefined)
-    ){
       
+    }
 
-    this.teacherService.updateItem(formValue.id,formValue).subscribe(
-      () => {
-              var date = new Date('2020-01-01 00:00:03');
-                function padLeft(n:any){ 
-                   return n ="00".substring(0, "00".length - n.length) + n;
-                }
-                var interval = setInterval(() => {
-                var minutes = padLeft(date.getMinutes() + "");
-                var seconds = padLeft(date.getSeconds() + "");
-                // console.log(minutes, seconds);
-                if( seconds == '03') {
-                this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Docente Actualizado con exito'});
-                }
-                date = new Date(date.getTime() - 1000);
-                if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Teacher');
-                  clearInterval(interval); 
-                 }
-          }, 1000);
-      },async error => {
-        if(error != undefined) {
-          let text = await translate(error.error.message, "es");
-          if(error.error.dataErros){
-            text = await translate(error.error.dataErros[0].message, "es");
-          }
-          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+  if(boolean == false){
+      if(this.scales.length == 0){
+        formValue.ScaleId=''
+      }
+
+      if(this.headquarterProgramStudent1.length == 0 ){
+        let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+        for (const key of control.value) {
+          key.HeadquarterProgramId=key.HeadquarterProgramId.id
+          key.ResearchBondingId=key.ResearchBondingId.id
+          key.TeacherId=this.form.value.id
+          this.headquarterProgramStudent1.push({
+            TeacherId:0,
+            HeadquarterProgramId:key.HeadquarterProgramId,
+            ResearchBondingId:key.ResearchBondingId,
+          })
         }
-      });
-  }else{
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
-  }
+        formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
+      }else{
+        formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
+      }
+    
+      if(this.trainingTeachers.length == 0 ){
+        let control = <FormArray>this.form.controls['trainingTeacher']
+        for (const key of control.value) {
+
+          key.TrainingId=key.TrainingId.id
+          // this.trainingTeachers.push({
+          // TeacherId:0,
+          // name:key.name,
+          // date_graduation:moment(key.date_graduation).format("YYYY-MM-DD").toString(),
+          // name_institution:key.name_institution,
+          // resolution_convalidation:key.resolution_convalidation,
+          // degree_certificate:key.degree_certificate,
+          // TrainingId:key.TrainingId,
+          // })
+        }
+        this.trainingTeachers= this.form.value.trainingTeacher
+        formValue.trainingTeacher = this.form.value.trainingTeacher
+      }else{
+        formValue.trainingTeacher = this.trainingTeachers
+      }
+
+      if(this.Workexperiences.length == 0 ){
+        this.Workexperiences = this.form.value.Workexperiences 
+        formValue.Workexperiences = this.form.value.Workexperiences
+      }else{
+        formValue.Workexperiences = this.Workexperiences
+      }
+
+      if(this.form.value.trainingTeacher[0].name == ''){
+        // this.form.value.trainingTeacher=[]
+        formValue.trainingTeacher=[]
+      }
+      if(this.form.value.Workexperiences[0].name_institution == ''){
+        // this.form.value.Workexperiences=[]
+        formValue.Workexperiences=[]
+
+      }
+      // console.log(formValue)
+      if(formValue.name != ""&&
+        formValue.surname != ""&&
+        formValue.DocumentTypeId != ( 0 || undefined)&&
+        formValue.identification != ""&&
+        // formValue.GenderId != ( 0 || undefined)&&
+        // formValue.address != ""&&
+        // formValue.phone != ""&&
+        formValue.email != ""&&
+        // formValue.hours_of_dedication != ""&&
+        // formValue.nationality != ("" || undefined) && 
+        // formValue. date_of_birth!= ("" || undefined) && 
+      //  formValue.ScaleId !=("" || undefined)  &&
+    formValue.MincienciaCategoryId != ("" || undefined) &&
+      formValue.ChargeBondingId != ("" || undefined)
+      ){
+        
+
+      this.teacherService.updateItem(formValue.id,formValue).subscribe(
+        (algo) => {
+
+          let array:any[] = []
+          let array1:any[] = []
+          let Bandera:boolean = false
+        // console.log(algo.teacherOne,'algo.teacher')
+          if(algo.teacherOne.id != undefined){
+
+            console.log(algo.teacherOne,'algo.teacher')
+            if(algo.teacherOne?.TrainingTeachers?.length != undefined 
+              && algo.teacherOne.TrainingTeachers.length >0){
+              // console.log('algo.teacher?.TrainingTeachers')
+              for (const key of algo.teacherOne.TrainingTeachers) {
+                if(key.id){
+                  array.push({
+                    UserId:algo.teacherOne.UserId,
+                    TrainingTeacherId:key.id,
+                    name:'certificado'+key.Training?.name, 
+                    file:null
+                    }
+                    )
+                }
+              }
+              // console.log(array,'array')
+
+            
+              for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+
+                for (const key of algo.teacherOne.TrainingTeachers) {
+                  if(key.id == element.TrainingTeacherId){
+                    if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+
+                    }else{
+                      if(this.FilesFormaciones.length > 0){
+                        for (const key2 of this.FilesFormaciones) {
+                          // cont=cont + 1
+                          // console.log(key2.position + '=='+index,'position y index')
+                          if( key2.id==0 && key2.position == index){
+                            console.log(' key2.id==0 && key2.position == index')
+                            array[index].file=key2.file
+                          }
+                          // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                          if(key2.id == parseInt(array[index].TrainingTeacherId)){
+
+                            console.log(' key2.id == array[index].TrainingTeacherId')
+                            array[index].file=key2.file
+                          }
+                        
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
+            if(this.FilesFormaciones.length > 0 && array.length > 0){
+              console.log(array,'array')
+              let cont=0
+            for (let key1 of array) {
+                  if(key1.file != null){
+
+                  this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                      cont=cont + 1
+                      if(cont == this.FilesFormaciones.length){
+                        Bandera=true
+                
+                      }
+                    
+                  },error => console.error(error))
+                }else{
+                  Bandera=true
+                }
+              }
+              Bandera=true
+              // aqui enviar datos
+            }else{
+
+              Bandera=true
+              
+              }      
+            
+
+            if(algo.teacherOne?.Workexperiences?.length != undefined  
+              && algo.teacherOne?.Workexperiences?.length > 0){
+                for (const key of algo.teacherOne.Workexperiences) {
+                  if(key.id){
+                    array1.push({
+                      UserId:algo.teacherOne.UserId,
+                      WorkexperienceId:key.id,
+                      name:'constancia'+key.name_institution, 
+                      file:null
+                      }
+                      )
+                  }
+                }
+
+                for (let index = 0; index < array1.length; index++) {
+                  const element = array1[index];
+
+                  for (const key of algo.teacherOne.Workexperiences) {
+                    if(key.id == element.WorkexperienceId){
+                      if(key.AnexosWorkexperiences?.length != undefined 
+                        &&  key.AnexosWorkexperiences?.length > 0){
+                    //  console.log('jaja')
+                      }else{
+                        if(this.FilesExperinecia.length > 0){
+                          for (const key3 of this.FilesExperinecia) {
+                            // cont=cont + 1
+                            // console.log(key3.position + '=='+index,'position y index')
+                            if( key3.id==0 && key3.position == index){
+                              // console.log(' key3.id==0 && key3.position == index')
+                              array1[index].file=key3.file
+                            }
+                            // console.log(key3.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                            if(key3.id == 
+                            parseInt(array1[index].WorkexperienceId)){
+
+                              // console.log(' key3.id == array[index].WorkexperienceId')
+                              array1[index].file=key3.file
+                            }
+                          
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              }
+              // console.log(array1,'array1')
+              if(this.FilesExperinecia.length > 0 && array1.length > 0){
+              let cont1=0
+                // console.log('aqui')
+                
+                for (let clave1 of array1) {
+                  if(clave1.file != null){
+                                                // console.log(clave1.UserId.toString(),clave1.TrainingTeacherId.toString(),
+                  // clave1.name.toString(),clave1.file,'datos enviados')
+                    this.teacherService.ExperienciaLaboralDocente(clave1.UserId.toString(),
+                    clave1.WorkexperienceId.toString(),clave1.name.toString(),clave1.file).subscribe(result=>{
+                        cont1=cont1 + 1
+                        // console.log('aqui se eviaron datos')
+                        if(cont1 == this.FilesExperinecia.length){
+                          Bandera=true
+                    
+                        }
+                        
+                    },error => console.error(error))
+                  }else{
+                    Bandera=true
+                  }
+
+                
+                }
+              Bandera=true
+
+
+              }else{
+                Bandera=true
+              }
+              // alerta de exito
+              if(Bandera==true){
+                // var date = new Date('2020-01-01 00:00:03');
+                //       function padLeft(n:any){ 
+                //         return n ="00".substring(0, "00".length - n.length) + n;
+                //       }
+                //       var interval = setInterval(() => {
+                //       var minutes = padLeft(date.getMinutes() + "");
+                //       var seconds = padLeft(date.getSeconds() + "");
+                //       if( seconds == '03') {
+                //       this.messageService.add({severity:'success', summary: 'Success', 
+                //       detail: 'Registro de Docente Actualizado con exito'});
+                //       }
+                //       date = new Date(date.getTime() - 1000);
+                //       if( minutes == '00' && seconds == '01' ) {
+                //         this.ref.close(algo);
+                //         clearInterval(interval); 
+                //       }
+                // }, 1000);
+                // if(this.mostrarDialogo== true){
+                //     this.ref.close(algo);
+                //   }else{
+                        var date = new Date('2020-01-01 00:00:03');
+                          function padLeft(n:any){ 
+                            return n ="00".substring(0, "00".length - n.length) + n;
+                          }
+                          var interval = setInterval(() => {
+                          var minutes = padLeft(date.getMinutes() + "");
+                          var seconds = padLeft(date.getSeconds() + "");
+                          // console.log(minutes, seconds);
+                          if( seconds == '03') {
+                          this.messageService.add({severity:'success', summary: 'Success', 
+                          detail: 'Registro de Docente Creado con exito'});
+                          }
+                          date = new Date(date.getTime() - 1000);
+                          if( minutes == '00' && seconds == '01' ) {
+                            this.router.navigateByUrl('/usuarios/Teacher');
+                            clearInterval(interval); 
+                          }
+                    }, 1000);
+                  // }
+              }
+              
+            }
+        },async error => {
+          if(error != undefined) {
+            let text = await translate(error.error.message, "es");
+            if(error.error.dataErros){
+              text = await translate(error.error.dataErros[0].message, "es");
+            }
+            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+          }
+        });
+    }else{
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+    }
+}else{
+  this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Certificados por adjuntar'});
+
+}
 }
 
 get getRoles() {
@@ -541,104 +759,134 @@ getOneCntAccount(id:number) {
   //     // console.log(control)
   //   }
   // }
-  agregarHeadquarterPrograms(HeadquarterProgramTeachers: HeadquarterProgramTeacherI[]) {
-    if(HeadquarterProgramTeachers.length){
-      for (let key of HeadquarterProgramTeachers) {
-        if(key.HeadquarterProgramId != undefined) {
-          let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-          let  HeadquarterId:any | null=null
-          if(key.HeadquarterProgram?.HeadquarterId != undefined
-            &&  key.HeadquarterProgram?.ProgramId != undefined){
-              for (let key2 of this.headquarterProgram) {
-                if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
-                  && key2.ProgramId== key.HeadquarterProgram.ProgramId){
-                    HeadquarterId=key2
-                }
-              }
-            }
-            let  ResearchBondingId:any | null=null
-            for (const key2 of this.research_bondings) {
-              if(key2.id == key.ResearchBondingId){
-                ResearchBondingId=key2
-              }
-            } 
+  // **************************Docentes****************************************************
+    // datos filtrados docentes
 
-          if(HeadquarterId != null && ResearchBondingId != null){
-            control.push(this.formBuilder.group({
-              TeacherId:0,
-                HeadquarterProgramId:[HeadquarterId, [Validators.required]],
-                ResearchBondingId:[ResearchBondingId, [Validators.required]],
-            }))
-          }else{}
-
-        }
-      }
-      this.mostrar1= true
-      let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-      control.removeAt(0)
-    }
-  }
-
-  agregarDescuentos2(Workexperiences: WorkexperienceI[]) {
-    if(Workexperiences.length){
-      for (let key of Workexperiences) {
-        if(key.TeacherId != undefined) {
-          // console.log(DiscountLine)
-          
-          let control = <FormArray>this.form.controls['Workexperiences']
-                    control.push(this.formBuilder.group({
-                      final_date: key.final_date,
-                      functions: key.functions,
-                      name_institution:key.name_institution,
-                      position_type:key.position_type,
-                      start_date:key.start_date
-                    }))
-      }
-    }
-      this.mostrar3= true
-      let control = <FormArray>this.form.controls['Workexperiences']
-      control.removeAt(0)
-    }
-  }
-  agregarDescuentos(TrainingTeachers: TrainingTeacherI[]) {
-    if(TrainingTeachers.length){
-      for (let key of TrainingTeachers) {
-        if(key.TrainingId != undefined) {
-          // console.log(DiscountLine)
-          
-          let control = <FormArray>this.form.controls['trainingTeacher']
-            this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
-              if(algo1.teacher.id != undefined && key.TrainingId != undefined) {
-                this.trainingsService.getItem(key.TrainingId).subscribe((algo)=>{
-                  if(algo.training.id != undefined){
-                    // let any :any=algo.training
-                    // console.log(algo.training)
-                    control.push(this.formBuilder.group({
-                      name: [key?.name],
-                      date_graduation: [key?.date_graduation],
-                      name_institution: [key?.name_institution],
-                      resolution_convalidation: [key?.resolution_convalidation],
-                      degree_certificate: [key?.degree_certificate],
-                      TeacherId:algo1.teacher.id,
-                      TrainingId:[algo.training],
-                    }))
+      // datos de docentes 
+      agregarHeadquarterPrograms(HeadquarterProgramTeachers: HeadquarterProgramTeacherI[]) {
+        if(HeadquarterProgramTeachers.length){
+          for (let key of HeadquarterProgramTeachers) {
+            if(key.HeadquarterProgramId != undefined) {
+              let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+              let  HeadquarterId:any | null=null
+              if(key.HeadquarterProgram?.HeadquarterId != undefined
+                &&  key.HeadquarterProgram?.ProgramId != undefined && key.status==true){
+                  for (let key2 of this.headquarterProgram) {
+                    if(key2.HeadquarterId == key.HeadquarterProgram.HeadquarterId 
+                      && key2.ProgramId== key.HeadquarterProgram.ProgramId){
+                        HeadquarterId=key2
+                    }
                   }
-      
-                })
-              }
-              
-            })
+                }
+                let  ResearchBondingId:any | null=null
+                for (const key2 of this.research_bondings) {
+                  if(key2.id == key.ResearchBondingId){
+                    ResearchBondingId=key2
+                  }
+                } 
+
+              if(HeadquarterId != null && ResearchBondingId != null){
+                control.push(this.formBuilder.group({
+                  TeacherId:0,
+                    HeadquarterProgramId:[HeadquarterId, [Validators.required]],
+                    ResearchBondingId:[ResearchBondingId, [Validators.required]],
+                }))
+              }else{}
+
+            }
+          }
+          this.mostrar1= true
+          let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+          control.removeAt(0)
         }
       }
-      this.mostrar2= true
-      let control = <FormArray>this.form.controls['trainingTeacher']
-      console.log(control,'control')
 
-      control.removeAt(0)
-    }
+      agregarDescuentos2(Workexperiences: WorkexperienceI[]) {
+        if(Workexperiences.length){
+          for (let key of Workexperiences) {
+            if(key.id != undefined) {
+              // console.log(DiscountLine)
+              let AnexoId:any | string = ''
+              if(key.AnexosWorkexperiences?.length != undefined 
+                && key.AnexosWorkexperiences?.length >0){
+                AnexoId=key.AnexosWorkexperiences[0].Anexo
+              }
+              let cont=0
+              let control = <FormArray>this.form.controls['Workexperiences']
+                        control.push(this.formBuilder.group({
+                          id:key.id,
+                          final_date: [key.final_date,[Validators.required]],
+                          functions: [key.functions,[Validators.required]],
+                          name_institution:[key.name_institution,[Validators.required]],
+                          position_type:[key.position_type,[Validators.required]],
+                          start_date:[key.start_date,[Validators.required]],
+                          constancy:[AnexoId,[Validators.required]]
+                        }))
+                        this.FilesExperinecia.push({
+                          id:key.id,position:cont
+                        })
+                        cont =cont + 1
+          }
+        }
+          this.mostrar3= true
+          let control = <FormArray>this.form.controls['Workexperiences']
+          control.removeAt(0)
+        }
+      }
+      agregarDescuentos(TrainingTeachers: TrainingTeacherI[]) {
+        if(TrainingTeachers.length){
+          for (let index = 0; index < TrainingTeachers.length; index++) {
+            const key = TrainingTeachers[index];
+          // for (let key of TrainingTeachers) {
+            if(key.TrainingId != undefined) {
+              // console.log(DiscountLine)
+              
+              let control = <FormArray>this.form.controls['trainingTeacher']
+              let AnexoId:any | string = ''
+              if(
+                key.resolution_convalidation == 'Si' &&
+                key.AnexosTrainingTeachers?.length != undefined && key.AnexosTrainingTeachers?.length >0){
+                AnexoId=key.AnexosTrainingTeachers[0].Anexo
+              }
+              let cont=0
+                this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+                  if(algo1.teacher.id != undefined && key.TrainingId != undefined) {
+                    this.trainingsService.getItem(key.TrainingId).subscribe((algo)=>{
+                      if(algo.training.id != undefined && key.id){
+                        // let any :any=algo.training
+                      
+                        control.push(this.formBuilder.group({
+                          id:key.id,
+                          name: [key?.name,[Validators.required]],
+                          date_graduation: [key?.date_graduation,[Validators.required]],
+                          name_institution: [key?.name_institution,[Validators.required]],
+                          resolution_convalidation: [{value:key?.resolution_convalidation},[Validators.required]],
+                          degree_certificate: AnexoId,
+                          TeacherId:algo1.teacher.id,
+                          TrainingId:[algo.training,[Validators.required]],
+                        }))
+                        
+                        this.FilesFormaciones.push({
+                          id:key.id,position:cont
+                        })
+                        cont =cont + 1
 
-  }
+                        // console.log(control,'control')
+                        this.resolucion(new Event(''),index)
+                      }
+          
+                    })
+                  }
+                  
+                })
+            }
+          }
+          this.mostrar2= true
+          let control = <FormArray>this.form.controls['trainingTeacher']
+          control.removeAt(0)
+        }
 
+      }
 
   get getWorkexperiences() {
     return this.form.get('Workexperiences') as FormArray;//obtener todos los formularios
@@ -649,22 +897,26 @@ getOneCntAccount(id:number) {
       const control = <FormArray>this.form.controls['Workexperiences']
         if(control.length == 0 && this.mostrar3 == false){
           control.push(this.formBuilder.group({
+          id:0,
             TeacherId:0,
             name_institution: [''],
             position_type: [''],
             functions:[''],
             start_date:[''],
             final_date:[''],
+             constancy:[''],
           }))
         }
         if(control.length >= 1 && this.mostrar3 == true){
           control.push(this.formBuilder.group({
+          id:0,
             TeacherId:0,
             name_institution: [''],
             position_type: [''],
             functions:[''],
             start_date:[''],
             final_date:[''],
+             constancy:[''],
           }))
   
         }
@@ -673,16 +925,25 @@ getOneCntAccount(id:number) {
     removeWorkexperiences(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form.controls['Workexperiences']//aceder al control
+       if(control.value[index].id !== undefined && control.value[index].id != ''){
+        this.deleteWorkexperiences.push(control.value[index]);
+      }
       control.removeAt(index)
+      if( this.FilesExperinecia[index] != undefined){
+          this.FilesExperinecia.splice(index,1) 
+        }
         if(control.length <= 0){
         this.mostrar3=false
         control.push(this.formBuilder.group({
+          id:0,
+
           TeacherId:0,
           name_institution: [''],
           position_type: [''],
           functions:[''],
           start_date:[''],
           final_date:[''],
+           constancy:[''],
         }))
         }
     }
@@ -696,6 +957,8 @@ getOneCntAccount(id:number) {
         const control = <FormArray>this.form.controls['trainingTeacher']
           if(control.length == 0 && this.mostrar2 == false){
             control.push(this.formBuilder.group({
+          id:0,
+
               TeacherId:0,
               name: [''],
               date_graduation: [''],
@@ -707,6 +970,8 @@ getOneCntAccount(id:number) {
           }
           if(control.length >= 1 && this.mostrar2 == true){
             control.push(this.formBuilder.group({
+          id:0,
+
               TeacherId:0,
               name: [''],
               date_graduation: [''],
@@ -722,10 +987,22 @@ getOneCntAccount(id:number) {
       removetrainingTeacher(index: number,event: Event){
         event.preventDefault();
         let control = <FormArray>this.form.controls['trainingTeacher']//aceder al control
-        control.removeAt(index)
+        
+      if(control.value[index].id !== undefined && control.value[index].id != ''){
+        this.deletetrainingTeachers.push(control.value[index]);
+      }
+      control.removeAt(index)
+      if( this.FilesFormaciones[index] != undefined){
+          this.FilesFormaciones.splice(index,1)
+        }
+        // console.log(this.FilesFormaciones,'this.FilesFormaciones');
+      // al eliminar un registro, se debe quitar el file del array
+      // this.FilesFormaciones.(index)
           if(control.length <= 0){
           this.mostrar2=false
           control.push(this.formBuilder.group({
+          id:0,
+
             TeacherId:0,
             name: [''],
             date_graduation: [''],
@@ -760,27 +1037,7 @@ getOneCntAccount(id:number) {
         }
   });
   }
-  // addEscalafon(e:Event){
-  //   e.preventDefault()
 
-  //   this.ref = this.dialogService.open(Create_EscalafonComponent, {
-  //     width: '40%',
-  //     height: '50%',showHeader:false,
-  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-  //     baseZIndex: 10000,
-  //     data: {
-  //       id: '1'
-  //   },
-  // });
-
-  // this.ref.onClose.subscribe((person: any) =>{
-  //     if (person) {
-  //         this.messageService.add({severity:'info', summary: 'Escalafon Creado', detail: person.name,life: 2000});
-  //     this.getAllscales()
-
-  //       }
-  // });
-  // }
   addCategoriaColciencias(e:Event){
     e.preventDefault()
 
@@ -845,49 +1102,158 @@ getOneCntAccount(id:number) {
   });
   }
 
-  // addGenero(e:Event){
-  //   e.preventDefault()
+  // ***************************************Codigo Logica Docente****************************************
 
-  //   this.ref = this.dialogService.open(Create_genderComponent, {
-  //     width: '40%',
-  //     height: '52%',showHeader:false,
-  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-  //     baseZIndex: 10000,
-  //     data: {
-  //       id: '1'
-  //   },
-  // });
+  resolucion(e:Event,pointIndex:number) {
+    e.preventDefault();
+    const control = <FormArray>this.form.controls['trainingTeacher']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(control.value[pointIndex].resolution_convalidation.value == 'Si'){
+      if(this.validandoCertificado.length == 0){
+        this.validandoCertificado.push(true)
+      }else{
+        this.validandoCertificado[pointIndex]=true
+      }
+      // control.value[pointIndex].degree_certificate
+    
+    }
+    if(control.value[pointIndex].resolution_convalidation.value == 'No'){
+      if(this.validandoCertificado.length == 0){
+        this.validandoCertificado.push(false)
+      }else{
+        this.validandoCertificado[pointIndex]=false
+      }
+    }
+    // console.log('aja')
+    // console.log(this.validandoCertificado)
+    // console.log(control.value[pointIndex].degree_certificate)
+  }
+  // files Certificado formaciones
+  onFileChange(event:any,pointIndex:number) {
+  event.preventDefault();
+  const control = <FormArray>this.form.controls['trainingTeacher']
+  // console.log(control.value[pointIndex].resolution_convalidation)
+  if(control.value[pointIndex].degree_certificate != ''){
+    // console.log('aquii')
+    if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+      const file=event.target.files[0];
+    
+      // if(file.type.includes("degree_certificate")){//Evaluar si es una imagen
+          // const reader= new FileReader();
+          // reader.readAsDataURL(file);
+          // reader.onload=function load(){
+          //    let images=reader.result; //Asignar al thumbnail
+          // }.bind(this);
+          // this.file=file;
+          // console.log('aquii-actualizado file ==', pointIndex)
+          // if(this.FilesFormaciones.length ==0){
+          //   console.log('aquii-create file')
+          //   this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
 
-  // this.ref.onClose.subscribe((person: any) =>{
-  //     if (person) {
-  //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-  //     this.getAllgenders()
+          // }else{
+          //   // console.log('aquii-actualizado file')
 
-  //       }
-  // });
-  // }
+          //   for (const key of this.FilesFormaciones) {
+
+          //     if(key.position == pointIndex){
+          //   console.log('aquii-actualizado file',key.position+' ==', pointIndex)
+
+               
+          //     }
+          //     // else{
+          //     //   this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
+          //     // }
+              
+          //   }
+          // }
+          
+          
+          if( this.FilesFormaciones[pointIndex] != undefined){
+            // console.log('aquii-actualizado file')
+
+            this.FilesFormaciones[pointIndex]={
+              id:control.value[pointIndex].id,
+              position:pointIndex,
+              file:file
+            }
+
+            
+          }else{
+            // console.log('aquii-nuevo file')
+            this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,
+              file:file})
+
+          }
+          console.log(this.FilesFormaciones,'this.FilesFormaciones')
+
+          // console.log(this.FilesFormaciones[pointIndex],'this.FilesFormaciones[pointIndex].position')
+          // console.log(this.file)
+          // console.log(reader,'reader')
+      // }
+  }
+  }
 
 
-  // addTipoDocumento(e:Event){
-  //   e.preventDefault()
 
-  //   this.ref = this.dialogService.open(Create_documentTypeComponent, {
-  //     width: '40%',
-  //     height: '50%',showHeader:false,
-  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,
-  //     baseZIndex: 10000,
-  //     data: {
-  //       id: '1'
-  //   },
-  // });
+  }
+  // files constancia experiencia laboral
+  onFileChange1(event:any,pointIndex:number) {
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Workexperiences']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(control.value[pointIndex].constancy != ''){
+      // console.log('aquii')
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+      
+        // if(file.type.includes("constancy")){//Evaluar si es una imagen
+            // const reader= new FileReader();
+            // reader.readAsDataURL(file);
+            // reader.onload=function load(){
+            //    let images=reader.result; //Asignar al thumbnail
+            // }.bind(this);
+            // this.file=file;
+            
+            if( this.FilesExperinecia[pointIndex] != undefined){
+              // console.log('aquii-actualizado file')
 
-  // this.ref.onClose.subscribe((person: any) =>{
-  //     if (person) {
-  //         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-  //     this.getAlldocumentTypes()
+              this.FilesExperinecia[pointIndex]={
+                id:control.value[pointIndex].id,
+                position:pointIndex,
+                file:file}
 
-  //       }
-  // });
-  // }
+            }else{
+              // console.log('aquii-nuevo file')
+              this.FilesExperinecia.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
+
+            }
+            console.log(this.FilesExperinecia,'this.FilesExperinecia')
+            // console.log(this.file)
+            // console.log(reader,'reader')
+        // }
+    }
+    }
+  
+
+  
+  }
+
+  // archivos eliminados
+  removeArchivo(item:any,event:Event,pointIndex:number){
+    event.preventDefault()
+    this.ArchivosEliminados.push(item)
+    console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
+    let control = <FormArray>this.form.controls['trainingTeacher']
+    control.controls[pointIndex].get('degree_certificate')?.setValue('')
+  }
+  removeArchivoC(item:any,event:Event,pointIndex:number){
+  
+    event.preventDefault()
+
+    this.ArchivosEliminados.push(item)
+    console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
+    let control = <FormArray>this.form.controls['Workexperiences']
+    control.controls[pointIndex].get('constancy')?.setValue('')
+  }
 
 }
