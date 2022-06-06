@@ -80,6 +80,15 @@ export interface WorkexperienceI {
     start_date:string
     final_date:string
     constancy?:string
+    AnexosWorkexperiences?:AnexosWorkexperienceI[]
+}
+
+export interface AnexosWorkexperienceI {
+    id?: number;
+    WorkexperienceId:number;
+    AnexoId:number;
+    UserId:number
+    Anexo?:AnexosI
 }
 
 export interface Charge_bondingI {

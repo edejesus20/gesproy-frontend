@@ -612,14 +612,14 @@
                                     </div>
                                     <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
                                       <ng-template [ngIf]="validandoCertificado[pointIndex] === true">
-                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
                                           <div class="field ">
                                             <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
                                           <div class="p-inputgroup">
                                             <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
           
-                                            <div class="custom-input-file mt-2" style="width: 100%;">
+                                            <div class="custom-input-file " style="width: 100%;">
                                               <input type="hidden" 
                                               class="input-file p-inputtext-lg" 
                                               style="margin-bottom: 10px;" 
@@ -629,15 +629,20 @@
                                               title="CERTIFICADO DE GRADO" (click)="onFileChange($event,pointIndex)">
                                               <a pInputText
                                               class="input-file p-inputtext-lg mt-4" 
-                                              style="margin-bottom: 15px;" target="back" href="http://localhost:3000{{form4.value.trainingTeacher[pointIndex].degree_certificate.url}}">
-                                              {{form4.value.trainingTeacher[pointIndex].degree_certificate.name}}</a>
+                                              style="margin-bottom: 15px;" target="back" href="http://localhost:3000{{form4.value.trainingTeacher[pointIndex].degree_certificate?.url}}">
+                                              {{form4.value.trainingTeacher[pointIndex].degree_certificate?.name}}</a>
+                                              <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
+                                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo(form4.value.trainingTeacher[pointIndex].degree_certificate,$event,pointIndex)"  
+                                                class="p-button-rounded p-button-danger"></button>
+              
+                                              </span>
                                             </div>
                                             </span>       
                                           </div>
                                         </div>
                                         </ng-template>
 
-                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate.name">
+                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
                                           <div class="field ">
                                             <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
                                           
@@ -650,11 +655,17 @@
                                             <div class="custom-input-file" style="width: 100%;">
                                               <input type="file" 
                                               class="input-file p-inputtext-lg" 
-                                              style="margin-bottom: 10px;" 
+                                              style="margin-bottom: 10px;width: 80%;" 
                                               name="Anexos" 
                                               placeholder="CERTIFICADO DE GRADO" 
                                               formControlName="degree_certificate" 
                                               title="CERTIFICADO DE GRADO" (change)="onFileChange($event,pointIndex)">
+                                              <span class="bottomdelete "  *ngIf="form4.value.trainingTeacher[pointIndex].degree_certificate != ''"
+                                              style="margin-left: 5px;padding-bottom:7px ;">
+                                                <button pButton pRipple type="button" icon="pi pi-check"   
+                                                class="p-button-rounded p-button-success"></button>
+              
+                                              </span>
                                             </div>
                                             </span>       
                                           </div>
@@ -689,7 +700,7 @@
                   </div>
                 </div>
             </div>
-            <div style="border: 1px solid #F16257;padding: 10px;border-radius: 5px;">
+           
               <h4 style="text-align:left;">3.3. CARGOS DESEMPEÑADOS EN LOS ÚLTIMOS 5 AÑOS </h4>
               <br>
                 <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
@@ -715,11 +726,13 @@
                               <div class="grid">
                                 <div class="col-11">
                                   <div class="grid">
-                                    <div class="col-12 md:col-6 lg:col-6">
+                                    <div class="col-12 md:col-12 lg:col-6">
                                       <div class="field ">
                                         <label for="name"style="font-weight: bold;">NOMBRE DE INSTITUCIÓN</label>
                                       
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
          
@@ -731,11 +744,13 @@
                                       </div>
                                     </div>
                                     </div>
-                                      <div class="col-12 md:col-6 lg:col-6">
+                                      <div class="col-12 md:col-12 lg:col-6">
                                         <div class="field ">
                                           <label for="name"style="font-weight: bold;">CARGO</label>
                                         
                                       <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                         <span class="p-float-label" 
                                         [style]="{'width':'100%'}">
       
@@ -754,6 +769,8 @@
                                           <label for="name"style="font-weight: bold;">FUNCIONES</label>
                                         
                                         <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;"><i class="pi pi-bookmark-fill"></i></span>
+
                                           <span class="p-float-label" 
                                           [style]="{'width':'100%'}">
                                           <textarea rows="3" cols="200" 
@@ -770,24 +787,30 @@
                                     </div>
                                   </div>
                                   <div class="grid">
-                                    <div class="col-12 md:col-6 lg:col-6 flex">
-                                        <div class="field ">
+                                    <div class="col-12 md:col-12 lg:col-7 xg:col-7 ">
+                                      <div class="grid">
+                                        <div class="field col-12 sm:col-6">
                                           <label for="name"style="font-weight: bold;">FECHA DE INICIO</label>
                                         
                                         <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+
                                           <span class="p-float-label" 
                                           [style]="{'width':'100%'}">
-                                          <input type="date" pInputText   class="p-inputtext-lg" title="FECHA DE INICIO"
+                                          <input type="date" pInputText 
+                                          class="p-inputtext-lg" title="FECHA DE INICIO"
                                           inputId="basic" name="start_date" 
                                           placeholder="FECHA DE INICIO"
                                           formControlName="start_date" required></span> 
                                         </div>
                                       </div>
-                                      <div class="field ">
+                                      <div class="field col-12 sm:col-6">
                                         <label for="name"style="font-weight: bold;">FECHA DE TERMINO</label>
                                       
-                                          <div class="p-inputgroup"  style="margin-left: 15px;margin-top: 10px;">
-                                            <span class="p-float-label" 
+                                          <div class="p-inputgroup"  style="margin-top: 10px;">
+                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                      
+                                      <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
                                             <input type="date" pInputText  class="p-inputtext-lg" 
                                             title="FECHA DE TERMINO"
@@ -796,25 +819,75 @@
                                             formControlName="final_date" required></span> 
                                           </div>
                                          </div>
+                                      </div>
+                                     
                                     </div>
 
-                                      <div class="col-12 md:col-6 lg:col-6">
+                                      <div class="col-12 md:col-12 lg:col-5 xg:col-5">
+                                        <ng-template [ngIf]="form4.value.Workexperiences[pointIndex].constancy.name">
+                                          <div class="field ">
+                                            <label for="name"style="font-weight: bold;">CONSTANCIA</label>
+                                          <div class="p-inputgroup">
+                                      <span class="p-inputgroup-addon mt-3"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
+
+                                            <span class="p-float-label" 
+                                            [style]="{'width':'100%'}">
+          
+                                            <div class="custom-input-file " style="width: 100%;">
+                                              <input type="hidden" 
+                                              class="input-file p-inputtext-lg" 
+                                              style="margin-bottom: 10px;"  
+                                              name="constancy" 
+                                              placeholder="CONSTANCIA" 
+                                              formControlName="constancy" 
+                                              title="CONSTANCIA" (click)="onFileChange1($event,pointIndex)">
+                                              <a pInputText
+                                              class="input-file p-inputtext-lg " 
+                                              style="margin-top: -10px;" target="back" href="http://localhost:3000{{form4.value.Workexperiences[pointIndex].constancy.url}}">
+                                              {{form4.value.Workexperiences[pointIndex].constancy.name}}</a>
+                                              <span class="bottomdelete mt-6"  
+                                              style="margin-left: 20px ;">
+                                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivoC(form4.value.Workexperiences[pointIndex].constancy,$event,pointIndex)"  
+                                                class="p-button-rounded p-button-danger"></button>
+              
+                                              </span>
+                                            </div>
+                                            </span>       
+                                          </div>
+                                        </div>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="!form4.value.Workexperiences[pointIndex].constancy.name">
                                               <div class="field ">
                                                 <label for="name"style="font-weight: bold;">CONSTANCIA</label>
                                               
                                             <div class="p-inputgroup" >
+                                      <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
+
                                               <span class="p-float-label" 
                                               [style]="{'width':'100%'}">
             
                                               <div class="custom-input-file" style="width: 100%;">
-                                                <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
+                                                <input type="file" 
+                                                class="input-file p-inputtext-lg" 
+                                                style="margin-bottom: 10px;" 
                                                 name="constancy" 
-                                                placeholder="CONSTANCIA" formControlName="constancy" 
-                                                title="CONSTANCIA" required>
+                                                placeholder="CONSTANCIA" 
+                                                style="width: 80%;"
+                                                formControlName="constancy" 
+                                                
+                                                title="CONSTANCIA" required (change)="onFileChange1($event,pointIndex)">
+                                                <span class="bottomdelete mt-7"  *ngIf="form4.value.Workexperiences[pointIndex].constancy != ''"
+                                                style="margin-left: 5px ;">
+                                                  <button pButton pRipple type="button" icon="pi pi-check"   
+                                                  class="p-button-rounded p-button-success"></button>
+                
+                                                </span>
                                               </div>
                                               </span>       
                                             </div>
                                           </div>
+                                        </ng-template>
                                       </div>
                                     </div>
                                 </div>
@@ -837,7 +910,6 @@
                 </div>
           
             </div>
-          </div>
           </div>
 
             <br>
