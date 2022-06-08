@@ -316,26 +316,26 @@ this.notificaciones(this.UserId)
   }
 }
 
-mostrarNOtificaciones(event: Event){
-  event.preventDefault()
-  this.ref1 = this.dialogService.open(AnunciosComponent, {
-    width: '80%',
-    // height: '55%',
-    contentStyle:{'padding':'20px'} ,closable:false, closeOnEscape:false,
-     showHeader:false, 
-    // baseZIndex: 10000,
-    data: {
-      id: '1'
-  },
-});
+  mostrarNOtificaciones(event: Event){
+    event.preventDefault()
+    this.ref1 = this.dialogService.open(AnunciosComponent, {
+      width: '80%',
+      // height: '55%',
+      contentStyle:{'padding':'20px'} ,closable:false, closeOnEscape:false,
+      showHeader:false, 
+      // baseZIndex: 10000,
+      data: {
+        id: '1'
+    },
+  });
 
-this.ref1.onClose.subscribe((person: any) =>{
-    if (person) {
-      this.notificaciones(this.UserId)
-        // this.messageService.add({severity:'successs', summary: 'Perfil Editado', detail: person.name,life: 2000});
-      this.ngOnInit()
-      }
-});
+  this.ref1.onClose.subscribe((person: any) =>{
+      if (person) {
+        this.notificaciones(this.UserId)
+          // this.messageService.add({severity:'successs', summary: 'Perfil Editado', detail: person.name,life: 2000});
+        this.ngOnInit()
+        }
+  });
 
-}
+  }
 }

@@ -74,11 +74,12 @@ public responsiveOptions:any[] = [
    },
   
 ];
-blockSpecial: RegExp = /^[^<>*!]+$/ 
+blockSpecial: RegExp = /^[^<>*!@.,]+$/
 
 public documentTypes:DocumentTypeI[]=[]
 public genders:GenderI[] =[]
 public Roles1:any[] =[]
+public bandera:boolean=false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -96,18 +97,15 @@ public Roles1:any[] =[]
   ngOnInit(): void {
 this.rolesService.getRole().subscribe(role => {
   if(role.roles){
-    for (const key of role.roles) {
-
-      if(key.name.toLocaleLowerCase() === 'docente'){
-        this.cities.push(key)
-  
-      }
-      if(key.name.toLocaleLowerCase() === 'administrativo'){
-        this.cities.push(key)
-
-      }
-      
-    }
+    this.cities.push({
+      // createdAt: "2022-06-06 14:03:12"
+    id: 5,
+    name: "Docente",
+    // updatedAt: "2022-06-06 14:03:12"
+      },{
+      id: 6,
+      name: "Administrativo"
+    })
   }
 })
 
@@ -130,22 +128,52 @@ this.rolesService.getRole().subscribe(role => {
     // this.getAllgenders()
     // this.getAlldocumentTypes()
   }
-  
-  // private getAllgenders(selectId?: number) {
-  //   this.genderService.getList().subscribe(
-  //     (AdministrativeFromApi) => {
-  //       // console.log(AdministrativeFromApi.administratives)
-  //       this.genders = AdministrativeFromApi.genders;
-  //     }, error => console.error(error));
-  // }
-  
-  // private getAlldocumentTypes(selectId?: number) {
-  //   this.documentTypeService.getList().subscribe(
-  //     (AdministrativeFromApi) => {
-  //       this.documentTypes = AdministrativeFromApi.documentTypes;
-  
-  //     }, error => console.error(error));
-  // }
+  public verificar(){
+    // e.preventDefault();
+    let email = this.form;
+
+let dominios = new Array('uniguajira.edu.co'); //creo un arreglo con los dominios aceptados
+
+// email.addEventListener('blur', function() {
+
+
+if(email.value.email1 == '' || email.value.email1 == 'undefined'){
+    console.log('El campo es obligatorio');
+    return false;
+
+}else{
+  let value = email.value.email1.split('@'); //split() funciona para dividir una cadena en un array pasando un caracter como delimitador
+    
+ 
+    if(value[1] == undefined){
+    //  console.log('aqui'); 
+     return false;
+    }else{
+      console.log(value[1]);
+      if(dominios.indexOf(value[1]) == -1){ //.indexOf() sirve para encontrar un elemento en un array
+      
+        console.log('dominio no encontrado'); 
+        dominios.forEach(function(dominio){ //utilizamos forEach para recorrer el arreglo.
+           
+             console.log(`Los dominios aceptados son: ${dominio}`);
+        
+        })
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: `El dominio aceptado es: ${dominios[0]}`,life: 1000});
+
+         return false;
+       }else{
+         
+           console.log('dominio aceptado');
+           return true;
+       
+       }
+    }
+    
+   
+}
+
+  }
+
   private buildForm(){
     this.form = this.formBuilder.group({
     name:['', [Validators.required]],
@@ -155,7 +183,7 @@ this.rolesService.getRole().subscribe(role => {
     // GenderId:['', [Validators.required]],
     // address:['', [Validators.required]],
     // phone:['', [Validators.required]],
-    email:['', [Validators.required]],
+    email1:['', [Validators.required]],
     // nationality: ['', [Validators.required]],
     // date_of_birth: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -166,6 +194,13 @@ this.rolesService.getRole().subscribe(role => {
   }
 
   onSubmit(){
+  //  let bandera= this.verificar()
+
+  //  if(bandera == true){
+    let value = this.form.value.email1.split('@');
+  //  let result = this.form.value.email1.substring(1, this.form.value.email1.split('@'));
+    // value=value.slice(1)
+    // console.log(value[0])
     let formValue={
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -174,7 +209,7 @@ this.rolesService.getRole().subscribe(role => {
       // GenderId: this.form.value.GenderId.id,
       // address: this.form.value.address,
       // phone: this.form.value.phone,
-      email:this.form.value.email,
+      email:`${value[0]}@uniguajira.edu.co`,
       password:this.form.value.password,
       Roles: this.form.value.Roles
       // nationality: this.form.value.nationality,
@@ -194,19 +229,11 @@ this.rolesService.getRole().subscribe(role => {
     }else{
       formValue.Roles = this.Roles1
     }
-
-
-    // if(formValue.Roles[0].RoleId == '' ||
-    // formValue.Roles[0].RoleId == undefined ||this.Roles1.length == undefined){
-    //   // this.form.value.Workexperiences=[]
-    //   formValue.Roles=[]
-
-    // }
-
     if(this.form.value.password !== this.form.value.password2){
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Contraseñas No Coinciden'});
 
     }else{
+
       if(formValue.name != ""&&
                 formValue.surname != ""&&
                 formValue.DocumentTypeId != ( 0 || undefined)&&
@@ -220,7 +247,8 @@ this.rolesService.getRole().subscribe(role => {
                 // formValue.nationality != "" && 
                 // formValue. date_of_birth!= ""
                 ){
-                  console.log(formValue)
+                  this.bandera=true
+                  // console.log(formValue)
   
               this.userService.createUser(formValue).subscribe(
                 (algo) => {
@@ -235,8 +263,12 @@ this.rolesService.getRole().subscribe(role => {
                     this.messageService.add({severity:'success', summary: 'Success', 
                     detail: 'Registro de Usuario Creado con exito'});
                     }
+                    if( seconds == '01') {
+                      this.bandera=false
+                      }
                     date = new Date(date.getTime() - 1000);
                     if( minutes == '00' && seconds == '01' ) {
+                      this.bandera=false
                       this.router.navigateByUrl('/login');
                       clearInterval(interval); 
                     }
@@ -249,12 +281,15 @@ this.rolesService.getRole().subscribe(role => {
                       text = await translate(error.error.dataErros[0].message, "es");
                     }
                     this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+                    this.bandera=false
                   }
                 });
             }else{
               this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+              this.bandera=false
             }
     }
+ 
     
 
     

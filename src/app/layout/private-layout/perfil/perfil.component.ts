@@ -62,6 +62,11 @@ export class PerfilComponent implements OnInit {
     nationality: ['Colombiano'],
     date_of_birth: [''],
   });
+public bandera:boolean=false
+public bandera2:boolean=false
+public bandera3:boolean=false
+public bandera4:boolean=false
+
   public form2:FormGroup=this.formBuilder.group({
     id: [''],
     headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
@@ -1111,7 +1116,7 @@ export class PerfilComponent implements OnInit {
         // formValue.nationality != "" && 
         // formValue. date_of_birth!= ""
         ){
-
+          this.bandera=true
       this.perfilService.updatePerfil(formValue.id,formValue).subscribe(
         (algo) => {
             var date = new Date('2020-01-01 00:00:03');
@@ -1126,6 +1131,11 @@ export class PerfilComponent implements OnInit {
             this.messageService.add({severity:'success', summary: 'Success', 
             detail: 'Registro de Usuario Actualizado con exito'});
             }
+            if( seconds == '01') {
+              this.bandera=false
+              }
+        
+
             date = new Date(date.getTime() - 1000);
             if( minutes == '00' && seconds == '01' ) {
               this.ref.close(algo);
@@ -1140,10 +1150,12 @@ export class PerfilComponent implements OnInit {
               text = await translate(error.error.dataErros[0].message, "es");
             }
             this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+            this.bandera=false
           }
         });
     }else{
       this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+      this.bandera=false
     }
       }
       // administrativo
@@ -1181,6 +1193,7 @@ export class PerfilComponent implements OnInit {
 
         if(formValue.HeadquarterId != ( 0 || undefined)
         ){
+          this.bandera2=true
         //  console.log(formValue,'admianistrativo')
 
             this.perfilService.updateAdminsitrativo(formValue.id,formValue).subscribe(
@@ -1198,6 +1211,10 @@ export class PerfilComponent implements OnInit {
                         this.messageService.add({severity:'success', summary: 'Success', 
                         detail: 'Registro de Administrativo Actualizado con exito'});
                         }
+                        if( seconds == '01') {
+                          this.bandera2=false
+                          }
+                        
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
                           this.ref.close(algo);
@@ -1212,10 +1229,14 @@ export class PerfilComponent implements OnInit {
                     text = await translate(error.error.dataErros[0].message, "es");
                   }
                   this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+                  this.bandera2=false
+                
                 }
               });
           }else{
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+            this.bandera2=false
+
           }
       }
       // estudiante
@@ -1253,6 +1274,8 @@ export class PerfilComponent implements OnInit {
     
         }
         if(formValue.headquarterProgramStudent){
+          this.bandera3=true
+
         this.perfilService.updateEstudiante(formValue.id,formValue).subscribe(
           (algo) => {
                   var date = new Date('2020-01-01 00:00:03');
@@ -1267,6 +1290,9 @@ export class PerfilComponent implements OnInit {
                     this.messageService.add({severity:'success', summary: 'Success', 
                     detail: 'Registro de Estudiante Actualizado con exito'});
                     }
+                    if( seconds == '01') {
+                      this.bandera3=false
+                      }
                     date = new Date(date.getTime() - 1000);
                     if( minutes == '00' && seconds == '01' ) {
                       this.ref.close(algo);
@@ -1282,10 +1308,14 @@ export class PerfilComponent implements OnInit {
                 text = await translate(error.error.dataErros[0].message, "es");
               }
               this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+              this.bandera3=false
+            
             }
           });
         }else{
           this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+          this.bandera3=false
+
         } 
 
 
@@ -1382,7 +1412,8 @@ export class PerfilComponent implements OnInit {
         // console.log(formValue,'docente nuevo')
     if(formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined) && 
       formValue.MincienciaCategoryId != ("" || undefined) && formValue.ChargeBondingId != ("" || undefined)){
-              this.perfilService.updateDocente(formValue.id,formValue).subscribe(
+        this.bandera4=true      
+        this.perfilService.updateDocente(formValue.id,formValue).subscribe(
                 (algo) => {
   
                   let array:any[] = []
@@ -1557,6 +1588,10 @@ export class PerfilComponent implements OnInit {
                               detail: 'Registro de Docente Actualizado con exito'});
                               }
                               date = new Date(date.getTime() - 1000);
+                              if(seconds == '01' ) {
+                                this.bandera4=false 
+                              }
+                             
                               if( minutes == '00' && seconds == '01' ) {
                                 this.ref.close(algo);
                                 clearInterval(interval); 
@@ -1566,6 +1601,7 @@ export class PerfilComponent implements OnInit {
                       
                     }
 
+
               },async error => {
                   if(error != undefined) {
                     let text = await translate(error.error.message, "es");
@@ -1573,15 +1609,18 @@ export class PerfilComponent implements OnInit {
                       text = await translate(error.error.dataErros[0].message, "es");
                     }
                     this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+                    this.bandera4=false 
                   }
                 });
               }
             else{
               this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
+              this.bandera4=false 
             }
         
         }else{
           this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Certificados por adjuntar'});
+          this.bandera4=false 
 
         }
     

@@ -36,16 +36,17 @@
         <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
           <!-- avatar -->
           <div class="grid p-fluid">
-            <div class="col-12 sm:col-12 md:col-6">
-              <div class="text-center">
-                <img class="imgLogo2" width="45%" src="{{image3}}" alt=""  shape="circle"
+            <div class="col-12 sm:col-12 md:col-5">
+              <!-- <div class="text-center" style="background: url(assets/img/fondo.png)no-repeat;  width: 100%;"> -->
+                <div class="text-center" >
+                <img class="imgLogo2" width="40%" src="{{image3}}" alt=""  shape="circle"
                 styleClass="p-button-outlined">
     
                 <!-- <p-avatar image="{{image3}}" 
                 styleClass="ml-3" size="xlarge" shape="circle"></p-avatar> -->
               </div>
             </div>
-            <div class="col-12 sm:col-12 md:col-6">
+            <div class="col-12 sm:col-12 md:col-7">
               <div class="field " [style]="{'margin-top':'10px'}">
                 <label for="name"style="font-weight: bold;">NOMBRES</label>
               <div class="p-inputgroup" >
@@ -230,12 +231,23 @@
         </div>
         </div>
     <br>
+    <ng-template [ngIf]="bandera == false">
         <div fxLayout="row" class="titleCard" >
           <button pButton type="button"(click)="onSubmit($event)" icon="pi pi-check" 
           [disabled]="!form.valid" style="background-color:#F16257"
         class=" p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
           <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
       </div>
+    </ng-template>
+    <ng-template [ngIf]="bandera == true">
+      <br>
+      <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+      <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+        <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+
+      <!-- </div> -->
+    
+    </ng-template>
 
 
 
@@ -913,6 +925,7 @@
           </div>
 
             <br>
+            <ng-template [ngIf]="bandera4 == false">
             <div fxLayout="row" class="titleCard" >
               <button pButton type="button"(click)="onSubmit4($event)" 
               icon="pi pi-check" [disabled]="!form4.valid"style="background-color:#F16257"
@@ -920,6 +933,16 @@
             label="Actualizar Registro" styleClass="mr-2"></button>
               <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
+            </ng-template>
+          <ng-template [ngIf]="bandera4 == true">
+            <br>
+            <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+            <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+            <!-- </div> -->
+          
+          </ng-template>
         </form>
 
       </p-accordionTab>
@@ -1033,6 +1056,7 @@
                   </div>
             </div>
             <br>
+            <ng-template [ngIf]="bandera2 == false">
             <div fxLayout="row" class="titleCard" >
               <button pButton type="button"(click)="onSubmit1($event)" 
               icon="pi pi-check" [disabled]="!form3.valid"style="background-color:#F16257"
@@ -1040,6 +1064,16 @@
             label="Actualizar Registro" styleClass="mr-2"></button>
               <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
+        </ng-template>
+          <ng-template [ngIf]="bandera2 == true">
+            <br>
+            <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+            <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+            <!-- </div> -->
+          
+          </ng-template>
         </form>
       </p-accordionTab>
 
@@ -1277,6 +1311,9 @@
       
           </div> 
             <br>
+            <ng-template [ngIf]="bandera3 == false">
+
+            
             <div fxLayout="row" class="titleCard" >
               <button pButton type="button"(click)="onSubmit2($event)" 
               icon="pi pi-check" [disabled]="!form2.valid"style="background-color:#F16257"
@@ -1284,6 +1321,16 @@
             label="Actualizar Registro" styleClass="mr-2"></button>
               <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
+        </ng-template>
+          <ng-template [ngIf]="bandera3 == true">
+            <br>
+            <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+            <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+            <!-- </div> -->
+          
+          </ng-template>
         </form>
     </p-accordionTab>
 

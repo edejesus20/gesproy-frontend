@@ -23,7 +23,7 @@
             <span class="block text-6xl font-bold mb-2" style="color:#F16257">
               SIGINV
               <strong class="block" style="color:gray;font-size: 0.8rem;">
-                Sistema de Gestión de la Investigación
+                Sistema de Información para la Gestión de la Investigación
                 </strong></span>
         </div>
          
@@ -49,109 +49,70 @@
       
           <div class="grid">
             <div class="col-12 sm:col-6">
-              <div class="p-inputgroup mr-2 mb-2 ">
+              <div class="p-inputgroup mb-1 ">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText formControlName="name" placeholder="Nombre"  title="Nombre">         
             </div>
-            <!-- <div class="p-inputgroup mb-2 ">
-              <span class="p-inputgroup-addon"><i class="pi pi-credit-card"></i></span>
-              <p-dropdown class="visorg500-select-filter" 
-              [options]="documentTypes" [filter]="true"
-                name="DocumentTypeId" formControlName="DocumentTypeId" label="Tipo de Documento" 
-                [style]="{'width':'100%','height':'100%'}" 
-                optionvalue="id"  optionLabel="name" filterBy="name"
-                [required]="true" placeholder="Tipo de Documento" title="Tipo de Documento">
-                <ng-template let-option pTemplate="item">
-                  <span >{{option.name}}</span>
-              </ng-template>
-              </p-dropdown>               
-            </div> -->
-
-            <!-- <div class="p-inputgroup mr-2 mb-2 ">
-              <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
-              <input type="date" class="p-inputtext" pInputText name="date_of_birth" 
-          placeholder="Fecha de Nacimiento" formControlName="date_of_birth" 
-          title="Fecha de Nacimiento" required>         
-          </div> -->
-          <!-- <div class="p-inputgroup mr-2 mb-2 ">
-            <span class="p-inputgroup-addon"><i class="pi pi-question"></i></span>
-
-              <p-dropdown class="visorg500-select-filter " 
-              [options]="genders" [filter]="true" formControlName="GenderId" label="Seleccione Genero" 
-                [style]="{'width':'100%','height':'100%'}" 
-                optionvalue="id"  optionLabel="name" filterBy="name"
-                [required]="true" placeholder="Seleccione Genero" title="Seleccione Genero">
-                <ng-template let-option pTemplate="item">
-                  <span >{{option.name }}</span>
-              </ng-template>
-              </p-dropdown>
-            </div> -->
-            <div class="p-inputgroup mr-2 mb-2 ">
-              <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
-              <input  type="text" pInputText formControlName="identification" pKeyFilter="num"
-            placeholder="Identification" required title="Identification" >      
-                </div>
-
-                <div class="p-inputgroup mb-1 ">
-                  <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                  <input type="password" pInputText formControlName="password" placeholder="Contraseña" title="Contraseña" >          
-                </div>
             </div>
-
             <div class="col-12 sm:col-6">
-              <div class="p-inputgroup mb-2 ">
+              <div class="p-inputgroup mb-1 ">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText formControlName="surname" placeholder="Apellido" title="Apellido" >          
               </div>
-              <!-- <div class="p-inputgroup mb-2 ">
-                <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
-                <input  type="number" pInputText formControlName="identification" 
-              placeholder="Identification" required title="Identification" >        
-              </div> -->
+            </div>
+          </div>
 
-              <!-- <div class="p-inputgroup mb-2 ">
-                <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
-                <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                class="p-inputtext"  name="nationality" placeholder="Nacionalidad" title="Nacionalidad"
-                formControlName="nationality" required  >                 
-              </div> -->
-              <div class="p-inputgroup mr-2 mb-2 ">
-                <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
+            <div class="p-inputgroup  mb-2 ">
+              <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
+              <input  type="text" pInputText formControlName="identification" pKeyFilter="num"
+            placeholder="Identification" required title="Identification" >      
+            </div>
+            <div class="p-inputgroup  mb-2 ">
+                  <input type="text"  pInputText [pKeyFilter]="blockSpecial" 
+                  class="p-inputtext"  name="email1" formControlName="email1"
+                placeholder="Correo" required title="Correo Electronico">
+                <span class="p-inputgroup-addon">
+                  <!-- <i class="pi pi-at"></i> -->
+                  @uniguajira.edu.co</span>
+              </div>
 
-                <input type="email"  pInputText [pKeyFilter]="blockSpecial" 
-                class="p-inputtext"  name="email" formControlName="email"
-              placeholder="Correo" required title="Correo Electronico">
-                </div>
-                <!-- <div class="p-inputgroup mb-2 ">
-                  <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
-                  <input class="p-inputtext" type="text" formControlName="phone"
-                  pInputText pKeyFilter="num" name="phone" 
-                  placeholder="Telefono" title="Telefono"
-                  required>       
-                </div> -->
-                <div class="p-inputgroup mb-1 ">
-                  <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                  <input type="password" pInputText formControlName="password2"  placeholder="Confirmación de Contraseña"title="Confirmación Contraseña" >          
-                </div>
+            <div class="grid">
+                  <div class="col-12 sm:col-6">
+                    <div class="p-inputgroup mb-1 ">
+                      <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                      <input type="password" pInputText formControlName="password" placeholder="Contraseña" title="Contraseña" >          
+                    </div>
+                  </div>
+                  <div class="col-12 sm:col-6">
+                    <div class="p-inputgroup mb-1 ">
+                      <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                      <input type="password" pInputText formControlName="password2"  placeholder="Confirmación de Contraseña"title="Confirmación Contraseña" >          
+                    </div>
+                  </div>
+               
             </div>
           
 
           </div>
-   
-        </div>
-              
-         
-      <!-- <div fxLayout="row" class="titleCard "style="margin-top: 35px;">
-              <p-button type="submit"  icon="pi pi-check" label="Entrar" [disabled]="!form.valid" styleClass="mr-2"></p-button>
-              <p-button (click)="displayMaximizable=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
-          </div> -->
-          <br>
+          <ng-template [ngIf]="bandera == false">
           <div fxLayout="row" class="titleCard ">
           
           <button pButton pRipple  type="submit"  icon="pi pi-check" label="Enviar" 
           [disabled]="!form.valid" class=" mr-2 p-button-success "></button>
           <button pButton pRipple  type="button" routerLink="/login" icon="pi pi-sync" 
-           styleClass="p-button-text" label="Login"class="p-button-outlined "></button></div>
+           styleClass="p-button-text" label="Login"class="p-button-outlined "></button>
+          </div>
+        </ng-template>
+        <ng-template [ngIf]="bandera == true">
+          <br>
+          <br>
+          <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+          <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+            <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+    
+          <!-- </div> -->
+        
+        </ng-template>
       </section>
   </div>
   
