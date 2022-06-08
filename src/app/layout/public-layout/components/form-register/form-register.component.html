@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()"[formGroup]="form" novalidate  >
   <p-dialog [(visible)]="displayMaximizable" [modal]="true" 
-  [style]="{'width': '77vw','text-align': 'center','background':'#333333'}" 
+  [style]="{'width': '80%','text-align': 'center','background':'#333333'}" 
 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000" 
   [showHeader]="false">
@@ -34,11 +34,11 @@
           <br>
           <div fxLayout="row" class="titleCard">
               <i class="pi pi-shield" style="font-size: 2rem;margin-right: 10px;margin-top: -10px;"></i>
-            <h2 class="fondebabutton" style="margin-top: -10px;">Registro de Usuario</h2>
+            <h2 class="fondebabutton" style="margin-top: -12px;">Registro de Usuario</h2>
           </div>
           
           
-            <div class=" titleCard mb-2" style="margin:0px;text-align:center">
+            <div class=" titleCard mb-2" style="margin-top:-10px;text-align:center">
                 <span class="p-inputgroup-addon" style="height:37px"><i class="pi pi-users"></i></span>
               <p-multiSelect [options]="cities" formControlName="Roles"
               defaultLabel="Seleccione el tipo de usuario" [style]="{'width': '100%'}" required
@@ -113,6 +113,10 @@
           <!-- </div> -->
         
         </ng-template>
+        <div class="custom-input-file mt-2">
+          <a class="input-file p-inputtext-lg mt-2" 
+          target="back" href="https://www.youtube.com/playlist?list=PLeO4Lg5ff3KTFf6ydPCPf7iJ0GwCxDHZq" target="_blank" >Instructivo</a>
+        </div>
       </section>
   </div>
   

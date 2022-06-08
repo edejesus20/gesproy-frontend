@@ -9,6 +9,8 @@ mat-error > span:not(:first-child) {
     justify-content: center;
     margin: 0;
   }
+
+  
   
   mat-form-field{
     width: 100%;
