@@ -82,6 +82,7 @@ export class EditarTeacherComponent implements OnInit {
   private deleteWorkexperiences:any[] = []
 
   ArchivosEliminados:any[] =[]
+  public deleteheadquarterProgramTeachers:any[]=[]
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -118,6 +119,7 @@ export class EditarTeacherComponent implements OnInit {
       MincienciaCategoryId:['', [Validators.required]],
       headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
         {
+          id:0,
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
           ResearchBondingId:['', [Validators.required]],
@@ -154,7 +156,9 @@ export class EditarTeacherComponent implements OnInit {
       ChargeBondingId:['', [Validators.required]],
       deletetrainingTeachers:[''],
     deleteWorkexperiences:[''],
-    ArchivosEliminados:['']
+    ArchivosEliminados:[''],
+    deleteheadquarterProgramTeachers:['']
+
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()
@@ -209,7 +213,9 @@ export class EditarTeacherComponent implements OnInit {
       trainingTeacher:this.form.value.trainingTeacher,
       deletetrainingTeachers:this.deletetrainingTeachers,
       deleteWorkexperiences:this.deleteWorkexperiences,
-      ArchivosEliminados:this.ArchivosEliminados
+      ArchivosEliminados:this.ArchivosEliminados,
+      deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers
+
     };
     let boolean:boolean = false
     for (const clave of formValue.trainingTeacher) {
@@ -231,12 +237,13 @@ export class EditarTeacherComponent implements OnInit {
           key.HeadquarterProgramId=key.HeadquarterProgramId.id
           key.ResearchBondingId=key.ResearchBondingId.id
           key.TeacherId=this.form.value.id
-          this.headquarterProgramStudent1.push({
-            TeacherId:0,
-            HeadquarterProgramId:key.HeadquarterProgramId,
-            ResearchBondingId:key.ResearchBondingId,
-          })
+          // this.headquarterProgramStudent1.push({
+          //   TeacherId:0,
+          //   HeadquarterProgramId:key.HeadquarterProgramId,
+          //   ResearchBondingId:key.ResearchBondingId,
+          // })
         }
+        this.headquarterProgramStudent1= this.form.value.headquarterProgramTeacher
         formValue.headquarterProgramTeacher = this.form.value.headquarterProgramTeacher
       }else{
         formValue.headquarterProgramTeacher = this.headquarterProgramStudent1
@@ -530,6 +537,7 @@ get getRoles() {
     const control = <FormArray>this.form.controls['headquarterProgramTeacher']
       if(control.length == 0 && this.mostrar1 == false){
         control.push(this.formBuilder.group({
+          id:0,
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
           ResearchBondingId:['', [Validators.required]],
@@ -537,6 +545,7 @@ get getRoles() {
       }
       if(control.length >= 1 && this.mostrar1 == true){
         control.push(this.formBuilder.group({
+          id:0,
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
           ResearchBondingId:['', [Validators.required]],
@@ -548,10 +557,13 @@ get getRoles() {
   removeRoles(index: number,event: Event){
     event.preventDefault();
     let control = <FormArray>this.form.controls['headquarterProgramTeacher']//aceder al control
+    this.deleteheadquarterProgramTeachers.push(control.value[index])
+    
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar1=false
       control.push(this.formBuilder.group({
+        id:0,
         TeacherId:0,
         HeadquarterProgramId:['', [Validators.required]],
         ResearchBondingId:['', [Validators.required]],
@@ -713,7 +725,7 @@ getOneCntAccount(id:number) {
         // })
 
         for (const key of this.mincienciaCategorys) {
-          if(key.id != undefined && key.id == (cnt_groupFromApi.teacher.MincienciaCategoryId)){
+          if(key.id != undefined && key.id == parseInt(cnt_groupFromApi.teacher.MincienciaCategoryId)){
             this.form.controls['MincienciaCategoryId'].setValue(key)
           }
         }
@@ -787,6 +799,7 @@ getOneCntAccount(id:number) {
 
               if(HeadquarterId != null && ResearchBondingId != null){
                 control.push(this.formBuilder.group({
+                  id:key.id,
                   TeacherId:0,
                     HeadquarterProgramId:[HeadquarterId, [Validators.required]],
                     ResearchBondingId:[ResearchBondingId, [Validators.required]],

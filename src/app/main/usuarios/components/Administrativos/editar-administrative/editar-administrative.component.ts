@@ -41,6 +41,8 @@ export class EditarAdministrativeComponent implements OnInit {
   public Charges1:any[] = [];
 
   public ref:any;
+  private deleteCharges:any[]=[]
+
   constructor(
     public dialogService: DialogService,
     private administrativeService:AdministrativeService,
@@ -66,8 +68,10 @@ export class EditarAdministrativeComponent implements OnInit {
       email:['', [Validators.required]],
       HeadquarterId:['', [Validators.required]],
       Charges: this.formBuilder.array([this.formBuilder.group({
+        id:0,
         ChargeId:['', [Validators.required]],
         date:['', [Validators.required]]})]),
+        deleteCharges:['']
      });
   
       // this.getAllgenders()
@@ -165,7 +169,9 @@ export class EditarAdministrativeComponent implements OnInit {
           }
         }
           if(Charge != null){
-            control.push(this.formBuilder.group({UserId:this.form.value.id,ChargeId:[Charge, 
+            control.push(this.formBuilder.group({
+              id:key.id,
+              UserId:this.form.value.id,ChargeId:[Charge, 
               [Validators.required]],
             date:[key.date, [Validators.required]]}))
 
@@ -219,6 +225,7 @@ export class EditarAdministrativeComponent implements OnInit {
       UserId: 0,
       Charges: this.form.value.Charges,
       HeadquarterId: this.form.value.HeadquarterId.id,
+      deleteCharges: this.deleteCharges
       // nationality: this.form.value.nationality,
       // date_of_birth: this.form.value.date_of_birth,
     };
@@ -228,11 +235,12 @@ export class EditarAdministrativeComponent implements OnInit {
       let control = <FormArray>this.form.controls['Charges']
       for (const key of control.value) {
         key.ChargeId=key.ChargeId.id 
-        this.Charges1.push({
-          date:key.date,
-        ChargeId:key.ChargeId,
-        })
+        // this.Charges1.push({
+        //   date:key.date,
+        // ChargeId:key.ChargeId,
+        // })
       }
+      this.Charges1=this.form.value.Charges
       formValue.Charges = this.form.value.Charges
       // console.log('aqui')
     }else{
@@ -335,12 +343,14 @@ export class EditarAdministrativeComponent implements OnInit {
       //crear los controles del array
     if(control.length == 0 && this.mostrar2 == false){
       control.push(this.formBuilder.group({
+        id:0,
         ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
       }))//nuevo input
     }
     if(control.length >= 1 && this.mostrar2 == true){
       control.push(this.formBuilder.group({
+        id:0,
       ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
     }))
@@ -353,10 +363,12 @@ export class EditarAdministrativeComponent implements OnInit {
   removeRoles(index: number,event: Event){
     event.preventDefault();
     let control = <FormArray>this.form.controls['Charges']//aceder al control
+    this.deleteCharges.push(control.value[index])
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
      control.push(this.formBuilder.group({
+      id:0,
       ChargeId:['', [Validators.required]],
       date:['', [Validators.required]],
      }))//nuevo input

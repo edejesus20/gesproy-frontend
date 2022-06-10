@@ -25,7 +25,7 @@ export class Delete_MincienciaCategoryComponent implements OnInit {
         id:0,
         UserId: 0,
         ScaleId: 0,
-        MincienciaCategoryId: 0,
+        MincienciaCategoryId: '',
         // hours_of_dedication:'',
         ChargeBondingId:0,
 

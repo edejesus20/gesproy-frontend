@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <span class="text-green-500 font-medium">
-                                  {{item.Notification?.User?.fullName}}
+                                  <span class="text-500">De:</span>  {{item.Notification?.User?.fullName}}
                                 </span>
                                 <span class="text-500">{{item.Notification?.date_firt}}</span>
                                 <span class="text-blue-500 font-medium ml-1"
@@ -98,7 +98,7 @@
                                   </div>
                               </div>
                               <span class="text-green-500 font-medium">
-                                {{item.Notification?.User?.fullName}}
+                                <span class="text-500">De:</span>  {{item.Notification?.User?.fullName}}
                               </span>
                               <span class="text-500">{{item.Notification?.date_firt}}</span>
                               <span class="text-blue-500 font-medium ml-1"
@@ -158,8 +158,7 @@
             <div class="col-6">
               Publicado Por: 
               <span class="block text-green-500 font-medium ">
-                
-                {{Notificacion?.User?.email}}
+               {{Notificacion?.User?.email}}
               </span>
               <span class="text-500">Fecha: {{Notificacion?.date_firt}}</span>
             </div>

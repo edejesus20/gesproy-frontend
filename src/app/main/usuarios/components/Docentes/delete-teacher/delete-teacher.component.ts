@@ -241,7 +241,7 @@ getOneCntAccount(id:number) {
         // })
 
         if(cnt_groupFromApi.teacher.MincienciaCategoryId != undefined)
-        this.mincienciaCategoryService.getItem((cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
+        this.mincienciaCategoryService.getItem(parseInt(cnt_groupFromApi.teacher.MincienciaCategoryId)).subscribe((algo)=>{
           this.form.controls['MincienciaCategoryId'].setValue(algo.mincienciaCategory)
         })
 

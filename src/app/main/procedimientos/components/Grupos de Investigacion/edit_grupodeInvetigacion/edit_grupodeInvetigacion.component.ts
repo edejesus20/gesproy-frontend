@@ -60,7 +60,7 @@ export class Edit_grupodeInvetigacionComponent implements OnInit {
      UserId: 0,
     ScaleId: 0,
     // hours_of_dedication:'',
-    MincienciaCategoryId: 0,
+    MincienciaCategoryId: '',
     User:undefined, 
     Scale:undefined, 
     Group:undefined, 

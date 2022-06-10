@@ -97,9 +97,12 @@ public bandera4:boolean=false
     id: [''],
     HeadquarterId:['', [Validators.required]],
     Charges: this.formBuilder.array([this.formBuilder.group({
+      id:0,
       ChargeId:['', [Validators.required]],
       date:['', [Validators.required]]})]),
+      deleteCharges:['']
   });
+  private deleteCharges:any[]=[]
 
   // docentes
   public resolution_convalidations:any[]=[
@@ -113,6 +116,7 @@ public bandera4:boolean=false
     MincienciaCategoryId:['', [Validators.required]],
     headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
       {
+        id:0,
         TeacherId:0,
         HeadquarterProgramId:['', [Validators.required]],
         ResearchBondingId:['', [Validators.required]],
@@ -141,10 +145,13 @@ public bandera4:boolean=false
     })]),
     ChargeBondingId:['',[Validators.required]],
     deletetrainingTeachers:[''],
-    deleteWorkexperiences:['']
+    deleteWorkexperiences:[''],
+    deleteheadquarterProgramTeachers:['']
   });
   public charge_bondings:Charge_bondingI[]=[]
   public trainings: TrainingI[]=[]
+
+  public deleteheadquarterProgramTeachers:any[]=[]
 
   public research_bondings:Research_bondingI[]=[]
   public headquarterPrograms:any[]=[]
@@ -309,24 +316,7 @@ public bandera4:boolean=false
         
         this.form.controls['date_of_birth'].setValue(data.user.Person?.date_of_birth)
         this.image3=data.user.avatar
-        if(data.user.Person?.GenderId != undefined){
-          for (const key of this.genders) {
-            if(parseInt(data.user.Person.GenderId) == key.id){
-              this.form.controls['GenderId'].setValue(key)
-            }
-            
-          }
-        }
-        if(data.user.Person?.DocumentTypeId != undefined){
-          for (const key2 of this.documentTypes) {
-            if(parseInt(data.user.Person.DocumentTypeId) == key2.id){
-              this.form.controls['DocumentTypeId'].setValue(key2)
-              // console.log('this.form.controls[DocumentTypeId]',this.form.controls['DocumentTypeId'])
-
-            }
-            
-          }
-        }
+      
         this.UserRoles=data.user.UserRoles
         for (const key of this.UserRoles) {
           if(key.Role != undefined){
@@ -392,18 +382,40 @@ public bandera4:boolean=false
         this.perfilService.getItemTeacher(id).subscribe(data=>{
           if(data.teacher.id != undefined){
             console.log(data.teacher,'docente')
-          
-            for (const key of this.mincienciaCategorys) {
-              if(key.id != undefined && key.id == (data.teacher.MincienciaCategoryId)){
-                this.form4.controls['MincienciaCategoryId'].setValue(key)
+
+            if(data.teacher.User?.Person?.GenderId != undefined){
+              for (const key of this.genders) {
+                if(parseInt(data.teacher.User.Person.GenderId) == key.id){
+                  this.form.controls['GenderId'].setValue(key)
+                }
+                
               }
             }
+            if(data.teacher.User?.Person?.DocumentTypeId != undefined){
+              for (const key2 of this.documentTypes) {
+                if(parseInt(data.teacher.User.Person.DocumentTypeId) == key2.id){
+                  this.form.controls['DocumentTypeId'].setValue(key2)
+                  // console.log('this.form.controls[DocumentTypeId]',this.form.controls['DocumentTypeId'])
+    
+                }
+                
+              }
+            }
+            if(data.teacher.MincienciaCategoryId != undefined){
+            for (const key1 of this.mincienciaCategorys) {
+              if(key1.id != undefined && key1.id == parseInt(data.teacher.MincienciaCategoryId)){
+                this.form4.controls['MincienciaCategoryId'].setValue(key1)
+              }
+            }
+          }
+
             if(data.teacher.ChargeBondingId != undefined){
               for (const key of this.charge_bondings) {
                 if(key.id != undefined && key.id == (data.teacher.ChargeBondingId)){
                   this.form4.controls['ChargeBondingId'].setValue(key)
                 }
               }
+            
   
               if(this.form4.value.ChargeBondingId != ''){
                 this.scales=[]
@@ -454,6 +466,7 @@ public bandera4:boolean=false
         this.form3.controls['id'].setValue(id)
         this.perfilService.getItemAdministrative(id).subscribe(data=>{
           if(data.administrative.id != undefined){
+            console.log(data.administrative)
 
             for (const key of this.headquarters) {
               if(key.id != undefined && key.id == parseInt(data.administrative.HeadquarterId)){
@@ -672,8 +685,10 @@ public bandera4:boolean=false
             }
           }
             if(Charge != null){
-              control.push(this.formBuilder.group({UserId:this.form3.value.id,ChargeId:[Charge, 
-                [Validators.required]],
+              control.push(this.formBuilder.group({
+                id:key.id,
+                UserId:this.form3.value.id,
+                ChargeId:[Charge,[Validators.required]],
               date:[key.date, [Validators.required]]}))
 
             }
@@ -696,12 +711,14 @@ public bandera4:boolean=false
         //crear los controles del array
       if(control.length == 0 && this.mostrar3 == false){
         control.push(this.formBuilder.group({
+          id:0,
           ChargeId:['', [Validators.required]],
           date:['', [Validators.required]],
         }))//nuevo input
       }
       if(control.length >= 1 && this.mostrar3 == true){
         control.push(this.formBuilder.group({
+          id:0,
         ChargeId:['', [Validators.required]],
           date:['', [Validators.required]],
       }))
@@ -714,10 +731,13 @@ public bandera4:boolean=false
     removeRoles2(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form3.controls['Charges']//aceder al control
+      this.deleteCharges.push(control.value[index])
+      console.log(this.deleteCharges)
       control.removeAt(index)
       if(control.length <= 0){
       this.mostrar3=false
       control.push(this.formBuilder.group({
+        id:0,
         ChargeId:['', [Validators.required]],
         date:['', [Validators.required]],
       }))//nuevo input
@@ -753,10 +773,12 @@ public bandera4:boolean=false
 
               if(HeadquarterId != null && ResearchBondingId != null){
                 control.push(this.formBuilder.group({
+                  id:key.id,
                   TeacherId:0,
                     HeadquarterProgramId:[HeadquarterId, [Validators.required]],
                     ResearchBondingId:[ResearchBondingId, [Validators.required]],
                 }))
+                // console.log('HeadquarterProgramId',HeadquarterId)
               }else{}
 
             }
@@ -865,6 +887,7 @@ public bandera4:boolean=false
     
         if(control.length == 0 && this.mostrar4 == false){
           control.push(this.formBuilder.group({
+            id:0,
             TeacherId:0,
             HeadquarterProgramId:['', [Validators.required]],
                 ResearchBondingId:['', [Validators.required]],
@@ -872,6 +895,7 @@ public bandera4:boolean=false
         }
         if(control.length >= 1 && this.mostrar4 == true){
           control.push(this.formBuilder.group({
+            id:0,
             TeacherId:0,
             HeadquarterProgramId:['', [Validators.required]],
                 ResearchBondingId:['', [Validators.required]],
@@ -883,10 +907,13 @@ public bandera4:boolean=false
     removeRoles1(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form4.controls['headquarterProgramTeacher']//aceder al control
+      this.deleteheadquarterProgramTeachers.push(control.value[index])
+      // console.log(this.deleteheadquarterProgramTeachers)
       control.removeAt(index)
         if(control.length <= 0){
         this.mostrar4=false
         control.push(this.formBuilder.group({
+          id:0,
           TeacherId:0,
           HeadquarterProgramId:['', [Validators.required]],
               ResearchBondingId:['', [Validators.required]],
@@ -1165,17 +1192,19 @@ public bandera4:boolean=false
           id:  this.form3.value.id,
           Charges: this.form3.value.Charges,
           HeadquarterId: this.form3.value.HeadquarterId.id,
+          deleteCharges:this.deleteCharges
         };
         if(this.Charges1.length == 0 || this.Charges1.length == undefined){
           this.Charges1=[]
           let control = <FormArray>this.form3.controls['Charges']
           for (const key of control.value) {
             key.ChargeId=key.ChargeId.id 
-            this.Charges1.push({
-              date:key.date,
-            ChargeId:key.ChargeId,
-            })
+            // this.Charges1.push({
+            //   date:key.date,
+            // ChargeId:key.ChargeId,
+            // })
           }
+          this.Charges1=this.form3.value.Charges
           formValue.Charges = this.form3.value.Charges
           // console.log('aqui')
         }else{
@@ -1334,7 +1363,8 @@ public bandera4:boolean=false
           trainingTeacher:this.form4.value.trainingTeacher,
           deletetrainingTeachers:this.deletetrainingTeachers,
           deleteWorkexperiences:this.deleteWorkexperiences,
-          ArchivosEliminados:this.ArchivosEliminados
+          ArchivosEliminados:this.ArchivosEliminados,
+          deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers
         };
         if(this.form4.value.ScaleId.id){
           formValue.ScaleId=this.form4.value.ScaleId.id
@@ -1359,12 +1389,13 @@ public bandera4:boolean=false
       
               key.HeadquarterProgramId=key.HeadquarterProgramId.id
               key.ResearchBondingId=key.ResearchBondingId.id
-              this.headquarterProgramTeacher1.push({
-              TeacherId:0,
-              HeadquarterProgramId:key.HeadquarterProgramId,
-              ResearchBondingId:key.ResearchBondingId,
-              })
+              // this.headquarterProgramTeacher1.push({
+              // TeacherId:0,
+              // HeadquarterProgramId:key.HeadquarterProgramId,
+              // ResearchBondingId:key.ResearchBondingId,
+              // })
             }
+            this.headquarterProgramTeacher1=this.form4.value.headquarterProgramTeacher
             formValue.headquarterProgramTeacher = this.form4.value.headquarterProgramTeacher
           }else{
             formValue.headquarterProgramTeacher = this.headquarterProgramTeacher1
@@ -1621,9 +1652,7 @@ public bandera4:boolean=false
         }else{
           this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan Certificados por adjuntar'});
           this.bandera4=false 
-
         }
-    
 
       }
 
