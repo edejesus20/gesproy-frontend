@@ -239,11 +239,17 @@ public mostrarIntegrantes:boolean=false
 
     getKnowledge_area() {
       this.knowledge_areaService.getList().subscribe(categoryGroups=>{
+        for (let key of categoryGroups.knowledge_areas) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.knowledge_areas=categoryGroups.knowledge_areas
   }, error => console.error(error))
     }
     getCateghoria() {
       this.categoryGroupService.getList().subscribe(categoryGroups=>{
+        for (let key of categoryGroups.categoryGroups) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
           this.categoryGroups=categoryGroups.categoryGroups
     }, error => console.error(error))
     }
@@ -324,6 +330,9 @@ public mostrarIntegrantes:boolean=false
         this.teacherService.getItem(id).subscribe(teacher=>{
           // console.log(teacher.teacher)
           if(teacher.teacher.Seedbeds && teacher.teacher.Lines){
+            for (let key of teacher.teacher.Seedbeds) {
+              key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+            }
             this.Seedbeds=teacher.teacher.Seedbeds
             // this.lines=teacher.teacher.Lines
           }
@@ -331,6 +340,9 @@ public mostrarIntegrantes:boolean=false
     }
     geFacultad() {
       this.facultyService.getList().subscribe(teachersA => {
+        for (let key of teachersA.facultys) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.facultys=teachersA.facultys
         // console.log(teachersA.facultys)
       }, error => console.error(error))
@@ -348,6 +360,8 @@ public mostrarIntegrantes:boolean=false
          for (const key of rolesFromApi.teachers) {
            if(key.TeacherId){
             this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+           if(algo1.teacher.User?.Person)
+            algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
               this.teachers.push(algo1.teacher)
             })
            }
@@ -394,8 +408,11 @@ public mostrarIntegrantes:boolean=false
   
     getRoles() {
       this.roleInvestigationsService.getList().subscribe(teachersA => {
-        for (const key of teachersA.roleInvestigations) {
+        for (let key of teachersA.roleInvestigations) {
           if(key.id != 1)
+          // for (let key of categoryGroups.categoryGroups) {
+            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
           this.roles.push(key)
         }
       }, error => console.error(error))

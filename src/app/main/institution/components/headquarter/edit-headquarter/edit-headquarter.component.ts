@@ -111,6 +111,9 @@ public form2:HeadquarterI={
  private getAlluniversidades() {
    this.universityService.getList().subscribe(
      (AdministrativeFromApi) => {
+      for (let key of AdministrativeFromApi.universitys) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
        this.universitys = AdministrativeFromApi.universitys;
      }, error => console.error(error));
  }

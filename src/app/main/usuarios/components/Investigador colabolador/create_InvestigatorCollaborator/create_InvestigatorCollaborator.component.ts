@@ -76,6 +76,10 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.usersestudiente) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+        }
         this.users = AdministrativeFromApi.usersInvestigador;
         // console.log(this.users)
       }, error => console.error(error));

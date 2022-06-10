@@ -173,12 +173,18 @@ export class EditarTeacherComponent implements OnInit {
   getAlltrainings() {
     this.trainingsService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.trainings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.trainings = AdministrativeFromApi.trainings;
       }, error => console.error(error));
   }
   getAllLinkTypes() {
     this.charge_bondingService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.charge_bondings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.charge_bondings = AdministrativeFromApi.charge_bondings;
         // console.log(this.linkTypes)
       }, error => console.error(error));
@@ -580,13 +586,16 @@ public getAllscales(event?: Event) {
       if(algo.charge_bonding.ChargebondingScales?.length != undefined
         && algo.charge_bonding.ChargebondingScales.length > 0){
         
-          for (const key of algo.charge_bonding.ChargebondingScales) {
+          for (let key of algo.charge_bonding.ChargebondingScales) {
             if(key.Scale!= undefined){
+              // for (let key of AdministrativeFromApi.charge_bondings) {
+                key.Scale.name =  key.Scale.name.charAt(0).toUpperCase() +  key.Scale.name.slice(1);
+              // }
               this.scales.push(key.Scale)
             }
             
           }
-      console.log(this.scales)
+      // console.log(this.scales)
 
         }
     })
@@ -603,7 +612,9 @@ public getAllscales(event?: Event) {
 private getAllcolcienciaCategorys(selectId?: number) {
   this.mincienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
-      // console.log(AdministrativeFromApi.administratives)
+      for (let key of AdministrativeFromApi.mincienciaCategorys) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
     }, error => console.error(error));
 }
@@ -611,6 +622,16 @@ private getAllcolcienciaCategorys(selectId?: number) {
 private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
+      for (let key of AdministrativeFromApi.headquarterProgram) {
+        if(key.Headquarter?.name){
+          key.Headquarter.name =  key.Headquarter.name.charAt(0).toUpperCase() +  key.Headquarter.name.slice(1);
+
+        }
+        if(key.Program?.name){
+          key.Program.name =  key.Program.name.charAt(0).toUpperCase() +  key.Program.name.slice(1);
+
+        }
+      }
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
     }, error => console.error(error));
 }
@@ -619,6 +640,9 @@ private getAllrelationships(selectId?: number) {
   this.research_bondingService.getList().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
+      for (let key of AdministrativeFromApi.research_bondings) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.research_bondings = AdministrativeFromApi.research_bondings;
     }, error => console.error(error));
 }

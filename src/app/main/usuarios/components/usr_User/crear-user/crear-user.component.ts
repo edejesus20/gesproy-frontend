@@ -80,8 +80,11 @@ export class CrearUserComponent implements OnInit {
   }
   getUsrRoles() {
     this.rolesService.getRole().subscribe((rolesFromApi) => {
+      for (let key of rolesFromApi.roles) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.roles = rolesFromApi.roles;
-      console.log(this.roles);
+      // console.log(this.roles);
     }, error => console.error(error));
   }
 

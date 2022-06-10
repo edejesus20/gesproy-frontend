@@ -53,6 +53,9 @@ export class Create_CategoriaGruposComponent implements OnInit {
   private getAllFaculty(selectId?: number) {
     this.groupService.getList().subscribe(
       (groupsFromApi) => {
+        for (let key of groupsFromApi.groups) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.groups = groupsFromApi.groups;
       }, error => console.error(error));
   }

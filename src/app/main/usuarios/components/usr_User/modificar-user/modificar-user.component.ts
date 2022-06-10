@@ -75,6 +75,9 @@ export class ModificarUserComponent implements OnInit {
     }
     getUsrRoles() {
       this.rolesService.getRole().subscribe((rolesFromApi) => {
+        for (let key of rolesFromApi.roles) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.roles = rolesFromApi.roles;
         //console.log(this.roles);
       }, error => console.error(error));
@@ -199,8 +202,8 @@ getOneCntAccount(id:number) {
    
     if(cnt_groupFromApi.user.id != undefined
       ){
-      console.log(cnt_groupFromApi.user)
-      console.log(cnt_groupFromApi.rolesUsers)
+      // console.log(cnt_groupFromApi.user)
+      // console.log(cnt_groupFromApi.rolesUsers)
         this.form.controls['id'].setValue(id)
         if(cnt_groupFromApi.user?.Person != undefined
           ){

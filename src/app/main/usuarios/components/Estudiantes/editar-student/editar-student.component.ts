@@ -107,6 +107,9 @@ export class EditarStudentComponent implements OnInit {
   }
   getSeedbed() {
     this.seedbedService.getList().subscribe(data => {
+      for (let key of data.seedbeds) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.seedbeds=data.seedbeds
     }, error => console.error(error));
   }
@@ -160,9 +163,8 @@ export class EditarStudentComponent implements OnInit {
       // console.log('aqui2')
 
     }
- console.log(formValue)
-  if(
-    formValue.name != ""&&
+//  console.log(formValue)
+  if(formValue.name != ""&&
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
     formValue.id != ( 0 || undefined)&&
@@ -218,8 +220,16 @@ private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
       // console.log(AdministrativeFromApi.administratives)
+      for (let key of AdministrativeFromApi.headquarterProgram) {
+        if(key.Headquarter?.name){
+          key.Headquarter.name =  key.Headquarter.name.charAt(0).toUpperCase() +  key.Headquarter.name.slice(1);
+        }
+        if(key.Program?.name){
+          key.Program.name =  key.Program.name.charAt(0).toUpperCase() +  key.Program.name.slice(1);
+        }
+      }
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
-      console.log(this.headquarterProgram)
+      // console.log(this.headquarterProgram)
 
     }, error => console.error(error));
 }
@@ -241,26 +251,26 @@ private getAllheadquarters(selectId?: number) {
 // }
 
 
-public volver(event: Event){
-  event.preventDefault
-  this.tabla = true
-  this.displayMaximizable2 = false
-  this.ngOnInit()
-}
+  public volver(event: Event){
+    event.preventDefault
+    this.tabla = true
+    this.displayMaximizable2 = false
+    this.ngOnInit()
+  }
 
-ngOnDestroy() {
-  this.tabla = true
-  this.displayMaximizable2 = false
-  this.ngOnInit()
-}
-actualizar(id: number){
-  // console.log(id)
-  this.getOneCntAccount(id)
-}
+  ngOnDestroy() {
+    this.tabla = true
+    this.displayMaximizable2 = false
+    this.ngOnInit()
+  }
+  actualizar(id: number){
+    // console.log(id)
+    this.getOneCntAccount(id)
+  }
 
-getOneCntAccount(id:number) {
+  getOneCntAccount(id:number) {
   this.studentService.getItem(id).subscribe((cnt_groupFromApi) => {
-   
+    
     if(cnt_groupFromApi.student.id != undefined
       ){
       console.log(cnt_groupFromApi.student)
@@ -280,15 +290,15 @@ getOneCntAccount(id:number) {
           // this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
           // this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
           // this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
-       
-         
+        
+          
 
           // if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
           // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
             this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
           // })
-  
-     
+
+      
 
         // if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
         // this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
@@ -319,7 +329,7 @@ getOneCntAccount(id:number) {
           // })
         }
         
-       
+        
         
       
 
@@ -346,7 +356,7 @@ getOneCntAccount(id:number) {
     this.displayMaximizable2=true
     this.tabla = false
   }, error => console.error(error));
-}
+  }
   agregarStudentInternships(StudentInternships:StudentInternshipsI[]) {
     if(StudentInternships.length){
       for (let key of StudentInternships) {

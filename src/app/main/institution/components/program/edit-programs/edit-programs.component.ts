@@ -115,12 +115,18 @@ constructor(
   private getAllFaculty(selectId?: number) {
     this.facultyService.getList().subscribe(
       (facultiesFromApi) => {
+        for (let key of facultiesFromApi.facultys) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.faculties = facultiesFromApi.facultys;
       }, error => console.error(error));
   }
   private getAllCategorys(selectId?: number) {
     this.categoryService.getList().subscribe(
       (facultiesFromApi) => {
+        for (let key of facultiesFromApi.categorys) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.categorys = facultiesFromApi.categorys;
       }, error => console.error(error));
   }
@@ -352,9 +358,16 @@ public datos(position:number){
   if(valor != null){
   this.headquarterService.getItem(valor.value.id).subscribe(
     (AdministrativeFromApi) => {
-      if(AdministrativeFromApi.headquarter.Administratives)
-      this.administratives = AdministrativeFromApi.headquarter.Administratives;
-      // console.log(this.administratives)
+      if(AdministrativeFromApi.headquarter.Administratives){
+        for (let key of AdministrativeFromApi.headquarter.Administratives) {
+          if(key.User?.Person?.name && key.User?.Person?.surname){
+            key.User.Person.name =  key.User.Person.name.charAt(0).toUpperCase() +  key.User.Person.name.slice(1);
+            key.User.Person.surname =  key.User.Person.surname.charAt(0).toUpperCase() +  key.User.Person.surname.slice(1);
+          }
+         
+        }
+        this.administratives = AdministrativeFromApi.headquarter.Administratives;
+      }
     }, error => console.error(error));
   }
 }
@@ -407,7 +420,7 @@ public datos(position:number){
               this.administratives.push(decano)
           }   
         }
-        console.log(this.administratives)
+        // console.log(this.administratives)
       }, error => console.error(error));
 
   }
@@ -415,6 +428,9 @@ public datos(position:number){
   private getAllheadquarters() {
     this.headquarterService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.headquarters) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.headquarters = AdministrativeFromApi.headquarters;
       }, error => console.error(error));
   }

@@ -58,7 +58,7 @@ public ChargeAdministratives:any[] = [];
     this.administrativeService.getItem(id).subscribe((cnt_groupFromApi) => {
        if(cnt_groupFromApi.administrative.id != undefined
       ){
-      console.log(cnt_groupFromApi.administrative)
+      // console.log(cnt_groupFromApi.administrative)
         this.form.id=cnt_groupFromApi.administrative.id
         if(cnt_groupFromApi.administrative.User?.Person?.surname != undefined &&
         //   cnt_groupFromApi.administrative.User?.Person?.address != undefined &&

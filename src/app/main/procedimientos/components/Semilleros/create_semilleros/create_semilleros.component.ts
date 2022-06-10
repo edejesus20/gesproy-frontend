@@ -91,12 +91,18 @@ public ref1:any;
  getstudents() {
    this.studentService.AddStudentsSemilleros().subscribe(
       (facultiesFromApi) => {
+        for (let key of facultiesFromApi.students) {
+          key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+        }
         // console.log(facultiesFromApi.students)
         this.students =  facultiesFromApi.students;
       }, error => console.error(error));
   }
   geFacultad() {
     this.facultyService.getList().subscribe(teachersA => {
+      for (let key of teachersA.facultys) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
@@ -106,7 +112,9 @@ public ref1:any;
         // for (const key of facultiesFromApi.teachers) {
         //   this.teachers.push(key)
         // }
-        
+        for (let key of facultiesFromApi.teachers) {
+          key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+        }
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
@@ -165,6 +173,9 @@ public ref1:any;
      if(this.form.value.GroupId.LineProgramGroups.length >0){
        for (let key of this.form.value.GroupId.LineProgramGroups) {
         this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+          // for (let key of facultiesFromApi.teachers) {
+            algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
+          // }
           this.lines.push(algo.line)
         })
          
@@ -184,7 +195,7 @@ public ref1:any;
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
-          console.log(cnt_groupFromApi.teacher)
+          // console.log(cnt_groupFromApi.teacher)
       }
     }, error => console.error(error));
   }

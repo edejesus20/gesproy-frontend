@@ -97,6 +97,10 @@ export class CreateAdministrativeComponent implements OnInit {
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.users) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+        }
         this.users = AdministrativeFromApi.userseadministrative;
         // console.log(this.users)
       }, error => console.error(error));
@@ -107,6 +111,9 @@ export class CreateAdministrativeComponent implements OnInit {
     this.headquarterService.getList().subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
+        for (let key of AdministrativeFromApi.headquarters) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.headquarters = AdministrativeFromApi.headquarters;
       }, error => console.error(error));
   }
@@ -114,6 +121,9 @@ export class CreateAdministrativeComponent implements OnInit {
   private getAllocupations(selectId?: number) {
     this.chargeService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.charges) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         // console.log(AdministrativeFromApi.administratives)
         this.charges = AdministrativeFromApi.charges;
       }, error => console.error(error));

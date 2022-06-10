@@ -167,12 +167,18 @@ export class CreateTeacherComponent implements OnInit {
   getAllLinkTypes() {
     this.charge_bondingService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.charge_bondings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.charge_bondings = AdministrativeFromApi.charge_bondings;
       }, error => console.error(error));
   }
   getAlltrainings() {
     this.trainingsService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.trainings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.trainings = AdministrativeFromApi.trainings;
       }, error => console.error(error));
   }
@@ -180,6 +186,10 @@ export class CreateTeacherComponent implements OnInit {
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.users) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+        }
         this.users = AdministrativeFromApi.users;
       }, error => console.error(error));
   }
@@ -613,7 +623,15 @@ get getRoles() {
 private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
-      console.log( AdministrativeFromApi.headquarterProgram)
+      // console.log( AdministrativeFromApi.headquarterProgram)
+      for (let key of AdministrativeFromApi.headquarterProgram) {
+        if(key.Headquarter?.name){
+          key.Headquarter.name =  key.Headquarter.name.charAt(0).toUpperCase() +  key.Headquarter.name.slice(1);
+        }
+        if(key.Program?.name){
+          key.Program.name =  key.Program.name.charAt(0).toUpperCase() +  key.Program.name.slice(1);
+        }
+      }
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
       console.log(this.headquarterProgram)
     }, error => console.error(error));
@@ -627,8 +645,9 @@ public getAllscales(event: Event) {
       if(algo.charge_bonding.ChargebondingScales?.length != undefined
         && algo.charge_bonding.ChargebondingScales.length > 0){
         
-          for (const key of algo.charge_bonding.ChargebondingScales) {
+          for (let key of algo.charge_bonding.ChargebondingScales) {
             if(key.Scale!= undefined){
+              key.Scale.name =  key.Scale.name.charAt(0).toUpperCase() +  key.Scale.name.slice(1);
               this.scales.push(key.Scale)
             }
             
@@ -647,6 +666,9 @@ public getAllscales(event: Event) {
 private getAllcolcienciaCategorys(selectId?: number) {
   this.mincienciaCategoryService.getList().subscribe(
     (AdministrativeFromApi) => {
+      for (let key of AdministrativeFromApi.mincienciaCategorys) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
     }, error => console.error(error));
 }
@@ -654,6 +676,9 @@ private getAllcolcienciaCategorys(selectId?: number) {
 private getAllrelationships(selectId?: number) {
   this.research_bondingsService.getList().subscribe(
     (AdministrativeFromApi) => {
+      for (let key of AdministrativeFromApi.research_bondings) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.research_bondings = AdministrativeFromApi.research_bondings;
     }, error => console.error(error));
 }

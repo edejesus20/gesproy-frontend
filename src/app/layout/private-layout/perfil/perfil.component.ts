@@ -236,17 +236,26 @@ public bandera4:boolean=false
   }
   getSeedbed() {
     this.seedbedService.getList().subscribe(data => {
+      for (let key of data.seedbeds) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.seedbeds=data.seedbeds
     }, error => console.error(error));
   }
   getAlldocumentTypes() {
     this.documentTypeService.getList().subscribe((rolesFromApi) => {
+      for (let key of rolesFromApi.documentTypes) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
         this.documentTypes = rolesFromApi.documentTypes;
         //console.log(this.roles);
       }, error => console.error(error));
   }
   getAllgenders() {
     this.genderService.getList().subscribe((rolesFromApi) => {
+      for (let key of rolesFromApi.genders) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
         this.genders = rolesFromApi.genders;
         //console.log(this.roles);
       }, error => console.error(error));
@@ -255,6 +264,9 @@ public bandera4:boolean=false
     this.headquarterService.getList().subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
+        for (let key of AdministrativeFromApi.headquarters) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.headquarters = AdministrativeFromApi.headquarters;
       }, error => console.error(error));
   }
@@ -270,12 +282,18 @@ public bandera4:boolean=false
   getAllLinkTypes() {
     this.charge_bondingService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.charge_bondings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.charge_bondings = AdministrativeFromApi.charge_bondings;
       }, error => console.error(error));
   }
   getAlltrainings() {
     this.trainingsService.getList().subscribe(
       (AdministrativeFromApi) => {
+        for (let key of AdministrativeFromApi.trainings) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        }
         this.trainings = AdministrativeFromApi.trainings;
       }, error => console.error(error));
   }
@@ -340,6 +358,21 @@ public bandera4:boolean=false
          
          this.perfilService.getItemStudent(id).subscribe(data1=>{
           if(data1.student.id != undefined){
+            if(data1.student.User?.Person?.GenderId != undefined){
+              for (const key of this.genders) {
+                if(parseInt(data1.student.User.Person.GenderId) == key.id){
+                  this.form.controls['GenderId'].setValue(key)
+                }
+              }
+            }
+            if(data1.student.User?.Person?.DocumentTypeId != undefined){
+              for (const key2 of this.documentTypes) {
+                if(parseInt(data1.student.User.Person.DocumentTypeId) == key2.id){
+                  this.form.controls['DocumentTypeId'].setValue(key2)
+                  // console.log('this.form.controls[DocumentTypeId]',this.form.controls['DocumentTypeId'])
+                }
+              }
+            }
             if(data1.student.SeedbedStudents != undefined && data1.student.SeedbedStudents.length > 0){
               let algo=data1.student?.SeedbedStudents?.[0]
               let nuevo =algo?.hours
@@ -466,7 +499,26 @@ public bandera4:boolean=false
         this.form3.controls['id'].setValue(id)
         this.perfilService.getItemAdministrative(id).subscribe(data=>{
           if(data.administrative.id != undefined){
-            console.log(data.administrative)
+            // console.log(data.administrative)
+
+            if(data.administrative.User?.Person?.GenderId != undefined){
+              for (const key of this.genders) {
+                if(parseInt(data.administrative.User.Person.GenderId) == key.id){
+                  this.form.controls['GenderId'].setValue(key)
+                }
+                
+              }
+            }
+            if(data.administrative.User?.Person?.DocumentTypeId != undefined){
+              for (const key2 of this.documentTypes) {
+                if(parseInt(data.administrative.User.Person.DocumentTypeId) == key2.id){
+                  this.form.controls['DocumentTypeId'].setValue(key2)
+                  // console.log('this.form.controls[DocumentTypeId]',this.form.controls['DocumentTypeId'])
+    
+                }
+                
+              }
+            }
 
             for (const key of this.headquarters) {
               if(key.id != undefined && key.id == parseInt(data.administrative.HeadquarterId)){
@@ -482,8 +534,6 @@ public bandera4:boolean=false
       this.administrativo=true
     }
   }
-
-
 
   public cancelar(){
     this.ref.close(undefined);
@@ -924,6 +974,14 @@ public bandera4:boolean=false
     private getAllheadquarters2(selectId?: number) {
       this.headquarterService.HeadquarterProgram().subscribe(
         (AdministrativeFromApi) => {
+          for (let key of AdministrativeFromApi.headquarterProgram) {
+            if(key.Headquarter?.name){
+              key.Headquarter.name =  key.Headquarter.name.charAt(0).toUpperCase() +  key.Headquarter.name.slice(1);
+            }
+            if(key.Program?.name){
+              key.Program.name =  key.Program.name.charAt(0).toUpperCase() +  key.Program.name.slice(1);
+            }
+          }
           // console.log( AdministrativeFromApi.headquarterProgram)
           this.headquarterPrograms = AdministrativeFromApi.headquarterProgram;
           // console.log(this.headquarterPrograms)
@@ -938,8 +996,11 @@ public bandera4:boolean=false
           if(algo.charge_bonding.ChargebondingScales?.length != undefined
             && algo.charge_bonding.ChargebondingScales.length > 0){
             
-              for (const key of algo.charge_bonding.ChargebondingScales) {
+              for (let key of algo.charge_bonding.ChargebondingScales) {
                 if(key.Scale!= undefined){
+                  // for (let key of AdministrativeFromApi.trainings) {
+                    key.Scale.name =  key.Scale.name.charAt(0).toUpperCase() +  key.Scale.name.slice(1);
+                  // }
                   this.scales.push(key.Scale)
                 }
                 
@@ -953,6 +1014,9 @@ public bandera4:boolean=false
     private getAllcolcienciaCategorys(selectId?: number) {
       this.mincienciaCategoryService.getList().subscribe(
         (AdministrativeFromApi) => {
+          for (let key of AdministrativeFromApi.mincienciaCategorys) {
+            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          }
           this.mincienciaCategorys = AdministrativeFromApi.mincienciaCategorys;
         }, error => console.error(error));
     }
@@ -960,6 +1024,9 @@ public bandera4:boolean=false
     private getAllrelationships(selectId?: number) {
       this.research_bondingsService.getList().subscribe(
         (AdministrativeFromApi) => {
+          for (let key of AdministrativeFromApi.research_bondings) {
+            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          }
           this.research_bondings = AdministrativeFromApi.research_bondings;
         }, error => console.error(error));
     }

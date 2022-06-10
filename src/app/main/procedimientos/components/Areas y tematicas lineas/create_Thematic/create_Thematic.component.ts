@@ -164,6 +164,9 @@ this.ref1.onClose.subscribe((person: any) =>{
 }
  public getAllthematic() {
     this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
+      for (let key of scalesApiFrom.thematic_axiss) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.thematic_axiss =scalesApiFrom.thematic_axiss
       // console.log(this.thematic_axiss)
     })

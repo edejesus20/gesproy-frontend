@@ -60,8 +60,16 @@ export class Edit_linesComponent implements OnInit {
         if(data.thematic.Thematic_axis_Thematics !== undefined && data.thematic.Thematic_axis_Thematics.length > 0){
     
           for (const key of data.thematic.Thematic_axis_Thematics) {
-          if(key.Thematic_axis != undefined && key.status == true)
-          this.thematic_axiss.push(key.Thematic_axis)
+            if(key.Thematic_axis != undefined && key.status == true){
+
+          
+              // for (let key of categoryGroups.categoryGroups) {
+                key.Thematic_axis.name =  key.Thematic_axis.name.charAt(0).toUpperCase() +  key.Thematic_axis.name.slice(1);
+              // }
+              this.thematic_axiss.push(key.Thematic_axis)
+            }
+          // if(key.Thematic_axis != undefined && key.status == true)
+          // this.thematic_axiss.push(key.Thematic_axis)
         }
          
         }else{
@@ -107,6 +115,10 @@ export class Edit_linesComponent implements OnInit {
   // }
   public getAllthematic() {
     this.thematic_axisService.getList().subscribe((scalesApiFrom) => {
+      // scalesApiFrom.thematic_axiss
+      for (let key of scalesApiFrom.thematic_axiss) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.thematic_axiss =scalesApiFrom.thematic_axiss
       // console.log(this.thematic_axiss)
     })
@@ -115,9 +127,11 @@ export class Edit_linesComponent implements OnInit {
   thematic() {
     this.thematics=[]
     this.thematicService.getList().subscribe(list => {
-      for (const key of list.thematics) {
+      for (let key of list.thematics) {
         if(key.Thematic_axis_Thematics !== undefined && key.Thematic_axis_Thematics.length > 0){
-
+          // for (let key of categoryGroups.categoryGroups) {
+            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
         this.thematics.push(key);
       }
       }

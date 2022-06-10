@@ -99,9 +99,9 @@ constructor(
    this.studentService.OneAddStudentsSemilleros(id).subscribe(
       (ApiEstudiante) => {
         // console.log(ApiEstudiante.students)
-        for (const key of ApiEstudiante.students) {
+        for (let key of ApiEstudiante.students) {
+            key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
           this.students.push(key)
-          //  =  facultiesFromApi.students;
          }
         // this.students =  facultiesFromApi.students;
       }, error => console.error(error));
@@ -110,7 +110,8 @@ getstudents2() {
   this.studentService.AddStudentsSemilleros().subscribe(
      (ApiSemillero) => {
        // console.log(ApiSemillero.students)
-       for (const key of ApiSemillero.students) {
+       for (let key of ApiSemillero.students) {
+        key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
         this.students.push(key)
         //  =  facultiesFromApi.students;
        }
@@ -119,6 +120,14 @@ getstudents2() {
  }
   geFacultad() {
     this.facultyService.getList().subscribe(teachersA => {
+    //   for (let key of teachersA.facultys) {
+    //     key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+    //   this.students.push(key)
+    //  }
+     for (let key of teachersA.facultys) {
+      key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+    }
+    // this.facultys=teachersA.facultys
       this.facultys=teachersA.facultys
       // console.log(teachersA.facultys,'teachersA.facultys')
 

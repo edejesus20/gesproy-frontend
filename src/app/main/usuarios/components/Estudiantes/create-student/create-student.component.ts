@@ -117,6 +117,9 @@ export class CreateStudentComponent implements OnInit {
   }
   getSeedbed() {
     this.seedbedService.getList().subscribe(data => {
+      for (let key of data.seedbeds) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
       this.seedbeds=data.seedbeds
     }, error => console.error(error));
   }
@@ -125,6 +128,10 @@ export class CreateStudentComponent implements OnInit {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
         this.users = AdministrativeFromApi.usersestudiente;
+        for (let key of AdministrativeFromApi.usersestudiente) {
+          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+        }
         // console.log(this.users)
       }, error => console.error(error));
   }
@@ -258,6 +265,14 @@ export class CreateStudentComponent implements OnInit {
     this.headquarterService.HeadquarterProgram().subscribe(
       (AdministrativeFromApi) => {
         // console.log(AdministrativeFromApi.administratives)
+        for (let key of AdministrativeFromApi.headquarterProgram) {
+          if(key.Headquarter?.name){
+            key.Headquarter.name =  key.Headquarter.name.charAt(0).toUpperCase() +  key.Headquarter.name.slice(1);
+          }
+          if(key.Program?.name){
+            key.Program.name =  key.Program.name.charAt(0).toUpperCase() +  key.Program.name.slice(1);
+          }
+        }
         this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
       }, error => console.error(error));
   }
