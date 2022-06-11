@@ -79,6 +79,37 @@ export class TeacherService {
       catchError(this.handleError))
   }
 
+  ResolusionDocente(UserId: string,TrainingTeacherId:string,name:string,file:any): Observable<any> {
+    let token : string | null=localStorage.getItem('token')
+    let user : string | null=localStorage.getItem('user')
+    // let httpOptions:any
+    // if(token != null && user != null) {
+    //   let userObjeto:any = JSON.parse(user); 
+    //   httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Content-Type': 'application/json',
+    //       'x-token':token,
+    //       'user':userObjeto.id
+    //     })
+    //   }
+    // }
+    let form= new FormData();//Crea un formulario
+    form.append('name',name);
+    form.append('UserId',UserId);
+    form.append('TrainingTeacherId',TrainingTeacherId);
+    form.append('file',file);//Asigna el campo File
+  console.log(file,'FormData')
+
+    // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+      return this.http.post<any>(this.API_URI + '/api/subirResolusionDocente',form).pipe(
+      tap((res: any) => {
+        if (res) {
+        }
+      }),
+      catchError(this.handleError))
+  }
+
+
   ExperienciaLaboralDocente(UserId: string,WorkexperienceId:string,name:string,file:any): Observable<any> {
     let token : string | null=localStorage.getItem('token')
     let user : string | null=localStorage.getItem('user')

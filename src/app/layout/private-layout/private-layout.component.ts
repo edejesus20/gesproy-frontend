@@ -199,7 +199,7 @@ modalCambiarClave(e:Event){
   this.ref1 = this.dialogService.open(CambicarPasswordUserComponent, {
     width: '35%',
     // height: '55%',
-    contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:false, closeOnEscape:false,
+    contentStyle:{'padding':'10px'} ,closable:false, closeOnEscape:false,
      showHeader:false, 
     // baseZIndex: 10000,
     data: {

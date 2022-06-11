@@ -442,7 +442,7 @@
                                     <ng-template [ngIf]="form.value.trainingTeacher[pointIndex].degree_certificate.name">
 
                                     <div class="field ">
-                                      <label for="name"style="font-weight: bold;">CAPACITACIÓN</label>
+                                      <label for="name"style="font-weight: bold;">NIVEL DE FORMACIÓN</label>
                                        
                                     <div class="flex">
                                     <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
@@ -451,10 +451,10 @@
                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                         [options]="trainings" [filter]="true"
                                             formControlName="TrainingId" name="TrainingId"
-                                          label="CAPACITACIÓN" 
+                                          label="NIVEL DE FORMACIÓN" 
                                           [style]="{'width':'100%','margin-top':'10px'}"
                                           optionvalue="id" optionLabel="name"  filterBy="name"
-                                          [disabled]="true" placeholder="CAPACITACIÓN"  title="CAPACITACIÓN">
+                                          [disabled]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
                                           <ng-template let-option pTemplate="item">
                                             <span >
                                               {{option.name  | titlecase}}
@@ -468,7 +468,7 @@
                                     </ng-template>
                                     <ng-template [ngIf]="!form.value.trainingTeacher[pointIndex].degree_certificate.name">
                                       <div class="field ">
-                                        <label for="name"style="font-weight: bold;">CAPACITACIÓN</label>
+                                        <label for="name"style="font-weight: bold;">NIVEL DE FORMACIÓN</label>
                                          
                                       <div class="flex">
                                       <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
@@ -477,10 +477,10 @@
                                           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                           [options]="trainings" [filter]="true"
                                               formControlName="TrainingId" name="TrainingId"
-                                            label="CAPACITACIÓN" 
+                                            label="NIVEL DE FORMACIÓN" 
                                             [style]="{'width':'100%','margin-top':'10px'}"
                                             optionvalue="id" optionLabel="name"  filterBy="name"
-                                            [required]="true" placeholder="CAPACITACIÓN"  title="CAPACITACIÓN">
+                                            [required]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
                                             <ng-template let-option pTemplate="item">
                                               <span >
                                                 {{option.name  | titlecase}}

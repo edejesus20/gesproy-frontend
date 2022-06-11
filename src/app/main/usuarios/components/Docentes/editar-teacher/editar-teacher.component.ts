@@ -1132,7 +1132,7 @@ getOneCntAccount(id:number) {
 
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Capacitación Creada', detail: person.name,life: 2000});
+          this.messageService.add({severity:'info', summary: 'Formación Creada', detail: person.name,life: 2000});
       this.getAlltrainings()
 
         }
