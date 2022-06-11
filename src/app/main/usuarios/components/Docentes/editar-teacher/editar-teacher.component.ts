@@ -83,7 +83,7 @@ export class EditarTeacherComponent implements OnInit {
 
   ArchivosEliminados:any[] =[]
   public deleteheadquarterProgramTeachers:any[]=[]
-
+  FilesResolusiones:Archivo[] =[]
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -139,6 +139,8 @@ export class EditarTeacherComponent implements OnInit {
           degree_certificate: [''],
           TeacherId:this.form.value.id,
           TrainingId:[''],
+          resolution_certificate:[''],
+
       })]),
       Workexperiences:this.formBuilder.array([this.formBuilder.group(
         {
@@ -313,7 +315,8 @@ export class EditarTeacherComponent implements OnInit {
       this.teacherService.updateItem(formValue.id,formValue).subscribe(
         (algo) => {
 
-          let array:any[] = []
+          let arrayCertificado:any[] = []
+          let arrayResolusion:any[] = []
           let array1:any[] = []
           let Bandera:boolean = false
         // console.log(algo.teacherOne,'algo.teacher')
@@ -325,39 +328,73 @@ export class EditarTeacherComponent implements OnInit {
               // console.log('algo.teacher?.TrainingTeachers')
               for (const key of algo.teacherOne.TrainingTeachers) {
                 if(key.id){
-                  array.push({
-                    UserId:algo.teacherOne.UserId,
+                  arrayCertificado.push({
+                    UserId:this.form.value.id,
                     TrainingTeacherId:key.id,
                     name:'certificado'+key.Training?.name, 
                     file:null
-                    }
-                    )
+                    })
+                    arrayResolusion.push({
+                      UserId:this.form.value.id,
+                      TrainingTeacherId:key.id,
+                      name:'certificadoResolucion', 
+                      file:null
+                      })
                 }
               }
               // console.log(array,'array')
+              // array de resolucion
+            for (let index = 0; index < arrayResolusion.length; index++) {
+              const element = arrayResolusion[index];
 
-            
-              for (let index = 0; index < array.length; index++) {
-                const element = array[index];
+              for (const key of algo.teacherOne.TrainingTeachers) {
+                if(key.id == element.TrainingTeacherId){
+                  if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+
+                  }else{
+                    if(this.FilesResolusiones.length > 0){
+                      for (const key1 of this.FilesResolusiones) {
+                        // cont=cont + 1
+                        // console.log(key1.position + '=='+index,'position y index')
+                        if( key1.id==0 && key1.position == index){
+                          console.log(' key1.id==0 && key1.position == index')
+                          arrayResolusion[index].file=key1.file
+                        }
+                        // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                        if(key1.id == parseInt(arrayResolusion[index].TrainingTeacherId)){
+
+                          console.log(' key1.id == array[index].TrainingTeacherId')
+                          arrayResolusion[index].file=key1.file
+                        }
+                      
+                    }
+                    }
+                  }
+                }
+            }
+          }
+              for (let index = 0; index < arrayCertificado.length; index++) {
+                const element = arrayCertificado[index];
 
                 for (const key of algo.teacherOne.TrainingTeachers) {
                   if(key.id == element.TrainingTeacherId){
                     if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
 
                     }else{
+
                       if(this.FilesFormaciones.length > 0){
                         for (const key2 of this.FilesFormaciones) {
                           // cont=cont + 1
                           // console.log(key2.position + '=='+index,'position y index')
                           if( key2.id==0 && key2.position == index){
                             console.log(' key2.id==0 && key2.position == index')
-                            array[index].file=key2.file
+                            arrayCertificado[index].file=key2.file
                           }
                           // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                          if(key2.id == parseInt(array[index].TrainingTeacherId)){
+                          if(key2.id == parseInt(arrayCertificado[index].TrainingTeacherId)){
 
                             console.log(' key2.id == array[index].TrainingTeacherId')
-                            array[index].file=key2.file
+                            arrayCertificado[index].file=key2.file
                           }
                         
                       }
@@ -367,11 +404,37 @@ export class EditarTeacherComponent implements OnInit {
               }
             }
           }
-          
-            if(this.FilesFormaciones.length > 0 && array.length > 0){
-              console.log(array,'array')
+          // enviar archivos de resolusion
+          if(this.FilesResolusiones.length > 0 && arrayResolusion.length > 0){
+            console.log(arrayResolusion,'arrayResolusion')
+            let cont=0
+          for (let key1 of arrayResolusion) {
+                if(key1.file != null){
+
+                this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                    cont=cont + 1
+                    if(cont == this.FilesResolusiones.length){
+                      Bandera=true
+              
+                    }
+                  
+                },error => console.error(error))
+              }else{
+                Bandera=true
+              }
+            }
+            Bandera=true
+            // aqui enviar datos
+          }else{
+
+            Bandera=true
+            
+            } 
+          // array de certificado de grado
+            if(this.FilesFormaciones.length > 0 && arrayCertificado.length > 0){
+              // console.log(arrayCertificado,'array')
               let cont=0
-            for (let key1 of array) {
+            for (let key1 of arrayCertificado) {
                   if(key1.file != null){
 
                   this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
@@ -400,7 +463,7 @@ export class EditarTeacherComponent implements OnInit {
                 for (const key of algo.teacherOne.Workexperiences) {
                   if(key.id){
                     array1.push({
-                      UserId:algo.teacherOne.UserId,
+                      UserId:this.form.value.id,
                       WorkexperienceId:key.id,
                       name:'constancia'+key.name_institution, 
                       file:null
@@ -430,7 +493,7 @@ export class EditarTeacherComponent implements OnInit {
                             if(key3.id == 
                             parseInt(array1[index].WorkexperienceId)){
 
-                              // console.log(' key3.id == array[index].WorkexperienceId')
+                              console.log(' key3.id == array[index].WorkexperienceId')
                               array1[index].file=key3.file
                             }
                           
@@ -453,7 +516,7 @@ export class EditarTeacherComponent implements OnInit {
                     this.teacherService.ExperienciaLaboralDocente(clave1.UserId.toString(),
                     clave1.WorkexperienceId.toString(),clave1.name.toString(),clave1.file).subscribe(result=>{
                         cont1=cont1 + 1
-                        // console.log('aqui se eviaron datos')
+                        console.log('aqui se eviaron datos')
                         if(cont1 == this.FilesExperinecia.length){
                           Bandera=true
                     
@@ -699,8 +762,10 @@ getOneCntAccount(id:number) {
               this.charge_bondingService.getItem(this.form.value.ChargeBondingId.id).subscribe(algo=>{
                 if(algo.charge_bonding.ChargebondingScales?.length != undefined
                   && algo.charge_bonding.ChargebondingScales.length > 0){
-                    for (const key of algo.charge_bonding.ChargebondingScales) {
+                    for (let key of algo.charge_bonding.ChargebondingScales) {
                       if(key.Scale != undefined){
+                key.Scale.name =  key.Scale.name.charAt(0).toUpperCase() +  key.Scale.name.slice(1);
+
                         this.scales.push(key.Scale)
                       }
                     }
@@ -880,11 +945,20 @@ getOneCntAccount(id:number) {
               
               let control = <FormArray>this.form.controls['trainingTeacher']
               let AnexoId:any | string = ''
-              if(
-                key.resolution_convalidation == 'Si' &&
-                key.AnexosTrainingTeachers?.length != undefined && key.AnexosTrainingTeachers?.length >0){
-                AnexoId=key.AnexosTrainingTeachers[0].Anexo
-              }
+              let AnexoId1:any | string = ''
+              if( key.AnexosTrainingTeachers?.length != undefined && key.AnexosTrainingTeachers?.length >0){
+                  for (const ok of key.AnexosTrainingTeachers) {
+                    if(ok.Anexo?.name == key.resolution_certificate && key.resolution_convalidation == 'Si'){
+                      AnexoId1=ok.Anexo
+                    }
+                    if( ok.Anexo?.name == key.degree_certificate){
+                      AnexoId=ok.Anexo
+
+                    }
+                  }
+                 
+                }
+               
               let cont=0
                 this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
                   if(algo1.teacher.id != undefined && key.TrainingId != undefined) {
@@ -898,12 +972,16 @@ getOneCntAccount(id:number) {
                           date_graduation: [key?.date_graduation,[Validators.required]],
                           name_institution: [key?.name_institution,[Validators.required]],
                           resolution_convalidation: [{value:key?.resolution_convalidation},[Validators.required]],
-                          degree_certificate: AnexoId,
+                          degree_certificate: [AnexoId,[Validators.required]],
+                          resolution_certificate:AnexoId1,
                           TeacherId:algo1.teacher.id,
                           TrainingId:[algo.training,[Validators.required]],
                         }))
                         
                         this.FilesFormaciones.push({
+                          id:key.id,position:cont
+                        })
+                        this.FilesResolusiones.push({
                           id:key.id,position:cont
                         })
                         cont =cont + 1
@@ -1030,8 +1108,15 @@ getOneCntAccount(id:number) {
       }
       control.removeAt(index)
       if( this.FilesFormaciones[index] != undefined){
-          this.FilesFormaciones.splice(index,1)
-        }
+        // console.log('aquii-actualizado file')
+
+        this.FilesFormaciones.splice(index,1)
+        
+      }
+      if(this.FilesResolusiones[index] != undefined){
+        this.FilesResolusiones.splice(index,1)
+
+      }
         // console.log(this.FilesFormaciones,'this.FilesFormaciones');
       // al eliminar un registro, se debe quitar el file del array
       // this.FilesFormaciones.(index)
@@ -1046,6 +1131,7 @@ getOneCntAccount(id:number) {
             name_institution: [''],
             resolution_convalidation: [''],
             degree_certificate: [''],
+            resolution_certificate:[''],
             TrainingId:[''],
           }))
           }
@@ -1139,9 +1225,9 @@ getOneCntAccount(id:number) {
   });
   }
 
-  // ***************************************Codigo Logica Docente****************************************
+   // ***************************************Codigo Logica Docente****************************************
 
-  resolucion(e:Event,pointIndex:number) {
+   resolucion(e:Event,pointIndex:number) {
     e.preventDefault();
     const control = <FormArray>this.form.controls['trainingTeacher']
     // console.log(control.value[pointIndex].resolution_convalidation)
@@ -1174,39 +1260,9 @@ getOneCntAccount(id:number) {
     // console.log('aquii')
     if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
       const file=event.target.files[0];
-    
-      // if(file.type.includes("degree_certificate")){//Evaluar si es una imagen
-          // const reader= new FileReader();
-          // reader.readAsDataURL(file);
-          // reader.onload=function load(){
-          //    let images=reader.result; //Asignar al thumbnail
-          // }.bind(this);
-          // this.file=file;
-          // console.log('aquii-actualizado file ==', pointIndex)
-          // if(this.FilesFormaciones.length ==0){
-          //   console.log('aquii-create file')
-          //   this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
 
-          // }else{
-          //   // console.log('aquii-actualizado file')
-
-          //   for (const key of this.FilesFormaciones) {
-
-          //     if(key.position == pointIndex){
-          //   console.log('aquii-actualizado file',key.position+' ==', pointIndex)
-
-               
-          //     }
-          //     // else{
-          //     //   this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,file:file})
-          //     // }
-              
-          //   }
-          // }
-          
           
           if( this.FilesFormaciones[pointIndex] != undefined){
-            // console.log('aquii-actualizado file')
 
             this.FilesFormaciones[pointIndex]={
               id:control.value[pointIndex].id,
@@ -1216,17 +1272,11 @@ getOneCntAccount(id:number) {
 
             
           }else{
-            // console.log('aquii-nuevo file')
             this.FilesFormaciones.push({id:control.value[pointIndex].id,position:pointIndex,
               file:file})
 
           }
-          console.log(this.FilesFormaciones,'this.FilesFormaciones')
-
-          // console.log(this.FilesFormaciones[pointIndex],'this.FilesFormaciones[pointIndex].position')
-          // console.log(this.file)
-          // console.log(reader,'reader')
-      // }
+          // console.log(this.FilesFormaciones,'this.FilesFormaciones')
   }
   }
 
@@ -1274,10 +1324,43 @@ getOneCntAccount(id:number) {
 
   
   }
+  // files para certificado de resolucion dos
+  onFileChange2(event:any,pointIndex:number) {
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['trainingTeacher']
+    if(control.value[pointIndex].resolution_certificate != ''){
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+
+            if( this.FilesResolusiones[pointIndex] != undefined){
+              // console.log('aquii-actualizado file')
+
+              this.FilesResolusiones[pointIndex]={
+                id:control.value[pointIndex].id,
+                position:pointIndex,
+                file:file
+              }
+
+              
+            }else{
+              // console.log('aquii-nuevo file')
+              this.FilesResolusiones.push({id:control.value[pointIndex].id,position:pointIndex,
+                file:file})
+
+            }
+            console.log(this.FilesResolusiones,'this.FilesResolusiones')
+    }
+    }
+  
+
+  
+    }
 
   // archivos eliminados
   removeArchivo(item:any,event:Event,pointIndex:number){
+  
     event.preventDefault()
+
     this.ArchivosEliminados.push(item)
     console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
     let control = <FormArray>this.form.controls['trainingTeacher']
@@ -1291,6 +1374,22 @@ getOneCntAccount(id:number) {
     console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
     let control = <FormArray>this.form.controls['Workexperiences']
     control.controls[pointIndex].get('constancy')?.setValue('')
+
+    // if( this.FilesExperinecia[pointIndex] != undefined){
+    //   // console.log('aquii-actualizado file')
+
+    //   this.FilesExperinecia.splice(pointIndex,1)
+      
+    // }
+    // console.log(this.FilesExperinecia,'this.FilesExperinecia');
+  }
+
+  removeArchivo2(item:any,event:Event,pointIndex:number){
+    event.preventDefault()
+    this.ArchivosEliminados.push(item)
+    // console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
+    let control = <FormArray>this.form.controls['trainingTeacher']
+    control.controls[pointIndex].get('resolution_certificate')?.setValue('')
   }
 
 }

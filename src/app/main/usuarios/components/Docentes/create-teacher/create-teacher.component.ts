@@ -90,6 +90,8 @@ export class CreateTeacherComponent implements OnInit {
         resolution_convalidation: [''],
         degree_certificate: [''],
         TrainingId:[''],
+        resolution_certificate:[''],
+
     })]),
   Workexperiences:this.formBuilder.array([this.formBuilder.group(
     {
@@ -119,6 +121,7 @@ export class CreateTeacherComponent implements OnInit {
 
    FilesFormaciones:Archivo[] =[]
   FilesExperinecia:Archivo[] =[]
+  FilesResolusiones:Archivo[] =[]
 
   private deletetrainingTeachers:any[]=[]
   private deleteWorkexperiences:any[] = []
@@ -354,165 +357,268 @@ export class CreateTeacherComponent implements OnInit {
           this.teacherService.createItem(formValue).subscribe(
             (algo) => {
 
-              let array:any[] = []
-              let array1:any[] = []
-              let Bandera:boolean = false
-            // console.log(algo.teacherOne,'algo.teacher')
-              if(algo.teacherOne.id != undefined){
+              let arrayCertificado:any[] = []
+          let arrayResolusion:any[] = []
+          let array1:any[] = []
+          let Bandera:boolean = false
+        // console.log(algo.teacherOne,'algo.teacher')
+          if(algo.teacherOne.id != undefined){
 
-                console.log(algo.teacherOne,'algo.teacher')
-                if(algo.teacherOne?.TrainingTeachers?.length != undefined 
-                  && algo.teacherOne.TrainingTeachers.length >0){
-                  // console.log('algo.teacher?.TrainingTeachers')
-                  for (const key of algo.teacherOne.TrainingTeachers) {
-                    if(key.id){
-                      array.push({
-                        UserId:algo.teacherOne.UserId,
-                        TrainingTeacherId:key.id,
-                        name:'certificado'+key.Training?.name, 
-                        file:null
+            console.log(algo.teacherOne,'algo.teacher')
+            if(algo.teacherOne?.TrainingTeachers?.length != undefined 
+              && algo.teacherOne.TrainingTeachers.length >0){
+              // console.log('algo.teacher?.TrainingTeachers')
+              for (const key of algo.teacherOne.TrainingTeachers) {
+                if(key.id){
+                  arrayCertificado.push({
+                    UserId:this.form.value.id,
+                    TrainingTeacherId:key.id,
+                    name:'certificado'+key.Training?.name, 
+                    file:null
+                    })
+                    arrayResolusion.push({
+                      UserId:this.form.value.id,
+                      TrainingTeacherId:key.id,
+                      name:'certificadoResolucion', 
+                      file:null
+                      })
+                }
+              }
+              // console.log(array,'array')
+              // array de resolucion
+            for (let index = 0; index < arrayResolusion.length; index++) {
+              const element = arrayResolusion[index];
+
+              for (const key of algo.teacherOne.TrainingTeachers) {
+                if(key.id == element.TrainingTeacherId){
+                  if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+
+                  }else{
+                    if(this.FilesResolusiones.length > 0){
+                      for (const key1 of this.FilesResolusiones) {
+                        // cont=cont + 1
+                        // console.log(key1.position + '=='+index,'position y index')
+                        if( key1.id==0 && key1.position == index){
+                          console.log(' key1.id==0 && key1.position == index')
+                          arrayResolusion[index].file=key1.file
                         }
-                        )
+                        // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                        if(key1.id == parseInt(arrayResolusion[index].TrainingTeacherId)){
+
+                          console.log(' key1.id == array[index].TrainingTeacherId')
+                          arrayResolusion[index].file=key1.file
+                        }
+                      
+                    }
                     }
                   }
-                  // console.log(array,'array')
+                }
+            }
+          }
+              for (let index = 0; index < arrayCertificado.length; index++) {
+                const element = arrayCertificado[index];
 
-                
-                  for (let index = 0; index < array.length; index++) {
-                    const element = array[index];
+                for (const key of algo.teacherOne.TrainingTeachers) {
+                  if(key.id == element.TrainingTeacherId){
+                    if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
 
-                    for (const key of algo.teacherOne.TrainingTeachers) {
-                      if(key.id == element.TrainingTeacherId){
-                        if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+                    }else{
 
-                        }else{
-                          if(this.FilesFormaciones.length > 0){
-                            for (const key2 of this.FilesFormaciones) {
-                              // cont=cont + 1
-                              // console.log(key2.position + '=='+index,'position y index')
-                              if( key2.id==0 && key2.position == index){
-                                console.log(' key2.id==0 && key2.position == index')
-                                array[index].file=key2.file
-                              }
-                              // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                              if(key2.id == parseInt(array[index].TrainingTeacherId)){
-
-                                console.log(' key2.id == array[index].TrainingTeacherId')
-                                array[index].file=key2.file
-                              }
-                            
+                      if(this.FilesFormaciones.length > 0){
+                        for (const key2 of this.FilesFormaciones) {
+                          // cont=cont + 1
+                          // console.log(key2.position + '=='+index,'position y index')
+                          if( key2.id==0 && key2.position == index){
+                            console.log(' key2.id==0 && key2.position == index')
+                            arrayCertificado[index].file=key2.file
                           }
+                          // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                          if(key2.id == parseInt(arrayCertificado[index].TrainingTeacherId)){
+
+                            console.log(' key2.id == array[index].TrainingTeacherId')
+                            arrayCertificado[index].file=key2.file
+                          }
+                        
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // enviar archivos de resolusion
+          if(this.FilesResolusiones.length > 0 && arrayResolusion.length > 0){
+            console.log(arrayResolusion,'arrayResolusion')
+            let cont=0
+          for (let key1 of arrayResolusion) {
+                if(key1.file != null){
+
+                this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                    cont=cont + 1
+                    if(cont == this.FilesResolusiones.length){
+                      Bandera=true
+              
+                    }
+                  
+                },error => console.error(error))
+              }else{
+                Bandera=true
+              }
+            }
+            Bandera=true
+            // aqui enviar datos
+          }else{
+
+            Bandera=true
+            
+            } 
+          // array de certificado de grado
+            if(this.FilesFormaciones.length > 0 && arrayCertificado.length > 0){
+              // console.log(arrayCertificado,'array')
+              let cont=0
+            for (let key1 of arrayCertificado) {
+                  if(key1.file != null){
+
+                  this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                      cont=cont + 1
+                      if(cont == this.FilesFormaciones.length){
+                        Bandera=true
+                
+                      }
+                    
+                  },error => console.error(error))
+                }else{
+                  Bandera=true
+                }
+              }
+              Bandera=true
+              // aqui enviar datos
+            }else{
+
+              Bandera=true
+              
+              }      
+            
+
+            if(algo.teacherOne?.Workexperiences?.length != undefined  
+              && algo.teacherOne?.Workexperiences?.length > 0){
+                for (const key of algo.teacherOne.Workexperiences) {
+                  if(key.id){
+                    array1.push({
+                      UserId:this.form.value.id,
+                      WorkexperienceId:key.id,
+                      name:'constancia'+key.name_institution, 
+                      file:null
+                      }
+                      )
+                  }
+                }
+
+                for (let index = 0; index < array1.length; index++) {
+                  const element = array1[index];
+
+                  for (const key of algo.teacherOne.Workexperiences) {
+                    if(key.id == element.WorkexperienceId){
+                      if(key.AnexosWorkexperiences?.length != undefined 
+                        &&  key.AnexosWorkexperiences?.length > 0){
+                    //  console.log('jaja')
+                      }else{
+                        if(this.FilesExperinecia.length > 0){
+                          for (const key3 of this.FilesExperinecia) {
+                            // cont=cont + 1
+                            // console.log(key3.position + '=='+index,'position y index')
+                            if( key3.id==0 && key3.position == index){
+                              // console.log(' key3.id==0 && key3.position == index')
+                              array1[index].file=key3.file
+                            }
+                            // console.log(key3.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                            if(key3.id == 
+                            parseInt(array1[index].WorkexperienceId)){
+
+                              console.log(' key3.id == array[index].WorkexperienceId')
+                              array1[index].file=key3.file
+                            }
+                          
                         }
                       }
                     }
                   }
                 }
               }
-              
-                if(this.FilesFormaciones.length > 0 && array.length > 0){
-                  console.log(array,'array')
-                  let cont=0
-                for (let key1 of array) {
-                      if(key1.file != null){
-
-                      this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
-                          cont=cont + 1
-                          if(cont == this.FilesFormaciones.length){
-                            Bandera=true
-                    
-                          }
-                        
-                      },error => console.error(error))
-                    }else{
-                      Bandera=true
-                    }
-                  }
-                  Bandera=true
-                  // aqui enviar datos
-                }else{
-
-                  Bandera=true
-                  
-                  }      
+              }
+              // console.log(array1,'array1')
+              if(this.FilesExperinecia.length > 0 && array1.length > 0){
+              let cont1=0
+                // console.log('aqui')
                 
-
-                if(algo.teacherOne?.Workexperiences?.length != undefined  
-                  && algo.teacherOne?.Workexperiences?.length > 0){
-                    for (const key of algo.teacherOne.Workexperiences) {
-                      if(key.id){
-                        array1.push({
-                          UserId:algo.teacherOne.UserId,
-                          WorkexperienceId:key.id,
-                          name:'constancia'+key.name_institution, 
-                          file:null
-                          }
-                          )
-                      }
-                    }
-
-                    for (let index = 0; index < array1.length; index++) {
-                      const element = array1[index];
-
-                      for (const key of algo.teacherOne.Workexperiences) {
-                        if(key.id == element.WorkexperienceId){
-                          if(key.AnexosWorkexperiences?.length != undefined 
-                            &&  key.AnexosWorkexperiences?.length > 0){
-                        //  console.log('jaja')
-                          }else{
-                            if(this.FilesExperinecia.length > 0){
-                              for (const key3 of this.FilesExperinecia) {
-                                // cont=cont + 1
-                                // console.log(key3.position + '=='+index,'position y index')
-                                if( key3.id==0 && key3.position == index){
-                                  // console.log(' key3.id==0 && key3.position == index')
-                                  array1[index].file=key3.file
-                                }
-                                // console.log(key3.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                                if(key3.id == 
-                                parseInt(array1[index].WorkexperienceId)){
-
-                                  // console.log(' key3.id == array[index].WorkexperienceId')
-                                  array1[index].file=key3.file
-                                }
-                              
-                            }
-                          }
+                for (let clave1 of array1) {
+                  if(clave1.file != null){
+                                                // console.log(clave1.UserId.toString(),clave1.TrainingTeacherId.toString(),
+                  // clave1.name.toString(),clave1.file,'datos enviados')
+                    this.teacherService.ExperienciaLaboralDocente(clave1.UserId.toString(),
+                    clave1.WorkexperienceId.toString(),clave1.name.toString(),clave1.file).subscribe(result=>{
+                        cont1=cont1 + 1
+                        console.log('aqui se eviaron datos')
+                        if(cont1 == this.FilesExperinecia.length){
+                          Bandera=true
+                    
                         }
-                      }
-                    }
-                  }
-                  }
-                  // console.log(array1,'array1')
-                  if(this.FilesExperinecia.length > 0 && array1.length > 0){
-                  let cont1=0
-                    // console.log('aqui')
-                    
-                    for (let clave1 of array1) {
-                      if(clave1.file != null){
-                                                    // console.log(clave1.UserId.toString(),clave1.TrainingTeacherId.toString(),
-                      // clave1.name.toString(),clave1.file,'datos enviados')
-                        this.teacherService.ExperienciaLaboralDocente(clave1.UserId.toString(),
-                        clave1.WorkexperienceId.toString(),clave1.name.toString(),clave1.file).subscribe(result=>{
-                            cont1=cont1 + 1
-                            // console.log('aqui se eviaron datos')
-                            if(cont1 == this.FilesExperinecia.length){
-                              Bandera=true
                         
-                            }
-                            
-                        },error => console.error(error))
-                      }else{
-                        Bandera=true
-                      }
-
-                    
-                    }
-                  Bandera=true
-
-
+                    },error => console.error(error))
                   }else{
                     Bandera=true
                   }
+
+                
+                }
+              Bandera=true
+
+
+              }else{
+                Bandera=true
+              }
+              // alerta de exito
+              if(Bandera==true){
+                // var date = new Date('2020-01-01 00:00:03');
+                //       function padLeft(n:any){ 
+                //         return n ="00".substring(0, "00".length - n.length) + n;
+                //       }
+                //       var interval = setInterval(() => {
+                //       var minutes = padLeft(date.getMinutes() + "");
+                //       var seconds = padLeft(date.getSeconds() + "");
+                //       if( seconds == '03') {
+                //       this.messageService.add({severity:'success', summary: 'Success', 
+                //       detail: 'Registro de Docente Actualizado con exito'});
+                //       }
+                //       date = new Date(date.getTime() - 1000);
+                //       if( minutes == '00' && seconds == '01' ) {
+                //         this.ref.close(algo);
+                //         clearInterval(interval); 
+                //       }
+                // }, 1000);
+                // if(this.mostrarDialogo== true){
+                //     this.ref.close(algo);
+                //   }else{
+                        var date = new Date('2020-01-01 00:00:03');
+                          function padLeft(n:any){ 
+                            return n ="00".substring(0, "00".length - n.length) + n;
+                          }
+                          var interval = setInterval(() => {
+                          var minutes = padLeft(date.getMinutes() + "");
+                          var seconds = padLeft(date.getSeconds() + "");
+                          // console.log(minutes, seconds);
+                          if( seconds == '03') {
+                          this.messageService.add({severity:'success', summary: 'Success', 
+                          detail: 'Registro de Docente Creado con exito'});
+                          }
+                          date = new Date(date.getTime() - 1000);
+                          if( minutes == '00' && seconds == '01' ) {
+                            this.router.navigateByUrl('/usuarios/Teacher');
+                            clearInterval(interval); 
+                          }
+                    }, 1000);
+                  // }
+              }
                   // alerta de exito
                   if(Bandera==true){
                     // var date = new Date('2020-01-01 00:00:03');
@@ -765,6 +871,9 @@ get getWorkexperiences() {
           resolution_convalidation: [''],
           degree_certificate: [''],
           TrainingId:[''],
+          resolution_certificate:[''],
+          
+
           }))
         }
         if(control.length >= 1 && this.mostrar2 == true){
@@ -777,6 +886,8 @@ get getWorkexperiences() {
           resolution_convalidation: [''],
           degree_certificate: [''],
           TrainingId:[''],
+          resolution_certificate:[''],
+
           }))
   
         }
@@ -792,11 +903,15 @@ get getWorkexperiences() {
       // }
       control.removeAt(index)
       if( this.FilesFormaciones[index] != undefined){
-          // console.log('aquii-actualizado file')
+        // console.log('aquii-actualizado file')
 
-          this.FilesFormaciones.splice(index,1)
-          
-        }
+        this.FilesFormaciones.splice(index,1)
+        
+      }
+      if(this.FilesResolusiones[index] != undefined){
+        this.FilesResolusiones.splice(index,1)
+
+      }
         // console.log(this.FilesFormaciones,'this.FilesFormaciones');
       // al eliminar un registro, se debe quitar el file del array
       // this.FilesFormaciones.(index)
@@ -811,6 +926,8 @@ get getWorkexperiences() {
           resolution_convalidation: [''],
           degree_certificate: [''],
           TrainingId:[''],
+          resolution_certificate:[''],
+
         }))
         }
     }
@@ -1038,6 +1155,37 @@ get getWorkexperiences() {
 
   
   }
+  onFileChange2(event:any,pointIndex:number) {
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['trainingTeacher']
+    if(control.value[pointIndex].resolution_certificate != ''){
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+
+            if( this.FilesResolusiones[pointIndex] != undefined){
+              // console.log('aquii-actualizado file')
+
+              this.FilesResolusiones[pointIndex]={
+                id:control.value[pointIndex].id,
+                position:pointIndex,
+                file:file
+              }
+
+              
+            }else{
+              // console.log('aquii-nuevo file')
+              this.FilesResolusiones.push({id:control.value[pointIndex].id,position:pointIndex,
+                file:file})
+
+            }
+            console.log(this.FilesResolusiones,'this.FilesResolusiones')
+    }
+    }
+  
+
+  
+    }
+
 
   // archivos eliminados
   // removeArchivo(item:any,event:Event,pointIndex:number){
