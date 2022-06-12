@@ -99,8 +99,8 @@ this.rolesService.getRole().subscribe(role => {
   if(role.roles){
     this.cities.push({
       // createdAt: "2022-06-06 14:03:12"
-    id: 5,
-    name: "Docente",
+    id: 9,
+    name: "Docente Interno",
     // updatedAt: "2022-06-06 14:03:12"
       },{
       id: 6,

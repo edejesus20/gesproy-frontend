@@ -68,8 +68,7 @@ export class TeacherService {
     form.append('UserId',UserId);
     form.append('TrainingTeacherId',TrainingTeacherId);
     form.append('file',file);//Asigna el campo File
-  // console.log(form,'FormData')
-
+    console.log(file,'FormData')
     // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
       return this.http.post<any>(this.API_URI + '/api/subirFormacionDocente',form).pipe(
       tap((res: any) => {

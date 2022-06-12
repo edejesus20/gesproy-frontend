@@ -84,6 +84,7 @@ export class EditarTeacherComponent implements OnInit {
   ArchivosEliminados:any[] =[]
   public deleteheadquarterProgramTeachers:any[]=[]
   FilesResolusiones:Archivo[] =[]
+  private user:number=0
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -322,20 +323,20 @@ export class EditarTeacherComponent implements OnInit {
         // console.log(algo.teacherOne,'algo.teacher')
           if(algo.teacherOne.id != undefined){
 
-            console.log(algo.teacherOne,'algo.teacher')
+            // console.log(algo.teacherOne,'algo.teacher')
             if(algo.teacherOne?.TrainingTeachers?.length != undefined 
               && algo.teacherOne.TrainingTeachers.length >0){
               // console.log('algo.teacher?.TrainingTeachers')
               for (const key of algo.teacherOne.TrainingTeachers) {
                 if(key.id){
                   arrayCertificado.push({
-                    UserId:this.form.value.id,
+                    UserId: this.user,
                     TrainingTeacherId:key.id,
                     name:'certificado'+key.Training?.name, 
                     file:null
                     })
                     arrayResolusion.push({
-                      UserId:this.form.value.id,
+                      UserId: this.user,
                       TrainingTeacherId:key.id,
                       name:'certificadoResolucion', 
                       file:null
@@ -344,95 +345,93 @@ export class EditarTeacherComponent implements OnInit {
               }
               // console.log(array,'array')
               // array de resolucion
-            for (let index = 0; index < arrayResolusion.length; index++) {
-              const element = arrayResolusion[index];
+               for (let index = 0; index < arrayResolusion.length; index++) {
+                 const element = arrayResolusion[index];
 
-              for (const key of algo.teacherOne.TrainingTeachers) {
-                if(key.id == element.TrainingTeacherId){
-                  if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+                  for (const key of algo.teacherOne.TrainingTeachers) {
+                    if(key.id == element.TrainingTeacherId){
+                      if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
 
-                  }else{
-                    if(this.FilesResolusiones.length > 0){
-                      for (const key1 of this.FilesResolusiones) {
-                        // cont=cont + 1
-                        // console.log(key1.position + '=='+index,'position y index')
-                        if( key1.id==0 && key1.position == index){
-                          console.log(' key1.id==0 && key1.position == index')
-                          arrayResolusion[index].file=key1.file
+                      }else{
+                        if(this.FilesResolusiones.length > 0){
+                          for (const key1 of this.FilesResolusiones) {
+                            // cont=cont + 1
+                            // console.log(key1.position + '=='+index,'position y index')
+                            if( key1.id==0 && key1.position == index){
+                              console.log(' key1.id==0 && key1.position == index')
+                              arrayResolusion[index].file=key1.file
+                            }
+                            // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                            if(key1.id == parseInt(arrayResolusion[index].TrainingTeacherId)){
+
+                              console.log(' key1.id == array[index].TrainingTeacherId')
+                              arrayResolusion[index].file=key1.file
+                            }
+                          
                         }
-                        // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                        if(key1.id == parseInt(arrayResolusion[index].TrainingTeacherId)){
-
-                          console.log(' key1.id == array[index].TrainingTeacherId')
-                          arrayResolusion[index].file=key1.file
                         }
-                      
+                      }
                     }
-                    }
-                  }
                 }
-            }
-          }
+              }
               for (let index = 0; index < arrayCertificado.length; index++) {
                 const element = arrayCertificado[index];
 
                 for (const key of algo.teacherOne.TrainingTeachers) {
-                  if(key.id == element.TrainingTeacherId){
-                    if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
+                    if(key.id == element.TrainingTeacherId){
+                      if(key.AnexosTrainingTeachers?.length != undefined &&  key.AnexosTrainingTeachers?.length > 0){
 
-                    }else{
+                      }else{
 
-                      if(this.FilesFormaciones.length > 0){
-                        for (const key2 of this.FilesFormaciones) {
-                          // cont=cont + 1
-                          // console.log(key2.position + '=='+index,'position y index')
-                          if( key2.id==0 && key2.position == index){
-                            console.log(' key2.id==0 && key2.position == index')
-                            arrayCertificado[index].file=key2.file
-                          }
-                          // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                          if(key2.id == parseInt(arrayCertificado[index].TrainingTeacherId)){
+                        if(this.FilesFormaciones.length > 0){
+                          for (const key2 of this.FilesFormaciones) {
+                            // cont=cont + 1
+                            // console.log(key2.position + '=='+index,'position y index')
+                            if( key2.id==0 && key2.position == index){
+                              console.log(' key2.id==0 && key2.position == index')
+                              arrayCertificado[index].file=key2.file
+                            }
+                            // console.log(key2.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                            if(key2.id == parseInt(arrayCertificado[index].TrainingTeacherId)){
 
-                            console.log(' key2.id == array[index].TrainingTeacherId')
-                            arrayCertificado[index].file=key2.file
-                          }
-                        
+                              console.log(' key2.id == array[index].TrainingTeacherId')
+                              arrayCertificado[index].file=key2.file
+                            }
+                          
+                        }
                       }
                     }
                   }
                 }
-              }
             }
           }
-          // enviar archivos de resolusion
-          if(this.FilesResolusiones.length > 0 && arrayResolusion.length > 0){
-            console.log(arrayResolusion,'arrayResolusion')
-            let cont=0
-          for (let key1 of arrayResolusion) {
-                if(key1.file != null){
+              // enviar archivos de resolusion
+              if(this.FilesResolusiones.length > 0 && arrayResolusion.length > 0){
+                console.log(arrayResolusion,'arrayResolusion')
+                let cont=0
+              for (let key1 of arrayResolusion) {
+                    if(key1.file != null){
 
-                this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
-                    cont=cont + 1
-                    if(cont == this.FilesResolusiones.length){
-                      Bandera=true
-              
-                    }
+                    this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                        cont=cont + 1
+                        if(cont == this.FilesResolusiones.length){
+                          Bandera=true
                   
-                },error => console.error(error))
+                        }
+                      
+                    },error => console.error(error))
+                  }else{
+                    Bandera=true
+                  }
+                }
+                Bandera=true
+                // aqui enviar datos
               }else{
                 Bandera=true
-              }
-            }
-            Bandera=true
-            // aqui enviar datos
-          }else{
-
-            Bandera=true
-            
-            } 
+              } 
           // array de certificado de grado
             if(this.FilesFormaciones.length > 0 && arrayCertificado.length > 0){
-              // console.log(arrayCertificado,'array')
+              console.log(arrayCertificado,'array')
               let cont=0
             for (let key1 of arrayCertificado) {
                   if(key1.file != null){
@@ -455,7 +454,7 @@ export class EditarTeacherComponent implements OnInit {
 
               Bandera=true
               
-              }      
+            }      
             
 
             if(algo.teacherOne?.Workexperiences?.length != undefined  
@@ -739,6 +738,7 @@ getOneCntAccount(id:number) {
          
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
+        this.user=cnt_groupFromApi.teacher.UserId
         if(cnt_groupFromApi.teacher.User?.Person != undefined 
           // cnt_groupFromApi.teacher.User?.Person?.Gender != undefined
           ){

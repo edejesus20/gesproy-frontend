@@ -15,7 +15,9 @@ const routes: Routes = [
       //universidad
       {
         path: '',
-        component: GeneralComponent,
+        redirectTo: '/landing',
+        pathMatch: 'full'
+        // component: GeneralComponent,
       },
           {
             path:'mostrar_Notification',
