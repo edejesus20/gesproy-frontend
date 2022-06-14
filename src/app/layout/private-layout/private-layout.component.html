@@ -45,31 +45,13 @@
         </button>
       </div>
     </div>
-    <!-- <button type="button" pButton pRipple  
-   
-    style="padding-top: 8px;padding-bottom:0px"
-    class="p-button-rounded p-button-text"> -->
-  
-    
-     
-    <!-- </button> -->
-   
-
-    
-
      <p-menu #menu [popup]="true"  [model]="items" 
      [style]="{'width':'200px','margin-top':'5px'}"></p-menu>
-
-
      <div #menu2 class="box hidden" header="Anuncios" 
      style="display: inline-block;margin:0px">
 
     </div>
-  
-
   </div>
-
-
   </div>
   
   
@@ -132,44 +114,6 @@
 
 
 
-    <!-- <p-menubar  [autoDisplay]="false"
-     
-    [style]="{'background':'#f16357',
-'color':'#fff','font-weight':'bold',
-'border':'1px solid #f16357','border-radius':'0px'}">
-      <ng-template pTemplate="start">
-          <p-button styleClass="p-button-outlined  p-button-warning" (click)="display = true" class="mr-3">
-            <i class="pi pi-align-justify"  style="font-size: 1.5rem; margin-top: 5px;color:black"></i>
-              <span class="ml-2 font-bold" style="color:#FBC02D">SIGINV - UNIGUAJIRA</span>
-          </p-button>
-      </ng-template>
-      <ng-template pTemplate="end">
-
-          <button type="button" pButton pRipple 
-          class="p-button-rounded p-button-text mr-2"
-           icon="pi pi-plus" (click)="menu.toggle($event)">
-            <p-avatar image="{{image3}}" 
-            styleClass="ml-3" size="large" shape="circle"></p-avatar>
-          </button>
-          <i class="pi pi-bell mr-4 mb-1" pBadge style="font-size: 1.5rem" value="2"></i>
-          <button pButton pRipple type="button"  [disabled]="true"
-          class="p-button-outlined  p-button-warning"
-          style="padding: 7px;">
-         <div class="clock" style="color:#FBC02D;font-weight:bold">
-           {{dia | titlecase}} - {{fecha | titlecase}} [
-              <span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span>
-           <span class="ampm"> {{ampm}}</span> ]
-         </div>
-           </button> 
-       
-      <p-menu #menu [popup]="true"  [model]="items" [style]="{'width':'200px','margin-top':'10px'}"></p-menu>
-        
-
-          
-      </ng-template>            
-  </p-menubar> -->
-
-
   <div class="container margen">
       <p-sidebar [(visible)]="display" 
       [style]="{'width':'345px','min-height': '88vh'}"  [showCloseIcon]="true" 
@@ -210,7 +154,6 @@
 
 </ng-template>
 
-
 <p-dialog [(visible)]="Dialog" 
 [style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
  [showHeader]="false" [closeOnEscape]="false" [closable]="false"
@@ -236,3 +179,177 @@
 
 </ng-template>
 </p-dialog>
+
+
+<ng-template [ngIf]="mostrarDialogoClave == true">
+    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+      <p-dialog [(visible)]="mostrarDialogoClave" [modal]="true" [style]="{'width': '40vw'}" 
+      [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+    <br>
+    
+    
+    <div [style]="{'margin-top':'-1px'}" >
+      <div fxLayout="row" class="titleCard">
+        <i class="pi pi-key" style="font-size: 2rem;margin-right: 10px;"></i>
+        <h2 class="fondebabutton" style="margin-top: -1px;">Cambiar Contraseña</h2>
+      </div>
+
+      <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+        <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Actual Contraseña">
+          <i class="pi pi-lock-open"></i></span>
+        <input type="password" class="p-inputtext-lg" pInputText name="oldPassword" 
+        placeholder="Actual Contraseña" formControlName="oldPassword"
+        required>  
+  
+    </div>
+
+    <div class="p-inputgroup" [style]="{'margin-top':'20px','margin-bottom':'40px'}">
+      <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Nueva Contraseña">
+        <i class="pi pi-lock"></i></span>
+      <input type="password" class="p-inputtext-lg" pInputText name="newPassword" 
+      placeholder="Nueva Contraseña" formControlName="newPassword" required
+      required>  
+
+  </div>
+  </div>
+  <ng-template [ngIf]="motrar == false">
+  <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+    <p-button (click)="mostrarDialogoClave = false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+
+    <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
+    class="p-button-warning p-button-raised p-button-rounded" 
+    label="Modificar Clave" styleClass="mr-2"></button>
+  </div>
+  </ng-template>
+  <ng-template [ngIf]="motrar == true">
+    <br>
+    <br>
+    <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+    <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+      <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+
+    <!-- </div> -->
+
+  </ng-template>
+      </p-dialog>
+      </form>
+      <p-toast></p-toast>
+      <p-confirmPopup></p-confirmPopup>
+</ng-template>
+
+<ng-template [ngIf]="mostrarAvatarClave == true">
+  <form [formGroup]="form2" novalidate (ngSubmit)="onSubmit2()">
+    <p-dialog [(visible)]="mostrarAvatarClave" [modal]="true" [style]="{'width': '70vw'}" 
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
+
+  
+    <div [style]="{'margin-top':'-1px'}" >
+      <div fxLayout="row" class="titleCard1">
+        <i class="pi pi-user" style="font-size: 2rem;margin-right: 10px;"></i>
+        <h2 class="fondebabutton" style="margin-top: -1px;">Imagen de Perfil</h2>
+      </div>
+      <div class="grid">
+  
+        <div class="col-12 md:col-5" style="border: 1px solid black; border-radius:5px">
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
+            <i class="pi pi-user mr-2"></i>Imagen Actual</span>
+          <!-- <div class="" style="width:100%"> -->
+            <img class="imgLogo4" src="{{image3}}" alt="" title="Avatar Actual"  styleClass="p-button-outlined">
+          <!-- </div> -->
+          <br>
+          <br>
+          <div class="field ">
+            <label for="name"style="font-weight: bold;">Adjuntar Imagen</label>
+          
+        <div class="p-inputgroup" >
+  <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
+
+          <span class="p-float-label" 
+          [style]="{'width':'100%'}">
+
+          <div class="custom-input-file" style="width: 100%;">
+            <input type="file" 
+            class="input-file p-inputtext-lg" 
+            style="margin-bottom: 10px;" 
+            name="avatarImagen" 
+            placeholder="Adjuntar Imageb" 
+            style="width: 80%;"
+            formControlName="avatarImagen" 
+            
+            title="Adjuntar Imageb" required (change)="onFileChange($event)">
+            <span class="bottomdelete mt-7"  *ngIf="form2.value.avatarImagen != undefined && form2.value.avatarImagen != ''"
+            style="margin-left: 5px ;">
+              <button pButton pRipple type="button" icon="pi pi-check"   
+              class="p-button-rounded p-button-success"></button>
+
+            </span>
+          </div>
+          </span>       
+        </div>
+      </div>
+        </div>
+        <div class="col-12 md:col-7" style="border: 1px solid black; border-radius:5px">
+          <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
+            <i class="pi pi-user mr-2"></i>Avatar</span>
+  
+            <div class="card">
+              <p-dataView #dv [value]="images" [paginator]="true" [rows]="6" filterBy="name"
+                   layout="grid">
+  
+                  <ng-template let-product pTemplate="gridItem">
+                      <div class="col-12 md:col-4">
+                          <div class="product-grid-item card">
+                              <div class="product-grid-item-content">
+                                <img src="{{product.src}}" width="100%" class="product-image" />
+       
+                              </div>
+                              <div class="product-grid-item-bottom">
+                                <div fxLayout="row" class="titleCard"style="margin-top: 5px;">
+                                  <p-button icon="pi pi-check-circle"  styleClass="p-button-text" 
+                                  label="Seleccionar" width="100%" 
+                                  (click)="seleccionar(product.src,$event)"></p-button>
+  
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-dataView>
+          </div>
+        </div>
+  
+          <input type="hidden" class="p-inputtext-lg" pInputText name="avatar" 
+          placeholder="Nueva Contraseña" formControlName="avatar"
+          required>  
+      </div>
+  
+  
+  
+  </div>
+  <ng-template [ngIf]="motrar == false">
+  <div fxLayout="row" class="titleCard"style="margin-top: 5px;">
+    <br>
+    <p-button (click)="mostrarAvatarClave=false" icon="pi pi-times" styleClass="p-button-text" 
+    label="Cancelar"></p-button>
+  
+    <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="imagenNueva == null && form2.value.avatar == ''"
+    class="p-button-warning p-button-raised p-button-rounded" 
+    label="Modificar Imagen" styleClass="mr-2"></button>
+  </div>
+</ng-template>
+  <ng-template [ngIf]="motrar == true">
+    <br>
+    <br>
+    <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+    <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+      <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+
+    <!-- </div> -->
+
+  </ng-template>
+  
+  </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>

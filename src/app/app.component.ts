@@ -20,6 +20,8 @@ const translate = require('translate');
 })
 export class AppComponent {
   title = 'AppTuristica';
+  mantenimiento:boolean = false;
+  video: string='assets/video/manteni.mp4';
   constructor(
     private primengConfig: PrimeNGConfig,
    ) {}

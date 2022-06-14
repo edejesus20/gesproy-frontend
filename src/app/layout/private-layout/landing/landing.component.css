@@ -335,3 +335,32 @@ margin-right:3px;
   font-size: 0.8rem;
   font-size: 100;
 }
+
+
+.titleCard1{
+  margin: 0 0 10px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+}
+
+mat-card-title{
+  padding-left:10px;
+  padding-top:10px;
+}
+
+.categ-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  height: 80px;
+}
+
+.categ-margin {
+  margin: 0;
+}
+
+.opcStatus{
+  margin: 0 40px;
+}

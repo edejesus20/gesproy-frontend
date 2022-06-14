@@ -376,12 +376,10 @@ public bandera4:boolean=false
   verificarRol(Role:RoleI,id:number){
     // console.log(Role)
     if(Role.name.toLocaleLowerCase() === 'estudiante'){
-      
-        //  estudiantes
-         this.form2.controls['id'].setValue(id)
-         
          this.perfilService.getItemStudent(id).subscribe(data1=>{
           if(data1.student.id != undefined){
+            this.form2.controls['id'].setValue(data1.student.UserId)
+
             if(data1.student.User?.Person?.GenderId != undefined){
               for (const key of this.genders) {
                 if(parseInt(data1.student.User.Person.GenderId) == key.id){
@@ -436,9 +434,10 @@ public bandera4:boolean=false
     if(Role.name.toLocaleLowerCase() === 'docente interno' || Role.name.toLocaleLowerCase() === 'docente externo nacional' || Role.name.toLocaleLowerCase() === 'docente externo internacional'){
         // docentes
         if(this.docente==false){
-          this.form4.controls['id'].setValue(id)
+         
           this.perfilService.getItemTeacher(id).subscribe(data=>{
             if(data.teacher.id != undefined){
+              this.form4.controls['id'].setValue(data.teacher.UserId)
               console.log(data.teacher,'docente')
   
               if(data.teacher.User?.Person?.GenderId != undefined){
@@ -694,11 +693,11 @@ public bandera4:boolean=false
     // }
     if(Role.name.toLocaleLowerCase() === 'administrativo'){
         // administrativos
-        this.form3.controls['id'].setValue(id)
+       
         this.perfilService.getItemAdministrative(id).subscribe(data=>{
           if(data.administrative.id != undefined){
             // console.log(data.administrative)
-
+            this.form3.controls['id'].setValue(data.administrative.UserId)
             if(data.administrative.User?.Person?.GenderId != undefined){
               for (const key of this.genders) {
                 if(parseInt(data.administrative.User.Person.GenderId) == key.id){
@@ -1507,7 +1506,7 @@ public bandera4:boolean=false
     
         }
 
-        if(formValue.HeadquarterId != ( 0 || undefined)
+        if(formValue.HeadquarterId != ( 0 || undefined) && formValue.id
         ){
           this.bandera2=true
         //  console.log(formValue,'admianistrativo')
@@ -1540,6 +1539,7 @@ public bandera4:boolean=false
                 
               },async error => {
                 if(error != undefined) {
+                  console.log(error);
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");
@@ -2056,11 +2056,8 @@ public bandera4:boolean=false
 
               }
               // console.log(this.FilesFormaciones,'this.FilesFormaciones')
-      }
-      }
-    
-
-    
+          }
+        }
       }
       // files constancia experiencia laboral
       onFileChange1(event:any,pointIndex:number) {

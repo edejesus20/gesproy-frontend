@@ -3,7 +3,7 @@ import { ConfirmationService, MenuItem, MessageService, PrimeNGConfig } from 'pr
 import { Component, OnInit,DoCheck } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { FormBuilder, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { valorReloj, XsegundoService } from 'src/app/core/services/reloj/Xsegundo.service';
 import { listaMenuI } from 'src/app/models/menu';
 import { AnonimoService } from 'src/app/core/services/auth/anonimo.service';
@@ -18,6 +18,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { NotificationService } from 'src/app/core/services/dashboard/Notification.service';
 import { RecipientI } from 'src/app/models/desk/notifications';
 import { AnunciosComponent } from './Anuncios/Anuncios.component';
+import { CambiarPasswordI } from 'src/app/models/authorization/usr_CambiarPassword';
+import { environment } from 'src/environments/environment';
 const translate = require('translate');
 interface menu{
   label:string,
@@ -36,7 +38,7 @@ export class PrivateLayoutComponent implements OnInit {
   display=false
   items: MenuItem[]=[];
   items2: MenuItem[]=[];
-
+    private API_URI:string=environment.API_URI
   public isLoggedIn = false;
   public menu1: listaMenuI[] = [];
   public algo:listaMenuI[] = [];
@@ -68,13 +70,57 @@ export class PrivateLayoutComponent implements OnInit {
   public notifications:RecipientI[]=[]
   public notifications_noleidos:RecipientI[]=[]
   private UserId:number=0
+  public mensaje:boolean=false
+ public mostrarDialogoClave:boolean=false
+// cambiarr colave
+ public form:FormGroup=this.formBuilder.group({
+  id:[''],
+  oldPassword: ['', [Validators.required]],
+  newPassword: ['', [Validators.required]],
+});
+public motrar:boolean = false
+public mostrarAvatarClave:boolean=false
+// cambiar avatar
+public form2:FormGroup=this.formBuilder.group({
+  id:['', [Validators.required]],
+  UserId:['', [Validators.required]],
+  avatar: [''],
+  avatarImagen: [''],
+});
+public imagenNueva:any | null= null
+public responsiveOptions:any[] = [
+  {
+      breakpoint: '1068px',
+      numVisible: 1
+  },
  
+];
+public images: any[]=[
+  {"src": "assets/avatares/avataaars-1.png",},
+  {"src": "assets/avatares/avataaars-2.png",},
+  {"src": "assets/avatares/avataaars-example.png",},
+  {"src": "assets/avatares/avataaars.png",},
+  {"src": "assets/avatares/180808avatar04.png",},
+  {"src": "assets/avatares/50445980-88299a80-0912-11e9-962a-6fd92fd18027.png",},
+  {"src": "assets/avatares/avataaars-e28093-koolinus-1-12mar2019.png",},
+  {"src": "assets/avatares/avataaars-Frances.png",},
+  {"src": "assets/avatares/avatars-avataaars.png",},
+  {"src": "assets/avatares/CleanShot-2020-12-06-at-06.57.14.png",},
+  {"src": "assets/avatares/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png",},
+  {"src": "assets/avatares/DPFz5pjWsAA9bjE.png",},
+  {"src": "assets/avatares/images (2).png",},
+  {"src": "assets/avatares/images (1).png",},
+  {"src": "assets/avatares/images.png",},
+  {"src": "assets/avatares/infiltrado.jpg",},
+];
+
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
     private notificationService: NotificationService,
     private authService: AuthService, 
-    private userService:UserService,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
     private router:Router,
     private segundo: XsegundoService,
     public dialogService: DialogService,
@@ -138,14 +184,17 @@ export class PrivateLayoutComponent implements OnInit {
   ];
   this.items = [
     { label: 'Avatar', icon: 'pi pi-user ', command: () => {
-      this.modalAvatar(new Event(''));
+      this.mostrarAvatarClave=true
   }},
-    { label: 'Cambiar Clave', icon: 'pi pi-refresh', command: () => {this.modalCambiarClave(new Event(''))}},
+    { label: 'Cambiar Clave', icon: 'pi pi-refresh', command: () => {this.mostrarDialogoClave=true}},
     {label: 'Cerrar Sesion', icon: 'pi pi-power-off', command: () => {
       this.showConfirm();
   }},
     {separator: true},
-    {label: 'Perfil', icon: 'pi pi-cog',  command: () => {this.modalPerfil(new Event(''))}}
+    {label: 'Perfil', icon: 'pi pi-cog',  command: () => {
+      
+      this.modalPerfil(new Event(''))
+    }}
   ];
 
 }
@@ -185,34 +234,199 @@ export class PrivateLayoutComponent implements OnInit {
   });
   this.ref1.onClose.subscribe((person: any) =>{
     if (person) {
-        this.messageService.add({severity:'warn', summary: 'Avatar Cambiado', detail: person.name,life: 2000});
-      this.ngOnInit()
-this.router.navigateByUrl('/login')
-
-      }
+     
+     this.messageService.add({severity:'success', summary: 'Success', 
+    detail: 'Cambio realizado con exito',life: 2000});
+        this.ngOnInit()
+        this.router.navigateByUrl('/landing')
+        console.log('aqui')
+    }
 });
 }
 
-modalCambiarClave(e:Event){
-  e.preventDefault()
-  
-  this.ref1 = this.dialogService.open(CambicarPasswordUserComponent, {
-    width: '35%',
-    // height: '55%',
-    contentStyle:{'padding':'10px'} ,closable:false, closeOnEscape:false,
-     showHeader:false, 
-    // baseZIndex: 10000,
-    data: {
-      id: '1'
-  },
-});
 
-this.ref1.onClose.subscribe((person: any) =>{
-    if (person) {
-        this.messageService.add({severity:'warn', summary: 'Contraseña Cambiada', detail: person.name,life: 2000});
-      this.ngOnInit()
+// cambiar clave
+public onSubmit(): void {
+  const formValue: CambiarPasswordI = this.form.value;
+  this.userService.actualzarContraseña(formValue).subscribe(
+    (algo) => {
+        this.motrar=true
+
+            var date = new Date('2020-01-01 00:00:04');
+            function padLeft(n:any){ 
+              return n ="00".substring(0, "00".length - n.length) + n;
+            }
+            var interval = setInterval(() => {
+            var minutes = padLeft(date.getMinutes() + "");
+            var seconds = padLeft(date.getSeconds() + "");
+            // console.log(minutes, seconds);
+    
+            if( seconds == '03') {
+              this.messageService.add({severity:'success', summary: 'Success', 
+              detail: 'Contraseña Cambiada con exito'});
+            }
+            date = new Date(date.getTime() - 1000);
+            if(minutes == '00' && seconds == '01'){
+              // console.log('aqui',seconds);
+            // }
+            // if( minutes == '00' && seconds == '03' ) {
+              this.mostrarDialogoClave=false
+              this.motrar=false
+              this.ngOnInit()
+          this.router.navigateByUrl('/login');
+
+              clearInterval(interval); 
+            }
+      }, 1000)
+  }
+    ,async error => {
+      if(error != undefined) {
+        this.motrar=false
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
+        }
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
       }
-});
+    }
+  );
+}
+// cambiar avatar
+
+onFileChange(event:any) {
+  event.preventDefault();
+  // console.log(control.value[pointIndex].resolution_convalidation)
+  if(this.form2.value.avatarImagen != ''){
+    console.log('aquii')
+    if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+      let file=event.target.files[0];
+      this.imagenNueva=file
+      this.form2.controls['avatar'].setValue(undefined)
+      }
+    }
+  }
+  
+public onSubmit2(): void {
+  let formValue: any = this.form2.value;
+  if(this.imagenNueva != null || formValue.avatar !='' && formValue.avatar != undefined){
+
+    if(this.imagenNueva != null && formValue.UserId != undefined && 
+      formValue.avatar == undefined){
+      if(this.imagenNueva != null){
+        this.userService.createImagen(formValue.UserId,this.imagenNueva).subscribe(
+          (algo) => {
+            this.motrar=true
+            var date = new Date('2020-01-01 00:00:04');
+                function padLeft(n:any){ 
+                  return n ="00".substring(0, "00".length - n.length) + n;
+                }
+                var interval = setInterval(() => {
+                var minutes = padLeft(date.getMinutes() + "");
+                var seconds = padLeft(date.getSeconds() + "");
+                // console.log(minutes, seconds);
+        
+                if( seconds == '04') {
+                  this.messageService.add({severity:'success', summary: 'Cambio de Imagen con exito', 
+                  detail: 'Refrescar pagina para ver cambios'});
+                }
+                date = new Date(date.getTime() - 1000);
+                if(minutes == '00' && seconds == '01'){
+                  this.mostrarAvatarClave=false
+                  this.motrar=false
+                  this.verificar()
+                  this.ngOnInit()
+                  this.router.navigateByUrl('/login');
+    
+                  clearInterval(interval); 
+                }
+          }, 1000)
+        }
+          ,async error => {
+            this.motrar=false
+            if(error != undefined) {
+              let text = await translate(error.error.message, "es");
+              if(error.error.dataErros){
+                text = await translate(error.error.dataErros[0].message, "es");
+              }
+              this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+            }
+          }
+        );
+      }
+      
+    }else if(formValue.avatar !='' && formValue.avatar != undefined && formValue.id != undefined
+    && this.imagenNueva == null){
+      this.userService.actualzarAvatar(formValue).subscribe(
+        (algo) => {
+          this.motrar=true
+          var date = new Date('2020-01-01 00:00:04');
+              function padLeft(n:any){ 
+                return n ="00".substring(0, "00".length - n.length) + n;
+              }
+              var interval = setInterval(() => {
+              var minutes = padLeft(date.getMinutes() + "");
+              var seconds = padLeft(date.getSeconds() + "");
+              // console.log(minutes, seconds);
+      
+              if( seconds == '04') {
+                this.messageService.add({severity:'success', summary: 'Cambio de Imagen con exito', 
+                detail: 'Refrescar pagina para ver cambios'});
+              }
+              date = new Date(date.getTime() - 1000);
+              if(minutes == '00' && seconds == '01'){
+                this.mostrarAvatarClave=false
+                this.motrar=false
+                this.verificar()
+                this.ngOnInit()
+                this.router.navigateByUrl('/login');
+  
+                clearInterval(interval); 
+              }
+        }, 1000)
+      }
+        ,async error => {
+          this.motrar=false
+          if(error != undefined) {
+            let text = await translate(error.error.message, "es");
+            if(error.error.dataErros){
+              text = await translate(error.error.dataErros[0].message, "es");
+            }
+            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+          }
+        }
+      );
+    
+    }else{
+      if(this.imagenNueva != null && formValue.avatar !='' && formValue.avatar != undefined){
+    this.messageService.add({severity:'warnning', summary: 'Alerta', detail: `Solo Puedes Adjuntar Imagen o seleccionar Avatar, no ambas`});
+
+      }else{
+        this.messageService.add({severity:'warnning', summary: 'Alerta', detail: `Faltan Datos`});
+
+      }
+
+    }
+
+  }else{
+    this.messageService.add({severity:'warnning', summary: 'Alerta', detail: `Faltan Datos`});
+  }
+ 
+
+}
+public seleccionar(src:string,e:Event){
+  e.preventDefault()
+
+  if(this.form2.value.avatar == src){
+    this.form2.controls['avatar'].setValue(undefined)
+    this.form2.controls['avatarImagen'].setValue(undefined)
+    this.imagenNueva=null
+  }else{
+    this.form2.controls['avatar'].setValue(src)
+    this.form2.controls['avatarImagen'].setValue(undefined)
+    this.imagenNueva=null
+
+  }
+
 }
 
 ocultarMenu(boolean: boolean){
@@ -279,7 +493,7 @@ private notificaciones(id:number){
      
     }
   
-    console.log(this.recipients)
+    // console.log(this.recipients)
   })
 }
 
@@ -297,11 +511,23 @@ if(token!=null && user!=null && menu != null){
   this.menu1 = this.privateMenu;
   this.UserId=userObjeto.id
 this.notificaciones(this.UserId)
-  
+
   this.userService.getOneUser(userObjeto.id).subscribe((data)=>{
+    this.form2.controls['id'].setValue(data.user.id)
+    this.form2.controls['UserId'].setValue(data.user.id)
   if(data.user.fullName && data.user.avatar != undefined){
     this.nombre = data.user.fullName
-    this.image3=data.user.avatar
+    var str = data.user.avatar;
+    var n = str.search("assets");
+    // console.log(n)
+    if(n == -1){
+      // console.log(this.API_URI+'/Perfil/'+data.user.avatar)
+      this.image3=this.API_URI+'/Perfil/'+data.user.avatar
+    }else{
+      this.image3=data.user.avatar
+    }
+    
+    // this.form2.controls['avatar'].setValue(this.image3)
 
   }     
 })
@@ -338,4 +564,25 @@ this.notificaciones(this.UserId)
   });
 
   }
+
+  // modalCambiarClave(e:Event){
+    // e.preventDefault()
+  //   this.ref1 = this.dialogService.open(CambicarPasswordUserComponent, {
+  //     width: '35%',
+  //     // height: '55%',
+  //     contentStyle:{'padding':'10px'} ,closable:false, closeOnEscape:false,
+  //      showHeader:false, 
+  //     // baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
+  
+  // this.ref1.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'warn', summary: 'Contraseña Cambiada', detail: person.name,life: 2000});
+  //       this.ngOnInit()
+  //       }
+  // });
+  // }
 }

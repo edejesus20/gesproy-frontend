@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -12,9 +13,10 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 export class LandingComponent implements OnInit {
   // public image:string='assets/images/institution/fondeba1.jpg'
   // public image2:string='assets/images/institution/alcaldia.png'
-  public image3:string='assets/avatares/avatars-avataaars.png'
+  public image3:string=''
   public bandera:boolean=false
   public nombre:string = '';
+  private API_URI:string=environment.API_URI
 
 
   constructor(
@@ -35,7 +37,18 @@ export class LandingComponent implements OnInit {
         this.userService.getOneUser(userObjeto.id).subscribe((user)=>{
           if(user.user.fullName && user.user.avatar != undefined){
             this.nombre = user.user.fullName
-            this.image3=user.user.avatar
+            var str = user.user.avatar;
+            var n = str.search("assets");
+            // console.log(n)
+            if(n == -1){
+              // console.log(this.API_URI+'/Perfil/'+user.user.avatar)
+              this.image3=this.API_URI+'/Perfil/'+user.user.avatar
+            }else{
+              // console.log(this.API_URI+'/Perfil/'+user.user.avatar)
+
+              this.image3=user.user.avatar
+            }
+            // this.image3=user.user.avatar
         
           }    
       })

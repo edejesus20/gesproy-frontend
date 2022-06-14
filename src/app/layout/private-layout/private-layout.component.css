@@ -320,3 +320,84 @@ margin-right:2px;
   font-size: 0.8rem;
   font-size: 100;
 }
+.titleCard1{
+  margin: 0 0 5px 0;
+  display:flex;
+  justify-content:center;
+  align-content: center;
+}
+
+.imgLogo3 {
+  width:auto;
+   /* min-height: 250px; */
+    margin-top:25px;
+    /* margin-left: 30px; */
+    /* max-width: 500px; */
+    /* max-height:700px; */
+    border : 1px solid transparent;
+    border-radius: 15px;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+  }
+  .imgLogo4 {
+    width:100%;
+     /* min-height: 250px; */
+      /* margin-left: 30px; */
+      /* max-width: 500px; */
+      /* max-height:700px; */
+      border : 1px solid transparent;
+      border-radius: 15px;
+      display:flex;
+      justify-content:center;
+      align-content: center;
+    }
+  .titleCard2{
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    font-size: 45px;
+    font-weight: bold;
+    /* color:rgba(51,102,0,1); */
+    margin-top: 10px;
+  }
+
+
+  
+.custom-input-file {
+  padding: 10px;
+} 
+/* .custom-input-file .input-file {
+  border: 10000px solid transparent;
+  cursor: pointer;
+  color: black;
+  font-size: 10000px;
+  margin: 0;
+  opacity: 0px;
+  outline: 0 none;
+  padding: 5px;
+  position: absolute;
+  right: -1000px;
+  top: -1000px;
+ } */ 
+
+ .input-file {
+  cursor: pointer;
+  width: 100%;
+  color: black;
+  border: 1px solid transparent;
+  background-color: #f16357;
+  font-size: 18px;
+  overflow: hidden;
+  opacity: 0px;
+  outline: 0 none;
+  padding: 5px;
+  border-radius: 10px;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  font-weight:normal;
+  /* font-family: 'Lato'; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+
+ }

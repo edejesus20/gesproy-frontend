@@ -91,9 +91,9 @@ public seleccionar(src:string,e:Event){
     if(formValue.avatar !='' && formValue.avatar != undefined && formValue.id != undefined){
       this.userService.actualzarAvatar(formValue).subscribe(
         (algo) => {
-          if(this.mostrarDialogo== true){
-            this.ref.close(algo);
-          }else{
+          // if(this.mostrarDialogo== true){
+
+          // }else{
             var date = new Date('2020-01-01 00:00:03');
                   function padLeft(n:any){ 
                      return n ="00".substring(0, "00".length - n.length) + n;
@@ -103,16 +103,16 @@ public seleccionar(src:string,e:Event){
                   var seconds = padLeft(date.getSeconds() + "");
                   // console.log(minutes, seconds);
                   if( seconds == '03') {
-                  this.messageService.add({severity:'success', summary: 'Success', 
-                  detail: 'Avatar Cambiado con exito'});
+                  // this.messageService.add({severity:'success', summary: 'Success', 
+                  // detail: 'Cambio realizado con exito',life: 2000});
                   }
                   date = new Date(date.getTime() - 1000);
                   if( minutes == '00' && seconds == '01' ) {
-                    this.router.navigateByUrl('/landing');
+                    this.ref.close(algo);
                     clearInterval(interval); 
                    }
                   })
-                }
+                // }
       }
         ,async error => {
           if(error != undefined) {

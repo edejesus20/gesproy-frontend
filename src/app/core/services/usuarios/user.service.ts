@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
@@ -23,7 +23,6 @@ export class UserService {
   }
 
   // Http Options
-  
 
 
 // Handle API errors
@@ -43,16 +42,12 @@ getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
   let user : string | null=localStorage.getItem('user')
   if(token != null && user != null) {
     let userObjeto:any = JSON.parse(user); 
-    let httpOptions = {
-      headers: new HttpHeaders({
+    return this.http
+      .get<{users: UserI[],rolesUsers:any[]}>(this.base_path, { headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
-      })
-    }
-    // console.log(httpOptions)
-    return this.http
-      .get<{users: UserI[],rolesUsers:any[]}>(this.base_path,httpOptions)
+        'user':`${parseInt(userObjeto.id)}`
+      })})
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -76,7 +71,7 @@ getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
+        'user':`${parseInt(userObjeto.id)}`
       })
     }
     // console.log(httpOptions)
@@ -106,7 +101,7 @@ userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadm
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
+        'user':`${parseInt(userObjeto.id)}`
       })
     } 
     // console.log(httpOptions)
@@ -145,7 +140,7 @@ getOneUser(id: number): Observable<{ user: UserI ,rolesUsers:any[]}> {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
+        'user':`${parseInt(userObjeto.id)}`
       })
     }
   return this.http
@@ -187,24 +182,27 @@ createUser(person: any): Observable<any> {
 }
 
 
-actualzarContraseña(user: CambiarPasswordI): Observable<{ user: CambiarPasswordI }> {
+actualzarContraseña(contraseña: CambiarPasswordI): Observable<{ user: CambiarPasswordI }> {
   let token : string | null=localStorage.getItem('token')
   let userT :string | null= localStorage.getItem('user');
   if(token != null && userT != null) {
     let userObjeto:any = JSON.parse(userT); 
-    let httpOptions = {
+    // console.log(userObjeto)
+    let algo ={
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto
-      })
+        'user':`${parseInt(userObjeto.id)}`
+      }),
     }
+    // console.log(algo)
     return this.http
-    .patch<{ user: CambiarPasswordI }>(this.base+'/'+user.id, JSON.stringify(user),httpOptions)
+    .patch<{ user: CambiarPasswordI }>(this.base+'/', JSON.stringify(contraseña),algo
+    )
     .pipe(retry(2),catchError(this.handleError))
   }else{
       return this.http
-      .patch<{ user: CambiarPasswordI }>(this.base+'/'+user.id, JSON.stringify(user))
+      .patch<{ user: CambiarPasswordI }>(this.base+'/', JSON.stringify(contraseña))
       .pipe(retry(2),catchError(this.handleError)) 
     }
 }
@@ -218,7 +216,7 @@ updateUser(user:any){
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
+        'user':`${parseInt(userObjeto.id)}`
       })
     }
     // console.log('aqui')
@@ -246,7 +244,7 @@ actualzarAvatar(user:any){
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-token':token,
-        'user':userObjeto.id
+        'user':`${parseInt(userObjeto.id)}`
       })
     }
     // console.log(user)
@@ -270,16 +268,30 @@ eliminarUser(id:number){
   )
 }
 
-createImagen(formData:any){
+// createImagen(formData:any){
 
-    return this.http.post('http://localhost:4000/api/subir',JSON.stringify(formData))
-    .pipe(
-      retry(2),
-      catchError(this.handleError)
-    )
-  }
+//     return this.http.post('http://localhost:4000/api/subir',JSON.stringify(formData))
+//     .pipe(
+//       retry(2),
+//       catchError(this.handleError)
+//     )
+//   }
 
 // }
+createImagen(UserId: string,file:any): Observable<any> {
+  let form= new FormData();//Crea un formulario
+  form.append('UserId',UserId);
+  form.append('file',file);//Asigna el campo File
+console.log(file,'FormData')
+
+  // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+    return this.http.post<any>(this.API_URI + '/api/subirImagen',form).pipe(
+    tap((res: any) => {
+      if (res) {
+      }
+    }),
+    catchError(this.handleError))
+}
 
 
 }
