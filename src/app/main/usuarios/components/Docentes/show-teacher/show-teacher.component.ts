@@ -9,7 +9,13 @@ import { TeacherI } from 'src/app/models/user/teacher';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { environment } from 'src/environments/environment';
-
+import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
+import { ProgramService } from 'src/app/core/services/program/program.service';
+import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+interface OpcionI{
+  id:number;
+  name: string
+}
 @Component({
   selector: 'app-show-teacher',
   templateUrl: './show-teacher.component.html',
@@ -24,14 +30,38 @@ export class ShowTeacherComponent implements OnInit {
   API_URI = environment.API_URI;
   rows = 1;
   cols: any[]=[];
-
+  public image:string='assets/images/images.jpg'
+  public image2:string='assets/images/uniguajira_iso.jpg'
   private rows2:TeacherI[] = []
 
   exportColumns: any[]=[];
   selectedProducts: TeacherI[]=[];
+  opciones:OpcionI[]=[
+    {
+      id:1,
+      name:'Filtrado por Facultad'
+    },
+    {
+      id:2,
+      name:'Filtrado por Programas'
+    },
+    {
+      id:3,
+      name:'Filtrado por Sedes'
+    },
+    {
+      id:4,
+      name:'Todos'
+    }
+  ]
+  seleccionados:any[]=[]
+  opcion:any | null=null
+  seleccionado:any | null=null
   constructor(
     private teacherService:TeacherService,
-    private lineService:LineService,
+    private facultyService:FacultyService,
+    private programService:ProgramService,
+    private headquarterService: HeadquarterService,
     private primengConfig: PrimeNGConfig,
     ) { 
       (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs
@@ -56,12 +86,84 @@ export class ShowTeacherComponent implements OnInit {
       this.getUniversitys()
     }
   
-   
+getFiltro(e:Event){
+      e.preventDefault();
+
+      if(this.opcion != null){
+        if(this.opcion.id == 1){
+          this.facultyService.getList().subscribe((facultiesFromApi) => {
+            this.seleccionados =facultiesFromApi.facultys
+          }, error => console.error(error));
+        
+        }
+        if(this.opcion.id == 2){
+          this.programService.getList().subscribe((programsFromApi) => {
+            this.seleccionados =programsFromApi.programs
+          }, error => console.error(error));
+        }
+        if(this.opcion.id == 3){
+          this.headquarterService.getList().subscribe((headquartersFromApi) => {
+            this.seleccionados = headquartersFromApi.headquarters
+          }, error => console.error(error));
+        }
+        if(this.opcion.id == 4){
+          this.getUniversitys()
+        }
+       
+      }
+
+    }
+
+    getFiltroSeleccionado(e:Event){
+      e.preventDefault();
+      if(this.seleccionado != null){
+        if(this.opcion.id == 1){
+          this.teacherService.getUserTeacherFacultad(this.seleccionado.id).subscribe(
+            (TeacherApi) => {
+              if(TeacherApi.teachers){
+                this.asignarProfesor(TeacherApi.teachers)
+                // this.teachers=TeacherApi.teachers
+              }
+            }, error => console.error(error));
+        }
+        if(this.opcion.id == 2){
+          this.teacherService.getUserTeacherPrograma(this.seleccionado.id).subscribe(
+            (TeacherApi) => {
+              if(TeacherApi.teachers){
+                this.asignarProfesor(TeacherApi.teachers)
+              }
+            }, error => console.error(error));
+        }
+        if(this.opcion.id == 3){
+          this.teacherService.getUserTeacherSedes(this.seleccionado.id).subscribe(
+            (TeacherApi) => {
+              if(TeacherApi.teachers){
+                this.asignarProfesor(TeacherApi.teachers)
+              }
+            }, error => console.error(error));
+        }
+      }
+    }
   
+    asignarProfesor(teachers:TeacherI[]){
+      for (let key of teachers) {
+        if(key.User?.avatar != undefined){
+          var avatar = key.User.avatar;
+          var n = avatar.search("assets");
+          if(n == -1){
+            key.User.avatar=this.API_URI+'/Perfil/'+key.User.avatar
+          }else{
+            key.User.avatar= key.User.avatar
+          }
+        }  
+      }
+      this.teachers =teachers;
+    }
     getUniversitys() {
       this.teacherService.getList().subscribe((instititionsFromApi) => {
-        this.teachers =instititionsFromApi.teachers;
-        console.log(instititionsFromApi.teachers)
+      this.asignarProfesor(instititionsFromApi.teachers)
+        
+        // console.log(instititionsFromApi.teachers)
 
     //     let arrayLinea:any[] = [];
     //     for (const newH of  this.teachers) {

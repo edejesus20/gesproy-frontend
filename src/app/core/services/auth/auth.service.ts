@@ -73,7 +73,7 @@ export class AuthService {
     return this.http
       .get<{ mainSesionAdmin: listaMenuI[] }>(this.base_path_get)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -86,7 +86,7 @@ export class AuthService {
     return this.http
       .post<{ mainSesion: listaMenuI[] }>(this.base_path_get2,data)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -194,5 +194,5 @@ export class AuthService {
   }
 
 }
-
+  // public verificarMantenimiento
 }

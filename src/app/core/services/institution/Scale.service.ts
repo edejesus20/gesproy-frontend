@@ -43,7 +43,7 @@ createItem(seedbeds: ScaleI): Observable<ScaleI> {
   return this.http
     .post<ScaleI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -53,7 +53,7 @@ getItem(id: number): Observable<{scale:ScaleI}> {
   return this.http
     .get<{scale:ScaleI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -63,7 +63,7 @@ getList(): Observable<{ scales: ScaleI[] }> {
  return this.http
    .get<{ scales: ScaleI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -73,7 +73,7 @@ updateItem(id:number, scale:ScaleI): Observable<ScaleI> {
   return this.http
     .patch<ScaleI>(this.base_path_get + '/' + id, JSON.stringify(scale), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -83,7 +83,7 @@ deleteItem(id:number) {
   return this.http
     .delete<ScaleI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

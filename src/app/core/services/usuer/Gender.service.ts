@@ -53,7 +53,7 @@ export class GenderService {
    return this.http
      .get<{gender:GenderI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -64,7 +64,7 @@ export class GenderService {
    return this.http
      .get<{ genders: GenderI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -74,7 +74,7 @@ export class GenderService {
    return this.http
      .patch<GenderI>(this.base_path_get + '/' + id, JSON.stringify(gender), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -84,7 +84,7 @@ export class GenderService {
    return this.http
      .delete<GenderI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

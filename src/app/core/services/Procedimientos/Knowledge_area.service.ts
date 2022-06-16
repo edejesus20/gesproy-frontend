@@ -54,7 +54,7 @@ export class Knowledge_areaService {
    return this.http
      .get<{knowledge_area:Knowledge_areaI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -65,7 +65,7 @@ export class Knowledge_areaService {
    return this.http
      .get<{ knowledge_areas: Knowledge_areaI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -75,7 +75,7 @@ export class Knowledge_areaService {
    return this.http
      .patch<Knowledge_areaI>(this.base_path_get + '/' + id, JSON.stringify(knowledge_area), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -85,7 +85,7 @@ export class Knowledge_areaService {
    return this.http
      .delete<Knowledge_areaI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

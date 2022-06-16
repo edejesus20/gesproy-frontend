@@ -94,7 +94,7 @@ Buscar(event: Event, dt1:any){
     this.programService.getList().subscribe((programsFromApi) => {
       this.programs =programsFromApi.programs
       this.rows2=[]
-      console.log(programsFromApi.programs,'programs')
+      // console.log(programsFromApi.programs,'programs')
 
       if(programsFromApi.programs != undefined){
         for (const key of programsFromApi.programs) {

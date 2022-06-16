@@ -53,7 +53,7 @@ export class DocumentTypeService {
    return this.http
      .get<{documentType:DocumentTypeI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -64,7 +64,7 @@ export class DocumentTypeService {
    return this.http
      .get<{ documentTypes: DocumentTypeI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -74,7 +74,7 @@ export class DocumentTypeService {
    return this.http
      .patch<DocumentTypeI>(this.base_path_get + '/' + id, JSON.stringify(documentType), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -84,7 +84,7 @@ export class DocumentTypeService {
    return this.http
      .delete<DocumentTypeI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

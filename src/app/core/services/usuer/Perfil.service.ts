@@ -49,7 +49,7 @@ export class PerfilService {
    return this.http
      .patch<{teacherOne:TeacherI}>(this.base_path_docente + '/' + id, JSON.stringify(deleteTeacher), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -57,7 +57,7 @@ export class PerfilService {
   return this.http
     .get<{teacher:TeacherI}>(`${this.API_URI}/api/Teacher/User/`+ id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -67,7 +67,7 @@ export class PerfilService {
   return this.http
     .patch<any>(this.base_path_estudiante + '/' + id, JSON.stringify(documentType), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -77,7 +77,7 @@ getItemStudent(id: number): Observable<{student:StudentI}> {
   return this.http
     .get<{student:StudentI}>(`${this.API_URI}/api/Student/User/`+ id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -85,7 +85,7 @@ updateAdminsitrativo(id:number, documentType:any): Observable<any> {
   return this.http
     .patch<any>(this.base_path_administrativo + '/' + id, JSON.stringify(documentType), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -93,7 +93,7 @@ getItemAdministrative(id: number): Observable<{administrative:AdministrativeI}> 
   return this.http
     .get<{administrative:AdministrativeI}>(`${this.API_URI}/api/Administrative/User/`+ id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -101,7 +101,7 @@ updatePerfil(id:number, dataUser:any): Observable<any> {
   return this.http
     .patch<any>(this.base_path_perfil + '/' + id, JSON.stringify(dataUser), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

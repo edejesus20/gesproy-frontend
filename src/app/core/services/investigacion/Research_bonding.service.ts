@@ -44,7 +44,7 @@ createItem(research_bonding: Research_bondingI): Observable<Research_bondingI> {
   return this.http
     .post<Research_bondingI>(this.base_path_post, JSON.stringify(research_bonding), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -54,7 +54,7 @@ getItem(id: number): Observable<{research_bonding:Research_bondingI}> {
   return this.http
     .get<{research_bonding:Research_bondingI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -64,7 +64,7 @@ getList(): Observable<{ research_bondings: Research_bondingI[] }> {
  return this.http
    .get<{ research_bondings: Research_bondingI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -74,7 +74,7 @@ updateItem(id:number, research_bonding:Research_bondingI): Observable<Research_b
   return this.http
     .patch<Research_bondingI>(this.base_path_get + '/' + id, JSON.stringify(research_bonding), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -84,7 +84,7 @@ deleteItem(id:number) {
   return this.http
     .delete<Research_bondingI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

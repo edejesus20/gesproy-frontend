@@ -45,7 +45,7 @@ createItem(university: UniversityI): Observable<UniversityI> {
   return this.http
     .post<UniversityI>(this.base_path_post, JSON.stringify(university), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -55,7 +55,7 @@ getItem(id: number): Observable< {university:UniversityI}> {
   return this.http
     .get<{university:UniversityI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -65,7 +65,7 @@ getList(): Observable<{ universitys: UniversityI[] }> {
  return this.http
    .get<{ universitys: UniversityI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -75,7 +75,7 @@ updateItem(id:number, university:UniversityI): Observable<UniversityI> {
   return this.http
     .patch<UniversityI>(this.base_path_get + '/' + id, JSON.stringify(university), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -85,7 +85,7 @@ deleteItem(id:number) {
   return this.http
     .delete<UniversityI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { UserI } from 'src/app/models/authorization/usr_User';
 import { PersonI } from 'src/app/models/user/person';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-mostrar-users',
@@ -27,6 +28,7 @@ export class MostrarUsersComponent implements OnInit {
   public rows2:any[] = []
   exportColumns: any[]=[];
   selectedProducts: PersonI[]=[]; 
+  private API_URI= environment.API_URI;
 
   constructor(
     private userService: UserService,
@@ -51,12 +53,24 @@ export class MostrarUsersComponent implements OnInit {
       this.getAllScale() 
     }
   
+
     getAllScale() {
       this.userService.getUser().subscribe((categoryGroupsApiFrom) => {
         this.rows2=[]
         // console.log(categoryGroupsApiFrom.users)
         if(categoryGroupsApiFrom.users != undefined){
-          for (const key of categoryGroupsApiFrom.users) {
+          for (let key of categoryGroupsApiFrom.users) {
+
+            if(key.Person?.User?.avatar != undefined){
+              var avatar = key.Person.User.avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                key.Person.User.avatar=this.API_URI+'/Perfil/'+key.Person.User.avatar
+              }else{
+                key.Person.User.avatar= key.Person.User.avatar
+              }
+            }  
+
             if(key.Person != undefined){
               this.users.push(key.Person)
               let rolesUsers=[]

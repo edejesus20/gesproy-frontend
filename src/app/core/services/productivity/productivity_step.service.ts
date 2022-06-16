@@ -41,7 +41,7 @@ createItem(productivityStep: ProductivityStepI): Observable<ProductivityStepI> {
    return this.http
      .get<{productivityStep:ProductivityStepI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -49,7 +49,7 @@ createItem(productivityStep: ProductivityStepI): Observable<ProductivityStepI> {
    return this.http
      .get<{ productivitySteps: ProductivityStepI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -58,7 +58,7 @@ createItem(productivityStep: ProductivityStepI): Observable<ProductivityStepI> {
    return this.http
      .patch<ProductivityStepI>(this.base_path_get + '/' + id, JSON.stringify(productivityStep), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -67,7 +67,7 @@ createItem(productivityStep: ProductivityStepI): Observable<ProductivityStepI> {
    return this.http
      .delete<ProductivityStepI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

@@ -56,7 +56,7 @@ export class HeadquarterService {
     return this.http
       .get<{headquarter:HeadquarterI}>(this.base_path_get + '/' + id)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -64,7 +64,7 @@ export class HeadquarterService {
     return this.http
       .get<{programs:ProgramI[]}>(this.base_path_get + '/HeadquarterProgramas/' + id)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -77,7 +77,7 @@ export class HeadquarterService {
     return this.http
       .get<{ headquarters: HeadquarterI[] }>(this.base_path_get)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -86,7 +86,7 @@ export class HeadquarterService {
     return this.http
       .get<{ headquarterProgram: HeadquarterProgramI[] }>(this.API_URI+'/api/HeadquarterProgram')
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -96,7 +96,7 @@ export class HeadquarterService {
     return this.http
       .get<{headquarterProgram: HeadquarterProgramI[]}>(this.API_URI+'/api/HeadquarterProgramOne/' + id)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -105,7 +105,7 @@ export class HeadquarterService {
     return this.http
       .get<{FacultadHeadquarterProgram: any[]}>(this.API_URI+'/api/FacultadHeadquarterProgram' + '/' + id)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -114,7 +114,7 @@ export class HeadquarterService {
     return this.http
       .get<{FacultadHeadquarterProgram: any[]}>(this.API_URI+'/api/OneFacultadHeadquarterProgram' + '/' + id)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -126,7 +126,7 @@ export class HeadquarterService {
     return this.http
       .patch<{headquarter:HeadquarterI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -136,7 +136,7 @@ export class HeadquarterService {
     return this.http
       .delete<HeadquarterI>(this.base_path_get + '/' + id, this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }

@@ -49,14 +49,14 @@ getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
         'user':`${parseInt(userObjeto.id)}`
       })})
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }else{
     return this.http
     .get<{users: UserI[],rolesUsers:any[]}>(this.base_path)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -78,14 +78,14 @@ getUserteacherinvestigatorstudent(id:number): Observable<{users: any[]}> {
     return this.http
       .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/'+id,httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }else{
     return this.http
     .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/'+id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -108,14 +108,14 @@ userteacher(): Observable<{users: PersonI[],usersestudiente: PersonI[],userseadm
     return this.http
       .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}>(this.API_URI + '/api/userteacher',httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }else{
     return this.http
     .get<{users: PersonI[],usersestudiente: PersonI[],userseadministrative:PersonI[],usersInvestigador:PersonI[]}>(this.API_URI + '/api/userteacher')
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -125,7 +125,7 @@ getUserIdentificacion(cc:string): Observable<{ user: UserI }> {
   return this.http
     .get<{ user: UserI }>(this.base_path+ '/cc/' + cc)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -146,14 +146,14 @@ getOneUser(id: number): Observable<{ user: UserI ,rolesUsers:any[]}> {
   return this.http
     .get<{ user: UserI ,rolesUsers:any[]}>(this.base_path + '/' + id,httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }else{
     return this.http
     .get<{ user: UserI ,rolesUsers:any[]}>(this.base_path + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -165,7 +165,7 @@ getOneUser(id: number): Observable<{ user: UserI ,rolesUsers:any[]}> {
 //   return this.http
 //     .post<{ person: any }>(this.base_path, JSON.stringify(person))
 //     .pipe(
-//       retry(2),
+//       retry(0),
 //       catchError(this.handleError)
 //     )
 // }
@@ -199,11 +199,11 @@ actualzarContraseña(contraseña: CambiarPasswordI): Observable<{ user: CambiarP
     return this.http
     .patch<{ user: CambiarPasswordI }>(this.base+'/', JSON.stringify(contraseña),algo
     )
-    .pipe(retry(2),catchError(this.handleError))
+    .pipe(retry(0),catchError(this.handleError))
   }else{
       return this.http
       .patch<{ user: CambiarPasswordI }>(this.base+'/', JSON.stringify(contraseña))
-      .pipe(retry(2),catchError(this.handleError)) 
+      .pipe(retry(0),catchError(this.handleError)) 
     }
 }
 
@@ -221,14 +221,14 @@ updateUser(user:any){
     }
     // console.log('aqui')
     return this.http.patch(`${this.base_path}/${user.id}`, user,httpOptions)
-    .pipe(retry(2),catchError(this.handleError))
+    .pipe(retry(0),catchError(this.handleError))
   }else{
     return this.http.patch(`${this.base_path}/${user.id}`, user)
-      .pipe(retry(2),catchError(this.handleError)) 
+      .pipe(retry(0),catchError(this.handleError)) 
     }
 
   // return this.http.patch(`${this.base_path}/${user.id}`, user).pipe(
-  //   retry(2),
+  //   retry(0),
   //   catchError(this.handleError)
   // )
 
@@ -249,12 +249,12 @@ actualzarAvatar(user:any){
     }
     // console.log(user)
   return this.http.patch(`${this.API_URI}/api/Avatar/${user.id}`, user,httpOptions).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }else{
   return this.http.patch(`${this.API_URI}/api/Avatar/${user.id}`, user).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
   }
@@ -263,7 +263,7 @@ actualzarAvatar(user:any){
 
 eliminarUser(id:number){
   return this.http.delete(`${this.base_path}/${id}`).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -272,7 +272,7 @@ eliminarUser(id:number){
 
 //     return this.http.post('http://localhost:4000/api/subir',JSON.stringify(formData))
 //     .pipe(
-//       retry(2),
+//       retry(0),
 //       catchError(this.handleError)
 //     )
 //   }

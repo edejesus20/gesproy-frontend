@@ -43,7 +43,7 @@ createItem(categoryGroup: CategoryGroupI): Observable<CategoryGroupI> {
   return this.http
     .post<CategoryGroupI>(this.base_path_post, JSON.stringify(categoryGroup), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -53,7 +53,7 @@ getItem(id: number): Observable<{categoryGroup:CategoryGroupI}> {
   return this.http
     .get<{categoryGroup:CategoryGroupI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -63,7 +63,7 @@ getList(): Observable<{ categoryGroups: CategoryGroupI[] }> {
  return this.http
    .get<{ categoryGroups: CategoryGroupI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -73,7 +73,7 @@ updateItem(id:number, categoryGroup:CategoryGroupI): Observable<CategoryGroupI> 
   return this.http
     .patch<CategoryGroupI>(this.base_path_get + '/' + id, JSON.stringify(categoryGroup), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -83,7 +83,7 @@ deleteItem(id:number) {
   return this.http
     .delete<CategoryGroupI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

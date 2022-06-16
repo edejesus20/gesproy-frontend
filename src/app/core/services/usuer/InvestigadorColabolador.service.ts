@@ -53,7 +53,7 @@ export class InvestigadorColaboladorService {
    return this.http
      .get<{investigatorCollaborator:InvestigatorCollaboratorI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -64,7 +64,7 @@ export class InvestigadorColaboladorService {
    return this.http
      .get<{ investigatorCollaborators: InvestigatorCollaboratorI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -74,7 +74,7 @@ export class InvestigadorColaboladorService {
    return this.http
      .patch<any>(this.base_path_get + '/' + id, JSON.stringify(investigatorCollaborator), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -84,7 +84,7 @@ export class InvestigadorColaboladorService {
    return this.http
      .delete<InvestigatorCollaboratorI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

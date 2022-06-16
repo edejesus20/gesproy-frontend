@@ -41,7 +41,7 @@ createItem(notification: NotificationI): Observable<NotificationI> {
   return this.http
     .post<NotificationI>(this.base_path_post, JSON.stringify(notification), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -51,7 +51,7 @@ getItem(id: number): Observable<{notification:NotificationI}> {
   return this.http
     .get<{notification:NotificationI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -61,7 +61,7 @@ getList(): Observable<{ notifications: NotificationI[] }> {
  return this.http
    .get<{ notifications: NotificationI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -70,7 +70,7 @@ getUserNotification(id: number): Observable<{recipients:RecipientI[]}> {
   return this.http
     .get<{recipients:RecipientI[]}>(this.base_path_get + '/User/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -80,7 +80,7 @@ updateItem(id:number, item:NotificationI): Observable<{notification:Notification
   return this.http
     .patch<{notification:NotificationI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -88,7 +88,7 @@ marcar(id:number, item:any): Observable<{notification:NotificationI}> {
   return this.http
     .patch<{notification:NotificationI}>(this.base_path_get + '/Marcar/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -98,7 +98,7 @@ deleteItem(id:number) {
   return this.http
     .delete<NotificationI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

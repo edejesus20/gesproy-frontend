@@ -44,7 +44,7 @@ getRole(): Observable<{roles: RoleI[],rolesUsers:any[]}> {
   return this.http
     .get<{roles: RoleI[],rolesUsers:any[]}>(this.base_path)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -54,7 +54,7 @@ getOneRole(id: number): Observable<{ role: RoleI,rolesUsers:any[] }> {
   return this.http
     .get<{ role: RoleI,rolesUsers:any[]}>(this.base_path + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -66,7 +66,7 @@ createRole(role: RoleI): Observable<{ role: RoleI }> {
   return this.http
     .post<{ role: RoleI }>(this.base_path, JSON.stringify(role), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -86,14 +86,14 @@ assinRole(role: assinRoleUserI): Observable<{ role: assinRoleUserI }> {
   return this.http
     .post<{ role: assinRoleUserI }>(this.base + 'assinRole', JSON.stringify(role), httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }else{
     return this.http
     .post<{ role: assinRoleUserI }>(this.base + 'assinRole', JSON.stringify(role))
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -114,14 +114,14 @@ assinRoleResource(array: assinRoleResourceI): Observable<{ array: assinRoleResou
     return this.http
     .post<{ array: assinRoleResourceI }>(this.base + 'assinResourceRole', JSON.stringify(array), httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }else{
     return this.http
     .post<{ array: assinRoleResourceI }>(this.base + 'assinResourceRole', JSON.stringify(array))
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -131,14 +131,14 @@ assinRoleResource(array: assinRoleResourceI): Observable<{ array: assinRoleResou
 
 updateRole(role:RoleI){
   return this.http.patch(`${this.base_path}/${role.id}`, role).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 
 }
 eliminarRole(id:number){
   return this.http.delete(`${this.base_path}/${id}`).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }

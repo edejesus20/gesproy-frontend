@@ -56,7 +56,7 @@ export class AdministrativeService {
    return this.http
      .get<{administrative:AdministrativeI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -67,7 +67,7 @@ export class AdministrativeService {
    return this.http
      .get<{ administratives: AdministrativeI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -75,7 +75,7 @@ export class AdministrativeService {
   return this.http
     .get<{ administrativos: any[]}>(this.base_path_get+ '/tipo/' + tipo)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -83,7 +83,7 @@ getAdministrativesOneTipo(id:number): Observable<{ administrativos: any[]}> {
   return this.http
     .get<{ administrativos: any[]}>(this.base_path_get+ '/tipoOne/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -94,7 +94,7 @@ getAdministrativesOneTipo(id:number): Observable<{ administrativos: any[]}> {
    return this.http
      .patch<AdministrativeI>(this.base_path_get + '/' + id, JSON.stringify(administrative), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -104,7 +104,7 @@ getAdministrativesOneTipo(id:number): Observable<{ administrativos: any[]}> {
    return this.http
      .delete<AdministrativeI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

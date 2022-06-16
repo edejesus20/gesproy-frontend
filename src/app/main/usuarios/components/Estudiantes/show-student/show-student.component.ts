@@ -8,6 +8,7 @@ import { StudentI } from 'src/app/models/user/student';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import { GroupI } from 'src/app/models/institution/group';
 import { ProgramService } from 'src/app/core/services/program/program.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-show-student',
   templateUrl: './show-student.component.html',
@@ -24,6 +25,7 @@ export class ShowStudentComponent implements OnInit {
   cols: any[]=[];
 
   public rows2:any[] = []
+  private API_URI= environment.API_URI;
 
   exportColumns: any[]=[];
   selectedProducts: StudentI[]=[];
@@ -51,12 +53,29 @@ export class ShowStudentComponent implements OnInit {
   this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getUniversitys()
   }
+
+  asignar(students:StudentI[]){
+    for (let key of students) {
+      if(key.User?.avatar != undefined){
+        var avatar = key.User.avatar;
+        var n = avatar.search("assets");
+        if(n == -1){
+          key.User.avatar=this.API_URI+'/Perfil/'+key.User.avatar
+        }else{
+          key.User.avatar= key.User.avatar
+        }
+      }  
+    }
+    this.students =students;
+  }
   
   getUniversitys() {
     this.studentService.getList().subscribe((instititionsFromApi) => {
-      this.students =instititionsFromApi.students;
+      // this.students =instititionsFromApi.students;
+      this.asignar(instititionsFromApi.students)
+
       this.rows2=[]
-      console.log(instititionsFromApi.students)
+      // console.log(instititionsFromApi.students)
       if(instititionsFromApi.students != undefined){
         for (let key of instititionsFromApi.students) {
           this.rows2.push(

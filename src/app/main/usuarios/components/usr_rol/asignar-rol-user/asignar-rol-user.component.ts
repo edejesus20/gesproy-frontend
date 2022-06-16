@@ -8,6 +8,7 @@ import { assinRoleUserI } from 'src/app/models/usr_assinRoleUser';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
 import { PersonI } from 'src/app/models/user/person';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-asignar-rol-user',
@@ -31,6 +32,7 @@ export class AsignarRolUserComponent implements OnInit {
   cols: any[]=[];
   exportColumns: any[]=[];
   selectedProducts: PersonI[]=[];
+  private API_URI= environment.API_URI;
 
   public form:FormGroup=this.formBuilder.group({
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
@@ -70,6 +72,17 @@ export class AsignarRolUserComponent implements OnInit {
   getUser() {
     this.userService.getUser().subscribe((userFromApi) => {
       for (let key of userFromApi.users) {
+
+        if(key.Person?.User?.avatar != undefined){
+          var avatar = key.Person.User.avatar;
+          var n = avatar.search("assets");
+          if(n == -1){
+            key.Person.User.avatar=this.API_URI+'/Perfil/'+key.Person.User.avatar
+          }else{
+            key.Person.User.avatar= key.Person.User.avatar
+          }
+        }  
+
         if(key.Person != undefined){
 
           let rolesUsers=[]

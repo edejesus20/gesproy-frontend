@@ -7,10 +7,10 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   },
-  // {
-  //   path: '',
-  //   component:AppComponent
-  // },
+  {
+    path: '',
+    component:AppComponent
+  },
   // {
   //   path: '**',
   //   redirectTo: '/landing',

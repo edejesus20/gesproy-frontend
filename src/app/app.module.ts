@@ -114,7 +114,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ],
     providers: [ConfirmationService,MessageService,CdkVirtualScrollViewport,
     {provide:LOCALE_ID, useValue:'es'},
-      { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
 
     bootstrap: [AppComponent]

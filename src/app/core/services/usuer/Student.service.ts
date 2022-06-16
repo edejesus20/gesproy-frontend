@@ -54,7 +54,7 @@ export class StudentService {
    return this.http
      .get<{student:StudentI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -62,7 +62,7 @@ export class StudentService {
   return this.http
     .get<{ students: any[] }>(this.API_URI+'/api/OneAddStudentsSemilleros/'+id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -70,7 +70,7 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
   return this.http
     .get<{ students: any[] }>(this.API_URI+'/api/OneAddStudentsSemilleros2/'+id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -82,7 +82,7 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
    return this.http
      .get<{ students: StudentI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -90,7 +90,7 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
   return this.http
     .get<{ students: any[] }>(this.API_URI+'/api/AddStudentsSemilleros')
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -100,7 +100,7 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
    return this.http
      .patch<any>(this.base_path_get + '/' + id, JSON.stringify(student), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -110,7 +110,7 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
    return this.http
      .delete<StudentI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

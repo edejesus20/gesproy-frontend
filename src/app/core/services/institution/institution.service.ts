@@ -48,13 +48,13 @@ getInstitution(): Observable<{institutions: InstitutionI[]}> {
     }
     return this.http.get<{institutions: InstitutionI[]}>(this.base_path,httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }else{
     return this.http.get<{institutions: InstitutionI[]}>(this.base_path)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
   }
@@ -65,21 +65,21 @@ getInstitutionDetail(): Observable<{details: InstitutionDetailI[]}> {
   return this.http
     .get<{details: InstitutionDetailI[]}>(`${this.API_URI}/api/detail`)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
 
 updateInstitution(institutions:InstitutionI){
   return this.http.patch(`${this.base_path}/${institutions.id}`, institutions).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 
 }
 eliminarInstitution(id:number){
   return this.http.delete(`${this.base_path}/${id}`).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -88,7 +88,7 @@ eliminarInstitution(id:number){
 getGeneralFeature(): Observable<{ generalFeature: InstitutionDetailI }>{
   return this.http.get<{ generalFeature: InstitutionDetailI }>(`${this.base_path}generalFeature`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -96,7 +96,7 @@ getGeneralFeature(): Observable<{ generalFeature: InstitutionDetailI }>{
 getMission(): Observable<{ mission: InstitutionDetailI }>{
   return this.http.get<{ mission: InstitutionDetailI }>(`${this.base_path}mission`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -104,7 +104,7 @@ getMission(): Observable<{ mission: InstitutionDetailI }>{
 getVision(): Observable<{vision: InstitutionDetailI}>{
   return this.http.get<{vision: InstitutionDetailI}>(`${this.base_path}vision`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -112,7 +112,7 @@ getVision(): Observable<{vision: InstitutionDetailI}>{
 getValues(): Observable<{values:InstitutionDetailI}>{
   return this.http.get<{values:InstitutionDetailI}>(`${this.base_path}value`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -120,7 +120,7 @@ getValues(): Observable<{values:InstitutionDetailI}>{
 getTestimonials(): Observable<{testimonials:InstitutionDetailI}>{
   return this.http.get<{testimonials:InstitutionDetailI}>(`${this.base_path}testimonial`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -128,7 +128,7 @@ getTestimonials(): Observable<{testimonials:InstitutionDetailI}>{
 getEvents(): Observable<{events:InstitutionDetailI}>{
   return this.http.get<{events:InstitutionDetailI}>(`${this.base_path}event`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -137,7 +137,7 @@ getEvents(): Observable<{events:InstitutionDetailI}>{
 getAboutUs(): Observable<{aboutUs:InstitutionDetailI}>{
   return this.http.get<{aboutUs:InstitutionDetailI}>(`${this.base_path}aboutUs`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -145,7 +145,7 @@ getAboutUs(): Observable<{aboutUs:InstitutionDetailI}>{
 getLoanLines(): Observable<{loanLines:InstitutionDetailI}>{
   return this.http.get<{loanLines:InstitutionDetailI}>(`${this.base_path}linesPrestamo`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }
@@ -153,7 +153,7 @@ getLoanLines(): Observable<{loanLines:InstitutionDetailI}>{
 getOrganizationChart(): Observable<{organizationChart:InstitutionDetailI}>{
   return this.http.get<{organizationChart:InstitutionDetailI}>(`${this.base_path}organigrama`)
   .pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }

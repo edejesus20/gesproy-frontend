@@ -55,7 +55,7 @@ export class Thematic_axisService {
    return this.http
      .get<{thematic_axis:Thematic_axisI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -66,7 +66,7 @@ export class Thematic_axisService {
    return this.http
      .get<{ thematic_axiss: Thematic_axisI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -76,7 +76,7 @@ export class Thematic_axisService {
    return this.http
      .patch<Thematic_axisI>(this.base_path_get + '/' + id, JSON.stringify(thematic_axis), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -86,7 +86,7 @@ export class Thematic_axisService {
    return this.http
      .delete<Thematic_axisI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

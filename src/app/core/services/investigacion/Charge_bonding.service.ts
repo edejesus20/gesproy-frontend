@@ -54,7 +54,7 @@ export class Charge_bondingService {
    return this.http
      .get<{charge_bonding:Charge_bondingI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -65,7 +65,7 @@ export class Charge_bondingService {
    return this.http
      .get<{ charge_bondings: Charge_bondingI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -75,7 +75,7 @@ export class Charge_bondingService {
    return this.http
      .patch<Charge_bondingI>(this.base_path_get + '/' + id, JSON.stringify(charge_bonding), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -84,7 +84,7 @@ export class Charge_bondingService {
  deleteItem(id:number) {
    return this.http.delete<Charge_bondingI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

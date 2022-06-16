@@ -223,7 +223,6 @@
   </ng-template>
   <ng-template [ngIf]="motrar == true">
     <br>
-    <br>
     <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
     <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
       <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
@@ -275,7 +274,7 @@
             placeholder="Adjuntar Imageb" 
             style="width: 80%;"
             formControlName="avatarImagen" 
-            
+            accept=".png, .jpg, .jpeg"
             title="Adjuntar Imageb" required (change)="onFileChange($event)">
             <span class="bottomdelete mt-7"  *ngIf="form2.value.avatarImagen != undefined && form2.value.avatarImagen != ''"
             style="margin-left: 5px ;">

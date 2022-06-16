@@ -43,7 +43,7 @@ createItem(productivityType: ProductivityTypeI): Observable<ProductivityTypeI> {
    return this.http
      .get<{productivityType:ProductivityTypeI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -51,7 +51,7 @@ createItem(productivityType: ProductivityTypeI): Observable<ProductivityTypeI> {
    return this.http
      .get<{ productivityTypes: ProductivityTypeI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -60,7 +60,7 @@ createItem(productivityType: ProductivityTypeI): Observable<ProductivityTypeI> {
    return this.http
      .patch<ProductivityTypeI>(this.base_path_get + '/' + id, JSON.stringify(productivityType), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -69,7 +69,7 @@ createItem(productivityType: ProductivityTypeI): Observable<ProductivityTypeI> {
    return this.http
      .delete<ProductivityTypeI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

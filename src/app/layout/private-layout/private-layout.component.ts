@@ -273,7 +273,8 @@ public onSubmit(): void {
               this.mostrarDialogoClave=false
               this.motrar=false
               this.ngOnInit()
-          this.router.navigateByUrl('/login');
+              this.cerrarSesion()
+          // this.router.navigateByUrl('/login');
 
               clearInterval(interval); 
             }
@@ -521,8 +522,8 @@ this.notificaciones(this.UserId)
     var n = str.search("assets");
     // console.log(n)
     if(n == -1){
-      // console.log(this.API_URI+'/Perfil/'+data.user.avatar)
-      this.image3=this.API_URI+'/Perfil/'+data.user.avatar
+      console.log(this.API_URI+data.user.avatar)
+      this.image3=this.API_URI+data.user.avatar
     }else{
       this.image3=data.user.avatar
     }

@@ -6,6 +6,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { AdministrativeI } from 'src/app/models/user/administrative';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-show-administrative',
   templateUrl: './show-administrative.component.html',
@@ -21,6 +22,7 @@ export class ShowAdministrativeComponent implements OnInit {
   rows = 1;
   cols: any[]=[];
   private rows2:AdministrativeI[] = []
+  private API_URI= environment.API_URI;
   exportColumns: any[]=[];
   selectedProducts: AdministrativeI[]=[];
 
@@ -47,10 +49,27 @@ export class ShowAdministrativeComponent implements OnInit {
       this.getUniversitys()
     }
   
+    
+    asignar(administratives:AdministrativeI[]){
+      for (let key of administratives) {
+        if(key.User?.avatar != undefined){
+          var avatar = key.User.avatar;
+          var n = avatar.search("assets");
+          if(n == -1){
+            key.User.avatar=this.API_URI+'/Perfil/'+key.User.avatar
+          }else{
+            key.User.avatar= key.User.avatar
+          }
+        }  
+      }
+      this.administratives =administratives;
+    }
+
     getUniversitys() {
       this.administrativeService.getList().subscribe((instititionsFromApi) => {
-        this.administratives =instititionsFromApi.administratives;
-        console.log(instititionsFromApi.administratives)
+        this.asignar(instititionsFromApi.administratives)
+        // this.administratives =instititionsFromApi.administratives;
+        // console.log(instititionsFromApi.administratives)
         this.rows2=[]
         if(instititionsFromApi.administratives != undefined){
           for (const key of instititionsFromApi.administratives) {

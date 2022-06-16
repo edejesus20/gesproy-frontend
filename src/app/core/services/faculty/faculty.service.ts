@@ -43,7 +43,7 @@ export class FacultyService {
    return this.http
      .post<FacultyI>(this.base_path_post, JSON.stringify(faculty), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -53,7 +53,7 @@ export class FacultyService {
    return this.http
      .get<{faculty:FacultyI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -63,7 +63,7 @@ export class FacultyService {
   return this.http
     .get<{ facultys: FacultyI[] }>(this.base_path_get)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -73,7 +73,7 @@ export class FacultyService {
    return this.http
      .patch<{faculty:FacultyI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -83,7 +83,7 @@ export class FacultyService {
    return this.http
      .delete<FacultyI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

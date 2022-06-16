@@ -44,7 +44,7 @@ createItem(mincienciaCategory: MincienciaCategoryI): Observable<MincienciaCatego
   return this.http
     .post<MincienciaCategoryI>(this.base_path_post, JSON.stringify(mincienciaCategory), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -54,7 +54,7 @@ getItem(id: number): Observable<{mincienciaCategory:MincienciaCategoryI}> {
   return this.http
     .get<{mincienciaCategory:MincienciaCategoryI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -64,7 +64,7 @@ getList(): Observable<{ mincienciaCategorys: MincienciaCategoryI[] }> {
  return this.http
    .get<{ mincienciaCategorys: MincienciaCategoryI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -74,7 +74,7 @@ updateItem(id:number, mincienciaCategory:MincienciaCategoryI): Observable<Mincie
   return this.http
     .patch<MincienciaCategoryI>(this.base_path_get + '/' + id, JSON.stringify(mincienciaCategory), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -84,7 +84,7 @@ deleteItem(id:number) {
   return this.http
     .delete<MincienciaCategoryI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

@@ -158,7 +158,7 @@ export class TeacherService {
    return this.http
      .get<{teacher:TeacherI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -166,7 +166,7 @@ export class TeacherService {
   return this.http
     .get<{teachers:any[],lines:any[],semilleros:any[]}>(this.base_path_get + '/HeadquarterProgram/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -176,7 +176,7 @@ AddTeacherSemilleros(id:number): Observable<{ teachers: any[] }> {
   return this.http
     .get<{ teachers: any[] }>(this.API_URI+'/api/AddTeacherSemilleros/'+id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -184,7 +184,7 @@ OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
   return this.http
     .get<{ teachers: any[] }>(this.API_URI+'/api/OneAddTeacherSemilleros/'+id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -195,7 +195,7 @@ OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
    return this.http
      .get<{ teachers: TeacherI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -205,7 +205,7 @@ OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
    return this.http
      .patch<{teacherOne:TeacherI}>(this.base_path_get + '/' + id, JSON.stringify(teacher), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -215,8 +215,34 @@ OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
    return this.http
      .delete<TeacherI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
+
+
+ getUserTeacherSedes(id:number): Observable<{ teachers: TeacherI[] }> {
+  return this.http
+    .get<{ teachers: TeacherI[] }>(this.API_URI+'/api/Teacher/UserTeacherSedes/'+id)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+getUserTeacherPrograma(id:number): Observable<{ teachers: TeacherI[] }> {
+  return this.http
+    .get<{ teachers: TeacherI[] }>(this.API_URI+'/api/Teacher/UserTeacherPrograma/'+id)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+getUserTeacherFacultad(id:number): Observable<{ teachers: TeacherI[] }> {
+  return this.http
+    .get<{ teachers: TeacherI[] }>(this.API_URI+'/api/Teacher/UserTeacherFacultad/'+id)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
 }

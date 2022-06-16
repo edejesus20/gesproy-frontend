@@ -42,7 +42,7 @@ createItem(training: TrainingI): Observable<TrainingI> {
   return this.http
     .post<TrainingI>(this.base_path_post, JSON.stringify(training), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -52,7 +52,7 @@ getItem(id: number): Observable<{training:TrainingI}> {
   return this.http
     .get<{training:TrainingI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -62,7 +62,7 @@ getList(): Observable<{ trainings: TrainingI[] }> {
  return this.http
    .get<{ trainings: TrainingI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -72,7 +72,7 @@ updateItem(id:number, training:TrainingI): Observable<TrainingI> {
   return this.http
     .patch<TrainingI>(this.base_path_get + '/' + id, JSON.stringify(training), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -82,7 +82,7 @@ deleteItem(id:number) {
   return this.http
     .delete<TrainingI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

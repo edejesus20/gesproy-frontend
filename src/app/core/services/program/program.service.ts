@@ -43,7 +43,7 @@ export class ProgramService {
 //    return this.http
 //      .post<ProgramI>(this.base_path_post, JSON.stringify(program), this.httpOptions)
 //      .pipe(
-//        retry(2),
+//        retry(0),
 //        catchError(this.handleError)
 //      )
 //  }
@@ -62,7 +62,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
    return this.http
      .get<{program:ProgramI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -71,7 +71,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
   return this.http
     .get<{program:ProgramI}>(this.API_URI + '/api/OneProgram/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -82,7 +82,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
    return this.http
      .get<{ programs: ProgramI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -92,7 +92,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
    return this.http
      .patch<ProgramI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -100,7 +100,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
   return this.http
     .patch<any>(this.API_URI + '/api/VincularLineProgram/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -109,7 +109,7 @@ createItem(program: ProgramI): Observable<ProgramI> {
    return this.http
      .delete<ProgramI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

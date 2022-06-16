@@ -6,6 +6,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show_InvestigatorCollaborator',
@@ -25,6 +26,7 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
   private rows2:InvestigatorCollaboratorI[] = []
   exportColumns: any[]=[];
   selectedProducts: InvestigatorCollaboratorI[]=[];
+  private API_URI= environment.API_URI;
 
   constructor(
     private investigadorColaboladorService:InvestigadorColaboladorService,
@@ -47,9 +49,26 @@ export class Show_InvestigatorCollaboratorComponent implements OnInit {
       this.getUniversitys()
     }
   
+
+    asignar(investigatorCollaborators:InvestigatorCollaboratorI[]){
+      for (let key of investigatorCollaborators) {
+        if(key.User?.avatar != undefined){
+          var avatar = key.User.avatar;
+          var n = avatar.search("assets");
+          if(n == -1){
+            key.User.avatar=this.API_URI+'/Perfil/'+key.User.avatar
+          }else{
+            key.User.avatar= key.User.avatar
+          }
+        }  
+      }
+      this.investigatorCollaborators =investigatorCollaborators;
+    }
+
     getUniversitys() {
       this.investigadorColaboladorService.getList().subscribe((instititionsFromApi) => {
-        this.investigatorCollaborators =instititionsFromApi.investigatorCollaborators;
+      this.asignar(instititionsFromApi.investigatorCollaborators)
+        // this.investigatorCollaborators =instititionsFromApi.investigatorCollaborators;
         this.rows2=[]
         // console.log(instititionsFromApi.investigatorCollaborators)
         if(instititionsFromApi.investigatorCollaborators != undefined){

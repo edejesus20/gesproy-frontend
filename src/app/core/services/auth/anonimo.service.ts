@@ -34,7 +34,7 @@ getMenu(): Observable<{ mainDefault: listaMenuI[] }> {
   return this.http
     .get<{ mainDefault: listaMenuI[] }>(this.base_path_get)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

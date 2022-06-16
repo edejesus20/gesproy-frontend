@@ -43,7 +43,7 @@ createItem(trackingStatus: TrackingStatusI): Observable<TrackingStatusI> {
    return this.http
      .get<{trackingStatus:TrackingStatusI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -51,7 +51,7 @@ createItem(trackingStatus: TrackingStatusI): Observable<TrackingStatusI> {
    return this.http
      .get<{ trackingStatuss: TrackingStatusI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -60,7 +60,7 @@ createItem(trackingStatus: TrackingStatusI): Observable<TrackingStatusI> {
    return this.http
      .patch<TrackingStatusI>(this.base_path_get + '/' + id, JSON.stringify(trackingStatus), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -69,7 +69,7 @@ createItem(trackingStatus: TrackingStatusI): Observable<TrackingStatusI> {
    return this.http
      .delete<TrackingStatusI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

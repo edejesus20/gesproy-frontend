@@ -40,7 +40,7 @@ createItem(seedbeds: SeedbedI): Observable<SeedbedI> {
   return this.http
     .post<SeedbedI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -50,7 +50,7 @@ getItem(id: number): Observable<{seedbed:SeedbedI}> {
   return this.http
     .get<{seedbed:SeedbedI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -60,7 +60,7 @@ getList(): Observable<{ seedbeds: SeedbedI[] }> {
  return this.http
    .get<{ seedbeds: SeedbedI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -70,7 +70,7 @@ updateItem(id:number, item:SeedbedI): Observable<SeedbedI> {
   return this.http
     .patch<SeedbedI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -80,7 +80,7 @@ deleteItem(id:number) {
   return this.http
     .delete<SeedbedI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

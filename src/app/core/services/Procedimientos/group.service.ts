@@ -46,7 +46,7 @@ createItem(group: GroupI): Observable<GroupI> {
           console.log(res)
         }
       }),
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -56,7 +56,7 @@ getItem(id: number): Observable<{group:GroupI}> {
   return this.http
     .get<{group:GroupI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -64,7 +64,7 @@ getItemHeadquarterProgram(id: number): Observable<{groups:GroupI[]}> {
   return this.http
     .get<{groups:GroupI[]}>(this.base_path_get + '/HeadquarterProgram/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -72,7 +72,7 @@ getItemOneHeadquarterProgram(id: number): Observable<{group:GroupI}> {
   return this.http
     .get<{group:GroupI}>(this.base_path_get + '/OneHeadquarterProgram/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -83,7 +83,7 @@ getList(): Observable<{ groups: GroupI[] }> {
  return this.http
    .get<{ groups: GroupI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -93,7 +93,7 @@ updateItem(id:number, group:GroupI): Observable<GroupI> {
   return this.http
     .patch<GroupI>(this.base_path_get + '/' + id, JSON.stringify(group), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -103,7 +103,7 @@ deleteItem(id:number) {
   return this.http
     .delete<GroupI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

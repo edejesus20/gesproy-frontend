@@ -1,3 +1,70 @@
+<div >
+  <div class="flex align-items-center justify-content-center pl-5 pr-5">  
+      <div class="grid p-fluid" style="padding: 10px;">
+        <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 pt-4">
+          <img alt="logo" src="{{image}}" 
+          style="width: 100%"/>
+        </div>
+
+        <div style="border: 1px solid black;text-align: center;"class="col-8 md:col-8 lg:col-8 pt-4">
+          <div class="grid">
+            <div class="col-12 sm:col-6">
+              <div class="field ">
+                <label for="name"style="font-weight: bold;">SELECCIONE FILTRO</label>
+                <div class="flex">
+                  <div style="width:100%;margin-top:10px;text-align: left;">
+                      <p-dropdown class="visorg500-select-filter " 
+                      [options]="opciones" [filter]="true"
+                          [(ngModel)]="opcion"
+                          label="SELECCIONE FILTRO" 
+                        [style]="{'width':'100%'}"
+                        optionvalue="id" optionLabel="name"  filterBy="name"
+                        [required]="true" placeholder="SELECCIONE FILTRO" (click)="getFiltro($event)">
+                        <ng-template let-option pTemplate="item"  >
+                          <span >{{option.name  | titlecase}}</span>
+                      </ng-template>
+                      </p-dropdown>
+                    </div>
+                </div>
+             </div>
+            </div>
+        
+            <div class="col-12 sm:col-6">
+              <ng-template [ngIf]="opcion != null && opcion.id != 4">
+                <div class="field ">
+                  <label for="name"style="font-weight: bold;">{{opcion.name | uppercase}}</label>
+                  <div class="flex">
+                    <div style="width:100%;margin-top:10px;text-align: left;">
+                        <p-dropdown class="visorg500-select-filter " 
+                        [options]="seleccionados" [filter]="true"
+                            [(ngModel)]="seleccionado"
+                            label="SELECCIONE FILTRO" 
+                          [style]="{'width':'100%'}"
+                          optionvalue="id" optionLabel="name"  filterBy="name"
+                          [required]="true" placeholder="SELECCIONE FILTRO" (click)="getFiltroSeleccionado($event)">
+                          <ng-template let-option pTemplate="item"  >
+                            <span >{{option.name  | titlecase}}</span>
+                        </ng-template>
+                        </p-dropdown>
+                      </div>
+                  </div>
+               </div>
+              </ng-template>
+            </div>
+          </div>
+   
+         
+          
+        </div>
+
+        <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 pt-4">
+          <img alt="logo" src="{{image2}}" 
+          style="width: 100%"/>
+        </div>
+      </div>  
+ 
+    </div>
+  </div>
 
 <p-table  #dt1 [value]="teachers" responsiveLayout="scroll" dataKey="id" id="todo"
 [paginator]="true" [rows]="5" [showCurrentPageReport]="true"  

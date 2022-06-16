@@ -41,7 +41,7 @@ getResource(): Observable<{resources: ResourceI[]}> {
   return this.http
     .get<{resources: ResourceI[]}>(this.base_path)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -51,7 +51,7 @@ getOneResource(id: number): Observable<{ resource: ResourceI }> {
   return this.http
     .get<{ resource: ResourceI }>(this.base_path + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -60,7 +60,7 @@ getResourceIdentificacion(titulo:string): Observable<{ resource: ResourceI[] }> 
   return this.http
     .get<{ resource: ResourceI[] }>(this.base_path+ '/titulo/' + titulo)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -70,21 +70,21 @@ createResource(resource: ResourceI): Observable<{ resource: ResourceI }> {
   return this.http
     .post<{ resource: ResourceI }>(this.base_path, JSON.stringify(resource), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
 
 updateResource(resource:ResourceI){
   return this.http.patch(`${this.base_path}/${resource.id}`, resource).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 
 }
 eliminarResource(id:number){
   return this.http.delete(`${this.base_path}/${id}`).pipe(
-    retry(2),
+    retry(0),
     catchError(this.handleError)
   )
 }

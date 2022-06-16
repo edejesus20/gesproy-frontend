@@ -55,7 +55,7 @@ export class ChargeService {
    return this.http
      .get<{charge:ChargeI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -66,7 +66,7 @@ export class ChargeService {
    return this.http
      .get<{ charges: ChargeI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -76,7 +76,7 @@ export class ChargeService {
    return this.http
      .patch<ChargeI>(this.base_path_get + '/' + id, JSON.stringify(charge), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -86,7 +86,7 @@ export class ChargeService {
    return this.http
      .delete<ChargeI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }

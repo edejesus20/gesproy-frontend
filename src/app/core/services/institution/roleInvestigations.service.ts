@@ -42,7 +42,7 @@ createItem(seedbeds: RoleInvestigationI): Observable<RoleInvestigationI> {
   return this.http
     .post<RoleInvestigationI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -52,7 +52,7 @@ getItem(id: number): Observable<{roleInvestigation:RoleInvestigationI}> {
   return this.http
     .get<{roleInvestigation:RoleInvestigationI}>(this.base_path_get + '/' + id)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -62,7 +62,7 @@ getList(): Observable<{ roleInvestigations: RoleInvestigationI[] }> {
  return this.http
    .get<{ roleInvestigations: RoleInvestigationI[] }>(this.base_path_get)
    .pipe(
-     retry(2),
+     retry(0),
      catchError(this.handleError)
    )
 }
@@ -72,7 +72,7 @@ updateItem(id:number, roleInvestigation:RoleInvestigationI): Observable<RoleInve
   return this.http
     .patch<RoleInvestigationI>(this.base_path_get + '/' + id, JSON.stringify(roleInvestigation), this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }
@@ -82,7 +82,7 @@ deleteItem(id:number) {
   return this.http
     .delete<RoleInvestigationI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
-      retry(2),
+      retry(0),
       catchError(this.handleError)
     )
 }

@@ -730,7 +730,7 @@
               <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
                 <button pButton type="button" (click)="addWorkexperiences($event)" 
                 class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Experiencia Laboral"></button>  
+                 label="Add Experiencia laboral y/o académica"></button>  
               </div>
               <br>
               <div fxLayout="row" fxLayoutGap="20px">
@@ -738,7 +738,7 @@
                   <p-table [value]="algo3" *ngIf="mostrar3 == true"> 
                     <ng-template pTemplate="header">
                       <tr>
-                          <th pSortableColumn="id">Experiencia Laboral<p-sortIcon field="id"></p-sortIcon></th>
+                          <th pSortableColumn="id">Experiencia laboral y/o académica<p-sortIcon field="id"></p-sortIcon></th>
                       </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">

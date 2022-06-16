@@ -54,7 +54,7 @@ export class ThematicService {
    return this.http
      .get<{thematic:ThematicI}>(this.base_path_get + '/' + id)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -65,7 +65,7 @@ export class ThematicService {
    return this.http
      .get<{ thematics: ThematicI[] }>(this.base_path_get)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -75,7 +75,7 @@ export class ThematicService {
    return this.http
      .patch<ThematicI>(this.base_path_get + '/' + id, JSON.stringify(thematic), this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
@@ -85,7 +85,7 @@ export class ThematicService {
    return this.http
      .delete<ThematicI>(this.base_path_get + '/' + id, this.httpOptions)
      .pipe(
-       retry(2),
+       retry(0),
        catchError(this.handleError)
      )
  }
