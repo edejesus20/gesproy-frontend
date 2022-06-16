@@ -274,7 +274,7 @@
             placeholder="Adjuntar Imageb" 
             style="width: 80%;"
             formControlName="avatarImagen" 
-            accept=".png, .jpg, .jpeg"
+            accept="image/png, image/gif, image/jpeg"
             title="Adjuntar Imageb" required (change)="onFileChange($event)">
             <span class="bottomdelete mt-7"  *ngIf="form2.value.avatarImagen != undefined && form2.value.avatarImagen != ''"
             style="margin-left: 5px ;">

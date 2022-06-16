@@ -290,6 +290,7 @@ console.log(file,'FormData')
       if (res) {
       }
     }),
+    retry(0),
     catchError(this.handleError))
 }
 

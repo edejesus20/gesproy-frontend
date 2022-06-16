@@ -42,7 +42,7 @@ export class LandingComponent implements OnInit {
             // console.log(n)
             if(n == -1){
               // console.log(this.API_URI+'/Perfil/'+user.user.avatar)
-              this.image3=this.API_URI+'/Perfil/'+user.user.avatar
+              this.image3=this.API_URI+user.user.avatar
             }else{
               // console.log(this.API_URI+'/Perfil/'+user.user.avatar)
 

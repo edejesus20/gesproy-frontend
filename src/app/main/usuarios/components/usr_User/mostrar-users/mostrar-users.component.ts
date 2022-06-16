@@ -65,7 +65,7 @@ export class MostrarUsersComponent implements OnInit {
               var avatar = key.Person.User.avatar;
               var n = avatar.search("assets");
               if(n == -1){
-                key.Person.User.avatar=this.API_URI+'/Perfil/'+key.Person.User.avatar
+                key.Person.User.avatar=this.API_URI+key.Person.User.avatar
               }else{
                 key.Person.User.avatar= key.Person.User.avatar
               }

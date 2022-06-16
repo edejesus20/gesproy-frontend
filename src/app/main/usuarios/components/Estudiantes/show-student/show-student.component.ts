@@ -60,7 +60,7 @@ export class ShowStudentComponent implements OnInit {
         var avatar = key.User.avatar;
         var n = avatar.search("assets");
         if(n == -1){
-          key.User.avatar=this.API_URI+'/Perfil/'+key.User.avatar
+          key.User.avatar=this.API_URI+key.User.avatar
         }else{
           key.User.avatar= key.User.avatar
         }

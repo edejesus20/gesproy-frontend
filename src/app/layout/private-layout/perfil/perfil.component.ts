@@ -336,7 +336,16 @@ public bandera4:boolean=false
         }
         
         this.form.controls['date_of_birth'].setValue(data.user.Person?.date_of_birth)
-        this.image3=data.user.avatar
+        var str = data.user.avatar;
+        var n = str.search("assets");
+        // console.log(n)
+        if(n == -1){
+          console.log(this.API_URI+data.user.avatar)
+          this.image3=this.API_URI+data.user.avatar
+        }else{
+          this.image3=data.user.avatar
+        }
+        // this.image3=data.user.avatar
         if(this.docente== false && this.estudiante == false && this.administrativo== false){
           if(data.user.Person?.GenderId != undefined){
             for (const key of this.genders) {

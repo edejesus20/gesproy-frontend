@@ -314,9 +314,11 @@ public onSubmit2(): void {
     if(this.imagenNueva != null && formValue.UserId != undefined && 
       formValue.avatar == undefined){
       if(this.imagenNueva != null){
+        this.motrar=true
         this.userService.createImagen(formValue.UserId,this.imagenNueva).subscribe(
           (algo) => {
-            this.motrar=true
+         console.log('cambio')
+           
             var date = new Date('2020-01-01 00:00:04');
                 function padLeft(n:any){ 
                   return n ="00".substring(0, "00".length - n.length) + n;
@@ -357,9 +359,11 @@ public onSubmit2(): void {
       
     }else if(formValue.avatar !='' && formValue.avatar != undefined && formValue.id != undefined
     && this.imagenNueva == null){
+      this.motrar=true
       this.userService.actualzarAvatar(formValue).subscribe(
+       
         (algo) => {
-          this.motrar=true
+         console.log('cambio')
           var date = new Date('2020-01-01 00:00:04');
               function padLeft(n:any){ 
                 return n ="00".substring(0, "00".length - n.length) + n;
