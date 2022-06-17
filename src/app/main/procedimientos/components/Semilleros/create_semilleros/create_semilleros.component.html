@@ -18,8 +18,11 @@
             </div>
 
             <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-              <img alt="logo" src="{{image2}}" 
-              style="width: 100%"/>
+              <!-- <img alt="logo" src="{{image2}}" 
+              style="width: 100%"/> -->
+              <p-button (click)="Dialog = true" icon="pi pi-times" 
+              [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+              styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
             </div>
           </div>
           <div class="bordep">
@@ -462,12 +465,20 @@
            </div>
           </div>
           <br>
+    <ng-template [ngIf]="bandera == false">
+
 <br>
           <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
             <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="!form.valid"
             class="p-button-success p-button-raised p-button-rounded" label="Enviar Registro" styleClass="mr-2"></button>
-          <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+          <!-- <p-button (click)="Dialog=true" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
       </div>
+    </ng-template>
+    <ng-template [ngIf]="bandera == true">
+      <br>
+        <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+    
+    </ng-template>
        
           <!-- <div fxLayout="row" class="titleCard">
               <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
@@ -492,24 +503,27 @@
 <p-toast></p-toast>
 
 <p-confirmPopup></p-confirmPopup>
-<!-- 
-<mat-card>
-  <div fxLayout="row" class="titleCard">
-    <mat-icon class="fondebabutton">
-      credit_card
-    </mat-icon>
-    <mat-card-title class="fondebabutton">Ingresar Semillero</mat-card-title>
-  </div>
-    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" fxLayout="column" class="tittleForm">
-      <mat-card-content fxLayout="column wrap" >
-                      <mat-form-field>
-                        <input matInput type="text" placeholder="Nombre" formControlName="name" required>
-                      </mat-form-field>
-        </mat-card-content>
-  
-        <mat-card-actions>
-          <button type="submit" [disabled]="!this.form.valid" mat-button color="primary">Crear Semillero</button>
-        </mat-card-actions>
-    </form>
 
-</mat-card> -->
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+            <h4>Esta Seguro de Cerrar la Ventana?</h4>
+            <p>Si para continuar</p>
+        </div>
+    </div>
+
+  <ng-template pTemplate="footer" class="titleCard" >
+    <div style="text-align: center;">
+      <button pButton pRipple label="No" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+      class="p-button-text" (click)="Dialog = false"></button>
+      <button pButton pRipple label="Si"  style="background: #f16357" 
+      class=" p-button-raised p-button-rounded" 
+      icon="pi pi-check"  (click)="cerrar()"  ></button>
+    </div>
+  </ng-template>
+</p-dialog>

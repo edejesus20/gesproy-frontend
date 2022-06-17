@@ -40,8 +40,10 @@ export class Create_semillerosComponent implements OnInit {
   public image2:string='assets/images/uniguajira_iso.jpg'
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-  public form: FormGroup = this.formBuilder.group({});
-  public teachers: TeacherI[] =[]
+  public Dialog:boolean =false
+  public bandera:boolean=false
+ public form:FormGroup=this.formBuilder.group({
+  });  public teachers: TeacherI[] =[]
   public facultys: FacultyI[] =[]
   public groups: GroupI[]=[]
   public lines: LineI[] =[]
@@ -88,6 +90,20 @@ public ref1:any;
     this.geFacultad() 
     this.getstudents()
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+  }
+  private volver(){
+    this.bandera=false
+    this.lines1=[]
+    this.Students=[]
+    this.HeadquarterProgramId = 0 
+      this.TeacherId = 0 
+      this.GroupId = 0
+    this.ngOnInit()
+  }
+
  getstudents() {
    this.studentService.AddStudentsSemilleros().subscribe(
       (facultiesFromApi) => {
@@ -200,8 +216,6 @@ public ref1:any;
     }, error => console.error(error));
   }
 
-
-
   public onSubmit(): void {
     let formValue: SeedbedI = this.form.value;
     formValue.TeacherId=this.form.value.TeacherId.TeacherId
@@ -277,6 +291,8 @@ public ref1:any;
     formValue.GroupId != ( 0 || undefined)
 
     ){
+    this.bandera=true
+
       this.seedbedService.createItem(formValue).subscribe(
         () => {
           var date = new Date('2020-01-01 00:00:03');
@@ -293,12 +309,15 @@ public ref1:any;
             }
             date = new Date(date.getTime() - 1000);
             if( minutes == '00' && seconds == '01' ) {
-              this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+              this.volver()
+              // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
               clearInterval(interval); 
             }
       }, 1000);
         },async error => {
           if(error != undefined) {
+    this.bandera=false
+
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){
               text = await translate(error.error.dataErros[0].message, "es");

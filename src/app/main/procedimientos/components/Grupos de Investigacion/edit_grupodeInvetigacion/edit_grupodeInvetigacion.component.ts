@@ -33,6 +33,10 @@ import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudia
 })
 export class Edit_grupodeInvetigacionComponent implements OnInit {
 
+
+  public construccion:string='assets/construccion.jpg'
+  public Valorconstruccion:boolean=false
+
   public mostrar:number=1;
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
@@ -115,6 +119,8 @@ public mostrarIntegrantes:boolean=false
     ) { }
   
     ngOnInit() {
+    this.Valorconstruccion=true
+
       this.primengConfig.ripple = true;
       this.buildForm();
       // this.getTeachers();

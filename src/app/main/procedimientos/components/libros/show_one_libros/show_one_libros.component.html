@@ -1,3 +1,21 @@
-<p>
-  show_one_libros works!
-</p>
+
+
+<ng-template [ngIf]="Valorconstruccion == true">
+  <span  style="display: flex;
+  justify-content: center;
+  margin: 0;">
+    <div class="card" 
+    style="justify-content:center;justify-items: center;align-items: center;width: 67%;height: 70%;">
+      <img src="{{construccion}}"  pRipple 
+                [style]="{'width':'90%','height':'70%'}"
+                styleClass="imgLogo4 p-button-rounded p-button-outlined" 
+                size="xlarge" shape="circle">
+    </div>
+  </span>
+  </ng-template>
+  
+  <ng-template [ngIf]="Valorconstruccion == false">
+    <p>
+      show_one_libros works!
+    </p>
+  </ng-template>

@@ -17,6 +17,10 @@ export class Create_proyectosdeinvestigacionComponent implements OnInit {
   public seedbeds: any;
   public projetTypes:ProjetTypeI[]=[]
   public form: FormGroup = this.formBuilder.group({});
+
+  public construccion:string='assets/construccion.jpg'
+  public Valorconstruccion:boolean=false
+
   constructor(
     private projetService:ProjetService,
     private projetTypeService:ProjetTypeService,
@@ -26,6 +30,8 @@ export class Create_proyectosdeinvestigacionComponent implements OnInit {
     // private snackBar: MatSnackBar,
     ) { }
   ngOnInit(): void {
+    this.Valorconstruccion=true
+
     this.buildForm();
     this.getAllProjetTypeId()
   }

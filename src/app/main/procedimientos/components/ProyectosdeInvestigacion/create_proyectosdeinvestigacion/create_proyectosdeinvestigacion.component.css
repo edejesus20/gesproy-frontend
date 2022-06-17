@@ -1,4 +1,4 @@
-mat-error > span:not(:first-child) {
+/* mat-error > span:not(:first-child) {
   display: none;
 }
 
@@ -6,7 +6,7 @@ mat-error > span:not(:first-child) {
   display: flex;
   justify-content: center;
   margin: 0;
-}
+} */
 
 .mat-form-field{
   width: 100%;

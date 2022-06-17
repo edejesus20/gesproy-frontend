@@ -79,8 +79,14 @@ public users:any[]=[]
 public roles:RoleInvestigationI[] = []
 
 public mostrarTeacher:boolean=false
-  public form: FormGroup = this.formBuilder.group({});
- public ref:any;
+
+public Dialog:boolean =false
+public bandera:boolean=false
+public form:FormGroup=this.formBuilder.group({
+});
+
+
+public ref:any;
  public mostrarHeadquarterProgram:boolean=false;
   public categoryGroups:CategoryGroupI[] = []
   public knowledge_areas: Knowledge_areaI[]=[];
@@ -93,9 +99,13 @@ public InvestigatorCollaborators1:any[] =[]
 public knowledge_areas1:any[] =[]
 public Seedbeds1:any[] =[]
 public image:string='assets/images/images.jpg'
+
 public image2:string='assets/images/uniguajira_iso.jpg'
 filteredCountries: any[]=[];
 public mostrarIntegrantes:boolean=false
+
+public construccion:string='assets/construccion.jpg'
+public Valorconstruccion:boolean=false
 
   constructor(
     private groupService:GroupService,
@@ -111,6 +121,7 @@ public mostrarIntegrantes:boolean=false
     public categoryGroupService:CategoryGroupService,
     ) { }
   ngOnInit(): void {
+    this.Valorconstruccion=true
     this.buildForm();
     // this.getTeachers();
     this.geFacultad();
@@ -322,6 +333,19 @@ public mostrarIntegrantes:boolean=false
   }
 
 
+  cerrar(){
+    this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+  }
+  private volver(){
+    this.bandera=false
+    this.lines1=[]
+    this.knowledge_areas1=[]
+    this.InvestigatorCollaborators1=[]
+    this.HeadquarterProgramId=0
+    this.TeacherId = 0
+    this.CategoryGroupId=0
+    this.ngOnInit()
+  }
   
   public onSubmit(){
     // console.log('aqui1')
@@ -425,8 +449,9 @@ public mostrarIntegrantes:boolean=false
     // formValue.CategoryGroupId != ( 0 || undefined)&&
     // formValue.Link_gruplac != ""
     ){
-      console.log(formValue,'aqui')
-      https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003518 
+      // console.log(formValue,'aqui')
+    this.bandera=true
+
     this.groupService.createItem(formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');
@@ -443,12 +468,15 @@ public mostrarIntegrantes:boolean=false
           }
           date = new Date(date.getTime() - 1000);
           if( minutes == '00' && seconds == '01' ) {
-            this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+            this.volver()
+            // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
             clearInterval(interval); 
           }
     }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -649,7 +677,7 @@ public mostrarIntegrantes:boolean=false
     e.preventDefault()
 
     this.ref = this.dialogService.open(Create_CategoriaGruposComponent, {
-      width: '35%',
+      width: '50%',
       contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
 
       baseZIndex: 10000,
@@ -670,7 +698,7 @@ public mostrarIntegrantes:boolean=false
     e.preventDefault()
 
     this.ref = this.dialogService.open(Create_Knowledge_areaComponent, {
-      width: '35%',
+      width: '50%',
       contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
       baseZIndex: 10000,
       data: {

@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./delete_proyectosdeinvestigacion.component.css']
 })
 export class Delete_proyectosdeinvestigacionComponent implements OnInit {
-
+  public construccion:string='assets/construccion.jpg'
+  public Valorconstruccion:boolean=false
   constructor() { }
 
   ngOnInit() {
+    this.Valorconstruccion=true
+
   }
 
 }

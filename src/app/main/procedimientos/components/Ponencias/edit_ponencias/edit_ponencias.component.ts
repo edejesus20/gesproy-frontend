@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Edit_ponenciasComponent implements OnInit {
 
+  public construccion:string='assets/construccion.jpg'
+  public Valorconstruccion:boolean=false
   constructor() { }
 
   ngOnInit() {
+    this.Valorconstruccion=true
   }
 
 }

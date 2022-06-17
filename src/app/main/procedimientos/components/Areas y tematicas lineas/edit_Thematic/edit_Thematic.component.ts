@@ -34,6 +34,7 @@ export class Edit_ThematicComponent implements OnInit {
     }
     )]),
    })
+   private ThematicAxis:any[]=[]
   public thematic_axiss: Thematic_axisI[]=[];
 
   constructor(
@@ -130,14 +131,27 @@ export class Edit_ThematicComponent implements OnInit {
 
  public onSubmit() {
   // console.log(f)
+  // let control = <FormArray>this.form.controls['Thematic_axis']
+  // let array:any[] =[]
+  // for (let key of control.value) {
+  //   key.ThematicAxisId=key.ThematicAxisId.id
+  //   array.push({ThematicAxisId:key.ThematicAxisId})
+  // }
+  let formValue: any = this.form.value;
+
   let control = <FormArray>this.form.controls['Thematic_axis']
   let array:any[] =[]
-  for (let key of control.value) {
-    key.ThematicAxisId=key.ThematicAxisId.id
-    array.push({ThematicAxisId:key.ThematicAxisId})
-  }
-  let formValue: ThematicI = this.form.value;
+  if(this.ThematicAxis.length == 0){
+    for (let key of control.value) {
+      key.ThematicAxisId=key.ThematicAxisId.id
+      array.push({ThematicAxisId:key.ThematicAxisId})
+    }
+    this.ThematicAxis=control.value
+    formValue.Thematic_axis=control.value
+  }else{
+    formValue.Thematic_axis=this.ThematicAxis
 
+  }
   // console.log(formValue)
 
   if(formValue.name != ''){

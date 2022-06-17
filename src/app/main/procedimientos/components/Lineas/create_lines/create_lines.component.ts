@@ -29,6 +29,10 @@ export class Create_linesComponent implements OnInit {
   public thematic_axiss: Thematic_axisI[]=[];
   filteredCountries: any[]=[];
   public Thematics1:any[]=[];
+
+  public Dialog:boolean =false
+  public bandera:boolean=false
+
   constructor(
     public dialogService: DialogService,
     private formBuilder: FormBuilder,
@@ -136,6 +140,14 @@ export class Create_linesComponent implements OnInit {
     });
   }  
 
+  cerrar(){
+    this.router.navigateByUrl('/Procedimientos/line');
+  }
+  private volver(){
+    this.bandera=false
+    this.Thematics1=[]
+    this.ngOnInit()
+  }
   public onSubmit(e: Event): void {
     e.preventDefault();
    
@@ -162,6 +174,8 @@ export class Create_linesComponent implements OnInit {
 
     if(formValue.name != "" && formValue.justification != "" && 
     formValue.objectives !="" ){
+    this.bandera=true
+
     this.lineService.createItem(formValue).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');
@@ -178,12 +192,15 @@ export class Create_linesComponent implements OnInit {
           }
           date = new Date(date.getTime() - 1000);
           if( minutes == '00' && seconds == '01' ) {
-            this.router.navigateByUrl('/Procedimientos/line');
+            this.volver()
+            // this.router.navigateByUrl('/Procedimientos/line');
             clearInterval(interval); 
           }
     }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

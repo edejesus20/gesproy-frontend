@@ -140,12 +140,17 @@
         <footer class="footer" style="padding-top: 20px;">
             
           <div class="footer__copyright" >
-            <p>&copy; 2022</p>
-            <p>Desarrollo Universidad de la Guajira - Programa Ing de Sistemas</p>
+            
+            <p style="color:gray;font-size: 1.1rem">© 2022 Desarrollo Universidad de la Guajira</p>
           </div>
       
-          <div class="image"> 
+          <!-- <div class="image"> 
             <img src="{{image2}}" alt="">
+          </div> -->
+          <div class="footer__copyright" >
+            
+            <p style="color:gray;font-size: 1rem">Todos los derechos reservados - Semillero SETEC</p>
+            <p style="color:gray;font-size: 0.8rem">Autores: Emmanuel Meza - Adanud Meza - Jaider Mendoza</p>
           </div>
         </footer>
 
@@ -384,8 +389,8 @@
           <p-fileUpload #file (change)="onFileChange($event,file)"
           [style]="{'background-color': '#f16357'}"
           [showUploadButton]="false" [showCancelButton]="false" [previewWidth]="150"
-          chooseLabel="Cargar Imagen"
-          [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="1">
+          chooseLabel="Cargar Imagen" invalidFileSizeMessageSummary="Peso limite de Imagen 5mb"
+          [multiple]="true" accept="image/*" [maxFileSize]="5000000" [fileLimit]="1">
           <ng-template pTemplate="content">
               <ul *ngIf="uploadedFiles.length">
                   <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

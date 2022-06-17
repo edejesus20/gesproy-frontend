@@ -22,15 +22,14 @@ export class Create_ThematicComponent implements OnInit {
   public mostrar2:boolean=true;
   public mostrarDialogo:boolean=false;
   public ref1:any;
-  public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    Thematic_axis: this.formBuilder.array([this.formBuilder.group(
-      {
-        ThematicAxisId:['', [Validators.required]],
-    }
-    )]),
-   })
+  public Dialog:boolean =false
+  public bandera:boolean=false
+ public form:FormGroup=this.formBuilder.group({
+  });
+
+ 
   public thematic_axiss: Thematic_axisI[]=[];
+  public ThematicAxis: Thematic_axisI[]=[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +45,14 @@ export class Create_ThematicComponent implements OnInit {
  ) { }
 
  ngOnInit() {
+  this. form=this.formBuilder.group({
+    name:['', [Validators.required]],
+    Thematic_axis: this.formBuilder.array([this.formBuilder.group(
+      {
+        ThematicAxisId:['', [Validators.required]],
+    }
+    )]),
+   })
    this.primengConfig.ripple = true;
    if(this.config.data){
     if(this.config.data.id == '1'){
@@ -60,15 +67,36 @@ export class Create_ThematicComponent implements OnInit {
  public cancelar(){
   this.ref.close(undefined);
 }
+
+cerrar(){
+  this.router.navigateByUrl('/Procedimientos/Thematic');
+}
+private volver(){
+  this.bandera=false
+  this.ThematicAxis=[]
+  this.ngOnInit()
+}
+
  public onSubmit() {
+  let formValue: any = this.form.value;
   let control = <FormArray>this.form.controls['Thematic_axis']
   let array:any[] =[]
-  for (let key of control.value) {
-    key.ThematicAxisId=key.ThematicAxisId.id
-    array.push({ThematicAxisId:key.ThematicAxisId})
-  }
-  let formValue: ThematicI = this.form.value;
+  if(this.ThematicAxis.length == 0){
+    for (let key of control.value) {
+      key.ThematicAxisId=key.ThematicAxisId.id
+      array.push({ThematicAxisId:key.ThematicAxisId})
+    }
+    this.ThematicAxis=control.value
+    formValue.Thematic_axis=control.value
+  }else{
+    formValue.Thematic_axis=this.ThematicAxis
+
+  } 
+  
+  
   if(formValue.name != ''&& array.length > 0 ){
+  this.bandera=true
+
   this.thematicService.createItem(formValue).subscribe(
     (algo) => {
       if(this.mostrarDialogo== true){
@@ -88,13 +116,16 @@ export class Create_ThematicComponent implements OnInit {
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/Procedimientos/Thematic');
+                this.volver()
+                // this.router.navigateByUrl('/Procedimientos/Thematic');
                 clearInterval(interval); 
                }
         }, 1000);
       }
     },async error => {
       if(error != undefined) {
+  this.bandera=false
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");

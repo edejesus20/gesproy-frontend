@@ -17,9 +17,11 @@ export class Create_Thematic_axisComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public mostrarDialogo:boolean=false;
   displayMaximizable2:boolean=true
+
+   public Dialog:boolean =false
+   public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-   })
+   });
   constructor(
     private formBuilder: FormBuilder,
     private thematic_axisService:Thematic_axisService,
@@ -31,6 +33,9 @@ export class Create_Thematic_axisComponent implements OnInit {
  ) { }
 
  ngOnInit() {
+  this. form=this.formBuilder.group({
+    name:['', [Validators.required]],
+   })
    this.primengConfig.ripple = true;
    if(this.config.data){
     if(this.config.data.id == '1'){
@@ -45,10 +50,20 @@ export class Create_Thematic_axisComponent implements OnInit {
  public cancelar(){
   this.ref.close(undefined);
 }
+
+cerrar(){
+  this.router.navigateByUrl('/Procedimientos/Thematic_axis');
+}
+private volver(){
+  this.bandera=false
+  this.ngOnInit()
+}
  public onSubmit() {
 
   let formValue: Thematic_axisI = this.form.value;
   if(formValue.name != ''){
+  this.bandera=true
+
   this.thematic_axisService.createItem(formValue).subscribe(
     (algo) => {
       if(this.mostrarDialogo== true){
@@ -68,13 +83,16 @@ export class Create_Thematic_axisComponent implements OnInit {
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/Procedimientos/Thematic_axis');
+                this.volver()
+                // this.router.navigateByUrl('/Procedimientos/Thematic_axis');
                 clearInterval(interval); 
                }
         }, 1000);
       }
     },async error => {
       if(error != undefined) {
+  this.bandera=false
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");

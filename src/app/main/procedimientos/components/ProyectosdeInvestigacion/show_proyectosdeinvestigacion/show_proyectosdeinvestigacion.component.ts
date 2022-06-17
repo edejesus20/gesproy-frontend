@@ -10,6 +10,8 @@ import { ProjetI } from 'src/app/models/projet/projet';
 })
 export class Show_proyectosdeinvestigacionComponent implements OnInit {
   public projets: any;
+  public construccion:string='assets/construccion.jpg'
+  public Valorconstruccion:boolean=false
   // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   // @ViewChild(MatSort, {static: true}) sort!: MatSort;
   public displayedColumns: string[] = ['id', 'name','createdAt', 'updatedAt'];
@@ -17,6 +19,8 @@ export class Show_proyectosdeinvestigacionComponent implements OnInit {
     private projetService:ProjetService
     ) { }
   ngOnInit(): void {
+    this.Valorconstruccion=true
+
     this.getAllScale() 
   }
   Buscar(event: Event){

@@ -104,6 +104,8 @@ constructor(
   private volver(){
     this.bandera=false
     this.Headquarters1=[]
+    this.CategoryId = 0
+    this.FacultyId = 0
     this.ngOnInit()
   }
 
