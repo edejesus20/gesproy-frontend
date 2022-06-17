@@ -16,9 +16,11 @@ export class Create_Research_bondingComponent implements OnInit {
   displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
 public mostrarDialogo:boolean=false;
+
+ public Dialog:boolean =false
+ public bandera:boolean=false
 public form:FormGroup=this.formBuilder.group({
-  name:['', [Validators.required]],
- })
+ });
 constructor(
   private formBuilder: FormBuilder,
   public ref: DynamicDialogRef,
@@ -30,6 +32,9 @@ constructor(
   ) { }
 
   ngOnInit() {
+    this. form=this.formBuilder.group({
+      name:['', [Validators.required]],
+     })
     this.primengConfig.ripple = true;
     if(this.config.data){
       if(this.config.data.id == '1'){
@@ -42,9 +47,18 @@ constructor(
   public cancelar(){
     this.ref.close(undefined);
   }
+  cerrar(){
+    this.router.navigateByUrl('/Investigation/mostrar_Research_bondings');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
   public onSubmit() {
     let formValue: Research_bondingI = this.form.value;
     if(formValue.name != ''){
+    this.bandera=true
+
     this.research_bondingService.createItem(formValue).subscribe(
       (algo) => {
         if(this.mostrarDialogo== true){
@@ -64,13 +78,16 @@ constructor(
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/Investigation/mostrar_Research_bondings');
+                  this.volver()
+                  // this.router.navigateByUrl('/Investigation/mostrar_Research_bondings');
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

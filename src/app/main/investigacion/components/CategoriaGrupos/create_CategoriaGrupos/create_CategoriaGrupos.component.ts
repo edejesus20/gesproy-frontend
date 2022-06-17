@@ -16,20 +16,19 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
   styleUrls: ['./create_CategoriaGrupos.component.css']
 })
 export class Create_CategoriaGruposComponent implements OnInit {
-  public groups: GroupI[]=[];
-  public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    date:new Date().toDateString(),
-    // GroupId:['', [Validators.required]],
-   });
-  
+  // public groups: GroupI[]=[];
+  public Dialog:boolean =false
+  public bandera:boolean=false
+ public form:FormGroup=this.formBuilder.group({
+  });
+ 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public mostrarDialogo:boolean=false;
 
   constructor(
     private categoryGroupService:CategoryGroupService,
-    private groupService:GroupService,
+    // private groupService:GroupService,
     private router: Router,
     private formBuilder: FormBuilder,
     private messageService:MessageService,
@@ -39,6 +38,12 @@ export class Create_CategoriaGruposComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this. form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      date:new Date().toDateString(),
+      // GroupId:['', [Validators.required]],
+     });
+    
     if(this.config.data){
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
@@ -50,15 +55,23 @@ export class Create_CategoriaGruposComponent implements OnInit {
     this.primengConfig.ripple = true;
   
   }
-  private getAllFaculty(selectId?: number) {
-    this.groupService.getList().subscribe(
-      (groupsFromApi) => {
-        for (let key of groupsFromApi.groups) {
-          key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-        }
-        this.groups = groupsFromApi.groups;
-      }, error => console.error(error));
+
+  cerrar(){
+    this.router.navigateByUrl('/Investigation/mostrar_categorys');
   }
+ private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
+  // private getAllFaculty(selectId?: number) {
+  //   this.groupService.getList().subscribe(
+  //     (groupsFromApi) => {
+  //       for (let key of groupsFromApi.groups) {
+  //         key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+  //       }
+  //       this.groups = groupsFromApi.groups;
+  //     }, error => console.error(error));
+  // }
   public cancelar(){
     this.ref.close(undefined);
   }
@@ -70,6 +83,7 @@ export class Create_CategoriaGruposComponent implements OnInit {
     // && 
     // formValue.GroupId != ( 0 )
     ){
+      this.bandera=true
 
     this.categoryGroupService.createItem(formValue).subscribe(
       (algo) => {
@@ -90,13 +104,16 @@ export class Create_CategoriaGruposComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/Investigation/mostrar_categorys');
+                  this.volver()
+                  // this.router.navigateByUrl('/Investigation/mostrar_categorys');
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+      this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

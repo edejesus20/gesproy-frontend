@@ -12,10 +12,11 @@ import { RoleInvestigationI } from 'src/app/models/institution/roles_investigati
   styleUrls: ['./crear-rol-investigation.component.css']
 })
 export class CrearRolInvestigationComponent implements OnInit {
+
+   public Dialog:boolean =false
+   public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
    });
-  
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   constructor(
@@ -27,12 +28,23 @@ export class CrearRolInvestigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this. form=this.formBuilder.group({
+      name:['', [Validators.required]],
+     });
     this.primengConfig.ripple = true;
   }
-
+  cerrar(){
+    this.router.navigateByUrl('/Investigation/mostrar_RoleInvestigations');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
   public onSubmit() {
     let formValue: RoleInvestigationI = this.form.value;
     if(formValue.name != ''){
+    this.bandera=true
+
     this.roleInvestigationsService.createItem(formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -49,12 +61,15 @@ export class CrearRolInvestigationComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/Investigation/mostrar_RoleInvestigations');
+                  this.volver()
+                  // this.router.navigateByUrl('/Investigation/mostrar_RoleInvestigations');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

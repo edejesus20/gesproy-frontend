@@ -16,21 +16,15 @@ import { RoleI } from 'src/app/models/authorization/usr_roles';
 export class CrearResourceComponent implements OnInit {
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
-
+  public Dialog:boolean =false
+  public bandera:boolean=false
+ public form:FormGroup=this.formBuilder.group({
+  });
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=false;
   public algo:number[]=[0];
 
-  public form:FormGroup=this.formBuilder.group({
-    path: ['', [Validators.required]],
-    method: [''],
-    id_padre: [''],
-    icono: ['', [Validators.required]],
-    link: ['', [Validators.required]],
-    titulo: ['', [Validators.required]],
-    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
-  });
   constructor(
     private formBuilder: FormBuilder,
     private resourcesService: ResourcesService,
@@ -41,6 +35,16 @@ export class CrearResourceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
+  this.form=this.formBuilder.group({
+    path: ['', [Validators.required]],
+    method: [''],
+    id_padre: [''],
+    icono: ['', [Validators.required]],
+    link: ['', [Validators.required]],
+    titulo: ['', [Validators.required]],
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+  });
     this.getUsrRoles()
   }
   getUsrRoles() {
@@ -49,6 +53,16 @@ export class CrearResourceComponent implements OnInit {
       //console.log(this.roles);
     }, error => console.error(error));
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/resources');
+  }
+ private volver(){
+  this.Roles1 = []
+    this.bandera=false
+    this.ngOnInit()
+  }
+
   public onSubmit(e: Event) {
     e.preventDefault()
     const formValue:ResourceI={
@@ -60,7 +74,7 @@ export class CrearResourceComponent implements OnInit {
       titulo: this.form.value.titulo,
       Roles:this.form.value.Roles,
     };
-    if(this.Roles1.length == 0 || this.Roles1 == []){
+    if(this.Roles1.length == 0 ){
       let control = <FormArray>this.form.controls['Roles']
       for (const key of control.value) {
         key.RoleId=key.RoleId.id 
@@ -82,6 +96,7 @@ export class CrearResourceComponent implements OnInit {
               formValue.icono != ""&&
               formValue.link != ""&&
               formValue.titulo != ""){
+                this.bandera=true
 
             this.resourcesService.createResource(formValue).subscribe(
               () => {
@@ -99,12 +114,15 @@ export class CrearResourceComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/resources');
+                          this.volver()
+                          // this.router.navigateByUrl('/usuarios/resources');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");
