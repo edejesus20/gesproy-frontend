@@ -143,13 +143,19 @@
       
       </div>
       <br>
-            
+      <ng-template [ngIf]="bandera == false"> 
             <div fxLayout="row" class="titleCard">
               <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid || mostrar==false"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                label="Enviar Registro" styleClass="mr-2"></button>
             <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
         </div>
+      </ng-template>
+      <ng-template [ngIf]="bandera == true">
+        <br>
+          <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+      </ng-template>
        
         
             
@@ -404,6 +410,7 @@
   
   </div>
   <br>
+  <ng-template [ngIf]="bandera == false">
 <br>
       <div fxLayout="row" class="titleCard">
         <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
@@ -413,6 +420,12 @@
          label="Enviar Registro" styleClass="mr-2"></button>
       <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
   </div>
+</ng-template>
+<ng-template [ngIf]="bandera == true">
+  <br>
+    <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+
+</ng-template>
 </form>
 </ng-template>
 

@@ -36,6 +36,8 @@ export class CrearUserComponent implements OnInit {
   public mostrarDialogo:boolean=false;
   // public TipoUser:string=''
   public ref1:any;
+  public bandera:boolean=false
+
   constructor(
     public dialogService: DialogService,
     private formBuilder: FormBuilder,
@@ -81,6 +83,8 @@ export class CrearUserComponent implements OnInit {
  private volver(){
     this.mostrar=true;
     this.Roles1 =[]
+    this.bandera=false
+
     this.ngOnInit()
   }
   public cancelar(){
@@ -192,6 +196,7 @@ export class CrearUserComponent implements OnInit {
                 // formValue.nationality != "" && 
                 // formValue. date_of_birth!= ""
                 ){
+                  this.bandera=true
   
               this.userService.createUser(formValue).subscribe(
                 (algo) => {
@@ -222,6 +227,8 @@ export class CrearUserComponent implements OnInit {
                    
                 },async error => {
                   if(error != undefined) {
+    this.bandera=false
+
                     let text = await translate(error.error.message, "es");
                     if(error.error.dataErros){
                       text = await translate(error.error.dataErros[0].message, "es");

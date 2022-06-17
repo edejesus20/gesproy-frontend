@@ -20,7 +20,7 @@
                     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                     [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
                     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-                    [globalFilterFields]="['id','path','method','icono','link','titulo']"
+                    [globalFilterFields]="['path','method','icono','link','titulo']"
                     [columns]="cols"
                     [filterDelay]="0"
                     [scrollable]="true" scrollHeight="250px"
@@ -44,29 +44,29 @@
                   </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                          <th style="min-width:40px">
+                          <th style="max-width:45px">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
                             <!-- <th ></th> -->
                             <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
-                            <th style="min-width:200px" pSortableColumn="path">RUTA<p-sortIcon field="path"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="method">METHODO<p-sortIcon field="method"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="icono">ICONO<p-sortIcon field="icono"></p-sortIcon></th>
-                            <th style="min-width:270px" pSortableColumn="link">ENLACE<p-sortIcon field="link"></p-sortIcon></th>
-                            <th style="min-width:200px" pSortableColumn="titulo">TITULO<p-sortIcon field="titulo"></p-sortIcon></th>
-                            <th style="min-width:100px" pSortableColumn="Gender.name">Roles<p-sortIcon field="Gender.name"></p-sortIcon></th>
+                            <th style="max-width:150px" pSortableColumn="path">RUTA<p-sortIcon field="path"></p-sortIcon></th>
+                            <th style="max-width:150px" pSortableColumn="method">METHODO<p-sortIcon field="method"></p-sortIcon></th>
+                            <th style="max-width:130px" pSortableColumn="icono">ICONO<p-sortIcon field="icono"></p-sortIcon></th>
+                            <th style="max-width:270px" pSortableColumn="link">ENLACE<p-sortIcon field="link"></p-sortIcon></th>
+                            <th style="max-width:200px" pSortableColumn="titulo">TITULO<p-sortIcon field="titulo"></p-sortIcon></th>
+                            <th style="max-width:200px" pSortableColumn="Gender.name">Roles<p-sortIcon field="Gender.name"></p-sortIcon></th>
                         
                           </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-item>
                         <tr>
-                            <td style="min-width:40px">
+                            <td style="max-width:45px">
                                 <p-tableCheckbox [value]="item"></p-tableCheckbox>
                             </td>
                             <!-- <td>{{item.id}}</td> -->
-                            <td style="min-width:200px">{{item.path | titlecase}}</td>
-                            <td style="min-width:100px">{{item.method | titlecase}}</td>
-                            <td style="min-width:100px">{{item.icono | titlecase}}</td>
+                            <td style="min-width:150px">{{item.path | titlecase}}</td>
+                            <td style="min-width:150px">{{item.method | titlecase}}</td>
+                            <td style="min-width:110px">{{item.icono | titlecase}}</td>
                             <td style="min-width:270px">{{item.link | titlecase}}</td>
                             <td style="min-width:200px">{{item.titulo | titlecase}}</td>
                             <td >
@@ -124,7 +124,7 @@
                                     class="p-button-rounded p-button-danger"></button>
                                     <!-- <button pButton type="button" class="p-button-danger p-button-raised p-button-rounded"
                                     (click)="removeRoles(pointIndex,$event)" 
-                                    label="eliminar"></button> -->
+                                    label="elimaxar"></button> -->
                                   </span>
                                 </div>
 
@@ -141,13 +141,19 @@
       
       </div>
 
-            
+      <ng-template [ngIf]="bandera == false">  
             <div fxLayout="row" class="titleCard">
               <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                label="Enviar Registro" styleClass="mr-2"></button>
-            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            <p-button (click)="Dialog=true" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
         </div>
+      </ng-template>
+      <ng-template [ngIf]="bandera == true">
+        <br>
+          <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+      </ng-template>
        
         
             
@@ -156,3 +162,26 @@
 <p-toast></p-toast>
 
 <p-confirmPopup></p-confirmPopup>
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+            <h4>Esta Seguro de Cerrar la Ventana?</h4>
+            <p>Si para continuar</p>
+        </div>
+    </div>
+
+  <ng-template pTemplate="footer" class="titleCard" >
+    <div style="text-align: center;">
+      <button pButton pRipple label="No" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+      class="p-button-text" (click)="Dialog = false"></button>
+      <button pButton pRipple label="Si"  style="background: #f16357" 
+      class=" p-button-raised p-button-rounded" 
+      icon="pi pi-check"  (click)="cerrar()"  ></button>
+    </div>
+  </ng-template>
+</p-dialog>

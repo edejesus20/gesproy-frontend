@@ -17,11 +17,9 @@ import { Charge_bondingI } from 'src/app/models/user/teacher';
   providers: [DialogService]
 })
 export class Create_Charge_bondingComponent implements OnInit {
-
+  public Dialog:boolean =false
+   public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    Scales: this.formBuilder.array([this.formBuilder.group({
-      ScaleId:['']})]),
    });
 
   displayMaximizable2:boolean=true
@@ -48,6 +46,11 @@ export class Create_Charge_bondingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      Scales: this.formBuilder.array([this.formBuilder.group({
+        ScaleId:['']})]),
+     });
     this.primengConfig.ripple = true;
     if(this.config.data){
       if(this.config.data.id == '1'){
@@ -60,6 +63,14 @@ export class Create_Charge_bondingComponent implements OnInit {
   }
   public cancelar(){
     this.ref.close(undefined);
+  }
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/Charge_bonding');
+  }
+ private volver(){
+    this.bandera=false
+    this.Scale=[]
+    this.ngOnInit()
   }
 
   getAllScale() {
@@ -90,9 +101,11 @@ export class Create_Charge_bondingComponent implements OnInit {
     if(control.value[0].ScaleId == undefined){
       formValue.Scales=[]
     }
-      console.log(formValue)
+      // console.log(formValue)
 
     if(formValue.name != ''){
+    this.bandera=true
+
     this.charge_bondingService.createItem(formValue).subscribe(
         (algo) => {
           if(this.mostrarDialogo== true){
@@ -112,13 +125,16 @@ export class Create_Charge_bondingComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Charge_bonding');
+                  this.volver()
+                  // this.router.navigateByUrl('/usuarios/Charge_bonding');
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

@@ -14,7 +14,8 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
   styleUrls: ['./asignar-rol-resource.component.css']
 })
 export class AsignarRolResourceComponent implements OnInit {
-
+  public Dialog:boolean =false
+   public bandera:boolean=false
   public resources: ResourceI[]=[];
   public mostrar:boolean = false
   public roles: RoleI[]=[];
@@ -33,8 +34,6 @@ export class AsignarRolResourceComponent implements OnInit {
 
 
   public form:FormGroup=this.formBuilder.group({
-    //select: ['', [Validators.required]],
-    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +45,9 @@ export class AsignarRolResourceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.form=this.formBuilder.group({
+      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    });
     this.primengConfig.ripple = true;
     this.cols = [
       { field: 'id', header: 'Id' },
@@ -84,7 +86,16 @@ public onSelectAllChange(event:any) {
     }
 }
 
-
+cerrar(){
+  this.router.navigateByUrl('/usuarios/resources');
+ }
+private volver(){
+  this.bandera=false
+  this.selectAll= false
+  this.selectedProducts=[]
+  this.Roles1=[]
+  this.ngOnInit()
+}
 
   getUsrResource() {
   this.resourcesService.getResource().subscribe((ResourceFromApi) => {
@@ -146,6 +157,7 @@ public onSelectAllChange(event:any) {
       // console.log(formValue)
 
       if(this.selectedProducts.length > 0 && formValue.RecursosRoles.length > 0){
+        this.bandera=true
 
     this.rolesService.assinRoleResource(formValue).subscribe(
       () => {
@@ -163,12 +175,15 @@ public onSelectAllChange(event:any) {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/resources');
+                  this.volver()
+                  // this.router.navigateByUrl('/usuarios/resources');
                   clearInterval(interval); 
                 }
           }, 1000);
       },async error => {
         if(error != undefined) {
+  this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

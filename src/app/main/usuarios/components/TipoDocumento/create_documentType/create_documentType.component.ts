@@ -14,9 +14,10 @@ const translate = require('translate');
 export class Create_documentTypeComponent implements OnInit {
 
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
    });
    public mostrarDialogo:boolean=false;
+   public Dialog:boolean =false
+   public bandera:boolean=false
   
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
@@ -40,13 +41,26 @@ export class Create_documentTypeComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+     });
   }
   public cancelar(){
     this.ref.close(undefined);
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/documentType');
+  }
+ private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
+
   public onSubmit() {
     let formValue: DocumentTypeI = this.form.value;
     if(formValue.name != ''){
+    this.bandera=true
     this.documentTypeService.createItem(formValue).subscribe(
       (algo) => {
         if(this.mostrarDialogo== true){
@@ -66,13 +80,16 @@ export class Create_documentTypeComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/documentType');
+                  this.volver()
+                  // this.router.navigateByUrl('/usuarios/documentType');
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

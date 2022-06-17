@@ -47,6 +47,7 @@ export class CreateStudentComponent implements OnInit {
    public ref1:any;
    public seedbeds:SeedbedI[] =[]
  public Dialog:boolean =false
+ public bandera:boolean=false
 
   constructor(
     public ref: DynamicDialogRef,
@@ -125,6 +126,7 @@ export class CreateStudentComponent implements OnInit {
     this.mostrar=true;
     this.mostrar2=false;
     this.headquarterProgram=[]
+    this.bandera= false
     this.headquarterProgramStudent1 = []
     this.ngOnInit()
   }
@@ -222,7 +224,7 @@ export class CreateStudentComponent implements OnInit {
       // formValue.current_semester  != "" && formValue.current_average  != "")
       ){
  
-    
+        this.bandera= true
         this.studentService.createItem(formValue).subscribe(
           (algo) => {
             if(this.mostrarDialogo== true){
@@ -251,6 +253,8 @@ export class CreateStudentComponent implements OnInit {
           },async error => {
             if(error != undefined) {
               // console.log(error);
+    this.bandera=false
+
               let text = await translate(error.error.message, "es");
               if(error.error.dataErros){
                 text = await translate(error.error.dataErros[0].message, "es");

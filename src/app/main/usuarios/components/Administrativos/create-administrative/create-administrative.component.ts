@@ -44,6 +44,7 @@ export class CreateAdministrativeComponent implements OnInit {
   public headquarters: HeadquarterI[]=[]
   public charges:ChargeI[]=[]
   public mostrarDialogo:boolean=false;
+  public bandera:boolean=false
 
   public ref1:any;
   constructor(
@@ -140,6 +141,7 @@ export class CreateAdministrativeComponent implements OnInit {
     this.Charges1=[]
     this.mostrarUser= false
     this.mostrar=true;
+    this.bandera=false
     this.ngOnInit()
   }
 
@@ -212,7 +214,7 @@ export class CreateAdministrativeComponent implements OnInit {
     ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
     ){
     // console.log(formValue)
-
+    this.bandera=true
             this.administrativeService.createItem(formValue).subscribe(
               (algo) => {
                 if(this.mostrarDialogo== true){
@@ -240,6 +242,8 @@ export class CreateAdministrativeComponent implements OnInit {
                 }
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

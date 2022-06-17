@@ -14,9 +14,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class CrearRolComponent implements OnInit {
   public mostrarDialogo:boolean=false;
-
+  public Dialog:boolean =false
+   public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
    });
   
   displayMaximizable2:boolean=true
@@ -32,6 +32,9 @@ export class CrearRolComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+     });
     this.primengConfig.ripple = true;
     if(this.config.data){
       if(this.config.data.id == '1'){
@@ -44,10 +47,19 @@ export class CrearRolComponent implements OnInit {
   public cancelar(){
     this.ref.close(undefined);
   }
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/roles');
+  }
+ private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
 
   public onSubmit() {
     let formValue: RoleI = this.form.value;
     if(formValue.name != ''){
+    this.bandera=true
+
     this.rolesService.createRole(formValue).subscribe(
       (algo) => {
         if(this.mostrarDialogo== true){
@@ -67,13 +79,16 @@ export class CrearRolComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/roles');
+                  this.volver()
+                  // this.router.navigateByUrl('/usuarios/roles');
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

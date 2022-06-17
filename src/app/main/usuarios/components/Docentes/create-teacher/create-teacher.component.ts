@@ -71,7 +71,7 @@ export class CreateTeacherComponent implements OnInit {
    FilesFormaciones:Archivo[] =[]
   FilesExperinecia:Archivo[] =[]
   FilesResolusiones:Archivo[] =[]
-
+    public bandera:boolean=false
   private deletetrainingTeachers:any[]=[]
   private deleteWorkexperiences:any[] = []
   constructor(
@@ -213,6 +213,7 @@ export class CreateTeacherComponent implements OnInit {
     this.headquarterProgramTeacher1 = []
     this.trainingTeachers = []
     this.Workexperiences =[]
+    this.bandera= false
     this.ngOnInit()
   }
 
@@ -371,7 +372,7 @@ export class CreateTeacherComponent implements OnInit {
         && formValue.MincienciaCategoryId != ("" || undefined) &&
         formValue.ChargeBondingId != ("" || undefined))){
                   // console.log(formValue)
-
+    this.bandera= true
           this.teacherService.createItem(formValue).subscribe(
             (algo) => {
 
@@ -687,6 +688,8 @@ export class CreateTeacherComponent implements OnInit {
                 }
             },async error => {
               if(error != undefined) {
+    this.bandera=false
+
                 let text = await translate(error.error.message, "es");
                 if(error.error.dataErros){
                   text = await translate(error.error.dataErros[0].message, "es");

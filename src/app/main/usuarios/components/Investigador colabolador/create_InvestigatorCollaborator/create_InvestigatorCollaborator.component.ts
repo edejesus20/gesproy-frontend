@@ -30,7 +30,7 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
    });
    public image:string='assets/images/images.jpg'
-
+   public bandera:boolean=false
   public mostrarUser:boolean=false;
   public users:PersonI[]=[];
   public documentTypes:DocumentTypeI[]=[]
@@ -74,6 +74,7 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
   }
  private volver(){
+  this.bandera= false
 
     this.mostrarUser= false
 
@@ -146,7 +147,7 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
       )||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
     ){
     // console.log(formValue)
-
+      this.bandera=true
             this.investigadorColaboladorService.createItem(formValue).subscribe(
               (algo) => {
                 if(this.mostrarDialogo== true){
@@ -176,6 +177,8 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
               },async error => {
                 // console.log(error)
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

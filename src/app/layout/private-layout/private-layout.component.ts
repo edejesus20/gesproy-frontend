@@ -252,9 +252,10 @@ uploadedFiles: any[] = [];
 // cambiar clave
 public onSubmit(): void {
   const formValue: CambiarPasswordI = this.form.value;
+  this.motrar=true
   this.userService.actualzarContraseña(formValue).subscribe(
     (algo) => {
-        this.motrar=true
+        
 
             var date = new Date('2020-01-01 00:00:04');
             function padLeft(n:any){ 

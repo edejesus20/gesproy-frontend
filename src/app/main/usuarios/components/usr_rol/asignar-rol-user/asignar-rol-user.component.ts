@@ -23,7 +23,8 @@ export class AsignarRolUserComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public algo:number[]=[0];
- 
+  public Dialog:boolean =false
+  public bandera:boolean=false
   selectAll: boolean = false;
   totalRecords: number=0
   first = 0;
@@ -35,7 +36,6 @@ export class AsignarRolUserComponent implements OnInit {
   private API_URI= environment.API_URI;
 
   public form:FormGroup=this.formBuilder.group({
-    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +47,9 @@ export class AsignarRolUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this. form=this.formBuilder.group({
+      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    });
     this.getUser()
   this.getUsrRoles()
   this.loading = false;
@@ -104,7 +107,7 @@ export class AsignarRolUserComponent implements OnInit {
   public onSelectionChange(value = []) {
     this.selectAll = value.length === this.totalRecords;
     this.selectedProducts = value;
-    console.log(this.selectedProducts)
+    // console.log(this.selectedProducts)
 }
 
 public onSelectAllChange(event:any) {
@@ -127,6 +130,18 @@ Buscar(event: Event, dt1:any){
     dt1.filterGlobal(filterValue, 'contains')
     console.log('aqui',dt1)
 }
+
+cerrar(){
+  this.router.navigateByUrl('/usuarios/users');
+}
+private volver(){
+  this.bandera=false
+  this.Roles1=[]
+  this.selectedProducts=[]
+  this.selectAll= false
+  this.ngOnInit()
+}
+
 
   public onSubmit(e:Event):void {
     e.preventDefault()
@@ -166,6 +181,7 @@ Buscar(event: Event, dt1:any){
     console.log(formValue)
 
     if(formValue.UsersRoles.length > 0){
+      this.bandera=true
 
       this.rolesService.assinRole(formValue).subscribe(
     () => {
@@ -183,12 +199,15 @@ Buscar(event: Event, dt1:any){
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/usuarios/users');
+                this.volver()
+                // this.router.navigateByUrl('/usuarios/users');
                 clearInterval(interval); 
               }
         }, 1000);
     },async error => {
       if(error != undefined) {
+  this.bandera=false
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");

@@ -824,12 +824,23 @@
         </div>
         </div>
       </div>
+      <ng-template [ngIf]="bandera == false">
               <div fxLayout="row" class="titleCard" style="margin-top: 20px;">
-                <button pButton type="button" type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
+                <button pButton type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
               <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
+      </ng-template>
+          <ng-template [ngIf]="bandera == true">
+            <br>
+            <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
+            <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+      
+            <!-- </div> -->
+          
+          </ng-template>
          
           
               
@@ -1453,13 +1464,21 @@
     </div>
   </div>
   <br>
-  <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
-    <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
+  <ng-template [ngIf]="bandera == false">
+    <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
+      <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
+    
+      <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
+      icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
+      label="Enviar Registro" styleClass="mr-2"></button>
+        
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="bandera == true">
+    <br>
+      <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
   
-    <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
-               icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
-               label="Enviar Registro" styleClass="mr-2"></button>
-  </div>
+  </ng-template>
 
 </ng-template>
 </form>
