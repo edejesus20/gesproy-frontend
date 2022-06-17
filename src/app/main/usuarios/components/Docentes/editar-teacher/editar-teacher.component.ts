@@ -173,6 +173,7 @@ export class EditarTeacherComponent implements OnInit {
     this.getAlltrainings()
     this.getAllLinkTypes()
   }
+  
   getAlltrainings() {
     this.trainingsService.getList().subscribe(
       (AdministrativeFromApi) => {
@@ -462,7 +463,7 @@ export class EditarTeacherComponent implements OnInit {
                 for (const key of algo.teacherOne.Workexperiences) {
                   if(key.id){
                     array1.push({
-                      UserId:this.form.value.id,
+                      UserId:this.user,
                       WorkexperienceId:key.id,
                       name:'constancia'+key.name_institution, 
                       file:null

@@ -53,61 +53,10 @@ export class CreateTeacherComponent implements OnInit {
   // public lines:LineI[]=[];
   public charge_bondings:Charge_bondingI[]=[]
   public trainings: TrainingI[]=[]
- 
+ public Dialog:boolean =false
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
-  public form:FormGroup=this.formBuilder.group({
-    name:[''],
-    surname:[''],
-    DocumentTypeId:[1],
-    identification:[''],
-    // GenderId:[''],
-    // address:[''],
-    // phone:[''],
-    email:[''],
-    ScaleId:[''],
-    UserId:[''],
-    MincienciaCategoryId:['', [Validators.required]],
-    // hours_of_dedication:['', [Validators.required]],
-    headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
-      {
-        TeacherId:0,
-        HeadquarterProgramId:['', [Validators.required]],
-        ResearchBondingId:['', [Validators.required]],
-    })]),
-    // Lines: this.formBuilder.array([this.formBuilder.group(
-    //   {
-    //     TeacherId:0,
-    //     LineId:['', [Validators.required]],
-    // })]),
-    trainingTeacher: this.formBuilder.array([this.formBuilder.group(
-      {
-        id:0,
-        TeacherId:0,
-        name: [''],
-        date_graduation: [''],
-        name_institution: [''],
-        resolution_convalidation: [{value:'No'}],
-        degree_certificate: [''],
-        TrainingId:[''],
-        resolution_certificate:[''],
-
-    })]),
-  Workexperiences:this.formBuilder.array([this.formBuilder.group(
-    {
-      id:0,
-      TeacherId:0,
-      name_institution: [''],
-      position_type: [''],
-      functions:[''],
-      start_date:[''],
-      final_date:[''],
-      constancy:['']
-  })]),
-    // nationality:[''],
-    // date_of_birth:[''],
-    ChargeBondingId:['',[Validators.required]]
-   });
+  public form:FormGroup=this.formBuilder.group({});
    public research_bondings:Research_bondingI[]=[]
    public headquarterProgram:any[]=[]
    public headquarterProgramTeacher1:any[] = []
@@ -163,6 +112,58 @@ export class CreateTeacherComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
+    this.form=this.formBuilder.group({
+      name:[''],
+      surname:[''],
+      DocumentTypeId:[1],
+      identification:[''],
+      // GenderId:[''],
+      // address:[''],
+      // phone:[''],
+      email:[''],
+      ScaleId:[''],
+      UserId:[''],
+      MincienciaCategoryId:['', [Validators.required]],
+      // hours_of_dedication:['', [Validators.required]],
+      headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
+        {
+          TeacherId:0,
+          HeadquarterProgramId:['', [Validators.required]],
+          ResearchBondingId:['', [Validators.required]],
+      })]),
+      // Lines: this.formBuilder.array([this.formBuilder.group(
+      //   {
+      //     TeacherId:0,
+      //     LineId:['', [Validators.required]],
+      // })]),
+      trainingTeacher: this.formBuilder.array([this.formBuilder.group(
+        {
+          id:0,
+          TeacherId:0,
+          name: [''],
+          date_graduation: [''],
+          name_institution: [''],
+          resolution_convalidation: [{value:'No'}],
+          degree_certificate: [''],
+          TrainingId:[''],
+          resolution_certificate:[''],
+  
+      })]),
+    Workexperiences:this.formBuilder.array([this.formBuilder.group(
+      {
+        id:0,
+        TeacherId:0,
+        name_institution: [''],
+        position_type: [''],
+        functions:[''],
+        start_date:[''],
+        final_date:[''],
+        constancy:['']
+    })]),
+      // nationality:[''],
+      // date_of_birth:[''],
+      ChargeBondingId:['',[Validators.required]]
+     });
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -196,7 +197,24 @@ export class CreateTeacherComponent implements OnInit {
         this.users = AdministrativeFromApi.users;
       }, error => console.error(error));
   }
-
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/Teacher');
+  }
+ private volver(){
+    this.validandoCertificado=[]
+    this.FilesFormaciones=[]
+    this.FilesExperinecia =[]
+    this.FilesResolusiones =[]
+    this.mostrarUser= false
+    this.mostrar=true;
+    this.mostrar2=false;
+    this.mostrar3=false;
+    this.headquarterProgram=[]
+    this.headquarterProgramTeacher1 = []
+    this.trainingTeachers = []
+    this.Workexperiences =[]
+    this.ngOnInit()
+  }
 
   public onSubmit(e: Event) {
     e.preventDefault()
@@ -331,7 +349,7 @@ export class CreateTeacherComponent implements OnInit {
           formValue.Workexperiences=[]
         }
 
-          console.log(formValue)
+          // console.log(formValue)
 
       if(
         (this.mostrarUser == true && formValue.name != ""&& formValue.surname != ""&&
@@ -371,13 +389,13 @@ export class CreateTeacherComponent implements OnInit {
               for (const key of algo.teacherOne.TrainingTeachers) {
                 if(key.id){
                   arrayCertificado.push({
-                    UserId:this.form.value.id,
+                    UserId:algo.teacherOne.UserId,
                     TrainingTeacherId:key.id,
                     name:'certificado'+key.Training?.name, 
                     file:null
                     })
                     arrayResolusion.push({
-                      UserId:this.form.value.id,
+                      UserId:algo.teacherOne.UserId,
                       TrainingTeacherId:key.id,
                       name:'certificadoResolucion', 
                       file:null
@@ -505,7 +523,7 @@ export class CreateTeacherComponent implements OnInit {
                 for (const key of algo.teacherOne.Workexperiences) {
                   if(key.id){
                     array1.push({
-                      UserId:this.form.value.id,
+                      UserId:algo.teacherOne.UserId,
                       WorkexperienceId:key.id,
                       name:'constancia'+key.name_institution, 
                       file:null
@@ -613,7 +631,10 @@ export class CreateTeacherComponent implements OnInit {
                           }
                           date = new Date(date.getTime() - 1000);
                           if( minutes == '00' && seconds == '01' ) {
-                            this.router.navigateByUrl('/usuarios/Teacher');
+                            // this.ngOnInit()
+                            this.volver()
+                            // this.mostrarUser= false
+                            // this.router.navigateByUrl('/usuarios/Teacher');
                             clearInterval(interval); 
                           }
                     }, 1000);
@@ -655,7 +676,8 @@ export class CreateTeacherComponent implements OnInit {
                               }
                               date = new Date(date.getTime() - 1000);
                               if( minutes == '00' && seconds == '01' ) {
-                                this.router.navigateByUrl('/usuarios/Teacher');
+                                this.volver()
+                                // this.router.navigateByUrl('/usuarios/Teacher');
                                 clearInterval(interval); 
                               }
                         }, 1000);
@@ -938,8 +960,8 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(Create_Charge_bondingComponent, {
-      width: '40%',
-      height: '50%',
+      width: '50%',
+      height: '55%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
@@ -960,8 +982,8 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(Create_MincienciaCategoryComponent, {
-      width: '40%',
-      height: '50%',
+      width: '50%',
+      height: '55%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
@@ -981,8 +1003,8 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(Create_Research_bondingComponent, {
-      width: '35%',
-      height: '50%',
+      width: '50%',
+      height: '55%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
       baseZIndex: 10000,
       data: {
@@ -1002,8 +1024,8 @@ get getWorkexperiences() {
     e.preventDefault()
 
     this.ref1 = this.dialogService.open(Create_capacitacionComponent, {
-      width: '35%',
-      height: '50%',
+      width: '50%',
+      height: '55%',
       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false,showHeader:false, 
       baseZIndex: 10000,
       data: {

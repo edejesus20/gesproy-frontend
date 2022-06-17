@@ -26,6 +26,7 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({ });
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
+  public image:string='assets/images/images.jpg'
 
 
   public ref:any;

@@ -67,6 +67,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { AnunciosComponent } from './Anuncios/Anuncios.component';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {TabViewModule} from 'primeng/tabview';
+import {ScrollTopModule} from 'primeng/scrolltop';
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
@@ -94,7 +95,7 @@ import {TabViewModule} from 'primeng/tabview';
     FormsModule,
     TabMenuModule,
     TabViewModule,
-    
+    ScrollTopModule,
     BrowserModule,
     BrowserAnimationsModule,
     InstitutionRoutingModule,

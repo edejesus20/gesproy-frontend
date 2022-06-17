@@ -85,9 +85,10 @@ public form2:FormGroup=this.formBuilder.group({
   id:['', [Validators.required]],
   UserId:['', [Validators.required]],
   avatar: [''],
-  avatarImagen: [''],
+  // avatarImagen: [''],
 });
 public imagenNueva:any | null= null
+public imagenAdjuntada:any | null= null
 public responsiveOptions:any[] = [
   {
       breakpoint: '1068px',
@@ -113,6 +114,9 @@ public images: any[]=[
   {"src": "assets/avatares/images.png",},
   {"src": "assets/avatares/infiltrado.jpg",},
 ];
+public adjuntar:boolean=false
+public adjuntarM:boolean=false
+uploadedFiles: any[] = [];
 
   constructor(
     private messageService: MessageService,
@@ -294,17 +298,42 @@ public onSubmit(): void {
 }
 // cambiar avatar
 
-onFileChange(event:any) {
+adjuntarCancelar(a:any){
+  console.log(a)
+  this.imagenNueva=null
+  this.uploadedFiles=[]
+  a.files=[]
+  a.clear()
+  this.adjuntar= false
+  this.adjuntarM= false
+}
+onFileChange(event:any,a:any) {
   event.preventDefault();
   // console.log(control.value[pointIndex].resolution_convalidation)
-  if(this.form2.value.avatarImagen != ''){
-    console.log('aquii')
-    if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
-      let file=event.target.files[0];
-      this.imagenNueva=file
+  // console.log(this.imagenAdjuntada)
+  // if(this.imagenNueva == null){
+    // console.log('uploadedFiles',this.uploadedFiles)
+    // console.log('aquii a',a)
+    let file1=a.files[0];
+
+    // console.log('aquii file1',file1)
+    // console.log('aquii',this.fileUpload)
+  
+    // let file=event.target.files[0];
+      this.imagenNueva=file1
+  //   for(let file of event.target.files) {
+  //     this.imagenNueva=file
+  //     // this.uploadedFiles.push(file);
+  // }
+
+    // if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+    //   let file=event.target.files[0];
+    //   this.imagenNueva=file
       this.form2.controls['avatar'].setValue(undefined)
-      }
-    }
+    //   }
+  console.log(this.imagenNueva)
+
+    // }
   }
   
 public onSubmit2(): void {
@@ -314,7 +343,8 @@ public onSubmit2(): void {
     if(this.imagenNueva != null && formValue.UserId != undefined && 
       formValue.avatar == undefined){
       if(this.imagenNueva != null){
-        this.motrar=true
+        // this.motrar=true
+        this.adjuntarM=true
         this.userService.createImagen(formValue.UserId,this.imagenNueva).subscribe(
           (algo) => {
          console.log('cambio')
@@ -336,6 +366,8 @@ public onSubmit2(): void {
                 if(minutes == '00' && seconds == '01'){
                   this.mostrarAvatarClave=false
                   this.motrar=false
+                  this.adjuntarM=false
+
                   this.verificar()
                   this.ngOnInit()
                   this.router.navigateByUrl('/login');
@@ -346,6 +378,8 @@ public onSubmit2(): void {
         }
           ,async error => {
             this.motrar=false
+             this.adjuntarM=false
+
             if(error != undefined) {
               let text = await translate(error.error.message, "es");
               if(error.error.dataErros){
@@ -423,12 +457,15 @@ public seleccionar(src:string,e:Event){
 
   if(this.form2.value.avatar == src){
     this.form2.controls['avatar'].setValue(undefined)
-    this.form2.controls['avatarImagen'].setValue(undefined)
+    // this.form2.controls['avatarImagen'].setValue(undefined)
     this.imagenNueva=null
+    this.imagenAdjuntada=null
   }else{
     this.form2.controls['avatar'].setValue(src)
-    this.form2.controls['avatarImagen'].setValue(undefined)
+    // this.form2.controls['avatarImagen'].setValue(undefined)
     this.imagenNueva=null
+    this.imagenAdjuntada=null
+
 
   }
 

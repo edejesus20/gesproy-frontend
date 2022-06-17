@@ -21,6 +21,7 @@ const translate = require('translate');
   providers: [DialogService]
 })
 export class ModificarUserComponent implements OnInit {
+  public image:string='assets/images/images.jpg'
 
   public mostrar:number=1;
   public mostrar2:boolean=false;

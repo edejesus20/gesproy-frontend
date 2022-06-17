@@ -26,21 +26,12 @@ export class CrearUserComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=true;
   public algo:number[]=[0];
-
+  public Dialog:boolean =false
+  public image:string='assets/images/images.jpg'
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    surname:['', [Validators.required]],
-    DocumentTypeId:[1],
-    identification:[''],
-    // GenderId:['', [Validators.required]],
-    // address:['', [Validators.required]],
-  //  phone:['', [Validators.required]],
-    email:['', [Validators.required]],
-    // nationality: ['', [Validators.required]],
-    // date_of_birth: ['', [Validators.required]],
-    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
+ 
   });
   public mostrarDialogo:boolean=false;
   // public TipoUser:string=''
@@ -70,10 +61,27 @@ export class CrearUserComponent implements OnInit {
       this.mostrarDialogo= false
 
     }
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      surname:['', [Validators.required]],
+      DocumentTypeId:[1],
+      identification:[''],
+      email:['', [Validators.required]],
+      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
+    });
     
     this.getUsrRoles()
     // this.getAllgenders()
     // this.getAlldocumentTypes()
+  }
+
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/users');
+  }
+ private volver(){
+    this.mostrar=true;
+    this.Roles1 =[]
+    this.ngOnInit()
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -171,7 +179,7 @@ export class CrearUserComponent implements OnInit {
       }
 
 
-      console.log(formValue)
+      // console.log(formValue)
               if(formValue.name != ""&&
                 formValue.surname != ""&&
                 formValue.DocumentTypeId != ( 0 || undefined)&&
@@ -204,7 +212,8 @@ export class CrearUserComponent implements OnInit {
                     }
                     date = new Date(date.getTime() - 1000);
                     if( minutes == '00' && seconds == '01' ) {
-                      this.router.navigateByUrl('/usuarios/users');
+                      this.volver()
+                      // this.router.navigateByUrl('/usuarios/users');
                       clearInterval(interval); 
                     }
               }, 1000);

@@ -10,10 +10,29 @@
       <br>
       
       <div [style]="{'margin-top':'-1px'}" >
-          <div fxLayout="row" class="titleCard">
+        <div class="grid " style="padding: 5px;">
+          <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+            <img alt="logo" src="{{image}}" class="ml-4 mt-1"
+            style="width: 70%"/>
+          </div>
+  
+          <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+            <h2 style="text-align: center;">CREAR ADMINISTRATIVO</h2>
+          </div>
+  
+          <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+            <!-- <img alt="logo" src="{{image2}}" 
+            style="width: 100%"/> -->
+            <p-button (click)="Dialog = true" icon="pi pi-times" 
+          [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+          styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
+          </div>
+        </div>
+        <br>
+          <!-- <div fxLayout="row" class="titleCard">
               <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
             <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Administrativo</h2>
-          </div>
+          </div> -->
           <ng-template [ngIf]="mostrarUser == false">
 
             <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px;text-align: center">
@@ -132,13 +151,11 @@
               </div>
               
                 <br>
-                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                <div *ngIf="mostrar == false" fxLayout="row" fxLayoutGap="20px" style="text-align:center">
                   <button pButton type="button" (click)="addRoles($event)" 
                   class="p-button-warning p-button-raised p-button-rounded"
                    label="Add Cargos"></button>  
                 </div>
-      
-                <br>
                 <div fxLayout="row" fxLayoutGap="20px">
                   <div class="table-wrapper" >
                     <p-table [value]="algo" *ngIf="mostrar == true"> 
@@ -206,9 +223,17 @@
                           </td>
                       </tr>
                     </ng-template>
+                    <ng-template pTemplate="summary">
+                      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                        <button pButton type="button" (click)="addRoles($event)" 
+                        class="p-button-warning p-button-raised p-button-rounded"
+                         label="Add Cargos"></button>  
+                      </div>
+                  </ng-template>
                     </p-table>
                   </div>
                 </div>
+                <br>
       </div>
 
             <br>
@@ -216,7 +241,7 @@
               <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                label="Enviar Registro" styleClass="mr-2"></button>
-            <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+            <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
         </div>
        
         
@@ -226,10 +251,29 @@
 <ng-template [ngIf]="mostrarDialogo == true">
   <br>
   <div [style]="{'margin-top':'-1px'}" >
-    <div fxLayout="row" class="titleCard">
+    <div class="grid " style="padding: 5px;">
+      <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+        <img alt="logo" src="{{image}}" class="ml-4 mt-1"
+        style="width: 70%"/>
+      </div>
+
+      <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+        <h2 style="text-align: center;">CREAR ADMINISTRATIVO</h2>
+      </div>
+
+      <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+        <!-- <img alt="logo" src="{{image2}}" 
+        style="width: 100%"/> -->
+        <p-button (click)="cancelar()" icon="pi pi-times" 
+      [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+      styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
+      </div>
+    </div>
+    <br>
+    <!-- <div fxLayout="row" class="titleCard">
         <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
       <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Administrativo</h2>
-    </div>
+    </div> -->
     <ng-template [ngIf]="mostrarUser == false">
 
       <div fxLayout="row" fxLayoutGap="20px" style="margin-bottom: 20px;text-align: center">
@@ -347,13 +391,11 @@
           </div>
         </div>
           <br>
-          <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+          <div *ngIf="mostrar == false" fxLayout="row" fxLayoutGap="20px" style="text-align:center">
             <button pButton type="button" (click)="addRoles($event)" 
             class="p-button-warning p-button-raised p-button-rounded"
              label="Add Cargos"></button>  
           </div>
-
-          <br>
           <div fxLayout="row" fxLayoutGap="20px">
             <div class="table-wrapper" >
               <p-table [value]="algo" *ngIf="mostrar == true"> 
@@ -421,15 +463,23 @@
                     </td>
                 </tr>
               </ng-template>
+              <ng-template pTemplate="summary">
+                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                  <button pButton type="button" (click)="addRoles($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Cargos"></button>  
+                </div>
+            </ng-template>
               </p-table>
             </div>
           </div>
+          
 </div>
 <br>
 <br>
 
 <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
-  <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+  <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
 
   <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
@@ -440,3 +490,27 @@
 <p-toast></p-toast>
 
 <p-confirmPopup></p-confirmPopup>
+
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+            <h4>Esta Seguro de Cerrar la Ventana?</h4>
+            <p>Si para continuar</p>
+        </div>
+    </div>
+
+  <ng-template pTemplate="footer" class="titleCard" >
+    <div style="text-align: center;">
+      <button pButton pRipple label="No" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+      class="p-button-text" (click)="Dialog = false"></button>
+      <button pButton pRipple label="Si"  style="background: #f16357" 
+      class=" p-button-raised p-button-rounded" 
+      icon="pi pi-check"  (click)="cerrar()"  ></button>
+    </div>
+  </ng-template>
+</p-dialog>

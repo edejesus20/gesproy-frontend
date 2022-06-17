@@ -25,21 +25,11 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrarDialogo:boolean=false;
+  public Dialog:boolean =false
 
   public form:FormGroup=this.formBuilder.group({
-    name:[''],
-    surname:[''],
-    DocumentTypeId:[1],
-    identification:[''],
-    // GenderId:[''],
-    // address:[''],
-    // phone:[''],
-    
-    email:[''],
-    UserId:[''],
-    // nationality:[''],
-    // date_of_birth:[''],
    });
+   public image:string='assets/images/images.jpg'
 
   public mostrarUser:boolean=false;
   public users:PersonI[]=[];
@@ -69,7 +59,27 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
+    this.form=this.formBuilder.group({
+      name:[''],
+      surname:[''],
+      DocumentTypeId:[1],
+      identification:[''],
+      email:[''],
+      UserId:[''],
+   
+     });
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
+  }
+ private volver(){
+
+    this.mostrarUser= false
+
+    this.ngOnInit()
+  }
+
   public cancelar(){
     this.ref.close(undefined);
   }
@@ -156,7 +166,8 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
+                          this.volver()
+                          // this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
                           clearInterval(interval); 
                         }
                      

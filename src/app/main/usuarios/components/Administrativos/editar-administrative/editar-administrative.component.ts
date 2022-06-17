@@ -29,6 +29,7 @@ export class EditarAdministrativeComponent implements OnInit {
 
   public mostrar2:boolean=true;
   public algo:number[]=[0];
+  public image:string='assets/images/images.jpg'
 
   public tabla:boolean=true;
   displayMaximizable2:boolean=false

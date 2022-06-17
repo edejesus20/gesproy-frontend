@@ -8,10 +8,10 @@
   <br>
   
         <div [style]="{'margin-top':'-1px'}" >
-          <div fxLayout="row" class="titleCard">
+          <!-- <div fxLayout="row" class="titleCard">
             <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
           <h2 class="fondebabutton" style="margin-top: -1px;">Editar Estudiante</h2>
-        </div>
+        </div> -->
 
   
           <div style="border: 1px solid black;padding: 10px;">
@@ -19,16 +19,17 @@
             <div class="grid p-fluid" style="padding: 10px;">
               <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
                 <img alt="logo" src="{{image}}" 
-                style="width: 100%"/>
+                style="width: 70%"/>
               </div>
   
               <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
-                <h2 style="text-align: center;">HOJA DE VIDA PARA ESTUDIANTES</h2>
+                <h2 style="text-align: center;">EDITAR ESTUDIANTES</h2>
               </div>
   
               <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                <img alt="logo" src="{{image2}}" 
-                style="width: 100%"/>
+                <p-button (click)="volver($event)" icon="pi pi-times" 
+                [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+                styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
               </div>
             </div>
            
@@ -163,14 +164,6 @@
               </div>
               <br>
 
-
-          <div fxLayout="row" fxLayoutGap="20px"  style="display: flex;justify-content:center;align-items:center" >
-            <button pButton type="button" (click)="addRoles($event)" 
-            class="p-button-warning p-button-raised p-button-rounded"
-             label="Add Sedes y Programa"></button>  
-          </div>
-
-          <br>
           <div fxLayout="row" fxLayoutGap="20px">
             <div class="table-wrapper" >
               <p-table [value]="algo" *ngIf="mostrar2 == true"> 
@@ -231,6 +224,13 @@
                     </td>
                 </tr>
               </ng-template>
+              <ng-template pTemplate="summary">
+                <div fxLayout="row" fxLayoutGap="20px"  style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" (click)="addRoles($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Sedes y Programa"></button>  
+                </div>
+            </ng-template>
               </p-table>
             </div>
           </div>
@@ -242,12 +242,7 @@
             <h4 style="text-align:center;">3.1. Prácticas o pasantías que haya realiza</h4>
            
 
-              <div fxLayout="row" fxLayoutGap="20px" 
-              style="display: flex;justify-content:center;align-items:center" >
-                <button pButton type="button" (click)="addStudentInternships($event)" 
-                class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Pasantias o Practicas"></button>  
-              </div>
+              
               <div fxLayout="row" fxLayoutGap="20px">
                 <div class="table-wrapper" >
                   <p-table [value]="algo1" *ngIf="mostrar3 == true"> 
@@ -328,6 +323,14 @@
                         </td>
                     </tr>
                   </ng-template>
+                  <ng-template pTemplate="summary">
+                    <div fxLayout="row" fxLayoutGap="20px" 
+                    style="display: flex;justify-content:center;align-items:center" >
+                      <button pButton type="button" (click)="addStudentInternships($event)" 
+                      class="p-button-warning p-button-raised p-button-rounded"
+                       label="Add Pasantias o Practicas"></button>  
+                    </div>
+                </ng-template>
                   </p-table>
                 </div>
               </div>
@@ -343,7 +346,7 @@
               <div fxLayout="row" class="titleCard" >
                 <button pButton type="button" (click)="onSubmit()" icon="pi pi-check" [disabled]="!form.valid"
                class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
-                <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+                <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
          
           

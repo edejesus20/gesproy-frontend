@@ -10,10 +10,10 @@
 
         <div style="border: 1px solid black;padding: 10px;">
 
-          <div class="grid p-fluid" style="padding: 10px;">
+          <div class="grid " style="padding: 5px;">
             <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-              <img alt="logo" src="{{image}}" 
-              style="width: 100%"/>
+              <img alt="logo" src="{{image}}" class="ml-4 mt-1"
+              style="width: 70%"/>
             </div>
 
             <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
@@ -21,8 +21,11 @@
             </div>
 
             <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-              <img alt="logo" src="{{image2}}" 
-              style="width: 100%"/>
+              <!-- <img alt="logo" src="{{image2}}" 
+              style="width: 100%"/> -->
+              <p-button (click)="Dialog = true" icon="pi pi-times" 
+            [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+            styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
             </div>
           </div>
          
@@ -140,7 +143,8 @@
                   <div style="width:100%">
                   <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                   [options]="charge_bondings" [filter]="true"
-                    name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
+                    name="ChargeBondingId" formControlName="ChargeBondingId" 
+                    label="VINCULACION DE CARGO" 
                     [style]="{'width':'100%','margin-bottom':'20px'}"  
                     optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
                      placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO" (click)="getAllscales($event)">
@@ -190,7 +194,7 @@
                 <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                 [options]="scales" [filter]="true"
                   name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-                  [style]="{'width':'100%','margin-bottom':'20px','margin-left':'-40px'}"  
+                  [style]="{'width':'100%','margin-bottom':'20px'}"  
                   optionvalue="id"  optionLabel="name" filterBy="name"
                    placeholder="ESCALAFON" title="ESCALAFON">
                   <ng-template let-option pTemplate="item">
@@ -204,11 +208,11 @@
             </ng-template>
           
           
-          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
-            <button pButton type="button" (click)="addRoles($event)" 
-            class="p-button-warning p-button-raised p-button-rounded"
-             label="Add Sedes y Programa"></button>  
-          </div>
+            <div *ngIf="mostrar==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+              <button pButton type="button" (click)="addRoles($event)" 
+              class="p-button-warning p-button-raised p-button-rounded"
+               label="Add Sedes y Programa"></button>  
+            </div>
 
           <br>
           <div fxLayout="row" fxLayoutGap="20px">
@@ -287,22 +291,31 @@
                     </td>
                 </tr>
               </ng-template>
+              <ng-template pTemplate="summary">
+                <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" (click)="addRoles($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Sedes y Programa"></button>  
+                </div>
+            </ng-template>
               </p-table>
             </div>
           </div>
+          <br>
         </div>
 
         <div  style="border: 1px solid black;padding: 10px">
           <h3 style="text-align:center;">3. Datos Adicionales</h3>
           <div class="bordep">
             <h4 style="text-align:left;">3.1. TÍTULOS ACADÉMICOS OBTENIDOS </h4>
+
+            <div *ngIf="mostrar2==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+              <button pButton type="button" (click)="addtrainingTeacher($event)" 
+              class="p-button-warning p-button-raised p-button-rounded"
+               label="Add Formaciones Academicas"></button>  
+            </div>
            <br>
-              <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
-                <button pButton type="button" (click)="addtrainingTeacher($event)" 
-                class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Formaciones Academicas"></button>  
-              </div>
-              <br>
+
               <div fxLayout="row" fxLayoutGap="20px">
                 <div class="table-wrapper" >
                   <p-table [value]="algo2" *ngIf="mostrar2 == true"> 
@@ -580,19 +593,26 @@
                         </td>
                     </tr>
                   </ng-template>
+                  <ng-template pTemplate="summary">
+                    <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                      <button pButton type="button" (click)="addtrainingTeacher($event)" 
+                      class="p-button-warning p-button-raised p-button-rounded"
+                       label="Add Formaciones Academicas"></button>  
+                    </div>
+                </ng-template>
                   </p-table>
                 </div>
               </div>
+              <br>
           </div>
           <div style="border: 1px solid black;padding: 10px">
             <h4 style="text-align:left;">3.3. CARGOS DESEMPEÑADOS EN LOS ÚLTIMOS 5 AÑOS </h4>
+            <div *ngIf="mostrar3==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+              <button pButton type="button" (click)="addWorkexperiences($event)" 
+              class="p-button-warning p-button-raised p-button-rounded"
+               label="Add Experiencia laboral y/o académica"></button>  
+            </div>
             <br>
-              <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
-                <button pButton type="button" (click)="addWorkexperiences($event)" 
-                class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Experiencia laboral y/o académica"></button>  
-              </div>
-              <br>
               <div fxLayout="row" fxLayoutGap="20px">
                 <div class="table-wrapper" >
                   <p-table [value]="algo3" *ngIf="mostrar3 == true"> 
@@ -789,10 +809,17 @@
                         </td>
                     </tr>
                   </ng-template>
+                  <ng-template pTemplate="summary">
+                    <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                      <button pButton type="button" (click)="addWorkexperiences($event)" 
+                      class="p-button-warning p-button-raised p-button-rounded"
+                       label="Add Experiencia laboral y/o académica"></button>  
+                    </div>
+                </ng-template>
                   </p-table>
                 </div>
               </div>
-        
+              <br>
           </div>
         </div>
         </div>
@@ -801,7 +828,7 @@
                 <button pButton type="button" type="button" (click)="onSubmit($event)" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
-              <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+              <!-- <p-button (click)="displayMaximizable2=false" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
           </div>
          
           
@@ -815,10 +842,10 @@
 
     <div style="border: 1px solid black;padding: 10px;">
 
-      <div class="grid p-fluid" style="padding: 10px;">
+      <div class="grid " style="padding: 5px;">
         <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-          <img alt="logo" src="{{image}}" 
-          style="width: 100%"/>
+          <img alt="logo" src="{{image}}" class="ml-4 mt-1"
+          style="width: 70%"/>
         </div>
 
         <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
@@ -826,8 +853,11 @@
         </div>
 
         <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-          <img alt="logo" src="{{image2}}" 
-          style="width: 100%"/>
+          <!-- <img alt="logo" src="{{image2}}" 
+          style="width: 100%"/> -->
+          <p-button (click)="cancelar()" icon="pi pi-times" 
+        [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+        styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
         </div>
       </div>
      
@@ -1027,13 +1057,18 @@
       </ng-template>
       
       
-      <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+      <div *ngIf="mostrar==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
         <button pButton type="button" (click)="addRoles($event)" 
         class="p-button-warning p-button-raised p-button-rounded"
          label="Add Sedes y Programa"></button>  
       </div>
 
       <br>
+      <div *ngIf="mostrar == false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+        <button pButton type="button" (click)="addRoles($event)" 
+        class="p-button-warning p-button-raised p-button-rounded"
+         label="Add Sedes y Programa"></button>  
+      </div>
       <div fxLayout="row" fxLayoutGap="20px">
         <div class="table-wrapper" >
           <p-table [value]="algo" *ngIf="mostrar == true"> 
@@ -1122,22 +1157,30 @@
                 </td>
             </tr>
           </ng-template>
+          <ng-template pTemplate="summary">
+            <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+              <button pButton type="button" (click)="addRoles($event)" 
+              class="p-button-warning p-button-raised p-button-rounded"
+               label="Add Sedes y Programa"></button>  
+            </div>
+        </ng-template>
           </p-table>
         </div>
       </div>
+      <br>
     </div>
 
     <div  style="border: 1px solid black;padding: 10px">
       <h3 style="text-align:center;">3. Datos Adicionales</h3>
       <div class="bordep">
         <h4 style="text-align:left;">3.1. TÍTULOS ACADÉMICOS OBTENIDOS </h4>
+        <div *ngIf="mostrar2==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+          <button pButton type="button" (click)="addtrainingTeacher($event)" 
+          class="p-button-warning p-button-raised p-button-rounded"
+           label="Add Formaciones Academicas"></button>  
+        </div>
        <br>
-          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
-            <button pButton type="button" (click)="addtrainingTeacher($event)" 
-            class="p-button-warning p-button-raised p-button-rounded"
-             label="Add Formaciones Academicas"></button>  
-          </div>
-          <br>
+
           <div fxLayout="row" fxLayoutGap="20px">
             <div class="table-wrapper" >
               <p-table [value]="algo2" *ngIf="mostrar2 == true"> 
@@ -1266,19 +1309,27 @@
                     </td>
                 </tr>
               </ng-template>
+              <ng-template pTemplate="summary">
+                <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" (click)="addtrainingTeacher($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Formaciones Academicas"></button>  
+                </div>
+            </ng-template>
               </p-table>
             </div>
           </div>
+          <br>
       </div>
       <div style="border: 1px solid black;padding: 10px">
         <h4 style="text-align:left;">3.3. CARGOS DESEMPEÑADOS EN LOS ÚLTIMOS 5 AÑOS </h4>
+        <div *ngIf="mostrar3==false" fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+          <button pButton type="button" (click)="addWorkexperiences($event)" 
+          class="p-button-warning p-button-raised p-button-rounded"
+           label="Add Experiencia laboral y/o académica"></button>  
+        </div>
         <br>
-          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
-            <button pButton type="button" (click)="addWorkexperiences($event)" 
-            class="p-button-warning p-button-raised p-button-rounded"
-             label="Add Experiencia laboral y/o académica"></button>  
-          </div>
-          <br>
+
           <div fxLayout="row" fxLayoutGap="20px">
             <div class="table-wrapper" >
               <p-table [value]="algo3" *ngIf="mostrar3 == true"> 
@@ -1385,9 +1436,17 @@
                     </td>
                 </tr>
               </ng-template>
+              <ng-template pTemplate="summary">
+                <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" (click)="addWorkexperiences($event)" 
+                  class="p-button-warning p-button-raised p-button-rounded"
+                   label="Add Experiencia laboral y/o académica"></button>  
+                </div>
+            </ng-template>
               </p-table>
             </div>
           </div>
+
     
       </div>
     </div>
@@ -1395,7 +1454,7 @@
   </div>
   <br>
   <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
-    <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
+    <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
   
     <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
@@ -1407,3 +1466,27 @@
 <p-toast></p-toast>
 
 <p-confirmPopup></p-confirmPopup>
+
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+            <h4>Esta Seguro de Cerrar la Ventana?</h4>
+            <p>Si para continuar</p>
+        </div>
+    </div>
+
+  <ng-template pTemplate="footer" class="titleCard" >
+    <div style="text-align: center;">
+      <button pButton pRipple label="No" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+      class="p-button-text" (click)="Dialog = false"></button>
+      <button pButton pRipple label="Si"  style="background: #f16357" 
+      class=" p-button-raised p-button-rounded" 
+      icon="pi pi-check"  (click)="cerrar()"  ></button>
+    </div>
+  </ng-template>
+</p-dialog>

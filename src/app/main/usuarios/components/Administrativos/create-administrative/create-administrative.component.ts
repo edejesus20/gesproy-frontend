@@ -31,23 +31,9 @@ export class CreateAdministrativeComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=true;
   public algo:number[]=[0];
+  public Dialog:boolean =false
+  public image:string='assets/images/images.jpg'
   public form:FormGroup=this.formBuilder.group({
-    name:[''],
-    surname:[''],
-    DocumentTypeId:[1],
-    identification:[''],
-    // GenderId:[''],
-    // address:[''],
-    // phone:[''],
-    email:[''],
-    UserId:[''],
-    // nationality:[''],
-    // date_of_birth:[''],
-    HeadquarterId:['', [Validators.required]],
-    Charges: this.formBuilder.array([this.formBuilder.group({
-      ChargeId:['', [Validators.required]],
-      date:['', [Validators.required]]})]),
-
    });
 
    public mostrarUser:boolean=false;
@@ -90,6 +76,24 @@ export class CreateAdministrativeComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
+    this.form=this.formBuilder.group({
+      name:[''],
+      surname:[''],
+      DocumentTypeId:[1],
+      identification:[''],
+      // GenderId:[''],
+      // address:[''],
+      // phone:[''],
+      email:[''],
+      UserId:[''],
+      // nationality:[''],
+      // date_of_birth:[''],
+      HeadquarterId:['', [Validators.required]],
+      Charges: this.formBuilder.array([this.formBuilder.group({
+        ChargeId:['', [Validators.required]],
+        date:['', [Validators.required]]})]),
+  
+     });
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -127,6 +131,16 @@ export class CreateAdministrativeComponent implements OnInit {
         // console.log(AdministrativeFromApi.administratives)
         this.charges = AdministrativeFromApi.charges;
       }, error => console.error(error));
+  }
+
+  cerrar(){
+    this.router.navigateByUrl('/usuarios/Administrative');
+  }
+ private volver(){
+    this.Charges1=[]
+    this.mostrarUser= false
+    this.mostrar=true;
+    this.ngOnInit()
   }
 
   public onSubmit(e: Event) {
@@ -218,7 +232,8 @@ export class CreateAdministrativeComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/Administrative');
+                          this.volver()
+                          // this.router.navigateByUrl('/usuarios/Administrative');
                           clearInterval(interval); 
                         }
                   }, 1000);
