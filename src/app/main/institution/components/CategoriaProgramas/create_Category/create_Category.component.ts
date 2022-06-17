@@ -15,10 +15,11 @@ export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
   styleUrls: ['./create_Category.component.css']
 })
 export class Create_CategoryComponent implements OnInit {
+
+
+   public Dialog:boolean =false
+   public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    date:new Date().toDateString(),
-    // GroupId:['', [Validators.required]],
    });
   
   displayMaximizable2:boolean=true
@@ -35,6 +36,11 @@ export class Create_CategoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this. form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      date:new Date().toDateString(),
+      // GroupId:['', [Validators.required]],
+     });
     if(this.config.data){
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
@@ -49,6 +55,14 @@ export class Create_CategoryComponent implements OnInit {
   public cancelar(){
     this.ref.close(undefined);
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/institution/mostrar_categorysP');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
   public onSubmit() {
     let formValue: CategoryI = this.form.value;
     // formValue.GroupId=this.form.value.GroupId.id
@@ -57,6 +71,7 @@ export class Create_CategoryComponent implements OnInit {
     // && 
     // formValue.GroupId != ( 0 )
     ){
+      this.bandera=true
 
     this.categoryService.createItem(formValue).subscribe(
       (algo) => {
@@ -77,13 +92,16 @@ export class Create_CategoryComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_categorysP');
+                  // this.router.navigateByUrl('/institution/mostrar_categorysP');
+                  this.volver()
                   clearInterval(interval); 
                  }
           }, 1000);
         }
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

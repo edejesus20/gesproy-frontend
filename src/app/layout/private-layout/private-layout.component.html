@@ -336,22 +336,19 @@
           placeholder="Nueva Contraseña" formControlName="avatar"
           required>  
       </div>
-  
 
-  
-  
   </div>
-  <ng-template [ngIf]="motrar == false">
-  <div fxLayout="row" class="titleCard"style="margin-top: 5px;">
-    <br>
-    <p-button (click)="mostrarAvatarClave=false" icon="pi pi-times" styleClass="p-button-text" 
-    label="Cancelar"></p-button>
-  
-    <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="imagenNueva == null && form2.value.avatar == ''"
-    class="p-button-warning p-button-raised p-button-rounded" 
-    label="Modificar Imagen" styleClass="mr-2"></button>
-  </div>
-</ng-template>
+    <ng-template [ngIf]="motrar == false">
+      <div fxLayout="row" class="titleCard"style="margin-top: 5px;">
+        <br>
+        <p-button (click)="mostrarAvatarClave=false" icon="pi pi-times" styleClass="p-button-text" 
+        label="Cancelar"></p-button>
+      
+        <button pButton type="button" type="submit"  icon="pi pi-check" [disabled]="imagenNueva == null && form2.value.avatar == ''"
+        class="p-button-warning p-button-raised p-button-rounded" 
+        label="Modificar Imagen" styleClass="mr-2"></button>
+      </div>
+  </ng-template>
   <ng-template [ngIf]="motrar == true">
     <br>
     <br>
@@ -399,20 +396,21 @@
           
         </div>
     </div>
-    <ng-template [ngIf]="adjuntarM == false">
+    
 <ng-template pTemplate="footer" class="titleCard" >
-  <div style="text-align: center;">
-    <button pButton pRipple label="Cancelar" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
-    class="p-button-text" (click)="adjuntarCancelar(file)"></button>
-    <button pButton type="button"  icon="pi pi-check" 
-    [disabled]="imagenNueva == null" (click)="onSubmit2()"
-    class="p-button-raised p-button-rounded" style="background: #f16357" 
-    label="Cambiar Imagen" styleClass="mr-2"></button>
-  </div>
-</ng-template>
+  <ng-template [ngIf]="adjuntarM == false">
+      <div style="text-align: center;">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+        class="p-button-text" (click)="adjuntarCancelar(file)"></button>
+        <button pButton type="button"  icon="pi pi-check" 
+        [disabled]="imagenNueva == null" (click)="onSubmit2()"
+        class="p-button-raised p-button-rounded" style="background: #f16357" 
+        label="Cambiar Imagen" styleClass="mr-2"></button>
+      </div>
     </ng-template>
     <ng-template [ngIf]="adjuntarM == true">
-      <ng-template pTemplate="footer" class="titleCard" >
+      <br>
+      <!-- <ng-template pTemplate="footer" class="titleCard" > -->
       <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
       <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
         <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>

@@ -13,11 +13,12 @@ const translate = require('translate');
 export class CreateUniversityComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-  public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    nit:['', [Validators.required]],
-    addres:['', [Validators.required]],
+
+  public Dialog:boolean =false
+  public bandera:boolean=false
+ public form:FormGroup=this.formBuilder.group({
   });
+
 
   constructor(
     private universityService: UniversityService,
@@ -28,11 +29,26 @@ export class CreateUniversityComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    
+    this. form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      nit:['', [Validators.required]],
+      addres:['', [Validators.required]],
+    });
   }
+
+  cerrar(){
+    this.router.navigateByUrl('/institution/mostrar_universitys');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
+
   public onSubmit() {
     let formValue: UniversityI = this.form.value;
     if(formValue.name != "" && formValue.nit != "" && formValue.addres != ""){
+    this.bandera=true
+
     this.universityService.createItem(formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -49,12 +65,15 @@ export class CreateUniversityComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_universitys');
+                  this.volver()
+                  // this.router.navigateByUrl('/institution/mostrar_universitys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

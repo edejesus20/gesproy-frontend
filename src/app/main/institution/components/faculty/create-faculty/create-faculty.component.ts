@@ -24,12 +24,11 @@ export class CreateFacultyComponent implements OnInit {
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-
+public Dialog:boolean =false
+public bandera:boolean=false
 public form:FormGroup=this.formBuilder.group({
- name:['', [Validators.required]],
- AdministrativeId:[''],
- UniversityId:['', [Validators.required]],
 });
+
 public ref1:any;
 constructor(
   public dialogService: DialogService,
@@ -43,11 +42,22 @@ constructor(
   ) { }
 
   ngOnInit(): void {
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      AdministrativeId:[''],
+      UniversityId:['', [Validators.required]],
+     });
     this.getAlladministrative()
     this.getAlluniversidades()
   
   }
-
+  cerrar(){
+    this.router.navigateByUrl('/institution/mostrar_facultys');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
   public onSubmit() {
     let formValue: FacultyI = this.form.value;
     if(this.form.value.AdministrativeId != ''){
@@ -60,6 +70,7 @@ constructor(
     if(formValue.name != '' && 
     // formValue.AdministrativeId != ( 0 ) &&
     formValue.UniversityId != ( 0 )){
+      this.bandera=true
 
     this.facultyService.createItem(formValue).subscribe(
       () => {
@@ -77,12 +88,15 @@ constructor(
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_facultys');
+                  this.volver()
+                  // this.router.navigateByUrl('/institution/mostrar_facultys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

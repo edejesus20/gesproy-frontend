@@ -34,18 +34,12 @@ export class CreateProgramComponent implements OnInit {
   public administratives: AdministrativeI[]=[]
   public headquarters: HeadquarterI[]=[]
 
-  public form:FormGroup=this.formBuilder.group({
-    name:['', [Validators.required]],
-    FacultyId:['', [Validators.required]],
-    CategoryId:['', [Validators.required]],
-    Headquarters: this.formBuilder.array([this.formBuilder.group(
-      {
-        ProgramId:0,
-         HeadquarterId:['', [Validators.required]],
-        AdministrativeId:['']
-    })]),
-  });
 
+
+  public Dialog:boolean =false
+   public bandera:boolean=false
+  public form:FormGroup=this.formBuilder.group({
+   });
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
@@ -72,6 +66,17 @@ constructor(
     this.getAllCategorys()
     this.getAlladministratives()
     this.getAllheadquarters()
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      FacultyId:['', [Validators.required]],
+      CategoryId:['', [Validators.required]],
+      Headquarters: this.formBuilder.array([this.formBuilder.group(
+        {
+          ProgramId:0,
+           HeadquarterId:['', [Validators.required]],
+          AdministrativeId:['']
+      })]),
+    });
   }
 
   private getAllFaculty(selectId?: number) {
@@ -91,6 +96,15 @@ constructor(
         }
         this.categorys = facultiesFromApi.categorys;
       }, error => console.error(error));
+  }
+
+  cerrar(){
+    this.router.navigateByUrl('/institution/mostrar_programs');
+  }
+  private volver(){
+    this.bandera=false
+    this.Headquarters1=[]
+    this.ngOnInit()
   }
 
   public onSubmit() {
@@ -126,11 +140,12 @@ constructor(
     }else{
       formValue.Headquarters = this.Headquarters1
     }
-    console.log(formValue)
+    // console.log(formValue)
     if(formValue.name != '' &&
     formValue.CategoryId != ( 0 )&&
     formValue.FacultyId != ( 0 )
     ){
+      this.bandera=true
 
     this.programService.createItem(formValue).subscribe(
       () => {
@@ -148,12 +163,15 @@ constructor(
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_programs');
+                  this.volver()
+                  // this.router.navigateByUrl('/institution/mostrar_programs');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

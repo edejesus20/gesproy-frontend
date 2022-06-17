@@ -89,7 +89,7 @@ export class Delete_EscalafonComponent implements OnInit {
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/institution/mostrar_scales');
+                this.router.navigateByUrl('/Investigation/mostrar_scales');
                 clearInterval(interval); 
                }
         }, 1000);

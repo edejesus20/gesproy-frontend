@@ -24,12 +24,11 @@ export class CreateHeadquarterComponent implements OnInit {
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
-
+public Dialog:boolean =false
+public bandera:boolean=false
 public form:FormGroup=this.formBuilder.group({
-  name:['', [Validators.required]],
-  cordinatorInvestigation:['', [Validators.required]],
-  UniversityId:['', [Validators.required]],
 });
+
 
   constructor( 
     private router: Router,
@@ -40,12 +39,21 @@ public form:FormGroup=this.formBuilder.group({
     ) { }
 
   ngOnInit(): void {
-   
+    this.form=this.formBuilder.group({
+      name:['', [Validators.required]],
+      cordinatorInvestigation:['', [Validators.required]],
+      UniversityId:['', [Validators.required]],
+    });
     this.getAlluniversidades()
 
   }
-
-
+  cerrar(){
+    this.router.navigateByUrl('/institution/mostrar_headquarters');
+  }
+  private volver(){
+    this.bandera=false
+    this.ngOnInit()
+  }
   public onSubmit() {
     let formValue: HeadquarterI = this.form.value;
     formValue.UniversityId=this.form.value.UniversityId.id
@@ -53,6 +61,7 @@ public form:FormGroup=this.formBuilder.group({
     if(formValue.name != '' && 
     formValue.cordinatorInvestigation != '' &&
     formValue.UniversityId != ( 0 )){
+      this.bandera=true
 
     this.headquarterService.createItem(formValue).subscribe(
       () => {
@@ -70,12 +79,15 @@ public form:FormGroup=this.formBuilder.group({
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_headquarters');
+                  this.volver()
+                  // this.router.navigateByUrl('/institution/mostrar_headquarters');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

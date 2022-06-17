@@ -367,13 +367,43 @@ public Dialog:boolean=false
             }
           }
         }
-       
+        let bandera=false
         this.UserRoles=data.user.UserRoles
         for (const key of this.UserRoles) {
           if(key.Role != undefined){
             this.verificarRol(key.Role,data.user.id)
+            if(key.Role.name.toLocaleLowerCase() === 'estudiante'){
+              bandera=true
+            }
+            if(key.Role.name.toLocaleLowerCase() === 'docente interno' || key.Role.name.toLocaleLowerCase() === 'docente externo nacional' || key.Role.name.toLocaleLowerCase() === 'docente externo internacional'){
+              bandera=true
+            }
+            if(key.Role.name.toLocaleLowerCase() === 'administrativo'){
+              bandera=true
+            }
+
           }
           
+        }
+        if(bandera ==false){
+          if(data.user?.Person?.GenderId != undefined){
+            for (const key of this.genders) {
+              if(parseInt(data.user.Person.GenderId) == key.id){
+                this.form.controls['GenderId'].setValue(key)
+              }
+              
+            }
+          }
+          if(data.user?.Person?.DocumentTypeId != undefined){
+            for (const key2 of this.documentTypes) {
+              if(parseInt(data.user.Person.DocumentTypeId) == key2.id){
+                this.form.controls['DocumentTypeId'].setValue(key2)
+                // console.log('this.form.controls[DocumentTypeId]',this.form.controls['DocumentTypeId'])
+  
+              }
+              
+            }
+          }
         }
 
       }

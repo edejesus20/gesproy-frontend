@@ -339,16 +339,17 @@ onFileChange(event:any,a:any) {
   
 public onSubmit2(): void {
   let formValue: any = this.form2.value;
+  this.adjuntarM=true
+
   if(this.imagenNueva != null || formValue.avatar !='' && formValue.avatar != undefined){
 
     if(this.imagenNueva != null && formValue.UserId != undefined && 
       formValue.avatar == undefined){
       if(this.imagenNueva != null){
         // this.motrar=true
-        this.adjuntarM=true
         this.userService.createImagen(formValue.UserId,this.imagenNueva).subscribe(
           (algo) => {
-         console.log('cambio')
+        //  console.log('cambio')
            
             var date = new Date('2020-01-01 00:00:04');
                 function padLeft(n:any){ 
@@ -416,6 +417,7 @@ public onSubmit2(): void {
               if(minutes == '00' && seconds == '01'){
                 this.mostrarAvatarClave=false
                 this.motrar=false
+                this.adjuntarM=false
                 this.verificar()
                 this.ngOnInit()
                 this.router.navigateByUrl('/login');
@@ -426,6 +428,8 @@ public onSubmit2(): void {
       }
         ,async error => {
           this.motrar=false
+          this.adjuntarM=false
+
           if(error != undefined) {
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){
