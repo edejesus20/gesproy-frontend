@@ -12,6 +12,7 @@ const translate = require('translate');
   styleUrls: ['./delete_lines.component.css']
 })
 export class Delete_linesComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=2;
   public tabla:boolean=true;
@@ -46,6 +47,8 @@ export class Delete_linesComponent implements OnInit {
     e.preventDefault();
     const formValue: LineI = this.form.value;
     if( formValue.id ){
+   this.bandera=true
+
     this.lineService.deleteItem(formValue.id).subscribe(
       () => {
         var date = new Date('2020-01-01 00:00:03');
@@ -62,12 +65,17 @@ export class Delete_linesComponent implements OnInit {
           }
           date = new Date(date.getTime() - 1000);
           if( minutes == '00' && seconds == '01' ) {
-            this.router.navigateByUrl('/Procedimientos/line');
+            this.ngOnInit()
+            this.volver(new Event(''))
+           this.bandera=false
+            // this.router.navigateByUrl('/Procedimientos/line');
             clearInterval(interval); 
           }
     }, 1000);
       },async error => {
         if(error != undefined) {
+   this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -109,6 +117,8 @@ export class Delete_linesComponent implements OnInit {
     this.tabla = true
     this.ngOnInit()
     this.displayMaximizable2 = false
+   this.bandera=false
+
     //console.log(event)
   }
 

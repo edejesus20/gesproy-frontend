@@ -478,8 +478,9 @@
              <br>
             </div>
             
-            <br>
-
+          
+            <ng-template [ngIf]="bandera == false">
+              <br>
             <div fxLayout="row" class="titleCard" style="text-align:center">
               <button pButton type="button" type="submit"  icon="pi pi-check" 
               [disabled]="!form.valid" 
@@ -488,6 +489,12 @@
               <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
 
             </div>
+          </ng-template>
+          <ng-template [ngIf]="bandera == true">
+            <br>
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+          
+          </ng-template>
          
             <!-- <div fxLayout="row" class="titleCard">
                 <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>

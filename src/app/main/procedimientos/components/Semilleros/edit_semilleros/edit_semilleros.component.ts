@@ -66,6 +66,8 @@ export class Edit_semillerosComponent implements OnInit {
     ChargeBondingId:0,
     Charge_bonding:undefined
 }
+public bandera:boolean=false
+
 public mostrarTeacher:boolean=false
 public students:any[] =[]
 public lines1:any[] =[]
@@ -224,6 +226,20 @@ getstudents2() {
     }, error => console.error(error));
   }
 
+  public volver(event: Event){
+    event.preventDefault
+    this.tabla = true
+    this.ngOnInit()
+    this.displayMaximizable2 = false
+    this.bandera=false
+    this.HeadquarterProgramId = 0 
+    this.TeacherId = 0 
+    this.GroupId = 0
+    this.lines1=[]
+    this.Students=[]
+    //console.log(event)
+  }
+
   public onSubmit(): void {
     let formValue: SeedbedI = this.form.value;
     formValue.TeacherId=this.form.value.TeacherId.TeacherId
@@ -281,7 +297,7 @@ getstudents2() {
     }
 
     
-    console.log(formValue)
+    // console.log(formValue)
     if(
       formValue.id !=undefined &&
       formValue.TeacherId != 0 && formValue.name != "" &&
@@ -298,6 +314,8 @@ getstudents2() {
     formValue.GroupId != ( 0 || undefined)
 
     ){
+    this.bandera=true
+
       this.seedbedService.updateItem(formValue.id, formValue).subscribe(
         () => {
           var date = new Date('2020-01-01 00:00:03');
@@ -314,12 +332,17 @@ getstudents2() {
             }
             date = new Date(date.getTime() - 1000);
             if( minutes == '00' && seconds == '01' ) {
-              this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+              this.ngOnInit()
+              this.volver(new Event(''))
+             this.bandera=false
+              // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
               clearInterval(interval); 
             }
       }, 1000);
         },async error => {
           if(error != undefined) {
+        this.bandera=false
+
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){
               text = await translate(error.error.dataErros[0].message, "es");
@@ -535,13 +558,7 @@ getstudents2() {
     }
   }
 
-  public volver(event: Event){
-    event.preventDefault
-    this.tabla = true
-    this.ngOnInit()
-    this.displayMaximizable2 = false
-    //console.log(event)
-  }
+
 
   ngOnDestroy() {
     this.tabla = true

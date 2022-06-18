@@ -29,7 +29,6 @@ export class Create_linesComponent implements OnInit {
   public thematic_axiss: Thematic_axisI[]=[];
   filteredCountries: any[]=[];
   public Thematics1:any[]=[];
-
   public Dialog:boolean =false
   public bandera:boolean=false
 

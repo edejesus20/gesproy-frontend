@@ -55,7 +55,7 @@
                     [value]="form.value.objectives" placeholder="ESCRIBIR OBJETIVOS"   [disabled]="true" ></textarea> 
                   </div>
                 </div>
-                Thematics
+                
                 <div style="border: 1px solid black;padding: 10px">
                   <h4 style="text-align:left;">4. TEMÁTICAS ASOCIADAS A LA LÍNEA DE INVESTIGACIÓN </h4>
                           <p-table [value]="Thematics" > 
@@ -82,6 +82,8 @@
                     title="ESCRIBIR RESOLUCION"  [disabled]="true" >        
                   </div>                  
                 </div>
+            <ng-template [ngIf]="bandera == false">
+
            <br>
               <div fxLayout="row" class="titleCard" >
                 <button pButton type="button" type="submit"  icon="pi pi-check" 
@@ -90,6 +92,12 @@
                 styleClass="mr-2"></button>
                 <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>  
               </div>
+            </ng-template>
+            <ng-template [ngIf]="bandera == true">
+              <br>
+                <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+            
+            </ng-template>
             </div>
         </div>
          

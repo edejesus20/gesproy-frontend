@@ -173,6 +173,8 @@
                     title="ESCRIBIR RESOLUCION" >        
                   </div>                  
                 </div>
+          <ng-template [ngIf]="bandera == false">
+
            <br>
                 <div fxLayout="row" class="titleCard" >
                   <button pButton type="button" type="submit"  icon="pi pi-check" 
@@ -180,6 +182,12 @@
                  class="p-button-success p-button-raised p-button-rounded" label="Actualizar Registro" styleClass="mr-2"></button>
                   <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
             </div>
+          </ng-template>
+          <ng-template [ngIf]="bandera == true">
+            <br>
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+          
+          </ng-template>
   
             </div>
         </div>
