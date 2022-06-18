@@ -19,6 +19,7 @@ export class Edit_CategoryComponent implements OnInit {
 
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
 
   constructor(
     private categoryService:CategoryService,
@@ -45,11 +46,11 @@ export class Edit_CategoryComponent implements OnInit {
     // formValue.GroupId=this.form.value.GroupId.id
 
     if(formValue.name != '' 
-    // && 
+    && formValue.id
     // formValue.GroupId != ( 0 )
     ){
+          this.bandera=true
 
-    if(formValue.id)
     this.categoryService.updateItem(formValue.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -66,12 +67,17 @@ export class Edit_CategoryComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_categorysP');
+                  // this.router.navigateByUrl('/institution/mostrar_categorysP');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -89,6 +95,8 @@ export class Edit_CategoryComponent implements OnInit {
       this.tabla = true
       this.displayMaximizable2 = false
       this.ngOnInit()
+      this.bandera=false
+
       //console.log(event)
     }
 

@@ -12,6 +12,7 @@ const translate = require('translate');
   styleUrls: ['./edit_MincienciaCategory.component.css']
 })
 export class Edit_MincienciaCategoryComponent implements OnInit {
+  public bandera:boolean=false
 
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public mostrar:number=1;
@@ -57,6 +58,8 @@ export class Edit_MincienciaCategoryComponent implements OnInit {
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
 
@@ -91,8 +94,9 @@ export class Edit_MincienciaCategoryComponent implements OnInit {
     };
     // console.log(formValue)
 
-    if(formValue.name != ''){
-      if(formValue.id)
+    if(formValue.name != '' && formValue.id){
+   this.bandera=true
+
     this.mincienciaCategoryService.updateItem(formValue.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -109,12 +113,17 @@ export class Edit_MincienciaCategoryComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/Investigation/mostrar_MincienciaCategorys');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/Investigation/mostrar_MincienciaCategorys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

@@ -3,7 +3,7 @@
 </ng-template>
 <ng-template [ngIf]="tabla == false">
   <form novalidate  enctype="multipart/form-data" >
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '50vw','height': '35vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '50vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"
   
     [closable]="false" [closeOnEscape]="false" 
@@ -71,53 +71,7 @@
                   </div>
                   </div>
 
-<!--         
-                  <div class="grid p-fluid">
-                    <div class="col-12 md:col-6 lg:col-6">
-                      <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                        <input type="text" class="p-inputtext-lg"
-                         pInputText [value]="form.DocumentTypeId" disabled
-                        placeholder="TIPO DE DOCUMENTO" required title="TIPO DE DOCUMENTO">         
-                    </div>
-                    </div>
-                    
-                    <div class="col-12 md:col-6 lg:col-6">
-                      <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                        <input class="p-inputtext-lg" [value]="form.identification" disabled
-                        type="text" pInputText pKeyFilter="num" name="identification" 
-                        placeholder="IDENTIFICACIÓN"  title="IDENTIFICACIÓN">         
-                    </div>
-        
-                    </div>
-        
-                  </div> -->
-        
-                  <!-- <div class="grid p-fluid">
-                    <div class="col-12 md:col-6 lg:col-6">
-                      
-                      <div class="p-inputgroup" >
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                        <input type="text" pInputText [pKeyFilter]="blockSpecial" 
-                        [value]="form.address" disabled
-                        class="p-inputtext-lg"  name="address" placeholder="DIRECCIÓN" 
-                         required title="DIRECCION" >         
-                    </div>
-        
-                    </div>
-                    <div class="col-12 md:col-6 lg:col-6">
-                      <div class="p-inputgroup"  style="margin-bottom: 20px;">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                        <input class="p-inputtext-lg" type="text"[value]="form.phone" disabled
-                        pInputText pKeyFilter="num" name="phone" 
-                        placeholder="TELEFONO" title="TELEFONO"
-                        required>         
-                    </div>
-        
-                    </div>
-        
-                  </div> -->
+
                   <div class="grid ">            
                     <div class="col-12 md:col-12 lg:col-12">
                       <div class="p-inputgroup"  style="margin-bottom: 20px;">
@@ -157,6 +111,7 @@
                 </div>
           </div>
        
+          <ng-template [ngIf]="bandera == false">
   
               <br>
         <div fxLayout="row" class="titleCard" >
@@ -165,6 +120,12 @@
          class="p-button-danger p-button-raised p-button-rounded" label="Eliminar Registro" styleClass="mr-2"></button>
           <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
     </div>
+  </ng-template>
+  <ng-template [ngIf]="bandera == true">
+    <br>
+      <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+  
+  </ng-template>
   </p-dialog>
   </form>
   <p-toast></p-toast>

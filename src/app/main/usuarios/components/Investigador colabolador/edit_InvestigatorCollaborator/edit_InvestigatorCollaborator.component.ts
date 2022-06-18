@@ -18,6 +18,7 @@ import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/Inve
   providers: [DialogService]
 })
 export class Edit_InvestigatorCollaboratorComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=1;
   public tabla:boolean=true;
@@ -47,34 +48,14 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
       surname:['', [Validators.required]],
       DocumentTypeId:['', [Validators.required]],
       identification:['', [Validators.required]],
-      // GenderId:['', [Validators.required]],
-      // address:['', [Validators.required]],
-      // phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      // nationality:['', [Validators.required]],
-      // date_of_birth:['', [Validators.required]],
+
      });
   
-    //  this.getAllgenders()
-    //  this.getAlldocumentTypes()
+
    }
 
-  //  private getAllgenders(selectId?: number) {
-  //    this.genderService.getList().subscribe(
-  //      (AdministrativeFromApi) => {
-  //        // console.log(AdministrativeFromApi.administratives)
-  //        this.genders = AdministrativeFromApi.genders;
-  //      }, error => console.error(error));
-  //  }
- 
-  //  private getAlldocumentTypes(selectId?: number) {
-  //    this.documentTypeService.getList().subscribe(
-  //      (AdministrativeFromApi) => {
-  //        this.documentTypes = AdministrativeFromApi.documentTypes;
-   
-  //      }, error => console.error(error));
-  //  }
- 
+
   getOneCntAccount(id:number) {
     this.investigadorColaboladorService.getItem(id).subscribe((cnt_groupFromApi) => {
        if(cnt_groupFromApi.investigatorCollaborator.id != undefined
@@ -122,6 +103,8 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     //console.log(event)
+    this.bandera=false
+
   }
 
   ngOnDestroy() {
@@ -170,6 +153,7 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
               // formValue. date_of_birth!= ("" || undefined)
               ){
 
+                this.bandera=true
 
             this.investigadorColaboladorService.updateItem(formValue.id,formValue).subscribe(
               () => {
@@ -187,12 +171,17 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

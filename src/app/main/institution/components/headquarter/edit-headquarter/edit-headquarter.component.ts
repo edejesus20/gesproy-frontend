@@ -20,6 +20,7 @@ export class EditHeadquarterComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
  private id:number=0
+ public bandera:boolean=false
 
  public universitys: UniversityI[]=[]
 
@@ -72,6 +73,8 @@ public form2:HeadquarterI={
    if(formValue.name != '' && 
    formValue.cordinatorInvestigation != '' &&
    formValue.UniversityId != ( 0 )){
+    this.bandera=true
+
    this.headquarterService.updateItem(this.id,formValue).subscribe(
      () => {
              var date = new Date('2020-01-01 00:00:03');
@@ -88,12 +91,17 @@ public form2:HeadquarterI={
                }
                date = new Date(date.getTime() - 1000);
                if( minutes == '00' && seconds == '01' ) {
-                 this.router.navigateByUrl('/institution/mostrar_headquarters');
+                this.ngOnInit()
+                this.volver(new Event(''))
+               this.bandera=false
+                //  this.router.navigateByUrl('/institution/mostrar_headquarters');
                  clearInterval(interval); 
                 }
          }, 1000);
      },async error => {
        if(error != undefined) {
+    this.bandera=false
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");
@@ -122,6 +130,8 @@ public form2:HeadquarterI={
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
   ngOnDestroy() {

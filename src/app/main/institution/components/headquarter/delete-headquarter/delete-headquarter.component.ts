@@ -18,6 +18,8 @@ export class DeleteHeadquarterComponent implements OnInit {
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public universitys: UniversityI[]=[]
+  public bandera:boolean=false
+
   public form:HeadquarterI={
     id:0,
      name:'',
@@ -50,11 +52,12 @@ export class DeleteHeadquarterComponent implements OnInit {
       }, error => console.error(error));
   }
 
-
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
   
@@ -89,36 +92,44 @@ export class DeleteHeadquarterComponent implements OnInit {
       cordinatorInvestigation:this.form.cordinatorInvestigation,
       UniversityId:this.form.UniversityId
     };
-    if(formValue.id)
-    // console.log(formValue)
-    this.headquarterService.deleteItem(formValue.id).subscribe(
-      () => {
-              var date = new Date('2020-01-01 00:00:03');
-                function padLeft(n:any){ 
-                   return n ="00".substring(0, "00".length - n.length) + n;
-                }
-                var interval = setInterval(() => {
-                var minutes = padLeft(date.getMinutes() + "");
-                var seconds = padLeft(date.getSeconds() + "");
-                // console.log(minutes, seconds);
-                if( seconds == '03') {
-                this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Registro de Sede Eliminado con exito'});
-                }
-                date = new Date(date.getTime() - 1000);
-                if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_headquarters');
-                  clearInterval(interval); 
-                 }
-          }, 1000);
-      },async error => {
-        if(error != undefined) {
-          let text = await translate(error.error.message, "es");
-          if(error.error.dataErros){
-            text = await translate(error.error.dataErros[0].message, "es");
-          }
-          this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+    if(formValue.id){
+      this.bandera=true
+   // console.log(formValue)
+   this.headquarterService.deleteItem(formValue.id).subscribe(
+    () => {
+            var date = new Date('2020-01-01 00:00:03');
+              function padLeft(n:any){ 
+                 return n ="00".substring(0, "00".length - n.length) + n;
+              }
+              var interval = setInterval(() => {
+              var minutes = padLeft(date.getMinutes() + "");
+              var seconds = padLeft(date.getSeconds() + "");
+              // console.log(minutes, seconds);
+              if( seconds == '03') {
+              this.messageService.add({severity:'success', summary: 'Success', 
+              detail: 'Registro de Sede Eliminado con exito'});
+              }
+              date = new Date(date.getTime() - 1000);
+              if( minutes == '00' && seconds == '01' ) {
+                this.ngOnInit()
+                this.volver(new Event(''))
+               this.bandera=false
+                // this.router.navigateByUrl('/institution/mostrar_headquarters');
+                clearInterval(interval); 
+               }
+        }, 1000);
+    },async error => {
+      if(error != undefined) {
+        this.bandera=false
+
+        let text = await translate(error.error.message, "es");
+        if(error.error.dataErros){
+          text = await translate(error.error.dataErros[0].message, "es");
         }
-      });
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
+      }
+    });
+    }
+ 
 }
 }

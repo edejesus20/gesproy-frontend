@@ -42,6 +42,8 @@ export class EditarStudentComponent implements OnInit {
   public headquarterProgramStudent1:any[]=[]
   public ref:any;
   public seedbeds:SeedbedI[] =[]
+  public bandera:boolean=false
+
   constructor(
     public dialogService: DialogService,
     private seedbedService:SeedbedService,
@@ -121,27 +123,19 @@ export class EditarStudentComponent implements OnInit {
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
       identification: this.form.value.identification,
-      // GenderId: this.form.value.GenderId.id,
-      // address: this.form.value.address,
-      // phone: this.form.value.phone,
+
       username:'',
       fullName:'',
       email:this.form.value.email,
       password:'',
       UserId: 0,
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
-      // nationality: this.form.value.nationality,
-      // date_of_birth: this.form.value.date_of_birth,
+
       SeedbedId:this.form.value.SeedbedId.id,
       Horas: this.form.value.Horas,
       date_firt:this.form.value.date_firt,
       date_end:this.form.value.date_end,
-      // current_semester: this.form.value.current_semester,
-      // current_average: this.form.value.current_average,
-      // experienciaInvestigativa: this.form.value.experienciaInvestigativa,
-      // areasEstudio: this.form.value.areasEstudio,
-      // publicacionesResientes: this.form.value.publicacionesResientes,
-      // practicas: this.form.value.practicas,
+
       StudentInternship:this.form.value.StudentInternship,
     };
     if(this.mostrar3==false){
@@ -168,18 +162,10 @@ export class EditarStudentComponent implements OnInit {
     formValue.surname != ""&&
     formValue.DocumentTypeId != ( 0 || undefined)&&
     formValue.id != ( 0 || undefined)&&
-    // formValue.SeedbedId != ( 0 || undefined)&&
-    // formValue.Horas != ""&&
     formValue.identification != ""&&
-    // formValue.GenderId != ( 0 || undefined)&&
-    // formValue.address != ""&&
-    // formValue.phone != ""&&
-    // formValue.nationality != ("" || undefined) && 
-    // formValue. date_of_birth!= ("" || undefined) && 
     formValue.email != ""
-    // && 
-    // formValue.current_semester  != "" && formValue.current_average  != ""
     ){
+      this.bandera=true
 
       this.studentService.updateItem(formValue.id,formValue).subscribe(
         () => {
@@ -203,6 +189,8 @@ export class EditarStudentComponent implements OnInit {
             }, 1000);
         },async error => {
           if(error != undefined) {
+            this.bandera=false
+
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){
               text = await translate(error.error.dataErros[0].message, "es");
@@ -234,28 +222,16 @@ private getAllheadquarters(selectId?: number) {
     }, error => console.error(error));
 }
 
-// private getAllgenders(selectId?: number) {
-//   this.genderService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       // console.log(AdministrativeFromApi.administratives)
-//       this.genders = AdministrativeFromApi.genders;
-//     }, error => console.error(error));
-// }
-
-// private getAlldocumentTypes(selectId?: number) {
-//   this.documentTypeService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       this.documentTypes = AdministrativeFromApi.documentTypes;
-
-//     }, error => console.error(error));
-// }
-
 
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+  this.bandera=false
+  this.headquarterProgramStudent1=[]
+  this.mostrar3=true
+
   }
 
   ngOnDestroy() {
@@ -282,17 +258,7 @@ private getAllheadquarters(selectId?: number) {
           // this.form.controls['address'].setValue(cnt_groupFromApi.student.User.Person.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.student.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.student.User.email)
-          // this.form.controls['nationality'].setValue(cnt_groupFromApi.student.User.Person.nationality)
-          // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.student.User.Person.date_of_birth)
-          // this.form.controls['current_semester'].setValue(cnt_groupFromApi.student.current_semester)
-          // this.form.controls['current_average'].setValue(cnt_groupFromApi.student.current_average)
-          // this.form.controls['experienciaInvestigativa'].setValue(cnt_groupFromApi.student.experienciaInvestigativa)
-          // this.form.controls['areasEstudio'].setValue(cnt_groupFromApi.student.areasEstudio)
-          // this.form.controls['publicacionesResientes'].setValue(cnt_groupFromApi.student.publicacionesResientes)
-          // this.form.controls['practicas'].setValue(cnt_groupFromApi.student.practicas)
-        
           
-
           // if(cnt_groupFromApi.student.User?.Person?.DocumentTypeId != undefined)
           // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.DocumentTypeId)).subscribe((algo)=>{
             this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
@@ -522,46 +488,5 @@ private getAllheadquarters(selectId?: number) {
         }
     }
     
-  //   addTipoDocumento(e:Event){
-  //     e.preventDefault()
   
-  //     this.ref = this.dialogService.open(Create_documentTypeComponent, {
-  //       width: '35%',
-  //       height: '50%',
-  //       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-  //       baseZIndex: 10000,
-  //       data: {
-  //         id: '1'
-  //     },
-  //   });
-  
-  //   this.ref.onClose.subscribe((person: any) =>{
-  //       if (person) {
-  //           this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-  //       this.getAlldocumentTypes()
-  
-  //         }
-  //   });
-  //   }
-  //   addGenero(e:Event){
-  //     e.preventDefault()
-  
-  //     this.ref = this.dialogService.open(Create_genderComponent, {
-  //       width: '35%',
-  //       height: '50%',
-  //       contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-  //       baseZIndex: 10000,
-  //       data: {
-  //         id: '1'
-  //     },
-  //   });
-     
-  //   this.ref.onClose.subscribe((person: any) =>{
-  //     if (person) {
-  //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-  //     this.getAllgenders()
-
-  //       }
-  // });
-  // }
 }

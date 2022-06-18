@@ -44,6 +44,7 @@ export class EditarTeacherComponent implements OnInit {
   public mostrar:number=1;
   public mostrar2:boolean=false;
   public mostrar1:boolean=true;
+  public bandera:boolean=false
   
   public mostrar3:boolean=false;
   public tabla:boolean=true;
@@ -193,7 +194,28 @@ export class EditarTeacherComponent implements OnInit {
         // console.log(this.linkTypes)
       }, error => console.error(error));
   }
-
+  public volver(event: Event){
+    event.preventDefault
+    this.tabla = true
+    this.displayMaximizable2 = false
+    this.ngOnInit()
+    this.mostrar2= false
+    this.mostrar3= false
+    this.bandera=false
+    this.Workexperiences=[]
+    this. headquarterProgramStudent1=[]
+    this. headquarterProgram=[]
+    this.trainingTeachers=[]
+    this.validandoCertificado=[]
+    this.FilesFormaciones =[]
+    this.FilesExperinecia =[]
+    this.deletetrainingTeachers=[]
+    this.deleteWorkexperiences = []
+    this.ArchivosEliminados =[]
+    this.deleteheadquarterProgramTeachers=[]
+    this.FilesResolusiones =[]
+  
+  }
   public onSubmit() {
 
     let formValue={
@@ -313,6 +335,7 @@ export class EditarTeacherComponent implements OnInit {
       formValue.ChargeBondingId != ("" || undefined)
       ){
         
+        this.bandera=true
 
       this.teacherService.updateItem(formValue.id,formValue).subscribe(
         (algo) => {
@@ -571,7 +594,10 @@ export class EditarTeacherComponent implements OnInit {
                           }
                           date = new Date(date.getTime() - 1000);
                           if( minutes == '00' && seconds == '01' ) {
-                            this.router.navigateByUrl('/usuarios/Teacher');
+                            this.ngOnInit()
+                            this.volver(new Event(''))
+                            this.bandera=false
+                            // this.router.navigateByUrl('/usuarios/Teacher');
                             clearInterval(interval); 
                           }
                     }, 1000);
@@ -581,6 +607,8 @@ export class EditarTeacherComponent implements OnInit {
             }
         },async error => {
           if(error != undefined) {
+  this.bandera=false
+
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){
               text = await translate(error.error.dataErros[0].message, "es");
@@ -709,14 +737,7 @@ private getAllrelationships(selectId?: number) {
       this.research_bondings = AdministrativeFromApi.research_bondings;
     }, error => console.error(error));
 }
-public volver(event: Event){
-  event.preventDefault
-  this.tabla = true
-  this.displayMaximizable2 = false
-  this.ngOnInit()
-  this.mostrar2= false
-  this.mostrar3= false
-}
+
 
 ngOnDestroy() {
   this.tabla = true

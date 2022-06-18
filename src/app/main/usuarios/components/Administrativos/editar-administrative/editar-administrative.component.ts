@@ -26,6 +26,7 @@ import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
 export class EditarAdministrativeComponent implements OnInit {
 
   public mostrar:number=1;
+  public bandera:boolean=false
 
   public mostrar2:boolean=true;
   public algo:number[]=[0];
@@ -196,11 +197,20 @@ export class EditarAdministrativeComponent implements OnInit {
     }
   }
 
+  // public volver(event: Event){
+  //   event.preventDefault
+  //   this.tabla = true
+  //   this.displayMaximizable2 = false
+  //   this.ngOnInit()
+  // }
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+    this.Charges1=[]
     this.ngOnInit()
+    //console.log(event)
   }
 
   ngOnDestroy() {
@@ -279,6 +289,7 @@ export class EditarAdministrativeComponent implements OnInit {
               // && 
               // formValue. date_of_birth!= ("" || undefined)
               ){
+                this.bandera=true
 
 
             this.administrativeService.updateItem(formValue.id,formValue).subscribe(
@@ -297,12 +308,17 @@ export class EditarAdministrativeComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/Administrative');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                          this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/Administrative');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+              this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

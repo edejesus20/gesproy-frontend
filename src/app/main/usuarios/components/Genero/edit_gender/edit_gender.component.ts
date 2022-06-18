@@ -11,6 +11,7 @@ const translate = require('translate');
   styleUrls: ['./edit_gender.component.css']
 })
 export class Edit_genderComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=1;
   public tabla:boolean=true;
@@ -40,6 +41,8 @@ export class Edit_genderComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     //console.log(event)
+    this.bandera=false
+
   }
 
   ngOnDestroy() {
@@ -68,6 +71,8 @@ export class Edit_genderComponent implements OnInit {
   public onSubmit() {
     let formValue: GenderI = this.form.value;
     if(formValue.name != ''  && formValue.id){
+    this.bandera=true
+
     this.genderService.updateItem(formValue.id, formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -84,12 +89,17 @@ export class Edit_genderComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/gender');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/gender');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           console.log(error);
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){

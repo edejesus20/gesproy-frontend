@@ -19,6 +19,7 @@ export class DeleteStudentComponent implements OnInit {
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form:FormGroup=this.formBuilder.group({});
+  public bandera:boolean=false
 
 
   constructor(
@@ -64,6 +65,8 @@ export class DeleteStudentComponent implements OnInit {
       password:'',
       UserId: 0,
     };
+  this.bandera=true
+
     this.studentService.deleteItem(formValue.id).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -80,12 +83,17 @@ export class DeleteStudentComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Student');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/Student');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -95,27 +103,13 @@ export class DeleteStudentComponent implements OnInit {
       });
 }
 
-
-// private getAllgenders(selectId?: number) {
-//   this.genderService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       this.genders = AdministrativeFromApi.genders;
-//     }, error => console.error(error));
-// }
-
-// private getAlldocumentTypes(selectId?: number) {
-//   this.documentTypeService.getList().subscribe(
-//     (AdministrativeFromApi) => {
-//       this.documentTypes = AdministrativeFromApi.documentTypes;
-//     }, error => console.error(error));
-// }
-
-
 public volver(event: Event){
   event.preventDefault
   this.tabla = true
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.bandera=false
+
 }
 
 ngOnDestroy() {

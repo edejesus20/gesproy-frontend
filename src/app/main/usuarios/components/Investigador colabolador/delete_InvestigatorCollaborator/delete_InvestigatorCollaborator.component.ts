@@ -10,6 +10,7 @@ const translate = require('translate');
   styleUrls: ['./delete_InvestigatorCollaborator.component.css']
 })
 export class Delete_InvestigatorCollaboratorComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=2;
   public tabla:boolean=true;
@@ -80,6 +81,8 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
 
@@ -95,6 +98,8 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
 
   public onSubmit(e: Event) {
     e.preventDefault()
+    this.bandera=true
+
       this.investigadorColaboladorService.deleteItem(this.form.id).subscribe(
               () => {
                       var date = new Date('2020-01-01 00:00:03');
@@ -111,7 +116,10 @@ export class Delete_InvestigatorCollaboratorComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/InvestigatorCollaborator');
                           clearInterval(interval); 
                         }
                   }, 1000);

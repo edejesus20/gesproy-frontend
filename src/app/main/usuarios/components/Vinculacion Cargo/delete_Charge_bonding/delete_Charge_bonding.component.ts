@@ -13,6 +13,7 @@ const translate = require('translate');
   styleUrls: ['./delete_Charge_bonding.component.css']
 })
 export class Delete_Charge_bondingComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=2;
   public tabla:boolean=true;
@@ -41,6 +42,7 @@ export class Delete_Charge_bondingComponent implements OnInit {
     this.displayMaximizable2 = false
     this.ngOnInit()
     this.scales=[]
+    this.bandera=false
     
     //console.log(event)
   }
@@ -89,6 +91,8 @@ export class Delete_Charge_bondingComponent implements OnInit {
   public onSubmit() {
     let formValue: Charge_bondingI = this.form.value;
     if(formValue.id){
+    this.bandera=true
+
     this.charge_bondingService.deleteItem(formValue.id).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -105,12 +109,17 @@ export class Delete_Charge_bondingComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Charge_bonding');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/Charge_bonding');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

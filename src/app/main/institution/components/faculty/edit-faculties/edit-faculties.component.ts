@@ -24,6 +24,7 @@ export class EditFacultiesComponent implements OnInit {
   private id:number=0
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
 
   public administratives: AdministrativeI[]=[];
  
@@ -66,6 +67,8 @@ constructor(
       if(formValue.name != '' && 
       // formValue.AdministrativeId != ( 0 ) &&
       formValue.UniversityId != ( 0 )){
+    this.bandera=true
+
     this.facultyService.updateItem(this.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -82,12 +85,17 @@ constructor(
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_facultys');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/institution/mostrar_facultys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -99,7 +107,6 @@ constructor(
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
 }
-
 
   private getAlladministrative(selectId?: number) {
     this.administrativeService.getTipoAdministrative('1').subscribe(
@@ -124,15 +131,13 @@ constructor(
 
       }, error => console.error(error));
   }
-
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
     this.administratives=[]
-
-    //console.log(event)
+    this.bandera=false
   }
 
   ngOnDestroy() {
@@ -169,16 +174,14 @@ constructor(
       if(cnt_groupFromApi.faculty.AdministrativeId){
         for (const key of this.administratives) {
           if(key.id == cnt_groupFromApi.faculty.AdministrativeId){
-  
             AdministrativeId=key
             this.form.controls['AdministrativeId'].setValue(AdministrativeId)
           }
         } 
         if(AdministrativeId == ''){
-          this.administrativeService.getAdministrativesOneTipo(cnt_groupFromApi.faculty?.AdministrativeId).subscribe((algo)=>{
-    
+          console.log(cnt_groupFromApi.faculty?.AdministrativeId)
+          this.administrativeService.getAdministrativesOneTipo(cnt_groupFromApi.faculty.AdministrativeId).subscribe((algo)=>{
             this.administratives.push(algo.administrativos[0])
-           
             this.form.controls['AdministrativeId'].setValue(algo.administrativos[0])
           })
         }

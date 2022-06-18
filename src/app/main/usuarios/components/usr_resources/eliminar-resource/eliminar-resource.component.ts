@@ -22,6 +22,7 @@ export class EliminarResourceComponent implements OnInit {
   public mostrar2:boolean=false;
   public algo:number[]=[0];
   public form:FormGroup=this.formBuilder.group({});
+  public bandera:boolean=false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,6 +57,8 @@ export class EliminarResourceComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.bandera=false
+
   }
   get getRoles() {
     return this.form.get('Roles') as FormArray;
@@ -129,6 +132,7 @@ export class EliminarResourceComponent implements OnInit {
     };
     // console.log(formValue)
             if(formValue.id){
+              this.bandera=true
 
             this.resourcesService.eliminarResource(formValue.id).subscribe(
               () => {
@@ -146,12 +150,17 @@ export class EliminarResourceComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/resources');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/resources');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

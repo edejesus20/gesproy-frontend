@@ -28,6 +28,7 @@ export class DeleteAdministrativeComponent implements OnInit {
    
  };
 public ChargeAdministratives:any[] = [];
+public bandera:boolean=false
 
   constructor(
     private administrativeService:AdministrativeService,
@@ -94,6 +95,8 @@ public ChargeAdministratives:any[] = [];
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
+    this.bandera=false
+    this.ngOnInit()
     //console.log(event)
   }
 
@@ -109,6 +112,8 @@ public ChargeAdministratives:any[] = [];
 
   public onSubmit(e: Event) {
     e.preventDefault()
+    this.bandera=true
+
       this.administrativeService.deleteItem(this.form.id).subscribe(
               () => {
                       var date = new Date('2020-01-01 00:00:03');
@@ -125,12 +130,17 @@ public ChargeAdministratives:any[] = [];
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/Administrative');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                          this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/Administrative');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

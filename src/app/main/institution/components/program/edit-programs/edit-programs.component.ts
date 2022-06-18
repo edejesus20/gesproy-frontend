@@ -34,6 +34,7 @@ export class EditProgramsComponent implements OnInit {
   public headquarters: HeadquarterI[]=[]
   public algo:number[]=[0];
   public mostrar2:boolean=false;
+  public bandera:boolean=false
   
   public form:FormGroup=this.formBuilder.group({});
   
@@ -172,11 +173,8 @@ constructor(
     formValue.FacultyId != ( 0 )
     ){
     
-
-    
-
-
-    console.log(formValue)
+      this.bandera=true
+    // console.log(formValue)
     this.programService.updateItem(this.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -193,12 +191,17 @@ constructor(
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_programs');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/institution/mostrar_programs');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -219,6 +222,8 @@ constructor(
     this.id =0
     this.mostrar2=false
     this.administratives=[]
+    this.bandera=false
+
     //console.log(event)
   }
 

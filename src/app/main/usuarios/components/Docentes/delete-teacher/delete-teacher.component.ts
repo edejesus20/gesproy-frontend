@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { Charge_bondingService } from 'src/app/core/services/investigacion/Charge_bonding.service';
 import { MincienciaCategoryService } from 'src/app/core/services/investigacion/MincienciaCategory.service';
@@ -32,6 +33,8 @@ export class DeleteTeacherComponent implements OnInit {
   public scales:ScaleI[] =[]
   public mincienciaCategorys:MincienciaCategoryI[] =[]
   public charge_bondings:Charge_bondingI[]=[]
+  public bandera:boolean=false
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private teacherService:TeacherService,
@@ -77,8 +80,8 @@ export class DeleteTeacherComponent implements OnInit {
       }, error => console.error(error));
   }
   public onSubmit() {
-    const formValue={
-      id: this.form.value.id,
+    let formValue={
+      id: this.id,
       name: this.form.value.name,
       surname: this.form.value.surname,
       DocumentTypeId: this.form.value.DocumentTypeId.id,
@@ -91,11 +94,12 @@ export class DeleteTeacherComponent implements OnInit {
       email:this.form.value.email,
       password:'',
       UserId: 0,
-      ScaleId: this.form.value.ScaleId.id,
+      // ScaleId: this.form.value.ScaleId.id,
       MincienciaCategoryId: this.form.value.MincienciaCategoryId.id
     };
     // console.log(formValue)
     if(
+      // formValue.id !="" &&
       formValue.name != ""&&
       formValue.surname != ""&&
       formValue.DocumentTypeId != ( 0 || undefined)&&
@@ -106,6 +110,7 @@ export class DeleteTeacherComponent implements OnInit {
       formValue.email != ""&&
     //  formValue.ScaleId !=("" || undefined) &&
    formValue.MincienciaCategoryId != ("" || undefined)){
+    this.bandera=true
 
     this.teacherService.deleteItem(formValue.id).subscribe(
       () => {
@@ -123,12 +128,17 @@ export class DeleteTeacherComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Teacher');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                  this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/Teacher');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+  this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -176,13 +186,20 @@ private getAllcolcienciaCategorys(selectId?: number) {
 }
 
 
+// public volver(event: Event){
+//   event.preventDefault
+//   this.tabla = true
+//   this.displayMaximizable2 = false
+//   this.ngOnInit()
+// }
 public volver(event: Event){
   event.preventDefault
   this.tabla = true
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.bandera=false
+  //console.log(event)
 }
-
 ngOnDestroy() {
   this.tabla = true
   this.displayMaximizable2 = false

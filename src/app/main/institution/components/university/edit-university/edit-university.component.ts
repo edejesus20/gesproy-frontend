@@ -15,6 +15,7 @@ export class EditUniversityComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
   
   public form:FormGroup=this.formBuilder.group({})
 
@@ -62,6 +63,8 @@ export class EditUniversityComponent implements OnInit {
     this.tabla = true
     this.ngOnInit()
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
 
@@ -77,6 +80,7 @@ export class EditUniversityComponent implements OnInit {
   public onSubmit() {
     let formValue: UniversityI = this.form.value;
     if(formValue.name != "" && formValue.nit != "" && formValue.addres != ""){
+      this.bandera=true
      
     this.universityService.updateItem(this.id,formValue).subscribe(
       () => {
@@ -94,12 +98,17 @@ export class EditUniversityComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_universitys');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/institution/mostrar_universitys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

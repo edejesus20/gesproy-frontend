@@ -16,6 +16,7 @@ import { RoleI } from 'src/app/models/authorization/usr_roles';
 export class ModificarResourceComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
+  public bandera:boolean=false
 
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
@@ -60,12 +61,16 @@ export class ModificarResourceComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.bandera=false
+    this.Roles1=[]
+
   }
   
   ngOnDestroy() {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.Roles1=[]
   }
   actualizar(id: number){
     // console.log(id)
@@ -152,7 +157,7 @@ export class ModificarResourceComponent implements OnInit {
       titulo: this.form.value.titulo,
       Roles:this.form.value.Roles,
     };
-    if(this.Roles1.length == 0 || this.Roles1 == []){
+    if(this.Roles1.length == 0 ){
       let control = <FormArray>this.form.controls['Roles']
       for (const key of control.value) {
         key.RoleId=key.RoleId.id 
@@ -174,6 +179,7 @@ export class ModificarResourceComponent implements OnInit {
               formValue.icono != ""&&
               formValue.link != ""&&
               formValue.titulo != ""){
+                this.bandera=true
 
             this.resourcesService.updateResource(formValue).subscribe(
               () => {
@@ -191,12 +197,17 @@ export class ModificarResourceComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/resources');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/resources');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");

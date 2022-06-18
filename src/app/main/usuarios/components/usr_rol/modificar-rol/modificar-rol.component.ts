@@ -17,6 +17,7 @@ export class ModificarRolComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
 
   public form:FormGroup=this.formBuilder.group({ });
 
@@ -41,6 +42,8 @@ export class ModificarRolComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
+    this.bandera=false
+
 
     //console.log(event)
   }
@@ -72,6 +75,7 @@ export class ModificarRolComponent implements OnInit {
   public onSubmit() {
     let formValue: RoleI = this.form.value;
     if(formValue.name != ''){
+    this.bandera=true
     this.rolesService.updateRole(formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -88,12 +92,17 @@ export class ModificarRolComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/roles');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/roles');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+    this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");

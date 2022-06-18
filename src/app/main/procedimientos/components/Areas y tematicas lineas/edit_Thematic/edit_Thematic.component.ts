@@ -21,6 +21,7 @@ export class Edit_ThematicComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   public algo:number[]=[0];
+  public bandera:boolean=false
 
   public mostrar2:boolean=false;
   public mostrarDialogo:boolean=false;
@@ -54,12 +55,7 @@ export class Edit_ThematicComponent implements OnInit {
 
 
  }
- public volver(event: Event){
-   event.preventDefault
-   this.tabla = true
-   this.displayMaximizable2 = false
-   //console.log(event)
- }
+
 
  ngOnDestroy() {
  this.tabla = true
@@ -129,6 +125,15 @@ export class Edit_ThematicComponent implements OnInit {
     }
   }
 
+  public volver(event: Event){
+    event.preventDefault
+    this.tabla = true
+    this.displayMaximizable2 = false
+    this.bandera=false
+    this.ThematicAxis=[]
+ 
+    //console.log(event)
+  }
  public onSubmit() {
   // console.log(f)
   // let control = <FormArray>this.form.controls['Thematic_axis']
@@ -154,8 +159,9 @@ export class Edit_ThematicComponent implements OnInit {
   }
   // console.log(formValue)
 
-  if(formValue.name != ''){
-    if(formValue.id)
+  if(formValue.name != '' && formValue.id){
+    this.bandera=true
+
   this.thematicService.updateItem(formValue.id,formValue).subscribe(
     () => {
             var date = new Date('2020-01-01 00:00:03');
@@ -172,12 +178,17 @@ export class Edit_ThematicComponent implements OnInit {
               }
               date = new Date(date.getTime() - 1000);
               if( minutes == '00' && seconds == '01' ) {
-                this.router.navigateByUrl('/Procedimientos/Thematic');
+                this.ngOnInit()
+                this.volver(new Event(''))
+               this.bandera=false
+                // this.router.navigateByUrl('/Procedimientos/Thematic');
                 clearInterval(interval); 
                }
         }, 1000);
     },async error => {
       if(error != undefined) {
+        this.bandera=false
+
         let text = await translate(error.error.message, "es");
         if(error.error.dataErros){
           text = await translate(error.error.dataErros[0].message, "es");

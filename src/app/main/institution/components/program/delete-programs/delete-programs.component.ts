@@ -23,6 +23,8 @@ export class DeleteProgramsComponent implements OnInit {
   public faculties: FacultyI[]=[];
   public categorys:CategoryI[] = []
   displayMaximizable2:boolean=false
+  public bandera:boolean=false
+
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form:ProgramI={
     id: 0,
@@ -85,36 +87,44 @@ export class DeleteProgramsComponent implements OnInit {
       };
       // console.log(formValue)
 
-      if(formValue.id)
-      this.programService.deleteItem(formValue.id).subscribe(
-        () => {
-                var date = new Date('2020-01-01 00:00:03');
-                  function padLeft(n:any){ 
-                     return n ="00".substring(0, "00".length - n.length) + n;
-                  }
-                  var interval = setInterval(() => {
-                  var minutes = padLeft(date.getMinutes() + "");
-                  var seconds = padLeft(date.getSeconds() + "");
-                  // console.log(minutes, seconds);
-                  if( seconds == '03') {
-                  this.messageService.add({severity:'success', summary: 'Success', 
-                  detail: 'Registro de Programa Eliminado con exito'});
-                  }
-                  date = new Date(date.getTime() - 1000);
-                  if( minutes == '00' && seconds == '01' ) {
-                    this.router.navigateByUrl('/institution/mostrar_programs');
-                    clearInterval(interval); 
-                   }
-            }, 1000);
-        },async error => {
-          if(error != undefined) {
-            let text = await translate(error.error.message, "es");
-            if(error.error.dataErros){
-              text = await translate(error.error.dataErros[0].message, "es");
+      if(formValue.id){
+        this.bandera=true
+        this.programService.deleteItem(formValue.id).subscribe(
+          () => {
+                  var date = new Date('2020-01-01 00:00:03');
+                    function padLeft(n:any){ 
+                       return n ="00".substring(0, "00".length - n.length) + n;
+                    }
+                    var interval = setInterval(() => {
+                    var minutes = padLeft(date.getMinutes() + "");
+                    var seconds = padLeft(date.getSeconds() + "");
+                    // console.log(minutes, seconds);
+                    if( seconds == '03') {
+                    this.messageService.add({severity:'success', summary: 'Success', 
+                    detail: 'Registro de Programa Eliminado con exito'});
+                    }
+                    date = new Date(date.getTime() - 1000);
+                    if( minutes == '00' && seconds == '01' ) {
+                      this.ngOnInit()
+                      this.volver(new Event(''))
+                     this.bandera=false
+                      // this.router.navigateByUrl('/institution/mostrar_programs');
+                      clearInterval(interval); 
+                     }
+              }, 1000);
+          },async error => {
+            if(error != undefined) {
+              this.bandera=false
+  
+              let text = await translate(error.error.message, "es");
+              if(error.error.dataErros){
+                text = await translate(error.error.dataErros[0].message, "es");
+              }
+              this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
             }
-            this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
-          }
-        });
+          });
+      }
+    
   }
 
 
@@ -122,6 +132,8 @@ export class DeleteProgramsComponent implements OnInit {
       event.preventDefault
       this.tabla = true
       this.displayMaximizable2 = false
+      this.bandera=false
+
       //console.log(event)
     }
   
@@ -135,11 +147,21 @@ export class DeleteProgramsComponent implements OnInit {
   }
   
   getOneCntAccount(id:number) {
+    console.log(id)
     this.programService.getItem(id).subscribe((cnt_groupFromApi) => {
      
-      if(cnt_groupFromApi.program.Faculty?.Administrative?.User != undefined
+      if(cnt_groupFromApi.program.Faculty != undefined
         ){
-        this.form=cnt_groupFromApi.program
+          // console.log(cnt_groupFromApi)
+        this.form={
+          id:  cnt_groupFromApi.program.id,
+          name: cnt_groupFromApi.program.name,
+          FacultyId: cnt_groupFromApi.program.FacultyId,
+          CategoryId: cnt_groupFromApi.program.CategoryId,
+          Faculty:cnt_groupFromApi.program.Faculty,
+          Category:cnt_groupFromApi.program.Category
+        }
+       
         // this.selectedUniversit=cnt_groupFromApi.headquarter.University
         // console.log(this.selectedUniversit)
             }

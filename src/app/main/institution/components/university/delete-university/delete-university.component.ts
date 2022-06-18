@@ -16,6 +16,7 @@ export class DeleteUniversityComponent implements OnInit {
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form:FormGroup=this.formBuilder.group({})
+  public bandera:boolean=false
 
   private id:number=0
   constructor(
@@ -64,6 +65,8 @@ export class DeleteUniversityComponent implements OnInit {
     this.tabla = true
     this.ngOnInit()
     this.displayMaximizable2 = false
+    this.bandera=false
+
     //console.log(event)
   }
 
@@ -79,7 +82,10 @@ export class DeleteUniversityComponent implements OnInit {
   public onSubmit() {
     let formValue: UniversityI = this.form.value;
     if(formValue.name != "" && formValue.nit != "" && formValue.addres != ""){
+      this.bandera=true
     this.universityService.deleteItem(this.id).subscribe(
+
+
       () => {
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
@@ -95,12 +101,17 @@ export class DeleteUniversityComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_universitys');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/institution/mostrar_universitys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           const text = await translate(error.error.message, "es");
           this.messageService.add({severity:'error', summary: 'Error', detail: `Error. ${text}`});
         }

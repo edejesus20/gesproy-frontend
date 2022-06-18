@@ -16,6 +16,7 @@ export class Edit_CategoriaGruposComponent implements OnInit {
   public mostrar:number=1;
   public tabla:boolean=true;
   public groups: GroupI[]=[];
+  public bandera:boolean=false
 
   public form:FormGroup=this.formBuilder.group({ });
 
@@ -57,11 +58,10 @@ export class Edit_CategoriaGruposComponent implements OnInit {
     // formValue.GroupId=this.form.value.GroupId.id
 
     if(formValue.name != '' 
-    // && 
+    && formValue.id
     // formValue.GroupId != ( 0 )
     ){
-
-    if(formValue.id)
+      this.bandera=true
     this.categoryGroupService.updateItem(formValue.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -78,12 +78,17 @@ export class Edit_CategoriaGruposComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/Investigation/mostrar_categorys');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/Investigation/mostrar_categorys');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
+
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -101,6 +106,8 @@ export class Edit_CategoriaGruposComponent implements OnInit {
       this.tabla = true
       this.displayMaximizable2 = false
       this.ngOnInit()
+      this.bandera=false
+
       //console.log(event)
     }
 

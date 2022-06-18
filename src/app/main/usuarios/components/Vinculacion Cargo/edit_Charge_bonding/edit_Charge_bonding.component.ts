@@ -22,6 +22,7 @@ export class Edit_Charge_bondingComponent implements OnInit {
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
 
   public form:FormGroup=this.formBuilder.group({ });
   public mostrar2:boolean=false;
@@ -54,6 +55,9 @@ export class Edit_Charge_bondingComponent implements OnInit {
     this.displayMaximizable2 = false
     this.ngOnInit()
     this.mostrar2=false
+    this.bandera=false
+    this.Scale=[]
+
     //console.log(event)
   }
 
@@ -71,22 +75,7 @@ export class Edit_Charge_bondingComponent implements OnInit {
       this.scales =scalesApiFrom.scales
     })
   }
-  // getAllScale() {
-  //   if(this.form.value.id != ''){
-  //     this.charge_bondingService.getItem(this.form.value.id).subscribe(algo=>{
-  //       if(algo.charge_bonding.ChargebondingScales?.length != undefined){
-  //         for (const key of algo.charge_bonding.ChargebondingScales) {
-  //           if(key.Scale != undefined) this.scales.push(key.Scale)
-            
-  //         }
-  //       }
-  //     })
-  //   }
-    
-  //   // this.scaleService.getList().subscribe((scalesApiFrom) => {
-  //   //   this.scales =scalesApiFrom.scales
-  //   // })
-  // }
+
   getOneCntAccount(id:number) {
   this.charge_bondingService.getItem(id).subscribe((cnt_groupFromApi) => {
       console.log(cnt_groupFromApi.charge_bonding)
@@ -158,9 +147,11 @@ export class Edit_Charge_bondingComponent implements OnInit {
     if(control.value[0].ScaleId == undefined){
       formValue.Scales=[]
     }
-      console.log(formValue)
+      // console.log(formValue)
 
     if(formValue.name != ''  && formValue.id){
+      this.bandera=true
+
     this.charge_bondingService.updateItem(formValue.id, formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -177,7 +168,10 @@ export class Edit_Charge_bondingComponent implements OnInit {
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/usuarios/Charge_bonding');
+                  this.ngOnInit()
+                  this.volver(new Event(''))
+                 this.bandera=false
+                  // this.router.navigateByUrl('/usuarios/Charge_bonding');
                   clearInterval(interval); 
                  }
           }, 1000);

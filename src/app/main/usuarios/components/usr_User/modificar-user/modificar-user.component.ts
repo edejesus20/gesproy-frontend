@@ -22,6 +22,7 @@ const translate = require('translate');
 })
 export class ModificarUserComponent implements OnInit {
   public image:string='assets/images/images.jpg'
+  public bandera:boolean=false
 
   public mostrar:number=1;
   public mostrar2:boolean=false;
@@ -84,8 +85,6 @@ export class ModificarUserComponent implements OnInit {
       }, error => console.error(error));
     }
 
-  
-
   public onSubmit(e:Event) {
     e.preventDefault();
     const formValue={
@@ -128,7 +127,7 @@ export class ModificarUserComponent implements OnInit {
         formValue.Roles=[]
   
       }
-    console.log(formValue)
+    // console.log(formValue)
             if(formValue.name != ""&&
               formValue.surname != ""&&
               formValue.DocumentTypeId != ( 0 || undefined)&&
@@ -141,6 +140,7 @@ export class ModificarUserComponent implements OnInit {
               // formValue.nationality != "" && 
               // formValue. date_of_birth!= ""
               ){
+                this.bandera=true
 
             this.userService.updateUser(formValue).subscribe(
               () => {
@@ -158,12 +158,17 @@ export class ModificarUserComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/users');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/users');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+               this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");
@@ -185,6 +190,9 @@ public volver(event: Event){
   this.mostrar2 = false
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.bandera=false
+  this.Roles1=[]
+
 }
 
 ngOnDestroy() {

@@ -17,6 +17,7 @@ const translate = require('translate');
   styleUrls: ['./eliminar-user.component.css']
 })
 export class EliminarUserComponent implements OnInit {
+  public bandera:boolean=false
 
   public mostrar:number=2;
   public mostrar2:boolean=false;
@@ -92,6 +93,7 @@ export class EliminarUserComponent implements OnInit {
       Roles:this.form.value.Roles,
     };
             if(formValue.id){
+              this.bandera=true
 
             this.userService.eliminarUser(formValue.id).subscribe(
               () => {
@@ -109,12 +111,17 @@ export class EliminarUserComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
-                          this.router.navigateByUrl('/usuarios/users');
+                          this.ngOnInit()
+                          this.volver(new Event(''))
+                         this.bandera=false
+                          // this.router.navigateByUrl('/usuarios/users');
                           clearInterval(interval); 
                         }
                   }, 1000);
               },async error => {
                 if(error != undefined) {
+    this.bandera=false
+
                   let text = await translate(error.error.message, "es");
                   if(error.error.dataErros){
                     text = await translate(error.error.dataErros[0].message, "es");
@@ -136,6 +143,9 @@ public volver(event: Event){
   this.mostrar2 = false
   this.displayMaximizable2 = false
   this.ngOnInit()
+  this.bandera=false
+  this.Roles1=[]
+
 }
 
 ngOnDestroy() {
@@ -161,34 +171,15 @@ getOneCntAccount(id:number) {
           this.form.controls['name'].setValue(cnt_groupFromApi.user.Person.name)
           this.form.controls['surname'].setValue(cnt_groupFromApi.user.Person.surname)
           this.form.controls['identification'].setValue(cnt_groupFromApi.user.Person.identification)
-          // this.form.controls['address'].setValue(cnt_groupFromApi.user.address)
-          // this.form.controls['phone'].setValue(cnt_groupFromApi.user.phone)
+
           this.form.controls['email'].setValue(cnt_groupFromApi.user.email)
           this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.user.Person.DocumentType)
-
           // console.log('aqui')
-       
           }
 
-          // if(cnt_groupFromApi.user.DocumentTypeId != undefined)
-          // this.documentTypeService.getItem(parseInt(cnt_groupFromApi.user.DocumentTypeId)).subscribe((algo)=>{
-          // })
-  
-   
-
-        // if(cnt_groupFromApi.user.GenderId != undefined)
-        // this.genderService.getItem(parseInt(cnt_groupFromApi.user.GenderId)).subscribe((algo)=>{
-        //   this.form.controls['GenderId'].setValue(algo.gender)
-        // })
-
         if(cnt_groupFromApi.rolesUsers.length != undefined && cnt_groupFromApi.rolesUsers.length > 0){
-          
           this.agregarDescuentos(cnt_groupFromApi.rolesUsers)
-          
         }
-        
-        // console.log(this.form.value)
-      
     }
 
     this.displayMaximizable2=true
