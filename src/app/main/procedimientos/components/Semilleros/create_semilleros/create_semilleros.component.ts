@@ -126,6 +126,25 @@ public ref1:any;
       this.GroupId = 0
     this.ngOnInit()
     this.vaciar()
+    this.mostrarTeacher=false
+    this.mostrarlineasProgram=false
+    this.mostrarHeadquarterProgram=false
+    this.mostrarFacultad= false
+    this. form2= {
+      id:0,   
+       UserId: 0,
+      ScaleId: 0,
+      // hours_of_dedication:'',
+      MincienciaCategoryId: '',
+      User:undefined, 
+      Scale:undefined, 
+      Group:undefined, 
+      MincienciaCategory:undefined, 
+      TrainingTeacher:undefined, 
+      Trainings:undefined, 
+      ChargeBondingId:0,
+      Charge_bonding:undefined
+  }
 }
 private vaciar(){
   this.form.reset()
@@ -428,14 +447,14 @@ private vaciar(){
 
   addlines(event: Event){
     event.preventDefault();
-    const control = <FormArray>this.form.controls['lines']
+    let control = <FormArray>this.form.controls['lines']
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar == false){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]],}))//nuevo input
     }
     if(control.length >= 1 && this.mostrar == true){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]],}))//nuevo input
 
     }
       this.mostrar=true
@@ -446,7 +465,7 @@ private vaciar(){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
-     control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+     control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
 
     }
   }

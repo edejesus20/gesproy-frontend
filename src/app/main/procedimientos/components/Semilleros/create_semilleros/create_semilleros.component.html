@@ -1,5 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height':'100vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '90%','height':'100vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
   <br>
       
@@ -236,7 +236,7 @@
                     <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
 
                     <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
-                    formControlName="Mision" placeholder="ESCRIBIR LA MISION"  required></textarea>
+                   name="Mision" formControlName="Mision" placeholder="ESCRIBIR LA MISION"  required></textarea>
                     
                   </div>
                 </div>
@@ -245,7 +245,7 @@
                     <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
 
                     <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
-                    formControlName="Vision" placeholder="ESCRIBIR LA VISION"  required></textarea>
+                    name="Vision" formControlName="Vision" placeholder="ESCRIBIR LA VISION"  required></textarea>
         
                   </div>
                 </div>
@@ -283,7 +283,7 @@
             <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
 
             <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" pInputTextarea [autoResize]="true"
-            formControlName="estrategias" placeholder="ESCRIBIR LAS ESTRATEGIAS"  required></textarea>
+            name="estrategias" formControlName="estrategias" placeholder="ESCRIBIR LAS ESTRATEGIAS"  required></textarea>
           </div>
  
       </p-panel>
@@ -442,7 +442,7 @@
                                 <div class="p-inputgroup"  >
                                   <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
                                   <input class="p-inputtext-lg" type="text" formControlName="Horas"
-                                  pInputText pKeyFilter="num" name="Horas" 
+                                  pInputText  name="Horas" required
                                   placeholder="Horas" title="Horas" >         
                               </div>
                               </div>
