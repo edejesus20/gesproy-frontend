@@ -31,9 +31,8 @@ export class AsignarRolResourceComponent implements OnInit {
   cols: any[]=[];
   exportColumns: any[]=[];
   selectedProducts: ResourceI[]=[];
-
-
   public form:FormGroup=this.formBuilder.group({
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +44,9 @@ export class AsignarRolResourceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form=this.formBuilder.group({
-      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
-    });
+    // this.form=this.formBuilder.group({
+    //   Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    // });
     this.primengConfig.ripple = true;
     this.cols = [
       { field: 'id', header: 'Id' },
@@ -60,11 +59,8 @@ export class AsignarRolResourceComponent implements OnInit {
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   this.getUsrRoles()
   this.getUsrResource()
-
   this.loading = false;
   }
-
-
 
 public onSelectionChange(value = []) {
     this.selectAll = value.length === this.totalRecords;
@@ -95,6 +91,17 @@ private volver(){
   this.selectedProducts=[]
   this.Roles1=[]
   this.ngOnInit()
+    this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getRoles.reset()
+  this.getRoles.clear()
+  // this.form.controls['name'].setValue('')
+  let control = <FormArray>this.form.controls['Roles']
+  control.push(this.formBuilder.group({
+    RoleId:['', [Validators.required]]
+  }))
 }
 
   getUsrResource() {
@@ -127,7 +134,7 @@ private volver(){
       if(this.Roles1.length == 0 ){
 
         let control = <FormArray>this.form.controls['Roles']
-        for (const key of control.value) {
+        for (let key of control.value) {
           key.RoleId=key.RoleId.id 
           this.Roles1.push({
           RoleId:key.RoleId,
@@ -220,6 +227,7 @@ private volver(){
       control.removeAt(index)
       if(control.length <= 0){
        this.mostrar=false
+       control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
       }
     }
 

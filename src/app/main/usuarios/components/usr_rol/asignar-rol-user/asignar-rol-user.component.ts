@@ -36,6 +36,7 @@ export class AsignarRolUserComponent implements OnInit {
   private API_URI= environment.API_URI;
 
   public form:FormGroup=this.formBuilder.group({
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -47,9 +48,9 @@ export class AsignarRolUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this. form=this.formBuilder.group({
-      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
-    });
+    // this.form=this.formBuilder.group({
+    //   Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
+    // });
     this.getUser()
   this.getUsrRoles()
   this.loading = false;
@@ -140,6 +141,17 @@ private volver(){
   this.selectedProducts=[]
   this.selectAll= false
   this.ngOnInit()
+  this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getRoles.reset()
+  this.getRoles.clear()
+  // this.form.controls['name'].setValue('')
+  let control = <FormArray>this.form.controls['Roles']
+  control.push(this.formBuilder.group({
+    RoleId:['', [Validators.required]]
+  }))
 }
 
 
@@ -151,7 +163,7 @@ private volver(){
     if(this.Roles1.length == 0 ){
 
       let control = <FormArray>this.form.controls['Roles']
-      for (const key of control.value) {
+      for (let key of control.value) {
         key.RoleId=key.RoleId.id 
         this.Roles1.push({
         RoleId:key.RoleId,
@@ -221,7 +233,6 @@ private volver(){
   
   }
 
-
   get getRoles() {
     return this.form.get('Roles') as FormArray;
   }
@@ -229,15 +240,14 @@ private volver(){
   addRoles(event: Event){
     event.preventDefault();
     const control = <FormArray>this.form.controls['Roles']
-    this.mostrar=true
-    // if(control.length == 0 && this.mostrar == false){
-    //   control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
-    // }
-    // if(control.length >= 1 && this.mostrar == true){
-      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
 
-    // }
-      
+    if(control.length == 0 && this.mostrar == false){
+      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+    }
+    if(control.length >= 1 && this.mostrar == true){
+      control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+    }
+    this.mostrar=true
   }
   removeRoles(index: number,event: Event){
     event.preventDefault();
@@ -245,7 +255,7 @@ private volver(){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
-    //  control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
+     control.push(this.formBuilder.group({RoleId:['', [Validators.required]]}))
     }
   }
 

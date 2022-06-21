@@ -25,6 +25,7 @@ import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/crea
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
+import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -82,7 +83,37 @@ public mostrarTeacher:boolean=false
 
 public Dialog:boolean =false
 public bandera:boolean=false
-public form:FormGroup=this.formBuilder.group({
+public form:FormGroup= this.formBuilder.group({
+  name: ['', [Validators.required]],
+  // group_code:['', [Validators.required]],
+  Facultad: ['', [Validators.required]],
+  HeadquarterProgramId: ['', [Validators.required]],
+  // ident_colciencias:['', [Validators.required]],
+  // CategoryGroupId: ['', [Validators.required]],
+  // resolution: ['', [Validators.required]],
+  // Link_gruplac: ['', [Validators.required]],
+  RoleInvestigador: ['', [Validators.required]],
+  ObjetivoGeneral: ['', [Validators.required]],
+  ObjetivosEspecificos: ['', [Validators.required]],
+  Mision: ['', [Validators.required]],
+  Vision: ['', [Validators.required]],
+  Perfil: ['', [Validators.required]],
+  Metas: ['', [Validators.required]],
+  Resultados: ['', [Validators.required]],
+  Sector: ['', [Validators.required]],
+
+  TeacherId:['', [Validators.required]],
+ 
+  InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
+    {Usuarios:['', [Validators.required]],
+      // RoleId:['', [Validators.required]]
+    }) 
+    ]),
+
+  knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
+  lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
+  // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
+  Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
 });
 
 
@@ -107,6 +138,11 @@ public mostrarIntegrantes:boolean=false
 public construccion:string='assets/construccion.jpg'
 public Valorconstruccion:boolean=false
 
+
+FilesAnexos:Archivo[] =[]
+
+ArchivosEliminados:any[] =[]
+  
   constructor(
     private groupService:GroupService,
     private roleInvestigationsService:RoleInvestigationsService,
@@ -121,8 +157,8 @@ public Valorconstruccion:boolean=false
     public categoryGroupService:CategoryGroupService,
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
-    this.buildForm();
+    this.Valorconstruccion=false
+    // this.buildForm();
     // this.getTeachers();
     this.geFacultad();
     // this.getInvestigatorCollaborators()
@@ -171,40 +207,6 @@ public Valorconstruccion:boolean=false
     }
   }
 
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      // group_code:['', [Validators.required]],
-      Facultad: ['', [Validators.required]],
-      HeadquarterProgramId: ['', [Validators.required]],
-      // ident_colciencias:['', [Validators.required]],
-      // CategoryGroupId: ['', [Validators.required]],
-      // resolution: ['', [Validators.required]],
-      // Link_gruplac: ['', [Validators.required]],
-      RoleInvestigador: ['', [Validators.required]],
-      ObjetivoGeneral: ['', [Validators.required]],
-      ObjetivosEspecificos: ['', [Validators.required]],
-      Mision: ['', [Validators.required]],
-      Vision: ['', [Validators.required]],
-      Perfil: ['', [Validators.required]],
-      Metas: ['', [Validators.required]],
-      Resultados: ['', [Validators.required]],
-      Sector: ['', [Validators.required]],
-
-      TeacherId:['', [Validators.required]],
-     
-      InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
-        {Usuarios:['', [Validators.required]],
-          // RoleId:['', [Validators.required]]
-        }) 
-        ]),
-
-      knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
-      // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
-      Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
-    });
-  }  
  public SelectFacultad(e:Event){
   e.preventDefault();
     if(this.form.value.Facultad != ''){
@@ -271,12 +273,6 @@ public Valorconstruccion:boolean=false
       })
     }
   }
-  // getTeachers() {
-  //   this.teacherService.getList().subscribe(teachersA => {
-  //     this.teachers=teachersA.teachers
-  //   }, error => console.error(error))
-  // }  
-
 
   llenar(event:Event){
     let filterValue = (event.target as HTMLInputElement).value;
@@ -338,6 +334,26 @@ public Valorconstruccion:boolean=false
   }
   private volver(){
     this.bandera=false
+    this.mostrarFacultad = false
+    this.mostrarHeadquarterProgram=false
+    this.mostrarDirector=false
+    this.mostrarLienas=false;
+    this.mostrarTeacher= false
+    this.form2= {
+      id:0,   
+       UserId: 0,
+      ScaleId: 0,
+      // hours_of_dedication:'',
+      MincienciaCategoryId: '',
+      User:undefined, 
+      Scale:undefined, 
+      Group:undefined, 
+      MincienciaCategory:undefined, 
+      TrainingTeacher:undefined, 
+      Trainings:undefined, 
+      ChargeBondingId:0,
+      Charge_bonding:undefined
+  }
     this.lines1=[]
     this.knowledge_areas1=[]
     this.InvestigatorCollaborators1=[]
@@ -345,7 +361,56 @@ public Valorconstruccion:boolean=false
     this.TeacherId = 0
     this.CategoryGroupId=0
     this.ngOnInit()
-  }
+   this. FilesAnexos =[]
+
+this.ArchivosEliminados=[]
+this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+
+  this.getlines.reset()
+  this.getlines.clear()
+  this.getAnexos.reset()
+  this.getAnexos.clear()
+  this.getInvestigatorCollaborator.reset()
+  this.getInvestigatorCollaborator.clear()
+  this.getknowledge_areas.reset()
+  this.getknowledge_areas.clear()
+
+  this.form.controls['name'].setValue('')
+  this.form.controls['Facultad'].setValue('')
+  this.form.controls['HeadquarterProgramId'].setValue('')
+  this.form.controls['RoleInvestigador'].setValue('')
+  this.form.controls['Sector'].setValue('')
+  this.form.controls['ObjetivoGeneral'].setValue('')
+  this.form.controls['ObjetivosEspecificos'].setValue('')
+  this.form.controls['Mision'].setValue('')
+  this.form.controls['Vision'].setValue('')
+  this.form.controls['Metas'].setValue('')
+  this.form.controls['Perfil'].setValue('')
+  this.form.controls['Resultados'].setValue('')
+  this.form.controls['TeacherId'].setValue('')
+  // this.form.controls['Resultados'].setValue('')
+  let control = <FormArray>this.form.controls['lines']
+  control.push(this.formBuilder.group({
+    LineId:['', [Validators.required]]
+  }))
+  let control1 = <FormArray>this.form.controls['Anexos']
+  control1.push(this.formBuilder.group({
+    Anexos:['', [Validators.required]]
+  }))
+
+  let control3 = <FormArray>this.form.controls['InvestigatorCollaborators']
+  control3.push(this.formBuilder.group({
+    Usuarios:['', [Validators.required]],
+  }))
+  let control4 = <FormArray>this.form.controls['knowledge_areas']
+  control4.push(this.formBuilder.group({
+    Knowledge_areaId:['', [Validators.required]],
+  }))
+  
+}
   
   public onSubmit(){
     // console.log('aqui1')
@@ -381,9 +446,6 @@ public Valorconstruccion:boolean=false
       }else{
         formValue.lines = this.lines1
       }
-
-      
-
 
       if(this.knowledge_areas1.length == 0 ){
         let control = <FormArray>this.form.controls['knowledge_areas']
@@ -453,26 +515,162 @@ public Valorconstruccion:boolean=false
     this.bandera=true
 
     this.groupService.createItem(formValue).subscribe(
-      () => {
-        var date = new Date('2020-01-01 00:00:03');
-          function padLeft(n:any){ 
-            return n ="00".substring(0, "00".length - n.length) + n;
+      (algo) => {
+
+        let array1:any[] = []
+        let Bandera:boolean = false
+        if(algo.group.id != undefined){
+
+          console.log(algo.group,'algo.grupo')
+          if(algo.group?.AnexosGroups?.length != undefined
+            && algo.group.AnexosGroups.length >0){
+            // console.log('algo.teacher?.TrainingTeachers')
+            for (const key of algo.group.AnexosGroups) {
+              if(key.id){
+                array1.push({
+                  GroupId:algo.group.id,
+                  AnexoId:key.AnexoId,
+                  GroupAnexoId:key.id,
+                  // name:'certificado'+key.Training?.name, 
+                  file:null
+                  })
+              }
+            }
+            console.log(array1,'array')
+            // array de resolucion
+          for (let index = 0; index < array1.length; index++) {
+            const element = array1[index];
+
+            for (const key of algo.group.AnexosGroups) {
+              if(key.id == element.GroupAnexoId){
+                if(key.Anexo?.name != undefined){
+
+                }else{
+                  if(this.FilesAnexos.length > 0){
+                    for (const key1 of this.FilesAnexos) {
+                      // cont=cont + 1
+                      // console.log(key1.position + '=='+index,'position y index')
+                      if( key1.id==0 && key1.position == index){
+                        console.log(' key1.id==0 && key1.position == index')
+                        array1[index].file=key1.file
+                      }
+                      // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                      if(key1.id == parseInt(array1[index].GroupAnexoId)){
+
+                        console.log(' key1.id == array[index].AnexoId')
+                        array1[index].file=key1.file
+                      }
+                    
+                  }
+                  }
+                }
+              }
           }
-          var interval = setInterval(() => {
-          var minutes = padLeft(date.getMinutes() + "");
-          var seconds = padLeft(date.getSeconds() + "");
-          // console.log(minutes, seconds);
-          if( seconds == '03') {
-          this.messageService.add({severity:'success', summary: 'Success', 
-          detail: 'Registro de Grupo Creado con exito'});
+            }
+ 
+
+        }else{
+          // array1.push({
+          //   GroupId:algo.group.id,
+          //   AnexoId:'',
+          //   GroupAnexoId:'',
+          //   // name:'certificado'+key.Training?.name, 
+          //   file:null
+          //   })
+          if(this.FilesAnexos.length > 0){
+            let cont=0
+            for (const key of this.FilesAnexos) {
+              if(key.file != null){
+                this.groupService.Anexos(algo.group.id.toString(),'','', key.file).subscribe(result=>{
+                    cont=cont + 1
+                    if(cont == this.FilesAnexos.length){
+                      Bandera=true
+                      if(Bandera==true){
+                        var date = new Date('2020-01-01 00:00:03');
+                        function padLeft(n:any){ 
+                          return n ="00".substring(0, "00".length - n.length) + n;
+                        }
+                        var interval = setInterval(() => {
+                        var minutes = padLeft(date.getMinutes() + "");
+                        var seconds = padLeft(date.getSeconds() + "");
+                        // console.log(minutes, seconds);
+                        if( seconds == '03') {
+                        this.messageService.add({severity:'success', summary: 'Success', 
+                        detail: 'Registro de Grupo Creado con exito'});
+                        }
+                        date = new Date(date.getTime() - 1000);
+                        if( minutes == '00' && seconds == '01' ) {
+                          this.bandera=false
+                          this.volver()
+                          // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+                          clearInterval(interval); 
+                        }
+                  }, 1000);
+                }
+                    }
+                  
+                },error => console.error(error))
+              }else{
+                Bandera=true
+              }
+            }
           }
-          date = new Date(date.getTime() - 1000);
-          if( minutes == '00' && seconds == '01' ) {
-            this.volver()
-            // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
-            clearInterval(interval); 
+        }
+        // console.log(Bandera,'aqui-Bandera')
+
+         // enviar archivos de resolusion
+        //  if(this.FilesAnexos.length > 0 && array1.length > 0){
+        //   console.log(array1,'arrayAnexos')
+        //   let cont=0
+        // for (let key1 of array1) {
+        //       if(key1.file != null){
+
+        //       this.groupService.Anexos(key1.GroupId.toString(),key1.AnexoId.toString(),
+        //       key1.GroupAnexoId.toString(),
+        //       key1.file).subscribe(result=>{
+        //           cont=cont + 1
+        //           if(cont == this.FilesAnexos.length){
+        //             Bandera=true
+            
+        //           }
+                
+        //       },error => console.error(error))
+        //     }else{
+        //       Bandera=true
+        //     }
+        //   }
+        //   Bandera=true
+        //   // aqui enviar datos
+        // }else{
+
+        //   Bandera=true
+          
+        //   } 
+
+          if(Bandera==true){
+                  var date = new Date('2020-01-01 00:00:03');
+                  function padLeft(n:any){ 
+                    return n ="00".substring(0, "00".length - n.length) + n;
+                  }
+                  var interval = setInterval(() => {
+                  var minutes = padLeft(date.getMinutes() + "");
+                  var seconds = padLeft(date.getSeconds() + "");
+                  // console.log(minutes, seconds);
+                  if( seconds == '03') {
+                  this.messageService.add({severity:'success', summary: 'Success', 
+                  detail: 'Registro de Grupo Creado con exito'});
+                  }
+                  date = new Date(date.getTime() - 1000);
+                  if( minutes == '00' && seconds == '01' ) {
+                    this.bandera=false
+                    this.volver()
+                    // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+                    clearInterval(interval); 
+                  }
+            }, 1000);
           }
-    }, 1000);
+      }
+
       },async error => {
         if(error != undefined) {
     this.bandera=false
@@ -489,14 +687,12 @@ public Valorconstruccion:boolean=false
       }
   }
 
-
   get getlines() {
     return this.form.get('lines') as FormArray;//obtener todos los formularios
   }
-
   addlines(event: Event){
     event.preventDefault();
-    const control = <FormArray>this.form.controls['lines']
+    let control = <FormArray>this.form.controls['lines']
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar == false){
@@ -514,16 +710,16 @@ public Valorconstruccion:boolean=false
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
+     control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
+
     }
   }
-
   get getAnexos() {
     return this.form.get('Anexos') as FormArray;//obtener todos los formularios
   }
-
   addAnexos(event: Event){
     event.preventDefault();
-    const control = <FormArray>this.form.controls['Anexos']
+    let control = <FormArray>this.form.controls['Anexos']
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar2 == false){
@@ -545,35 +741,62 @@ public Valorconstruccion:boolean=false
 
     }
   }
-
-  get getSeedbed() {
-    return this.form.get('Seedbeds') as FormArray;//obtener todos los formularios
-  }
-
-  addSeedbed(event: Event){
+   // files Certificado formaciones
+   onFileChange(event:any,pointIndex:number) {
     event.preventDefault();
-    const control = <FormArray>this.form.controls['Seedbeds']
-    //console.log(control)      
-      //crear los controles del array
-    if(control.length == 0 && this.mostrarS == false){
-      control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
-    }
-    if(control.length >= 1 && this.mostrarS == true){
-      control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+    let control = <FormArray>this.form.controls['Anexos']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(control.value[pointIndex].Anexos != ''){
+      // console.log('aquii')
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
 
-    }
-      this.mostrarS=true
-  }
-  removeSeedbed(index: number,event: Event){
-    event.preventDefault();
-    let control = <FormArray>this.form.controls['Seedbeds']//aceder al control
-    control.removeAt(index)
-    if(control.length <= 0){
-     this.mostrarS=false
-     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+            
+            if( this.FilesAnexos[pointIndex] != undefined){
 
+              this.FilesAnexos[pointIndex]={
+                id:control.value[pointIndex].id,
+                position:pointIndex,
+                file:file
+              } 
+            }else{
+              this.FilesAnexos.push({id:control.value[pointIndex].id,position:pointIndex,
+                file:file})
+
+            }
+            // console.log(this.FilesFormaciones,'this.FilesFormaciones')
+        }
+      }
     }
-  }
+
+  // get getSeedbed() {
+  //   return this.form.get('Seedbeds') as FormArray;//obtener todos los formularios
+  // }
+
+  // addSeedbed(event: Event){
+  //   event.preventDefault();
+  //   let control = <FormArray>this.form.controls['Seedbeds']
+  //   //console.log(control)      
+  //     //crear los controles del array
+  //   if(control.length == 0 && this.mostrarS == false){
+  //     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+  //   }
+  //   if(control.length >= 1 && this.mostrarS == true){
+  //     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+
+  //   }
+  //     this.mostrarS=true
+  // }
+  // removeSeedbed(index: number,event: Event){
+  //   event.preventDefault();
+  //   let control = <FormArray>this.form.controls['Seedbeds']//aceder al control
+  //   control.removeAt(index)
+  //   if(control.length <= 0){
+  //    this.mostrarS=false
+  //    control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
+
+  //   }
+  // }
 
   get getInvestigatorCollaborator() {
     return this.form.get('InvestigatorCollaborators') as FormArray;//obtener todos los formularios

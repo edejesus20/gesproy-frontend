@@ -42,6 +42,8 @@ public form2:ProgramI={
   Headquarters:undefined,
   HeadquarterProgram:undefined,
 }
+public bandera:boolean=false
+
   constructor(
     private messageService:MessageService,
     private programService: ProgramService,
@@ -76,16 +78,17 @@ public form2:ProgramI={
   }
 
 
-
   public onSubmit() {
     let control = <FormArray>this.form.controls['Lines']
       let array:LineProgramI[] =[]
-    for (const key of control.value) {
+    for (let key of control.value) {
       key.LineId=key.LineId.id
       array.push({LineId:key.LineId,ProgramId:this.id})
     }
     if(array.length > 0){
       // console.log({array})
+      this.bandera=true
+
     this.programService.vincularLine(this.id,{array}).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -102,12 +105,14 @@ public form2:ProgramI={
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
-                  this.router.navigateByUrl('/institution/mostrar_programs');
+                  // this.router.navigateByUrl('/institution/mostrar_programs');
+                  this.volver(new Event(''))
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
+          this.bandera=false
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
             text = await translate(error.error.dataErros[0].message, "es");
@@ -122,6 +127,7 @@ public form2:ProgramI={
 
   public volver(event: Event){
     event.preventDefault
+    this.bandera=false
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()

@@ -27,6 +27,7 @@ export interface ThematicI {
     Lines?:LineI[]
     LineThematic?:LineThematicI
     Thematics?:ThematicI[]
+    // Thematics?:ThematicI[]
     Thematic_axes?:Thematic_axisI[] | undefined
     Thematic_axis_Thematics?:Thematic_axis_ThematicI[]
     status?:boolean

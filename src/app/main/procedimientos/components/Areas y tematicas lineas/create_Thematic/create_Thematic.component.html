@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
   <ng-template [ngIf]="mostrarDialogo == false">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '55vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw'}" 
   [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000"  [showHeader]="false"   >
   <br>
       
@@ -35,8 +35,8 @@
                     <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
                       <tr [pSelectableRow]="rowData">
                           <td>
-                            <div formArrayName="Thematic_axis"> 
-                              <div *ngFor="let item of getThematics.controls; 
+                            <div formArrayName="Thematic_axiss"> 
+                              <div *ngFor="let item of getThematic_axiss.controls; 
                               let pointIndex=index" [formGroupName]="pointIndex">
                               <div class="grid"> 
                                 <div class="col-11 sm:col-11 md:col-11">
@@ -155,8 +155,8 @@
             <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
               <tr [pSelectableRow]="rowData">
                   <td>
-                    <div formArrayName="Thematic_axis"> 
-                      <div *ngFor="let item of getThematics.controls; 
+                    <div formArrayName="Thematic_axiss"> 
+                      <div *ngFor="let item of getThematic_axiss.controls; 
                       let pointIndex=index" [formGroupName]="pointIndex">
                       <div class="grid"> 
                         <div class="col-11 sm:col-11 md:col-11">

@@ -37,6 +37,32 @@ export class CreateStudentComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    surname:['', [Validators.required]],
+    DocumentTypeId:[1],
+    identification:[''],
+    email:['', [Validators.required]],
+    UserId:[''],
+    headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
+        StudentId:0,
+        HeadquarterProgramId:['', [Validators.required]],
+    })]),
+    StudentInternship: this.formBuilder.array([this.formBuilder.group({
+      StudentId:0,
+      nameP:[''],
+      start_date:[''],
+      final_date:[''],
+      name_institution:[''],
+      internship_certificate:[''],
+      practice_hours:[''],
+      area:[''],
+      post:[''],
+      functions:[''],
+  })]),
+    SeedbedId:[''],
+    Horas:[''],
+    date_firt:[''],
+    date_end:[''],
    });
 
    public headquarterProgram: any[]=[]
@@ -56,8 +82,6 @@ export class CreateStudentComponent implements OnInit {
     private studentService:StudentService,
     private router: Router,
     private messageService:MessageService,
-    private genderService:GenderService,
-    private documentTypeService:DocumentTypeService,
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
     private userService:UserService,
@@ -78,44 +102,34 @@ export class CreateStudentComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
-    this.form=this.formBuilder.group({
-      name:['', [Validators.required]],
-      surname:['', [Validators.required]],
-      DocumentTypeId:[1],
-      identification:[''],
-      // GenderId:['', [Validators.required]],
-      // address:['', [Validators.required]],
-      // phone:['', [Validators.required]],
-      email:['', [Validators.required]],
-      UserId:[''],
-      // nationality:['', [Validators.required]],
-      // date_of_birth:['', [Validators.required]],
-      headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
-          StudentId:0,
-          HeadquarterProgramId:['', [Validators.required]],
-      })]),
-      // current_semester:['', [Validators.required]],
-      // current_average:['', [Validators.required]],
-      StudentInternship: this.formBuilder.array([this.formBuilder.group({
-        StudentId:0,
-        nameP:[''],
-        start_date:[''],
-        final_date:[''],
-        name_institution:[''],
-        internship_certificate:[''],
-        practice_hours:[''],
-        area:[''],
-        post:[''],
-        functions:[''],
-    })]),
-      SeedbedId:[''],
-      Horas:[''],
-      date_firt:[''],
-      date_end:[''],
-      // areasEstudio:[''],
-      // publicacionesResientes:[''],
-      // practicas:['',[Validators.required]]
-     });
+    // this.form=this.formBuilder.group({
+    //   name:['', [Validators.required]],
+    //   surname:['', [Validators.required]],
+    //   DocumentTypeId:[1],
+    //   identification:[''],
+    //   email:['', [Validators.required]],
+    //   UserId:[''],
+    //   headquarterProgramStudent: this.formBuilder.array([this.formBuilder.group({
+    //       StudentId:0,
+    //       HeadquarterProgramId:['', [Validators.required]],
+    //   })]),
+    //   StudentInternship: this.formBuilder.array([this.formBuilder.group({
+    //     StudentId:0,
+    //     nameP:[''],
+    //     start_date:[''],
+    //     final_date:[''],
+    //     name_institution:[''],
+    //     internship_certificate:[''],
+    //     practice_hours:[''],
+    //     area:[''],
+    //     post:[''],
+    //     functions:[''],
+    // })]),
+    //   SeedbedId:[''],
+    //   Horas:[''],
+    //   date_firt:[''],
+    //   date_end:[''],
+    //  });
   }
 
   cerrar(){
@@ -129,6 +143,43 @@ export class CreateStudentComponent implements OnInit {
     this.bandera= false
     this.headquarterProgramStudent1 = []
     this.ngOnInit()
+    this.vaciar()
+  }
+  private vaciar(){
+    this.form.reset()
+    this.getRoles.reset()
+    this.getRoles.clear()
+    this.getStudentInternships.reset()
+    this.getStudentInternships.clear()
+    this.form.controls['name'].setValue('')
+    this.form.controls['surname'].setValue('')
+    this.form.controls['DocumentTypeId'].setValue('1')
+    this.form.controls['identification'].setValue('')
+    this.form.controls['email'].setValue('')
+    this.form.controls['UserId'].setValue('')
+    this.form.controls['SeedbedId'].setValue('')
+    this.form.controls['Horas'].setValue('')
+    this.form.controls['date_firt'].setValue('')
+    this.form.controls['date_end'].setValue('')
+    
+    let control = <FormArray>this.form.controls['headquarterProgramStudent']
+    control.push(this.formBuilder.group({
+      StudentId:0,
+      HeadquarterProgramId:['', [Validators.required]],
+    }))
+    let control1 = <FormArray>this.form.controls['StudentInternship']
+    control1.push(this.formBuilder.group({
+      StudentId:0,
+      nameP:[''],
+      start_date:[''],
+      final_date:[''],
+      name_institution:[''],
+      internship_certificate:[''],
+      practice_hours:[''],
+      area:[''],
+      post:[''],
+      functions:[''],
+    }))
   }
 
   public cancelar(){
@@ -267,22 +318,6 @@ export class CreateStudentComponent implements OnInit {
       } 
   }
 
-  // private getAllgenders(selectId?: number) {
-  //   this.genderService.getList().subscribe(
-  //     (AdministrativeFromApi) => {
-  //       // console.log(AdministrativeFromApi.administratives)
-  //       this.genders = AdministrativeFromApi.genders;
-  //     }, error => console.error(error));
-  // }
-  
-  // private getAlldocumentTypes(selectId?: number) {
-  //   this.documentTypeService.getList().subscribe(
-  //     (AdministrativeFromApi) => {
-  //       this.documentTypes = AdministrativeFromApi.documentTypes;
-  
-  //     }, error => console.error(error));
-  // }
-
   private getAllheadquarters(selectId?: number) {
     this.headquarterService.HeadquarterProgram().subscribe(
       (AdministrativeFromApi) => {
@@ -393,49 +428,5 @@ export class CreateStudentComponent implements OnInit {
         }))
         }
     }
-    
-    // addGenero(e:Event){
-    //   e.preventDefault()
-  
-    //   this.ref1 = this.dialogService.open(Create_genderComponent, {
-    //     width: '35%',
-    //     height: '50%',
-    //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-    //     baseZIndex: 10000,
-    //     data: {
-    //       id: '1'
-    //   },
-    // });
-  
-    // this.ref1.onClose.subscribe((person: any) =>{
-    //     if (person) {
-    //         this.messageService.add({severity:'info', summary: 'Genero Creado', detail: person.name,life: 2000});
-    //     this.getAllgenders()
-  
-    //       }
-    // });
-    // }
-  
-  
-    // addTipoDocumento(e:Event){
-    //   e.preventDefault()
-  
-    //   this.ref1 = this.dialogService.open(Create_documentTypeComponent, {
-    //     width: '35%',
-    //     height: '50%',
-    //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:true, showHeader:false, 
-    //     baseZIndex: 10000,
-    //     data: {
-    //       id: '1'
-    //   },
-    // });
-  
-    // this.ref1.onClose.subscribe((person: any) =>{
-    //     if (person) {
-    //         this.messageService.add({severity:'info', summary: 'Tipo de Documento Creado', detail: person.name,life: 2000});
-    //     this.getAlldocumentTypes()
-  
-    //       }
-    // });
-    // }
+
 }

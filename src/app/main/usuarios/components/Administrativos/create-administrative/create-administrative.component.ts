@@ -34,6 +34,17 @@ export class CreateAdministrativeComponent implements OnInit {
   public Dialog:boolean =false
   public image:string='assets/images/images.jpg'
   public form:FormGroup=this.formBuilder.group({
+    name:[''],
+    surname:[''],
+    DocumentTypeId:[1],
+    identification:[''],
+    email:[''],
+    UserId:[''],
+    HeadquarterId:['', [Validators.required]],
+    Charges: this.formBuilder.array([this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+      date:['', [Validators.required]]})]),
+
    });
 
    public mostrarUser:boolean=false;
@@ -77,24 +88,19 @@ export class CreateAdministrativeComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
-    this.form=this.formBuilder.group({
-      name:[''],
-      surname:[''],
-      DocumentTypeId:[1],
-      identification:[''],
-      // GenderId:[''],
-      // address:[''],
-      // phone:[''],
-      email:[''],
-      UserId:[''],
-      // nationality:[''],
-      // date_of_birth:[''],
-      HeadquarterId:['', [Validators.required]],
-      Charges: this.formBuilder.array([this.formBuilder.group({
-        ChargeId:['', [Validators.required]],
-        date:['', [Validators.required]]})]),
+    // this.form=this.formBuilder.group({
+    //   name:[''],
+    //   surname:[''],
+    //   DocumentTypeId:[1],
+    //   identification:[''],
+    //   email:[''],
+    //   UserId:[''],
+    //   HeadquarterId:['', [Validators.required]],
+    //   Charges: this.formBuilder.array([this.formBuilder.group({
+    //     ChargeId:['', [Validators.required]],
+    //     date:['', [Validators.required]]})]),
   
-     });
+    //  });
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -111,7 +117,6 @@ export class CreateAdministrativeComponent implements OnInit {
       }, error => console.error(error));
   }
 
-  
   private getAllheadquarters(selectId?: number) {
     this.headquarterService.getList().subscribe(
       (AdministrativeFromApi) => {
@@ -143,6 +148,24 @@ export class CreateAdministrativeComponent implements OnInit {
     this.mostrar=true;
     this.bandera=false
     this.ngOnInit()
+    this.vaciar()
+  }
+  private vaciar(){
+    this.form.reset()
+    this.getRoles.reset()
+    this.getRoles.clear()
+    this.form.controls['name'].setValue('')
+    this.form.controls['surname'].setValue('')
+    this.form.controls['DocumentTypeId'].setValue('')
+    this.form.controls['identification'].setValue('')
+    this.form.controls['email'].setValue('')
+    this.form.controls['UserId'].setValue('')
+    this.form.controls['HeadquarterId'].setValue('')
+    let control = <FormArray>this.form.controls['Charges']
+    control.push(this.formBuilder.group({
+      ChargeId:['', [Validators.required]],
+      date:['', [Validators.required]],
+    }))
   }
 
   public onSubmit(e: Event) {
@@ -168,7 +191,7 @@ export class CreateAdministrativeComponent implements OnInit {
     if(this.Charges1.length == 0 || this.Charges1.length == undefined){
       this.Charges1=[]
       let control = <FormArray>this.form.controls['Charges']
-      for (const key of control.value) {
+      for (let key of control.value) {
         key.ChargeId=key.ChargeId.id 
         this.Charges1.push({
           date:key.date,
@@ -188,9 +211,7 @@ export class CreateAdministrativeComponent implements OnInit {
     this.form.value.Charges[0].ChargeId == undefined ||this.Charges1.length == undefined){
       // this.form.value.Workexperiences=[]
       formValue.Charges=[]
-
     }
-
 
     console.log(formValue)
 
@@ -207,12 +228,8 @@ export class CreateAdministrativeComponent implements OnInit {
     // formValue.identification != ""&&
     // formValue.GenderId != ( 0 || undefined)&& formValue.address != ""&&
     // formValue.phone != ""&& 
-    formValue.email != ""
-      // formValue.nationality != ("" || undefined) && 
-      // formValue. date_of_birth!= ("" || undefined)
-      )
-    ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))
-    ){
+    formValue.email != "")
+    ||(this.mostrarUser == false && formValue.UserId != ( 0 || undefined))){
     // console.log(formValue)
     this.bandera=true
             this.administrativeService.createItem(formValue).subscribe(
@@ -255,30 +272,6 @@ export class CreateAdministrativeComponent implements OnInit {
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
           }
 }
-
-
-  // onFileChange(e: Event) {
-  //   e.preventDefault()
-  //   const algo= (e.target as HTMLInputElement)
-  //   if(algo.files){
-  //     if(algo.files.length > 0) {
-  //       const file = algo.files[0]
-  //       this.images = file
-  //       console.log('aqui',this.images)
-  //     }
-  //   }
-  // }
-
-  // public onSubmit() {
-  //   let formData = new FormData();
-  //   formData.append("file",this.images);
-  //   // console.log(formData)
-  //   this.http.post<any>('http://localhost:4000/api/subir',formData).subscribe(
-  //     (res)=> console.log(res),(err)=> console.log(err)
-  //   )
-  // }
-
-
 
   addOcupacion(e:Event){
     e.preventDefault()

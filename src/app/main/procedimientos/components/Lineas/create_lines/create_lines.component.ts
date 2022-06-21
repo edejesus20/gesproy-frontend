@@ -17,7 +17,19 @@ const translate = require('translate');
   providers: [DialogService]
 })
 export class Create_linesComponent implements OnInit {
-  public form: FormGroup = this.formBuilder.group({});
+  public form: FormGroup = this.formBuilder.group({
+    name: ['', [Validators.required]],
+    justification: ['', [Validators.required]],
+    objectives: ['', [Validators.required]],
+    // thematics: ['', [Validators.required]],
+    Thematics: this.formBuilder.array([this.formBuilder.group(
+      {
+        ThematicId:['', [Validators.required]],
+        Thematic_axis: ['', [Validators.required]]
+      }
+    )]),
+    resolution: [''],
+  });
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar2:boolean=true;
@@ -44,7 +56,7 @@ export class Create_linesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.buildForm();
+    // this.buildForm();
     this.thematic()
     // this.getAllthematic()
   }
@@ -124,20 +136,21 @@ export class Create_linesComponent implements OnInit {
   }
 
 
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      justification: ['', [Validators.required]],
-      objectives: ['', [Validators.required]],
-      // thematics: ['', [Validators.required]],
-      Thematics: this.formBuilder.array([this.formBuilder.group(
-        {
-          ThematicId:['', [Validators.required]],
-          Thematic_axis: ['', [Validators.required]],
-      })]),
-      resolution: [''],
-    });
-  }  
+  // private buildForm() {
+  //   this.form = this.formBuilder.group({
+  //     name: ['', [Validators.required]],
+  //     justification: ['', [Validators.required]],
+  //     objectives: ['', [Validators.required]],
+  //     // thematics: ['', [Validators.required]],
+  //     Thematics: this.formBuilder.array([this.formBuilder.group(
+  //       {
+  //         ThematicId:['', [Validators.required]],
+  //         Thematic_axis: ['', [Validators.required]]
+  //       }
+  //     )]),
+  //     resolution: [''],
+  //   });
+  // }  
 
   cerrar(){
     this.router.navigateByUrl('/Procedimientos/line');
@@ -146,7 +159,24 @@ export class Create_linesComponent implements OnInit {
     this.bandera=false
     this.Thematics1=[]
     this.ngOnInit()
+    this.mostrar2=true
+    this.vaciar()
   }
+  private vaciar(){
+    this.form.reset()
+    this.getThematics.reset()
+    this.getThematics.clear()
+    this.form.controls['name'].setValue('')
+    this.form.controls['justification'].setValue('')
+    this.form.controls['objectives'].setValue('')
+    this.form.controls['resolution'].setValue('')
+    let control = <FormArray>this.form.controls['Thematics']
+    control.push(this.formBuilder.group({
+      ThematicId:['', [Validators.required]],
+      Thematic_axis: ['', [Validators.required]],
+    }))
+  }
+
   public onSubmit(e: Event): void {
     e.preventDefault();
    
@@ -156,15 +186,14 @@ export class Create_linesComponent implements OnInit {
 
     
     if(this.Thematics1.length == 0 ){
-      for (let key of control.value) {
-
-        key.ThematicId=key.ThematicId.id
+      for (const key of control.value) {
+        // key.ThematicId=key.ThematicId.id
         this.Thematics1.push({
-          ThematicId:key.ThematicId,
+          ThematicId:key.ThematicId.id,
           Thematic_axis:key.Thematic_axis
         })
       }
-      formValue.Thematics = this.form.value.Thematics
+      formValue.Thematics = this.Thematics1
     }else{
       formValue.Thematics = this.Thematics1
     }
@@ -218,7 +247,7 @@ export class Create_linesComponent implements OnInit {
 
   addRoles(event: Event){
     event.preventDefault();
-    const control = <FormArray>this.form.controls['Thematics']
+    let control = <FormArray>this.form.controls['Thematics']
       if(control.length == 0 && this.mostrar2 == false){
         control.push(this.formBuilder.group({
           ThematicId:['', [Validators.required]],
@@ -240,17 +269,15 @@ export class Create_linesComponent implements OnInit {
     control.removeAt(index)
       if(control.length <= 0){
       this.mostrar2=false
-      control.push(this.formBuilder.group({
-        ThematicId:['', [Validators.required]],
-        Thematic_axis: ['', [Validators.required]],
-      }))
+      // control.push(this.formBuilder.group({
+      //   ThematicId:['', [Validators.required]],
+      //   Thematic_axis: ['', [Validators.required]],
+      // }))
       }
       // console.log(control)
   }
 
-
   // modal
-
   addTematica(e:Event){
     e.preventDefault()
 
@@ -272,26 +299,4 @@ export class Create_linesComponent implements OnInit {
         }
   });
   }
-
-  // addeJES(e:Event){
-  //   e.preventDefault()
-  
-  //   this.ref = this.dialogService.open(Create_Thematic_axisComponent, {
-  //     width: '35%',
-  //     height: '50%',
-  //     contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-  //     baseZIndex: 10000,
-  //     data: {
-  //       id: '1'
-  //   },
-  // });
-  
-  // this.ref.onClose.subscribe((person: any) =>{
-  //     if (person) {
-  //         this.messageService.add({severity:'info', summary: 'Eje Temático Creada', detail: person.name,life: 2000});
-  //     this.getAllthematic()
-  
-  //       }
-  // });
-  // }
 }

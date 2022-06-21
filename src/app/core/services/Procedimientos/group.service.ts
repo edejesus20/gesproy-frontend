@@ -38,10 +38,10 @@ handleError(res: Response) {
 };
 
 // Create a new item
-createItem(group: GroupI): Observable<GroupI> {
-  return this.http.post<GroupI>(this.base_path_post, JSON.stringify(group), this.httpOptions)
+createItem(group: GroupI): Observable<{group:GroupI}> {
+  return this.http.post<{group:GroupI}>(this.base_path_post, JSON.stringify(group), this.httpOptions)
     .pipe(
-      tap((res: GroupI) => {
+      tap((res: {group:GroupI}) => {
         if (res) {
           console.log(res)
         }
@@ -50,7 +50,34 @@ createItem(group: GroupI): Observable<GroupI> {
       catchError(this.handleError)
     )
 }
-
+Anexos(GroupId: string,AnexoId:string,GroupAnexoId:string,file:any): Observable<any> {
+  let token : string | null=localStorage.getItem('token')
+  let user : string | null=localStorage.getItem('user')
+  // let httpOptions:any
+  // if(token != null && user != null) {
+  //   let userObjeto:any = JSON.parse(user); 
+  //   httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'x-token':token,
+  //       'user':userObjeto.id
+  //     })
+  //   }
+  // }
+  let form= new FormData();//Crea un formulario
+  form.append('GroupId',GroupId);
+  form.append('AnexoId',AnexoId);
+  form.append('GroupAnexoId',GroupAnexoId);
+  form.append('file',file);//Asigna el campo File
+  console.log(file,'FormData')
+  // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+    return this.http.post<any>(this.API_URI + '/api/subirAnexoGrupos',form).pipe(
+    tap((res: any) => {
+      if (res) {
+      }
+    }),
+    catchError(this.handleError))
+}
 // Get single student data by ID
 getItem(id: number): Observable<{group:GroupI}> {
   return this.http

@@ -1,4 +1,4 @@
-import { TeacherI } from "../user/teacher";
+import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
 import { LineProgramGroupI, ProgramI } from "./program";
@@ -29,6 +29,7 @@ export interface GroupI {
 
     Seedbeds?:any[]
     Anexos?:any[]
+    AnexosGroups?:AnexosGroupI[]
     
     LineProgramGroups?:LineProgramGroupI[]
     CategoryGroup?:CategoryGroupI
@@ -37,6 +38,12 @@ export interface GroupI {
     Program?:ProgramI
     
     // LineProgramGroups?
+}
+export interface AnexosGroupI {
+    id?: number;
+    GroupId:number;
+    AnexoId:number;
+    Anexo?:AnexosI
 }
 
 export interface Knowledge_areaI{

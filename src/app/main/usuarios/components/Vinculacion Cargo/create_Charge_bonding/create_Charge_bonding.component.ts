@@ -20,6 +20,9 @@ export class Create_Charge_bondingComponent implements OnInit {
   public Dialog:boolean =false
    public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
+    name:['', [Validators.required]],
+    Scales: this.formBuilder.array([this.formBuilder.group({
+      ScaleId:['']})]),
    });
 
   displayMaximizable2:boolean=true
@@ -46,11 +49,11 @@ export class Create_Charge_bondingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.form=this.formBuilder.group({
-      name:['', [Validators.required]],
-      Scales: this.formBuilder.array([this.formBuilder.group({
-        ScaleId:['']})]),
-     });
+    // this.form=this.formBuilder.group({
+    //   name:['', [Validators.required]],
+    //   Scales: this.formBuilder.array([this.formBuilder.group({
+    //     ScaleId:['']})]),
+    //  });
     this.primengConfig.ripple = true;
     if(this.config.data){
       if(this.config.data.id == '1'){
@@ -71,10 +74,20 @@ export class Create_Charge_bondingComponent implements OnInit {
     this.bandera=false
     this.Scale=[]
     this.ngOnInit()
-  }
+    this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getRoles.reset()
+  this.getRoles.clear()
+  this.form.controls['name'].setValue('')
+  let control = <FormArray>this.form.controls['Scales']
+  control.push(this.formBuilder.group({
+    ScaleId:['']
+  }))
+}
 
   getAllScale() {
-    
     this.scaleService.getList().subscribe((scalesApiFrom) => {
       this.scales =scalesApiFrom.scales
     })

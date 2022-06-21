@@ -25,8 +25,13 @@ export class Create_ThematicComponent implements OnInit {
   public Dialog:boolean =false
   public bandera:boolean=false
  public form:FormGroup=this.formBuilder.group({
-  });
-
+  name:['', [Validators.required]],
+  Thematic_axiss: this.formBuilder.array([this.formBuilder.group(
+    {
+      ThematicAxisId:['', [Validators.required]],
+  }
+  )]),
+ })
  
   public thematic_axiss: Thematic_axisI[]=[];
   public ThematicAxis: Thematic_axisI[]=[];
@@ -45,14 +50,14 @@ export class Create_ThematicComponent implements OnInit {
  ) { }
 
  ngOnInit() {
-  this. form=this.formBuilder.group({
-    name:['', [Validators.required]],
-    Thematic_axis: this.formBuilder.array([this.formBuilder.group(
-      {
-        ThematicAxisId:['', [Validators.required]],
-    }
-    )]),
-   })
+  // this.form=this.formBuilder.group({
+  //   name:['', [Validators.required]],
+  //   Thematic_axiss: this.formBuilder.array([this.formBuilder.group(
+  //     {
+  //       ThematicAxisId:['', [Validators.required]],
+  //   }
+  //   )]),
+  //  })
    this.primengConfig.ripple = true;
    if(this.config.data){
     if(this.config.data.id == '1'){
@@ -74,22 +79,34 @@ cerrar(){
 private volver(){
   this.bandera=false
   this.ThematicAxis=[]
+  this.mostrar2=true
   this.ngOnInit()
+  this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getThematic_axiss.reset()
+  this.getThematic_axiss.clear()
+  this.form.controls['name'].setValue('')
+  let control = <FormArray>this.form.controls['Thematic_axiss']
+  control.push(this.formBuilder.group({
+    ThematicAxisId:['', [Validators.required]],
+  }))
 }
 
  public onSubmit() {
   let formValue: any = this.form.value;
-  let control = <FormArray>this.form.controls['Thematic_axis']
+  let control = <FormArray>this.form.controls['Thematic_axiss']
   let array:any[] =[]
   if(this.ThematicAxis.length == 0){
-    for (let key of control.value) {
-      key.ThematicAxisId=key.ThematicAxisId.id
-      array.push({ThematicAxisId:key.ThematicAxisId})
+    for (const key of control.value) {
+      // key.ThematicAxisId=key.ThematicAxisId.id
+      array.push({ThematicAxisId:key.ThematicAxisId.id})
     }
-    this.ThematicAxis=control.value
-    formValue.Thematic_axis=control.value
+    this.ThematicAxis=array
+    formValue.Thematic_axiss=array
   }else{
-    formValue.Thematic_axis=this.ThematicAxis
+    formValue.Thematic_axiss=this.ThematicAxis
 
   } 
   
@@ -138,13 +155,13 @@ private volver(){
 }
 }
 
-get getThematics() {
-  return this.form.get('Thematic_axis') as FormArray;//obtener todos los formularios
+get getThematic_axiss() {
+  return this.form.get('Thematic_axiss') as FormArray;//obtener todos los formularios
 }
 
 addRoles(event: Event){
   event.preventDefault();
-  const control = <FormArray>this.form.controls['Thematic_axis']
+  const control = <FormArray>this.form.controls['Thematic_axiss']
     if(control.length == 0 && this.mostrar2 == false){
     
       control.push(this.formBuilder.group({
@@ -162,7 +179,7 @@ addRoles(event: Event){
 }
 removeRoles(index: number,event: Event){
   event.preventDefault();
-  let control = <FormArray>this.form.controls['Thematic_axis']//aceder al control
+  let control = <FormArray>this.form.controls['Thematic_axiss']//aceder al control
   control.removeAt(index)
     if(control.length <= 0){
     this.mostrar2=false

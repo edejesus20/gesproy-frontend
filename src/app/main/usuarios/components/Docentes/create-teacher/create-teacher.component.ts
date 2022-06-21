@@ -56,7 +56,50 @@ export class CreateTeacherComponent implements OnInit {
  public Dialog:boolean =false
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
-  public form:FormGroup=this.formBuilder.group({});
+
+  public form:FormGroup=this.formBuilder.group({
+    name:[''],
+    surname:[''],
+    DocumentTypeId:[1],
+    identification:[''],
+    email:[''],
+    ScaleId:[''],
+    UserId:[''],
+    MincienciaCategoryId:['', [Validators.required]],
+    headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
+      {
+        TeacherId:0,
+        HeadquarterProgramId:['', [Validators.required]],
+        ResearchBondingId:['', [Validators.required]],
+    })]),
+    trainingTeacher: this.formBuilder.array([this.formBuilder.group(
+      {
+        id:0,
+        TeacherId:0,
+        name: [''],
+        date_graduation: [''],
+        name_institution: [''],
+        resolution_convalidation: [{value:'No'}],
+        degree_certificate: [''],
+        TrainingId:[''],
+        resolution_certificate:[''],
+
+      }
+    )]),
+  Workexperiences:this.formBuilder.array([this.formBuilder.group(
+    {
+      id:0,
+      TeacherId:0,
+      name_institution: [''],
+      position_type: [''],
+      functions:[''],
+      start_date:[''],
+      final_date:[''],
+      constancy:['']
+  })]),
+    ChargeBondingId:['',[Validators.required]]
+   });
+
    public research_bondings:Research_bondingI[]=[]
    public headquarterProgram:any[]=[]
    public headquarterProgramTeacher1:any[] = []
@@ -82,23 +125,16 @@ export class CreateTeacherComponent implements OnInit {
     private router: Router,
     public dialogService: DialogService,
     private messageService:MessageService,
-    // private genderService:GenderService,
-    // private documentTypeService:DocumentTypeService,
-    // private scaleService:ScaleService,
     private formBuilder: FormBuilder,
     private mincienciaCategoryService:MincienciaCategoryService,
     private headquarterService: HeadquarterService,
     private research_bondingsService:Research_bondingService,
     private userService:UserService,
-    // private lineService:LineService,
     private trainingsService:TrainingsService,
 
   ) { }
 
   ngOnInit() {
-    // this.getAllgenders()
-    // this.getAlldocumentTypes()
-    // this.getAllscales()
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
@@ -112,58 +148,48 @@ export class CreateTeacherComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
-    this.form=this.formBuilder.group({
-      name:[''],
-      surname:[''],
-      DocumentTypeId:[1],
-      identification:[''],
-      // GenderId:[''],
-      // address:[''],
-      // phone:[''],
-      email:[''],
-      ScaleId:[''],
-      UserId:[''],
-      MincienciaCategoryId:['', [Validators.required]],
-      // hours_of_dedication:['', [Validators.required]],
-      headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
-        {
-          TeacherId:0,
-          HeadquarterProgramId:['', [Validators.required]],
-          ResearchBondingId:['', [Validators.required]],
-      })]),
-      // Lines: this.formBuilder.array([this.formBuilder.group(
-      //   {
-      //     TeacherId:0,
-      //     LineId:['', [Validators.required]],
-      // })]),
-      trainingTeacher: this.formBuilder.array([this.formBuilder.group(
-        {
-          id:0,
-          TeacherId:0,
-          name: [''],
-          date_graduation: [''],
-          name_institution: [''],
-          resolution_convalidation: [{value:'No'}],
-          degree_certificate: [''],
-          TrainingId:[''],
-          resolution_certificate:[''],
+    // this.form=this.formBuilder.group({
+    //   name:[''],
+    //   surname:[''],
+    //   DocumentTypeId:[1],
+    //   identification:[''],
+    //   email:[''],
+    //   ScaleId:[''],
+    //   UserId:[''],
+    //   MincienciaCategoryId:['', [Validators.required]],
+    //   headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
+    //     {
+    //       TeacherId:0,
+    //       HeadquarterProgramId:['', [Validators.required]],
+    //       ResearchBondingId:['', [Validators.required]],
+    //   })]),
+    //   trainingTeacher: this.formBuilder.array([this.formBuilder.group(
+    //     {
+    //       id:0,
+    //       TeacherId:0,
+    //       name: [''],
+    //       date_graduation: [''],
+    //       name_institution: [''],
+    //       resolution_convalidation: [{value:'No'}],
+    //       degree_certificate: [''],
+    //       TrainingId:[''],
+    //       resolution_certificate:[''],
   
-      })]),
-    Workexperiences:this.formBuilder.array([this.formBuilder.group(
-      {
-        id:0,
-        TeacherId:0,
-        name_institution: [''],
-        position_type: [''],
-        functions:[''],
-        start_date:[''],
-        final_date:[''],
-        constancy:['']
-    })]),
-      // nationality:[''],
-      // date_of_birth:[''],
-      ChargeBondingId:['',[Validators.required]]
-     });
+    //     }
+    //   )]),
+    // Workexperiences:this.formBuilder.array([this.formBuilder.group(
+    //   {
+    //     id:0,
+    //     TeacherId:0,
+    //     name_institution: [''],
+    //     position_type: [''],
+    //     functions:[''],
+    //     start_date:[''],
+    //     final_date:[''],
+    //     constancy:['']
+    // })]),
+    //   ChargeBondingId:['',[Validators.required]]
+    //  });
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -215,6 +241,57 @@ export class CreateTeacherComponent implements OnInit {
     this.Workexperiences =[]
     this.bandera= false
     this.ngOnInit()
+    this.vaciar()
+  }
+  private vaciar(){
+    this.form.reset()
+    this.getRoles.reset()
+    this.getRoles.clear()
+    this.getWorkexperiences.reset()
+    this.getWorkexperiences.clear()
+
+    this.gettrainingTeacher.reset()
+    this.gettrainingTeacher.clear()
+    
+    this.form.controls['name'].setValue('')
+    this.form.controls['surname'].setValue('')
+    this.form.controls['DocumentTypeId'].setValue(1)
+    this.form.controls['identification'].setValue('')
+    this.form.controls['email'].setValue('')
+    this.form.controls['ScaleId'].setValue('')
+    this.form.controls['UserId'].setValue('')
+    this.form.controls['MincienciaCategoryId'].setValue('')
+    this.form.controls['ChargeBondingId'].setValue('')
+
+    let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+    control.push(this.formBuilder.group({
+      TeacherId:0,
+      HeadquarterProgramId:['', [Validators.required]],
+          ResearchBondingId:['', [Validators.required]],
+    }))
+    let control1 = <FormArray>this.form.controls['Workexperiences']
+    control1.push(this.formBuilder.group({
+      id:0,
+      TeacherId:0,
+      name_institution: [''],
+      position_type: [''],
+      functions:[''],
+      start_date:[''],
+      final_date:[''],
+      constancy:['']
+    }))
+    let control2 = <FormArray>this.form.controls['trainingTeacher']
+    control2.push(this.formBuilder.group({
+      id:0,
+      TeacherId:0,
+      name: [''],
+      date_graduation: [''],
+      name_institution: [''],
+      resolution_convalidation: [{value:'No'}],
+      degree_certificate: [''],
+      TrainingId:[''],
+      resolution_certificate:[''],
+    }))
   }
 
   public onSubmit(e: Event) {
@@ -749,8 +826,6 @@ get getRoles() {
       }
   }
 
-
-
 private getAllheadquarters(selectId?: number) {
   this.headquarterService.HeadquarterProgram().subscribe(
     (AdministrativeFromApi) => {
@@ -897,8 +972,6 @@ get getWorkexperiences() {
           degree_certificate: [''],
           TrainingId:[''],
           resolution_certificate:[''],
-          
-
           }))
         }
         if(control.length >= 1 && this.mostrar2 == true){
@@ -921,17 +994,9 @@ get getWorkexperiences() {
     removetrainingTeacher(index: number,event: Event){
       event.preventDefault();
       let control = <FormArray>this.form.controls['trainingTeacher']//aceder al control
-
-      // if(control.value[index].id !== undefined && control.value[index].id != ''){
-      //   this.deletetrainingTeachers.push(control.value[index]);
-
-      // }
       control.removeAt(index)
       if( this.FilesFormaciones[index] != undefined){
-        // console.log('aquii-actualizado file')
-
         this.FilesFormaciones.splice(index,1)
-        
       }
       if(this.FilesResolusiones[index] != undefined){
         this.FilesResolusiones.splice(index,1)

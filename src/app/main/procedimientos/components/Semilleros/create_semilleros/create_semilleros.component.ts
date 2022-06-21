@@ -42,8 +42,31 @@ export class Create_semillerosComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   public Dialog:boolean =false
   public bandera:boolean=false
- public form:FormGroup=this.formBuilder.group({
-  });  public teachers: TeacherI[] =[]
+ public form:FormGroup= this.formBuilder.group({
+  creation_date:['', [Validators.required]],
+  // approval_date:['', [Validators.required]],
+  // resolution:['', [Validators.required]],
+  // article:['', [Validators.required]],
+  name: ['', [Validators.required]],
+  TeacherId: ['', [Validators.required]],
+  ObjetivoGeneral: ['', [Validators.required]],
+  ObjetivosEspecificos: ['', [Validators.required]],
+  Mision: ['', [Validators.required]],
+  Vision: ['', [Validators.required]],
+  Facultad: ['', [Validators.required]],
+  estrategias: ['', [Validators.required]],
+  HeadquarterProgramId: ['', [Validators.required]],
+  GroupId:['', [Validators.required]],
+  lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
+  Students: this.formBuilder.array([this.formBuilder.group({
+    date_firt:['',[Validators.required]],
+    date_end:['',[Validators.required]],
+    StudentId:['',[Validators.required]],
+    Horas:['',[Validators.required]]
+  })]),
+});
+  
+  public teachers: TeacherI[] =[]
   public facultys: FacultyI[] =[]
   public groups: GroupI[]=[]
   public lines: LineI[] =[]
@@ -85,7 +108,7 @@ public ref1:any;
     private studentService:StudentService
     ) { }
   ngOnInit(): void {
-    this.buildForm();
+    // this.buildForm();
     // this.getAllteachers()
     this.geFacultad() 
     this.getstudents()
@@ -102,7 +125,36 @@ public ref1:any;
       this.TeacherId = 0 
       this.GroupId = 0
     this.ngOnInit()
-  }
+    this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getStudents.reset()
+  this.getStudents.clear()
+  this.getlines.reset()
+  this.getlines.clear()
+  this.form.controls['creation_date'].setValue('')
+  this.form.controls['TeacherId'].setValue('')
+  this.form.controls['ObjetivoGeneral'].setValue('')
+  this.form.controls['ObjetivosEspecificos'].setValue('')
+  this.form.controls['Mision'].setValue('')
+  this.form.controls['Vision'].setValue('')
+  this.form.controls['Facultad'].setValue('')
+  this.form.controls['estrategias'].setValue('')
+  this.form.controls['HeadquarterProgramId'].setValue('')
+  this.form.controls['GroupId'].setValue('')
+  let control = <FormArray>this.form.controls['Students']
+  control.push(this.formBuilder.group({
+      StudentId:['', [Validators.required]],
+    date_firt:['',[Validators.required]],
+    date_end:['',[Validators.required]],
+    Horas:['',[Validators.required]]
+  }))
+  let control1 = <FormArray>this.form.controls['lines']
+  control1.push(this.formBuilder.group({
+    LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+
+}
 
  getstudents() {
    this.studentService.AddStudentsSemilleros().subscribe(
@@ -134,31 +186,31 @@ public ref1:any;
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      creation_date:['', [Validators.required]],
-      // approval_date:['', [Validators.required]],
-      // resolution:['', [Validators.required]],
-      // article:['', [Validators.required]],
-      name: ['', [Validators.required]],
-      TeacherId: ['', [Validators.required]],
-      ObjetivoGeneral: ['', [Validators.required]],
-      ObjetivosEspecificos: ['', [Validators.required]],
-      Mision: ['', [Validators.required]],
-      Vision: ['', [Validators.required]],
-      Facultad: ['', [Validators.required]],
-      estrategias: ['', [Validators.required]],
-      HeadquarterProgramId: ['', [Validators.required]],
-      GroupId:['', [Validators.required]],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
-      Students: this.formBuilder.array([this.formBuilder.group({
-        date_firt:['',[Validators.required]],
-        date_end:['',[Validators.required]],
-        StudentId:['',[Validators.required]],
-        Horas:['',[Validators.required]]
-      })]),
-    });
-  }  
+  // private buildForm() {
+  //   this.form = this.formBuilder.group({
+  //     creation_date:['', [Validators.required]],
+  //     // approval_date:['', [Validators.required]],
+  //     // resolution:['', [Validators.required]],
+  //     // article:['', [Validators.required]],
+  //     name: ['', [Validators.required]],
+  //     TeacherId: ['', [Validators.required]],
+  //     ObjetivoGeneral: ['', [Validators.required]],
+  //     ObjetivosEspecificos: ['', [Validators.required]],
+  //     Mision: ['', [Validators.required]],
+  //     Vision: ['', [Validators.required]],
+  //     Facultad: ['', [Validators.required]],
+  //     estrategias: ['', [Validators.required]],
+  //     HeadquarterProgramId: ['', [Validators.required]],
+  //     GroupId:['', [Validators.required]],
+  //     lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
+  //     Students: this.formBuilder.array([this.formBuilder.group({
+  //       date_firt:['',[Validators.required]],
+  //       date_end:['',[Validators.required]],
+  //       StudentId:['',[Validators.required]],
+  //       Horas:['',[Validators.required]]
+  //     })]),
+  //   });
+  // }  
   public SelectFacultad(){
     if(this.form.value.Facultad != ''){
       this.getFacultadHeadquarterProgram(this.form.value.Facultad.id)

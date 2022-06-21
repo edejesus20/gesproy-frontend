@@ -39,7 +39,16 @@ export class CreateProgramComponent implements OnInit {
   public Dialog:boolean =false
    public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
-   });
+    name:['', [Validators.required]],
+    FacultyId:['', [Validators.required]],
+    CategoryId:['', [Validators.required]],
+    Headquarters: this.formBuilder.array([this.formBuilder.group(
+      {
+        ProgramId:0,
+         HeadquarterId:['', [Validators.required]],
+        AdministrativeId:['']
+    })]),
+  });
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
@@ -66,17 +75,17 @@ constructor(
     this.getAllCategorys()
     this.getAlladministratives()
     this.getAllheadquarters()
-    this.form=this.formBuilder.group({
-      name:['', [Validators.required]],
-      FacultyId:['', [Validators.required]],
-      CategoryId:['', [Validators.required]],
-      Headquarters: this.formBuilder.array([this.formBuilder.group(
-        {
-          ProgramId:0,
-           HeadquarterId:['', [Validators.required]],
-          AdministrativeId:['']
-      })]),
-    });
+    // this.form=this.formBuilder.group({
+    //   name:['', [Validators.required]],
+    //   FacultyId:['', [Validators.required]],
+    //   CategoryId:['', [Validators.required]],
+    //   Headquarters: this.formBuilder.array([this.formBuilder.group(
+    //     {
+    //       ProgramId:0,
+    //        HeadquarterId:['', [Validators.required]],
+    //       AdministrativeId:['']
+    //   })]),
+    // });
   }
 
   private getAllFaculty(selectId?: number) {
@@ -107,7 +116,20 @@ constructor(
     this.CategoryId = 0
     this.FacultyId = 0
     this.ngOnInit()
-  }
+    this.vaciar()
+}
+private vaciar(){
+  this.form.reset()
+  this.getRoles.reset()
+  this.getRoles.clear()
+  this.form.controls['name'].setValue('')
+  let control = <FormArray>this.form.controls['Headquarters']
+  control.push(this.formBuilder.group({
+    ProgramId:0,
+    HeadquarterId:['', [Validators.required]],
+  AdministrativeId:['']
+  }))
+}
 
   public onSubmit() {
     if(this.CategoryId == 0){

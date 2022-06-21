@@ -12,7 +12,7 @@
 <ng-template [ngIf]="Valorconstruccion == false">
   <form [formGroup]="form"  novalidate (ngSubmit)="onSubmit()"  enctype="multipart/form-data" >
     <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
-    [style]="{'width': '65vw','height': '70vw'}" 
+    [style]="{'width': '80vw','height': '70vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"
    
     [closable]="true" [closeOnEscape]="false" 
@@ -30,8 +30,8 @@
   
                 <div class="grid p-fluid" style="padding: 10px;">
                   <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                    <img alt="logo" src="{{image}}" 
-                    style="width: 100%"/>
+                    <img alt="logo" src="{{image}}" class="ml-2"
+                    style="width: 70%"/>
                   </div>
   
                   <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
@@ -823,7 +823,8 @@
                                     <div class="custom-input-file" style="width: 100%;">
                                       <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
                                       name="Anexos" 
-                                      placeholder="Anexo" formControlName="Anexos" title="Anexos" required>
+                                      placeholder="Anexo" (change)="onFileChange($event,pointIndex)"
+                                      formControlName="Anexos" title="Anexos" required>
                                     </div>
                                     
                                   <span class="bottomdelete" style="margin-top: 5px;">

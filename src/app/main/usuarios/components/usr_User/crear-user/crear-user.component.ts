@@ -31,7 +31,12 @@ export class CrearUserComponent implements OnInit {
   public roles: RoleI[]=[];
   public Roles1:any[] =[]
   public form:FormGroup=this.formBuilder.group({
- 
+    name:['', [Validators.required]],
+    surname:['', [Validators.required]],
+    DocumentTypeId:[1],
+    identification:[''],
+    email:['', [Validators.required]],
+    Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
   });
   public mostrarDialogo:boolean=false;
   // public TipoUser:string=''
@@ -58,19 +63,17 @@ export class CrearUserComponent implements OnInit {
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true
       }
-
     }else{
       this.mostrarDialogo= false
-
     }
-    this.form=this.formBuilder.group({
-      name:['', [Validators.required]],
-      surname:['', [Validators.required]],
-      DocumentTypeId:[1],
-      identification:[''],
-      email:['', [Validators.required]],
-      Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
-    });
+    // this.form=this.formBuilder.group({
+    //   name:['', [Validators.required]],
+    //   surname:['', [Validators.required]],
+    //   DocumentTypeId:[1],
+    //   identification:[''],
+    //   email:['', [Validators.required]],
+    //   Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['']})]),
+    // });
     
     this.getUsrRoles()
     // this.getAllgenders()
@@ -84,9 +87,25 @@ export class CrearUserComponent implements OnInit {
     this.mostrar=true;
     this.Roles1 =[]
     this.bandera=false
-
     this.ngOnInit()
+    this.vaciar()
   }
+  private vaciar(){
+    this.form.reset()
+    this.getRoles.reset()
+    this.getRoles.clear()
+    this.form.controls['name'].setValue('')
+    this.form.controls['surname'].setValue('')
+    this.form.controls['DocumentTypeId'].setValue(1)
+    this.form.controls['identification'].setValue('')
+    this.form.controls['email'].setValue('')
+    let control = <FormArray>this.form.controls['Roles']
+    control.push(this.formBuilder.group({
+      RoleId:['']
+    }))
+  }
+
+
   public cancelar(){
     this.ref.close(undefined);
   }
@@ -99,9 +118,6 @@ export class CrearUserComponent implements OnInit {
       // console.log(this.roles);
     }, error => console.error(error));
   }
-
-
-
      //metodos para agregar controles de Roles
      get getRoles() {
       return this.form.get('Roles') as FormArray;//obtener todos los formularios
@@ -110,16 +126,16 @@ export class CrearUserComponent implements OnInit {
     addRoles(event: Event){
       event.preventDefault();
       const control = <FormArray>this.form.controls['Roles']
-      this.mostrar=true
+
       //console.log(control)      
         //crear los controles del array
-      // if(control.length == 0 && this.mostrar == false){
+      if(control.length == 0 && this.mostrar == false){
         control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
-      // }
-      // if(control.length >= 1 && this.mostrar == true){
-      //   control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
-      // }
-       
+      }
+      if(control.length >= 1 && this.mostrar == true){
+        control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
+      }
+      this.mostrar=true
     }
     removeRoles(index: number,event: Event){
       event.preventDefault();
@@ -127,7 +143,7 @@ export class CrearUserComponent implements OnInit {
       control.removeAt(index)
       if(control.length <= 0){
        this.mostrar=false
-      //  control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
+       control.push(this.formBuilder.group({RoleId:['']}))//nuevo input
 
       }
     }
