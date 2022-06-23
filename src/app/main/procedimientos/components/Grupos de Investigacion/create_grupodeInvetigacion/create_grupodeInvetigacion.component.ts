@@ -106,6 +106,8 @@ public form:FormGroup= this.formBuilder.group({
  
   InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
     {Usuarios:['', [Validators.required]],
+    RoleInvestigadorId:[''],
+
       // RoleId:['', [Validators.required]]
     }) 
     ]),
@@ -138,9 +140,7 @@ public mostrarIntegrantes:boolean=false
 public construccion:string='assets/construccion.jpg'
 public Valorconstruccion:boolean=false
 
-
 FilesAnexos:Archivo[] =[]
-
 ArchivosEliminados:any[] =[]
   
   constructor(
@@ -188,7 +188,12 @@ ArchivosEliminados:any[] =[]
     // console.log("AreaSeleccionada")
     if(this.form.value.RoleInvestigador != ''){
       // this.getInvestigatorCollaborators(this.form.value.RoleInvestigador.id)
-
+      const control = <FormArray>this.form.controls['InvestigatorCollaborators']
+      if(control.length == 1 &&  this.mostrarI==false){
+        
+        control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
+        this.mostrarI=true
+      }
       this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
       .subscribe(teachersA => {
 
@@ -200,7 +205,7 @@ ArchivosEliminados:any[] =[]
           }else{
             this.users=[{todo:'No hay registros'}]
           }
-          console.log(this.users)  
+          // console.log(this.users)  
           this.mostrarIntegrantes= true
       })
           
@@ -302,11 +307,13 @@ ArchivosEliminados:any[] =[]
   getRoles() {
     this.roleInvestigationsService.getList().subscribe(teachersA => {
       for (let key of teachersA.roleInvestigations) {
-        if(key.id != 1)
+        // if(key.name.toLocaleLowerCase() != 'investigador principal'){
         // for (let key of teachersA.facultys) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
+          this.roles.push(key)
         // }
-        this.roles.push(key)
+        
       }
     }, error => console.error(error))
   } 
@@ -404,6 +411,8 @@ private vaciar(){
   let control3 = <FormArray>this.form.controls['InvestigatorCollaborators']
   control3.push(this.formBuilder.group({
     Usuarios:['', [Validators.required]],
+    RoleInvestigadorId:[''],
+
   }))
   let control4 = <FormArray>this.form.controls['knowledge_areas']
   control4.push(this.formBuilder.group({
@@ -465,11 +474,10 @@ private vaciar(){
 
       if(this.InvestigatorCollaborators1.length == 0 ){
         let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
-        for (const key of control1.value) {
+        for (let key of control1.value) {
           // key.RoleId=key.RoleId.id 
-          key.Usuarios=key.Usuarios 
           this.InvestigatorCollaborators1.push({
-            // RoleId:key.RoleId,
+            RoleInvestigadorId:  key.RoleInvestigadorId.id,
             Usuarios:key.Usuarios,
           })
         }
@@ -492,7 +500,7 @@ private vaciar(){
         formValue.InvestigatorCollaborators=[]
   
       }
-      console.log(formValue)
+      console.log(formValue,'formValue')
     if(this.mostrarFacultad == true && formValue.name != ""&&
     // formValue.ident_colciencias != "" &&
     // formValue.resolution != "" && 
@@ -769,34 +777,7 @@ private vaciar(){
       }
     }
 
-  // get getSeedbed() {
-  //   return this.form.get('Seedbeds') as FormArray;//obtener todos los formularios
-  // }
 
-  // addSeedbed(event: Event){
-  //   event.preventDefault();
-  //   let control = <FormArray>this.form.controls['Seedbeds']
-  //   //console.log(control)      
-  //     //crear los controles del array
-  //   if(control.length == 0 && this.mostrarS == false){
-  //     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
-  //   }
-  //   if(control.length >= 1 && this.mostrarS == true){
-  //     control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
-
-  //   }
-  //     this.mostrarS=true
-  // }
-  // removeSeedbed(index: number,event: Event){
-  //   event.preventDefault();
-  //   let control = <FormArray>this.form.controls['Seedbeds']//aceder al control
-  //   control.removeAt(index)
-  //   if(control.length <= 0){
-  //    this.mostrarS=false
-  //    control.push(this.formBuilder.group({SeedbedId: ['', [Validators.required]]}))//nuevo input
-
-  //   }
-  // }
 
   get getInvestigatorCollaborator() {
     return this.form.get('InvestigatorCollaborators') as FormArray;//obtener todos los formularios
@@ -810,13 +791,16 @@ private vaciar(){
     if(control.length == 0 && this.mostrarI == false){
       control.push(this.formBuilder.group({
         Usuarios:['', [Validators.required]],
-          // RoleId:['', [Validators.required]]
+        RoleInvestigadorId:[this.form.value.RoleInvestigador],
+        // RoleId:['', [Validators.required]]
       }))//nuevo input
       // control.removeAt(0)
     }
     if(control.length >= 1 && this.mostrarI == true){
       control.push(this.formBuilder.group({
         Usuarios:['', [Validators.required]],
+        RoleInvestigadorId:[this.form.value.RoleInvestigador],
+
           // RoleId:['', [Validators.required]]
       }))//nuevo input
 
@@ -832,6 +816,8 @@ private vaciar(){
      this.mostrarI=false
      control.push(this.formBuilder.group({
       Usuarios:['', [Validators.required]],
+      RoleInvestigadorId:[this.form.value.RoleInvestigador],
+
         // RoleId:['', [Validators.required]]
     }))//nuevo input
     }

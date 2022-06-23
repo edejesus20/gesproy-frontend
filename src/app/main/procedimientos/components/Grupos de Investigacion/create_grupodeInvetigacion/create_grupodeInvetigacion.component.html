@@ -12,7 +12,7 @@
 <ng-template [ngIf]="Valorconstruccion == false">
   <form [formGroup]="form"  novalidate (ngSubmit)="onSubmit()"  enctype="multipart/form-data" >
     <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
-    [style]="{'width': '80vw','height': '70vw'}" 
+    [style]="{'width': '90vw','height': '70vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"
    
     [closable]="true" [closeOnEscape]="false" 
@@ -31,7 +31,7 @@
                 <div class="grid p-fluid" style="padding: 10px;">
                   <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
                     <img alt="logo" src="{{image}}" class="ml-2"
-                    style="width: 70%"/>
+                    style="width: 60%"/>
                   </div>
   
                   <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
@@ -280,44 +280,53 @@
                     </ng-template>
                     <br>
                     <ng-template [ngIf]="mostrarHeadquarterProgram==true">
-                      <div class="flex">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-  
-                        <div style="width:100%" class="pr-4">
-                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                          [options]="roles" [filter]="true"
-                          formControlName="RoleInvestigador" name="RoleInvestigador"
-    
-                              label="ROL DE INVESTIGACIÓN" 
-                            [style]="{'width':'100%','margin-bottom':'20px'}"
-                            optionvalue="id" optionLabel="name"  filterBy="name"
-                            [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
-                            <ng-template let-option pTemplate="item"  >
-                              <span >{{option.name  | titlecase}} </span>
+                      <div class="grid">
+                        <div class="col-12 sm:col-6 md:col-6">
+                          <div class="flex">
+                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+      
+                            <div style="width:100%" class="pr-4">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="roles" [filter]="true"
+                              formControlName="RoleInvestigador" name="RoleInvestigador"
+        
+                                  label="ROL DE INVESTIGACIÓN" 
+                                [style]="{'width':'100%','margin-bottom':'20px'}"
+                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
+                                <ng-template let-option pTemplate="item"  >
+                                  <span >{{option.name  | titlecase}} </span>
+                              </ng-template>
+                              </p-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 sm:col-6 md:col-6">
+                          <ng-template [ngIf]="mostrarIntegrantes==true">
+                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
+              
+                              <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
+                             class="p-button-success p-button-raised p-button-rounded mr-3 "
+                              label="Add Investigadores"></button> 
+           
+                              <!-- <button pButton type="button" (click)="addInvestigator($event)" 
+                              class="p-button-info p-button-raised p-button-rounded mr-3"
+                               label="Crear nuevo Investigador"></button>
+                               <button pButton type="button" (click)="addStudent($event)" 
+                               class="p-button-warning p-button-raised p-button-rounded"
+                                label="Crear nuevo Estudiante"></button>   -->
+                           </div>
                           </ng-template>
-                          </p-dropdown>
                         </div>
                       </div>
+           
                       <!-- <h5 style="text-align:left;">Director y/o Investigador Principal:</h5> -->
                       
                              
-                      <ng-template [ngIf]="mostrarIntegrantes==true">
-                      <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
-        
-                        <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
-                       class="p-button-success p-button-raised p-button-rounded mr-3 "
-                        label="Add Investigadores"></button> 
-     
-                        <button pButton type="button" (click)="addInvestigator($event)" 
-                        class="p-button-info p-button-raised p-button-rounded mr-3"
-                         label="Crear nuevo Investigador"></button>
-                         <button pButton type="button" (click)="addStudent($event)" 
-                         class="p-button-warning p-button-raised p-button-rounded"
-                          label="Crear nuevo Estudiante"></button>  
-                     </div>
+                      
            
                      <br>
-         
+                     <ng-template [ngIf]="mostrarIntegrantes==true">
                      <div fxLayout="row" fxLayoutGap="20px">
                        <div class="table-wrapper" >
                          <p-table [value]="algoI" *ngIf="mostrarI == true"> 
@@ -332,76 +341,43 @@
                                  <div formArrayName="InvestigatorCollaborators"> 
                                    <div *ngFor="let item of getInvestigatorCollaborator.controls; 
                                    let pointIndex=index" [formGroupName]="pointIndex">
-                                     <div class="grupo"> 
-                                      <div class="grupoinput"> 
-                                        <div class="field">
-                                          <div class="flex">
-                                            <div style="width:100%">
-                                        <span class="p-fluid">
-                                            <p-autoComplete formControlName="Usuarios" 
-                                            class=" p-inputtext-lg" 
-                                            [suggestions]="filteredCountries"
-                                            title="SELECCIONE USUARIO"
-                                             placeholder="SELECCIONE USUARIO"
-                                            (input)="llenar($event)"
-                                            (completeMethod)="filterCountry($event)" 
-                                            field="todo" [multiple]="true">
-                                            </p-autoComplete>
-                                        </span>
-                                            </div>
-                                            <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
-                                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
-                                              class="p-button-rounded p-button-danger"></button>
-         
-                                            </span>
-                                            <!-- <span class="bottomdelete" style="margin-top: 5px;">
-                                              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                                              class="p-button-rounded p-button-outlined" (click)="addeJES($event)" ></button>
-                                            </span> -->
-                                          </div>
+                                   <div class="grid">
+                                     <div class="col-12 sm:col-4 md:col-4">
+                                      <div class="field ">
+                                        <label for="name"style="font-weight: bold;">ROL SELECCIONADO</label>
+                                          <div class="p-inputgroup" >
+                                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                            <input type="text" pInputText 
+                                            class="p-inputtext-lg"  name="ROL SELECCIONADO"  title="ROL SELECCIONADO"
+                                            [value]="form.value.InvestigatorCollaborators[pointIndex].RoleInvestigadorId.name" [disabled]="true">         
                                         </div>
                                       </div>
-                                         <!-- <ng-template [ngIf]="users.Docentes != []">
-                                         
-                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                         [options]="users.Docentes" [filter]="true"
-                                             formControlName="UserId" name="UserId"
-                                            label="SELECCIONE INVESTIGADOR" 
-                                           [style]="{'width':'100%','margin-bottom':'20px'}"
-                                           optionvalue="UserId" optionLabel="fullName" filterBy="fullName"
-                                           [required]="true" placeholder="SELECCIONE INVESTIGADOR"  >
-                                           <ng-template let-option pTemplate="item"  >
-                                             <span >{{option.fullName  | titlecase}} -
-                                               CC: {{option.identification }}  Rol : {{option.rol }}
-                                               </span>
-                                         </ng-template>
-                                         </p-dropdown>
-                                        </ng-template> -->
-                                       
-                               
-                                         <!-- <div class="grupoinput1">
-                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                         [options]="roles" [filter]="true"
-                                             formControlName="RoleId" name="RoleId"
-                                            label="SELECCIONE ROL DE INVESTIGACIÓN" 
-                                           [style]="{'width':'100%','margin-bottom':'20px'}"
-                                           optionvalue="id" optionLabel="name" filterBy="name"
-                                           [required]="true" placeholder="SELECCIONE ROL DE INVESTIGACIÓN"  >
-                                           <ng-template let-option  pTemplate="item">
-                                             <span>
-                                               {{option.name  | titlecase}} 
-                                              
-                                               
-                                             </span>
-                                             
-                                         </ng-template>
-                                         </p-dropdown>
-                                       </div> -->
-                                       
-                               
-                                     
+                                     </div>
+                                     <div class="col-12 sm:col-8 md:col-8 mt-5">
+                                      <div class="flex">
+                                        <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                        <div style="width:100%">
+                                          <span class="p-fluid">
+                                              <p-autoComplete formControlName="Usuarios" 
+                                              class=" p-inputtext-lg" 
+                                              [suggestions]="filteredCountries"
+                                              title="SELECCIONE USUARIO"
+                                              placeholder="SELECCIONE USUARIO"
+                                              (input)="llenar($event)"
+                                              (completeMethod)="filterCountry($event)" 
+                                              field="todo" [multiple]="true">
+                                              </p-autoComplete>
+                                          </span>
+                                        </div>
+                                        <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
+                                          <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
+                                          class="p-button-rounded p-button-danger"></button>
+     
+                                        </span>
+                                      </div>
+                                     </div>
                                    </div>
-                                   </div>
+                                  </div>
                                  </div> 
                                </td>
                            </tr>

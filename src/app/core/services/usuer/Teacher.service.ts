@@ -171,6 +171,15 @@ export class TeacherService {
     )
 }
 
+getHeadquarterProgramTeacherOne(id: number): Observable<{teachers:any[]}> {
+  return this.http
+    .get<{teachers:any[]}>(this.base_path_get + '/HeadquarterProgramTeacherOne/' + id)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+
 
 AddTeacherSemilleros(id:number): Observable<{ teachers: any[] }> {
   return this.http

@@ -48,9 +48,15 @@
     /* background-color: #F16257; */
   }
   .padre:hover{
-    border-left: 5px solid #F16257;
-    /* border-left: 5px solid #FBC02D; */
-    text-decoration-color: #F16257;
+    border-left: 5px solid #f16157c0;
+    text-decoration-color: #f16157c0;
+    cursor: pointer;
+    /* color:#F16257 */
+    /* background-color: #F16257; */
+  }
+  .padre:focus{
+    border-left: 5px solid #f16157c0;
+    text-decoration-color: #f16157c0;
     cursor: pointer;
     /* color:#F16257 */
     /* background-color: #F16257; */

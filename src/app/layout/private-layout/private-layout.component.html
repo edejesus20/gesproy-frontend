@@ -7,7 +7,6 @@
   <div class="col-12 sm:col-2 md:col-3 lg:col-3 xl:col-3">
     <p-button styleClass="p-button-outlined  p-button-warning" (click)="display = true" class="mr-3">
       <i class="pi pi-align-justify"  style="font-size: 1.5rem; margin-top: 5px;color:black"></i>
-        <!-- <img alt="logo" src="assets/avatars-avataaars.png" style="width: 1.5rem"/> -->
         <span class="ml-2 font-bold" style="color:#FBC02D">SIGINV - UNIGUAJIRA</span>
     </p-button>
   </div>
@@ -52,9 +51,281 @@
 
     </div>
   </div>
-  </div>
-  <!-- notificaciones -->
+  </div>  
+
+
+
+  <div class="container margen">
+      <p-sidebar [(visible)]="display" 
+      [style]="{'width':'345px','min-height': '88vh'}"  [showCloseIcon]="true" 
+      [blockScroll]="false" >
+      <a routerLink="/landing" (click)="display=false">
+          <img alt="logo" src="assets/images/logo-uniguajira.png" width="260px" height="92px" style="margin-left: 20px ;margin-top: -7px;" 
+          styleClass="p-button-outlined"class="mr-3"/>
+      </a>
+      <h4 class="fondebabutton" style="text-align: center;margin-bottom:-5px">{{nombre}}</h4>
+      <hr>
+          <app-menu [menu]="menu1" (funcion)="ocultarMenu($event)"></app-menu>
+      </p-sidebar>
+      <div class="content">
+        
+        <router-outlet></router-outlet>
+        <footer class="footer" style="padding-top: 20px;">
+            
+          <div class="footer__copyright" >
+            
+            <p style="color:gray;font-size: 1.1rem">© 2022 Desarrollo Universidad de la Guajira</p>
+          </div>
+          <div class="footer__copyright" >
+            
+            <p style="color:gray;font-size: 1rem">Todos los derechos reservados - Semillero SETEC</p>
+            <p style="color:gray;font-size: 0.8rem">Autores: Emmanuel Meza - Adanud Meza - Jaider Mendoza</p>
+          </div>
+        </footer>
+
+      </div>
+    </div>  
+
+</ng-template>
+
+
+
+
+
+
+<!-- <router-outlet></router-outlet> -->
+
+
+  <!-- <ng-template [ngIf]="display">
+    <div class="min-h-screen flex relative static surface-ground">
+    <div id="app-sidebar-11" 
+    class="surface-section h-screen hidden block flex-shrink-0
+    relative static left-0 top-0 z-1 border-right-1 surface-border select-none"  style="width:350px;">
+        <div class="flex flex-column h-full " style="width:350px;position:fixed;">
+            <div class="flex align-items-center px-5 flex-shrink-0  border-bottom-1 surface-border"
+            style="height:60px;background:#f16357">
+              <p-button styleClass="p-button-outlined  p-button-warning" 
+              (click)="display = false" >
+                  <span class="ml-2 font-bold" style="color:#FBC02D">SIGINV - UNIGUAJIRA</span>
+              </p-button>
+            </div>
+            <div class="overflow-y-auto overflow-x-hidden app-sidebar-11 pt-2">
+              <a routerLink="/landing" (click)="display=false">
+                <img alt="logo" src="assets/images/logo-uniguajira.png" width="260px" 
+                height="92px" style="margin-left: 20px ;" 
+                styleClass="p-button-outlined"class="mr-3"/>
+            </a>
+            <h4 class="fondebabutton" style="text-align: center;margin-bottom:-7px">{{nombre}}</h4>
+            <hr>
+              <app-menu [menu]="menu1" (funcion)="ocultarMenu($event)"></app-menu>
   
+                
+            </div>
+            
+            <div class="mt-auto border-top-1 surface-border p-3 flex justify-content-between">
+              <a class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle" style="width:40px;height:40px">
+                  <i class="pi pi-file text-xl"></i>
+              </a>
+              <a class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle" style="width:40px;height:40px">
+                  <i class="pi pi-star text-xl"></i>
+              </a>
+              <a class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle" style="width:40px;height:40px">
+                  <i class="pi pi-cog text-xl"></i>
+              </a>
+              <a class="cursor-pointer inline-flex align-items-center justify-content-center bg-pink-500 text-white border-2 border-pink-600 hover:bg-pink-600 text-600 transition-colors transition-duration-150 border-circle" style="width:40px;height:40px">
+                  <i class="pi pi-sign-out text-xl"></i>
+              </a>
+             
+          </div>
+        </div>
+    </div>
+    <div class="sm:min-h-screen flex flex-column relative flex-auto"style="overflow-x: auto">
+      <div class="flex justify-content-between align-items-center  
+       border-bottom-1 surface-border relative static" style="height:60px;background:#f16357">
+          <ul class="list-none p-0 m-0 hidden sm:flex sm:align-items-center  
+          sm:flex-row w-auto sm:w-full 
+          surface-section border-1 sm:border-none surface-border right-0 top-100 z-1 shadow-2 
+          sm:shadow-none absolute sm:static" style="height:59px;background:#f16357">
+              <li>
+                  <a class="flex 
+                  align-items-center text-600 hover:text-900 hover:surface-100 
+                  font-medium border-round cursor-pointer
+                  transition-duration-150 transition-colors  ml-2 mr-2">
+         
+                          
+                    <ng-template [ngIf]="notifications_noleidos.length > 0">
+                      <i class="pi pi-bell p-2 mt-2" 
+                      pBadge style="font-size: 1.5rem" value="{{notifications_noleidos.length}}" 
+                      (click)="op.toggle($event)"></i>
+                    </ng-template>
+                    <ng-template [ngIf]="notifications_noleidos.length == 0">
+                      <i class="pi pi-bell  mt-2 " 
+                       style="font-size: 1.5rem" value="" 
+                      (click)="op.toggle($event)"></i>
+                    </ng-template>   
+                    <div #menu2 class="box hidden" header="Anuncios" 
+                    style="display: inline-block;margin:0px">
+               
+                   </div> 
+                  </a>
+              </li>
+
+              <li>
+                  <a class="flex p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-200 font-medium border-round cursor-pointer                                     transition-duration-150 transition-colors">
+                    <button pButton pRipple type="button"  [disabled]="true"
+                    class="p-button-outlined  p-button-warning "
+                    style="padding: 7px;">
+                    <div class="clock" style="color:#FBC02D;font-weight:bold">
+                      {{dia | titlecase}} {{fecha | titlecase}} [<span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span><span class="ampm">{{ampm}}</span>]
+                    </div>
+                     </button>
+                  </a>
+              </li>
+              <li class="border-top-1 surface-border lg:border-top-none ml-auto">
+                  <a class="flex p-3 lg:px-3 lg:py-2 align-items-center hover:surface-100 
+                  font-medium border-round cursor-pointer
+                  transition-duration-150 transition-colors">
+                  <button type="button" pButton pRipple 
+                class="p-button-rounded p-button-text"
+                 icon="pi pi-plus" (click)="menu.toggle($event)">
+                  <p-avatar image="{{image3}}" 
+                  styleClass="ml-3" size="large" shape="circle"></p-avatar>
+                </button>
+            
+                   
+   
+                  </a>
+
+                  
+              </li>
+          </ul>
+          
+      </div>
+      <div class="p-5 flex flex-column flex-auto overflow-x-auto">
+          <div class="border-2 border-dashed surface-border border-round surface-section flex-auto">
+            <router-outlet></router-outlet>
+            <footer class="footer" style="padding-top: 20px;">
+            
+              <div class="footer__copyright" >
+                
+                <p style="color:gray;font-size: 1.1rem">© 2022 Desarrollo Universidad de la Guajira</p>
+              </div>
+              <div class="footer__copyright" >
+                
+                <p style="color:gray;font-size: 1rem">Todos los derechos reservados - Semillero SETEC</p>
+                <p style="color:gray;font-size: 0.8rem">Autores: Emmanuel Meza - Adanud Meza - Jaider Mendoza</p>
+              </div>
+            </footer>
+          </div>
+      </div>
+  </div>
+</div>
+
+  </ng-template>
+  <ng-template [ngIf]="!display">
+
+
+  <div class="grid"  [style]="{'background':'#f16357',
+  'color':'#fff','font-weight':'bold','margin':'0',
+  'border':'1px solid #f16357','border-radius':'0px'}">
+
+  <div class="col-12 sm:col-10 md:col-8 lg:col-8 xl:col-8">
+    <p-button styleClass="p-button-outlined  p-button-warning mb-1" (click)="display = true" class="mr-1">
+      <i class="pi pi-align-justify"  style="font-size: 1.5rem; margin-top: 5px;color:black"></i>
+    </p-button>
+    <a class=" text-600 hover:text-900 
+                  font-medium border-round cursor-pointer
+                  transition-duration-150 transition-colors  ml-2 mr-2">
+         
+                          
+                    <ng-template [ngIf]="notifications_noleidos.length > 0">
+                      <i class="pi pi-bell p-2 mt-2 mb-1" 
+                      pBadge style="font-size: 1.5rem" value="{{notifications_noleidos.length}}" 
+                      (click)="op.toggle($event)"></i>
+                    </ng-template>
+                    <ng-template [ngIf]="notifications_noleidos.length == 0">
+                      <i class="pi pi-bell  mt-2 mb-1" 
+                       style="font-size: 1.5rem" value="" 
+                      (click)="op.toggle($event)"></i>
+                    </ng-template>   
+                    <div #menu2 class="box hidden" header="Anuncios" 
+                    style="display: inline-block;margin:0px">
+               
+                   </div> 
+                  </a>
+                  <a class=" ml-3 mr-2 mb-4
+                  text-600 hover:text-900  font-medium border-round cursor-pointer                                     transition-duration-150 transition-colors">
+                    <button pButton pRipple type="button"  [disabled]="true"
+                    class="p-button-outlined  p-button-warning mb-2"
+                    >
+                    <div class="clock" style="color:#FBC02D;font-weight:bold">
+                      {{dia | titlecase}} {{fecha | titlecase}} [<span class="mishoras">{{hora}}:{{minutos}}:<span class="segundos">{{segundos}}</span></span><span class="ampm">{{ampm}}</span>]
+                    </div>
+                     </button>
+                  </a>
+  </div>
+  <div class="col-12 sm:col-2 md:col-4 lg:col-4 xl:col-4">
+    <div class="flex justify-content-end flex-wrap card-container green-container">
+    <div class="grid">
+      <div class="col-12 sm:col-12">
+        <button type="button" pButton pRipple 
+        class="p-button-rounded p-button-text"
+         icon="pi pi-plus" (click)="menu.toggle($event)">
+          <p-avatar image="{{image3}}" 
+          styleClass="ml-3" size="large" shape="circle"></p-avatar>
+        </button>
+      </div>
+    </div>
+     <p-menu #menu [popup]="true"  [model]="items" 
+     [style]="{'width':'200px','margin-top':'5px'}"></p-menu>
+     <div #menu2 class="box hidden" header="Anuncios" 
+     style="display: inline-block;margin:0px">
+
+    </div>
+    
+    </div>
+  </div>
+  </div>  
+
+
+
+  <div class="container margen">
+      <p-sidebar [(visible)]="display" 
+      [style]="{'width':'345px','min-height': '88vh'}"  [showCloseIcon]="true" 
+      [blockScroll]="false" >
+      <a routerLink="/landing" (click)="display=false">
+          <img alt="logo" src="assets/images/logo-uniguajira.png" width="260px" height="92px" style="margin-left: 20px ;margin-top: -7px;" 
+          styleClass="p-button-outlined"class="mr-3"/>
+      </a>
+      <h4 class="fondebabutton" style="text-align: center;margin-bottom:-5px">{{nombre}}</h4>
+      <hr>
+          <app-menu [menu]="menu1" (funcion)="ocultarMenu($event)"></app-menu>
+      </p-sidebar>
+      <div class="content">
+        
+        <router-outlet></router-outlet>
+        <footer class="footer" style="padding-top: 20px;">
+            
+          <div class="footer__copyright" >
+            
+            <p style="color:gray;font-size: 1.1rem">© 2022 Desarrollo Universidad de la Guajira</p>
+          </div>
+          <div class="footer__copyright" >
+            
+            <p style="color:gray;font-size: 1rem">Todos los derechos reservados - Semillero SETEC</p>
+            <p style="color:gray;font-size: 0.8rem">Autores: Emmanuel Meza - Adanud Meza - Jaider Mendoza</p>
+          </div>
+        </footer>
+
+      </div>
+    </div>  
+  </ng-template> -->
+ 
+
+<div style="display:relative;">
+  <p-menu #menu [popup]="true"  [model]="items" 
+  [style]="{'width':'200px','margin-top':'5px'}"></p-menu>
+</div>
   <p-overlayPanel #op [showCloseIcon]="false" [dismissable]="true"[style]="{width: '450px'}">
     <ng-template pTemplate>
       <ng-template [ngIf]="recipients.length">
@@ -74,9 +345,6 @@
                           styleClass="ml-3" size="xlarge" shape="circle"></p-avatar>
                           </div>
                       </div>
-                      <!-- <span class="text-green-500 font-medium">
-                        {{item.Notification?.User?.fullName}}
-                      </span> -->
                       <span class="text-500">{{item.Notification?.date_firt}}</span>
                       <span class="text-blue-500 font-medium ml-1"
                       style="cursor:pointer; cursor: hand"
@@ -113,52 +381,6 @@
 </p-overlayPanel>
 
 
-
-  <div class="container margen">
-      <p-sidebar [(visible)]="display" 
-      [style]="{'width':'345px','min-height': '88vh'}"  [showCloseIcon]="true" 
-      [blockScroll]="false" >
-      <a routerLink="/landing" (click)="display=false">
-          <img alt="logo" src="assets/images/logo-uniguajira.png" width="260px" height="92px" style="margin-left: 20px ;margin-top: -7px;" 
-          styleClass="p-button-outlined"class="mr-3"/><!-- (click)="display = true"  -->
-      </a>
-      <h4 class="fondebabutton" style="text-align: center;margin-bottom:-5px">{{nombre}}</h4>
-      <hr>
-          <!-- <p-panelMenu [model]="items" [style]="{'width':'192px','margin-left':'-5px'}"></p-panelMenu> -->
-          <app-menu [menu]="menu1" (funcion)="ocultarMenu($event)"></app-menu>
-          <!-- <div  class="padre grid align-items-center justify-content-cente">
-              <span (click)="cerrarSesion()" 
-              style="padding-left: 10px;padding-bottom: 10px;padding-top: 10px; cursor: pointer;">
-                <i class="pi pi-power-off"  style="font-size: 1.5rem; margin-top: 5px;"></i>
-                <span class="ml-4 font-bold" style=" width: 500px; font-size: 18px;">Logout</span>
-              </span>
-          </div> -->
-      </p-sidebar>
-      <div class="content">
-        
-        <router-outlet></router-outlet>
-        <footer class="footer" style="padding-top: 20px;">
-            
-          <div class="footer__copyright" >
-            
-            <p style="color:gray;font-size: 1.1rem">© 2022 Desarrollo Universidad de la Guajira</p>
-          </div>
-      
-          <!-- <div class="image"> 
-            <img src="{{image2}}" alt="">
-          </div> -->
-          <div class="footer__copyright" >
-            
-            <p style="color:gray;font-size: 1rem">Todos los derechos reservados - Semillero SETEC</p>
-            <p style="color:gray;font-size: 0.8rem">Autores: Emmanuel Meza - Adanud Meza - Jaider Mendoza</p>
-          </div>
-        </footer>
-
-      </div>
-    </div>  
-
-</ng-template>
-<!-- cerrar seccion -->
 <p-dialog [(visible)]="Dialog" 
 [style]="{'height': '18vw','width': '25vw'}"[resizable]="false" zindex="10000"
  [showHeader]="false" [closeOnEscape]="false" [closable]="false"
@@ -183,7 +405,6 @@
   </ng-template>
 </p-dialog>
 
-<!-- cambio de clave -->
 <ng-template [ngIf]="mostrarDialogoClave == true">
     <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
       <p-dialog [(visible)]="mostrarDialogoClave" [modal]="true" [style]="{'width': '40vw'}" 
@@ -226,11 +447,8 @@
   </ng-template>
   <ng-template [ngIf]="motrar == true">
     <br>
-    <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
-    <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
       <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
 
-    <!-- </div> -->
 
   </ng-template>
       </p-dialog>
@@ -238,7 +456,7 @@
       <p-toast></p-toast>
       <p-confirmPopup></p-confirmPopup>
 </ng-template>
-<!-- cambiar avatar -->
+
 <ng-template [ngIf]="mostrarAvatarClave == true">
   <form [formGroup]="form2" novalidate (ngSubmit)="onSubmit2()">
     <p-dialog [(visible)]="mostrarAvatarClave" [modal]="true" [style]="{'width': '80vw'}" 
@@ -255,57 +473,20 @@
         <div class="col-12 md:col-5" style="border: 1px solid black; border-radius:5px">
           <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
             <i class="pi pi-user mr-2"></i>Imagen Actual</span>
-          <!-- <div class="" style="width:100%"> -->
             <span class="flex">
               <p-avatar image="{{image3}}"  pRipple 
               [style]="{'width':'350px','height':'350px','border':'4px solid #f16357'}"
               styleClass="imgLogo4 mt-5 ml-5 p-button-rounded p-button-outlined" 
               size="xlarge" shape="circle"></p-avatar>
-              <!-- <img class="imgLogo4" src="{{image3}}" alt="" 
-              title="Avatar Actual"  styleClass="p-button-outlined"> -->
+             
               <div circle class="mt-10" style="margin-left: -55px; margin-top: 300px;"> 
                 <button pButton pRipple type="button" icon="pi pi-camera" 
                 (click)="adjuntar=true" title="Adjuntar imagen"
                 class="p-button-rounded p-button-secondary" style="font-size: 2rem;border:2px solid #f16357"></button></div>
               </span>
-              
- 
-           
-          <!-- </div> -->
           <br>
           <br>
-          <!-- <div class="field ">
-            <label for="name"style="font-weight: bold;">Adjuntar Imagen</label>
-          
-        <div class="p-inputgroup" >
-        <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
-
-          <span class="p-float-label" 
-          [style]="{'width':'100%'}">
-
-          <div class="custom-input-file" style="width: 100%;">
-            <input type="file" 
-            class="input-file p-inputtext-lg" 
-            style="margin-bottom: 10px;" 
-            name="avatarImagen" 
-            placeholder="Adjuntar Imageb" 
-            style="width: 80%;"
-            formControlName="avatarImagen" 
-            accept="image/png, image/gif, image/jpeg"
-            title="Adjuntar Imageb" required (change)="onFileChange($event)">
-            <span class="bottomdelete mt-7"  *ngIf="form2.value.avatarImagen != undefined && form2.value.avatarImagen != ''"
-            style="margin-left: 5px ;">
-              <button pButton pRipple type="button" icon="pi pi-check"   
-              class="p-button-rounded p-button-success"></button>
-
-            </span>
-          </div>
-          </span>       
-        </div>
-      </div> -->
-
-      
-
+    
         </div>
         <div class="col-12 md:col-7" style="border: 1px solid black; border-radius:5px">
           <span class="p-inputgroup-addon"  style="margin-top:-1px;" title="Avatar Actual">
@@ -357,12 +538,8 @@
   <ng-template [ngIf]="motrar == true">
     <br>
     <br>
-    <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
-    <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+    
       <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
-
-    <!-- </div> -->
-
   </ng-template>
   
   </p-dialog>
@@ -372,7 +549,6 @@
 </ng-template>
 
 
-<!-- adjuntarimagen -->
 <p-dialog [(visible)]="adjuntar" 
 [style]="{'height': '67%','width': '67%'}"[resizable]="false" zindex="10000"
 [showHeader]="false" [closeOnEscape]="false" [closable]="false"
@@ -415,9 +591,7 @@
     </ng-template>
     <ng-template [ngIf]="adjuntarM == true">
       <br>
-      <!-- <ng-template pTemplate="footer" class="titleCard" > -->
-      <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
-      <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
+
         <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
       </ng-template>
 

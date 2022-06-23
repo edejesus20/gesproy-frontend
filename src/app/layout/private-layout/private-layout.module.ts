@@ -126,7 +126,7 @@ import {ScrollTopModule} from 'primeng/scrolltop';
     ConfirmPopupModule,
     ToastModule,
     TreeModule,
-    SharedModule,
+    // SharedModule,
     // VirtualScrollerModule,
     TableModule,
     KeyFilterModule,

@@ -13,7 +13,12 @@
   font-weight: bold;
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
 }
-
+.transition-duration-150 {
+  transition-duration: 150ms !important;
+}
+.transition-colors {
+  transition-property: background-color,border-color,color !important;
+}
 @keyframes my-fadein {
   0%   { opacity: 0; }
   100% { opacity: 1; }
@@ -401,3 +406,14 @@ margin-right:2px;
 
 
  }
+
+ .app-sidebar-11::-webkit-scrollbar{
+  width: 8px;     /* Tamaño del scroll en vertical */
+  height: 8px;    /* Tamaño del scroll en horizontal */
+  background: #ccc;
+}
+
+.app-sidebar-11::-webkit-scrollbar-thumb {
+  background:#F16257;
+  border-radius: 4px;
+}

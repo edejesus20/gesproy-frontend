@@ -35,7 +35,7 @@ interface menu{
   providers: [DialogService]
 })
 export class PrivateLayoutComponent implements OnInit {
-  display=false
+  display=true
   items: MenuItem[]=[];
   items2: MenuItem[]=[];
     private API_URI:string=environment.API_URI
@@ -477,7 +477,7 @@ public seleccionar(src:string,e:Event){
 }
 
 ocultarMenu(boolean: boolean){
-this.display=boolean
+// this.display=boolean
 }
 
 

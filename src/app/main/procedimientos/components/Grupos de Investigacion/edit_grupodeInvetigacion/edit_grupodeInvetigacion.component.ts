@@ -25,6 +25,7 @@ import { Create_Knowledge_areaComponent } from '../../Areas de conocimiento/crea
 import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/components/Investigador colabolador/create_InvestigatorCollaborator/create_InvestigatorCollaborator.component';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
+import { LineProgramGroupI } from 'src/app/models/institution/program';
 
 @Component({
   selector: 'app-edit_grupodeInvetigacion',
@@ -32,8 +33,6 @@ import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudia
   styleUrls: ['./edit_grupodeInvetigacion.component.css']
 })
 export class Edit_grupodeInvetigacionComponent implements OnInit {
-
-
   public construccion:string='assets/construccion.jpg'
   public Valorconstruccion:boolean=false
 
@@ -175,32 +174,48 @@ public mostrarIntegrantes:boolean=false
                      this.teachers=[]
                     this.lines=rolesFromApi.lines
                      this.seedbeds= rolesFromApi.semilleros
-                     for (const key of rolesFromApi.teachers) {
-                       if(key.TeacherId){
+                     if(rolesFromApi.teachers.length != undefined && rolesFromApi.teachers.length > 0){
+                      for (const key of rolesFromApi.teachers) {
+                        if(key.TeacherId){
+                         this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+                           this.teachers.push(algo1.teacher)
+                           console.log(this.teachers,'aqui--teacher')
+                           for (const key of this.teachers) {
+                              if(key.id == cnt_groupFromApi.group.TeacherId){
+                                console.log('aqui')
+                                this.form.controls['TeacherId'].setValue(key)
+                                this.form2=key
+                                this.mostrarTeacher=true
+                                this.mostrarLienas=true
+                               }
                             
+                             
+                           }
+                         })
+                        }
                         
-                        this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
-                          this.teachers.push(algo1.teacher)
-                          console.log(this.teachers,'aqui--teacher')
-                          for (const key of this.teachers) {
-                     
-                             if(key.id == cnt_groupFromApi.group.TeacherId){
-                               console.log('aqui')
-                               this.form.controls['TeacherId'].setValue(key)
-                               this.form2=key
-                               this.mostrarTeacher=true
-                               this.mostrarLienas=true
-                              }
-                           
-                            
-                          }
-                        })
-                       }
-                       
+                      }
+                     }else{
+                      this.teacherService.getItem(cnt_groupFromApi.group.TeacherId).subscribe((algo1)=>{
+                        this.teachers.push(algo1.teacher)
+                        // console.log(this.teachers,'aqui--teacher')
+                        for (const key of this.teachers) {
+                           if(key.id == cnt_groupFromApi.group.TeacherId){
+                             console.log('aqui')
+                             this.form.controls['TeacherId'].setValue(key)
+                             this.form2=key
+                             this.mostrarTeacher=true
+                             this.mostrarLienas=true
+                            }
+                         
+                          
+                        }
+                      })
                      }
-      
-                    
-                     
+                     if(cnt_groupFromApi.group.LineProgramGroups?.length != undefined && 
+                      cnt_groupFromApi.group.LineProgramGroups.length > 0){
+                        this.agregarLinea(cnt_groupFromApi.group.LineProgramGroups)
+                      }
                      
                       this.mostrarHeadquarterProgram=true
               
@@ -210,21 +225,41 @@ public mostrarIntegrantes:boolean=false
                 }
              
               }, error => console.error(error));
-             
+            
             }
-
                   // console.log(this.FacultadHeadquarterProgram
            
-
-           
           }
-
         }
         this.displayMaximizable2=true
         this.tabla = false
         //console.log(this.cnt_group);
       }, error => console.error(error));
     }
+  agregarLinea(LineProgramGroups:LineProgramGroupI[]) {
+    if(LineProgramGroups.length){
+      for (let key of LineProgramGroups) {
+        if(key.LineProgram?.Line != undefined){
+          let control = <FormArray>this.form.controls['lines']
+      console.log(this.lines)      
+        //crear los controles del array
+        for (const key1 of this.lines) {
+          if(key1.id == key.LineProgram.Line.id){
+            control.push(this.formBuilder.group({
+              LineId:[key1, [Validators.required]]}))//nuevo input
+          }
+          
+        }
+        }
+        
+      }
+      this.mostrar4 == true
+      let control = <FormArray>this.form.controls['lines']
+      control.removeAt(0)
+     
+    }
+    
+  }
   
     public volver(event: Event){
       event.preventDefault

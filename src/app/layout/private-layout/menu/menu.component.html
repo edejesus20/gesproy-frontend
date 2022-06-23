@@ -1,6 +1,8 @@
 
-  <div *ngFor="let item of menu; let i = index" class="padre grid align-items-center justify-content-cente">
-    <span [routerLink]="item.link"  (click)="clickHandler($event, item)" 
+  <div *ngFor="let item of menu; let i = index" 
+  class=" padre grid align-items-center justify-content-cente pl-2">
+    <span [routerLink]="item.link"  (click)="clickHandler($event, item)"
+    class=" text-600 cursor-pointer border-2 border-transparent border-rounded" 
     style="padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">
       <i [ngClass]="item.icono"   style="font-size: 1.5rem; margin-top: 5px;"></i>
       <span class="ml-4 font-bold" style=" width: 500px; font-size: 18px;">{{ item.titulo }}</span>
@@ -37,9 +39,6 @@
     
             </span>
           </ng-container>
-          <!-- <ng-container *ngIf="subitem.menu">
-            <i class="menu-arrow">{{ !subitem.collapsed ? 'expand_less' : 'expand_more' }}</i>
-          </ng-container> -->
         </span>
         <div *ngIf="subitem.menu && !subitem.collapsed">
           <div *ngFor="let item3 of subitem.menu" class="nieto">
@@ -55,3 +54,4 @@
     </div>
   </div>
 
+  
