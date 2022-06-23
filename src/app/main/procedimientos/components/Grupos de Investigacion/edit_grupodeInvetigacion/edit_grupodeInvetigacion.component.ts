@@ -468,30 +468,19 @@ private anterior:any
         Metas: ['', [Validators.required]],
         Resultados: ['', [Validators.required]],
         Sector: ['', [Validators.required]],
-  
         TeacherId:['', [Validators.required]],
-       
-        InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
-          {
-              id:0,
-            Usuarios:['', [Validators.required]],
-            RoleInvestigadorId:[''],
-          }) 
-          ]),
-  
+        InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group({
+            id:0,Usuarios:['', [Validators.required]],RoleInvestigadorId:[''],
+          })]),
         knowledge_areas: this.formBuilder.array([this.formBuilder.group({
-            id:0,
-          Knowledge_areaId:['',[Validators.required]]})]),
-        lines: this.formBuilder.array([this.formBuilder.group({
-            id:0,
-          LineId:['',[Validators.required]]})]),
+        id:0, Knowledge_areaId:['',[Validators.required]]})]),
+        lines: this.formBuilder.array([this.formBuilder.group({id:0,LineId:['',[Validators.required]]})]),
         // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
         Anexos: this.formBuilder.array([this.formBuilder.group({
-            id:0,
-          Anexos:['', [Validators.required]],
-          anterior:false})]),
+          id:0,Anexos:['', [Validators.required]],anterior:false})]),
       });
     }  
+    // al seleccionar la facultad
    public SelectFacultad(e?:Event){
     if(e)e.preventDefault();
       if(this.form.value.Facultad != ''){
@@ -499,7 +488,17 @@ private anterior:any
         this.mostrarFacultad=true
       }
     }
-  
+    // buscar programas de facultad
+    getFacultadHeadquarterProgram(id:number) {
+      this.facultyService.getItem(id).subscribe((rolesFromApi) => {
+        if( rolesFromApi.faculty.Programs != undefined){
+          this.FacultadHeadquarterProgram = rolesFromApi.faculty.Programs;
+          // console.log(this.FacultadHeadquarterProgram)
+        }
+     
+      }, error => console.error(error));
+    }
+  // al seleccionar el lider proncipal
     public SelectTeacher(e:Event){
       e.preventDefault();
       if(this.form.value.TeacherId != ''){
@@ -509,18 +508,30 @@ private anterior:any
         this.mostrarLienas=true
       }
     }
-    getLineTeacherId(id: any) {
-        this.teacherService.getItem(id).subscribe(teacher=>{
-          // console.log(teacher.teacher)
-          if(teacher.teacher.Seedbeds && teacher.teacher.Lines){
-            for (let key of teacher.teacher.Seedbeds) {
-              key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-            }
-            this.Seedbeds=teacher.teacher.Seedbeds
-            // this.lines=teacher.teacher.Lines
+      // datos del lider principal
+      getOneTeachers(id:number) {
+        this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
+          if(cnt_groupFromApi.teacher.id != undefined){
+              this.form2=cnt_groupFromApi.teacher
           }
-      }, error => console.error(error))
-    }
+        }, error => console.error(error));
+      }
+
+
+    // getLineTeacherId(id: any) {
+    //     this.teacherService.getItem(id).subscribe(teacher=>{
+    //       // console.log(teacher.teacher)
+    //       if(teacher.teacher.Seedbeds && teacher.teacher.Lines){
+    //         for (let key of teacher.teacher.Seedbeds) {
+    //           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+    //         }
+    //         this.Seedbeds=teacher.teacher.Seedbeds
+    //         // this.lines=teacher.teacher.Lines
+    //       }
+    //   }, error => console.error(error))
+    // }
+
+    // *************************datos iniciales roles y facultada************
     geFacultad() {
       this.facultyService.getList().subscribe(teachersA => {
         for (let key of teachersA.facultys) {
@@ -530,6 +541,19 @@ private anterior:any
         // console.log(teachersA.facultys)
       }, error => console.error(error))
     }
+    getRoles() {
+      this.roleInvestigationsService.getList().subscribe(teachersA => {
+        for (let key of teachersA.roleInvestigations) {
+          if(key.id != 1)
+          // for (let key of categoryGroups.categoryGroups) {
+            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
+          this.roles.push(key)
+        }
+      }, error => console.error(error))
+    } 
+
+    // buscar lineas y areas de grupos dependiendo al programa
     public getHeadquarterProgram(e?:Event){
       if(e)e.preventDefault();
   
@@ -558,7 +582,7 @@ private anterior:any
       }
     } 
   
-  
+  // filtrado para investigadores secundarios
     llenar(event:Event){
       let filterValue = (event.target as HTMLInputElement).value;
       this.filterCountry(event,filterValue)
@@ -583,37 +607,7 @@ private anterior:any
       
   }
   
-  
-    getRoles() {
-      this.roleInvestigationsService.getList().subscribe(teachersA => {
-        for (let key of teachersA.roleInvestigations) {
-          if(key.id != 1)
-          // for (let key of categoryGroups.categoryGroups) {
-            key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-          // }
-          this.roles.push(key)
-        }
-      }, error => console.error(error))
-    } 
-    getOneTeachers(id:number) {
-      this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
-        if(cnt_groupFromApi.teacher.id != undefined){
-            this.form2=cnt_groupFromApi.teacher
-        }
-      }, error => console.error(error));
-    }
-  
-    getFacultadHeadquarterProgram(id:number) {
-      this.facultyService.getItem(id).subscribe((rolesFromApi) => {
-        if( rolesFromApi.faculty.Programs != undefined){
-          this.FacultadHeadquarterProgram = rolesFromApi.faculty.Programs;
-          // console.log(this.FacultadHeadquarterProgram)
-        }
-     
-      }, error => console.error(error));
-    }
-  
-    
+// **************enviar datos ******************************************
     public onSubmit(){
       // console.log('aqui1')
       let formValue: any = this.form.value;
@@ -992,7 +986,7 @@ private anterior:any
 
 
 
-      // modales
+      // *************Ventanas modales
   addInvestigator(e:Event){
     e.preventDefault()
 
