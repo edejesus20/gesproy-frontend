@@ -20,7 +20,7 @@ margin: 0;">
 <ng-template [ngIf]="tabla == false">
   <form [formGroup]="form"  novalidate (ngSubmit)="onSubmit()"  enctype="multipart/form-data" >
     <p-dialog [(visible)]="displayMaximizable2" [modal]="true" 
-    [style]="{'width': '65vw','height': '70vw'}" 
+    [style]="{'width': '90vw','height': '70vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"
    
     [closable]="true" [closeOnEscape]="false" 
@@ -32,23 +32,26 @@ margin: 0;">
                 <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
               <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Grupo de Investigacion</h2>
             </div> -->
-            <br>
+           
       
               <div style="border: 1px solid black;padding: 10px;">
   
                 <div class="grid p-fluid" style="padding: 10px;">
-                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                    <img alt="logo" src="{{image}}" 
-                    style="width: 100%"/>
-                  </div>
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
+                    <img alt="logo" src="{{image}}" class=" "
+                    style="width: 60%"/>
+                  </div> 
   
                   <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
                     <h2 style="text-align: center;">EDITAR GRUPO DE INVESTIGACIÓN</h2>
                   </div>
   
-                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                    <img alt="logo" src="{{image2}}" 
-                    style="width: 100%"/>
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
+                    <!-- <img alt="logo" src="{{image2}}" 
+                    style="width: 100%"/> -->
+                    <p-button (click)="volver($event)" icon="pi pi-times" 
+                    [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+                    styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
                   </div>
                 </div>
                 
@@ -287,44 +290,53 @@ margin: 0;">
                     </ng-template>
                     <br>
                     <ng-template [ngIf]="mostrarHeadquarterProgram==true">
-                      <div class="flex">
-                        <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-  
-                        <div style="width:100%" class="pr-4">
-                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                          [options]="roles" [filter]="true"
-                          formControlName="RoleInvestigador" name="RoleInvestigador"
-    
-                              label="ROL DE INVESTIGACIÓN" 
-                            [style]="{'width':'100%','margin-bottom':'20px'}"
-                            optionvalue="id" optionLabel="name"  filterBy="name"
-                            [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
-                            <ng-template let-option pTemplate="item"  >
-                              <span >{{option.name  | titlecase}} </span>
+                      <div class="grid">
+                        <div class="col-12 sm:col-6 md:col-6">
+                          <div class="flex">
+                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+      
+                            <div style="width:100%" class="pr-4">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="roles" [filter]="true"
+                              formControlName="RoleInvestigador" name="RoleInvestigador"
+        
+                                  label="ROL DE INVESTIGACIÓN" 
+                                [style]="{'width':'100%','margin-bottom':'20px'}"
+                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
+                                <ng-template let-option pTemplate="item"  >
+                                  <span >{{option.name  | titlecase}} </span>
+                              </ng-template>
+                              </p-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 sm:col-6 md:col-6">
+                          <ng-template [ngIf]="mostrarIntegrantes==true">
+                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
+              
+                              <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
+                             class="p-button-success p-button-raised p-button-rounded mr-3 "
+                              label="Add Investigadores"></button> 
+           
+                              <!-- <button pButton type="button" (click)="addInvestigator($event)" 
+                              class="p-button-info p-button-raised p-button-rounded mr-3"
+                               label="Crear nuevo Investigador"></button>
+                               <button pButton type="button" (click)="addStudent($event)" 
+                               class="p-button-warning p-button-raised p-button-rounded"
+                                label="Crear nuevo Estudiante"></button>   -->
+                           </div>
                           </ng-template>
-                          </p-dropdown>
                         </div>
                       </div>
+           
                       <!-- <h5 style="text-align:left;">Director y/o Investigador Principal:</h5> -->
                       
                              
-                      <ng-template [ngIf]="mostrarIntegrantes==true">
-                      <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
-        
-                        <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
-                       class="p-button-success p-button-raised p-button-rounded mr-3 "
-                        label="Add Investigadores"></button> 
-     
-                        <button pButton type="button" (click)="addInvestigator($event)" 
-                        class="p-button-info p-button-raised p-button-rounded mr-3"
-                         label="Crear nuevo Investigador"></button>
-                         <button pButton type="button" (click)="addStudent($event)" 
-                         class="p-button-warning p-button-raised p-button-rounded"
-                          label="Crear nuevo Estudiante"></button>  
-                     </div>
+                      
            
                      <br>
-         
+                     <ng-template [ngIf]="mostrarIntegrantes==true">
                      <div fxLayout="row" fxLayoutGap="20px">
                        <div class="table-wrapper" >
                          <p-table [value]="algoI" *ngIf="mostrarI == true"> 
@@ -339,76 +351,43 @@ margin: 0;">
                                  <div formArrayName="InvestigatorCollaborators"> 
                                    <div *ngFor="let item of getInvestigatorCollaborator.controls; 
                                    let pointIndex=index" [formGroupName]="pointIndex">
-                                     <div class="grupo"> 
-                                      <div class="grupoinput"> 
-                                        <div class="field">
-                                          <div class="flex">
-                                            <div style="width:100%">
-                                        <span class="p-fluid">
-                                            <p-autoComplete formControlName="Usuarios" 
-                                            class=" p-inputtext-lg" 
-                                            [suggestions]="filteredCountries"
-                                            title="SELECCIONE USUARIO"
-                                             placeholder="SELECCIONE USUARIO"
-                                            (input)="llenar($event)"
-                                            (completeMethod)="filterCountry($event)" 
-                                            field="todo" [multiple]="true">
-                                            </p-autoComplete>
-                                        </span>
-                                            </div>
-                                            <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
-                                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
-                                              class="p-button-rounded p-button-danger"></button>
-         
-                                            </span>
-                                            <!-- <span class="bottomdelete" style="margin-top: 5px;">
-                                              <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
-                                              class="p-button-rounded p-button-outlined" (click)="addeJES($event)" ></button>
-                                            </span> -->
-                                          </div>
+                                   <div class="grid">
+                                     <div class="col-12 sm:col-4 md:col-4">
+                                      <div class="field ">
+                                        <label for="name"style="font-weight: bold;">ROL SELECCIONADO</label>
+                                          <div class="p-inputgroup" >
+                                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                            <input type="text" pInputText 
+                                            class="p-inputtext-lg"  name="ROL SELECCIONADO"  title="ROL SELECCIONADO"
+                                            [value]="form.value.InvestigatorCollaborators[pointIndex].RoleInvestigadorId.name" [disabled]="true">         
                                         </div>
                                       </div>
-                                         <!-- <ng-template [ngIf]="users.Docentes != []">
-                                         
-                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                         [options]="users.Docentes" [filter]="true"
-                                             formControlName="UserId" name="UserId"
-                                            label="SELECCIONE INVESTIGADOR" 
-                                           [style]="{'width':'100%','margin-bottom':'20px'}"
-                                           optionvalue="UserId" optionLabel="fullName" filterBy="fullName"
-                                           [required]="true" placeholder="SELECCIONE INVESTIGADOR"  >
-                                           <ng-template let-option pTemplate="item"  >
-                                             <span >{{option.fullName  | titlecase}} -
-                                               CC: {{option.identification }}  Rol : {{option.rol }}
-                                               </span>
-                                         </ng-template>
-                                         </p-dropdown>
-                                        </ng-template> -->
-                                       
-                               
-                                         <!-- <div class="grupoinput1">
-                                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                         [options]="roles" [filter]="true"
-                                             formControlName="RoleId" name="RoleId"
-                                            label="SELECCIONE ROL DE INVESTIGACIÓN" 
-                                           [style]="{'width':'100%','margin-bottom':'20px'}"
-                                           optionvalue="id" optionLabel="name" filterBy="name"
-                                           [required]="true" placeholder="SELECCIONE ROL DE INVESTIGACIÓN"  >
-                                           <ng-template let-option  pTemplate="item">
-                                             <span>
-                                               {{option.name  | titlecase}} 
-                                              
-                                               
-                                             </span>
-                                             
-                                         </ng-template>
-                                         </p-dropdown>
-                                       </div> -->
-                                       
-                               
-                                     
+                                     </div>
+                                     <div class="col-12 sm:col-8 md:col-8 mt-5">
+                                      <div class="flex">
+                                        <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                        <div style="width:100%">
+                                          <span class="p-fluid">
+                                              <p-autoComplete formControlName="Usuarios" 
+                                              class=" p-inputtext-lg" 
+                                              [suggestions]="filteredCountries"
+                                              title="SELECCIONE USUARIO"
+                                              placeholder="SELECCIONE USUARIO"
+                                              (input)="llenar($event)"
+                                              (completeMethod)="filterCountry($event)" 
+                                              field="todo" [multiple]="true">
+                                              </p-autoComplete>
+                                          </span>
+                                        </div>
+                                        <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
+                                          <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
+                                          class="p-button-rounded p-button-danger"></button>
+     
+                                        </span>
+                                      </div>
+                                     </div>
                                    </div>
-                                   </div>
+                                  </div>
                                  </div> 
                                </td>
                            </tr>
@@ -826,22 +805,79 @@ margin: 0;">
                               <div formArrayName="Anexos"> 
                                 <div *ngFor="let item of getAnexos.controls; 
                                 let pointIndex=index" [formGroupName]="pointIndex">
-                                  <div class="grupo"> 
-                                    <div class="custom-input-file" style="width: 100%;">
+                                  <div class="grid"> 
+                                    <div class="col-12 sm:col-10 md:col-10 lg:col-10 xl:col-10">
+                                      <ng-template [ngIf]="form.value.Anexos[pointIndex].anterior == true ">
+                                        <div class="custom-input-file " style="width: 100%;">
+                                          <input type="hidden" 
+                                          class="input-file p-inputtext-lg" 
+                                        
+                                          name="Anexos" 
+                                          placeholder="Anexo" formControlName="Anexos"
+                                          title="Anexo" (click)="onFileChange1($event,pointIndex)">
+                                          <a pInputText
+                                          class="input-file p-inputtext-lg " 
+                                          style="margin-top: -20px; width:100%" 
+                                          target="back" href="{{API_URI}}{{form.value.Anexos[pointIndex].Anexos?.url}}">
+                                          {{form.value.Anexos[pointIndex].Anexos?.name}}</a>
+                                          <span class="bottomdelete"  
+                                          style="margin-left: 20px;">
+                                            <button pButton pRipple type="button" icon="pi pi-sync"  title="Cambiar Archivo"
+                                            (click)="removeArchivoC(form.value.Anexos[pointIndex].Anexos,$event,pointIndex)"  
+                                            class="p-button-rounded p-button-warning "></button>
+          
+                                          </span>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="form.value.Anexos[pointIndex].anterior != true ">
+    
+                                          <div class="custom-input-file" style="width: 100%;">
+                                            <input type="file" 
+                                            class="input-file p-inputtext-lg" 
+                                            style="margin-bottom: 10px;" 
+                                            name="Anexos" 
+                                            placeholder="Anexo" formControlName="Anexos"
+                                            style="width: 80%;"
+                                            title="Anexo" required (change)="onFileChange1($event,pointIndex)">
+                                            <span class="bottomdelete mt-7" 
+                                            style="margin-left: 5px ;">
+                                            <button pButton pRipple type="button" icon="pi pi-sync"  title="Volver Archivo"  
+                                            *ngIf="(form.value.Anexos[pointIndex].Anexos == undefined 
+                                            || form.value.Anexos[pointIndex].Anexos == '') && form.value.Anexos[pointIndex].anterior != true "
+                                            (click)="volverArchivoC($event,pointIndex)"  
+                                            class="p-button-rounded p-button-warning "></button>
+                                              <button pButton pRipple type="button" icon="pi pi-check"   
+                                              *ngIf="form.value.Anexos[pointIndex].Anexos != '' && form.value.Anexos[pointIndex].Anexos != undefined"
+                                              class="p-button-rounded p-button-success mt-2"></button>
+            
+                                            </span>
+                                          </div>
+                  
+                                    </ng-template>
+                                    </div>
+                                    <div class="col-12 sm:col-1 md:col-1 lg:col-1 xl:col-1">
+                                    <!-- <div class="custom-input-file" style="width: 100%;">
                                       <input type="file" class="input-file p-inputtext-lg" style="margin-bottom: 10px;" 
                                       name="Anexos" 
                                       placeholder="Anexo" formControlName="Anexos" title="Anexos" required>
-                                    </div>
+                                    </div> -->
                                     
-                                  <span class="bottomdelete" style="margin-top: 5px;">
-                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removeAnexos(pointIndex,$event)"  
-                                    class="p-button-rounded p-button-danger"></button>
-                                  </span>
+                                    <span class="bottomdelete mt-4" >
+                                      <button pButton pRipple type="button" icon="pi pi-trash" 
+                                      (click)="removeAnexos(pointIndex,$event)"  
+                                      title="Eliminar Anexos"
+                                      class="p-button-rounded p-button-danger mt-3"></button>
+                                    </span>
+                                    </div>
+                                   
+
                                   
                                 </div>
                                 </div>
                               </div> 
                             </td>
+
                         </tr>
                       </ng-template>
                       </p-table>

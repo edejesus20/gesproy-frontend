@@ -25,8 +25,8 @@ export interface GroupI {
 
     InvestigatorCollaborators?:any[]
     lines?:any[]
-    knowledge_areas?:any[]
-
+    knowledge_areas?:any[] | Knowledge_areaI[]
+    GroupKnowledge_areas?:GroupKnowledge_areaI[]
     Seedbeds?:any[]
     Anexos?:any[]
     AnexosGroups?:AnexosGroupI[]
@@ -56,4 +56,5 @@ export interface GroupKnowledge_areaI {
     id?: number;
     GroupId:number;
     Knowledge_areaId:number;
+    Knowledge_area?:Knowledge_areaI
 }

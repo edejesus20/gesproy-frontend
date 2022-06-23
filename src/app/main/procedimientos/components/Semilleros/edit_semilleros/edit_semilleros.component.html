@@ -11,9 +11,9 @@
           <div style="border: 1px solid black;padding: 10px;">
   
             <div class="grid p-fluid" style="padding: 10px;">
-              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
                 <img alt="logo" src="{{image}}" 
-                style="width: 100%"/>
+                style="width: 60%"/>
               </div>
   
               <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
@@ -21,9 +21,10 @@
                 <h2 style="text-align: center;">EDITAR SEMILLERO DE INVESTIGACIÓN</h2>
               </div>
   
-              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
-                <img alt="logo" src="{{image2}}" 
-                style="width: 100%"/>
+              <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
+                <p-button (click)="volver($event)" icon="pi pi-times" 
+              [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+              styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
               </div>
             </div>
             <div class="bordep">

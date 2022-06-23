@@ -33,11 +33,13 @@ export interface LineProgramGroupI {
    LineProgramId:number;
    GroupId:number;
    LineProgram?:LineProgramI
+   LineProgramGroupTeachers?:LineProgramGroupTeacherI[]
 }
 export interface LineProgramGroupTeacherI {
    id?: number;
    LineProgramGroupId:number;
    TeacherId:number;
    Teacher?:TeacherI
+   RoleInvestigationId?:number;
    LineProgramGroup?:LineProgramGroupI
 }

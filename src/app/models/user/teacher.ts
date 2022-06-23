@@ -48,6 +48,7 @@ export interface AnexosTrainingTeacherI {
     Anexo?:AnexosI
 }
 export interface AnexosI {
+    id?:number
     name: string;
     url: string;
 }
