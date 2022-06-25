@@ -285,18 +285,43 @@ ArchivosEliminados:any[] =[]
 
   }
   filterCountry(event:Event,filterValue?:string){
-    if(filterValue != undefined){
-      let filtered : any[] = [];
-      let query = filterValue;
-  
-      for(let i = 0; i < this.users.length; i++) {
-          let country = this.users[i];
-          if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-              filtered.push(country);
+    if(this.form.value.RoleInvestigador != ''){
+      this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+      .subscribe(teachersA => {
+
+        if(teachersA.users !== undefined && teachersA.users.length > 0){
+          this.users=teachersA.users
+          }else{
+            this.users=[{todo:'No hay registros'}]
           }
-      }
-      this.filteredCountries = filtered;
+          if(filterValue != undefined){
+            let filtered : any[] = [];
+            let query = filterValue;
+        
+            for(let i = 0; i < this.users.length; i++) {
+                let country = this.users[i];
+                if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                    filtered.push(country);
+                }
+            }
+            this.filteredCountries = filtered;
+          }
+          console.log(this.users)  
+          // this.mostrarIntegrantes= true
+      })
     }
+    // if(filterValue != undefined){
+    //   let filtered : any[] = [];
+    //   let query = filterValue;
+  
+    //   for(let i = 0; i < this.users.length; i++) {
+    //       let country = this.users[i];
+    //       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+    //           filtered.push(country);
+    //       }
+    //   }
+    //   this.filteredCountries = filtered;
+    // }
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
   
 
@@ -368,7 +393,7 @@ ArchivosEliminados:any[] =[]
     this.TeacherId = 0
     this.CategoryGroupId=0
     this.ngOnInit()
-   this. FilesAnexos =[]
+   this.FilesAnexos =[]
 
 this.ArchivosEliminados=[]
 this.vaciar()
@@ -388,7 +413,13 @@ private vaciar(){
   this.form.controls['name'].setValue('')
   this.form.controls['Facultad'].setValue('')
   this.form.controls['HeadquarterProgramId'].setValue('')
-  this.form.controls['RoleInvestigador'].setValue('')
+  this.mostrarIntegrantes= false
+  this.mostrarI=false
+  // for (const key of this.roles) {
+  //   if(key.id == 1){
+  //     this.form.controls['RoleInvestigador'].setValue(key)
+  //   }
+  // }
   this.form.controls['Sector'].setValue('')
   this.form.controls['ObjetivoGeneral'].setValue('')
   this.form.controls['ObjetivosEspecificos'].setValue('')
@@ -532,129 +563,85 @@ private vaciar(){
           console.log(algo.group,'algo.grupo')
           if(algo.group?.AnexosGroups?.length != undefined
             && algo.group.AnexosGroups.length >0){
-            // console.log('algo.teacher?.TrainingTeachers')
-            for (const key of algo.group.AnexosGroups) {
-              if(key.id){
-                array1.push({
-                  GroupId:algo.group.id,
-                  AnexoId:key.AnexoId,
-                  GroupAnexoId:key.id,
-                  // name:'certificado'+key.Training?.name, 
-                  file:null
-                  })
-              }
-            }
-            console.log(array1,'array')
-            // array de resolucion
-          for (let index = 0; index < array1.length; index++) {
-            const element = array1[index];
-
-            for (const key of algo.group.AnexosGroups) {
-              if(key.id == element.GroupAnexoId){
-                if(key.Anexo?.name != undefined){
-
-                }else{
-                  if(this.FilesAnexos.length > 0){
-                    for (const key1 of this.FilesAnexos) {
-                      // cont=cont + 1
-                      // console.log(key1.position + '=='+index,'position y index')
-                      if( key1.id==0 && key1.position == index){
-                        console.log(' key1.id==0 && key1.position == index')
-                        array1[index].file=key1.file
-                      }
-                      // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
-                      if(key1.id == parseInt(array1[index].GroupAnexoId)){
-
-                        console.log(' key1.id == array[index].AnexoId')
-                        array1[index].file=key1.file
-                      }
-                    
-                  }
-                  }
+              for (const key of algo.group.AnexosGroups) {
+                if(key.id){
+                  array1.push({
+                    GroupId:algo.group.id,
+                    AnexoId:key.AnexoId,
+                    GroupAnexoId:key.id,
+                    file:null
+                    })
                 }
               }
-          }
-            }
+              console.log(array1,'array')
+              for (let index = 0; index < array1.length; index++) {
+                const element = array1[index];
+
+                for (const key of algo.group.AnexosGroups) {
+                  if(key.id == element.GroupAnexoId){
+                    if(key.Anexo?.name != undefined){
+
+                    }else{
+                      if(this.FilesAnexos.length > 0){
+                        for (const key1 of this.FilesAnexos) {
+                          if( key1.id==0 && key1.position == index){
+                            console.log(' key1.id==0 && key1.position == index')
+                            array1[index].file=key1.file
+                          }
+                          // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
+                          if(key1.id == parseInt(array1[index].GroupAnexoId)){
+
+                            console.log(' key1.id == array[index].AnexoId')
+                            array1[index].file=key1.file
+                          }
+                        }
+                      }
+                    }
+                    }
+                  }
+                }
  
 
-        }else{
-          // array1.push({
-          //   GroupId:algo.group.id,
-          //   AnexoId:'',
-          //   GroupAnexoId:'',
-          //   // name:'certificado'+key.Training?.name, 
-          //   file:null
-          //   })
-          if(this.FilesAnexos.length > 0){
-            let cont=0
-            for (const key of this.FilesAnexos) {
-              if(key.file != null){
-                this.groupService.Anexos(algo.group.id.toString(),'','', key.file).subscribe(result=>{
-                    cont=cont + 1
-                    if(cont == this.FilesAnexos.length){
-                      Bandera=true
-                      if(Bandera==true){
-                        var date = new Date('2020-01-01 00:00:03');
-                        function padLeft(n:any){ 
-                          return n ="00".substring(0, "00".length - n.length) + n;
-                        }
-                        var interval = setInterval(() => {
-                        var minutes = padLeft(date.getMinutes() + "");
-                        var seconds = padLeft(date.getSeconds() + "");
-                        // console.log(minutes, seconds);
-                        if( seconds == '03') {
-                        this.messageService.add({severity:'success', summary: 'Success', 
-                        detail: 'Registro de Grupo Creado con exito'});
-                        }
-                        date = new Date(date.getTime() - 1000);
-                        if( minutes == '00' && seconds == '01' ) {
-                          this.bandera=false
-                          this.volver()
-                          // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
-                          clearInterval(interval); 
-                        }
-                  }, 1000);
+          }else{
+            if(this.FilesAnexos.length > 0){
+              let cont=0
+              for (const key of this.FilesAnexos) {
+                if(key.file != null){
+                  this.groupService.Anexos(algo.group.id.toString(),'','', key.file).subscribe(result=>{
+                      cont=cont + 1
+                      if(cont == this.FilesAnexos.length){
+                        Bandera=true
+                        if(Bandera==true){
+                          var date = new Date('2020-01-01 00:00:03');
+                          function padLeft(n:any){ 
+                            return n ="00".substring(0, "00".length - n.length) + n;
+                          }
+                          var interval = setInterval(() => {
+                          var minutes = padLeft(date.getMinutes() + "");
+                          var seconds = padLeft(date.getSeconds() + "");
+                          // console.log(minutes, seconds);
+                          if( seconds == '03') {
+                          this.messageService.add({severity:'success', summary: 'Success', 
+                          detail: 'Registro de Grupo Creado con exito'});
+                          }
+                          date = new Date(date.getTime() - 1000);
+                          if( minutes == '00' && seconds == '01' ) {
+                            this.bandera=false
+                            this.volver()
+                            // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
+                            clearInterval(interval); 
+                          }
+                    }, 1000);
+                  }
+                      }
+                    
+                  },error => console.error(error))
+                }else{
+                  Bandera=true
                 }
-                    }
-                  
-                },error => console.error(error))
-              }else{
-                Bandera=true
               }
             }
-          }
         }
-        // console.log(Bandera,'aqui-Bandera')
-
-         // enviar archivos de resolusion
-        //  if(this.FilesAnexos.length > 0 && array1.length > 0){
-        //   console.log(array1,'arrayAnexos')
-        //   let cont=0
-        // for (let key1 of array1) {
-        //       if(key1.file != null){
-
-        //       this.groupService.Anexos(key1.GroupId.toString(),key1.AnexoId.toString(),
-        //       key1.GroupAnexoId.toString(),
-        //       key1.file).subscribe(result=>{
-        //           cont=cont + 1
-        //           if(cont == this.FilesAnexos.length){
-        //             Bandera=true
-            
-        //           }
-                
-        //       },error => console.error(error))
-        //     }else{
-        //       Bandera=true
-        //     }
-        //   }
-        //   Bandera=true
-        //   // aqui enviar datos
-        // }else{
-
-        //   Bandera=true
-          
-        //   } 
-
           if(Bandera==true){
                   var date = new Date('2020-01-01 00:00:03');
                   function padLeft(n:any){ 

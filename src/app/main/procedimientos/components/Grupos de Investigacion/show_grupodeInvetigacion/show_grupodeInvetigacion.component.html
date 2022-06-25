@@ -73,7 +73,7 @@
           <!-- <td>{{item.CategoryGroup.name }}</td> -->
           
           <!-- <td>{{item.resolution }}</td> -->
-          <td>{{item.Teacher.User.fullName }}</td>
+          <td>{{item.Teacher.User.fullName | titlecase}}</td>
           
           <!-- <td style="max-width:400px" >
             <a pButton 
@@ -84,7 +84,7 @@
             <td >
               <span *ngFor="let i of item.GroupKnowledge_areas">
                 <span style="display: flex;">
-                  * {{i.Knowledge_area.name}} 
+                  * {{i.Knowledge_area.name | titlecase}} 
                 </span>
               </span>
             </td>

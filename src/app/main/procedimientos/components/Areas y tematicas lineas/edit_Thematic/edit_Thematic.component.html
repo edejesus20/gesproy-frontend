@@ -23,7 +23,7 @@
           </div>
           <div >
             <!-- <div class="p-inputgroup" style="margin-bottom: 10px;"> -->
-              <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+              <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar2 == false">
                 <button pButton type="button" (click)="addRoles($event)" 
                 class="p-button-warning p-button-raised p-button-rounded"
                  label="Add Ejes Temáticos"></button>
@@ -98,6 +98,13 @@
                             </div> 
                           </td>
                       </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary" >
+                      <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                        <button pButton type="button" (click)="addRoles($event)" 
+                        class="p-button-warning p-button-raised p-button-rounded"
+                         label="Add Ejes Temáticos"></button>
+                      </div>
                     </ng-template>
                     </p-table>
                   </div>

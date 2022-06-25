@@ -73,11 +73,13 @@
           <ng-template [ngIf]="mostrar!=3">
 
           <th style="min-width:150px" pSortableColumn="Sedes">SEDES<p-sortIcon field="Sedes"></p-sortIcon></th>
-          <th pSortableColumn="Administrativos">ADMINISTRATIVOS<p-sortIcon field="Administrativos"></p-sortIcon></th>
-          </ng-template>
+          <th pSortableColumn="LinePrograms">LINEAS<p-sortIcon field="LinePrograms"></p-sortIcon></th>
+ 
+        </ng-template>
           <th pSortableColumn="Faculty.name">FACULTAD<p-sortIcon field="Faculty.name"></p-sortIcon></th>
 
           <th pSortableColumn="Category.name">CATEGORIA<p-sortIcon field="Category.name"></p-sortIcon></th>
+
           <!-- <th pSortableColumn="createdAt">FECHACREAT<p-sortIcon field="createdAt"></p-sortIcon></th> -->
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -104,9 +106,9 @@
             </span>
           </td>
           <td >
-            <span *ngFor="let i of item.HeadquarterPrograms" >
-              <span style="display: flex;" *ngIf="i.ChargeAdministrative != null">
-                * {{i.ChargeAdministrative?.Administrative?.User.fullName}}-{{i.ChargeAdministrative?.Charge.name}}  
+            <span *ngFor="let i of item.LinePrograms" >
+              <span style="display: flex;" >
+                * {{i.Line.name | titlecase}}
               </span>
             </span>
           </td>

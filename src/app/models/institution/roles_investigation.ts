@@ -18,7 +18,8 @@ export interface GroupInvestigatorCollaboratorI {
     RoleInvestigationId:number;
     InvestigatorCollaboratorId:number;
     InvestigatorCollaborator?:InvestigatorCollaboratorI
-    Group?:GroupI
+    Group?:GroupI,
+    status?:boolean
 }
 
 export interface GroupStudentI {
@@ -28,5 +29,7 @@ export interface GroupStudentI {
     StudentId:number;
     Student?:StudentI
     Group?:GroupI
+    status?:boolean
+
 
 }

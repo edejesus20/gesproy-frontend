@@ -113,6 +113,7 @@ export class Create_linesComponent implements OnInit {
     
 }
   thematic() {
+    this.thematics=[]
     this.thematicService.getList().subscribe(list => {
       for (let key of list.thematics) {
         if(key.Thematic_axis_Thematics !== undefined && key.Thematic_axis_Thematics.length > 0){
@@ -282,10 +283,10 @@ export class Create_linesComponent implements OnInit {
     e.preventDefault()
 
     this.ref = this.dialogService.open(Create_ThematicComponent, {
-      width: '50%',
-      height: '50%',
-      contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 10000,
+      width: '70%',
+      // height: '55%',
+      contentStyle:{'padding':'10px'} ,closable:true, closeOnEscape:false, showHeader:false, 
+      baseZIndex: 8000,
       data: {
         id: '1'
     },

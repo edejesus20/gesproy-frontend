@@ -303,7 +303,7 @@
                         </div>
                         <div class="col-12 sm:col-6 md:col-6">
                           <ng-template [ngIf]="mostrarIntegrantes==true">
-                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
+                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4" *ngIf="mostrarI == false">
               
                               <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
                              class="p-button-success p-button-raised p-button-rounded mr-3 "
@@ -382,6 +382,13 @@
                                </td>
                            </tr>
                          </ng-template>
+                         <ng-template pTemplate="summary" >
+                          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                            <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
+                             class="p-button-success p-button-raised p-button-rounded mr-3 "
+                              label="Add Investigadores"></button> 
+                          </div>
+                        </ng-template>
                          </p-table>
                        </div>
                      </div>
@@ -520,7 +527,7 @@
                       Lineas asociadas al Programa
                     </ng-template>
                     <ng-template [ngIf]="mostrarHeadquarterProgram==true">
-                      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar == false">
       
                         <button pButton type="button" 
                         (click)="addlines($event)" style="margin-right: 15px;" 
@@ -586,6 +593,14 @@
                                </td>
                            </tr>
                          </ng-template>
+                         <ng-template pTemplate="summary" >
+                          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                            <button pButton type="button" 
+                        (click)="addlines($event)" style="margin-right: 15px;" 
+                       class="p-button-success p-button-raised p-button-rounded"
+                        label="Add Lineas"></button> 
+                          </div>
+                        </ng-template>
                          </p-table>
                        </div>
                      </div>
@@ -668,7 +683,7 @@
                     <ng-template pTemplate="header">
                       Areas del Conocimiento
                     </ng-template>
-                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center"  *ngIf="mostrar3 == false">
                   <button pButton type="button" (click)="addknowledge_areas($event)" 
                   class="p-button-success p-button-raised p-button-rounded"
                    label="Add AREAS "></button>
@@ -733,6 +748,13 @@
                             </td>
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="summary" >
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addknowledge_areas($event)" 
+                  class="p-button-success p-button-raised p-button-rounded"
+                   label="Add AREAS "></button>
+                        </div>
+                      </ng-template>
                       </p-table>
                     </div>
                   </div>
@@ -774,7 +796,7 @@
   <!-- anexos -->
                 <div style="border: 1px solid black;padding: 10px">
                   <h4 style="text-align:left;">11. ANEXOS:</h4>
-                  <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                  <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar2 == false">
                     <button pButton type="button" (click)="addAnexos($event)" 
                     class="p-button-warning p-button-raised p-button-rounded"
                      label="Add Anexos"></button>  
@@ -813,6 +835,13 @@
                               </div> 
                             </td>
                         </tr>
+                      </ng-template>
+                      <ng-template pTemplate="summary" >
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addAnexos($event)" 
+                          class="p-button-warning p-button-raised p-button-rounded"
+                           label="Add Anexos"></button>  
+                        </div>
                       </ng-template>
                       </p-table>
                     </div>

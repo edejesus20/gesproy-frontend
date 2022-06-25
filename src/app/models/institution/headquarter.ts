@@ -36,6 +36,8 @@ export interface HeadquarterProgramI {
    // Administrative?:AdministrativeI
    ChargeAdministratives?:ChargeAdministrativeI[]
    ChargeAdministrative?:ChargeAdministrativeI
+   status?:boolean
+
 }
 export interface HeadquarterProgramTeacherI {
    id?: number;

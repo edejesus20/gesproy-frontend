@@ -428,26 +428,26 @@ export class EditarTeacherComponent implements OnInit {
                   }
                 }
             }
-          }
+              }
               // enviar archivos de resolusion
               if(this.FilesResolusiones.length > 0 && arrayResolusion.length > 0){
                 console.log(arrayResolusion,'arrayResolusion')
                 let cont=0
-              for (let key1 of arrayResolusion) {
-                    if(key1.file != null){
+                for (let key1 of arrayResolusion) {
+                      if(key1.file != null){
 
-                    this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
-                        cont=cont + 1
-                        if(cont == this.FilesResolusiones.length){
-                          Bandera=true
-                  
-                        }
-                      
-                    },error => console.error(error))
-                  }else{
-                    Bandera=true
+                      this.teacherService.ResolusionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                          cont=cont + 1
+                          if(cont == this.FilesResolusiones.length){
+                            Bandera=true
+                    
+                          }
+                        
+                      },error => console.error(error))
+                    }else{
+                      Bandera=true
+                    }
                   }
-                }
                 Bandera=true
                 // aqui enviar datos
               }else{
@@ -457,27 +457,25 @@ export class EditarTeacherComponent implements OnInit {
             if(this.FilesFormaciones.length > 0 && arrayCertificado.length > 0){
               console.log(arrayCertificado,'array')
               let cont=0
-            for (let key1 of arrayCertificado) {
-                  if(key1.file != null){
+              for (let key1 of arrayCertificado) {
+                    if(key1.file != null){
 
-                  this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
-                      cont=cont + 1
-                      if(cont == this.FilesFormaciones.length){
-                        Bandera=true
-                
-                      }
-                    
-                  },error => console.error(error))
-                }else{
-                  Bandera=true
+                    this.teacherService.FormacionDocente(key1.UserId.toString(),key1.TrainingTeacherId.toString(),key1.name.toString(),key1.file).subscribe(result=>{
+                        cont=cont + 1
+                        if(cont == this.FilesFormaciones.length){
+                          Bandera=true
+                  
+                        }
+                      
+                    },error => console.error(error))
+                  }else{
+                    Bandera=true
+                  }
                 }
-              }
               Bandera=true
               // aqui enviar datos
             }else{
-
               Bandera=true
-              
             }      
             
 
@@ -530,8 +528,6 @@ export class EditarTeacherComponent implements OnInit {
               // console.log(array1,'array1')
               if(this.FilesExperinecia.length > 0 && array1.length > 0){
               let cont1=0
-                // console.log('aqui')
-                
                 for (let clave1 of array1) {
                   if(clave1.file != null){
                                                 // console.log(clave1.UserId.toString(),clave1.TrainingTeacherId.toString(),
@@ -553,33 +549,11 @@ export class EditarTeacherComponent implements OnInit {
                 
                 }
               Bandera=true
-
-
               }else{
                 Bandera=true
               }
               // alerta de exito
               if(Bandera==true){
-                // var date = new Date('2020-01-01 00:00:03');
-                //       function padLeft(n:any){ 
-                //         return n ="00".substring(0, "00".length - n.length) + n;
-                //       }
-                //       var interval = setInterval(() => {
-                //       var minutes = padLeft(date.getMinutes() + "");
-                //       var seconds = padLeft(date.getSeconds() + "");
-                //       if( seconds == '03') {
-                //       this.messageService.add({severity:'success', summary: 'Success', 
-                //       detail: 'Registro de Docente Actualizado con exito'});
-                //       }
-                //       date = new Date(date.getTime() - 1000);
-                //       if( minutes == '00' && seconds == '01' ) {
-                //         this.ref.close(algo);
-                //         clearInterval(interval); 
-                //       }
-                // }, 1000);
-                // if(this.mostrarDialogo== true){
-                //     this.ref.close(algo);
-                //   }else{
                         var date = new Date('2020-01-01 00:00:03');
                           function padLeft(n:any){ 
                             return n ="00".substring(0, "00".length - n.length) + n;
@@ -597,11 +571,9 @@ export class EditarTeacherComponent implements OnInit {
                             this.ngOnInit()
                             this.volver(new Event(''))
                             this.bandera=false
-                            // this.router.navigateByUrl('/usuarios/Teacher');
                             clearInterval(interval); 
                           }
                     }, 1000);
-                  // }
               }
               
             }

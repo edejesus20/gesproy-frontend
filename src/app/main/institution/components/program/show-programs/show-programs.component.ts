@@ -106,7 +106,9 @@ Buscar(event: Event, dt1:any){
               Faculty:key.Faculty,
               Category:key.Category,
               createdAt:key.createdAt,
-              Headquarters:key.Headquarters
+              Headquarters:key.Headquarters,
+              LinePrograms:key.LinePrograms
+              
             }
           )
         }

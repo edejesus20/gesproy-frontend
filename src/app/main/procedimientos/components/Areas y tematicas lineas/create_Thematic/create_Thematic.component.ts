@@ -193,9 +193,9 @@ addTematica(e:Event){
   e.preventDefault()
 
   this.ref1 = this.dialogService.open(Create_Thematic_axisComponent, {
-    width: '35%',
-    height: '50%',
-    contentStyle:{'overflow-y': 'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+    width: '50%',
+    // height: '55%',
+    contentStyle:{'padding':'10px'},closable:true, closeOnEscape:false, showHeader:false, 
     baseZIndex: 10000,
     data: {
       id: '1'

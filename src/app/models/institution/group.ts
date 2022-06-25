@@ -2,6 +2,7 @@ import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
 import { LineProgramGroupI, ProgramI } from "./program";
+import { GroupInvestigatorCollaboratorI, GroupStudentI } from "./roles_investigation";
 import { SeedbedI } from "./seedbed";
 
 export interface GroupI {
@@ -35,7 +36,9 @@ export interface GroupI {
     CategoryGroup?:CategoryGroupI
     Teacher?:TeacherI
     HeadquarterProgram?:HeadquarterProgramI
-    Program?:ProgramI
+    Program?:ProgramI,
+    GroupInvestigatorCollaborators?:GroupInvestigatorCollaboratorI[],
+    GroupStudents?:GroupStudentI[]
     
     // LineProgramGroups?
 }
@@ -44,6 +47,8 @@ export interface AnexosGroupI {
     GroupId:number;
     AnexoId:number;
     Anexo?:AnexosI
+    status?:boolean
+
 }
 
 export interface Knowledge_areaI{
@@ -57,4 +62,5 @@ export interface GroupKnowledge_areaI {
     GroupId:number;
     Knowledge_areaId:number;
     Knowledge_area?:Knowledge_areaI
+    status?:boolean
 }

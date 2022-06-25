@@ -154,7 +154,7 @@
             Línea de investigación y Temáticas Asociadas al semillero:
           </ng-template>
           <ng-template [ngIf]="mostrarlineasProgram==true">
-            <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+            <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar == false">
             
               <button pButton type="button" 
               (click)="addlines($event)" style="margin-right: 15px;" 
@@ -218,6 +218,14 @@
                      </td>
                  </tr>
                </ng-template>
+               <ng-template pTemplate="summary" >
+                <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" 
+                  (click)="addlines($event)" style="margin-right: 15px;" 
+                 class="p-button-success p-button-raised p-button-rounded"
+                  label="Add Lineas"></button>
+                </div>
+              </ng-template>
                </p-table>
              </div>
            </div>
@@ -357,7 +365,7 @@
           <div style="border: 1px solid black;">
             <h3 style="text-align:center;">3. IDENTIFICACIÓN DE LOS INTEGRANTES DEL SEMILLERO</h3>
             <br>
-            <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+            <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar1 == false">
             
               <button pButton type="button" 
               (click)="addStudents($event)" style="margin-right: 15px;" 
@@ -460,6 +468,14 @@
                      </td>
                  </tr>
                </ng-template>
+               <ng-template pTemplate="summary" >
+                <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                  <button pButton type="button" 
+                  (click)="addStudents($event)" style="margin-right: 15px;" 
+                 class="p-button-success p-button-raised p-button-rounded"
+                  label="Add Estudiantes"></button> 
+                </div>
+              </ng-template>
                </p-table>
              </div>
            </div>

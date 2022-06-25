@@ -17,6 +17,7 @@ export interface ProgramI {
    Lines?:LineI[]
    LinePrograms?:LineProgramI[]
    HeadquarterPrograms?:HeadquarterProgramI[]
+   status?:boolean
 
 }
 
@@ -26,6 +27,8 @@ export interface LineProgramI {
    ProgramId:number;
    Program?:ProgramI
    Line?: LineI
+   status?:boolean
+
 }
 
 export interface LineProgramGroupI {
@@ -34,6 +37,8 @@ export interface LineProgramGroupI {
    GroupId:number;
    LineProgram?:LineProgramI
    LineProgramGroupTeachers?:LineProgramGroupTeacherI[]
+   status?:boolean
+
 }
 export interface LineProgramGroupTeacherI {
    id?: number;
@@ -42,4 +47,6 @@ export interface LineProgramGroupTeacherI {
    Teacher?:TeacherI
    RoleInvestigationId?:number;
    LineProgramGroup?:LineProgramGroupI
+   status?:boolean
+
 }

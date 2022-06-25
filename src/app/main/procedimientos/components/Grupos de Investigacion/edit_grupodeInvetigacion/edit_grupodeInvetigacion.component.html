@@ -313,7 +313,7 @@ margin: 0;">
                         </div>
                         <div class="col-12 sm:col-6 md:col-6">
                           <ng-template [ngIf]="mostrarIntegrantes==true">
-                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4">
+                            <div fxLayout="row" fxLayoutGap="20px"  class="pl-4 pr-4" *ngIf="mostrarI == false">
               
                               <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
                              class="p-button-success p-button-raised p-button-rounded mr-3 "
@@ -365,9 +365,12 @@ margin: 0;">
                                      </div>
                                      <div class="col-12 sm:col-8 md:col-8 mt-5">
                                       <div class="flex">
-                                        <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
-                                        <div style="width:100%">
-                                          <span class="p-fluid">
+                                        
+                                            <ng-template [ngIf]="form.value.InvestigatorCollaborators[pointIndex].id == 0  ">
+                                              <span class="p-inputgroup-addon" 
+                                              style="margin-top:-1px; color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                              <div style="width:100%">
+                                                <span class="p-fluid">
                                               <p-autoComplete formControlName="Usuarios" 
                                               class=" p-inputtext-lg" 
                                               [suggestions]="filteredCountries"
@@ -377,8 +380,32 @@ margin: 0;">
                                               (completeMethod)="filterCountry($event)" 
                                               field="todo" [multiple]="true">
                                               </p-autoComplete>
+                                            </span>
+                                          </div>
+                                            </ng-template>
+                                            <ng-template [ngIf]="form.value.InvestigatorCollaborators[pointIndex].id != 0 ">
+                                              <!-- <p-autoComplete formControlName="Usuarios" 
+                                              [disabled]="true"
+                                              class=" p-inputtext-lg" 
+                                              [suggestions]="filteredCountries"
+                                              title="SELECCIONE USUARIO"
+                                              placeholder="SELECCIONE USUARIO"
+                                              (input)="llenar($event)"
+                                              (completeMethod)="filterCountry($event)" 
+                                              field="todo" [multiple]="true">
+                                              </p-autoComplete> -->
+                                              <span class="p-inputgroup-addon"  style="margin-top:-1px; 
+                                              color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                              <div style="width:100%">
+                                                <span class="p-fluid">
+                                              <input type="text" pInputText 
+                                            class="p-inputtext-lg"  name="ROL SELECCIONADO"  title="ROL SELECCIONADO"
+                                            [value]="form.value.InvestigatorCollaborators[pointIndex].Usuarios[0].todo" [disabled]="true">      
                                           </span>
-                                        </div>
+                                        </div>  
+                                          </ng-template>
+
+                                         
                                         <span class="bottomdelete" style="margin-left: 15px;margin-top: -5px;">
                                           <button pButton pRipple type="button" icon="pi pi-times" (click)="removeInvestigatorCollaborators(pointIndex,$event)"  
                                           class="p-button-rounded p-button-danger"></button>
@@ -392,6 +419,13 @@ margin: 0;">
                                </td>
                            </tr>
                          </ng-template>
+                         <ng-template pTemplate="summary" >
+                          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                            <button pButton type="button" (click)="addInvestigatorCollaborators($event)" 
+                            class="p-button-success p-button-raised p-button-rounded mr-3 "
+                             label="Add Investigadores"></button> 
+                          </div>
+                        </ng-template>
                          </p-table>
                        </div>
                      </div>
@@ -530,7 +564,7 @@ margin: 0;">
                       Lineas asociadas al Programa
                     </ng-template>
                     <ng-template [ngIf]="mostrarHeadquarterProgram==true">
-                      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                      <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar4 == false">
       
                         <button pButton type="button" 
                         (click)="addlines($event)" style="margin-right: 15px;" 
@@ -596,6 +630,14 @@ margin: 0;">
                                </td>
                            </tr>
                          </ng-template>
+                         <ng-template pTemplate="summary" >
+                          <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                            <button pButton type="button" 
+                        (click)="addlines($event)" style="margin-right: 15px;" 
+                       class="p-button-success p-button-raised p-button-rounded"
+                        label="Add Lineas"></button> 
+                          </div>
+                        </ng-template>
                          </p-table>
                        </div>
                      </div>
@@ -678,7 +720,7 @@ margin: 0;">
                     <ng-template pTemplate="header">
                       Areas del Conocimiento
                     </ng-template>
-                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar3 == false">
                   <button pButton type="button" (click)="addknowledge_areas($event)" 
                   class="p-button-success p-button-raised p-button-rounded"
                    label="Add AREAS "></button>
@@ -743,6 +785,13 @@ margin: 0;">
                             </td>
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="summary" >
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addknowledge_areas($event)" 
+                  class="p-button-success p-button-raised p-button-rounded"
+                   label="Add AREAS "></button> 
+                        </div>
+                      </ng-template>
                       </p-table>
                     </div>
                   </div>
@@ -784,7 +833,7 @@ margin: 0;">
   <!-- anexos -->
                 <div style="border: 1px solid black;padding: 10px">
                   <h4 style="text-align:left;">11. ANEXOS:</h4>
-                  <div fxLayout="row" fxLayoutGap="20px" style="text-align:center">
+                  <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar2 == false">
                     <button pButton type="button" (click)="addAnexos($event)" 
                     class="p-button-warning p-button-raised p-button-rounded"
                      label="Add Anexos"></button>  
@@ -802,12 +851,12 @@ margin: 0;">
                       <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
                         <tr [pSelectableRow]="rowData">
                             <td>
-                              <div formArrayName="Anexos"> 
+                              <div formArrayName="Anexoss"> 
                                 <div *ngFor="let item of getAnexos.controls; 
                                 let pointIndex=index" [formGroupName]="pointIndex">
                                   <div class="grid"> 
                                     <div class="col-12 sm:col-10 md:col-10 lg:col-10 xl:col-10">
-                                      <ng-template [ngIf]="form.value.Anexos[pointIndex].anterior == true ">
+                                      <ng-template [ngIf]="form.value.Anexoss[pointIndex].anterior == true ">
                                         <div class="custom-input-file " style="width: 100%;">
                                           <input type="hidden" 
                                           class="input-file p-inputtext-lg" 
@@ -818,19 +867,19 @@ margin: 0;">
                                           <a pInputText
                                           class="input-file p-inputtext-lg " 
                                           style="margin-top: -20px; width:100%" 
-                                          target="back" href="{{API_URI}}{{form.value.Anexos[pointIndex].Anexos?.url}}">
-                                          {{form.value.Anexos[pointIndex].Anexos?.name}}</a>
+                                          target="back" href="{{API_URI}}{{form.value.Anexoss[pointIndex].Anexos?.url}}">
+                                          {{form.value.Anexoss[pointIndex].Anexos?.name}}</a>
                                           <span class="bottomdelete"  
                                           style="margin-left: 20px;">
                                             <button pButton pRipple type="button" icon="pi pi-sync"  title="Cambiar Archivo"
-                                            (click)="removeArchivoC(form.value.Anexos[pointIndex].Anexos,$event,pointIndex)"  
+                                            (click)="removeArchivoC(form.value.Anexoss[pointIndex].Anexos,$event,pointIndex)"  
                                             class="p-button-rounded p-button-warning "></button>
           
                                           </span>
                                         </div>
                                     </ng-template>
 
-                                    <ng-template [ngIf]="form.value.Anexos[pointIndex].anterior != true ">
+                                    <ng-template [ngIf]="form.value.Anexoss[pointIndex].anterior != true ">
     
                                           <div class="custom-input-file" style="width: 100%;">
                                             <input type="file" 
@@ -843,12 +892,14 @@ margin: 0;">
                                             <span class="bottomdelete mt-7" 
                                             style="margin-left: 5px ;">
                                             <button pButton pRipple type="button" icon="pi pi-sync"  title="Volver Archivo"  
-                                            *ngIf="(form.value.Anexos[pointIndex].Anexos == undefined 
-                                            || form.value.Anexos[pointIndex].Anexos == '') && form.value.Anexos[pointIndex].anterior != true "
+                                            *ngIf="(form.value.Anexoss[pointIndex].Anexos == undefined 
+                                            || form.value.Anexoss[pointIndex].Anexos == '') 
+                                            && form.value.Anexoss[pointIndex].anterior != true "
                                             (click)="volverArchivoC($event,pointIndex)"  
                                             class="p-button-rounded p-button-warning "></button>
                                               <button pButton pRipple type="button" icon="pi pi-check"   
-                                              *ngIf="form.value.Anexos[pointIndex].Anexos != '' && form.value.Anexos[pointIndex].Anexos != undefined"
+                                              *ngIf="form.value.Anexoss[pointIndex].Anexos != '' 
+                                              && form.value.Anexoss[pointIndex].Anexos != undefined"
                                               class="p-button-rounded p-button-success mt-2"></button>
             
                                             </span>
@@ -880,6 +931,13 @@ margin: 0;">
 
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="summary" >
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addAnexos($event)" 
+                    class="p-button-warning p-button-raised p-button-rounded"
+                     label="Add Anexos"></button>  
+                        </div>
+                      </ng-template>
                       </p-table>
                     </div>
                   </div>
@@ -890,13 +948,18 @@ margin: 0;">
                 </div>
   
   
-                            
+          <ng-template [ngIf]="bandera == false">                
               <div fxLayout="row" class="titleCard" style="margin-top: 20px">
                 <button pButton type="submit" [disabled]="!form.valid"
                  icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
                  label="Enviar Registro" styleClass="mr-2"></button>
               <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button>
           </div>
+        </ng-template>
+        <ng-template [ngIf]="bandera == true">
+          <br>
+            <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+        </ng-template>
   
               </div>
     
