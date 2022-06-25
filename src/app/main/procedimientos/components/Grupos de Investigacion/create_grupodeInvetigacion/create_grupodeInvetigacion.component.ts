@@ -632,7 +632,7 @@ private vaciar(){
                             clearInterval(interval); 
                           }
                     }, 1000);
-                  }
+                        }
                       }
                     
                   },error => console.error(error))
@@ -641,6 +641,7 @@ private vaciar(){
                 }
               }
             }
+            Bandera=true
         }
           if(Bandera==true){
                   var date = new Date('2020-01-01 00:00:03');

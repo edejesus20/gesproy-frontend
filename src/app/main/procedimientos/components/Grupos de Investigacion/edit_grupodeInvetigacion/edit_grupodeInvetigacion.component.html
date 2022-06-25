@@ -235,12 +235,12 @@ margin: 0;">
                           <div style="width:100%">
                             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                             [options]="teachers" [filter]="true" 
-                            label="SELECCIONE EL INVESTIGADOR PRINCIPAL" 
+                            label="SELECCIONE EL LIDER INVESTIGADOR" 
                             formControlName="TeacherId" name="TeacherId"
                               [style]="{'width':'100%'}" 
                               optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
-                              [required]="true" placeholder="SELECCIONE EL INVESTIGADOR PRINCIPAL" (click)="SelectTeacher($event)"
-                              title="SELECCIONE EL INVESTIGADOR PRINCIPAL">
+                              [required]="true" placeholder="SELECCIONE EL LIDER INVESTIGADOR" (click)="SelectTeacher($event)"
+                              title="SELECCIONE EL LIDER INVESTIGADOR">
                               <ng-template let-option pTemplate="item" >
                                 <span >{{option.User.fullName  | titlecase}} -
                                 cc: {{option.User.Person.identification }} 

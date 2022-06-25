@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
   <ng-template [ngIf]="mostrarDialogo == false">
-  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '30vw'}" 
+  <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '90%','height': '45vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
 
   [closable]="false" [closeOnEscape]="false" 
@@ -307,6 +307,9 @@
               </div>
         </div>
       </div>
+      <br>
+<br>
+<br>
     </ng-template>
 
     <ng-template [ngIf]="mostrarUser == true">
@@ -474,11 +477,13 @@
     </ng-template>
     
 </div>
-<br>
-<br>
+
+
 
 <ng-template [ngIf]="bandera == false">     
-  <div fxLayout="row" class="titleCard"style="margin-top: -10px;">
+  <br>
+<br>
+  <div fxLayout="row" class="titleCard"style="margin-top: 40px;">
           <!-- <p-button (click)="cancelar()" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
 
           <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
