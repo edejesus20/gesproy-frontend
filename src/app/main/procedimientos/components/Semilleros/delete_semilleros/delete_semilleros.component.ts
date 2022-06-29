@@ -69,7 +69,8 @@ private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
 private GroupId:number = 0
 public bandera:boolean=false
-
+public construccion:string='assets/construccion.jpg'
+public Valorconstruccion:boolean=false
   constructor(
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,
@@ -84,6 +85,8 @@ public bandera:boolean=false
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
+    this.Valorconstruccion=true
+
     this.buildForm();
     this.getAllteachers()
     this.geFacultad() 

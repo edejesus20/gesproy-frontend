@@ -1,3 +1,17 @@
+
+<ng-template [ngIf]="Valorconstruccion == true">
+
+  <div class="card" 
+  style="justify-content:center;justify-items: center;align-items: center;width: 67%;height: 70%;">
+    <img src="{{construccion}}"  pRipple 
+              [style]="{'width':'90%','height':'70%'}"
+              styleClass="imgLogo4 p-button-rounded p-button-outlined" 
+              size="xlarge" shape="circle">
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="Valorconstruccion == false">
+
 <ng-template [ngIf]="tabla == true">
   <app-show_semilleros [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show_semilleros>
 </ng-template>
@@ -524,4 +538,6 @@
   <p-toast></p-toast>
   
   <p-confirmPopup></p-confirmPopup>
+</ng-template>
+
 </ng-template>

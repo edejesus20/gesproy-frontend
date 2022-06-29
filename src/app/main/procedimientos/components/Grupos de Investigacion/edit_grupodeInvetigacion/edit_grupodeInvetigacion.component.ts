@@ -132,7 +132,8 @@ public bandera:boolean=false
     ) { }
   
     ngOnInit() {
-    this.Valorconstruccion=false
+      this.Valorconstruccion=true
+
 
       this.primengConfig.ripple = true;
       this.buildForm();

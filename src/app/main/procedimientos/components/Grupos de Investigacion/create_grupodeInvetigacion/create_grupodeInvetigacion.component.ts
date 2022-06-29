@@ -157,7 +157,7 @@ ArchivosEliminados:any[] =[]
     public categoryGroupService:CategoryGroupService,
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
     // this.buildForm();
     // this.getTeachers();
     this.geFacultad();

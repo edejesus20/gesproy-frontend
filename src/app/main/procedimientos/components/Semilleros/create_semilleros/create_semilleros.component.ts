@@ -93,7 +93,8 @@ private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
 private GroupId:number = 0
 public ref1:any;
-
+public construccion:string='assets/construccion.jpg'
+public Valorconstruccion:boolean=false
   constructor(
     public dialogService: DialogService,
     private seedbedService:SeedbedService,
@@ -108,6 +109,7 @@ public ref1:any;
     private studentService:StudentService
     ) { }
   ngOnInit(): void {
+    this.Valorconstruccion=true
     // this.buildForm();
     // this.getAllteachers()
     this.geFacultad() 
