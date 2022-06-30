@@ -526,7 +526,7 @@
                     <ng-template pTemplate="header">
                       Lineas asociadas al Programa
                     </ng-template>
-                    <ng-template [ngIf]="mostrarHeadquarterProgram==true">
+                   
                       <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar == false">
       
                         <button pButton type="button" 
@@ -566,7 +566,7 @@
                                               filterBy="name"
                                               [required]="true" placeholder="SELECCIONE LINEA"  >
                                               <ng-template let-option pTemplate="item"  >
-                                                <span >{{option.name  | titlecase}}
+                                                <span >{{option.name  | titlecase}} - {{option.resolution  | titlecase}}
                                                   </span>
                                             </ng-template>
                                             </p-dropdown>
@@ -605,7 +605,7 @@
                        </div>
                      </div>
   
-                    </ng-template>
+                   
                     </p-panel>
                 </div>
                 <!-- semillero -->

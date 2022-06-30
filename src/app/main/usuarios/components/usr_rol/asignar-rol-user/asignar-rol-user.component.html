@@ -1,3 +1,15 @@
+<ng-template [ngIf]="Valorconstruccion == true">
+
+  <div class="card" 
+  style="justify-content:center;justify-items: center;align-items: center;width: 67%;height: 70%;">
+    <img src="{{construccion}}"  pRipple 
+              [style]="{'width':'90%','height':'70%'}"
+              styleClass="imgLogo4 p-button-rounded p-button-outlined" 
+              size="xlarge" shape="circle">
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="Valorconstruccion == false">
 <form [formGroup]="form" novalidate  >
   <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '90vw','height': '70vw'}" 
   [contentStyle]="{'overflow-y': 'auto'}"
@@ -186,3 +198,5 @@
     </div>
   </ng-template>
 </p-dialog>
+
+</ng-template>

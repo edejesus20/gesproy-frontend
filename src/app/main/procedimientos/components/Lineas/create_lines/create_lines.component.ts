@@ -285,8 +285,9 @@ export class Create_linesComponent implements OnInit {
     this.ref = this.dialogService.open(Create_ThematicComponent, {
       width: '70%',
       // height: '55%',
-      contentStyle:{'padding':'10px'} ,closable:true, closeOnEscape:false, showHeader:false, 
-      baseZIndex: 8000,
+      contentStyle:{'width':'auto'} ,closable:true, closeOnEscape:false, showHeader:false, 
+      // baseZIndex: 1000,
+      autoZIndex:true,
       data: {
         id: '1'
     },

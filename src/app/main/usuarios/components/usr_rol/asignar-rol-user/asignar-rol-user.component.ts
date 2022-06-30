@@ -38,6 +38,8 @@ export class AsignarRolUserComponent implements OnInit {
   public form:FormGroup=this.formBuilder.group({
     Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
   });
+  public construccion:string='assets/construccion.jpg'
+public Valorconstruccion:boolean=false
   constructor(
     private formBuilder: FormBuilder,
     private rolesService: RolesService,
@@ -48,6 +50,8 @@ export class AsignarRolUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.Valorconstruccion=true
+
     // this.form=this.formBuilder.group({
     //   Roles: this.formBuilder.array([this.formBuilder.group({RoleId:['', [Validators.required]]})]),
     // });

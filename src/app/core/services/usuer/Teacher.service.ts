@@ -152,6 +152,15 @@ export class TeacherService {
     }),
     catchError(this.handleError))
 }
+// cambios nuevos
+getDocentesGruposDisponibles(): Observable<{teachers:any[]}> {
+  return this.http
+    .get<{teachers:any[]}>(this.API_URI + '/api/DocentesGruposDisponibles/')
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
 
  // Get single student data by ID
  getItem(id: number): Observable<{teacher:TeacherI}> {

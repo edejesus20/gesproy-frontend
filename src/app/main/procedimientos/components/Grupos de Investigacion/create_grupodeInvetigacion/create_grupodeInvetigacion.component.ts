@@ -26,6 +26,7 @@ import { Create_InvestigatorCollaboratorComponent } from 'src/app/main/usuarios/
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
 import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -151,13 +152,14 @@ ArchivosEliminados:any[] =[]
     private facultyService: FacultyService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private lineService: LineService,
     private messageService:MessageService,
     private userService: UserService,
     public dialogService: DialogService,
     public categoryGroupService:CategoryGroupService,
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.Valorconstruccion=false
     // this.buildForm();
     // this.getTeachers();
     this.geFacultad();
@@ -165,7 +167,16 @@ ArchivosEliminados:any[] =[]
     this.getRoles()
     this.getCateghoria()
     this.getKnowledge_area()
+    this.getLines()
     // console.log('aqui')
+  }
+  getLines() {
+    this.lineService.getList().subscribe(categoryGroups=>{
+      for (let key of categoryGroups.lines) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
+      this.lines=categoryGroups.lines
+    });
   }
   getKnowledge_area() {
     this.knowledge_areaService.getList().subscribe(categoryGroups=>{
@@ -194,6 +205,8 @@ ArchivosEliminados:any[] =[]
         control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
         this.mostrarI=true
       }
+    // console.log(this.form.value.RoleInvestigador,'this.form.value.RoleInvestigador')
+
       this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
       .subscribe(teachersA => {
 
@@ -255,27 +268,48 @@ ArchivosEliminados:any[] =[]
 
     this.teachers=[]
     if(this.form.value.HeadquarterProgramId != ''){
-      this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
-      //  console.log(rolesFromApi.semilleros)
+      // this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
+      // //  console.log(rolesFromApi.semilleros)
       
-       this.teachers=[]
-      this.lines=rolesFromApi.lines
-       this.seedbeds= rolesFromApi.semilleros
-       for (const key of rolesFromApi.teachers) {
-         if(key.TeacherId){
-          this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
-           if(algo1.teacher.User?.Person)
-            algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
-            this.teachers.push(algo1.teacher)
-          })
+      //  this.teachers=[]
+      // this.lines=rolesFromApi.lines
+      //  this.seedbeds= rolesFromApi.semilleros
+      //  for (const key of rolesFromApi.teachers) {
+      //    if(key.TeacherId){
+      //     this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+      //      if(algo1.teacher.User?.Person)
+      //       algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+      //       this.teachers.push(algo1.teacher)
+      //     })
+      //    }
+         
+      //  }
+       
+       
+      //   this.mostrarHeadquarterProgram=true
+
+      // })
+      this.teacherService.getDocentesGruposDisponibles().subscribe((rolesFromApi) => {
+         console.log(rolesFromApi.teachers)
+        
+         this.teachers=[]
+        // this.lines=rolesFromApi.lines
+        //  this.seedbeds= rolesFromApi.semilleros
+         for (const key of rolesFromApi.teachers) {
+           if(key.TeacherId){
+            this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+             if(algo1.teacher.User?.Person)
+              algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+              this.teachers.push(algo1.teacher)
+            })
+           }
+           
          }
          
-       }
-       
-       
-        this.mostrarHeadquarterProgram=true
-
-      })
+         
+          this.mostrarHeadquarterProgram=true
+  
+        })
     }
   }
 
@@ -417,7 +451,7 @@ private vaciar(){
   this.mostrarI=false
   // for (const key of this.roles) {
   //   if(key.id == 1){
-  //     this.form.controls['RoleInvestigador'].setValue(key)
+      this.form.controls['RoleInvestigador'].setValue('')
   //   }
   // }
   this.form.controls['Sector'].setValue('')
@@ -588,7 +622,6 @@ private vaciar(){
                             console.log(' key1.id==0 && key1.position == index')
                             array1[index].file=key1.file
                           }
-                          // console.log(key1.id + '=='+array[index].TrainingTeacherId,'id y TrainingTeacherId')
                           if(key1.id == parseInt(array1[index].GroupAnexoId)){
 
                             console.log(' key1.id == array[index].AnexoId')
@@ -619,7 +652,6 @@ private vaciar(){
                           var interval = setInterval(() => {
                           var minutes = padLeft(date.getMinutes() + "");
                           var seconds = padLeft(date.getSeconds() + "");
-                          // console.log(minutes, seconds);
                           if( seconds == '03') {
                           this.messageService.add({severity:'success', summary: 'Success', 
                           detail: 'Registro de Grupo Creado con exito'});
@@ -628,7 +660,6 @@ private vaciar(){
                           if( minutes == '00' && seconds == '01' ) {
                             this.bandera=false
                             this.volver()
-                            // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
                             clearInterval(interval); 
                           }
                     }, 1000);
@@ -640,8 +671,9 @@ private vaciar(){
                   Bandera=true
                 }
               }
+             Bandera=true
             }
-            Bandera=true
+           
         }
           if(Bandera==true){
                   var date = new Date('2020-01-01 00:00:03');
@@ -651,7 +683,6 @@ private vaciar(){
                   var interval = setInterval(() => {
                   var minutes = padLeft(date.getMinutes() + "");
                   var seconds = padLeft(date.getSeconds() + "");
-                  // console.log(minutes, seconds);
                   if( seconds == '03') {
                   this.messageService.add({severity:'success', summary: 'Success', 
                   detail: 'Registro de Grupo Creado con exito'});
@@ -660,7 +691,6 @@ private vaciar(){
                   if( minutes == '00' && seconds == '01' ) {
                     this.bandera=false
                     this.volver()
-                    // this.router.navigateByUrl('/Procedimientos/mostrar_groups');
                     clearInterval(interval); 
                   }
             }, 1000);

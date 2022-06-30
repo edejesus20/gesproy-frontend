@@ -2,12 +2,12 @@ mat-error > span:not(:first-child) {
     display: none;
   }
   
-  :host{
+  /* :host{
     display: flex;
     justify-content: center;
     margin: 0;
   }
-  
+   */
   .mat-form-field{
     width: 100%;
     min-width: 400px;

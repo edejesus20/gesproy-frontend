@@ -1,8 +1,9 @@
+import { LineI } from "../projet/line";
 import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
 import { LineProgramGroupI, ProgramI } from "./program";
-import { GroupInvestigatorCollaboratorI, GroupStudentI } from "./roles_investigation";
+import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from "./roles_investigation";
 import { SeedbedI } from "./seedbed";
 
 export interface GroupI {
@@ -39,9 +40,37 @@ export interface GroupI {
     Program?:ProgramI,
     GroupInvestigatorCollaborators?:GroupInvestigatorCollaboratorI[],
     GroupStudents?:GroupStudentI[]
+    GroupLines?:GroupLineI[]
     
     // LineProgramGroups?
 }
+
+export interface GroupLineI {
+    id?: number;
+    LineId:number;
+    Line?:LineI;
+    GroupId:number;
+    GroupLineTeachers?:GroupLineTeacherI[]
+    status?:boolean
+}
+export interface GroupLineSeedbedI {
+    id?: number;
+    GroupLineId:number;
+    SeedbedId:number;
+    status?:boolean
+}
+
+
+export interface GroupLineTeacherI {
+    id?: number;
+    GroupLineId:number;
+    TeacherId:number;
+    RoleInvestigationId:number;
+    Teacher?:TeacherI
+    RoleInvestigation?:RoleInvestigationI
+    status?:boolean
+}
+
 export interface AnexosGroupI {
     id?: number;
     GroupId:number;

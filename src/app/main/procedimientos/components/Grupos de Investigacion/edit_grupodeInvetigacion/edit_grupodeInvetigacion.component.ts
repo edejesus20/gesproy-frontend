@@ -9,7 +9,7 @@ import { GroupService } from 'src/app/core/services/Procedimientos/group.service
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
-import { AnexosGroupI, GroupI, GroupKnowledge_areaI, Knowledge_areaI } from 'src/app/models/institution/group';
+import { AnexosGroupI, GroupI, GroupKnowledge_areaI, GroupLineI, Knowledge_areaI } from 'src/app/models/institution/group';
 import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
@@ -28,6 +28,7 @@ import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudia
 import { LineProgramGroupI } from 'src/app/models/institution/program';
 import { environment } from 'src/environments/environment';
 import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 
 @Component({
   selector: 'app-edit_grupodeInvetigacion',
@@ -128,11 +129,12 @@ public bandera:boolean=false
     private userService: UserService,
     public dialogService: DialogService,
     public categoryGroupService:CategoryGroupService,
+    private lineService: LineService,
 
     ) { }
   
     ngOnInit() {
-      this.Valorconstruccion=true
+      this.Valorconstruccion=false
 
 
       this.primengConfig.ripple = true;
@@ -143,7 +145,17 @@ public bandera:boolean=false
       this.getRoles()
       this.getCateghoria()
       this.getKnowledge_area()
-    }
+      this.getLines()
+    // console.log('aqui')
+  }
+  getLines() {
+    this.lineService.getList().subscribe(categoryGroups=>{
+      for (let key of categoryGroups.lines) {
+        key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      }
+      this.lines=categoryGroups.lines
+    });
+  }
     getOneCntAccount(id:number) {
       this.groupService.getItem(id).subscribe((cnt_groupFromApi) => {
         console.log(cnt_groupFromApi.group)
@@ -182,11 +194,11 @@ public bandera:boolean=false
 
                   this.teachers=[]
                   if(this.form.value.HeadquarterProgramId != ''){
-                    this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
+                    this.teacherService.getDocentesGruposDisponibles().subscribe((rolesFromApi) => {
                   
                      this.teachers=[]
-                    this.lines=rolesFromApi.lines
-                     this.seedbeds= rolesFromApi.semilleros
+                    // this.lines=rolesFromApi.lines
+                    //  this.seedbeds= rolesFromApi.semilleros
                      if(rolesFromApi.teachers.length != undefined && rolesFromApi.teachers.length > 0){
                       for (const key of rolesFromApi.teachers) {
                         if(key.TeacherId){
@@ -211,10 +223,15 @@ public bandera:boolean=false
                              this.mostrarLienas=true
                             } 
                         }
-                        if(cnt_groupFromApi.group.LineProgramGroups?.length != undefined && 
-                          cnt_groupFromApi.group.LineProgramGroups.length > 0){
-                            this.agregarLinea(cnt_groupFromApi.group.LineProgramGroups)
-                          }
+                        // if(cnt_groupFromApi.group.LineProgramGroups?.length != undefined && 
+                        //   cnt_groupFromApi.group.LineProgramGroups.length > 0){
+                        //     this.agregarLinea(cnt_groupFromApi.group.LineProgramGroups)
+                        //   }
+
+                          if(cnt_groupFromApi.group.GroupLines?.length != undefined && 
+                            cnt_groupFromApi.group.GroupLines.length > 0){
+                              this.agregarLinea1(cnt_groupFromApi.group.GroupLines)
+                            }
                           if(cnt_groupFromApi.group.GroupInvestigatorCollaborators?.length != undefined && 
                             cnt_groupFromApi.group.GroupInvestigatorCollaborators.length > 0){
                               this.agregarColaboladores(cnt_groupFromApi.group.GroupInvestigatorCollaborators)
@@ -253,6 +270,7 @@ public bandera:boolean=false
         //console.log(this.cnt_group);
       }, error => console.error(error));
     }
+ 
   agregarEstudiantes(GroupStudents:GroupStudentI[]) {
     if(GroupStudents.length){
       let arrayEstudiante:any[]=[]
@@ -402,6 +420,7 @@ public bandera:boolean=false
      
     }
   }
+  // datos de lineas antes
   agregarLinea(LineProgramGroups:LineProgramGroupI[]) {
     // console.log(LineProgramGroups)
     let arrayProfesor:any[] = []
@@ -409,10 +428,9 @@ public bandera:boolean=false
     let TeacherId: number | null = null
     if(LineProgramGroups.length){
       let element = LineProgramGroups[0]
-      // for (let key of LineProgramGroups) {
+
         if(element.LineProgram?.Line != undefined){
-      // console.log(this.lines)      
-        //crear los controles del array
+
         if(element.LineProgramGroupTeachers?.length){
           for (const key1 of element.LineProgramGroupTeachers) {
             TeacherId=key1.TeacherId
@@ -426,11 +444,11 @@ public bandera:boolean=false
                   }
                   arrayProfesor=[]
                  
-                  // console.log(this.users)  
+             
                   for (const clave of this.users) {
                     if(parseInt(clave.UserId) == key1.Teacher?.UserId
                     ){
-                      // TeacherId=key1.TeacherId
+               
                       arrayProfesor.push(clave)
                       RoleInvestigationId=clave.RoleInvestigationId
                     }
@@ -440,7 +458,7 @@ public bandera:boolean=false
                       RoleInvestigationId=algo
                     }
                   }
-                //  console.log(arrayProfesor,'arrayProfesor')
+             
                    this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
                   let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
                   control1.push(this.formBuilder.group({
@@ -461,7 +479,7 @@ public bandera:boolean=false
       for (let key of LineProgramGroups) {
         if(key.LineProgram?.Line != undefined && key.status == true){
           let control = <FormArray>this.form.controls['lines']
-        // arrayProfesor=key.LineProgramGroupTeachers
+    
           for (const key1 of this.lines) {
             
             if(key1.id == key.LineProgram.Line.id){
@@ -482,7 +500,86 @@ public bandera:boolean=false
       control.removeAt(0)
     }
   }
-  
+  // datos de lienas cambios de grupos
+  agregarLinea1(GroupLines:GroupLineI[]) {
+    let arrayProfesor:any[] = []
+    let RoleInvestigationId: any | null = null
+    let TeacherId: number | null = null
+    if(GroupLines.length){
+      // console.log(GroupLines[0],'GroupLines[0]')
+      let element = GroupLines[0]
+        if(element.GroupLineTeachers?.length != undefined && element.GroupLineTeachers.length > 0){
+          for (const key1 of element.GroupLineTeachers) {
+            TeacherId=key1.TeacherId
+            // console.log(TeacherId)
+            if(key1.RoleInvestigationId 
+              && this.form2.UserId != key1.Teacher?.UserId && key1.status == true){
+              this.userService.getUserteacherinvestigatorstudent2(key1.RoleInvestigationId)
+              .subscribe(teachersA => {
+                // console.log(teachersA,'teachersA')
+                if(teachersA.users !== undefined && teachersA.users.length > 0){
+                  this.users=teachersA.users
+                  }else{
+                    this.users=[{todo:'No hay registros'}]
+                  }
+                  arrayProfesor=[]
+                //  console.log(this.users)
+             
+                  for (const clave of this.users) {
+                    if(parseInt(clave.UserId) == key1.Teacher?.UserId
+                    ){
+                //  console.log('aquiiiiiiii',clave.UserId,'-',key1.Teacher?.UserId)
+                      arrayProfesor.push(clave)
+                      RoleInvestigationId=clave.RoleInvestigationId
+                    }
+                  }
+                  for (const algo of this.roles) {
+                    if(algo.id == RoleInvestigationId){
+                      RoleInvestigationId=algo
+                    }
+                  }
+                  
+                   this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
+                  //  console.log(arrayProfesor,'arrayProfesor')
+                  //  console.log(RoleInvestigationId,'RoleInvestigationId')
+                  let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
+                  control1.push(this.formBuilder.group({
+                    id:[key1.id],
+                    Usuarios:[arrayProfesor, [Validators.required]],
+                    RoleInvestigadorId:[RoleInvestigationId],
+                  }))
+
+                  this.mostrarIntegrantes= true
+              })
+            }
+          }
+         
+        }
+      
+      for (let key of GroupLines) {
+        if(key.Line?.id != undefined && key.status == true){
+          let control = <FormArray>this.form.controls['lines']
+    
+          for (const key1 of this.lines) {
+            
+            if(key1.id == key.Line.id){
+              control.push(this.formBuilder.group({
+                id:[key.id],
+                LineId:[key1, [Validators.required]]}))//nuevo input
+            }
+            
+          }
+        }
+      }
+
+      this.mostrar4 == true
+      this.mostrarI=true
+      let control2 = <FormArray>this.form.controls['InvestigatorCollaborators']
+      control2.removeAt(0)
+      let control = <FormArray>this.form.controls['lines']
+      control.removeAt(0)
+    }
+  }
     public volver(event: Event){
       event.preventDefault
       this.tabla = true
@@ -730,26 +827,47 @@ public bandera:boolean=false
   
       this.teachers=[]
       if(this.form.value.HeadquarterProgramId != ''){
-        this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
-        //  console.log(rolesFromApi.semilleros)
-         this.teachers=[]
-        this.lines=rolesFromApi.lines
-         this.seedbeds= rolesFromApi.semilleros
-         for (const key of rolesFromApi.teachers) {
-           if(key.TeacherId){
-            this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
-           if(algo1.teacher.User?.Person)
-            algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
-              this.teachers.push(algo1.teacher)
-            })
-           }
+        // this.teacherService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
+        // //  console.log(rolesFromApi.semilleros)
+        //  this.teachers=[]
+        // this.lines=rolesFromApi.lines
+        //  this.seedbeds= rolesFromApi.semilleros
+        //  for (const key of rolesFromApi.teachers) {
+        //    if(key.TeacherId){
+        //     this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+        //    if(algo1.teacher.User?.Person)
+        //     algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+        //       this.teachers.push(algo1.teacher)
+        //     })
+        //    }
            
-         }
+        //  }
          
          
-          this.mostrarHeadquarterProgram=true
+        //   this.mostrarHeadquarterProgram=true
   
-        })
+        // })
+        this.teacherService.getDocentesGruposDisponibles().subscribe((rolesFromApi) => {
+          console.log(rolesFromApi.teachers)
+         
+          this.teachers=[]
+         // this.lines=rolesFromApi.lines
+         //  this.seedbeds= rolesFromApi.semilleros
+          for (const key of rolesFromApi.teachers) {
+            if(key.TeacherId){
+             this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
+              if(algo1.teacher.User?.Person)
+               algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+               this.teachers.push(algo1.teacher)
+             })
+            }
+            
+          }
+          
+          
+           this.mostrarHeadquarterProgram=true
+   
+         })
       }
     } 
   
@@ -997,7 +1115,7 @@ public bandera:boolean=false
                                 // console.log(minutes, seconds);
                                 if( seconds == '03') {
                                 this.messageService.add({severity:'success', summary: 'Success', 
-                                detail: 'Registro de Grupo Creado con exito'});
+                                detail: 'Registro de Grupo Actualizado con exito'});
                                 }
                                 date = new Date(date.getTime() - 1000);
                                 if( minutes == '00' && seconds == '01' ) {
@@ -1033,7 +1151,7 @@ public bandera:boolean=false
                                 // console.log(minutes, seconds);
                                 if( seconds == '03') {
                                 this.messageService.add({severity:'success', summary: 'Success', 
-                                detail: 'Registro de Grupo Creado con exito'});
+                                detail: 'Registro de Grupo Actualizado con exito'});
                                 }
                                 date = new Date(date.getTime() - 1000);
                                 if( minutes == '00' && seconds == '01' ) {
@@ -1068,7 +1186,7 @@ public bandera:boolean=false
                       // console.log(minutes, seconds);
                       if( seconds == '03') {
                       this.messageService.add({severity:'success', summary: 'Success', 
-                      detail: 'Registro de Grupo Creado con exito'});
+                      detail: 'Registro de Grupo Actualizado con exito'});
                       }
                       date = new Date(date.getTime() - 1000);
                       if( minutes == '00' && seconds == '01' ) {

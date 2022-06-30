@@ -2,7 +2,7 @@ mat-error > span:not(:first-child) {
   display: none;
 }
 
-:host{
+.main{
   display: flex;
   justify-content: center;
   margin: 0;

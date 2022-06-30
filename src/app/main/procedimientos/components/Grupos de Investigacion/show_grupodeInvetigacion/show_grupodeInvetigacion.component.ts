@@ -53,7 +53,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
   getUsrRoles() {
     this.groupService.getList().subscribe((rolesFromApi) => {
       this.groups =rolesFromApi.groups
-      // console.log(this.groups)
+      console.log(this.groups)
       
       this.rows2=[]
       if(rolesFromApi.groups != undefined){

@@ -49,6 +49,7 @@
           <th pSortableColumn="Teacher.User.fullName">LIDER<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <!-- <th style="max-width:400px" pSortableColumn="Link_gruplac">LINK GRUPLAC<p-sortIcon field="Link_gruplac"></p-sortIcon></th> -->
           <th pSortableColumn="Knowledge_areas">AREAS DE CONOCIMIENTO<p-sortIcon field="Knowledge_areas"></p-sortIcon></th>
+          <th pSortableColumn="MIEMBROS">MIEMBROS<p-sortIcon field="MIEMBROS"></p-sortIcon></th>
 
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
@@ -87,6 +88,15 @@
                   * {{i.Knowledge_area.name | titlecase}} 
                 </span>
               </span>
+            </td>
+            <td >
+           
+                <span *ngFor="let a of item.GroupLines[0].GroupLineTeachers">
+                  <span style="display: flex;" *ngIf="a.Teacher.id != item.TeacherId">
+                    * {{a.Teacher.User.fullName | titlecase}} - {{a.Teacher.User.Person.identification | titlecase}} Rol: {{a.RoleInvestigation.name | titlecase}}
+                  </span>
+                </span>
+            
             </td>
           <ng-template [ngIf]="mostrar==1">
               
@@ -130,7 +140,7 @@
               <div >
             
                   
-                  <p-table [value]="item.LineProgramGroups"  dataKey="id" 
+                  <p-table [value]="item.GroupLines"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                       <ng-template pTemplate="header" >
@@ -144,9 +154,9 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <td>{{order.LineProgram.Line.name | titlecase}}</td> 
-                          <td>{{order.LineProgram.Line.objectives }}</td> 
-                          <td>{{order.LineProgram.Line.resolution }}</td> 
+                          <td>{{order.Line.name | titlecase}}</td> 
+                          <td>{{order.Line.objectives }}</td> 
+                          <td>{{order.Line.resolution }}</td> 
                           <!-- <td >
                             <span *ngFor="let i of order.Thematics">
                               <span style="display: flex;">
