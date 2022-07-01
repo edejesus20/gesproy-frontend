@@ -51,12 +51,14 @@ export interface GroupLineI {
     Line?:LineI;
     GroupId:number;
     GroupLineTeachers?:GroupLineTeacherI[]
+  
     status?:boolean
 }
 export interface GroupLineSeedbedI {
     id?: number;
     GroupLineId:number;
     SeedbedId:number;
+    GroupLine?:GroupLineI
     status?:boolean
 }
 
@@ -68,6 +70,7 @@ export interface GroupLineTeacherI {
     RoleInvestigationId:number;
     Teacher?:TeacherI
     RoleInvestigation?:RoleInvestigationI
+    GroupLine?:GroupLineI
     status?:boolean
 }
 

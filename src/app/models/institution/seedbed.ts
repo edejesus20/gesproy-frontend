@@ -1,6 +1,6 @@
 import { StudentI } from "../user/student";
 import { TeacherI } from "../user/teacher";
-import { GroupI } from "./group";
+import { GroupI, GroupLineSeedbedI } from "./group";
 import { HeadquarterProgramI } from "./headquarter";
 
 export interface SeedbedI {
@@ -28,6 +28,8 @@ export interface SeedbedI {
     HeadquarterProgram?:HeadquarterProgramI
     Program?:any
     SeedbedStudents?:SeedbedStudentI[]
+
+    GroupLineSeedbeds?:GroupLineSeedbedI[]
 
 }
 

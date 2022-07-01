@@ -121,23 +121,29 @@
                   <p-table [value]="item.SeedbedStudents"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
-                      <ng-template pTemplate="header" >
+                  <ng-template pTemplate="caption">
+                    <span style="display: flex;">
+                      <i class="pi pi-users mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                      <h3>Estudiantes del Semillero</h3>
+                    </span>
+                  </ng-template>
+                  <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                             <th pSortableColumn="name">Nombre de Estudiantes<p-sortIcon field="name"></p-sortIcon></th>
                             <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
-                            <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
                             <th pSortableColumn="email">Correo<p-sortIcon field="email"></p-sortIcon></th>
-                            <th pSortableColumn="status_seedbed">Estado<p-sortIcon field="status_seedbed"></p-sortIcon></th>
-                              
+                            <th pSortableColumn="status_seedbed">Fecna Ingreso<p-sortIcon field="status_seedbed"></p-sortIcon></th>
+                            <th pSortableColumn="phone">Fecha de Retiro<p-sortIcon field="phone"></p-sortIcon></th>
+
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
                           <td>{{order.Student.User.Person.name | titlecase}} {{order.Student.User.Person.surname | titlecase}}</td> 
                           <td>{{order.Student.User.Person.identification }} </td> 
-                          <td>{{order.Student.User.Person.phone }} </td> 
                           <td>{{order.Student.User.email }} </td> 
-                          <td>{{order.Student.status_seedbed  | titlecase}} </td> 
+                          <td>{{order.date_firt | date:'fullDate' | titlecase}} </td> 
+                          <td>{{order.date_end| date:'fullDate' | titlecase}} </td> 
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -150,6 +156,44 @@
                   </p-table>
               </div>
           </td>
+      </tr>
+          <tr>
+          <td colspan="12">
+            <div >
+                <p-table [value]="item.GroupLineSeedbeds"  dataKey="id" 
+                [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
+                <ng-template pTemplate="caption">
+                  <span style="display: flex;">
+                    <i class="pi pi-list mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                    <h3>Lineas de Investigación</h3>
+                  </span>
+                </ng-template>
+                    <ng-template pTemplate="header" >
+                        <tr style="background: rgba(0, 255, 255, 0.849);">
+                          <th pSortableColumn="name">Nombre de Linea<p-sortIcon field="name"></p-sortIcon></th>
+                          <th pSortableColumn="identification">Resolucion<p-sortIcon field="identification"></p-sortIcon></th>
+                          
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-order let-expanded="expanded">
+                      <tr>
+                        <td>{{order.GroupLine.Line.name | titlecase}}</td> 
+                        <td>{{order.GroupLine.Line.resolution }} </td> 
+  
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6" style="text-align: center;">
+                          <h3>No hay registros encontrados</h3>
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </td>
       </tr>
   </ng-template>
 

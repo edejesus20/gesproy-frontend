@@ -1,6 +1,6 @@
 import { UserI } from "../authorization/usr_User";
 import { MincienciaCategoryI } from "../institution/colciencias_category";
-import { GroupI } from "../institution/group";
+import { GroupI, GroupLineTeacherI } from "../institution/group";
 import { HeadquarterProgramI, HeadquarterProgramTeacherI } from "../institution/headquarter";
 import { LineProgramGroupTeacherI } from "../institution/program";
 import { ScaleI } from "../institution/scale";
@@ -18,7 +18,7 @@ export interface TeacherI {
     User?:UserI
     Scale?:ScaleI
     Group?:GroupI
-    Groups?:GroupI[]
+    
     MincienciaCategory?:MincienciaCategoryI,
     TrainingTeacher?:TrainingTeacherI[]
     Seedbeds?:SeedbedI[]
@@ -37,7 +37,8 @@ export interface TeacherI {
 
     ChargebondingScaleTeachers?:ChargebondingScaleTeacherI[]
 
-    // LinesG?:any[]
+    GroupLineTeachers?:GroupLineTeacherI[]
+    Groups?:GroupI[]
     // LinesS?:any[]
 }
 export interface AnexosTrainingTeacherI {

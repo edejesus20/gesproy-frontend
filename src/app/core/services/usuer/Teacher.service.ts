@@ -198,6 +198,16 @@ AddTeacherSemilleros(id:number): Observable<{ teachers: any[] }> {
       catchError(this.handleError)
     )
 }
+DocentesTeacherSemilleros(): Observable<{ teachers: any[] }> {
+  return this.http
+    .get<{ teachers: any[] }>(this.API_URI+'/api/DocentesTeacherSemilleros')
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+
+
 OneAddTeacherSemilleros(id: number): Observable<{ teachers: any[] }> {
   return this.http
     .get<{ teachers: any[] }>(this.API_URI+'/api/OneAddTeacherSemilleros/'+id)

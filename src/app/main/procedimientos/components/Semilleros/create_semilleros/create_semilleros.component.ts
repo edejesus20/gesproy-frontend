@@ -53,10 +53,10 @@ export class Create_semillerosComponent implements OnInit {
   ObjetivosEspecificos: ['', [Validators.required]],
   Mision: ['', [Validators.required]],
   Vision: ['', [Validators.required]],
-  Facultad: ['', [Validators.required]],
+  Facultad: [''],
   estrategias: ['', [Validators.required]],
-  HeadquarterProgramId: ['', [Validators.required]],
-  GroupId:['', [Validators.required]],
+  HeadquarterProgramId: [''],
+  GroupId:[''],
   lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
   Students: this.formBuilder.array([this.formBuilder.group({
     date_firt:['',[Validators.required]],
@@ -85,6 +85,7 @@ export class Create_semillerosComponent implements OnInit {
     ChargeBondingId:0,
     Charge_bonding:undefined
 }
+public Grupo:any | null=null
 public mostrarTeacher:boolean=false
 public students:any[] =[]
 public lines1:any[] =[]
@@ -109,11 +110,20 @@ public Valorconstruccion:boolean=false
     private studentService:StudentService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.Valorconstruccion=false
     // this.buildForm();
-    // this.getAllteachers()
+    this.getAllteachers()
     this.geFacultad() 
     this.getstudents()
+    this.getGrupos()
+  }
+  getGrupos() {
+    this.groupService.getList().subscribe((rolesFromApi) => {
+      this.groups= rolesFromApi.groups
+      //  this.mostrarHeadquarterProgram=true
+       // this.getAllteachers(this.form.value.HeadquarterProgramId.id)
+
+     })
   }
 
   cerrar(){
@@ -195,8 +205,8 @@ private vaciar(){
       this.facultys=teachersA.facultys
     }, error => console.error(error))
   }
-  private getAllteachers(id: number) {
-    this.teacherService.AddTeacherSemilleros(id).subscribe(
+  private getAllteachers() {
+    this.teacherService.DocentesTeacherSemilleros().subscribe(
       (facultiesFromApi) => {
         // for (const key of facultiesFromApi.teachers) {
         //   this.teachers.push(key)
@@ -241,6 +251,12 @@ private vaciar(){
   public getFacultadHeadquarterProgram(id:number) {
     this.headquarterService.getFacultadHeadquarterProgramId(id).subscribe((rolesFromApi) => {
       this.FacultadHeadquarterProgram = rolesFromApi.FacultadHeadquarterProgram;
+      for (const key of this.FacultadHeadquarterProgram) {
+        if(this.Grupo != null && this.Grupo.HeadquarterProgram != undefined 
+          && parseInt(this.Grupo.HeadquarterProgramId)==key.id){
+            this.form.controls['HeadquarterProgramId'].setValue(key)
+        }
+      }
       // console.log(this.FacultadHeadquarterProgram)
     }, error => console.error(error));
   }
@@ -250,18 +266,86 @@ private vaciar(){
       this.groupService.getItemHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe((rolesFromApi) => {
        this.groups= rolesFromApi.groups
         this.mostrarHeadquarterProgram=true
-        this.getAllteachers(this.form.value.HeadquarterProgramId.id)
+        // this.getAllteachers(this.form.value.HeadquarterProgramId.id)
 
       })
     }
   }
+  // public getLineProgramGroup(){
+  //   if(this.form.value.GroupId != ''){
+  //    console.log(this.form.value.GroupId)
+  //    this.lines=[]
+  //    if(this.form.value.GroupId.LineProgramGroups.length >0){
+  //      for (let key of this.form.value.GroupId.LineProgramGroups) {
+  //       this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+  //         // for (let key of facultiesFromApi.teachers) {
+  //           algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
+  //         // }
+  //         this.lines.push(algo.line)
+  //       })
+         
+  //      }
+  //      this.mostrarlineasProgram=true
+  //     //  console.log(this.lines)
+  //    }
+  //   }
+  // }
+  public SelectTeacher(){
+    if(this.form.value.TeacherId != ''){
+      this.getOneTeachers(this.form.value.TeacherId.TeacherId)
+      this.mostrarTeacher=true
+    }
+  }
+  getOneTeachers(id:number) {
+    this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
+      if(cnt_groupFromApi.teacher.id != undefined){
+          this.form2=cnt_groupFromApi.teacher
+          let Group :any | null= null 
+          if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
+            && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+
+              for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
+                if(clave.GroupLine?.GroupId && clave.status == true){
+                  Group=clave.GroupLine?.GroupId
+                }
+              }
+
+          }
+          for (const key of this.groups) {
+
+            if(Group != null && parseInt(Group) == key.id){
+              this.Grupo=key
+              this.form.controls['GroupId'].setValue(key)
+              this.getLineProgramGroup()
+
+            
+              console.log(this.Grupo,'this.Grupo')
+            }
+            
+          }
+
+          if(this.form.value.GroupId != ''){
+            if(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId != undefined){
+              for (const key of this.facultys) {
+                if(parseInt(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId) == key.id){
+                  this.form.controls['Facultad'].setValue(key)
+                  this.SelectFacultad()
+                }
+              }
+            }
+          }
+          // console.log(cnt_groupFromApi.teacher)
+      }
+    }, error => console.error(error));
+  }
+
   public getLineProgramGroup(){
     if(this.form.value.GroupId != ''){
      console.log(this.form.value.GroupId)
      this.lines=[]
-     if(this.form.value.GroupId.LineProgramGroups.length >0){
-       for (let key of this.form.value.GroupId.LineProgramGroups) {
-        this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+     if(this.form.value.GroupId.GroupLines.length >0){
+       for (let key of this.form.value.GroupId.GroupLines) {
+        this.lineService.getItem(key.LineId).subscribe((algo)=>{
           // for (let key of facultiesFromApi.teachers) {
             algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
           // }
@@ -273,20 +357,6 @@ private vaciar(){
       //  console.log(this.lines)
      }
     }
-  }
-  public SelectTeacher(){
-    if(this.form.value.TeacherId != ''){
-      this.getOneTeachers(this.form.value.TeacherId.TeacherId)
-      this.mostrarTeacher=true
-    }
-  }
-  getOneTeachers(id:number) {
-    this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
-      if(cnt_groupFromApi.teacher.id != undefined){
-          this.form2=cnt_groupFromApi.teacher
-          // console.log(cnt_groupFromApi.teacher)
-      }
-    }, error => console.error(error));
   }
 
   public onSubmit(): void {
@@ -487,7 +557,7 @@ private vaciar(){
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
-          this.getAllteachers(this.form.value.HeadquarterProgramId.id)
+          this.getAllteachers()
 
         }
   });
