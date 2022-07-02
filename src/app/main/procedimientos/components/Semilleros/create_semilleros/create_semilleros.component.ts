@@ -183,7 +183,7 @@ private vaciar(){
   }))
   let control1 = <FormArray>this.form.controls['lines']
   control1.push(this.formBuilder.group({
-    LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+    LineId:['', [Validators.required]]}))//nuevo input
 
 }
 

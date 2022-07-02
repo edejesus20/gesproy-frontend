@@ -85,7 +85,7 @@ public Valorconstruccion:boolean=false
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.Valorconstruccion=false
 
     this.buildForm();
     this.getAllteachers()
@@ -133,22 +133,22 @@ getstudents2() {
       // approval_date:['', [Validators.required]],
       // resolution:['', [Validators.required]],
       // article:['', [Validators.required]],
-      name: ['', [Validators.required]],
-      TeacherId: ['', [Validators.required]],
-      ObjetivoGeneral: ['', [Validators.required]],
-      ObjetivosEspecificos: ['', [Validators.required]],
-      Mision: ['', [Validators.required]],
-      Vision: ['', [Validators.required]],
-      Facultad: ['', [Validators.required]],
-      estrategias: ['', [Validators.required]],
-      HeadquarterProgramId: ['', [Validators.required]],
-      GroupId:['', [Validators.required]],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
+      name: [''],
+      TeacherId: [''],
+      ObjetivoGeneral: [''],
+      ObjetivosEspecificos: [''],
+      Mision: [''],
+      Vision: [''],
+      Facultad: [''],
+      estrategias: [''],
+      HeadquarterProgramId: [''],
+      GroupId:[''],
+      lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
       Students: this.formBuilder.array([this.formBuilder.group({
-        date_firt:['',[Validators.required]],
-        date_end:['',[Validators.required]],
-        StudentId:['',[Validators.required]],
-        Horas:['',[Validators.required]]
+        date_firt:[''],
+        date_end:[''],
+        StudentId:[''],
+        Horas:['']
       })]),
     });
   }  
@@ -218,9 +218,42 @@ getstudents2() {
      this.Students=[]
 
     //console.log(event)
+    this.vaciar()
+    //console.log(event)
+  }
+
+  private vaciar(){
+    this.form.reset()
+    this.getStudents.reset()
+    this.getStudents.clear()
+    this.getlines.reset()
+    this.getlines.clear()
+    this.form.controls['creation_date'].setValue('')
+    this.form.controls['TeacherId'].setValue('')
+    this.form.controls['ObjetivoGeneral'].setValue('')
+    this.form.controls['ObjetivosEspecificos'].setValue('')
+    this.form.controls['Mision'].setValue('')
+    this.form.controls['Vision'].setValue('')
+    this.form.controls['Facultad'].setValue('')
+    this.form.controls['estrategias'].setValue('')
+    this.form.controls['HeadquarterProgramId'].setValue('')
+    this.form.controls['GroupId'].setValue('')
+    let control = <FormArray>this.form.controls['Students']
+    control.push(this.formBuilder.group({
+      id:0,
+        StudentId:['', [Validators.required]],
+      date_firt:['',[Validators.required]],
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
+    }))
+    let control1 = <FormArray>this.form.controls['lines']
+    control1.push(this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]}))//nuevo input
+  
   }
   public onSubmit(): void {
-    let formValue: SeedbedI = this.form.value;
+    let formValue: any = this.form.value;
     formValue.TeacherId=this.form.value.TeacherId.id
     formValue.GroupId=this.form.value.GroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
@@ -430,7 +463,22 @@ getstudents2() {
                       this.form.controls['GroupId'].setValue(key2.group)
 
                     }
-                    this.getLineProgramGroup()
+                    if(cnt_groupFromApi.seedbed.GroupLineSeedbeds?.length != undefined){
+                      //  console.log(this.form.value.GroupId)
+                      
+                       if(cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
+                        this.lines=[]
+                         for (let key of cnt_groupFromApi.seedbed.GroupLineSeedbeds) {
+                          if(key.GroupLine && key.status == true)
+                          this.lineService.getItem(key.GroupLine.LineId).subscribe((algo)=>{
+                            this.lines.push(algo.line)
+                          })
+                           
+                         }
+                         this.mostrarlineasProgram=true
+                         
+                       }
+                      }
                     if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
                       this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
             

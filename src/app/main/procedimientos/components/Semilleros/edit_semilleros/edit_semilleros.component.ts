@@ -10,7 +10,7 @@ import { HeadquarterService } from 'src/app/core/services/headquarter/headquarte
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
-import { GroupI } from 'src/app/models/institution/group';
+import { GroupI, GroupLineSeedbedI } from 'src/app/models/institution/group';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { LineI } from 'src/app/models/projet/line';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
@@ -78,6 +78,10 @@ private GroupId:number = 0
 public ref1:any;
 public construccion:string='assets/construccion.jpg'
 public Valorconstruccion:boolean=false
+
+public Grupo:any | null=null
+public deletelines:any[] =[]
+public  deleteStudents:any[] =[]
 constructor(
   public dialogService: DialogService,
     private seedbedService:SeedbedService,
@@ -93,12 +97,21 @@ constructor(
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.Valorconstruccion=false
 
     this.buildForm();
-    // this.getAllteachers()
+    this.getAllteachers()
     this.geFacultad() 
     // this.getstudents()
+    this.getGrupos()
+  }
+  getGrupos() {
+    this.groupService.getList().subscribe((rolesFromApi) => {
+      this.groups= rolesFromApi.groups
+      //  this.mostrarHeadquarterProgram=true
+       // this.getAllteachers(this.form.value.HeadquarterProgramId.id)
+
+     })
   }
  getstudents(id:number) {
   // this.students=[]
@@ -141,14 +154,24 @@ getstudents2() {
 
     }, error => console.error(error))
   }
-  private getAllteachers(id: number) {
-    this.teacherService.AddTeacherSemilleros(id).subscribe(
-      (facultiesFromApi) => {
-        for (const key of facultiesFromApi.teachers) {
-          this.teachers.push(key)
-        }
+  private getAllteachers() {
+    // this.teacherService.AddTeacherSemilleros(id).subscribe(
+    //   (facultiesFromApi) => {
+    //     for (const key of facultiesFromApi.teachers) {
+    //       this.teachers.push(key)
+    //     }
         
-        // this.teachers = facultiesFromApi.teachers;
+    //     // this.teachers = facultiesFromApi.teachers;
+    //   }, error => console.error(error));
+    this.teacherService.DocentesTeacherSemilleros().subscribe(
+      (facultiesFromApi) => {
+        // for (const key of facultiesFromApi.teachers) {
+        //   this.teachers.push(key)
+        // }
+        for (let key of facultiesFromApi.teachers) {
+          key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+        }
+        this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
   }
   private buildForm() {
@@ -164,17 +187,21 @@ getstudents2() {
       ObjetivosEspecificos: ['', [Validators.required]],
       Mision: ['', [Validators.required]],
       Vision: ['', [Validators.required]],
-      Facultad: ['', [Validators.required]],
+      Facultad: [''],
       estrategias: ['', [Validators.required]],
-      HeadquarterProgramId: ['', [Validators.required]],
-      GroupId:['', [Validators.required]],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
+      HeadquarterProgramId: [''],
+      GroupId:[''],
+      lines: this.formBuilder.array([this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]})]),
       Students: this.formBuilder.array([this.formBuilder.group({
+      id:0,
         date_firt:['',[Validators.required]],
         date_end:['',[Validators.required]],
         StudentId:['',[Validators.required]],
         Horas:['',[Validators.required]]
       })]),
+      
     });
   }  
   public SelectFacultad(){
@@ -184,8 +211,18 @@ getstudents2() {
     }
   }
   public getFacultadHeadquarterProgram(id:number) {
+    // this.headquarterService.getFacultadHeadquarterProgramId(id).subscribe((rolesFromApi) => {
+    //   this.FacultadHeadquarterProgram = rolesFromApi.FacultadHeadquarterProgram;
+    //   // console.log(this.FacultadHeadquarterProgram)
+    // }, error => console.error(error));
     this.headquarterService.getFacultadHeadquarterProgramId(id).subscribe((rolesFromApi) => {
       this.FacultadHeadquarterProgram = rolesFromApi.FacultadHeadquarterProgram;
+      for (const key of this.FacultadHeadquarterProgram) {
+        if(this.Grupo != null && this.Grupo.HeadquarterProgram != undefined 
+          && parseInt(this.Grupo.HeadquarterProgramId)==key.id){
+            this.form.controls['HeadquarterProgramId'].setValue(key)
+        }
+      }
       // console.log(this.FacultadHeadquarterProgram)
     }, error => console.error(error));
   }
@@ -202,21 +239,38 @@ getstudents2() {
     }
   }
   public getLineProgramGroup(){
-    if(this.form.value.GroupId != ''){
-    //  console.log(this.form.value.GroupId)
+    // if(this.form.value.GroupId != ''){
+    // //  console.log(this.form.value.GroupId)
     
-     if(this.form.value.GroupId.LineProgramGroups.length >0){
-      this.lines=[]
-       for (let key of this.form.value.GroupId.LineProgramGroups) {
-        this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-          this.lines.push(algo.line)
-        })
+    //  if(this.form.value.GroupId.LineProgramGroups.length >0){
+    //   this.lines=[]
+    //    for (let key of this.form.value.GroupId.LineProgramGroups) {
+    //     this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+    //       this.lines.push(algo.line)
+    //     })
          
-       }
-       this.mostrarlineasProgram=true
+    //    }
+    //    this.mostrarlineasProgram=true
        
+    //  }
+    // }
+    if(this.form.value.GroupId != ''){
+      console.log(this.form.value.GroupId,'GroupId')
+      this.lines=[]
+      if(this.form.value.GroupId.GroupLines.length >0){
+        for (let key of this.form.value.GroupId.GroupLines) {
+         this.lineService.getItem(key.LineId).subscribe((algo)=>{
+           // for (let key of facultiesFromApi.teachers) {
+             algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
+           // }
+           this.lines.push(algo.line)
+         })
+          
+        }
+        this.mostrarlineasProgram=true
+       //  console.log(this.lines)
+      }
      }
-    }
   }
   public SelectTeacher(){
     if(this.form.value.TeacherId != ''){
@@ -225,9 +279,49 @@ getstudents2() {
     }
   }
   getOneTeachers(id:number) {
+    // this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
+    //   if(cnt_groupFromApi.teacher.id != undefined){
+    //       this.form2=cnt_groupFromApi.teacher
+    //   }
+    // }, error => console.error(error));
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
+          let Group :any | null= null 
+          if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
+            && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+
+              for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
+                if(clave.GroupLine?.GroupId && clave.status == true){
+                  Group=clave.GroupLine?.GroupId
+                }
+              }
+
+          }
+          for (const key of this.groups) {
+
+            if(Group != null && parseInt(Group) == key.id){
+              this.Grupo=key
+              this.form.controls['GroupId'].setValue(key)
+              // this.getLineProgramGroup()
+
+            
+              console.log(this.Grupo,'this.Grupo')
+            }
+            
+          }
+
+          if(this.form.value.GroupId != ''){
+            if(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId != undefined){
+              for (const key of this.facultys) {
+                if(parseInt(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId) == key.id){
+                  this.form.controls['Facultad'].setValue(key)
+                  this.SelectFacultad()
+                }
+              }
+            }
+          }
+          // console.log(cnt_groupFromApi.teacher)
       }
     }, error => console.error(error));
   }
@@ -245,12 +339,49 @@ getstudents2() {
     this.Students=[]
     this.students=[]
     this.lines=[]
+    this.Grupo=null
+    this.deletelines =[]
+    this.deleteStudents =[]
     this.teachers=[]
+    this.vaciar()
     //console.log(event)
   }
 
+  private vaciar(){
+    this.form.reset()
+    this.getStudents.reset()
+    this.getStudents.clear()
+    this.getlines.reset()
+    this.getlines.clear()
+    this.form.controls['creation_date'].setValue('')
+    this.form.controls['TeacherId'].setValue('')
+    this.form.controls['ObjetivoGeneral'].setValue('')
+    this.form.controls['ObjetivosEspecificos'].setValue('')
+    this.form.controls['Mision'].setValue('')
+    this.form.controls['Vision'].setValue('')
+    this.form.controls['Facultad'].setValue('')
+    this.form.controls['estrategias'].setValue('')
+    this.form.controls['HeadquarterProgramId'].setValue('')
+    this.form.controls['GroupId'].setValue('')
+    let control = <FormArray>this.form.controls['Students']
+    control.push(this.formBuilder.group({
+      id:0,
+        StudentId:['', [Validators.required]],
+      date_firt:['',[Validators.required]],
+      date_end:['',[Validators.required]],
+      Horas:['',[Validators.required]]
+    }))
+    let control1 = <FormArray>this.form.controls['lines']
+    control1.push(this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]}))//nuevo input
+  
+  }
+
   public onSubmit(): void {
-    let formValue: SeedbedI = this.form.value;
+    let formValue: any = this.form.value;
+    formValue.deletelines=this.deletelines
+    formValue.deleteStudents=this.deleteStudents
     formValue.TeacherId=this.form.value.TeacherId.TeacherId
     formValue.GroupId=this.form.value.GroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
@@ -375,6 +506,7 @@ getstudents2() {
       //crear los controles del array
     if(control.length == 0 && this.mostrar1 == false){
       control.push(this.formBuilder.group({
+      id:0,
       StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
       date_end:['',[Validators.required]],
@@ -383,7 +515,9 @@ getstudents2() {
     }))
     }
     if(control.length >= 1 && this.mostrar1 == true){
-      control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
+      control.push(this.formBuilder.group({  
+      id:0,
+      StudentId:['', [Validators.required]],
       date_firt:['',[Validators.required]],
       date_end:['',[Validators.required]],
       Horas:['',[Validators.required]]
@@ -394,10 +528,13 @@ getstudents2() {
   removeStudents(index: number,event: Event){
     event.preventDefault();
     let control = <FormArray>this.form.controls['Students']//aceder al control
+    this.deleteStudents.push(control.value[index])
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar1=false
-     control.push(this.formBuilder.group({  StudentId:['', [Validators.required]],
+     control.push(this.formBuilder.group({  
+      id:0,
+      StudentId:['', [Validators.required]],
      date_firt:['',[Validators.required]],
      date_end:['',[Validators.required]],
      Horas:['',[Validators.required]]
@@ -415,10 +552,14 @@ getstudents2() {
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar2 == false){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]}))//nuevo input
     }
     if(control.length >= 1 && this.mostrar2 == true){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]}))//nuevo input
 
     }
       this.mostrar2=true
@@ -426,10 +567,13 @@ getstudents2() {
   removelines(index: number,event: Event){
     event.preventDefault();
     let control = <FormArray>this.form.controls['lines']//aceder al control
+    this.deletelines.push(control.value[index])
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
-     control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+     control.push(this.formBuilder.group({
+      id:0,
+      LineId:['', [Validators.required]]}))//nuevo input
 
     }
   }
@@ -450,58 +594,143 @@ getstudents2() {
         this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
         this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
 
-        if(cnt_groupFromApi.seedbed.HeadquarterProgram?.Program != undefined){
-          this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
-            if(algo.program.id != undefined && algo.program.FacultyId != undefined){
 
-              for (const clave of this.facultys) {
-                if(algo.program.FacultyId == clave.id){
-                  this.form.controls['Facultad'].setValue(clave)
-                  // console.log(clave,'algo.program.FacultyId')
-                  // console.log(this.form.controls['Facultad'],'this.form.controls[Facultad]')
-                }
-                
-              }
-              
-                this.headquarterService.getOneFacultadHeadquarterProgram(cnt_groupFromApi.seedbed.HeadquarterProgramId).subscribe(key1=>{
-                  if(key1.FacultadHeadquarterProgram != undefined){
-                    this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
-                  this.groupService.getItemOneHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe(key2=>{
-                    if(key2.group.id != undefined){
-                      this.form.controls['GroupId'].setValue(key2.group)
-
-                    }
-                    this.getLineProgramGroup()
-                    if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
-                      this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
+        if(cnt_groupFromApi.seedbed.Teacher != undefined){
+          this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
+            // this.teachers=[]
+            this.teachers.push(item.teachers[0]) 
+            // this.getAllteachers()
+            this.form.controls['TeacherId'].setValue(item.teachers[0])
+            if(this.form.value.TeacherId != ''){
             
+              this.teacherService.getItem(this.form.value.TeacherId.TeacherId).subscribe((Apiteacher) => {
+                if(Apiteacher.teacher.id != undefined){
+                    this.form2=Apiteacher.teacher
+
+                    let Group :any | null= null 
+                    if(Apiteacher.teacher.GroupLineTeachers?.length != undefined
+                      && Apiteacher.teacher.GroupLineTeachers?.length > 0){
+          
+                        for (const clave of Apiteacher.teacher.GroupLineTeachers) {
+                          if(clave.GroupLine?.GroupId && clave.status == true){
+                            Group=clave.GroupLine?.GroupId
+                          }
+                        }
+          
                     }
-                    this.SelectFacultad()
-                    this.getHeadquarterProgram()
+                    for (const key of this.groups) {
+          
+                      if(Group != null && parseInt(Group) == key.id){
+                        this.Grupo=key
+                        this.form.controls['GroupId'].setValue(key)
+                        // this.getLineProgramGroup()
+                        // console.log(this.Grupo,'this.Grupo')
+                      
+                         if(this.form.value.GroupId != '' && cnt_groupFromApi.seedbed){
+                          // console.log(this.form.value.GroupId,'GroupId')
+                          this.lines=[]
+                          let cont=0
+                              if(this.Grupo.GroupLines.length >0){
+                                for (let key of this.Grupo.GroupLines) {
+                                 
+                                // this.lineService.getItem(key.LineId).subscribe((algo)=>{
+                                  // for (let key of facultiesFromApi.teachers) {
+                                    key.Line.name =  key.Line.name.charAt(0).toUpperCase() +  key.Line.name.slice(1);
+                                  // }
+                                  this.lines.push(key.Line)
+                        
+                                 
+                                // })
+                                  // console.log(this.lines)
+                                }
+                                
+                               
+                                this.mostrarlineasProgram=true
+                              //  console.log(this.lines)
+                             
+                              }
+                          }
+                      }
+                      
+                    }
+                    if(this.Grupo.GroupLines.length){
+                      if(cnt_groupFromApi.seedbed.GroupLineSeedbeds != undefined 
+                        && cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
+                        this.agregarLine(cnt_groupFromApi.seedbed.GroupLineSeedbeds)
+              
+                      }
+                    }
+          
+                    if(this.form.value.GroupId != ''){
+                      if(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId != undefined){
+                        for (const key of this.facultys) {
+                          if(parseInt(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId) == key.id){
+                            this.form.controls['Facultad'].setValue(key)
+                            this.SelectFacultad()
+                          }
+                        }
+                      }
+                    }
+                    // console.log(cnt_groupFromApi.teacher)
+                }
+              }, error => console.error(error));
+              this.mostrarTeacher=true
+            }
+            
+          
+           })
+         }
+
+       
+
+
+        // if(cnt_groupFromApi.seedbed.HeadquarterProgram?.Program != undefined){
+        //   this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
+        //     if(algo.program.id != undefined && algo.program.FacultyId != undefined){
+
+        //       for (const clave of this.facultys) {
+        //         if(algo.program.FacultyId == clave.id){
+        //           this.form.controls['Facultad'].setValue(clave)
+        //           // console.log(clave,'algo.program.FacultyId')
+        //           // console.log(this.form.controls['Facultad'],'this.form.controls[Facultad]')
+        //         }
+                
+        //       }
+              
+        //         this.headquarterService.getOneFacultadHeadquarterProgram(cnt_groupFromApi.seedbed.HeadquarterProgramId).subscribe(key1=>{
+        //           if(key1.FacultadHeadquarterProgram != undefined){
+        //             this.form.controls['HeadquarterProgramId'].setValue(key1.FacultadHeadquarterProgram[0])
+        //           this.groupService.getItemOneHeadquarterProgram(this.form.value.HeadquarterProgramId.id).subscribe(key2=>{
+        //             if(key2.group.id != undefined){
+        //               this.form.controls['GroupId'].setValue(key2.group)
+
+        //             }
+        //             // this.getLineProgramGroup()
+        //             // if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
+        //             //   this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
+            
+        //             // }
+                   
+                    
+                   
                     
                   
-                  })
-                  }
+        //           })
+        //           }
                   
-                })
+        //         })
            
-            }
-          })
+        //     }
+        //   })
 
-        }
+        // }
         
 
-
-
-       if(cnt_groupFromApi.seedbed.Teacher != undefined)
+        // this.SelectFacultad()
+        // this.getHeadquarterProgram()
+     
+       
       
-       this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
-        this.teachers=[]
-        this.teachers.push(item.teachers[0]) 
-        this.getAllteachers(this.form.value.HeadquarterProgramId.id)
-        this.form.controls['TeacherId'].setValue(item.teachers[0])
-        this.SelectTeacher()
-       })
      
        
    
@@ -546,6 +775,36 @@ getstudents2() {
       
     }, error => console.error(error));
   }
+  agregarLine(GroupLineSeedbeds:GroupLineSeedbedI[]) {
+    // console.log(this.lines,'this.lines')
+    if(GroupLineSeedbeds.length){
+      for (let key of GroupLineSeedbeds) {
+        if(key.id != undefined && key.GroupLine?.LineId != undefined && key.status == true) { 
+          // console.log( key.status,' key.status')         
+          let control = <FormArray>this.form.controls['lines']
+         for (let key1 of this.lines) {
+          if( key1.id && key1.id == key.GroupLine?.LineId ){
+            // this.lineService.getItem(key.GroupLine?.LineId).subscribe((algo)=>{
+              // console.log(key1,'key1')
+              control.push(this.formBuilder.group({
+                id:key.id,
+                LineId:[key1, [Validators.required]],
+              }))
+              // console.log(control,'control')
+            // })
+          }
+         }
+         
+        }
+      }
+      this.mostrar2= true
+      let control = <FormArray>this.form.controls['lines']
+      control.removeAt(0)
+      // console.log(control,'control')
+      // console.log(this.lines,'lines')
+    }
+  }
+  
   agregarEstudiantes(SeedbedStudents:SeedbedStudentI[]) {
     if(SeedbedStudents.length){
       for (let key of SeedbedStudents) {
@@ -560,6 +819,7 @@ getstudents2() {
           if(key.Student?.UserId == parseInt(key1.UserId)){
             Studen=key1
             control.push(this.formBuilder.group({
+              id:key.id,
               StudentId:[Studen, [Validators.required]],
               date_firt:[date_firt,[Validators.required]],
               date_end:[date_end,[Validators.required]],
@@ -601,26 +861,26 @@ getstudents2() {
       // console.log(this.lines,'lines')
     }
   }
-  agregarLine(LineProgramGroups: LineProgramGroupI[]) {
-    if(LineProgramGroups.length){
-      for (let key of LineProgramGroups) {
-        if(key.id != undefined && key.LineProgram?.LineId != undefined) {          
-          let control = <FormArray>this.form.controls['lines']
-          this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-            control.push(this.formBuilder.group({
-              LineId:[algo.line, [Validators.required]],
-            }))
-          })
-        }
-      }
-      this.mostrar2= true
-      let control = <FormArray>this.form.controls['lines']
-      control.removeAt(0)
-      // console.log(control,'control')
-      // console.log(this.lines,'lines')
-    }
-  }
-
+  // agregarLine(LineProgramGroups: LineProgramGroupI[]) {
+  //   if(LineProgramGroups.length){
+  //     for (let key of LineProgramGroups) {
+  //       if(key.id != undefined && key.LineProgram?.LineId != undefined) {          
+  //         let control = <FormArray>this.form.controls['lines']
+  //         this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
+  //           control.push(this.formBuilder.group({
+  //             LineId:[algo.line, [Validators.required]],
+  //           }))
+  //         })
+  //       }
+  //     }
+  //     this.mostrar2= true
+  //     let control = <FormArray>this.form.controls['lines']
+  //     control.removeAt(0)
+  //     // console.log(control,'control')
+  //     // console.log(this.lines,'lines')
+  //   }
+  // }
+ 
 
 
   ngOnDestroy() {
@@ -651,7 +911,7 @@ getstudents2() {
           this.teacherService.OneAddTeacherSemilleros(this.form.value.id).subscribe(item=>{
             this.teachers=[]
             this.teachers.push(item.teachers[0]) 
-            this.getAllteachers(this.form.value.HeadquarterProgramId.id)
+            this.getAllteachers()
             this.form.controls['TeacherId'].setValue(item.teachers[0])
             this.SelectTeacher()
            })

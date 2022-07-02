@@ -143,7 +143,13 @@
                   <p-table [value]="item.GroupLines"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
-                      <ng-template pTemplate="header" >
+                  <ng-template pTemplate="caption">
+                    <span style="display: flex;">
+                      <i class="pi pi-list mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                      <h3>Lineas de Investigación</h3>
+                    </span>
+                  </ng-template>    
+                  <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                             <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
                             <th pSortableColumn="objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>

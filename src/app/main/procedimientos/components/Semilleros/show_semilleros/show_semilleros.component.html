@@ -138,7 +138,7 @@
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
-                        <tr>
+                        <tr *ngIf="order.status == true">
                           <td>{{order.Student.User.Person.name | titlecase}} {{order.Student.User.Person.surname | titlecase}}</td> 
                           <td>{{order.Student.User.Person.identification }} </td> 
                           <td>{{order.Student.User.email }} </td> 
@@ -178,7 +178,7 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-order let-expanded="expanded">
-                      <tr>
+                      <tr *ngIf="order.status == true">
                         <td>{{order.GroupLine.Line.name | titlecase}}</td> 
                         <td>{{order.GroupLine.Line.resolution }} </td> 
   
