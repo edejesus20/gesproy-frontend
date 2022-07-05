@@ -1,3 +1,38 @@
-<p>
-  create_mantenimiento works!
-</p>
+
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>
+
+
+<p-dialog [(visible)]="Dialog" 
+[style]="{'height': '50%','width': '50%'}"[resizable]="false" zindex="10000"
+ [showHeader]="false" [closeOnEscape]="false" [closable]="false"
+[modal]="true" >
+
+    <div class="flex flex-column " style="flex: 1">
+        <div class="text-center">
+            <i class="pi pi-desktop" style="font-size: 3rem"></i>
+            <h4>Esta Seguro de Cambiar el Estado del Sotware?</h4>
+            <p>Por Favor de escribir la clave de acceso</p>
+        </div>
+    </div>
+    <div class="p-inputgroup" [style]="{'margin-top':'10px'}">
+      <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257">
+        <i class="pi pi-bookmark-fill"></i></span>
+
+      <input type="text" class="p-inputtext-lg" pInputText name="Clave" 
+       #ngModel [(ngModel)]="clave" placeholder="Clave" required>  
+ 
+  </div>
+
+
+  <ng-template pTemplate="footer" class="titleCard" >
+    <div style="text-align: center;">
+      <button pButton pRipple label="No" icon="pi pi-times" style="color: rgb(31, 45, 64);" 
+      class="p-button-text" (click)="cerrar()" ></button>
+      <button pButton pRipple label="Si"  style="background: #f16357" 
+      class=" p-button-raised p-button-rounded" 
+      icon="pi pi-check"   (click)="enviar(clave)" [disabled]="clave=='' "></button>
+    </div>
+  </ng-template>
+</p-dialog>

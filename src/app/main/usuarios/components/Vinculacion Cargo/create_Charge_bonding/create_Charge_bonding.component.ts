@@ -18,7 +18,7 @@ import { Charge_bondingI } from 'src/app/models/user/teacher';
 })
 export class Create_Charge_bondingComponent implements OnInit {
   public Dialog:boolean =false
-   public bandera:boolean=false
+   public bandera:boolean=false 
   public form:FormGroup=this.formBuilder.group({
     name:['', [Validators.required]],
     Scales: this.formBuilder.array([this.formBuilder.group({

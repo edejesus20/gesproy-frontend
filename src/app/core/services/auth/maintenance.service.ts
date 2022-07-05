@@ -66,6 +66,14 @@ export class MaintenanceService {
       catchError(this.handleError)
     )
 }
+getclave(clave: string): Observable<{maintenance:MaintenanceI}> {
+  return this.http
+    .post<{maintenance:MaintenanceI}>(this.base_path_get + '/clave',{clave:clave})
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
  // Get students data
 
  getList(): Observable<{ maintenances: MaintenanceI[] }> {
