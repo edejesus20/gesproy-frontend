@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { ValidateGuard } from './core/guards/validate.guard';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-  {
-    path: '',
-    component:AppComponent
-  },
+  { 
+    path: 'mantenimiento',
+    component:MantenimientoComponent
+  }
   // {
   //   path: '**',
   //   redirectTo: '/landing',

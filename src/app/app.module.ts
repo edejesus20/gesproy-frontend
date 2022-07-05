@@ -54,10 +54,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 @NgModule({
   declarations: [
     AppComponent,
-      
+    MantenimientoComponent,
   ],
   imports: [
     CommonModule,

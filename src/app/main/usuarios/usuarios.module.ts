@@ -100,6 +100,7 @@ import { Show_one_ChargeComponent } from './components/Cargo/show_one_Charge/sho
 import { Create_ChargeComponent } from './components/Cargo/create_Charge/create_Charge.component';
 import { Edit_ChargeComponent } from './components/Cargo/edit_Charge/edit_Charge.component';
 import { Delete_ChargeComponent } from './components/Cargo/delete_Charge/delete_Charge.component';
+import { MantenimientoComponent } from './components/Maintenance/mantenimiento/mantenimiento.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +174,7 @@ Show_one_ChargeComponent,
     Create_ChargeComponent,
     Edit_ChargeComponent,
    Delete_ChargeComponent,
+   MantenimientoComponent
    
   ],
   imports: [

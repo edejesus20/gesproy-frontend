@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { UserLoginI } from './models/authorization/usr_User';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { valorReloj, XsegundoService } from './core/services/reloj/Xsegundo.service';
+import { MaintenanceService } from './core/services/auth/maintenance.service';
 const translate = require('translate');
 
 @Component({
@@ -18,15 +19,33 @@ const translate = require('translate');
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'AppTuristica';
   mantenimiento:boolean = false;
   video: string='assets/video/manteni.mp4';
   constructor(
     private primengConfig: PrimeNGConfig,
+    private maintenanceService: MaintenanceService,
+    private router: Router
    ) {}
 
   ngOnInit() {
+    // console.log(this.router.url)
+    this.maintenanceService.getUrl('/').subscribe((cnt_groupFromApi)=>{
+      if(cnt_groupFromApi.maintenance != null){
+            this.mantenimiento= true
+            // console.log('aquii')
+        }else{
+          this.mantenimiento= false
+
+        }
+        // console.log(this.mantenimiento)
+
+        if(this.mantenimiento == true){
+          this.router.navigateByUrl('/mantenimiento');
+        }
+     
+    })
     this.primengConfig.ripple = true; 
   }
 }

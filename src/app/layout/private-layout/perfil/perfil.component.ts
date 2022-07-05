@@ -1221,15 +1221,17 @@ public Dialog:boolean=false
 
       }
       control.removeAt(index)
+
       if( this.FilesFormaciones[index] != undefined){
           // console.log('aquii-actualizado file')
 
           this.FilesFormaciones.splice(index,1)
           
+          
         }
         if(this.FilesResolusiones[index] != undefined){
           this.FilesResolusiones.splice(index,1)
-
+          this.validandoCertificado.splice(index,1)
         }
         // console.log(this.FilesFormaciones,'this.FilesFormaciones');
       // al eliminar un registro, se debe quitar el file del array

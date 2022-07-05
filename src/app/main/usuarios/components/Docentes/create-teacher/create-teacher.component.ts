@@ -1000,6 +1000,7 @@ get getWorkexperiences() {
       }
       if(this.FilesResolusiones[index] != undefined){
         this.FilesResolusiones.splice(index,1)
+        this.validandoCertificado.splice(index,1)
 
       }
         // console.log(this.FilesFormaciones,'this.FilesFormaciones');
