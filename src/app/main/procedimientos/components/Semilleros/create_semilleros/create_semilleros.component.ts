@@ -159,6 +159,7 @@ public Valorconstruccion:boolean=false
   }
 }
 private vaciar(){
+  this.Grupo=null
   this.form.reset()
   this.getStudents.reset()
   this.getStudents.clear()
