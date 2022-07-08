@@ -551,14 +551,268 @@
                       || form.value.LineId == ''  || form.value.ThematicId == ''"
                       icon="pi pi-angle-right" iconPos="right"></p-button>
                   </div>
-
-              
-       
                 </ng-template>
                 </p-card>
               </div>
             </ng-template>
+            <ng-template [ngIf]="activeIndex==3">
             
+                <div class="stepsdemo-content">
+                      <p-card>
+                      
+                          <ng-template pTemplate="title">
+                          <div class="text-center">
+                            INFORMACIÓN DEL PROYECTO
+
+                          </div>
+                          
+                          </ng-template>
+
+                          <div class="field ">
+                            <label for="title"style="font-weight: bold;">Titulo del Proyecto</label>
+                              <div class="p-inputgroup" >
+                                <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                <input type="text" class="p-inputtext-lg" pInputText name="title" 
+                                  formControlName="title" 
+                                  title="Titulo del Proyecto" required>  
+                
+                              </div>
+                          </div>
+
+                          <br>
+                          <div class="field ">
+                            <label for="title"style="font-weight: bold;">Resumen del Proyecto</label>
+                          <div class="p-inputgroup" style="margin-bottom: 10px;">
+                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                            <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                            pInputTextarea [autoResize]="true"  title="Resumen del Proyecto"
+                           name="Project_summary" formControlName="Project_summary"
+                           placeholder="El resumen del proyecto debe elaborarse en un máximo de 1000 palabras (dos hojas a espacio sencillo) y contener la información necesaria para darle al lector una idea precisa de la pertinencia y calidad del proyecto. El resumen comprende una breve síntesis del problema a investigar, los objetivos (generales y específicos), resultados esperados, marco teórico y metodología a utilizar."
+                           required></textarea>
+                            
+                          </div>
+                        </div>
+                        <br>
+                        <div class="field ">
+                          <label for="title"style="font-weight: bold;">PALABRAS CLAVE</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true"  title="Palabras Claves"
+                            name="keywords" formControlName="keywords"
+                            placeholder="(Se pueden escribir las palabras o combinaciones de palabras que sean necesarias)."
+                            required></textarea>
+                              
+                            </div>
+                      </div>
+                      <div class="text-center">
+                        <h4> Descriptores del Proyecto </h4>
+                      </div>
+                      <div class="field ">
+                        <label for="title"style="font-weight: bold;">1. PLANTEAMIENTO DEL PROBLEMA:</label>
+                          <div class="p-inputgroup" style="margin-bottom: 10px;">
+                            <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                            <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                            pInputTextarea [autoResize]="true" title="Planteamiento del Problema"
+                          name="problem_statement" formControlName="problem_statement"
+                          placeholder="En la definición del problema de estudio lo primero que nos interesa es conocer, saber, lo que será investigado: Por qué, para qué, cual es el valor o la importancia  del hecho o fenómeno a investigar. Si la investigación a realizar tiene criterios de prioridad, novedad, oportunidad, conformismo o comportamiento. A fin de identificar claramente la pregunta que se quiere responder o el problema concreto cuya solución o entendimiento se contribuirá con la ejecución del proyecto de investigación. Por lo tanto se recomienda hacer una descripción precisa y completa de la naturaleza y magnitud del problema y justificar la necesidad de la investigación en términos del desarrollo del país y/o del aporte al conocimiento científico global."
+                          required></textarea>
+                            
+                          </div>
+                    </div>
+
+                    <div class="field ">
+                      <label for="title"style="font-weight: bold;">2. FORMULACIÓN DEL PROBLEMA</label>
+                        <div class="p-inputgroup" style="margin-bottom: 10px;">
+                          <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                          <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                          pInputTextarea [autoResize]="true" title="Formulación del Problema"
+                        name="problem_formulation" formControlName="problem_formulation"
+                        placeholder="La formulación del problema, es la estructuración de toda la investigación, de tal forma que uno de sus componentes resulte parte de un todo y que ese todo forme un cuerpo que tenga lógica de investigación. Se debe por lo tanto, sintetizar la cuestión proyectada para investigar, generalmente a través de un interrogante."
+                        required></textarea>
+                          
+                        </div>
+                  </div>
+                  <div class="text-center">
+                    <h4> 3. OBJETIVOS DEL PROYECTO </h4>
+                  </div>
+                        <div class="field ">
+                          <label for="title"style="font-weight: bold;">3.1 OBJETIVO GENERAL</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Objetivo General"
+                            name="general_objetive" formControlName="general_objetive"
+                            placeholder="Es recomendable formular un solo objetivo general global, coherente con el problema planteado"
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">3.2 OBJETIVOS ESPECÍFICOS</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Objetivos Específicos"
+                            name="specific_objectives" formControlName="specific_objectives"
+                            placeholder="Los objetivos específicos conducirán a lograr el objetivo general y que son alcanzables con la metodología propuesta."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">4. JUSTIFICACIÓN</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="3" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="justificación"
+                            name="justification" formControlName="justification"
+                            placeholder="Justificar una investigación es exponer las razones por las cuales se quiere realizar. Toda investigación debe realizarse con un propósito definido. Debe explicar porque es conveniente la investigación y qué o cuáles son los beneficios que se esperan con el conocimiento obtenido."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">5. DELIMITACIÓN</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="5" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Delimitación"
+                            name="delimitation" formControlName="delimitation"
+                            placeholder="Es pertinente dar al problema una formulación lógica, adecuada, precisar sus límites, su alcance, para ello es necesario tener en cuenta los siguientes factores: •	Viabilidad •	Lugar o espacio donde se llevará a cabo la investigación. •	Tiempo •	Financiación"
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+                         <div class="text-center">
+                          <h4> 6. MARCO TEÓRICO</h4>
+                        </div>
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">6.1 ANTECEDENTES DE LA INVESTIGACIÓN</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="4" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Antecedentes de la Investigación"
+                            name="investigation_background" formControlName="investigation_background"
+                            placeholder="Los antecedentes del problema, son las investigaciones que se han hecho sobre el objeto de investigación y te pueden servir para ampliar o continuar su objeto de investigación.  En este aspecto entrara en juego la capacidad investigadora del grupo de trabajo, aquí se condensará todo lo relacionado a lo que se ha escrito e investigado sobre el objeto de investigación."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">6.2 FUNDAMENTACIÓN TEÓRICA</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="4" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Fundamentación teorica"
+                            name="theoretical_foundation" formControlName="theoretical_foundation"
+                            placeholder="En este aspecto se condensara todo lo pertinente a la literatura que se tiene sobre el tema a investigar. Debe ser una búsqueda detallada y concreta donde el tema y la temática del objeto a investigar tengan un soporte teórico, que se pueda debatir, ampliar, conceptualizar y concluir. Ninguna investigación debe privarse de un fundamento o marco teórico o de referencia."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">7. IDENTIFICACIÓN DE LAS VARIABLES </label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Identificación de Variable"
+                            name="identification_of_the_variables" formControlName="identification_of_the_variables"
+                            placeholder="La identificación de las variables comienza con la explicitación de las mismas en el planteamiento del problema, la formulación de los objetivos y continúa cuando se trabaja el marco teórico, momento en el que se identifican y conceptualizan.                                                                          La identificación de las variables es un elemento crucial, puesto que permite establecer claramente lo que se va a medir, deben ser definidas, para que tanto el investigador como asesores, correctores y otros, puedan entender claramente cuál es su objetivo."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">8. METODOLOGÍA</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="metodología"
+                            name="methodology" formControlName="methodology"
+                            placeholder="Debe mostrar, en forma organizada, precisa, cómo serán alcanzados cada uno de los objetivos específicos propuestos. La metodología debe reflejar la estructura lógica y el rigor científico del proceso de investigación desde la elección de un enfoque metodológico específico (preguntas con hipótesis fundamentadas correspondientes, diseños muestrales o experimentales) hasta la forma como se van a analizar, interpretar y presentar los resultados. Deben detallarse, los procedimientos, técnicas, actividades y demás estrategias metodológicas requeridas para la investigación. Deberá indicarse el proceso a seguir en la recolección de la información, así como en la organización, sistematización y análisis de los datos"
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">9. IMPACTO ESPERADO</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Impacto Esperado"
+                            name="expected_impact" formControlName="expected_impact"
+                            placeholder="El impacto esperado no es una reformulación de los resultados sino una descripción de la incidencia de los resultados desde el punto de vista de los asuntos o problemas estratégicos definidos en los Planes Estratégicos de los Programas Nacionales. Se relacionan principalmente con la solución de problemas nacionales globales, y/o con el desarrollo del país, en términos académicos, socioeconómicos, ambientales, de productividad, etc. El investigador debe identificar claramente cuál es el aporte del proyecto al fortalecimiento de la capacidad científica regional, nacional y, cuando lo amerite, al conocimiento de frontera a nivel mundial."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">10. ESTRATEGIA DE COMUNICACIÓN</label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="Estrategia de Comunicación"
+                            name="communication_strategy" formControlName="communication_strategy"
+                            placeholder="Todo proyecto debe plantear una estrategia de comunicación de los resultados, tanto en medios científicos como divulgativos. La investigación que no se publica es como si no existiera. Las estrategias de comunicación pueden variar según el tipo de proyecto y la confidencialidad que requiera, pero en todo caso, debe haber una forma de someterse a la crítica autorizada y otra de llegar a amplios sectores de la sociedad. Se debe indicar en que revistas nacionales y/o internacional se publicarán los resultados y/o que procedimientos utilizarán para proteger y/o dar a conocer los productos de la investigación."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">11. CRONOGRAMA DE ACTIVIDADES </label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="cronograma de actividades"
+                            name="timeline_of_activities" formControlName="timeline_of_activities"
+                            placeholder="Es un plan de trabajo o un plan de actividades, que muestra la duración del proceso investigativo."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">12. PRESUPUESTO </label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="presupuesto"
+                            name="budget" formControlName="budget"
+                            placeholder="El presupuesto debe presentarse en forma global y desglosada en tablas los cuales dan cuenta del presupuesto global, personal, bienes y equipos, materiales y suministros, bibliografía, servicios técnicos, software, salidas de campo, eventos científicos Y publicaciones. Así como se describieron en los términos de referencia."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+                         <div class="field ">
+                          <label for="title"style="font-weight: bold;">13. REFERENTES BIBLIOGRÁFICOS </label>
+                            <div class="p-inputgroup" style="margin-bottom: 10px;">
+                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                              <textarea rows="7" cols="30" [style]="{'border-radius':'10px'}" 
+                              pInputTextarea [autoResize]="true" title="referencia bibliograficas"
+                            name="bibliographical_references" formControlName="bibliographical_references"
+                            placeholder="En la bibliografía se registran las obras que tratan del tema, implícita o explícitamente, no es recomendable citar obras de cultura general, como enciclopedias, diccionarios, etc. La presentación de las referencias debe seguir las normas APA (American Psychological Association)."
+                            required></textarea>
+                              
+                            </div>
+                         </div>
+
+                          <ng-template pTemplate="footer">
+                            <div class="grid grid-nogutter justify-content-between">
+                              <p-button label="Atras" [disabled]="form.value.TeacherId == ''" 
+                              (onClick)="activeIndex = 2" icon="pi pi-angle-left"></p-button>
+                          </div>
+                        </ng-template>
+                    </p-card>
+              </div>
+            </ng-template>
             </div>
             </div>
             
