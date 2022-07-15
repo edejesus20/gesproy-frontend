@@ -4,7 +4,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
     [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
-    [globalFilterFields]="['id','name','justification','objectives']"
+    [globalFilterFields]="['id','name','LineDetail.justification','LineDetail.objectives','LineDetail.resolution']"
     [columns]="cols"
    ><!-- styleClass="p-datatable-gridlines" -->
   <ng-template pTemplate="caption">
@@ -37,10 +37,11 @@
         </ng-template>
           <!-- <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th> -->
           <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="justification">JUSTIFICACIÓN<p-sortIcon field="justification"></p-sortIcon></th>
-          <th pSortableColumn="objectives">OBJETIVOS<p-sortIcon field="objectives"></p-sortIcon></th>
+          <th pSortableColumn="LineDetail.justification">JUSTIFICACIÓN<p-sortIcon field="LineDetail.justification"></p-sortIcon></th>
+          <th pSortableColumn="LineDetail.objectives">OBJETIVOS<p-sortIcon field="LineDetail.objectives"></p-sortIcon></th>
           <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
-          <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th>
+          <th pSortableColumn="LineDetail.resolution">RESOLUCIÓN<p-sortIcon field="LineDetail.resolution"></p-sortIcon></th>
+          <th pSortableColumn="Anexo">AENXO<p-sortIcon field="Anexo"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -57,8 +58,8 @@
        
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.name  | titlecase}}</td>
-          <td>{{item.justification }}</td>
-          <td>{{item.objectives }}</td>
+          <td>{{item.LineDetail.justification }}</td>
+          <td>{{item.LineDetail.objectives }}</td>
           <td >
             <span *ngFor="let i of item.LineThematics">
               <span style="display: flex;" *ngIf="i.status == true">
@@ -66,7 +67,19 @@
               </span>
             </span>
           </td>
-          <td>{{item.resolution | titlecase}}</td>
+          <td>{{item.LineDetail.resolution | titlecase}}</td>
+          <td>
+            <ng-template [ngIf]="item.Anexo != null">
+              <div class="custom-input-file p-1" style="width: 100%;">
+                <a pInputText
+                class="input-file p-inputtext-lg mt-4" 
+                style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{item.Anexo}}">
+                {{item.name}}</a>
+              </div>
+            </ng-template>
+            
+            
+          </td>
           <ng-template [ngIf]="mostrar==1">
               
               <td >

@@ -71,17 +71,14 @@ export class Create_linesComponent implements OnInit {
       command: (event: any) => {
           this.activeIndex = 0;
          }
-  },
-  {
-      label: 'Registrar Mas Detalles',
-      command: (event: any) => {
-          this.activeIndex = 1;
-        }
-  },
- 
-
-  
-];
+      },
+      {
+          label: 'Registrar Mas Detalles',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+    ];
 
     // this.buildForm();
     this.thematic()
@@ -267,6 +264,28 @@ export class Create_linesComponent implements OnInit {
                   }, 1000);
                   }
                 }, error => console.error(error))
+          }else{
+           
+            var date = new Date('2020-01-01 00:00:03');
+            function padLeft(n:any){ 
+              return n ="00".substring(0, "00".length - n.length) + n;
+            }
+            var interval = setInterval(() => {
+            var minutes = padLeft(date.getMinutes() + "");
+            var seconds = padLeft(date.getSeconds() + "");
+            // console.log(minutes, seconds);
+            if( seconds == '03') {
+            this.messageService.add({severity:'success', summary: 'Success', 
+            detail: 'Registro de Linea Creado con exito'});
+            }
+            date = new Date(date.getTime() - 1000);
+            if( minutes == '00' && seconds == '01' ) {
+              this.volver()
+              // this.router.navigateByUrl('/Procedimientos/line');
+              clearInterval(interval); 
+            }
+          }, 1000);
+            
           }
         }
        

@@ -5,10 +5,6 @@
   <br>
       
       <div [style]="{'margin-top':'-1px'}" >
-          <!-- <div fxLayout="row" class="titleCard">
-              <i class="pi pi-credit-card" style="font-size: 2rem;margin-right: 10px;"></i>
-            <h2 class="fondebabutton" style="margin-top: -1px;">Registrar Grupo de Investigacion</h2>
-          </div> -->
           <br>
     
             <div style="border: 1px solid black;padding: 10px;">
@@ -27,16 +23,16 @@
                   <!-- <img alt="logo" src="{{image2}}" 
                   style="width: 100%"/> -->
                   <p-button (click)="Dialog = true" icon="pi pi-times" 
-                  [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+                  [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto','margin-top':'20px'}"
                   styleClass="p-button-text" label="Cancelar"></p-button>
                 </div>
               </div>
+              
               <div style="border: 1px solid gray;border-radius:10px"class="p-4 ">
                 <br> 
             <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 
             <ng-template [ngIf]="activeIndex==0">
-
               <div class="stepsdemo-content">
                 <p-card>
                     <!-- <ng-template pTemplate="title">
@@ -218,26 +214,9 @@
             </div>
 
             </ng-template>
+            </div>
 
-        
-
-          
-              </div>
-
-              
-           
-            
-
-           
-              
-
-             
-
-
-
-
-      <ng-template [ngIf]="bandera == false">
-                          
+      <ng-template [ngIf]="bandera == false">            
             <div fxLayout="row" class="titleCard" style="margin-top: 20px">
               <button pButton type="submit" (click)="onSubmit($event)" [disabled]="!form.valid"
                icon="pi pi-check" class="p-button-success p-button-raised p-button-rounded" 
@@ -248,17 +227,10 @@
       <ng-template [ngIf]="bandera == true">
         <br>
           <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
-      
       </ng-template>
-
             </div> 
-      
       </div>
-
-
-       
-        
-            
+    
 </p-dialog>
 </form>
 <p-toast></p-toast>

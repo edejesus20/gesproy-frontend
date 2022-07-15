@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Thematic_axisService } from 'src/app/core/services/investigacion/Thematic_axis.service';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { ThematicService } from 'src/app/core/services/Procedimientos/Thematic.service';
 import { LineI, LineThematicI, ThematicI, Thematic_axisI } from 'src/app/models/projet/line';
+import { environment } from 'src/environments/environment';
 import { Create_ThematicComponent } from '../../Areas y tematicas lineas/create_Thematic/create_Thematic.component';
 import { Create_Thematic_axisComponent } from '../../Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
 const translate = require('translate');
@@ -18,7 +19,14 @@ const translate = require('translate');
 })
 export class Edit_linesComponent implements OnInit {
   public bandera:boolean=false
-
+  API_URI = environment.API_URI;
+  items: MenuItem[]=[]
+    
+  activeIndex: number = 0;
+  AnexoAdjuntado:any | null = null
+  BanderaAnexo:boolean=false
+  mostrarAnexo:string | null = null
+  
   public mostrar:number=1;
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
@@ -46,6 +54,20 @@ export class Edit_linesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Registrar Mas Detalles',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+    ];
     this.buildForm();
     this.filteredCountries=[]
     
@@ -143,8 +165,8 @@ export class Edit_linesComponent implements OnInit {
     this.form = this.formBuilder.group({
       id:[''],
       name: ['', [Validators.required]],
-      justification: ['', [Validators.required]],
-      objectives: ['', [Validators.required]],
+      justification: [''],
+      objectives: [''],
       Thematics: this.formBuilder.array([this.formBuilder.group(
         {
           ThematicId:['', [Validators.required]],
@@ -152,6 +174,7 @@ export class Edit_linesComponent implements OnInit {
 
       })]),
       resolution: [''],
+      Anexo: [''],
     });
   }  
 
@@ -159,7 +182,7 @@ export class Edit_linesComponent implements OnInit {
     e.preventDefault();
     let control = <FormArray>this.form.controls['Thematics']
 
-    let formValue: LineI = this.form.value;
+    let formValue: any = this.form.value;
     if(this.Thematics1.length == 0 ){
       for (let key of control.value) {
 
@@ -181,36 +204,75 @@ export class Edit_linesComponent implements OnInit {
     if(formValue.name != "" 
     // && formValue.justification != "" && 
     // formValue.objectives !="" 
-    && formValue.id 
+    && formValue.id != undefined && formValue.Thematics.length > 0
     // &&
     // formValue.thematics != ""  &&  
     // formValue.resolution != ""
     ){
       this.bandera=true
+      console.log(formValue,'formValue')
 
     this.lineService.updateItem(formValue.id,formValue).subscribe(
-      () => {
-        var date = new Date('2020-01-01 00:00:03');
-          function padLeft(n:any){ 
-            return n ="00".substring(0, "00".length - n.length) + n;
+      (algo) => {
+        if(algo.line.id){
+
+          if(this.AnexoAdjuntado != null){
+              let data ={
+                LineId:algo.line.id,
+                url:'',
+                file:this.AnexoAdjuntado
+                }
+
+                this.lineService.Anexo(data.LineId.toString(),data.url.toString(),data.file).subscribe(result=>{
+                  if(result){
+                    var date = new Date('2020-01-01 00:00:03');
+                    function padLeft(n:any){ 
+                      return n ="00".substring(0, "00".length - n.length) + n;
+                    }
+                    var interval = setInterval(() => {
+                    var minutes = padLeft(date.getMinutes() + "");
+                    var seconds = padLeft(date.getSeconds() + "");
+                    // console.log(minutes, seconds);
+                    if( seconds == '03') {
+                    this.messageService.add({severity:'success', summary: 'Success', 
+                    detail: 'Registro de Linea Actualizado con exito'});
+                    }
+                    date = new Date(date.getTime() - 1000);
+                    if( minutes == '00' && seconds == '01' ) {
+                      this.ngOnInit()
+                      this.volver(new Event(''))
+                     this.bandera=false
+                      // this.router.navigateByUrl('/Procedimientos/line');
+                      clearInterval(interval); 
+                    }
+              }, 1000);
+                  }
+                }, error => console.error(error))
+          }else{
+            var date = new Date('2020-01-01 00:00:03');
+            function padLeft(n:any){ 
+              return n ="00".substring(0, "00".length - n.length) + n;
+            }
+            var interval = setInterval(() => {
+            var minutes = padLeft(date.getMinutes() + "");
+            var seconds = padLeft(date.getSeconds() + "");
+            // console.log(minutes, seconds);
+            if( seconds == '03') {
+            this.messageService.add({severity:'success', summary: 'Success', 
+            detail: 'Registro de Linea Actualizado con exito'});
+            }
+            date = new Date(date.getTime() - 1000);
+            if( minutes == '00' && seconds == '01' ) {
+              this.ngOnInit()
+              this.volver(new Event(''))
+             this.bandera=false
+              // this.router.navigateByUrl('/Procedimientos/line');
+              clearInterval(interval); 
+            }
+      }, 1000);
           }
-          var interval = setInterval(() => {
-          var minutes = padLeft(date.getMinutes() + "");
-          var seconds = padLeft(date.getSeconds() + "");
-          // console.log(minutes, seconds);
-          if( seconds == '03') {
-          this.messageService.add({severity:'success', summary: 'Success', 
-          detail: 'Registro de Linea Actualizado con exito'});
-          }
-          date = new Date(date.getTime() - 1000);
-          if( minutes == '00' && seconds == '01' ) {
-            this.ngOnInit()
-            this.volver(new Event(''))
-           this.bandera=false
-            // this.router.navigateByUrl('/Procedimientos/line');
-            clearInterval(interval); 
-          }
-    }, 1000);
+        }
+   
       },async error => {
         if(error != undefined) {
    this.bandera=false
@@ -233,10 +295,25 @@ export class Edit_linesComponent implements OnInit {
       if(cnt_groupFromApi.line.id != undefined)
       this.form.controls['id'].setValue(cnt_groupFromApi.line.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.line.name)
-      // this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
-      // this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
+      if(cnt_groupFromApi.line.LineDetail != undefined){
+        this.form.controls['justification'].setValue(cnt_groupFromApi.line.LineDetail.justification)
+          this.form.controls['objectives'].setValue(cnt_groupFromApi.line.LineDetail.objectives)
+        this.form.controls['resolution'].setValue(cnt_groupFromApi.line.LineDetail.resolution)
+      }
+      console.log(cnt_groupFromApi.line.Anexo,'cnt_groupFromApi.line.Anexo')
+      if(cnt_groupFromApi.line.Anexo != undefined && cnt_groupFromApi.line.Anexo != null){
+        this.mostrarAnexo=cnt_groupFromApi.line.Anexo
+        this.BanderaAnexo=false
+
+      }else{
+        this.BanderaAnexo=true
+        this.mostrarAnexo=null
+      }
+
+      
+   
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
-      // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+    
       // this.thematic()
       this.thematicService.getList().subscribe(list => {
         for (const key of list.thematics) {
@@ -303,6 +380,9 @@ export class Edit_linesComponent implements OnInit {
   }
 
   public volver(event: Event){
+    this.BanderaAnexo=false
+    this.mostrarAnexo=null
+    this.AnexoAdjuntado=null
     event.preventDefault
     this.tabla = true
     this.ngOnInit()
@@ -405,4 +485,19 @@ export class Edit_linesComponent implements OnInit {
   //       }
   // });
   // }
+
+ 
+  onFileChange(event:any) {
+    event.preventDefault();
+    // let control = <FormArray>this.form.controls['Anexos']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(this.form.value.Anexo != '' && this.BanderaAnexo == true){
+      // console.log('aquii')
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+        this.AnexoAdjuntado=file
+            // console.log(this.AnexoAdjuntado,'this.Anexo')
+        }
+      }
+    }
 }

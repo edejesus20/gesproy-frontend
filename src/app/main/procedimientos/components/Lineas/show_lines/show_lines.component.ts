@@ -7,6 +7,7 @@ import {  PrimeNGConfig } from 'primeng/api';
 
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { LineI } from 'src/app/models/projet/line';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show_lines',
@@ -15,6 +16,9 @@ import { LineI } from 'src/app/models/projet/line';
 })
 export class Show_linesComponent implements OnInit {
   public lines:LineI[]=[]
+  API_URI = environment.API_URI;
+
+  
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;
