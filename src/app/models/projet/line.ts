@@ -1,17 +1,38 @@
 import { LineProgramI, ProgramI } from "../institution/program";
 
+// export interface LineI {
+//     id?:number;
+//     name: string;
+//     justification: string;
+//     objectives: string;
+//     // thematics: string;
+//     resolution?: string;
+//     
+//    
+// }
+
 export interface LineI {
     id?:number;
     name: string;
-    justification: string;
-    objectives: string;
+    Anexo?: string;
+    // justification?: string;
+    // objectives: string;
     // thematics: string;
-    resolution?: string;
-    Thematics?:ThematicI[]
-    Programs?:ProgramI[]
     LinePrograms?:LineProgramI[]
     LineThematics?:LineThematicI[]
+    Thematics?:ThematicI[]
+    Programs?:ProgramI[]
+    LineDetailId?: string;
+    LineDetail?: LineDetailI
 }
+export interface LineDetailI {
+    id?:number;
+    resolution?: string;
+    justification?: string;
+    objectives: string;
+    // thematics: string;
+}
+
 export interface LineThematicI {
     id?:number;
     LineId:number;

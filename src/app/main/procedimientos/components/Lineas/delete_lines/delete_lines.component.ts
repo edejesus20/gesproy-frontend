@@ -94,10 +94,10 @@ export class Delete_linesComponent implements OnInit {
       if(cnt_groupFromApi.line.id != undefined)
       this.form.controls['id'].setValue(cnt_groupFromApi.line.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.line.name)
-      this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
-      this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
+      // this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
+      // this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
-      this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+      // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
       if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
         this.agregarThematics(cnt_groupFromApi.line.Thematics)  
       } 
@@ -118,6 +118,8 @@ export class Delete_linesComponent implements OnInit {
     this.ngOnInit()
     this.displayMaximizable2 = false
    this.bandera=false
+  //  this.filteredCountries=[]
+
 
     //console.log(event)
   }

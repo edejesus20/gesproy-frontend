@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry,tap } from 'rxjs/operators';
 import { LineI } from 'src/app/models/projet/line';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -37,15 +37,31 @@ handleError(res: Response) {
 
 
 // Create a new item
-createItem(line: LineI): Observable<LineI> {
+createItem(line: LineI): Observable<{line:LineI}> {
   return this.http
-    .post<LineI>(this.base_path_post, JSON.stringify(line), this.httpOptions)
+    .post<{line:LineI}>(this.base_path_post, JSON.stringify(line), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)
     )
 }
 
+
+Anexo(LineId: string,url:string,file:any): Observable<any> {
+  let form= new FormData();//Crea un formulario
+  form.append('LineId',LineId);
+  form.append('url',url);
+  form.append('file',file);//Asigna el campo File
+  console.log(file,'FormData')
+  // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+    return this.http.post<any>(this.API_URI + '/api/subirAnexoLinea',form).pipe(
+    tap((res: any) => {
+      if (res) {
+      }
+    }),
+    catchError(this.handleError))
+}
+// G
 // Get single student data by ID
 getItem(id: number): Observable<{line:LineI}> {
   return this.http
@@ -85,9 +101,9 @@ getList(): Observable<{ lines: LineI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, line:LineI): Observable<LineI> {
+updateItem(id:number, line:LineI): Observable<{line:LineI}> {
   return this.http
-    .patch<LineI>(this.base_path_get + '/' + id, JSON.stringify(line), this.httpOptions)
+    .patch<{line:LineI}>(this.base_path_get + '/' + id, JSON.stringify(line), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)

@@ -52,10 +52,10 @@ export class Show_linesComponent implements OnInit {
               {
                 id:key.id,
                 name: key.name,
-                justification:key.justification,
-                objectives:key.objectives,
-                // thematics:key.thematics,
-                resolution:key.resolution,
+                // justification:key.justification,
+                // objectives:key.objectives,
+                // // thematics:key.thematics,
+                // resolution:key.resolution,
               }
             )
           
@@ -76,8 +76,8 @@ export class Show_linesComponent implements OnInit {
       array.push({ 
         id: key.id,
         Nombre:key.name,
-        Justificación:key.justification,
-        Objetivos:key.objectives,
+        // Justificación:key.justification,
+        // Objetivos:key.objectives,
         // Tematicas_Asociadas:key.thematics,
         // Resolución:key.resolution,
       })
@@ -149,8 +149,8 @@ export class Show_linesComponent implements OnInit {
               var row:any[] = [
                 // data.id?.toString(),
                 data.name.toString(),
-                data.justification.toString(),
-                data.objectives.toString(),
+                // data.justification.toString(),
+                // data.objectives.toString(),
                 // data.thematics.toString(),
                 // data.resolution?.toString()
               ]

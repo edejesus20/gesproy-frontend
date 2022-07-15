@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Thematic_axisService } from 'src/app/core/services/investigacion/Thematic_axis.service';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
@@ -17,10 +17,16 @@ const translate = require('translate');
   providers: [DialogService]
 })
 export class Create_linesComponent implements OnInit {
+
+  items: MenuItem[]=[]
+    
+  activeIndex: number = 0;
+  AnexoAdjuntado:any | null = null
+  
   public form: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
-    justification: ['', [Validators.required]],
-    objectives: ['', [Validators.required]],
+    justification: [''],
+    objectives: [''],
     // thematics: ['', [Validators.required]],
     Thematics: this.formBuilder.array([this.formBuilder.group(
       {
@@ -29,6 +35,7 @@ export class Create_linesComponent implements OnInit {
       }
     )]),
     resolution: [''],
+    Anexo: [''],
   });
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
@@ -56,8 +63,30 @@ export class Create_linesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+  },
+  {
+      label: 'Registrar Mas Detalles',
+      command: (event: any) => {
+          this.activeIndex = 1;
+        }
+  },
+ 
+
+  
+];
+
     // this.buildForm();
     this.thematic()
+    this.filteredCountries=[]
+
     // this.getAllthematic()
   }
 
@@ -97,11 +126,11 @@ export class Create_linesComponent implements OnInit {
   filterCountry(event:Event,filterValue?:string){
     if(filterValue != undefined){
       let filtered : any[] = [];
-      let query = filterValue;
+      // let query = filterValue;
   
       for(let i = 0; i < this.thematic_axiss.length; i++) {
           let country = this.thematic_axiss[i];
-          if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
               filtered.push(country);
           }
       }
@@ -136,23 +165,6 @@ export class Create_linesComponent implements OnInit {
     })
   }
 
-
-  // private buildForm() {
-  //   this.form = this.formBuilder.group({
-  //     name: ['', [Validators.required]],
-  //     justification: ['', [Validators.required]],
-  //     objectives: ['', [Validators.required]],
-  //     // thematics: ['', [Validators.required]],
-  //     Thematics: this.formBuilder.array([this.formBuilder.group(
-  //       {
-  //         ThematicId:['', [Validators.required]],
-  //         Thematic_axis: ['', [Validators.required]]
-  //       }
-  //     )]),
-  //     resolution: [''],
-  //   });
-  // }  
-
   cerrar(){
     this.router.navigateByUrl('/Procedimientos/line');
   }
@@ -162,8 +174,11 @@ export class Create_linesComponent implements OnInit {
     this.ngOnInit()
     this.mostrar2=true
     this.vaciar()
+    this.filteredCountries=[]
+
   }
   private vaciar(){
+    this.AnexoAdjuntado=null
     this.form.reset()
     this.getThematics.reset()
     this.getThematics.clear()
@@ -183,9 +198,24 @@ export class Create_linesComponent implements OnInit {
    
     let control = <FormArray>this.form.controls['Thematics']
     // console.log(control)
-    let formValue: LineI = this.form.value;
+    let formValue: any = this.form.value;
 
-    
+    // if(this.form.value.justification != "" ||
+    //   this.form.value.objectives !="" || this.form.value.resolution ){
+    //   this.detalles
+    //   formValue.LineDetail={
+    //     resolution: this.form.value.resolution,
+    //     justification: this.form.value.justification,
+    //     objectives: this.form.value.objectives
+    //   }
+    // }else{
+    //   formValue.LineDetail=undefined
+    // }
+    // if(this.form.value.Anexo != ""){
+    //   formValue.Anexo=this.form.value.Anexo
+    // }else{
+    //   formValue.Anexo=undefined
+    // }
     if(this.Thematics1.length == 0 ){
       for (const key of control.value) {
         // key.ThematicId=key.ThematicId.id
@@ -198,37 +228,51 @@ export class Create_linesComponent implements OnInit {
     }else{
       formValue.Thematics = this.Thematics1
     }
-    // console.log(control)
+    console.log(formValue,'formValue')
 
 
-    if(formValue.name != "" && formValue.justification != "" && 
-    formValue.objectives !="" ){
+    if(formValue.name != "" && formValue.Thematics.length > 0 ){
     this.bandera=true
 
     this.lineService.createItem(formValue).subscribe(
-      () => {
-        var date = new Date('2020-01-01 00:00:03');
-          function padLeft(n:any){ 
-            return n ="00".substring(0, "00".length - n.length) + n;
+      (algo) => {
+        if(algo.line.id){
+          if(this.AnexoAdjuntado != null){
+              let data ={
+                LineId:algo.line.id,
+                url:'',
+                file:this.AnexoAdjuntado
+                }
+
+                this.lineService.Anexo(data.LineId.toString(),data.url.toString(),data.file).subscribe(result=>{
+                  if(result){
+                    var date = new Date('2020-01-01 00:00:03');
+                    function padLeft(n:any){ 
+                      return n ="00".substring(0, "00".length - n.length) + n;
+                    }
+                    var interval = setInterval(() => {
+                    var minutes = padLeft(date.getMinutes() + "");
+                    var seconds = padLeft(date.getSeconds() + "");
+                    // console.log(minutes, seconds);
+                    if( seconds == '03') {
+                    this.messageService.add({severity:'success', summary: 'Success', 
+                    detail: 'Registro de Linea Creado con exito'});
+                    }
+                    date = new Date(date.getTime() - 1000);
+                    if( minutes == '00' && seconds == '01' ) {
+                      this.volver()
+                      // this.router.navigateByUrl('/Procedimientos/line');
+                      clearInterval(interval); 
+                    }
+                  }, 1000);
+                  }
+                }, error => console.error(error))
           }
-          var interval = setInterval(() => {
-          var minutes = padLeft(date.getMinutes() + "");
-          var seconds = padLeft(date.getSeconds() + "");
-          // console.log(minutes, seconds);
-          if( seconds == '03') {
-          this.messageService.add({severity:'success', summary: 'Success', 
-          detail: 'Registro de Linea Creado con exito'});
-          }
-          date = new Date(date.getTime() - 1000);
-          if( minutes == '00' && seconds == '01' ) {
-            this.volver()
-            // this.router.navigateByUrl('/Procedimientos/line');
-            clearInterval(interval); 
-          }
-    }, 1000);
+        }
+       
       },async error => {
         if(error != undefined) {
-    this.bandera=false
+        this.bandera=false
 
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
@@ -301,4 +345,28 @@ export class Create_linesComponent implements OnInit {
         }
   });
   }
+
+  // removeAnexos(event: Event){
+  //   event.preventDefault();
+  //   // let control = <FormArray>this.form.controls['Anexos']//aceder al control
+  //   // control.removeAt(index)
+  //   // if(control.length <= 0){
+  //   //  this.mostrar2=false
+  //   //  control.push(this.formBuilder.group({Anexos:['', [Validators.required]]}))//nuevo input
+
+  //   // }
+  // }
+  onFileChange(event:any) {
+    event.preventDefault();
+    // let control = <FormArray>this.form.controls['Anexos']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(this.form.value.Anexo != ''){
+      // console.log('aquii')
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+        this.AnexoAdjuntado=file
+            // console.log(this.AnexoAdjuntado,'this.Anexo')
+        }
+      }
+    }
 }

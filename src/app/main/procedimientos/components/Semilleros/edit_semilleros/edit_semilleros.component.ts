@@ -288,16 +288,16 @@ getstudents2() {
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
           let Group :any | null= null 
-          if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
-            && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+          // if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
+          //   && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
 
-              for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
-                if(clave.GroupLine?.GroupId && clave.status == true){
-                  Group=clave.GroupLine?.GroupId
-                }
-              }
+          //     for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
+          //       if(clave.GroupLine?.GroupId && clave.status == true){
+          //         Group=clave.GroupLine?.GroupId
+          //       }
+          //     }
 
-          }
+          // }
           for (const key of this.groups) {
 
             if(Group != null && parseInt(Group) == key.id){
@@ -588,11 +588,11 @@ getstudents2() {
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
 
         this.form.controls['creation_date'].setValue(creation_date)
-        this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
-        this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
-        this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
-        this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
-        this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
+        // this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
+        // this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
+        // this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
+        // this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
+        // this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
 
 
         if(cnt_groupFromApi.seedbed.Teacher != undefined){
@@ -608,16 +608,16 @@ getstudents2() {
                     this.form2=Apiteacher.teacher
 
                     let Group :any | null= null 
-                    if(Apiteacher.teacher.GroupLineTeachers?.length != undefined
-                      && Apiteacher.teacher.GroupLineTeachers?.length > 0){
+                    // if(Apiteacher.teacher.GroupLineTeachers?.length != undefined
+                    //   && Apiteacher.teacher.GroupLineTeachers?.length > 0){
           
-                        for (const clave of Apiteacher.teacher.GroupLineTeachers) {
-                          if(clave.GroupLine?.GroupId && clave.status == true){
-                            Group=clave.GroupLine?.GroupId
-                          }
-                        }
+                    //     for (const clave of Apiteacher.teacher.GroupLineTeachers) {
+                    //       if(clave.GroupLine?.GroupId && clave.status == true){
+                    //         Group=clave.GroupLine?.GroupId
+                    //       }
+                    //     }
           
-                    }
+                    // }
                     for (const key of this.groups) {
           
                       if(Group != null && parseInt(Group) == key.id){

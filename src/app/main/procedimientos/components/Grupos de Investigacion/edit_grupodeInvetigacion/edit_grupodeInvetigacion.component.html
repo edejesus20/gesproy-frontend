@@ -376,7 +376,8 @@ margin: 0;">
                                               [suggestions]="filteredCountries"
                                               title="SELECCIONE USUARIO"
                                               placeholder="SELECCIONE USUARIO"
-                                              (input)="llenar($event)"
+                                              (input)="llenar($event)" [dropdown]="true"(click)="llenar($event)" 
+
                                               (completeMethod)="filterCountry($event)" 
                                               field="todo" [multiple]="true">
                                               </p-autoComplete>
@@ -390,7 +391,7 @@ margin: 0;">
                                               [suggestions]="filteredCountries"
                                               title="SELECCIONE USUARIO"
                                               placeholder="SELECCIONE USUARIO"
-                                              (input)="llenar($event)"
+                                              (input)="llenar($event)" [dropdown]="true"(click)="llenar($event)" 
                                               (completeMethod)="filterCountry($event)" 
                                               field="todo" [multiple]="true">
                                               </p-autoComplete> -->

@@ -3,35 +3,44 @@ import { TeacherI } from "../user/teacher";
 import { GroupI, GroupLineSeedbedI } from "./group";
 import { HeadquarterProgramI } from "./headquarter";
 
+
 export interface SeedbedI {
     id?: number;
     creation_date: string;
     approval_date?:string;
-    resolution?:string
-    article?:string
     name: string;
     TeacherId: number
-    ObjetivoGeneral: string;
-    ObjetivosEspecificos: string;
-    Mision: string;
-    Vision: string;
-    estrategias: string;
-
+    Anexo?:string
     HeadquarterProgramId: number
     GroupId: number
-    
-    Teacher?:TeacherI
-    SeedbedStudent?:SeedbedStudentI
-    lines?:any[]
-    Students?:StudentI[];
+
     Group?:GroupI
+    Teacher?:TeacherI
+    DetailSeedbedId?:string
+    DetailSeedbed?:DetailSeedbedI
+
     HeadquarterProgram?:HeadquarterProgramI
     Program?:any
     SeedbedStudents?:SeedbedStudentI[]
 
     GroupLineSeedbeds?:GroupLineSeedbedI[]
+    lines?:any[]
+    Students?:StudentI[];
 
 }
+
+
+export interface DetailSeedbedI {
+    id?: number;
+    ObjetivoGeneral: string;
+    ObjetivosEspecificos: string;
+    Mision: string;
+    Vision: string;
+    estrategias: string;
+    resolution:string
+    article:string
+}
+
 
 export interface SeedbedStudentI {
     id?: number;

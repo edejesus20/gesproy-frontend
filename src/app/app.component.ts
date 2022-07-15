@@ -26,7 +26,9 @@ export class AppComponent implements OnInit{
   constructor(
     private primengConfig: PrimeNGConfig,
     private maintenanceService: MaintenanceService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService, 
+
    ) {}
 
   ngOnInit() {
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit{
     this.maintenanceService.getUrl('/').subscribe((cnt_groupFromApi)=>{
       if(cnt_groupFromApi.maintenance != null){
             this.mantenimiento= true
+            this.cerrarSesion()
             // console.log('aquii')
         }else{
           this.mantenimiento= false
@@ -48,5 +51,16 @@ export class AppComponent implements OnInit{
     })
     this.primengConfig.ripple = true; 
   }
+
+  cerrarSesion(){
+    this.setLogin(false)
+    this.authService.logout()
+    this.ngOnInit()
+    this.router.navigateByUrl('/login')
+    }
+
+    setLogin(value: boolean): void {
+      this.authService.setLogin(value);
+      }
 }
 

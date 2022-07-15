@@ -65,13 +65,13 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
                 // ident_colciencias:key.ident_colciencias,
                 HeadquarterProgramId:key.HeadquarterProgramId,
                 TeacherId:key.TeacherId,
-                group_code:key.group_code,
-                ObjetivoGeneral:key.ObjetivoGeneral,
+                // group_code:key.group_code,
+                // ObjetivoGeneral:key.ObjetivoGeneral,
                 CategoryGroupId:key.CategoryGroupId,
-                resolution:key.resolution,
-                Link_gruplac:key.Link_gruplac,
+                // resolution:key.resolution,
+                // Link_gruplac:key.Link_gruplac,
                 CategoryGroup:key.CategoryGroup,
-                Teacher:key.Teacher,
+                // Teacher:key.Teacher,
                 Program:key.Program
               }
             )
@@ -97,12 +97,12 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
         // HeadquarterProgramId:key.HeadquarterProgramId,
         Facultad:key.Program?.Faculty?.name,
         // Codigo:key.group_code,
-        ObjetivoGeneral:key.ObjetivoGeneral,
+        // ObjetivoGeneral:key.ObjetivoGeneral,
         // CategoryGroupId:key.CategoryGroupId,
         // Resolución:key.resolution,
         // Link_Gruplac:key.Link_gruplac,
         // Categoria:key.CategoryGroup?.name,
-        Lider:key.Teacher?.User?.fullName,
+        // Lider:key.Teacher?.User?.fullName,
       })
     }
     import("xlsx").then(xlsx => {
@@ -189,11 +189,11 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
                 // data.ident_colciencias.toString(),
                 // data.group_code.toString(),
                 data.Program?.Faculty?.name.toString(),
-                data.ObjetivoGeneral.toString(),
+                // data.ObjetivoGeneral.toString(),
                 // data.resolution?.toString(),
                 // data.Link_gruplac.toString(),
                 // data.CategoryGroup?.name.toString(),
-                data.Teacher?.User?.fullName.toString(),
+                // data.Teacher?.User?.fullName.toString(),
               ]
               body.push(row);
               

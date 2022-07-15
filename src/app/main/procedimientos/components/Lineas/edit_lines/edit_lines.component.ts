@@ -47,7 +47,7 @@ export class Edit_linesComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-   
+    this.filteredCountries=[]
     
   }
   AreaSeleccionada(pointIndex:number,event:Event){
@@ -178,8 +178,10 @@ export class Edit_linesComponent implements OnInit {
     //   key.ThematicId=key.ThematicId.id
     //   array.push({LineId:key.LineId,ThematicId:key.ThematicId})
     // }
-    if(formValue.name != "" && formValue.justification != "" && 
-    formValue.objectives !="" && formValue.id 
+    if(formValue.name != "" 
+    // && formValue.justification != "" && 
+    // formValue.objectives !="" 
+    && formValue.id 
     // &&
     // formValue.thematics != ""  &&  
     // formValue.resolution != ""
@@ -231,10 +233,10 @@ export class Edit_linesComponent implements OnInit {
       if(cnt_groupFromApi.line.id != undefined)
       this.form.controls['id'].setValue(cnt_groupFromApi.line.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.line.name)
-      this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
-      this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
+      // this.form.controls['justification'].setValue(cnt_groupFromApi.line.justification)
+      // this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
-      this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
+      // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
       // this.thematic()
       this.thematicService.getList().subscribe(list => {
         for (const key of list.thematics) {
@@ -308,6 +310,8 @@ export class Edit_linesComponent implements OnInit {
     this.thematic_axiss=[]
     this.thematics=[]
    this.bandera=false
+   this.filteredCountries=[]
+
 
     //console.log(event)
   }

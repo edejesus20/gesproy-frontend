@@ -6,51 +6,93 @@ import { LineProgramGroupI, ProgramI } from "./program";
 import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from "./roles_investigation";
 import { SeedbedI } from "./seedbed";
 
+
+
 export interface GroupI {
     id?: number;
     name: string;
-    ident_colciencias?:string
     HeadquarterProgramId:number
     TeacherId:number
-    group_code:string
-    ObjetivoGeneral: string;
-    ObjetivosEspecificos?: string;
-    Mision?: string;
-    Vision?: string
-    Perfil?:string
-    Metas?:string
-    Resultados?: string
-    Sector?: string
-    resolution:string
-    CategoryGroupId:number
-    Link_gruplac:string
+    CategoryGroupId?:number
+    Anexo?:string
+    DetailGroupId?:string
+    DetailGroup?:DetailGroupI
+    CategoryGroup?:CategoryGroupI
+
+    HeadquarterProgram?:HeadquarterProgramI
+    Program?:ProgramI,
+ 
+    // GroupLines?:GroupLineI[]
+
+    Anexos?:any[]
+    AnexosGroups?:AnexosGroupI[]
+    LineProgramGroups?:LineProgramGroupI[]
 
     InvestigatorCollaborators?:any[]
     lines?:any[]
     knowledge_areas?:any[] | Knowledge_areaI[]
     GroupKnowledge_areas?:GroupKnowledge_areaI[]
     Seedbeds?:any[]
-    Anexos?:any[]
-    AnexosGroups?:AnexosGroupI[]
-    
-    LineProgramGroups?:LineProgramGroupI[]
-    CategoryGroup?:CategoryGroupI
-    Teacher?:TeacherI
-    HeadquarterProgram?:HeadquarterProgramI
-    Program?:ProgramI,
+
+    GroupTeachers?:GroupTeacherI
     GroupInvestigatorCollaborators?:GroupInvestigatorCollaboratorI[],
     GroupStudents?:GroupStudentI[]
-    GroupLines?:GroupLineI[]
-    
-    // LineProgramGroups?
 }
+
+
+
+export interface DetailGroupI {
+    id?: number;
+    ObjetivoGeneral: string;
+    group_code:string
+    resolution:string
+    Link_gruplac:string
+    ObjetivosEspecificos: string;
+    Mision: string;
+    Vision: string
+    Perfil:string
+    Metas:string
+    Resultados: string
+    Sector: string
+}
+
+
+export interface GroupTeacherI {
+    id?: number;
+    GroupId:number;
+    RoleGroupTeacherId:number
+    TeacherId:number;
+
+    Group?:GroupI
+    Teacher?:TeacherI
+    RoleGroupTeacher?:RoleGroupTeacherI
+
+    GroupTeacherLines?:GroupTeacherLineI
+}
+
+
+export interface RoleGroupTeacherI {
+    id?: number;
+    name: string;
+}
+
+export interface GroupTeacherLineI {
+    GroupTeacherId:number;
+    GroupLineId:number;
+
+    GroupTeacher?:GroupTeacherI
+    GroupLine?:GroupLineI
+}
+
 
 export interface GroupLineI {
     id?: number;
     LineId:number;
-    Line?:LineI;
     GroupId:number;
-    GroupLineTeachers?:GroupLineTeacherI[]
+
+    Line?:LineI;
+  
+    // GroupLineTeachers?:GroupLineTeacherI[]
   
     status?:boolean
 }
@@ -63,16 +105,16 @@ export interface GroupLineSeedbedI {
 }
 
 
-export interface GroupLineTeacherI {
-    id?: number;
-    GroupLineId:number;
-    TeacherId:number;
-    RoleInvestigationId:number;
-    Teacher?:TeacherI
-    RoleInvestigation?:RoleInvestigationI
-    GroupLine?:GroupLineI
-    status?:boolean
-}
+// export interface GroupLineTeacherI {
+//     id?: number;
+//     GroupLineId:number;
+//     TeacherId:number;
+//     RoleInvestigationId:number;
+//     Teacher?:TeacherI
+//     RoleInvestigation?:RoleInvestigationI
+//     GroupLine?:GroupLineI
+//     status?:boolean
+// }
 
 export interface AnexosGroupI {
     id?: number;

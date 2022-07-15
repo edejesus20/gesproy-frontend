@@ -108,8 +108,6 @@ public form:FormGroup= this.formBuilder.group({
   InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
     {Usuarios:['', [Validators.required]],
     RoleInvestigadorId:[''],
-
-      // RoleId:['', [Validators.required]]
     }) 
     ]),
 
@@ -168,6 +166,7 @@ ArchivosEliminados:any[] =[]
     this.getCateghoria()
     this.getKnowledge_area()
     this.getLines()
+    this.filteredCountries=[]
     // console.log('aqui')
   }
   getLines() {
@@ -400,6 +399,8 @@ ArchivosEliminados:any[] =[]
   }
   private volver(){
     this.bandera=false
+    this.filteredCountries=[]
+
     this.mostrarFacultad = false
     this.mostrarHeadquarterProgram=false
     this.mostrarDirector=false
@@ -495,13 +496,15 @@ private vaciar(){
     formValue.TeacherId=this.form.value.TeacherId.id
     // console.log('aqui3',formValue)
 
-      if(this.HeadquarterProgramId == 0 &&this.TeacherId == 0 &&this.CategoryGroupId == 0){
+      if(this.HeadquarterProgramId == 0 &&this.TeacherId == 0 
+        // &&this.CategoryGroupId == 0
+        ){
           this.HeadquarterProgramId= formValue.HeadquarterProgramId
           this.TeacherId= formValue.TeacherId
-          this.CategoryGroupId= formValue.CategoryGroupId
+          // this.CategoryGroupId= formValue.CategoryGroupId
       }else{
         formValue.TeacherId=this.TeacherId
-        formValue.CategoryGroupId=this.CategoryGroupId
+        // formValue.CategoryGroupId=this.CategoryGroupId
         formValue.HeadquarterProgramId=this.HeadquarterProgramId
       }
 
@@ -570,14 +573,14 @@ private vaciar(){
     // formValue.ident_colciencias != "" &&
     // formValue.resolution != "" && 
     // formValue.group_code != "" && 
-    formValue.Sector != "" && 
-    formValue.ObjetivoGeneral != "" && 
-    formValue.ObjetivosEspecificos != "" && 
-    formValue.Mision != "" && 
-    formValue.Vision != "" && 
-    formValue.Resultados != "" && 
-    formValue.Perfil != "" && 
-    formValue.Metas != "" && 
+    // formValue.Sector != "" && 
+    // formValue.ObjetivoGeneral != "" && 
+    // formValue.ObjetivosEspecificos != "" && 
+    // formValue.Mision != "" && 
+    // formValue.Vision != "" && 
+    // formValue.Resultados != "" && 
+    // formValue.Perfil != "" && 
+    // formValue.Metas != "" && 
     formValue.TeacherId != ( 0 || undefined)&&
     formValue.HeadquarterProgramId != ( 0 || undefined)
     // &&

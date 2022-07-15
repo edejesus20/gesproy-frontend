@@ -543,8 +543,8 @@
                   <ng-template pTemplate="footer">
                     <div class="grid grid-nogutter justify-content-between">
                       <p-button label="Atras" [disabled]="form.value.TeacherId == ''" 
-                      (onClick)="activeIndex = 0" icon="pi pi-angle-left"></p-button>
-                      <p-button label="Siguiente" (onClick)="activeIndex = 2" 
+                      (onClick)="activeIndex = 1" icon="pi pi-angle-left"></p-button>
+                      <p-button label="Siguiente" (onClick)="activeIndex = 3" 
                       [disabled]="
                       form.value.kind_of_investigation == '' || form.value.project_modality == '' 
                       || form.value.place_of_execution == '' || form.value.duration == ''
@@ -807,7 +807,7 @@
                           <ng-template pTemplate="footer">
                             <div class="grid grid-nogutter justify-content-between">
                               <p-button label="Atras" [disabled]="form.value.TeacherId == ''" 
-                              (onClick)="activeIndex = 2" icon="pi pi-angle-left"></p-button>
+                              (click)="activeIndex = 2" icon="pi pi-angle-left"></p-button>
                           </div>
                         </ng-template>
                     </p-card>

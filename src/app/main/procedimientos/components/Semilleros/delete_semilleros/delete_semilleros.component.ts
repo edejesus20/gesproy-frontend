@@ -435,11 +435,11 @@ getstudents2() {
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
 
         this.form.controls['creation_date'].setValue(creation_date)
-        this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
-        this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
-        this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
-        this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
-        this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
+        // this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
+        // this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
+        // this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
+        // this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
+        // this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
         if(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId != undefined){
           this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
             if(algo.program.id != undefined && algo.program.FacultyId != undefined){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -24,7 +24,8 @@ import { StudentService } from 'src/app/core/services/usuer/Student.service';
 @Component({
   selector: 'app-create_proyectosdeinvestigacion',
   templateUrl: './create_proyectosdeinvestigacion.component.html',
-  styleUrls: ['./create_proyectosdeinvestigacion.component.css']
+  styleUrls: ['./create_proyectosdeinvestigacion.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Create_proyectosdeinvestigacionComponent implements OnInit {
 
@@ -57,32 +58,61 @@ export class Create_proyectosdeinvestigacionComponent implements OnInit {
   title: ['', [Validators.required]],
   LineId: ['', [Validators.required]],
   ThematicId:['', [Validators.required]],
+  
   duration:['', [Validators.required]],
   place_of_execution:['', [Validators.required]],
+  // tipo investigacion
   kind_of_investigation:['', [Validators.required]],
+  // modalidad_de_proyecto
   project_modality:['', [Validators.required]],
+  // Resumen del proyecto
   Project_summary:['', [Validators.required]],
+  // palabras clave
   keywords:['', [Validators.required]],
+  // planteamiento del problema
   problem_statement:['', [Validators.required]],
+  // formulación del problema
   problem_formulation:['', [Validators.required]],
+  // objetivo_general
   general_objetive:['', [Validators.required]],
+  // objetivos específicos
   specific_objectives:['', [Validators.required]],
+  // justificación
   justification:['', [Validators.required]],
+  // delimitación
   delimitation:['', [Validators.required]],
+  // Marco teórico
   theoretical_framework:['', [Validators.required]],
+  // investigación_antecedentes
   investigation_background:['', [Validators.required]],
+  // Fundamento teórico
   theoretical_foundation:['', [Validators.required]],
+  // metodología
   methodology:['', [Validators.required]],
+  // impacto_esperado
   expected_impact:['', [Validators.required]],
+  // estrategia de comunicación
   communication_strategy:['', [Validators.required]],
+  // cronograma_de_actividades
   timeline_of_activities:['', [Validators.required]],
+  // presupuesto
   budget:['', [Validators.required]],
+  // referencias_bibliograficas
   bibliographical_references:['', [Validators.required]],
+  // identificación_de_las_variables
+  identification_of_the_variables:['', [Validators.required]],
+
   // lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
   Students: this.formBuilder.array([this.formBuilder.group({
     StudentId:['',[Validators.required]],
     Horas:['',[Validators.required]]
   })]),
+  InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
+    {
+      Usuarios:['', [Validators.required]],
+      RoleInvestigadorId:[''],
+    }) 
+    ])
 });
   
   public teachers: TeacherI[] =[]
@@ -167,34 +197,40 @@ public project_modalitys:any[] =[
     ) { }
   ngOnInit(): void {
 
-    this.items = [{
+    this.items = [
+      {
       label: 'Docente Responsable',
       command: (event: any) => {
           this.activeIndex = 0;
-          this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
+   
+          // this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
       }
   },
   {
       label: 'Datos Basicos',
       command: (event: any) => {
           this.activeIndex = 1;
-          this.messageService.add({severity:'info', summary:'Seat Selection', detail: event.item.label});
+   
+
+          // this.messageService.add({severity:'info', summary:'Seat Selection', detail: event.item.label});
       }
   },
   {
       label: 'Colaboladores',
       command: (event: any) => {
           this.activeIndex = 2;
-          this.messageService.add({severity:'info', summary:'Pay with CC', detail: event.item.label});
+   
+
+          // this.messageService.add({severity:'info', summary:'Pay with CC', detail: event.item.label});
       }
   },
   {
       label: 'Datos del Proyecto',
       command: (event: any) => {
           this.activeIndex = 3;
-          this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label});
-      }
+         }
   }
+
   
 ];
 
@@ -229,10 +265,34 @@ public project_modalitys:any[] =[
       place_of_execution:['', [Validators.required]],
       kind_of_investigation:['', [Validators.required]],
       project_modality:['', [Validators.required]],
+      Project_summary:['', [Validators.required]],
+      keywords:['', [Validators.required]],
+      problem_statement:['', [Validators.required]],
+      problem_formulation:['', [Validators.required]],
+      general_objetive:['', [Validators.required]],
+      specific_objectives:['', [Validators.required]],
+      justification:['', [Validators.required]],
+      delimitation:['', [Validators.required]],
+      theoretical_framework:['', [Validators.required]],
+      investigation_background:['', [Validators.required]],
+      theoretical_foundation:['', [Validators.required]],
+      methodology:['', [Validators.required]],
+      expected_impact:['', [Validators.required]],
+      communication_strategy:['', [Validators.required]],
+      timeline_of_activities:['', [Validators.required]],
+      budget:['', [Validators.required]],
+      bibliographical_references:['', [Validators.required]],
+      identification_of_the_variables:['', [Validators.required]],
       Students: this.formBuilder.array([this.formBuilder.group({
         StudentId:['',[Validators.required]],
         Horas:['',[Validators.required]]
       })]),
+      InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
+        {
+          Usuarios:['', [Validators.required]],
+          RoleInvestigadorId:[''],
+        }) 
+        ])
   });
   }  
   cerrar(){
@@ -341,16 +401,16 @@ public project_modalitys:any[] =[
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
           let Group :any | null= null 
-          if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
-            && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+          // if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
+          //   && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
 
-              for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
-                if(clave.GroupLine?.GroupId && clave.status == true){
-                  Group=clave.GroupLine?.GroupId
-                }
-              }
+          //     for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
+          //       if(clave.GroupLine?.GroupId && clave.status == true){
+          //         Group=clave.GroupLine?.GroupId
+          //       }
+          //     }
 
-          }
+          // }
           for (const key of this.groups) {
 
             if(Group != null && parseInt(Group) == key.id){

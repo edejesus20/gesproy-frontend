@@ -302,16 +302,16 @@ private vaciar(){
       if(cnt_groupFromApi.teacher.id != undefined){
           this.form2=cnt_groupFromApi.teacher
           let Group :any | null= null 
-          if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
-            && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+          // if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
+          //   && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
 
-              for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
-                if(clave.GroupLine?.GroupId && clave.status == true){
-                  Group=clave.GroupLine?.GroupId
-                }
-              }
+          //     for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
+          //       if(clave.GroupLine?.GroupId && clave.status == true){
+          //         Group=clave.GroupLine?.GroupId
+          //       }
+          //     }
 
-          }
+          // }
           for (const key of this.groups) {
 
             if(Group != null && parseInt(Group) == key.id){
@@ -426,11 +426,11 @@ private vaciar(){
     // formValue.approval_date != "" && 
     // formValue.resolution != "" && 
     // formValue.article != "" && 
-    formValue.ObjetivoGeneral != "" && 
-    formValue.ObjetivosEspecificos != "" && 
-    formValue.Mision != "" && 
-    formValue.Vision != "" && 
-    formValue.estrategias != "" && 
+    // formValue.ObjetivoGeneral != "" && 
+    // formValue.ObjetivosEspecificos != "" && 
+    // formValue.Mision != "" && 
+    // formValue.Vision != "" && 
+    // formValue.estrategias != "" && 
     formValue.HeadquarterProgramId != ( 0 || undefined)&&
     formValue.GroupId != ( 0 || undefined)
 

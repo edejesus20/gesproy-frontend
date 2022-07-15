@@ -117,7 +117,7 @@ import { Show_one_Thematic_axisComponent } from './components/Ejes tematicos/sho
 import { Edit_Thematic_axisComponent } from './components/Ejes tematicos/edit_Thematic_axis/edit_Thematic_axis.component';
 import { Delete_Thematic_axisComponent } from './components/Ejes tematicos/delete_Thematic_axis/delete_Thematic_axis.component';
 import { Create_Thematic_axisComponent } from './components/Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
-
+import {MultiSelectModule} from 'primeng/multiselect';
 import {StepsModule} from 'primeng/steps';
 
 @NgModule({
@@ -222,7 +222,7 @@ import {StepsModule} from 'primeng/steps';
     InputTextareaModule,
     SharedModule,
     AutoCompleteModule,
-    
+    MultiSelectModule,
     ReactiveFormsModule,
     ScrollingModule,
 
