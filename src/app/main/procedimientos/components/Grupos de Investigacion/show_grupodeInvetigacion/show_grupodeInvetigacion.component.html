@@ -41,16 +41,16 @@
           <!-- <th pSortableColumn="group_code">CODIGO<p-sortIcon field="group_code"></p-sortIcon></th> -->
           <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           
-          <th style="min-width:245px" pSortableColumn="ObjetivoGeneral">OBJETIVO GENERAL
-            <p-sortIcon field="ObjetivoGeneral"></p-sortIcon></th>
+          <th style="min-width:245px" pSortableColumn="DetailGroup.ObjetivoGeneral">OBJETIVO GENERAL
+            <p-sortIcon field="DetailGroup.ObjetivoGeneral"></p-sortIcon></th>
           <!-- <th pSortableColumn="ident_colciencias">ID COLCIENCIAS<p-sortIcon field="ident_colciencias"></p-sortIcon></th> -->
           <!-- <th pSortableColumn="CategoryGroup.name">CATEGORIA<p-sortIcon field="CategoryGroup.name"></p-sortIcon></th> -->
           <!-- <th pSortableColumn="resolution">RESOLUCIÓN<p-sortIcon field="resolution"></p-sortIcon></th> -->
           <th pSortableColumn="Teacher.User.fullName">LIDER<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <!-- <th style="max-width:400px" pSortableColumn="Link_gruplac">LINK GRUPLAC<p-sortIcon field="Link_gruplac"></p-sortIcon></th> -->
           <th pSortableColumn="Knowledge_areas">AREAS DE CONOCIMIENTO<p-sortIcon field="Knowledge_areas"></p-sortIcon></th>
-          <th pSortableColumn="MIEMBROS">MIEMBROS<p-sortIcon field="MIEMBROS"></p-sortIcon></th>
-
+          <th pSortableColumn="Anexo">ANEXO DE DETALLES<p-sortIcon field="Anexo"></p-sortIcon></th>
+         
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -69,7 +69,7 @@
           <td>{{item.name  | titlecase}}</td>
           <!-- <td>{{item.group_code }}</td> -->
           <td>{{item.HeadquarterProgram?.Program?.Faculty?.name | titlecase}}</td>
-          <td style="min-width:245px" >{{item.ObjetivoGeneral }}</td>
+          <td style="min-width:245px" >{{item.DetailGroup?.ObjetivoGeneral }}</td>
           <!-- <td>{{item.ident_colciencias }}</td> -->
           <!-- <td>{{item.CategoryGroup.name }}</td> -->
           
@@ -89,14 +89,17 @@
                 </span>
               </span>
             </td>
-            <td >
-           
-                <span *ngFor="let a of item.GroupLines[0].GroupLineTeachers">
-                  <span style="display: flex;" *ngIf="a.Teacher.id != item.TeacherId">
-                    * {{a.Teacher.User.fullName | titlecase}} - {{a.Teacher.User.Person.identification | titlecase}} Rol: {{a.RoleInvestigation.name | titlecase}}
-                  </span>
-                </span>
-            
+            <td>
+              <ng-template [ngIf]="item.Anexo != null">
+                <div class="custom-input-file p-1" style="width: 100%;">
+                  <a pInputText
+                  class="input-file p-inputtext-lg mt-4" 
+                  style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{item.Anexo}}">
+                  {{item.name}}</a>
+                </div>
+              </ng-template>
+              
+              
             </td>
           <ng-template [ngIf]="mostrar==1">
               
@@ -140,29 +143,31 @@
               <div >
             
                   
-                  <p-table [value]="item.GroupLines"  dataKey="id" 
+                  <p-table [value]="item.GroupTeachers"  dataKey="id" 
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                   <ng-template pTemplate="caption">
                     <span style="display: flex;">
-                      <i class="pi pi-list mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
-                      <h3>Lineas de Investigación</h3>
+                      <i class="pi pi-users mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                      <h3>Miembros del Grupo</h3>
                     </span>
                   </ng-template>    
                   <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
-                            <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
-                            <th pSortableColumn="objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>
-                            <th pSortableColumn="resolution">Resolucion<p-sortIcon field="resolution"></p-sortIcon></th>
-                            <!-- <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th> -->
+                            <th pSortableColumn="name">Nombre<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="identification">Cedula<p-sortIcon field="identification"></p-sortIcon></th>
+                            <th pSortableColumn="correo">Email<p-sortIcon field="correo"></p-sortIcon></th>
+                            <th pSortableColumn="RoleGroupTeacher">Rol del Miembro<p-sortIcon field="RoleGroupTeacher"></p-sortIcon></th>
                               
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-order let-expanded="expanded">
                         <tr>
-                          <td>{{order.Line.name | titlecase}}</td> 
-                          <td>{{order.Line.objectives }}</td> 
-                          <td>{{order.Line.resolution }}</td> 
+                          <td>{{order.Teacher.User.fullName | titlecase }}</td> 
+                          <td>{{order.Teacher.User.Person.identification }}</td> 
+                          <td>{{order.Teacher.User.email }}</td> 
+                          <td>{{order.RoleGroupTeacher.name | titlecase }}</td> 
+                          
                           <!-- <td >
                             <span *ngFor="let i of order.Thematics">
                               <span style="display: flex;">
@@ -183,7 +188,54 @@
               </div>
           </td>
       </tr>
-
+      <tr>
+        <td colspan="12">
+            <div >
+          
+                
+                <p-table [value]="item.GroupLines"  dataKey="id" 
+                [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
+                <ng-template pTemplate="caption">
+                  <span style="display: flex;">
+                    <i class="pi pi-list mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                    <h3>Lineas de Investigación</h3>
+                  </span>
+                </ng-template>    
+                <ng-template pTemplate="header" >
+                        <tr style="background: rgba(0, 255, 255, 0.849);">
+                          <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
+                          <th pSortableColumn="Line.LineDetail.objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>
+                          <th pSortableColumn="Line.LineDetail.resolution">Resolucion<p-sortIcon field="resolution"></p-sortIcon></th>
+                          <!-- <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th> -->
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-order let-expanded="expanded">
+                      <tr>
+                        <td>{{order.Line.name | titlecase}}</td> 
+                        <td>{{order.Line.LineDetail?.objectives }}</td> 
+                        <td>{{order.Line.LineDetail?.resolution }}</td> 
+                        <!-- <td >
+                          <span *ngFor="let i of order.Thematics">
+                            <span style="display: flex;">
+                              * {{i.name}} 
+                            </span>
+                          </span>
+                        </td> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6" style="text-align: center;">
+                          <h3>No hay registros encontrados</h3>
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </td>
+    </tr>
   </ng-template>
 
 

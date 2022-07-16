@@ -22,8 +22,8 @@ export interface GroupI {
     HeadquarterProgram?:HeadquarterProgramI
     Program?:ProgramI,
  
-    // GroupLines?:GroupLineI[]
-
+    GroupLines?:GroupLineI[]
+    
     Anexos?:any[]
     AnexosGroups?:AnexosGroupI[]
     LineProgramGroups?:LineProgramGroupI[]
@@ -89,7 +89,6 @@ export interface GroupLineI {
     id?: number;
     LineId:number;
     GroupId:number;
-
     Line?:LineI;
   
     // GroupLineTeachers?:GroupLineTeacherI[]

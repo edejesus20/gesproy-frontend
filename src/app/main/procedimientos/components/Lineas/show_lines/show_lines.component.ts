@@ -37,10 +37,10 @@ export class Show_linesComponent implements OnInit {
       this.loading = false;
       this.cols = [
       { field: 'name', header: 'Nombre' },
-      { field: 'justification', header: 'Justificación' },
-      { field: 'objectives', header: 'Objetivos' },
+      { field: 'LineDetail.justification', header: 'Justificación' },
+      { field: 'LineDetail.objectives', header: 'Objetivos' },
       // { field: 'thematics', header: 'Tematicas Asociadas' },
-      // { field: 'resolution', header: 'Resolución' },
+      { field: 'LineDetail.resolution', header: 'Resolución' },
     ];
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.getUsrRoles()
@@ -56,6 +56,7 @@ export class Show_linesComponent implements OnInit {
               {
                 id:key.id,
                 name: key.name,
+                LineDetail:key.LineDetail
                 // justification:key.justification,
                 // objectives:key.objectives,
                 // // thematics:key.thematics,
@@ -80,10 +81,10 @@ export class Show_linesComponent implements OnInit {
       array.push({ 
         id: key.id,
         Nombre:key.name,
-        // Justificación:key.justification,
-        // Objetivos:key.objectives,
+        Justificación:key.LineDetail?.justification,
+        Objetivos:key.LineDetail?.objectives,
         // Tematicas_Asociadas:key.thematics,
-        // Resolución:key.resolution,
+        Resolución:key.LineDetail?.resolution,
       })
     }
     import("xlsx").then(xlsx => {
@@ -119,12 +120,12 @@ export class Show_linesComponent implements OnInit {
       const DATA = <HTMLDivElement> document.getElementById('todo');
       var headers = [{
         fila_0:{
-            // col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
+            col_1:{ text: 'ID', style: 'tableHeader',fontSize: 12 ,bold: true, },
             col_2:{ text: 'NOMBRE', style: 'tableHeader' ,bold: true, },
             col_3:{ text: 'JUSTIFICACIÓN', style: 'tableHeader' ,bold: true, },
             col_5:{ text: 'OBJETIVOS', style: 'tableHeader' ,bold: true, },
             // col_6:{ text: 'TEMATICAS ASOCIADAS', style: 'tableHeader' ,bold: true, },
-            // col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
+            col_7:{ text: 'RESOLUCION', style: 'tableHeader' ,bold: true, },
         }
       }]
 
@@ -135,12 +136,12 @@ export class Show_linesComponent implements OnInit {
           if (headers.hasOwnProperty(key)){
               var headerU = headers[key];
               var row:any[] = [ 
-                // headerU.fila_0.col_1,
+                headerU.fila_0.col_1,
                 headerU.fila_0.col_2,
               headerU.fila_0.col_3,
               headerU.fila_0.col_5,
               // headerU.fila_0.col_6,
-              // headerU.fila_0.col_7,
+              headerU.fila_0.col_7,
               ]
               body.push(row);
           }
@@ -151,12 +152,12 @@ export class Show_linesComponent implements OnInit {
           {
               var data = this.rows2[key];
               var row:any[] = [
-                // data.id?.toString(),
+                data.id?.toString(),
                 data.name.toString(),
-                // data.justification.toString(),
-                // data.objectives.toString(),
+                data.LineDetail?.justification?.toString(),
+                data.LineDetail?.objectives.toString(),
                 // data.thematics.toString(),
-                // data.resolution?.toString()
+                data.LineDetail?.resolution?.toString()
               ]
               body.push(row);
               
@@ -191,7 +192,7 @@ export class Show_linesComponent implements OnInit {
             fontSize: 8,
             table: {
               headerRows: 1,
-              widths: [ '30%', '35%', '35%'],
+              widths: [ '20%', '20%', '20%', '20%', '20%'],
              
                 body: body
             },

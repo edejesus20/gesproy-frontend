@@ -78,6 +78,23 @@ Anexos(GroupId: string,AnexoId:string,GroupAnexoId:string,file:any): Observable<
     }),
     catchError(this.handleError))
 }
+
+Anexo(GroupId: string,url:string,file:any): Observable<any> {
+  let form= new FormData();//Crea un formulario
+  form.append('GroupId',GroupId);
+  form.append('url',url);
+  form.append('file',file);//Asigna el campo File
+  console.log(file,'FormData')
+  // return this.http.post<any>(this.API_URI + '/api/file/FormacionDocente',form).pipe(
+    return this.http.post<any>(this.API_URI + '/api/subirAnexoGrupo',form).pipe(
+    tap((res: any) => {
+      if (res) {
+      }
+    }),
+    catchError(this.handleError))
+}
+
+
 // Get single student data by ID
 getItem(id: number): Observable<{group:GroupI}> {
   return this.http

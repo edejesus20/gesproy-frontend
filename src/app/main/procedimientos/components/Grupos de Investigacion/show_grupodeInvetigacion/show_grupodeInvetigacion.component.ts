@@ -10,6 +10,7 @@ import { LineI } from 'src/app/models/projet/line';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
 import { GroupI } from 'src/app/models/institution/group';
 import { ProgramService } from 'src/app/core/services/program/program.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show_grupodeInvetigacion',
@@ -18,6 +19,8 @@ import { ProgramService } from 'src/app/core/services/program/program.service';
 })
 export class Show_grupodeInvetigacionComponent implements OnInit {
   public groups:GroupI[]=[]
+  API_URI = environment.API_URI;
+
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;

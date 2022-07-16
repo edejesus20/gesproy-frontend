@@ -114,7 +114,7 @@ public form:FormGroup= this.formBuilder.group({
  
   InvestigatorCollaborators: this.formBuilder.array([this.formBuilder.group(
     {Usuarios:['', [Validators.required]],
-    RoleInvestigadorId:[''],
+    RoleGroupTeacherId:[''],
     }) 
     ]),
 
@@ -224,7 +224,7 @@ ArchivosEliminados:any[] =[]
       let control = <FormArray>this.form.controls['InvestigatorCollaborators']
       if(control.length == 1 &&  this.mostrarI==false){
         
-        control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
+        control.controls[0].get('RoleGroupTeacherId')?.setValue(this.form.value.RoleInvestigador)
         this.mostrarI=true
       }
     // console.log(this.form.value.RoleInvestigador,'this.form.value.RoleInvestigador')
@@ -394,12 +394,12 @@ ArchivosEliminados:any[] =[]
 
     let control = <FormArray>this.form.controls['InvestigatorCollaborators']
     if(position != undefined){
-    console.log(control.controls[position].value.RoleInvestigadorId)  
+    console.log(control.controls[position].value.RoleGroupTeacherId)  
 
-      if(control.controls[position].value.RoleInvestigadorId.id != ''){
+      if(control.controls[position].value.RoleGroupTeacherId.id != ''){
   
-        if(control.controls[position].value.RoleInvestigadorId.id == 2){
-          console.log('2')
+        if(control.controls[position].value.RoleGroupTeacherId.id == 2){
+          // console.log('2')
   
           this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
@@ -441,7 +441,7 @@ ArchivosEliminados:any[] =[]
           })
         }
     
-        if(control.controls[position].value.RoleInvestigadorId.id == 3){
+        if(control.controls[position].value.RoleGroupTeacherId.id == 3){
           console.log('3')
           this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
@@ -534,6 +534,7 @@ ArchivosEliminados:any[] =[]
     this.router.navigateByUrl('/Procedimientos/mostrar_groups');
   }
   private volver(){
+    this.roles=[]
     this.AnexoAdjuntado=null
     this.bandera=false
     this.filteredCountries=[]
@@ -616,7 +617,7 @@ private vaciar(){
   let control3 = <FormArray>this.form.controls['InvestigatorCollaborators']
   control3.push(this.formBuilder.group({
     Usuarios:['', [Validators.required]],
-    RoleInvestigadorId:[''],
+    RoleGroupTeacherId:[''],
 
   }))
   let control4 = <FormArray>this.form.controls['knowledge_areas']
@@ -684,7 +685,7 @@ private vaciar(){
         for (let key of control1.value) {
           // key.RoleId=key.RoleId.id 
           this.InvestigatorCollaborators1.push({
-            RoleInvestigadorId:  key.RoleInvestigadorId.id,
+            RoleGroupTeacherId:  key.RoleGroupTeacherId.id,
             Usuarios:key.Usuarios,
           })
         }
@@ -707,7 +708,10 @@ private vaciar(){
         formValue.InvestigatorCollaborators=[]
   
       }
-      console.log(formValue,'formValue')
+      if(formValue.Anexos[0].Anexos ==""){
+        formValue.Anexos=[]
+      }
+      // console.log(formValue,'formValue')
     if(this.mostrarFacultad == true && formValue.name != ""&&
     // formValue.ident_colciencias != "" &&
     // formValue.resolution != "" && 
@@ -726,7 +730,7 @@ private vaciar(){
     // formValue.CategoryGroupId != ( 0 || undefined)&&
     // formValue.Link_gruplac != ""
     ){
-      // console.log(formValue,'aqui')
+      console.log(formValue,'aqui')
     this.bandera=true
 
     this.groupService.createItem(formValue).subscribe(
@@ -735,6 +739,7 @@ private vaciar(){
         let array1:any[] = []
         let Bandera:boolean = false
         if(algo.group.id != undefined){
+
 
           console.log(algo.group,'algo.grupo')
           if(algo.group?.AnexosGroups?.length != undefined
@@ -787,24 +792,25 @@ private vaciar(){
                       if(cont == this.FilesAnexos.length){
                         Bandera=true
                         if(Bandera==true){
-                          var date = new Date('2020-01-01 00:00:03');
-                          function padLeft(n:any){ 
-                            return n ="00".substring(0, "00".length - n.length) + n;
-                          }
-                          var interval = setInterval(() => {
-                          var minutes = padLeft(date.getMinutes() + "");
-                          var seconds = padLeft(date.getSeconds() + "");
-                          if( seconds == '03') {
-                          this.messageService.add({severity:'success', summary: 'Success', 
-                          detail: 'Registro de Grupo Creado con exito'});
-                          }
-                          date = new Date(date.getTime() - 1000);
-                          if( minutes == '00' && seconds == '01' ) {
-                            this.bandera=false
-                            this.volver()
-                            clearInterval(interval); 
-                          }
-                    }, 1000);
+                    //       var date = new Date('2020-01-01 00:00:03');
+                    //       function padLeft(n:any){ 
+                    //         return n ="00".substring(0, "00".length - n.length) + n;
+                    //       }
+                    //       var interval = setInterval(() => {
+                    //       var minutes = padLeft(date.getMinutes() + "");
+                    //       var seconds = padLeft(date.getSeconds() + "");
+                    //       if( seconds == '03') {
+                    //       this.messageService.add({severity:'success', summary: 'Success', 
+                    //       detail: 'Registro de Grupo Creado con exito'});
+                    //       }
+                    //       date = new Date(date.getTime() - 1000);
+                    //       if( minutes == '00' && seconds == '01' ) {
+                    //         this.bandera=false
+                    //         this.volver()
+                    //         clearInterval(interval); 
+                    //       }
+                    // }, 1000);
+                    this.finalizar()
                         }
                       }
                     
@@ -817,25 +823,27 @@ private vaciar(){
             }
            
         }
+
+        if(this.AnexoAdjuntado != null){
+          let data ={
+            GroupId:algo.group.id,
+            url:'',
+            file:this.AnexoAdjuntado
+            }
+
+            this.groupService.Anexo(data.GroupId.toString(),data.url.
+            toString(),data.file).subscribe(result=>{
+              if(result){
+                this.finalizar()
+              }
+            }, error => console.error(error))
+      }else{
+        Bandera=true
+        this.finalizar()
+      }
+
           if(Bandera==true){
-                  var date = new Date('2020-01-01 00:00:03');
-                  function padLeft(n:any){ 
-                    return n ="00".substring(0, "00".length - n.length) + n;
-                  }
-                  var interval = setInterval(() => {
-                  var minutes = padLeft(date.getMinutes() + "");
-                  var seconds = padLeft(date.getSeconds() + "");
-                  if( seconds == '03') {
-                  this.messageService.add({severity:'success', summary: 'Success', 
-                  detail: 'Registro de Grupo Creado con exito'});
-                  }
-                  date = new Date(date.getTime() - 1000);
-                  if( minutes == '00' && seconds == '01' ) {
-                    this.bandera=false
-                    this.volver()
-                    clearInterval(interval); 
-                  }
-            }, 1000);
+               this.finalizar()
           }
       }
 
@@ -855,6 +863,26 @@ private vaciar(){
       }
   }
 
+  finalizar(){
+    var date = new Date('2020-01-01 00:00:03');
+    function padLeft(n:any){ 
+      return n ="00".substring(0, "00".length - n.length) + n;
+    }
+    var interval = setInterval(() => {
+    var minutes = padLeft(date.getMinutes() + "");
+    var seconds = padLeft(date.getSeconds() + "");
+    if( seconds == '03') {
+    this.messageService.add({severity:'success', summary: 'Success', 
+    detail: 'Registro de Grupo Creado con exito'});
+    }
+    date = new Date(date.getTime() - 1000);
+    if( minutes == '00' && seconds == '01' ) {
+      this.bandera=false
+      this.volver()
+      clearInterval(interval); 
+    }
+}, 1000);
+  }
   get getlines() {
     return this.form.get('lines') as FormArray;//obtener todos los formularios
   }
@@ -959,7 +987,7 @@ private vaciar(){
     if(control.length == 0 && this.mostrarI == false){
       control.push(this.formBuilder.group({
         Usuarios:['', [Validators.required]],
-        RoleInvestigadorId:[this.form.value.RoleInvestigador],
+        RoleGroupTeacherId:[this.form.value.RoleInvestigador],
         // RoleId:['', [Validators.required]]
       }))//nuevo input
       // control.removeAt(0)
@@ -967,7 +995,7 @@ private vaciar(){
     if(control.length >= 1 && this.mostrarI == true){
       control.push(this.formBuilder.group({
         Usuarios:['', [Validators.required]],
-        RoleInvestigadorId:[this.form.value.RoleInvestigador],
+        RoleGroupTeacherId:[this.form.value.RoleInvestigador],
 
           // RoleId:['', [Validators.required]]
       }))//nuevo input
@@ -984,7 +1012,7 @@ private vaciar(){
      this.mostrarI=false
      control.push(this.formBuilder.group({
       Usuarios:['', [Validators.required]],
-      RoleInvestigadorId:[this.form.value.RoleInvestigador],
+      RoleGroupTeacherId:[this.form.value.RoleInvestigador],
 
         // RoleId:['', [Validators.required]]
     }))//nuevo input

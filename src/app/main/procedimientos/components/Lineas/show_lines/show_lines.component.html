@@ -41,7 +41,7 @@
           <th pSortableColumn="LineDetail.objectives">OBJETIVOS<p-sortIcon field="LineDetail.objectives"></p-sortIcon></th>
           <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
           <th pSortableColumn="LineDetail.resolution">RESOLUCIÓN<p-sortIcon field="LineDetail.resolution"></p-sortIcon></th>
-          <th pSortableColumn="Anexo">AENXO<p-sortIcon field="Anexo"></p-sortIcon></th>
+           <th pSortableColumn="Anexo">ANEXO DE DETALLES<p-sortIcon field="Anexo"></p-sortIcon></th>
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -58,8 +58,8 @@
        
           <!-- <td>{{item.id}}</td> -->
           <td>{{item.name  | titlecase}}</td>
-          <td>{{item.LineDetail.justification }}</td>
-          <td>{{item.LineDetail.objectives }}</td>
+          <td>{{item.LineDetail?.justification }}</td>
+          <td>{{item.LineDetail?.objectives }}</td>
           <td >
             <span *ngFor="let i of item.LineThematics">
               <span style="display: flex;" *ngIf="i.status == true">
@@ -67,7 +67,7 @@
               </span>
             </span>
           </td>
-          <td>{{item.LineDetail.resolution | titlecase}}</td>
+          <td>{{item.LineDetail?.resolution | titlecase}}</td>
           <td>
             <ng-template [ngIf]="item.Anexo != null">
               <div class="custom-input-file p-1" style="width: 100%;">
