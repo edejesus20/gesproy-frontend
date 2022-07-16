@@ -216,7 +216,7 @@
             <h3 style="text-align:center;"> MIEMBROS DEL GRUPO</h3>
               <p-panel >
                 <ng-template pTemplate="header">
-                  Director y/o Investigador Principal:
+                  Director y/o Lider del Grupo:
                 </ng-template>
                 <ng-template [ngIf]="mostrarHeadquarterProgram==true">
                   <div class="field">
@@ -279,7 +279,7 @@
               <br>
               <p-panel >
                 <ng-template pTemplate="header">
-                  Investigadores o Coinvestigadores:
+                  Investigadores
                 </ng-template>
                 <br>
                 <ng-template [ngIf]="mostrarHeadquarterProgram==true">
@@ -292,11 +292,12 @@
                           <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                           [options]="roles" [filter]="true"
                           formControlName="RoleInvestigador" name="RoleInvestigador"
-    
-                              label="ROL DE INVESTIGACIÓN" 
+                            title="ROL DE INVESTIGADOR" 
+                            label="ROL DE INVESTIGADOR" 
                             [style]="{'width':'100%','margin-bottom':'20px'}"
                             optionvalue="id" optionLabel="name"  filterBy="name"
-                            [required]="true" placeholder="ROL DE INVESTIGACIÓN" (click)="getRoleInvestigador($event)">
+                            [required]="true" placeholder="ROL DE INVESTIGADOR" 
+                            (click)="getRoleInvestigador($event)">
                             <ng-template let-option pTemplate="item"  >
                               <span >{{option.name  | titlecase}} </span>
                           </ng-template>
@@ -366,10 +367,11 @@
                                           [suggestions]="filteredCountries"
                                           title="SELECCIONE USUARIO"
                                           placeholder="SELECCIONE USUARIO"
-                                          (input)="llenar($event)" [dropdown]="true"(click)="llenar($event)" 
+                                          (input)="llenar(pointIndex,$event)" [dropdown]="true"
+                                          (click)="llenar(pointIndex,$event)" 
                                           
                                           (completeMethod)="filterCountry($event)" 
-                                          field="todo" [multiple]="true">
+                                          field="todo" [multiple]="false">
                                           </p-autoComplete>
                                       </span>
                                     </div>

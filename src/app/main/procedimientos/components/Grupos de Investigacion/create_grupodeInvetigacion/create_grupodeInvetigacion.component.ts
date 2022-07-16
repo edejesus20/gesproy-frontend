@@ -8,7 +8,7 @@ import { GroupService } from 'src/app/core/services/Procedimientos/group.service
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
-import { GroupI, Knowledge_areaI } from 'src/app/models/institution/group';
+import { GroupI, Knowledge_areaI, RoleGroupTeacherI } from 'src/app/models/institution/group';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';
@@ -27,6 +27,7 @@ import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { RoleResearchI } from 'src/app/models/projet/roles_research';
 import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
+import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -83,7 +84,7 @@ public algoS:number[]=[0];
 public mostrarS:boolean=false;
 
 public users:any[]=[]
-public roles:RoleResearchI[] = []
+public roles:RoleGroupTeacherI[] = []
 
 public mostrarTeacher:boolean=false
 
@@ -150,8 +151,8 @@ ArchivosEliminados:any[] =[]
   
   constructor(
     private groupService:GroupService,
-    private roleResearchService:RoleResearchService,
-
+    // private roleResearchService:RoleResearchService,
+    private roleGroupTeacherService:RoleGroupTeacherService,
     private knowledge_areaService:Knowledge_areaService,
     private teacherService:TeacherService,
     private facultyService: FacultyService,
@@ -220,28 +221,78 @@ ArchivosEliminados:any[] =[]
     // console.log("AreaSeleccionada")
     if(this.form.value.RoleInvestigador != ''){
       // this.getInvestigatorCollaborators(this.form.value.RoleInvestigador.id)
-      const control = <FormArray>this.form.controls['InvestigatorCollaborators']
+      let control = <FormArray>this.form.controls['InvestigatorCollaborators']
       if(control.length == 1 &&  this.mostrarI==false){
         
         control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
         this.mostrarI=true
       }
     // console.log(this.form.value.RoleInvestigador,'this.form.value.RoleInvestigador')
-
+    if(this.form.value.RoleInvestigador.id == 2){
       this.userService.getUserteacherinvestigatorstudent()
       .subscribe(teachersA => {
 
-        if(teachersA.users !== undefined && teachersA.users.length > 0){
+        if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
           // for (let key of teachersA.users) {
           //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
           // }
-          this.users=teachersA.users
+          this.users=teachersA.teachers
           }else{
             this.users=[{todo:'No hay registros'}]
           }
           // console.log(this.users)  
           this.mostrarIntegrantes= true
       })
+    }
+
+    if(this.form.value.RoleInvestigador.id == 3){
+      this.userService.getUserteacherinvestigatorstudent()
+      .subscribe(teachersA => {
+
+        if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+          // for (let key of teachersA.users) {
+          //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
+          this.users=teachersA.investigator_collaborators
+          }else{
+            this.users=[{todo:'No hay registros'}]
+          }
+          // console.log(this.users)  
+          this.mostrarIntegrantes= true
+      })
+    }
+
+    
+    if(this.form.value.RoleInvestigador.id == 4){
+      this.userService.getUserteacherinvestigatorstudent()
+      .subscribe(teachersA => {
+
+        if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
+          // for (let key of teachersA.users) {
+          //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+          // }
+          this.users=teachersA.estudiantes
+          }else{
+            this.users=[{todo:'No hay registros'}]
+          }
+          // console.log(this.users)  
+          this.mostrarIntegrantes= true
+      })
+    }
+      // this.userService.getUserteacherinvestigatorstudent()
+      // .subscribe(teachersA => {
+
+      //   if(teachersA.users !== undefined && teachersA.users.length > 0){
+      //     // for (let key of teachersA.users) {
+      //     //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+      //     // }
+      //     this.users=teachersA.users
+      //     }else{
+      //       this.users=[{todo:'No hay registros'}]
+      //     }
+      //     // console.log(this.users)  
+      //     this.mostrarIntegrantes= true
+      // })
           
     }
   }
@@ -334,49 +385,111 @@ ArchivosEliminados:any[] =[]
     }
   }
 
-  llenar(event:Event){
+  llenar(position:number,event:Event){
     let filterValue = (event.target as HTMLInputElement).value;
-    this.filterCountry(event,filterValue)
+    this.filterCountry(event,position,filterValue)
 
   }
-  filterCountry(event:Event,filterValue?:string){
-    if(this.form.value.RoleInvestigador != ''){
-      this.userService.getUserteacherinvestigatorstudent()
-      .subscribe(teachersA => {
+  filterCountry(event:Event,position?:number,filterValue?:string){
 
-        if(teachersA.users !== undefined && teachersA.users.length > 0){
-          this.users=teachersA.users
-          }else{
-            this.users=[{todo:'No hay registros'}]
-          }
-          if(filterValue != undefined){
-            let filtered : any[] = [];
-            let query = filterValue;
-        
-            for(let i = 0; i < this.users.length; i++) {
-                let country = this.users[i];
-                if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                    filtered.push(country);
-                }
-            }
-            this.filteredCountries = filtered;
-          }
-          console.log(this.users)  
-          // this.mostrarIntegrantes= true
-      })
-    }
-    // if(filterValue != undefined){
-    //   let filtered : any[] = [];
-    //   let query = filterValue;
+    let control = <FormArray>this.form.controls['InvestigatorCollaborators']
+    if(position != undefined){
+    console.log(control.controls[position].value.RoleInvestigadorId)  
+
+      if(control.controls[position].value.RoleInvestigadorId.id != ''){
   
-    //   for(let i = 0; i < this.users.length; i++) {
-    //       let country = this.users[i];
-    //       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-    //           filtered.push(country);
-    //       }
-    //   }
-    //   this.filteredCountries = filtered;
-    // }
+        if(control.controls[position].value.RoleInvestigadorId.id == 2){
+          console.log('2')
+  
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.teachers
+              if(filterValue != undefined){
+                let filtered : any[] = [];
+                let query = filterValue;
+            
+                for(let i = 0; i < this.users.length; i++) {
+                    let country = this.users[i];
+                    if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                        filtered.push(country);
+                    }
+                }
+                this.filteredCountries = filtered;
+              }
+              }else{
+                this.users=[{todo:'No hay registros'}]
+                if(filterValue != undefined){
+                  let filtered : any[] = [];
+                  let query = filterValue;
+              
+                  for(let i = 0; i < this.users.length; i++) {
+                      let country = this.users[i];
+                      if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                          filtered.push(country);
+                      }
+                  }
+                  this.filteredCountries = filtered;
+                }
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
+    
+        if(control.controls[position].value.RoleInvestigadorId.id == 3){
+          console.log('3')
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.investigator_collaborators
+              if(filterValue != undefined){
+                let filtered : any[] = [];
+                let query = filterValue;
+            
+                for(let i = 0; i < this.users.length; i++) {
+                    let country = this.users[i];
+                    if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                        filtered.push(country);
+                    }
+                }
+                this.filteredCountries = filtered;
+              }
+              }else{
+                this.users=[{todo:'No hay registros'}]
+                if(filterValue != undefined){
+                  let filtered : any[] = [];
+                  let query = filterValue;
+              
+                  for(let i = 0; i < this.users.length; i++) {
+                      let country = this.users[i];
+                      if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                          filtered.push(country);
+                      }
+                  }
+                  this.filteredCountries = filtered;
+                }
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
+      
+      }
+    }else{
+    console.log('aja position undefined')  
+
+    }
+  
+   
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
   
 
@@ -385,13 +498,14 @@ ArchivosEliminados:any[] =[]
 
 
   getRoles() {
-    this.roleResearchService.getList().subscribe(teachersA => {
-      for (let key of teachersA.roleResearchs) {
-        // if(key.name.toLocaleLowerCase() != 'investigador principal'){
+    this.roleGroupTeacherService.getList().subscribe(teachersA => {
+      for (let key of teachersA.roleGroupTeachers) {
+        if(key.name.toLocaleLowerCase() != 'investigador lider'){
         // for (let key of teachersA.facultys) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-          // }
           this.roles.push(key)
+          }
+         
         // }
         
       }
@@ -514,7 +628,7 @@ private vaciar(){
   
   public onSubmit(){
     // console.log('aqui1')
-    let formValue: GroupI = this.form.value;
+    let formValue: any = this.form.value;
     // console.log('aqui2',formValue)
     // formValue.CategoryGroupId=this.form.value.CategoryGroupId.id
     formValue.HeadquarterProgramId=this.form.value.HeadquarterProgramId.id
@@ -777,10 +891,10 @@ private vaciar(){
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar2 == false){
-      control.push(this.formBuilder.group({Anexos:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({Anexos:['']}))//nuevo input
     }
     if(control.length >= 1 && this.mostrar2 == true){
-      control.push(this.formBuilder.group({Anexos:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({Anexos:['']}))//nuevo input
 
     }
       this.mostrar2=true
@@ -791,7 +905,7 @@ private vaciar(){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
-     control.push(this.formBuilder.group({Anexos:['', [Validators.required]]}))//nuevo input
+     control.push(this.formBuilder.group({Anexos:['']}))//nuevo input
 
     }
   }

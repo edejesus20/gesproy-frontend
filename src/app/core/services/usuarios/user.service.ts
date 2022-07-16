@@ -89,7 +89,7 @@ getUserteacherinvestigatorstudent2(id:number): Observable<{users: any[]}> {
     )
   }
 }
-getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
+getUserteacherinvestigatorstudent(): Observable<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}> {
   let token : string | null=localStorage.getItem('token')
   let user : string | null=localStorage.getItem('user')
   if(token != null && user != null) {
@@ -103,14 +103,14 @@ getUserteacherinvestigatorstudent(): Observable<{users: any[]}> {
     }
     // console.log(httpOptions)
     return this.http
-      .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/',httpOptions)
+      .get<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/',httpOptions)
       .pipe(
         retry(0),
         catchError(this.handleError)
       )
   }else{
     return this.http
-    .get<{users: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/')
+    .get<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}>(this.API_URI+'/api/userteacherinvestigatorstudent/')
     .pipe(
       retry(0),
       catchError(this.handleError)

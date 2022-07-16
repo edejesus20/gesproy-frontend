@@ -285,8 +285,8 @@ public bandera:boolean=false
            ){
           this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
-            if(teachersA.users !== undefined && teachersA.users.length > 0){
-              this.users=teachersA.users
+            if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
+              this.users=teachersA.estudiantes
               }else{
                 this.users=[{todo:'No hay registros'}]
               }
@@ -331,8 +331,8 @@ public bandera:boolean=false
            ){
           this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
-            if(teachersA.users !== undefined && teachersA.users.length > 0){
-              this.users=teachersA.users
+            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+              this.users=teachersA.investigator_collaborators
               }else{
                 this.users=[{todo:'No hay registros'}]
               }
@@ -442,8 +442,8 @@ public bandera:boolean=false
               this.form2.UserId != key1.Teacher?.UserId && key1.status == true){
               this.userService.getUserteacherinvestigatorstudent()
               .subscribe(teachersA => {
-                if(teachersA.users !== undefined && teachersA.users.length > 0){
-                  this.users=teachersA.users
+                if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
+                  this.users=teachersA.teachers
                   }else{
                     this.users=[{todo:'No hay registros'}]
                   }
@@ -722,17 +722,50 @@ public bandera:boolean=false
           control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
           this.mostrarI=true
         }
-        this.userService.getUserteacherinvestigatorstudent()
-        .subscribe(teachersA => {
+        if(this.form.value.RoleInvestigador.id == 2){
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.teachers
+              }else{
+                this.users=[{todo:'No hay registros'}]
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
+    
+        if(this.form.value.RoleInvestigador.id == 3){
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.investigator_collaborators
+              }else{
+                this.users=[{todo:'No hay registros'}]
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
+        // this.userService.getUserteacherinvestigatorstudent()
+        // .subscribe(teachersA => {
   
-          if(teachersA.users !== undefined && teachersA.users.length > 0){
-            this.users=teachersA.users
-            }else{
-              this.users=[{todo:'No hay registros'}]
-            }
-            console.log(this.users)  
-            this.mostrarIntegrantes= true
-        })
+        //   if(teachersA.users !== undefined && teachersA.users.length > 0){
+        //     this.users=teachersA.users
+        //     }else{
+        //       this.users=[{todo:'No hay registros'}]
+        //     }
+        //     console.log(this.users)  
+        //     this.mostrarIntegrantes= true
+        // })
             
       }
     }
@@ -867,29 +900,39 @@ public bandera:boolean=false
       // this.getRoleInvestigador(event)
       // console.log(this.users)
       if(this.form.value.RoleInvestigador != ''){
-      this.userService.getUserteacherinvestigatorstudent()
-      .subscribe(teachersA => {
-
-        if(teachersA.users !== undefined && teachersA.users.length > 0){
-          this.users=teachersA.users
-          }else{
-            this.users=[{todo:'No hay registros'}]
-          }
-          if(filterValue != undefined){
-            let filtered : any[] = [];
-            let query = filterValue;
-        
-            for(let i = 0; i < this.users.length; i++) {
-                let country = this.users[i];
-                if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                    filtered.push(country);
-                }
-            }
-            this.filteredCountries = filtered;
-          }
-          // console.log(this.users)  
-          // this.mostrarIntegrantes= true
-      })
+        if(this.form.value.RoleInvestigador.id == 2){
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.teachers
+              }else{
+                this.users=[{todo:'No hay registros'}]
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
+    
+        if(this.form.value.RoleInvestigador.id == 3){
+          this.userService.getUserteacherinvestigatorstudent()
+          .subscribe(teachersA => {
+    
+            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+              // for (let key of teachersA.users) {
+              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+              // }
+              this.users=teachersA.investigator_collaborators
+              }else{
+                this.users=[{todo:'No hay registros'}]
+              }
+              // console.log(this.users)  
+              this.mostrarIntegrantes= true
+          })
+        }
     }
   
       //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
