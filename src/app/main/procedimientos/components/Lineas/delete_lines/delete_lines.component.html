@@ -3,32 +3,32 @@
 </ng-template>
 <ng-template [ngIf]="tabla == false">
   <form [formGroup]="form" novalidate   enctype="multipart/form-data" >
-    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '60vw','height': '70vw'}" 
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '70vw','height': '70vw'}" 
     [contentStyle]="{'overflow-y': 'auto'}"[closable]="true" [closeOnEscape]="false" 
     [showHeader]="false"   >
     <br>
         
         <div [style]="{'margin-top':'-1px'}" >
-          <div fxLayout="row" class="titleCard">
+          <!-- <div fxLayout="row" class="titleCard">
             <i class="pi pi-trash" style="font-size: 2rem;margin-right: 10px;"></i>
           <h2 class="fondebabutton" style="margin-top: -1px;">¿Seguro de eliminar esta Linea?</h2>
-        </div>
+        </div> -->
   
               <div style="border: 1px solid black;padding: 10px;">
   
                 <div class="grid p-fluid" style="padding: 10px;">
-                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
                     <img alt="logo" src="{{image}}" 
-                    style="width: 100%"/>
+                    style="width: 60%;margin-top:10px"/>
                   </div>
   
-                  <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
-                    <h3 style="text-align: center;">DATOS DE LA LÍNEA DE INVESTIGACIÓN</h3>
+                  <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8 text-center">
+                    <h2 style="text-align: center;">ELIMINAR DE LA LÍNEA DE INVESTIGACIÓN</h2>
                   </div>
   
-                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2">
+                  <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
                     <img alt="logo" src="{{image2}}" 
-                    style="width: 100%"/>
+                    style="width: 60%;margin-top:10px"/>
                   </div>
                 </div>
                 
@@ -58,15 +58,27 @@
                 
                 <div style="border: 1px solid black;padding: 10px">
                   <h4 style="text-align:left;">4. TEMÁTICAS ASOCIADAS A LA LÍNEA DE INVESTIGACIÓN </h4>
-                          <p-table [value]="Thematics" > 
+                          <p-table [value]="Thematics"responsiveLayout="scroll" > 
                             <ng-template pTemplate="header">
                               <tr>
-                                  <th pSortableColumn="id">AREAS Y TEMATICAS<p-sortIcon field="id"></p-sortIcon></th>
+                                  <th pSortableColumn="id">AREAS<p-sortIcon field="id"></p-sortIcon></th>
+                                  <th pSortableColumn="id">TEMATICAS<p-sortIcon field="id"></p-sortIcon></th>
                               </tr>
                           </ng-template>
                           <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
                             <tr [pSelectableRow]="rowData">
-                                <td> {{item.name | titlecase}}
+                                <td> {{item.Thematic.name | titlecase}}
+                                </td>
+                                <td>
+                                  
+                                  <span *ngFor="let i of item.Ejes">
+                                    <span style="display: flex;" *ngIf="i.status == true">
+                                      * {{i.Thematic_axis.name | titlecase}} 
+                                    </span>
+                                  </span> 
+
+                                  
+                                 
                                 </td>
                             </tr>
                           </ng-template>
@@ -82,6 +94,40 @@
                     title="ESCRIBIR RESOLUCION"  [disabled]="true" >        
                   </div>                  
                 </div>
+
+                <div style="border: 1px solid black;padding: 10px">
+                  <h4 style="text-align:left;">ANEXO</h4>
+                  <ng-template [ngIf]="mostrarAnexo != null && BanderaAnexo==false">
+                    <div class="p-inputgroup" >
+                      <span class="p-inputgroup-addon"  style="margin-top:15px; height:45px"><i class="pi pi-bookmark-fill"></i></span>
+      
+                    <div class="custom-input-file " style="width: 100%;">
+                      <input type="hidden" 
+                      class="input-file p-inputtext-lg" 
+                    
+                      name="Anexo" 
+                      placeholder="Anexo" formControlName="Anexo"
+                      title="Anexo" >
+                      <a pInputText
+                      class="input-file p-inputtext-lg " 
+                      style="margin-top: -15px; "
+                      target="back" href="{{API_URI}}{{mostrarAnexo}}">
+                      Archivo de Linea</a>
+                      <span class="bottomdelete"  
+                      style="margin-left: 20px;margin-top: 5px;">
+                        <button pButton pRipple type="button" icon="pi pi-sync"  title="Cambiar Archivo"
+                        (click)="BanderaAnexo=true"  
+                        class="p-button-rounded p-button-warning "></button>
+
+                      </span>
+                    </div>
+                  </div>
+               
+             
+
+                  </ng-template>
+                </div>
+
             <ng-template [ngIf]="bandera == false">
 
            <br>

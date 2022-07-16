@@ -151,13 +151,13 @@ export class Edit_ThematicComponent implements OnInit {
       key.ThematicAxisId=key.ThematicAxisId.id
       array.push({ThematicAxisId:key.ThematicAxisId})
     }
-    this.ThematicAxis=control.value
-    formValue.Thematic_axis=control.value
+    this.ThematicAxis=array
+    formValue.Thematic_axiss=this.ThematicAxis
   }else{
-    formValue.Thematic_axis=this.ThematicAxis
+    formValue.Thematic_axiss=this.ThematicAxis
 
   }
-  // console.log(formValue)
+  console.log(formValue)
 
   if(formValue.name != '' && formValue.id){
     this.bandera=true

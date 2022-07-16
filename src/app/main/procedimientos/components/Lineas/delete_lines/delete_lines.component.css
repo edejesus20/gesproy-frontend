@@ -14,4 +14,41 @@
     .bordep{
         border-left: 1px solid black;border-top: 1px solid black;border-right: 1px solid black;padding: 10px;
       }
-    
+      
+ .custom-input-file {
+  padding: 10px;
+} 
+/* .custom-input-file .input-file {
+  border: 10000px solid transparent;
+  cursor: pointer;
+  color: black;
+  font-size: 10000px;
+  margin: 0;
+  opacity: 0px;
+  outline: 0 none;
+  padding: 5px;
+  position: absolute;
+  right: -1000px;
+  top: -1000px;
+ } */ 
+
+ .input-file {
+  cursor: pointer;
+  width: 100%;
+  color: black;
+  border: 1px solid transparent;
+  background-color: #f16357;
+  font-size: 18px;
+  overflow: hidden;
+  opacity: 0px;
+  outline: 0 none;
+  padding: 5px;
+  border-radius: 10px;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  font-weight:normal;
+	/* font-family: 'Lato'; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+
+ }

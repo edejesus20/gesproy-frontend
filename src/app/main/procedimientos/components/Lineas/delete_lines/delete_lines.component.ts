@@ -3,7 +3,8 @@ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
-import { LineI, ThematicI } from 'src/app/models/projet/line';
+import { LineI, ThematicI,LineThematicI } from 'src/app/models/projet/line';
+import { environment } from 'src/environments/environment';
 import { threadId } from 'worker_threads';
 const translate = require('translate');
 @Component({
@@ -13,15 +14,21 @@ const translate = require('translate');
 })
 export class Delete_linesComponent implements OnInit {
   public bandera:boolean=false
+  API_URI = environment.API_URI;
 
   public mostrar:number=2;
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public form: FormGroup = this.formBuilder.group({});
-  public Thematics:ThematicI[] = []
+  public Thematics:any[] = []
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
+
+  BanderaAnexo:boolean=false
+  mostrarAnexo:string | null = null
+  
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -38,7 +45,7 @@ export class Delete_linesComponent implements OnInit {
       name: ['', [Validators.required]],
       justification: ['', [Validators.required]],
       objectives: ['', [Validators.required]],
-      // thematics: ['', [Validators.required]],
+      Anexo: [''],
       resolution: ['', [Validators.required]],
     });
   }  
@@ -98,21 +105,53 @@ export class Delete_linesComponent implements OnInit {
       // this.form.controls['objectives'].setValue(cnt_groupFromApi.line.objectives)
       // this.form.controls['thematics'].setValue(cnt_groupFromApi.line.thematics)
       // this.form.controls['resolution'].setValue(cnt_groupFromApi.line.resolution)
-      if(cnt_groupFromApi.line.Thematics != undefined && cnt_groupFromApi.line.Thematics.length > 0){
-        this.agregarThematics(cnt_groupFromApi.line.Thematics)  
+
+      if(cnt_groupFromApi.line.LineDetail != undefined){
+        this.form.controls['justification'].setValue(cnt_groupFromApi.line.LineDetail.justification)
+          this.form.controls['objectives'].setValue(cnt_groupFromApi.line.LineDetail.objectives)
+        this.form.controls['resolution'].setValue(cnt_groupFromApi.line.LineDetail.resolution)
+      }
+      console.log(cnt_groupFromApi.line.Anexo,'cnt_groupFromApi.line.Anexo')
+      if(cnt_groupFromApi.line.Anexo != undefined && cnt_groupFromApi.line.Anexo != null){
+        this.mostrarAnexo=cnt_groupFromApi.line.Anexo
+        this.BanderaAnexo=false
+
+      }else{
+        this.BanderaAnexo=true
+        this.mostrarAnexo=null
+      }
+      console.log(cnt_groupFromApi.line,'cnt_groupFromApi.line.Thematics')
+      if(cnt_groupFromApi.line.LineThematics != undefined && cnt_groupFromApi.line.LineThematics.length > 0){
+        // this.agregarThematics(cnt_groupFromApi.line.LineThematics)  
+        this.Thematics=[]
+        if(cnt_groupFromApi.line.LineThematics.length > 0){
+          for (let key of cnt_groupFromApi.line.LineThematics) {
+            if(key.Thematic)
+            this.Thematics.push({Thematic:key.Thematic,Ejes:key.Thematic_axis_Line_Thematics})
+          }
+          console.log(this.Thematics,'this.Thematics')
+       
+        }
       } 
       this.displayMaximizable2=true
       this.tabla = false
       //console.log(this.cnt_group);
     }, error => console.error(error));
   }
-  agregarThematics(Thematics:ThematicI[]) {
-    if(Thematics.length > 0){
-     this.Thematics=Thematics
+  agregarThematics(LineThematic:LineThematicI[]) {
+    this.Thematics=[]
+    if(LineThematic.length > 0){
+      for (let key of LineThematic) {
+        if(key.Thematic)
+        this.Thematics.push(key.Thematic)
+      }
+      console.log(this.Thematics,'this.Thematics')
+   
     }
   }
 
   public volver(event: Event){
+    this.Thematics=[]
     event.preventDefault
     this.tabla = true
     this.ngOnInit()

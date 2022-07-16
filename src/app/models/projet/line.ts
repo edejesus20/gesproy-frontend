@@ -38,6 +38,7 @@ export interface LineThematicI {
     LineId:number;
     ThematicId:number;
     Thematic?:ThematicI
+    Thematic_axis_Line_Thematics?:Thematic_axis_Line_ThematicI[]
     status?:boolean
 
 }
@@ -64,10 +65,17 @@ export interface Thematic_axisI {
 }
 
 export interface Thematic_axis_ThematicI {
+    id?:number;
     ThematicAxisId:number;
     ThematicId:number;
     Thematic_axis?:Thematic_axisI
     Thematic?:ThematicI
     status?:boolean
 
+}
+export interface Thematic_axis_Line_ThematicI {
+    id?:number;
+    ThematicAxisId:number;
+    LineThematicId:number;
+    Thematic_axis?:Thematic_axisI
 }
