@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 const translate = require('translate');
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { GroupI, Knowledge_areaI } from 'src/app/models/institution/group';
-import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';
@@ -27,6 +25,8 @@ import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docente
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
 import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
+import { RoleResearchI } from 'src/app/models/projet/roles_research';
+import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -35,7 +35,12 @@ import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
   providers: [DialogService]
 })
 export class Create_grupodeInvetigacionComponent implements OnInit {
-  public seedbeds: any[] = [];
+
+  items: MenuItem[]=[]
+    
+  activeIndex: number = 0;
+  AnexoAdjuntado:any | null = null
+  // public seedbeds: any[] = [];
   public mostrar:boolean=true;
   public algo:number[]=[0];
   public mostrar2:boolean=true;
@@ -78,7 +83,7 @@ public algoS:number[]=[0];
 public mostrarS:boolean=false;
 
 public users:any[]=[]
-public roles:RoleInvestigationI[] = []
+public roles:RoleResearchI[] = []
 
 public mostrarTeacher:boolean=false
 
@@ -94,14 +99,15 @@ public form:FormGroup= this.formBuilder.group({
   // resolution: ['', [Validators.required]],
   // Link_gruplac: ['', [Validators.required]],
   RoleInvestigador: ['', [Validators.required]],
-  ObjetivoGeneral: ['', [Validators.required]],
-  ObjetivosEspecificos: ['', [Validators.required]],
-  Mision: ['', [Validators.required]],
-  Vision: ['', [Validators.required]],
-  Perfil: ['', [Validators.required]],
-  Metas: ['', [Validators.required]],
-  Resultados: ['', [Validators.required]],
-  Sector: ['', [Validators.required]],
+  ObjetivoGeneral: [''],
+  ObjetivosEspecificos: [''],
+  Mision: [''],
+  Vision: [''],
+  Perfil: [''],
+  Metas: [''],
+  Resultados: [''],
+  Sector: [''],
+  Anexo: [''],
 
   TeacherId:['', [Validators.required]],
  
@@ -114,7 +120,7 @@ public form:FormGroup= this.formBuilder.group({
   knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
   lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
   // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
-  Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['', [Validators.required]]})]),
+  Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['']})]),
 });
 
 
@@ -144,7 +150,8 @@ ArchivosEliminados:any[] =[]
   
   constructor(
     private groupService:GroupService,
-    private roleInvestigationsService:RoleInvestigationsService,
+    private roleResearchService:RoleResearchService,
+
     private knowledge_areaService:Knowledge_areaService,
     private teacherService:TeacherService,
     private facultyService: FacultyService,
@@ -157,6 +164,21 @@ ArchivosEliminados:any[] =[]
     public categoryGroupService:CategoryGroupService,
     ) { }
   ngOnInit(): void {
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Registrar Mas Detalles',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+    ];
+
     this.Valorconstruccion=false
     // this.buildForm();
     // this.getTeachers();
@@ -206,7 +228,7 @@ ArchivosEliminados:any[] =[]
       }
     // console.log(this.form.value.RoleInvestigador,'this.form.value.RoleInvestigador')
 
-      this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+      this.userService.getUserteacherinvestigatorstudent()
       .subscribe(teachersA => {
 
         if(teachersA.users !== undefined && teachersA.users.length > 0){
@@ -319,7 +341,7 @@ ArchivosEliminados:any[] =[]
   }
   filterCountry(event:Event,filterValue?:string){
     if(this.form.value.RoleInvestigador != ''){
-      this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+      this.userService.getUserteacherinvestigatorstudent()
       .subscribe(teachersA => {
 
         if(teachersA.users !== undefined && teachersA.users.length > 0){
@@ -363,8 +385,8 @@ ArchivosEliminados:any[] =[]
 
 
   getRoles() {
-    this.roleInvestigationsService.getList().subscribe(teachersA => {
-      for (let key of teachersA.roleInvestigations) {
+    this.roleResearchService.getList().subscribe(teachersA => {
+      for (let key of teachersA.roleResearchs) {
         // if(key.name.toLocaleLowerCase() != 'investigador principal'){
         // for (let key of teachersA.facultys) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
@@ -398,6 +420,7 @@ ArchivosEliminados:any[] =[]
     this.router.navigateByUrl('/Procedimientos/mostrar_groups');
   }
   private volver(){
+    this.AnexoAdjuntado=null
     this.bandera=false
     this.filteredCountries=[]
 
@@ -448,6 +471,8 @@ private vaciar(){
   this.form.controls['name'].setValue('')
   this.form.controls['Facultad'].setValue('')
   this.form.controls['HeadquarterProgramId'].setValue('')
+  this.form.controls['Anexo'].setValue('')
+
   this.mostrarIntegrantes= false
   this.mostrarI=false
   // for (const key of this.roles) {
@@ -798,7 +823,15 @@ private vaciar(){
       }
     }
 
-
+    onFileChange1(event:any) {
+      event.preventDefault();
+      if(this.form.value.Anexo != ''){
+        if(event.target.files && event.target.files.length>0){
+          const file=event.target.files[0];
+          this.AnexoAdjuntado=file
+          }
+        }
+      }
 
   get getInvestigatorCollaborator() {
     return this.form.get('InvestigatorCollaborators') as FormArray;//obtener todos los formularios

@@ -78,23 +78,23 @@ const routes: Routes = [
 
            //rol investigaciones
             {
-            path: 'mostrar_RoleInvestigations',
+            path: 'mostrar_RoleResearchs',
             component: ShowRolInvestigationComponent,
             },
             {
-            path: 'mostrar_RoleInvestigation/:id',
+            path: 'mostrar_RoleResearch/:id',
             component:ShowOneRolInvestigationComponent ,
             },
             {
-            path: 'crear_RoleInvestigation',
+            path: 'crear_RoleResearch',
             component:CrearRolInvestigationComponent ,
             },   
             {
-            path: 'edit_RoleInvestigation/:id',
+            path: 'edit_RoleResearch/:id',
             component: EditRolInvestigationComponent,
             },
             {
-            path: 'delete_RoleInvestigation/:id',
+            path: 'delete_RoleResearch/:id',
             component:DeleteRolInvestigationComponent ,
             },
 

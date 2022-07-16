@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 const translate = require('translate');
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
-import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
 import { GroupService } from 'src/app/core/services/Procedimientos/group.service';
 import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AnexosGroupI, GroupI, GroupKnowledge_areaI, GroupLineI, Knowledge_areaI } from 'src/app/models/institution/group';
-import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { GroupInvestigatorCollaboratorI, GroupStudentI } from 'src/app/models/institution/roles_investigation';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';
@@ -29,6 +28,8 @@ import { LineProgramGroupI } from 'src/app/models/institution/program';
 import { environment } from 'src/environments/environment';
 import { Archivo } from 'src/app/layout/private-layout/perfil/perfil.component';
 import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
+import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
+import { RoleResearchI } from 'src/app/models/projet/roles_research';
 @Component({
   selector: 'app-delete_grupodeInvetigacion',
   templateUrl: './delete_grupodeInvetigacion.component.html',
@@ -85,7 +86,7 @@ public algoS:number[]=[0];
 public mostrarS:boolean=false;
 
 public users:any[]=[]
-public roles:RoleInvestigationI[] = []
+public roles:RoleResearchI[] = []
 
 public mostrarTeacher:boolean=false
   public form: FormGroup = this.formBuilder.group({});
@@ -118,7 +119,9 @@ public bandera:boolean=false
 
   constructor( private primengConfig: PrimeNGConfig,
     private groupService:GroupService,
-    private roleInvestigationsService:RoleInvestigationsService,
+    private roleResearchService:RoleResearchService,
+
+    // private roleInvestigationsService:RoleInvestigationsService,
     private knowledge_areaService:Knowledge_areaService,
     private teacherService:TeacherService,
     private facultyService: FacultyService,
@@ -275,10 +278,12 @@ public bandera:boolean=false
       let arrayEstudiante:any[]=[]
       let RoleInvestigationId:any | null = null
       for (const key of GroupStudents) {
-        if(key.RoleInvestigationId 
-           && key.status == true
+        if(
+          // key.RoleInvestigationId 
+          //  && 
+           key.status == true
            ){
-          this.userService.getUserteacherinvestigatorstudent(key.RoleInvestigationId)
+          this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
             if(teachersA.users !== undefined && teachersA.users.length > 0){
               this.users=teachersA.users
@@ -292,21 +297,21 @@ public bandera:boolean=false
                 if(parseInt(clave.UserId) == key.Student?.UserId){
                   // TeacherId=key1.TeacherId
                   arrayEstudiante.push(clave)
-                  RoleInvestigationId=clave.RoleInvestigationId
+                  // RoleInvestigationId=clave.RoleInvestigationId
                 }
               }
-              for (const algo of this.roles) {
-                if(algo.id == RoleInvestigationId){
-                  RoleInvestigationId=algo
-                }
-              }
+              // for (const algo of this.roles) {
+              //   if(algo.id == RoleInvestigationId){
+              //     RoleInvestigationId=algo
+              //   }
+              // }
             //  console.log(arrayEstudiante,'arrayEstudiante')
                this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
               let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
               control1.push(this.formBuilder.group({
                 id:[key.id],
                 Usuarios:[arrayEstudiante, [Validators.required]],
-                RoleInvestigadorId:[RoleInvestigationId],
+                // RoleInvestigadorId:[RoleInvestigationId],
               }))
 
               this.mostrarIntegrantes= true
@@ -322,10 +327,9 @@ public bandera:boolean=false
       let arrayI:any[]=[]
       let RoleInvestigationId:any | null = null
       for (const key of GroupInvestigatorCollaborators) {
-        if(key.RoleInvestigationId
-           && key.status == true
+        if( key.status == true
            ){
-          this.userService.getUserteacherinvestigatorstudent(key.RoleInvestigationId)
+          this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
             if(teachersA.users !== undefined && teachersA.users.length > 0){
               this.users=teachersA.users
@@ -339,21 +343,21 @@ public bandera:boolean=false
                 if(parseInt(clave.UserId) == key.InvestigatorCollaborator?.UserId){
                   // TeacherId=key1.TeacherId
                   arrayI.push(clave)
-                  RoleInvestigationId=clave.RoleInvestigationId
+                  // RoleInvestigationId=clave.RoleInvestigationId
                 }
               }
-              for (const algo of this.roles) {
-                if(algo.id == RoleInvestigationId){
-                  RoleInvestigationId=algo
-                }
-              }
+              // for (const algo of this.roles) {
+              //   if(algo.id == RoleInvestigationId){
+              //     RoleInvestigationId=algo
+              //   }
+              // }
             //  console.log(arrayI,'arrayI')
                this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
               let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
               control1.push(this.formBuilder.group({
                 id:[key.id],
                 Usuarios:[arrayI, [Validators.required]],
-                RoleInvestigadorId:[RoleInvestigationId],
+                // RoleInvestigadorId:[RoleInvestigationId],
               }))
 
               this.mostrarIntegrantes= true
@@ -433,8 +437,10 @@ public bandera:boolean=false
         if(element.LineProgramGroupTeachers?.length){
           for (const key1 of element.LineProgramGroupTeachers) {
             TeacherId=key1.TeacherId
-            if(key1.RoleInvestigationId && this.form2.UserId != key1.Teacher?.UserId && key1.status == true){
-              this.userService.getUserteacherinvestigatorstudent(key1.RoleInvestigationId)
+            if(
+              // key1.RoleInvestigationId && 
+              this.form2.UserId != key1.Teacher?.UserId && key1.status == true){
+              this.userService.getUserteacherinvestigatorstudent()
               .subscribe(teachersA => {
                 if(teachersA.users !== undefined && teachersA.users.length > 0){
                   this.users=teachersA.users
@@ -449,21 +455,21 @@ public bandera:boolean=false
                     ){
                       // TeacherId=key1.TeacherId
                       arrayProfesor.push(clave)
-                      RoleInvestigationId=clave.RoleInvestigationId
+                      // RoleInvestigationId=clave.RoleInvestigationId
                     }
                   }
-                  for (const algo of this.roles) {
-                    if(algo.id == RoleInvestigationId){
-                      RoleInvestigationId=algo
-                    }
-                  }
+                  // for (const algo of this.roles) {
+                  //   if(algo.id == RoleInvestigationId){
+                  //     RoleInvestigationId=algo
+                  //   }
+                  // }
                 //  console.log(arrayProfesor,'arrayProfesor')
                    this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
                   let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
                   control1.push(this.formBuilder.group({
                     id:[key1.id],
                     Usuarios:[arrayProfesor, [Validators.required]],
-                    RoleInvestigadorId:[RoleInvestigationId],
+                    // RoleInvestigadorId:[RoleInvestigationId],
                   }))
 
                   this.mostrarIntegrantes= true
@@ -716,7 +722,7 @@ public bandera:boolean=false
           control.controls[0].get('RoleInvestigadorId')?.setValue(this.form.value.RoleInvestigador)
           this.mostrarI=true
         }
-        this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+        this.userService.getUserteacherinvestigatorstudent()
         .subscribe(teachersA => {
   
           if(teachersA.users !== undefined && teachersA.users.length > 0){
@@ -811,8 +817,8 @@ public bandera:boolean=false
       }, error => console.error(error))
     }
     getRoles() {
-      this.roleInvestigationsService.getList().subscribe(teachersA => {
-        for (let key of teachersA.roleInvestigations) {
+      this.roleResearchService.getList().subscribe(teachersA => {
+        for (let key of teachersA.roleResearchs) {
           if(key.id != 1)
           // for (let key of categoryGroups.categoryGroups) {
             key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
@@ -861,7 +867,7 @@ public bandera:boolean=false
       // this.getRoleInvestigador(event)
       // console.log(this.users)
       if(this.form.value.RoleInvestigador != ''){
-      this.userService.getUserteacherinvestigatorstudent(this.form.value.RoleInvestigador.id)
+      this.userService.getUserteacherinvestigatorstudent()
       .subscribe(teachersA => {
 
         if(teachersA.users !== undefined && teachersA.users.length > 0){

@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 const translate = require('translate');
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
-import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
+import { RoleResearchI } from 'src/app/models/projet/roles_research';
 @Component({
   selector: 'app-edit-rol-investigation',
   templateUrl: './edit-rol-investigation.component.html',
@@ -24,7 +24,7 @@ export class EditRolInvestigationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
-    private roleInvestigationsService:RoleInvestigationsService,
+    private roleResearchService:RoleResearchService,
 
 ) { }
 
@@ -56,12 +56,12 @@ export class EditRolInvestigationComponent implements OnInit {
   }
 
   getOneCntAccount(id:number) {
-  this.roleInvestigationsService.getItem(id).subscribe((cnt_groupFromApi) => {
+  this.roleResearchService.getItem(id).subscribe((cnt_groupFromApi) => {
   
-    if(cnt_groupFromApi.roleInvestigation.name != undefined){
+    if(cnt_groupFromApi.roleResearch.name != undefined){
         
-      this.form.controls['id'].setValue(cnt_groupFromApi.roleInvestigation.id)
-      this.form.controls['name'].setValue(cnt_groupFromApi.roleInvestigation.name)
+      this.form.controls['id'].setValue(cnt_groupFromApi.roleResearch.id)
+      this.form.controls['name'].setValue(cnt_groupFromApi.roleResearch.name)
       // console.log(this.form)
           }
     this.displayMaximizable2=true
@@ -70,11 +70,11 @@ export class EditRolInvestigationComponent implements OnInit {
   }
 
   public onSubmit() {
-    let formValue: RoleInvestigationI = this.form.value;
+    let formValue: RoleResearchI = this.form.value;
     if(formValue.name != '' && formValue.id){
    this.bandera=true
 
-    this.roleInvestigationsService.updateItem(formValue.id,formValue).subscribe(
+    this.roleResearchService.updateItem(formValue.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 

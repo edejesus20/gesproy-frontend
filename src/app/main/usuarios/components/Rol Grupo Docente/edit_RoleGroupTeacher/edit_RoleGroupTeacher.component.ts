@@ -3,28 +3,32 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 const translate = require('translate');
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
-import { RoleResearchI } from 'src/app/models/projet/roles_research';
+import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
+import { RolesService } from 'src/app/core/services/usuarios/roles.service';
+import { RoleI } from 'src/app/models/authorization/usr_roles';
+import { RoleGroupTeacherI } from 'src/app/models/institution/group';
 @Component({
-  selector: 'app-delete-rol-investigation',
-  templateUrl: './delete-rol-investigation.component.html',
-  styleUrls: ['./delete-rol-investigation.component.css']
+  selector: 'app-edit_RoleGroupTeacher',
+  templateUrl: './edit_RoleGroupTeacher.component.html',
+  styleUrls: ['./edit_RoleGroupTeacher.component.css']
 })
-export class DeleteRolInvestigationComponent implements OnInit {
-  public mostrar:number=2;
+export class Edit_RoleGroupTeacherComponent implements OnInit {
+  public mostrar:number=1;
   public tabla:boolean=true;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
+  public bandera:boolean=false
 
   public form:FormGroup=this.formBuilder.group({ });
-  public bandera:boolean=false
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
-    private roleResearchService:RoleResearchService,
+    // private rolesService: RolesService,
+    private roleGroupTeacherService: RoleGroupTeacherService,
+
 
   ) { }
 
@@ -40,7 +44,7 @@ export class DeleteRolInvestigationComponent implements OnInit {
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
-   this.bandera=false
+    this.bandera=false
 
 
     //console.log(event)
@@ -57,12 +61,12 @@ export class DeleteRolInvestigationComponent implements OnInit {
   }
 
   getOneCntAccount(id:number) {
-  this.roleResearchService.getItem(id).subscribe((cnt_groupFromApi) => {
+  this.roleGroupTeacherService.getItem(id).subscribe((cnt_groupFromApi) => {
   
-    if(cnt_groupFromApi.roleResearch.name != undefined){
+    if(cnt_groupFromApi.roleGroupTeacher.name != undefined){
         
-      this.form.controls['id'].setValue(cnt_groupFromApi.roleResearch.id)
-      this.form.controls['name'].setValue(cnt_groupFromApi.roleResearch.name)
+      this.form.controls['id'].setValue(cnt_groupFromApi.roleGroupTeacher.id)
+      this.form.controls['name'].setValue(cnt_groupFromApi.roleGroupTeacher.name)
       // console.log(this.form)
           }
     this.displayMaximizable2=true
@@ -71,11 +75,10 @@ export class DeleteRolInvestigationComponent implements OnInit {
   }
 
   public onSubmit() {
-    let formValue: RoleResearchI = this.form.value;
-    if(formValue.id){
-   this.bandera=true
-
-    this.roleResearchService.deleteItem(formValue.id).subscribe(
+    let formValue: RoleGroupTeacherI = this.form.value;
+    if(formValue.name != '' && formValue.id){
+    this.bandera=true
+    this.roleGroupTeacherService.updateItem(formValue.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
@@ -87,20 +90,20 @@ export class DeleteRolInvestigationComponent implements OnInit {
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Rol de Investigación Eliminado con exito'});
+                detail: 'Rol Docentes de Grupo Actualizado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
                   this.ngOnInit()
                   this.volver(new Event(''))
                  this.bandera=false
-                  // this.router.navigateByUrl('/Investigation/mostrar_RoleInvestigations');
+                  // this.router.navigateByUrl('/usuarios/roles');
                   clearInterval(interval); 
                  }
           }, 1000);
       },async error => {
         if(error != undefined) {
-   this.bandera=false
+    this.bandera=false
 
           let text = await translate(error.error.message, "es");
           if(error.error.dataErros){
@@ -113,4 +116,5 @@ export class DeleteRolInvestigationComponent implements OnInit {
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
 }
+
 }

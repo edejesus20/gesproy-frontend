@@ -3,7 +3,7 @@ import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
 import { LineProgramGroupI, ProgramI } from "./program";
-import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from "./roles_investigation";
+import { GroupInvestigatorCollaboratorI, GroupStudentI } from "./roles_investigation";
 import { SeedbedI } from "./seedbed";
 
 

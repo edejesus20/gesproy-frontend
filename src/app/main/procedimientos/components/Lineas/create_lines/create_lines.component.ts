@@ -377,14 +377,10 @@ export class Create_linesComponent implements OnInit {
   // }
   onFileChange(event:any) {
     event.preventDefault();
-    // let control = <FormArray>this.form.controls['Anexos']
-    // console.log(control.value[pointIndex].resolution_convalidation)
     if(this.form.value.Anexo != ''){
-      // console.log('aquii')
-      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+      if(event.target.files && event.target.files.length>0){
         const file=event.target.files[0];
         this.AnexoAdjuntado=file
-            // console.log(this.AnexoAdjuntado,'this.Anexo')
         }
       }
     }

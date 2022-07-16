@@ -6,26 +6,30 @@ import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
 import { RolesService } from 'src/app/core/services/usuarios/roles.service';
 import { RoleI } from 'src/app/models/authorization/usr_roles';
-
+import { RoleGroupTeacherI } from 'src/app/models/institution/group';
+import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
 
 @Component({
-  selector: 'app-mostrar-rols',
-  templateUrl: './mostrar-rols.component.html',
-  styleUrls: ['./mostrar-rols.component.css']
+  selector: 'app-show_RoleGroupTeacher',
+  templateUrl: './show_RoleGroupTeacher.component.html',
+  styleUrls: ['./show_RoleGroupTeacher.component.css']
 })
-export class MostrarRolsComponent implements OnInit {
-  public roles:RoleI[]=[]
+export class Show_RoleGroupTeacherComponent implements OnInit {
+
+  public roleGroupTeachers:RoleGroupTeacherI[]=[]
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;
   @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
-  public rows2:RoleI[] = []
+  public rows2:RoleGroupTeacherI[] = []
   exportColumns: any[]=[];
-  selectedProducts: RoleI[]=[]; 
+  selectedProducts: RoleGroupTeacherI[]=[]; 
   constructor(
-    private rolesService: RolesService,
+    // private rolesService: RolesService,
+    private roleGroupTeacherService: RoleGroupTeacherService,
+
     private primengConfig: PrimeNGConfig,
     ) { (window as any). pdfMake.vfs=pdfFonts.pdfMake.vfs }
 
@@ -41,18 +45,18 @@ export class MostrarRolsComponent implements OnInit {
   }
 
   getUsrRoles() {
-    this.rolesService.getRole().subscribe((rolesFromApi) => {
-      this.roles =rolesFromApi.roles
+    this.roleGroupTeacherService.getList().subscribe((rolesFromApi) => {
+      this.roleGroupTeachers =rolesFromApi.roleGroupTeachers
       this.rows2=[]
-      if(rolesFromApi.roles != undefined){
-        for (const key of rolesFromApi.roles) {
+      if(rolesFromApi.roleGroupTeachers != undefined){
+        for (const key of rolesFromApi.roleGroupTeachers) {
 
           let rolesUsers=[]
-              for (const key2 of rolesFromApi.rolesUsers) {
-                if(key.id==key2.RoleId){
-                  rolesUsers.push(key2)
-                }
-              }
+              // for (const key2 of rolesFromApi.rolesUsers) {
+              //   if(key.id==key2.RoleId){
+              //     rolesUsers.push(key2)
+              //   }
+              // }
 
           // if(rolesFromApi.roles[0].Users){
             this.rows2.push(
@@ -60,7 +64,7 @@ export class MostrarRolsComponent implements OnInit {
                 id:key.id,
                 name: key.name,
                 // Users:key.Users,
-                rolesUsers:rolesUsers
+                // rolesUsers:rolesUsers
               }
             )
           // }
@@ -189,7 +193,7 @@ export class MostrarRolsComponent implements OnInit {
         })
       }
     }else{
-    for (const key of this.roles) {
+    for (const key of this.roleGroupTeachers) {
       array.push({ 
         id: key.id,
         Nombre:key.name,
@@ -200,7 +204,7 @@ export class MostrarRolsComponent implements OnInit {
         const worksheet = xlsx.utils.json_to_sheet(array);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, "roles");
+        this.saveAsExcelFile(excelBuffer, "roleGroupTeachers");
     });
   }
   
@@ -224,4 +228,5 @@ export class MostrarRolsComponent implements OnInit {
     detalle(id: number){
       this.modificar.emit(id)
     }
+
 }

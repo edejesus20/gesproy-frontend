@@ -70,6 +70,10 @@ import { MantenimientoComponent } from './components/Maintenance/mantenimiento/m
 import { Create_mantenimientoComponent } from './components/Maintenance/create_mantenimiento/create_mantenimiento.component';
 import { Delete_mantenimientoComponent } from './components/Maintenance/delete_mantenimiento/delete_mantenimiento.component';
 import { Edit_mantenimientoComponent } from './components/Maintenance/edit_mantenimiento/edit_mantenimiento.component';
+import { Show_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/show_RoleGroupTeacher/show_RoleGroupTeacher.component';
+import { Edit_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/edit_RoleGroupTeacher/edit_RoleGroupTeacher.component';
+import { Delete_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/delete_RoleGroupTeacher/delete_RoleGroupTeacher.component';
+import { Create_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/create_RoleGroupTeacher/create_RoleGroupTeacher.component';
 
 const routes: Routes = [
   {
@@ -365,7 +369,24 @@ const routes: Routes = [
           path:'create_mantenimiento',
           component:Create_mantenimientoComponent
         },
-        
+
+
+        {
+          path:'RoleGroupTeacher',
+          component:Show_RoleGroupTeacherComponent
+        },
+        {
+          path:'edit_RoleGroupTeacher/:id',
+          component:Edit_RoleGroupTeacherComponent
+        },
+        {
+          path:'delete_RoleGroupTeacher/:id',
+          component:Delete_RoleGroupTeacherComponent
+        },
+        {
+          path:'create_RoleGroupTeacher',
+          component:Create_RoleGroupTeacherComponent
+        },
     ]
   },
   {

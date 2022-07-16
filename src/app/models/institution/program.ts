@@ -45,7 +45,7 @@ export interface LineProgramGroupTeacherI {
    LineProgramGroupId:number;
    TeacherId:number;
    Teacher?:TeacherI
-   RoleInvestigationId?:number;
+   // RoleInvestigationId?:number;
    LineProgramGroup?:LineProgramGroupI
    status?:boolean
 

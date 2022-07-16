@@ -2,18 +2,17 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { RoleResearchI } from 'src/app/models/projet/roles_research';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleInvestigationsService {
-
+export class RoleResearchService {
   API_URI = environment.API_URI;
 
   // API path
-  base_path_post = `${this.API_URI}/api/RoleInvestigation`;
-  base_path_get = `${this.API_URI}/api/RoleInvestigation`;
+  base_path_post = `${this.API_URI}/api/RoleResearch`;
+  base_path_get = `${this.API_URI}/api/RoleResearch`;
 
 constructor(private http: HttpClient) { }
 
@@ -38,9 +37,9 @@ handleError(res: Response) {
 
 
 // Create a new item
-createItem(seedbeds: RoleInvestigationI): Observable<RoleInvestigationI> {
+createItem(roleResearch: RoleResearchI): Observable<RoleResearchI> {
   return this.http
-    .post<RoleInvestigationI>(this.base_path_post, JSON.stringify(seedbeds), this.httpOptions)
+    .post<RoleResearchI>(this.base_path_post, JSON.stringify(roleResearch), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)
@@ -48,9 +47,9 @@ createItem(seedbeds: RoleInvestigationI): Observable<RoleInvestigationI> {
 }
 
 // Get single student data by ID
-getItem(id: number): Observable<{roleInvestigation:RoleInvestigationI}> {
+getItem(id: number): Observable<{roleResearch:RoleResearchI}> {
   return this.http
-    .get<{roleInvestigation:RoleInvestigationI}>(this.base_path_get + '/' + id)
+    .get<{roleResearch:RoleResearchI}>(this.base_path_get + '/' + id)
     .pipe(
       retry(0),
       catchError(this.handleError)
@@ -58,9 +57,9 @@ getItem(id: number): Observable<{roleInvestigation:RoleInvestigationI}> {
 }
 
 // Get students data
-getList(): Observable<{ roleInvestigations: RoleInvestigationI[] }> {
+getList(): Observable<{ roleResearchs: RoleResearchI[] }> {
  return this.http
-   .get<{ roleInvestigations: RoleInvestigationI[] }>(this.base_path_get)
+   .get<{ roleResearchs: RoleResearchI[] }>(this.base_path_get)
    .pipe(
      retry(0),
      catchError(this.handleError)
@@ -68,9 +67,9 @@ getList(): Observable<{ roleInvestigations: RoleInvestigationI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, roleInvestigation:RoleInvestigationI): Observable<RoleInvestigationI> {
+updateItem(id:number, roleResearch:RoleResearchI): Observable<RoleResearchI> {
   return this.http
-    .patch<RoleInvestigationI>(this.base_path_get + '/' + id, JSON.stringify(roleInvestigation), this.httpOptions)
+    .patch<RoleResearchI>(this.base_path_get + '/' + id, JSON.stringify(roleResearch), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)
@@ -80,7 +79,7 @@ updateItem(id:number, roleInvestigation:RoleInvestigationI): Observable<RoleInve
 // Delete item by id
 deleteItem(id:number) {
   return this.http
-    .delete<RoleInvestigationI>(this.base_path_get + '/' + id, this.httpOptions)
+    .delete<RoleResearchI>(this.base_path_get + '/' + id, this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)

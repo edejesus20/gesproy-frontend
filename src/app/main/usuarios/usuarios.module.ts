@@ -102,6 +102,10 @@ import { Edit_ChargeComponent } from './components/Cargo/edit_Charge/edit_Charge
 import { Delete_ChargeComponent } from './components/Cargo/delete_Charge/delete_Charge.component';
 import { MantenimientoComponent } from './components/Maintenance/mantenimiento/mantenimiento.component';
 import { Create_mantenimientoComponent } from './components/Maintenance/create_mantenimiento/create_mantenimiento.component';
+import { Create_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/create_RoleGroupTeacher/create_RoleGroupTeacher.component';
+import { Delete_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/delete_RoleGroupTeacher/delete_RoleGroupTeacher.component';
+import { Edit_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/edit_RoleGroupTeacher/edit_RoleGroupTeacher.component';
+import { Show_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/show_RoleGroupTeacher/show_RoleGroupTeacher.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +180,11 @@ Show_one_ChargeComponent,
     Edit_ChargeComponent,
    Delete_ChargeComponent,
    Create_mantenimientoComponent,
+
+   Create_RoleGroupTeacherComponent,
+   Delete_RoleGroupTeacherComponent,
+   Edit_RoleGroupTeacherComponent,
+   Show_RoleGroupTeacherComponent
    
   ],
   imports: [

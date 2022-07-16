@@ -5,12 +5,13 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
 
-import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
-import { GroupInvestigatorCollaboratorI, GroupStudentI, RoleInvestigationI } from 'src/app/models/institution/roles_investigation';
+import { GroupInvestigatorCollaboratorI, GroupStudentI } from 'src/app/models/institution/roles_investigation';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { LineProgramGroupTeacherI } from 'src/app/models/institution/program';
+import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
+import { RoleResearchI } from 'src/app/models/projet/roles_research';
 
 @Component({
   selector: 'app-show-rol-investigation',
@@ -18,18 +19,18 @@ import { LineProgramGroupTeacherI } from 'src/app/models/institution/program';
   styleUrls: ['./show-rol-investigation.component.css']
 })
 export class ShowRolInvestigationComponent implements OnInit {
-  public roles:RoleInvestigationI[]=[]
+  public roles:RoleResearchI[]=[]
   first = 0;
   loading: boolean = true;
   @Input() mostrar:number=0;
   @Output() modificar= new EventEmitter<number>();
   rows = 1;
   cols: any[]=[];
-  private rows2:RoleInvestigationI[] = []
+  private rows2:RoleResearchI[] = []
   exportColumns: any[]=[];
-  selectedProducts: RoleInvestigationI[]=[]; 
+  selectedProducts: RoleResearchI[]=[]; 
   constructor(
-    private roleInvestigationsService:RoleInvestigationsService,
+    private roleResearchService:RoleResearchService,
     private studentService:StudentService,
     private teacherService:TeacherService,
     private investigadorColaboladorService:InvestigadorColaboladorService,
@@ -49,8 +50,8 @@ export class ShowRolInvestigationComponent implements OnInit {
     }
 
     getUsrRoles() {
-      this.roleInvestigationsService.getList().subscribe((rolesFromApi) => {
-        this.roles =rolesFromApi.roleInvestigations
+      this.roleResearchService.getList().subscribe((rolesFromApi) => {
+        this.roles =rolesFromApi.roleResearchs
         // console.log(rolesFromApi.roleInvestigations)
         // let arrayTeacher:any | null=null
         // let arrayStudiante:any | null=null
@@ -115,8 +116,8 @@ export class ShowRolInvestigationComponent implements OnInit {
         // }
         // console.log(this.roles)
         this.rows2=[]
-        if(rolesFromApi.roleInvestigations != undefined){
-          for (const key of rolesFromApi.roleInvestigations) {
+        if(rolesFromApi.roleResearchs != undefined){
+          for (const key of rolesFromApi.roleResearchs) {
             // if(rolesFromApi.roleInvestigations[0].Users){
               this.rows2.push(
                 {

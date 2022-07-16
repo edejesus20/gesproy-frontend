@@ -3,20 +3,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 const translate = require('translate');
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
-import { RoleResearchI } from 'src/app/models/projet/roles_research';
+import { RolesService } from 'src/app/core/services/usuarios/roles.service';
+import { RoleI } from 'src/app/models/authorization/usr_roles';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
+import { RoleGroupTeacherI } from 'src/app/models/institution/group';
 
 @Component({
-  selector: 'app-crear-rol-investigation',
-  templateUrl: './crear-rol-investigation.component.html',
-  styleUrls: ['./crear-rol-investigation.component.css']
+  selector: 'app-create_RoleGroupTeacher',
+  templateUrl: './create_RoleGroupTeacher.component.html',
+  styleUrls: ['./create_RoleGroupTeacher.component.css']
 })
-export class CrearRolInvestigationComponent implements OnInit {
+export class Create_RoleGroupTeacherComponent implements OnInit {
 
-   public Dialog:boolean =false
+  public mostrarDialogo:boolean=false;
+  public Dialog:boolean =false
    public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({
    });
+  
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
   constructor(
@@ -24,29 +29,45 @@ export class CrearRolInvestigationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService:MessageService,
     private primengConfig: PrimeNGConfig,
-    private roleResearchService:RoleResearchService,
+    private roleGroupTeacherService: RoleGroupTeacherService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
   ) { }
 
   ngOnInit() {
-    this. form=this.formBuilder.group({
+    this.form=this.formBuilder.group({
       name:['', [Validators.required]],
      });
     this.primengConfig.ripple = true;
+    if(this.config.data){
+      if(this.config.data.id == '1'){
+        this.mostrarDialogo= true
+      }
+    }else{
+      this.mostrarDialogo= false
+    }
+  }
+  public cancelar(){
+    this.ref.close(undefined);
   }
   cerrar(){
-    this.router.navigateByUrl('/Investigation/mostrar_RoleResearchs');
+    this.router.navigateByUrl('/usuarios/RoleGroupTeacher');
   }
-  private volver(){
+ private volver(){
     this.bandera=false
     this.ngOnInit()
   }
+
   public onSubmit() {
-    let formValue: RoleResearchI = this.form.value;
+    let formValue: RoleGroupTeacherI = this.form.value;
     if(formValue.name != ''){
     this.bandera=true
 
-    this.roleResearchService.createItem(formValue).subscribe(
-      () => {
+    this.roleGroupTeacherService.createItem(formValue).subscribe(
+      (algo) => {
+        if(this.mostrarDialogo== true){
+          this.ref.close(algo);
+        }else{
               var date = new Date('2020-01-01 00:00:03');
                 function padLeft(n:any){ 
                    return n ="00".substring(0, "00".length - n.length) + n;
@@ -57,15 +78,16 @@ export class CrearRolInvestigationComponent implements OnInit {
                 // console.log(minutes, seconds);
                 if( seconds == '03') {
                 this.messageService.add({severity:'success', summary: 'Success', 
-                detail: 'Rol de Investigacion Creado con exito'});
+                detail: 'Rol Docente de Grupo Creado con exito'});
                 }
                 date = new Date(date.getTime() - 1000);
                 if( minutes == '00' && seconds == '01' ) {
                   this.volver()
-                  // this.router.navigateByUrl('/Investigation/mostrar_RoleInvestigations');
+                  // this.router.navigateByUrl('/usuarios/roles');
                   clearInterval(interval); 
                  }
           }, 1000);
+        }
       },async error => {
         if(error != undefined) {
     this.bandera=false

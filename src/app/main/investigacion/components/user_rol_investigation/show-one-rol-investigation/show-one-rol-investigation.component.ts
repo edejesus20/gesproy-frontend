@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleInvestigationsService } from 'src/app/core/services/institution/roleInvestigations.service';
+import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
 
 @Component({
   selector: 'app-show-one-rol-investigation',
@@ -15,7 +15,7 @@ export class ShowOneRolInvestigationComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!]+$/ 
 
   constructor(
-    private roleInvestigationsService:RoleInvestigationsService,
+    private roleResearchService:RoleResearchService,
 
   ) { }
 
@@ -39,9 +39,9 @@ export class ShowOneRolInvestigationComponent implements OnInit {
   }
   
   getOneCntAccount(id:number) {
-    this.roleInvestigationsService.getItem(id).subscribe((cnt_groupFromApi) => {
+    this.roleResearchService.getItem(id).subscribe((cnt_groupFromApi) => {
      
-      if(cnt_groupFromApi.roleInvestigation.id != undefined
+      if(cnt_groupFromApi.roleResearch.id != undefined
         ){
 
       }

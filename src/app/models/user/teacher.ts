@@ -41,7 +41,22 @@ export interface TeacherI {
 
     // GroupLineTeachers?:GroupLineTeacherI[]
     Groups?:GroupI[]
+    GroupTeachers?:GroupTeacherI[]
     // LinesS?:any[]
+}
+export interface GroupTeacherI {
+    id?:number
+    GroupId:number;
+    RoleGroupTeacherId:number
+    TeacherId:number;
+    RoleGroupTeacher?:RoleGroupTeacherI
+    Group?:GroupI
+    Teacher?:TeacherI
+
+}
+export interface RoleGroupTeacherI {
+    id?:number
+    name: string;
 }
 export interface AnexosTrainingTeacherI {
     id?:number
