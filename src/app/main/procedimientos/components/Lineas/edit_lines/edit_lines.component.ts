@@ -300,7 +300,7 @@ export class Edit_linesComponent implements OnInit {
           this.form.controls['objectives'].setValue(cnt_groupFromApi.line.LineDetail.objectives)
         this.form.controls['resolution'].setValue(cnt_groupFromApi.line.LineDetail.resolution)
       }
-      console.log(cnt_groupFromApi.line.Anexo,'cnt_groupFromApi.line.Anexo')
+      // console.log(cnt_groupFromApi.line.Anexo,'cnt_groupFromApi.line.Anexo')
       if(cnt_groupFromApi.line.Anexo != undefined && cnt_groupFromApi.line.Anexo != null){
         this.mostrarAnexo=cnt_groupFromApi.line.Anexo
         this.BanderaAnexo=false

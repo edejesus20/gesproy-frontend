@@ -34,7 +34,7 @@ export interface GroupI {
     GroupKnowledge_areas?:GroupKnowledge_areaI[]
     Seedbeds?:any[]
 
-    GroupTeachers?:GroupTeacherI
+    GroupTeachers?:GroupTeacherI[]
     GroupInvestigatorCollaborators?:GroupInvestigatorCollaboratorI[],
     GroupStudents?:GroupStudentI[]
 }
