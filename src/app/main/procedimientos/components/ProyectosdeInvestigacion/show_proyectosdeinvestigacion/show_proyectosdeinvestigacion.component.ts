@@ -19,7 +19,7 @@ export class Show_proyectosdeinvestigacionComponent implements OnInit {
     private projetService:ProjetService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
 
     this.getAllScale() 
   }

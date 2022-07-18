@@ -97,7 +97,7 @@ constructor(
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
 
     this.buildForm();
     this.getAllteachers()

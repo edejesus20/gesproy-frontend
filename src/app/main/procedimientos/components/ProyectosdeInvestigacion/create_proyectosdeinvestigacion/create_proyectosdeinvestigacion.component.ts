@@ -234,7 +234,7 @@ public project_modalitys:any[] =[
   
 ];
 
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
 
     this.buildForm();
     this.getAllProjetTypeId()

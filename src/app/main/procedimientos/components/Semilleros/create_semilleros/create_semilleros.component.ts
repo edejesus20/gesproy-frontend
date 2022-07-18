@@ -110,7 +110,7 @@ public Valorconstruccion:boolean=false
     private studentService:StudentService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
     // this.buildForm();
     this.getAllteachers()
     this.geFacultad() 

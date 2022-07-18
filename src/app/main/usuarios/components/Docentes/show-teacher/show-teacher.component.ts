@@ -30,6 +30,7 @@ export class ShowTeacherComponent implements OnInit {
   API_URI = environment.API_URI;
   rows = 1;
   cols: any[]=[];
+  public lineas:any[] = [];
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
   private rows2:TeacherI[] = []
@@ -158,6 +159,7 @@ getFiltro(e:Event){
 
         }  
 
+
         if(key.GroupTeachers?.[0]){
           if( key.GroupTeachers[0].status == false
             ){
@@ -183,7 +185,6 @@ getFiltro(e:Event){
           }
         
         }
-        
      
       }
       this.teachers =teachers;
@@ -192,7 +193,7 @@ getFiltro(e:Event){
       this.teacherService.getList().subscribe((instititionsFromApi) => {
       this.asignarProfesor(instititionsFromApi.teachers)
         
-        console.log(instititionsFromApi.teachers)
+        // console.log(instititionsFromApi.teachers)
 
     //     let arrayLinea:any[] = [];
     //     for (const newH of  this.teachers) {
