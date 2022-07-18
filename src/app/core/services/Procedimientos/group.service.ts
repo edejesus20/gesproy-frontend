@@ -50,6 +50,21 @@ createItem(group: GroupI): Observable<{group:GroupI}> {
       catchError(this.handleError)
     )
 }
+getAreasLineasGrupos(GroupId: number,LineId: number): Observable<{groupLine:any[]}> {
+  return this.http.post<{groupLine:any[]}>(this.API_URI + '/api/AreasLineasGrupos', 
+  JSON.stringify({GroupId:GroupId,LineId:LineId}), this.httpOptions)
+    .pipe(
+      tap((res: {groupLine:any[]}) => {
+        if (res) {
+          console.log(res)
+        }
+      }),
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+
+
 Anexos(GroupId: string,AnexoId:string,GroupAnexoId:string,file:any): Observable<any> {
   let token : string | null=localStorage.getItem('token')
   let user : string | null=localStorage.getItem('user')
