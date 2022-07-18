@@ -63,7 +63,19 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
             if(linea.status == false){
               key.GroupLines.splice(index,1) 
 
+            }else{
+              if(linea.GroupLineThematics?.length != undefined && linea.GroupLineThematics.length >0){
+                for (let a = 0; a < linea.GroupLineThematics.length; a++) {
+                  const element = linea.GroupLineThematics[a];
+                  if(element.status == false){
+                    linea.GroupLineThematics.splice(a,1) 
+                  }
+                  
+                }
+              }
+             
             }
+
           }
         }
         if(key.GroupTeachers !== undefined && key.GroupTeachers?.length > 0) {

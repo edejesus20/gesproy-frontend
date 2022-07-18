@@ -207,7 +207,7 @@
                           <th pSortableColumn="name">Nombre de Lineas<p-sortIcon field="name"></p-sortIcon></th>
                           <th pSortableColumn="Line.LineDetail.objectives">Objetivo<p-sortIcon field="objectives"></p-sortIcon></th>
                           <th pSortableColumn="Line.LineDetail.resolution">Resolucion<p-sortIcon field="resolution"></p-sortIcon></th>
-                          <!-- <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th> -->
+                          <th pSortableColumn="thematics">TEMATICAS ASOCIADAS<p-sortIcon field="thematics"></p-sortIcon></th>
                             
                         </tr>
                     </ng-template>
@@ -216,13 +216,13 @@
                         <td>{{order.Line.name | titlecase}}</td> 
                         <td>{{order.Line?.LineDetail?.objectives }}</td> 
                         <td>{{order.Line?.LineDetail?.resolution }}</td> 
-                        <!-- <td >
-                          <span *ngFor="let i of order.Thematics">
+                        <td >
+                          <span *ngFor="let i of order.GroupLineThematics">
                             <span style="display: flex;">
-                              * {{i.name}} 
+                              * {{i.Thematic.name}} 
                             </span>
                           </span>
-                        </td> -->
+                        </td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="emptymessage">

@@ -242,6 +242,7 @@
                                        <tr>
                                            <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
                                       <th pSortableColumn="resolution">Resolución<p-sortIcon field="resolution"></p-sortIcon></th>
+                                      <th pSortableColumn="resolution">Areas Tematicas<p-sortIcon field="resolution"></p-sortIcon></th>
         
                                        </tr>
                                    </ng-template>
@@ -255,6 +256,14 @@
                                           {{item.LineId?.LineDetail?.resolution | titlecase}}
                                          
                                         </td>
+                                        <td >
+                                          <span *ngFor="let i of item.ThematicId">
+                                            <span style="display: flex;">
+                                              * {{i.name | titlecase}} 
+                                            </span>
+                                          </span>
+                                        </td>
+                                        
                                      </tr>
                                    </ng-template>
                                    </p-table>
@@ -342,7 +351,7 @@
                                     class="input-file p-inputtext-lg " 
                                     style="margin-top: -15px; "
                                     >
-                                    NO hay Archivo de Grupo</a>
+                                    No hay Archivo de Grupo</a>
                                     <!-- <span class="bottomdelete"  
                                     style="margin-left: 20px;">
                                       <button pButton pRipple type="button" icon="pi pi-sync"  *ngIf="mostrarAnexo!= null"

@@ -1,3 +1,4 @@
+import { GroupLineI } from "../institution/group";
 import { LineProgramI, ProgramI } from "../institution/program";
 
 // export interface LineI {
@@ -24,6 +25,7 @@ export interface LineI {
     Programs?:ProgramI[]
     LineDetailId?: string;
     LineDetail?: LineDetailI
+    GroupLines?:GroupLineI[]
 }
 export interface LineDetailI {
     id?:number;

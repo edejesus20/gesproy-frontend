@@ -5,7 +5,7 @@ import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.ser
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
@@ -26,6 +26,13 @@ const translate = require('translate');
   providers: [DialogService]
 })
 export class Create_semillerosComponent implements OnInit {
+
+  items: MenuItem[]=[]
+    
+  activeIndex: number = 0;
+  AnexoAdjuntado:any | null = null
+
+  
   public seedbeds: any;
   public mostrarDialogo:boolean=false;
   public mostrarFacultad:boolean=false;
@@ -57,6 +64,7 @@ export class Create_semillerosComponent implements OnInit {
   estrategias: ['', [Validators.required]],
   HeadquarterProgramId: [''],
   GroupId:[''],
+  Anexo: [''],
   lines: this.formBuilder.array([this.formBuilder.group({LineId:['', [Validators.required]]})]),
   Students: this.formBuilder.array([this.formBuilder.group({
     date_firt:['',[Validators.required]],
@@ -110,7 +118,22 @@ public Valorconstruccion:boolean=false
     private studentService:StudentService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Registrar Mas Detalles',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+    ];
+
+    this.Valorconstruccion=false
     // this.buildForm();
     this.getAllteachers()
     this.geFacultad() 
@@ -300,18 +323,21 @@ private vaciar(){
   getOneTeachers(id:number) {
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
+        console.log(cnt_groupFromApi.teacher)
           this.form2=cnt_groupFromApi.teacher
           let Group :any | null= null 
-          // if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
-          //   && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+          if(cnt_groupFromApi.teacher.GroupTeachers?.length != undefined
+            && cnt_groupFromApi.teacher.GroupTeachers?.length > 0){
 
-          //     for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
-          //       if(clave.GroupLine?.GroupId && clave.status == true){
-          //         Group=clave.GroupLine?.GroupId
-          //       }
-          //     }
+              for (const clave of cnt_groupFromApi.teacher.GroupTeachers) {
+                if(clave.Group?.id && clave.status == true){
+                  Group=clave.Group?.id
+                }
+              }
 
-          // }
+          }
+
+          
           for (const key of this.groups) {
 
             if(Group != null && parseInt(Group) == key.id){

@@ -115,8 +115,9 @@
                                                   [suggestions]="filteredCountries"
                                                   title="SELECCIONE EJES TEMATICOS"
                                                    placeholder="SELECCIONE EJES TEMATICOS"
-                                                   (input)="llenar($event)" 
-                                                   [dropdown]="true"(click)="llenar($event)" 
+                                                   (input)="llenar(pointIndex,$event)" 
+                                                   [dropdown]="true"
+                                                   (click)="llenar(pointIndex,$event)" 
                                                   (completeMethod)="filterCountry($event)" 
                                                   field="name" [multiple]="true" >
                                                   </p-autoComplete>

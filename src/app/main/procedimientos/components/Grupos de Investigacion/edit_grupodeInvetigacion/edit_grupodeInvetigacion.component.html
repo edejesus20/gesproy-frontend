@@ -486,7 +486,7 @@ margin: 0;">
                                                   [style]="{'width':'100%','margin-bottom':'20px'}"
                                                   optionvalue="id" optionLabel="name" 
                                                   filterBy="name"
-                                                  [required]="true" placeholder="SELECCIONE LINEA"  >
+                                                  [required]="true" placeholder="SELECCIONE LINEA" (click)="AreaSeleccionada(pointIndex,$event)" >
                                                   <ng-template let-option pTemplate="item"  >
                                                     <span >{{option.name  | titlecase}} - Resolución: {{option.LineDetail?.resolution  | titlecase}}
                                                       </span>
@@ -494,7 +494,33 @@ margin: 0;">
                                                 </p-dropdown>
                                               </div>
                                             </div>
-      
+                                            <br>
+                                            <div class="flex mb-4" >
+                                              <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257;height: 47px;"><i class="pi pi-bookmark-fill"></i></span>
+   
+                                              <div style="width:100%">
+                                                  
+                                          <span class="p-fluid">
+                                  
+                                              <p-autoComplete 
+                                              formControlName="ThematicId" name="ThematicId" class=" p-inputtext-lg" 
+                                              [suggestions]="filteredCountries2"
+                                              title="SELECCIONE EJES TEMATICOS"
+                                               placeholder="SELECCIONE EJES TEMATICOS"
+                                               (input)="llenar2(pointIndex,$event)" 
+                                               [dropdown]="true"
+                                               (click)="llenar2(pointIndex,$event)" 
+                                              (completeMethod)="filterCountry2($event)" 
+                                              field="name" [multiple]="true" >
+                                              </p-autoComplete>
+                                          </span>
+                                                </div>
+                                              <!-- <span class="bottomdelete" style="margin-top: 5px;">
+                                                <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
+                                                class="p-button-rounded p-button-outlined" (click)="addeJES($event)" ></button>
+                                              </span> -->
+                                            </div>
+                                            <hr>
       
                                             </div>
                                             <div class="col-1 sm:col-1">

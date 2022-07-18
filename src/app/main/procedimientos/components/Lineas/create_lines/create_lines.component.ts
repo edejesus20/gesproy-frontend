@@ -115,29 +115,66 @@ export class Create_linesComponent implements OnInit {
 
     }
   }
-  llenar(event:Event){
+  llenar(position:number,event:Event){
     let filterValue = (event.target as HTMLInputElement).value;
-    this.filterCountry(event,filterValue)
+    this.filterCountry(event,position,filterValue)
 
   }
-  filterCountry(event:Event,filterValue?:string){
-    if(filterValue != undefined){
-      let filtered : any[] = [];
-      // let query = filterValue;
-  
-      for(let i = 0; i < this.thematic_axiss.length; i++) {
-          let country = this.thematic_axiss[i];
-          if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
-              filtered.push(country);
-          }
-      }
-      this.filteredCountries = filtered;
-    }
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-  
+  filterCountry(event:Event,position?:number,filterValue?:string){
+    this.thematic_axiss=[]
+    let control = <FormArray>this.form.controls['Thematics']
+    if(position != undefined){
+    // console.log(control.controls[position].value.LineId)  
 
-    
-}
+      if(control.controls[position].value.ThematicId.id != ''){
+
+        this.thematicService.getItem(control.controls[position].value.ThematicId.id).subscribe(data=>{
+          if(data.thematic.Thematic_axis_Thematics !== undefined && data.thematic.Thematic_axis_Thematics.length > 0){
+         
+            for (let key of data.thematic.Thematic_axis_Thematics) {
+            if(key.Thematic_axis != undefined && key.status == true){
+  
+            
+            // for (let key of categoryGroups.categoryGroups) {
+              key.Thematic_axis.name =  key.Thematic_axis.name.charAt(0).toUpperCase() +  key.Thematic_axis.name.slice(1);
+            // }
+            this.thematic_axiss.push(key.Thematic_axis)
+          }
+          }
+          if(filterValue != undefined){
+            let filtered : any[] = [];
+            // let query = filterValue;
+        
+            for(let i = 0; i < this.thematic_axiss.length; i++) {
+                let country = this.thematic_axiss[i];
+                if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                    filtered.push(country);
+                }
+            }
+            this.filteredCountries = filtered;
+          }
+           
+          }else{
+            this.thematic_axiss=[{name:'No hay registros'}]
+            if(filterValue != undefined){
+              let filtered : any[] = [];
+              // let query = filterValue;
+          
+              for(let i = 0; i < this.thematic_axiss.length; i++) {
+                  let country = this.thematic_axiss[i];
+                  if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                      filtered.push(country);
+                  }
+              }
+              this.filteredCountries = filtered;
+            }
+          }
+        })
+
+  
+    }
+    }
+  }
   thematic() {
     this.thematics=[]
     this.thematicService.getList().subscribe(list => {

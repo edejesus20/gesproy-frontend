@@ -333,7 +333,7 @@ public bandera:boolean=false
                     }
                     
                   }
-                  console.log(RoleGroupTeacher,"RoleGroupTeacher")
+                  // console.log(RoleGroupTeacher,"RoleGroupTeacher")
                   // console.log(RoleGroupTeacher,"RoleGroupTeacher")
                    this.form.controls['RoleInvestigador'].setValue(RoleGroupTeacher)
                   let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
@@ -577,17 +577,32 @@ public bandera:boolean=false
    // datos de lienas cambios de grupos
    agregarLinea1(GroupLines:GroupLineI[]) {
     if(GroupLines.length){
+      let LineId:any | null = null;
+      
+      
       for (let key of GroupLines) {
         if(key.Line?.id != undefined && key.status == true){
+          let ArrayThematicId: any[] = []
           let control = <FormArray>this.form.controls['lines']
           for (const key1 of this.lines) { 
             if(key1.id == key.Line.id){
-              control.push(this.formBuilder.group({
-                id:[key.id],
-                LineId:[key1, [Validators.required]]}))//nuevo input
+              LineId=key1
+            
             }
             
           }
+          if(key.GroupLineThematics?.length!= undefined && key.GroupLineThematics?.length > 0){
+            for (const clave of key.GroupLineThematics) {
+              if(clave.status == true){
+                ArrayThematicId.push(clave.Thematic)
+              }
+            }
+          }
+          control.push(this.formBuilder.group({
+            id:[key.id],
+            LineId:[LineId, [Validators.required]],
+            ThematicId:[ArrayThematicId],
+          }))//nuevo input
         }
       }
 
@@ -675,25 +690,25 @@ public bandera:boolean=false
       let control = <FormArray>this.form.controls['lines']
       control.push(this.formBuilder.group({
         id:0,
-        LineId:['', [Validators.required]]
+        LineId:[''], ThematicId:['']
       }))
       let control1 = <FormArray>this.form.controls['Anexoss']
       control1.push(this.formBuilder.group({
         id:0,
-        Anexos:['', [Validators.required]]
+        Anexos:['']
       }))
     
       let control3 = <FormArray>this.form.controls['InvestigatorCollaborators']
       control3.push(this.formBuilder.group({
         id:0,
-        Usuarios:['', [Validators.required]],
+        Usuarios:[''],
         RoleGroupTeacherId:[''],
     
       }))
       let control4 = <FormArray>this.form.controls['knowledge_areas']
       control4.push(this.formBuilder.group({
         id:0,
-        Knowledge_areaId:['', [Validators.required]],
+        Knowledge_areaId:[''],
       }))
       
     }
@@ -811,7 +826,7 @@ public bandera:boolean=false
           })]),
         knowledge_areas: this.formBuilder.array([this.formBuilder.group({
         id:0, Knowledge_areaId:['']})]),
-        lines: this.formBuilder.array([this.formBuilder.group({id:0,LineId:['']})]),
+        lines: this.formBuilder.array([this.formBuilder.group({id:0,LineId:[''],ThematicId:['']})]),
         // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['']})]),
         Anexoss: this.formBuilder.array([this.formBuilder.group({
           id:0,Anexos:[''],anterior:false})]),
@@ -1189,11 +1204,11 @@ public bandera:boolean=false
       if(control.length == 0 && this.mostrar4 == false){
         control.push(this.formBuilder.group({
           id:0,
-          LineId:['', [Validators.required]]}))//nuevo input
+          LineId:['', [Validators.required]],ThematicId:['']}))//nuevo input
       }
       if(control.length >= 1 && this.mostrar4 == true){
         control.push(this.formBuilder.group({
-          id:0,LineId:['', [Validators.required]]}))//nuevo input
+          id:0,LineId:['', [Validators.required]],ThematicId:['']}))//nuevo input
   
       }
         this.mostrar4=true
@@ -1208,7 +1223,7 @@ public bandera:boolean=false
       if(control.length <= 0){
        this.mostrar4=false
        control.push(this.formBuilder.group({
-        id:0,LineId:['', [Validators.required]]}))
+        id:0,LineId:['', [Validators.required]],ThematicId:['']}))
       }
     }
   // ******************************Añadir Anexos

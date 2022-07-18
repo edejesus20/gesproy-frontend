@@ -1,4 +1,4 @@
-import { LineI } from "../projet/line";
+import { LineI, ThematicI } from "../projet/line";
 import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
@@ -92,11 +92,21 @@ export interface GroupLineI {
     LineId:number;
     GroupId:number;
     Line?:LineI;
-  
-    // GroupLineTeachers?:GroupLineTeacherI[]
-  
+    Group?:GroupI
+    GroupLineThematics?:GroupLineThematicI[]
     status?:boolean
 }
+
+export interface GroupLineThematicI {
+    GroupLineId:number;
+    ThematicId:number;
+    GroupLine?:GroupLineI
+    Thematic?:ThematicI
+    status?:boolean
+
+}
+
+
 export interface GroupLineSeedbedI {
     id?: number;
     GroupLineId:number;

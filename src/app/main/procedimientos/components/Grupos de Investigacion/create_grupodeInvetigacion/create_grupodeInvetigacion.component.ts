@@ -119,7 +119,10 @@ public form:FormGroup= this.formBuilder.group({
     ]),
 
   knowledge_areas: this.formBuilder.array([this.formBuilder.group({Knowledge_areaId:['',[Validators.required]]})]),
-  lines: this.formBuilder.array([this.formBuilder.group({LineId:['',[Validators.required]]})]),
+  lines: this.formBuilder.array([this.formBuilder.group({
+    LineId:['',[Validators.required]],
+    ThematicId:['', [Validators.required]],
+  })]),
   // Seedbeds: this.formBuilder.array([this.formBuilder.group({SeedbedId: ['', [Validators.required]]})]),
   Anexos: this.formBuilder.array([this.formBuilder.group({Anexos:['']})]),
 });
@@ -141,6 +144,7 @@ public image:string='assets/images/images.jpg'
 
 public image2:string='assets/images/uniguajira_iso.jpg'
 filteredCountries: any[]=[];
+filteredCountries2: any[]=[];
 public mostrarIntegrantes:boolean=false
 
 public construccion:string='assets/construccion.jpg'
@@ -148,7 +152,7 @@ public Valorconstruccion:boolean=false
 
 FilesAnexos:Archivo[] =[]
 ArchivosEliminados:any[] =[]
-  
+thematics:any[] =[]
   constructor(
     private groupService:GroupService,
     // private roleResearchService:RoleResearchService,
@@ -190,8 +194,96 @@ ArchivosEliminados:any[] =[]
     this.getKnowledge_area()
     this.getLines()
     this.filteredCountries=[]
+    this.filteredCountries2=[]
     // console.log('aqui')
   }
+
+  AreaSeleccionada(pointIndex:number,event:Event){
+    event.preventDefault();
+    // console.log("AreaSeleccionada")
+    let control = <FormArray>this.form.controls['lines']
+    let algo =control.controls[pointIndex].value.LineId
+ 
+
+    this.thematics=[]
+    if(algo != undefined && algo != ''){
+      this.lineService.getItem(algo.id).subscribe(data=>{
+        if(data.line.LineThematics !== undefined && data.line.LineThematics.length > 0){
+          for (let key of data.line.LineThematics) {
+          if(key.Thematic != undefined && key.status == true){
+          // for (let key of categoryGroups.categoryGroups) {
+            key.Thematic.name =  key.Thematic.name.charAt(0).toUpperCase() +  key.Thematic.name.slice(1);
+          // }
+          this.thematics.push(key.Thematic)
+        }
+        // console.log(this.thematics,'thematics') 
+        }
+        }else{
+          this.thematics=[{name:'No hay registros'}]
+        }
+      })
+
+    }
+  }
+
+  llenar2(position:number,event:Event){
+    let filterValue = (event.target as HTMLInputElement).value;
+    this.filterCountry2(event,position,filterValue)
+
+  }
+  filterCountry2(event:Event,position?:number,filterValue?:string){
+    this.thematics=[]
+    let control = <FormArray>this.form.controls['lines']
+    if(position != undefined){
+    // console.log(control.controls[position].value.LineId)  
+
+      if(control.controls[position].value.LineId.id != ''){
+
+        this.lineService.getItem(control.controls[position].value.LineId.id).subscribe(data=>{
+          if(data.line.LineThematics !== undefined && data.line.LineThematics.length > 0){
+            for (let key of data.line.LineThematics) {
+            if(key.Thematic != undefined && key.status == true){
+            // for (let key of categoryGroups.categoryGroups) {
+              key.Thematic.name =  key.Thematic.name.charAt(0).toUpperCase() +  key.Thematic.name.slice(1);
+            // }
+            this.thematics.push(key.Thematic)
+            }
+          // console.log(this.thematics,'thematics') 
+          }
+          if(filterValue != undefined){
+            let filtered : any[] = [];
+            // let query = filterValue;
+        
+            for(let i = 0; i < this.thematics.length; i++) {
+                let country = this.thematics[i];
+                if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                    filtered.push(country);
+                }
+            }
+            this.filteredCountries2 = filtered;
+          }
+
+          }else{
+            this.thematics=[{name:'No hay registros'}]
+            if(filterValue != undefined){
+              let filtered : any[] = [];
+              // let query = filterValue;
+          
+              for(let i = 0; i < this.thematics.length; i++) {
+                  let country = this.thematics[i];
+                  if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                      filtered.push(country);
+                  }
+              }
+              this.filteredCountries2 = filtered;
+            }
+          }
+        })
+      }
+    }
+   
+  }
+
   getLines() {
     this.lineService.getList().subscribe(categoryGroups=>{
       for (let key of categoryGroups.lines) {
@@ -394,7 +486,7 @@ ArchivosEliminados:any[] =[]
 
     let control = <FormArray>this.form.controls['InvestigatorCollaborators']
     if(position != undefined){
-    console.log(control.controls[position].value.RoleGroupTeacherId)  
+    // console.log(control.controls[position].value.RoleGroupTeacherId)  
 
       if(control.controls[position].value.RoleGroupTeacherId.id != ''){
   
@@ -607,7 +699,8 @@ private vaciar(){
   // this.form.controls['Resultados'].setValue('')
   let control = <FormArray>this.form.controls['lines']
   control.push(this.formBuilder.group({
-    LineId:['', [Validators.required]]
+    LineId:['', [Validators.required]],
+    ThematicId:['', [Validators.required]]
   }))
   let control1 = <FormArray>this.form.controls['Anexos']
   control1.push(this.formBuilder.group({
@@ -656,6 +749,7 @@ private vaciar(){
           key.LineId=key.LineId.id 
           this.lines1.push({
             LineId:key.LineId,
+            ThematicId:key.ThematicId
           })
         }
         formValue.lines = this.form.value.lines
@@ -892,10 +986,10 @@ private vaciar(){
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar == false){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]],ThematicId:['', [Validators.required]],}))//nuevo input
     }
     if(control.length >= 1 && this.mostrar == true){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({LineId:['', [Validators.required]],ThematicId:['', [Validators.required]],}))//nuevo input
 
     }
       this.mostrar=true
@@ -906,7 +1000,7 @@ private vaciar(){
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar=false
-     control.push(this.formBuilder.group({LineId:['', [Validators.required]]}))//nuevo input
+     control.push(this.formBuilder.group({LineId:['', [Validators.required]],ThematicId:['', [Validators.required]],}))//nuevo input
 
     }
   }
