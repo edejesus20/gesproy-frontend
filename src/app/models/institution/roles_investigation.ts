@@ -1,6 +1,6 @@
 import { InvestigatorCollaboratorI } from "../user/investigator_colabolator";
 import { StudentI } from "../user/student";
-import { GroupI } from "./group";
+import { GroupI, RoleGroupTeacherI } from "./group";
 import { LineProgramGroupTeacherI } from "./program";
 
 // export interface RoleInvestigationI {
@@ -15,7 +15,8 @@ import { LineProgramGroupTeacherI } from "./program";
 export interface GroupInvestigatorCollaboratorI {
     id?: number
     GroupId:number;
-    // RoleInvestigationId:number;
+    RoleGroupTeacherId:number;
+    RoleGroupTeacher?:RoleGroupTeacherI
     InvestigatorCollaboratorId:number;
     InvestigatorCollaborator?:InvestigatorCollaboratorI
     Group?:GroupI,

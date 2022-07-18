@@ -43,6 +43,7 @@ export class Edit_grupodeInvetigacionComponent implements OnInit {
   API_URI = environment.API_URI;
   BanderaAnexo:boolean=false
   mostrarAnexo:string | null = null
+
   public mostrar:number=1;
   public tabla:boolean=true;
   displayMaximizable2:boolean=false
@@ -605,9 +606,6 @@ AnexoAdjuntado:any | null = null
       }
 
       this.mostrar4 == true
-      this.mostrarI=true
-      let control2 = <FormArray>this.form.controls['InvestigatorCollaborators']
-      control2.removeAt(0)
       let control = <FormArray>this.form.controls['lines']
       control.removeAt(0)
     }
