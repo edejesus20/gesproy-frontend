@@ -157,6 +157,34 @@ getFiltro(e:Event){
           }
 
         }  
+
+        if(key.GroupTeachers?.[0]){
+          if( key.GroupTeachers[0].status == false
+            ){
+            if(key.GroupTeachers[0].GroupTeacherLines != undefined)
+            {
+              for (let index = 0; index < key.GroupTeachers[0].GroupTeacherLines.length; index++) {
+                  key.GroupTeachers?.[0].GroupTeacherLines.splice(index, key.GroupTeachers[0].GroupTeacherLines.length) 
+            }
+          }
+
+              // key.GroupTeachers.[0].
+          }else{
+            if(key.GroupTeachers[0].GroupTeacherLines != undefined)
+            for (let index = 0; index < key.GroupTeachers[0].GroupTeacherLines.length; index++) {
+              let Lineas = key.GroupTeachers?.[0].GroupTeacherLines[index];
+              if(Lineas.GroupLine != undefined)
+              if(Lineas.GroupLine?.status == false)
+              {
+                // this.FilesArchivos.splice(index,1) 
+                key.GroupTeachers?.[0].GroupTeacherLines.splice(index,1) 
+              }
+            }
+          }
+        
+        }
+        
+     
       }
       this.teachers =teachers;
     }
@@ -164,7 +192,7 @@ getFiltro(e:Event){
       this.teacherService.getList().subscribe((instititionsFromApi) => {
       this.asignarProfesor(instititionsFromApi.teachers)
         
-        // console.log(instititionsFromApi.teachers)
+        console.log(instititionsFromApi.teachers)
 
     //     let arrayLinea:any[] = [];
     //     for (const newH of  this.teachers) {

@@ -67,7 +67,8 @@ export interface GroupTeacherI {
     Teacher?:TeacherI
     RoleGroupTeacher?:RoleGroupTeacherI
 
-    GroupTeacherLines?:GroupTeacherLineI
+    GroupTeacherLines:GroupTeacherLineI
+    status?:boolean
 }
 
 
@@ -82,6 +83,8 @@ export interface GroupTeacherLineI {
 
     GroupTeacher?:GroupTeacherI
     GroupLine?:GroupLineI
+    GroupLines?:GroupLineI[]
+    status?:boolean
 }
 
 

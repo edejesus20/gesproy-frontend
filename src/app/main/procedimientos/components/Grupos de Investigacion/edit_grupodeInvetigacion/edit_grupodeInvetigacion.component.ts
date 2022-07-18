@@ -315,7 +315,7 @@ AnexoAdjuntado:any | null = null
     let RoleGroupTeacher:any
     if(GroupTeachers.length){
       for (let docente of GroupTeachers) {
-        if(docente.Teacher?.UserId){
+        if(docente.Teacher?.UserId && docente.status == true){
           if(docente.TeacherId != this.form.value.TeacherId.id){
             this.userService.getUserteacherinvestigatorstudent2(docente.Teacher?.UserId)
             .subscribe(teachersA => {
@@ -482,7 +482,7 @@ AnexoAdjuntado:any | null = null
 
     if(GroupKnowledge_areas.length){
       for (let key of GroupKnowledge_areas) {
-        if(key.Knowledge_area?.id != undefined){
+        if(key.Knowledge_area?.id != undefined && key.status == true){
           let control = <FormArray>this.form.controls['knowledge_areas']
       // console.log(this.knowledge_areas)      
         //crear los controles del array
@@ -695,7 +695,7 @@ AnexoAdjuntado:any | null = null
       let control1 = <FormArray>this.form.controls['Anexoss']
       control1.push(this.formBuilder.group({
         id:0,
-        Anexos:['', [Validators.required]]
+        Anexos:['']
       }))
     
       let control3 = <FormArray>this.form.controls['InvestigatorCollaborators']
@@ -1161,8 +1161,8 @@ AnexoAdjuntado:any | null = null
         let bandera:boolean = false
         for (const clave of formValue.InvestigatorCollaborators) {
 
-          if(clave.RoleGroupTeacherId.name.toLocaleLowerCase() === 'investigador co-investigador' || 
-          clave.RoleGroupTeacherId.name.toLocaleLowerCase() === 'investigador principal'){
+          if(clave.RoleGroupTeacherId.name.toLocaleLowerCase() === 'investigador segundo lider' || 
+          clave.RoleGroupTeacherId.name.toLocaleLowerCase() === 'investigador externo'){
             bandera=true
           }
           
@@ -1360,7 +1360,7 @@ AnexoAdjuntado:any | null = null
             this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
             }
         }else{
-          this.messageService.add({severity:'warn', summary: 'Warn', detail: 'El Grupo debe tener minimo Un Co-Investigador o Investigador Principal'});
+          this.messageService.add({severity:'warn', summary: 'Warn', detail: 'El Grupo debe tener minimo Un Investigador Externo o Investigador segundo lider'});
 
         }
         // console.log(this.FilesArchivos)

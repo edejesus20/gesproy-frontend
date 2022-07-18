@@ -441,8 +441,7 @@ margin: 0;">
               </p-panel>
    
 
-                  </p-card>
-                </div>
+               
                 <div >
                   <h3 style="text-align:center;">LINEA DE INVESTIGACIÓN Y TEMÁTICAS ASOCIADAS AL GRUPO</h3>                
                   <p-panel >
@@ -489,7 +488,7 @@ margin: 0;">
                                               filterBy="name"
                                               [required]="true" placeholder="SELECCIONE LINEA"  >
                                               <ng-template let-option pTemplate="item"  >
-                                                <span >{{option.name  | titlecase}} - {{option.resolution  | titlecase}}
+                                                <span >{{option.name  | titlecase}} - Resolución: {{option.LineDetail?.resolution  | titlecase}}
                                                   </span>
                                             </ng-template>
                                             </p-dropdown>
@@ -656,7 +655,7 @@ margin: 0;">
                               formControlName="Anexo" title="Anexo" >
                               <span class="bottomdelete"  
                               style="margin-left: 20px;">
-                                <button pButton pRipple type="button" icon="pi pi-sync"  
+                                <button pButton pRipple type="button" icon="pi pi-sync"  *ngIf="mostrarAnexo!= null"
                                 title="Volver Archivo Anterior"
                                 (click)="BanderaAnexo=false"  
                                 class="p-button-rounded p-button-warning mb-3"></button>
@@ -668,6 +667,8 @@ margin: 0;">
 
                       </ng-template>
                     </div>
+                  </p-card>
+                </div>
               </ng-template>
 
 

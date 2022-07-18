@@ -186,7 +186,13 @@
                   <p-table [value]="item.TrainingTeachers"  dataKey="id" responsiveLayout="scroll"
                   [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
-                      <ng-template pTemplate="header" >
+                  <ng-template pTemplate="caption">
+                    <span style="display: flex;">
+                      <i class="pi pi-book mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                      <h3>Formaciones Académicas</h3>
+                    </span>
+                  </ng-template>     
+                  <ng-template pTemplate="header" >
                           <tr style="background: rgba(0, 255, 255, 0.849);">
                               <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
                               <th pSortableColumn="name">Nombre de Formaciones <p-sortIcon field="name"></p-sortIcon></th>
@@ -230,7 +236,13 @@
                 <p-table [value]="item.Workexperiences"  dataKey="id" responsiveLayout="scroll"
                 [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
-                    <ng-template pTemplate="header" >
+                <ng-template pTemplate="caption">
+                  <span style="display: flex;">
+                    <i class="pi pi-briefcase mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                    <h3>Experiencia Laboral</h3>
+                  </span>
+                </ng-template>     
+                <ng-template pTemplate="header" >
                         <tr style="background: rgba(0, 255, 255, 0.849);">
                             <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
                             <th pSortableColumn="position_type">Experiencia Laboral<p-sortIcon field="position_type"></p-sortIcon></th>
@@ -278,11 +290,15 @@
                 [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                  >
+                 <ng-template pTemplate="caption">
+                  <span style="display: flex;">
+                    <i class="pi pi-chart-bar mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                    <h3>Semilleros de Investigación</h3>
+                  </span>
+                </ng-template> 
                     <ng-template pTemplate="header" >
                         <tr style="background: rgba(0, 255, 255, 0.849);">
-                          <!-- <ng-template [ngIf]="mostrar==3">
-                            <th style="width: 3rem"></th>
-                          </ng-template>  -->
+
                             <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
                             <th pSortableColumn="name">Nombre de Semillero <p-sortIcon field="name"></p-sortIcon></th>
                             <!-- <th pSortableColumn="Docente">Docente <p-sortIcon field="Docente"></p-sortIcon></th> -->
@@ -291,52 +307,13 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-order let-expanded="expanded">
                       <tr>
-                        <!-- <ng-template [ngIf]="mostrar==3">
-                          <td>
-                              <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                          </td>
-                        </ng-template>  -->
+
                             <td>{{order.id}}</td>
                             <td>{{order.name | titlecase}}</td>
-                            <!-- <td>{{order.Teacher?.User?.fullName | titlecase}}</td> -->
   
                         </tr>
                     </ng-template>
-<!-- 
-                    <ng-template pTemplate="rowexpansion" let-order>
-                      <tr>
-                          <td colspan="7">
-                              <div >
-                                  <p-table [value]="order.Faculties"  dataKey="AdministrativeId" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
-                                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                                   >
-                                      <ng-template pTemplate="header">
-                                          <tr>
-                                              <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                                              <th pSortableColumn="name">Nombre de Facultad <p-sortIcon field="name"></p-sortIcon></th>
-                                              <th pSortableColumn="AdministrativeId">Decano<p-sortIcon field="AdministrativeId"></p-sortIcon></th>
-                                          </tr>
-                                      </ng-template>
-                                      <ng-template pTemplate="body" let-ok>
-                                        <tr>
-                                              <td>{{ok.id}}</td>
-                                              <td>{{ok.name}}</td>
-                                              <td>{{ok.Administrative?.User?.fullName}}</td>
-                                          </tr>
-                                      </ng-template>
-                                      
-                                      <ng-template pTemplate="emptymessage">
-                                        <tr>
-                                          <td colspan="6" style="text-align: center;">
-                                            <h3>No hay registros encontrados</h3>
-                                          </td>
-                                      </tr>
-                                      </ng-template>
-                                  </p-table>
-                              </div>
-                          </td>
-                      </tr>
-                  </ng-template> -->
+
                     <ng-template pTemplate="emptymessage">
                       <tr>
                         <td colspan="6" style="text-align: center;">
@@ -351,15 +328,12 @@
       <tr>
         <td colspan="12">
           <div >
-              <p-table [value]="item.LineProgramGroupTeachers"  dataKey="id" responsiveLayout="scroll"
+              <!-- <p-table [value]="item.LineProgramGroupTeachers"  dataKey="id" responsiveLayout="scroll"
               [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
               currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                >
                   <ng-template pTemplate="header" >
                       <tr style="background: rgba(0, 255, 255, 0.849);">
-                        <!-- <ng-template [ngIf]="mostrar==3">
-                          <th style="width: 3rem"></th>
-                        </ng-template>  -->
                           <th pSortableColumn="LineProgramGroup.LineProgram.Line.id">Id <p-sortIcon field="LineProgramGroup.LineProgram.Line.id"></p-sortIcon></th>
                           <th pSortableColumn="LineProgramGroup.LineProgram.Line.name">Nombre de lineas <p-sortIcon field="LineProgramGroup.LineProgram.Line.name"></p-sortIcon></th>
                           <th pSortableColumn="LineProgramGroup.LineProgram.Line.objectives">Objetivos <p-sortIcon field="LineProgramGroup.LineProgram.Line.objectives"></p-sortIcon></th>
@@ -369,18 +343,51 @@
                   </ng-template>
                   <ng-template pTemplate="body" let-order let-expanded="expanded">
                     <tr>
-                      <!-- <ng-template [ngIf]="mostrar==3">
-                        <td>
-                            <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                        </td>
-                      </ng-template>  -->
                           <td>{{order.LineProgramGroup.LineProgram.Line.id}}</td>
                           <td>{{order.LineProgramGroup.LineProgram.Line.name | titlecase}}</td>
                           <td>{{order.LineProgramGroup.LineProgram.Line.objectives}}</td>
                           <td>{{order.LineProgramGroup.LineProgram.Line.resolution}}</td>
-                          <!-- <td>{{order.LineProgramGroup.LineProgram.tipo | titlecase}}</td> -->
 
                       </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6" style="text-align: center;">
+                        <h3>No hay registros encontrados</h3>
+                      </td>
+                  </tr>
+                  </ng-template>
+              </p-table> -->
+              
+
+              <p-table [value]="item.GroupTeachers[0].GroupTeacherLines"  dataKey="id" responsiveLayout="scroll"
+              [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+              currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+               >
+               <ng-template pTemplate="caption">
+                <span style="display: flex;">
+                  <i class="pi pi-list mr-2" style="font-size: 2rem;display: flex;margin-top: 15px;"></i>
+                  <h3>Lineas de Investigación</h3>
+                </span>
+              </ng-template> 
+                  <ng-template pTemplate="header" >
+                      <tr style="background: rgba(0, 255, 255, 0.849);">
+                          <th pSortableColumn="GroupLine.Line.id">Id <p-sortIcon field="GroupLine.Line.id"></p-sortIcon></th>
+                          <th pSortableColumn="GroupLine.Line.name">Nombre de lineas <p-sortIcon field="GroupLine.Line.name"></p-sortIcon></th>
+                          <th pSortableColumn="GroupLine.Line.LineDetail.objectives">Objetivos <p-sortIcon field="GroupLine.Line.LineDetail.objectives"></p-sortIcon></th>
+                          <th pSortableColumn="GroupLine.Line.LineDetail.resolution">Resolución <p-sortIcon field="GroupLine.Line.LineDetail.resolution"></p-sortIcon></th>
+                          
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-order let-expanded="expanded" >
+                      <tr >
+                        <td>{{order?.GroupLine?.Line?.id}}</td>
+                        <td>{{order?.GroupLine?.Line?.name | titlecase}}</td>
+                        <td>{{order?.GroupLine?.Line?.LineDetail?.objectives}}</td>
+                        <td>{{order?.GroupLine?.Line?.LineDetail?.resolution}}</td>
+
+                    </tr>
                   </ng-template>
 
                   <ng-template pTemplate="emptymessage">

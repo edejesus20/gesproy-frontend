@@ -409,8 +409,7 @@
               </p-panel>
    
 
-                  </p-card>
-                </div>
+                
                 <div >
                   <h3 style="text-align:center;">LINEA DE INVESTIGACIÓN Y TEMÁTICAS ASOCIADAS AL GRUPO</h3>                
                   <p-panel >
@@ -457,7 +456,7 @@
                                               filterBy="name"
                                               [required]="true" placeholder="SELECCIONE LINEA"  >
                                               <ng-template let-option pTemplate="item"  >
-                                                <span >{{option.name  | titlecase}} - {{option.resolution  | titlecase}}
+                                                <span >{{option.name  | titlecase}} - Resolución: {{option.LineDetail?.resolution  | titlecase}}
                                                   </span>
                                             </ng-template>
                                             </p-dropdown>
@@ -597,6 +596,8 @@
                           
                         </div>
                     </div>
+                  </p-card>
+                </div>
               </ng-template>
 
 

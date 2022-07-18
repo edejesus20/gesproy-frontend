@@ -1,6 +1,6 @@
 import { UserI } from "../authorization/usr_User";
 import { MincienciaCategoryI } from "../institution/colciencias_category";
-import { GroupI,
+import { GroupI, GroupTeacherLineI,
     //  GroupLineTeacherI 
     } from "../institution/group";
 import { HeadquarterProgramI, HeadquarterProgramTeacherI } from "../institution/headquarter";
@@ -52,6 +52,8 @@ export interface GroupTeacherI {
     RoleGroupTeacher?:RoleGroupTeacherI
     Group?:GroupI
     Teacher?:TeacherI
+    GroupTeacherLines?:GroupTeacherLineI[]
+    status?:boolean
 
 }
 export interface RoleGroupTeacherI {

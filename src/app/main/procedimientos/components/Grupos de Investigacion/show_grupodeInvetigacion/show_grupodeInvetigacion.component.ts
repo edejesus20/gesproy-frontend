@@ -55,6 +55,36 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
   }
   getUsrRoles() {
     this.groupService.getList().subscribe((rolesFromApi) => {
+   
+      for (let key of rolesFromApi.groups) {
+        if(key.GroupLines !== undefined && key.GroupLines?.length > 0) {
+          for (let index = 0; index < key.GroupLines.length; index++) {
+            const linea = key.GroupLines[index];
+            if(linea.status == false){
+              key.GroupLines.splice(index,1) 
+
+            }
+          }
+        }
+        if(key.GroupTeachers !== undefined && key.GroupTeachers?.length > 0) {
+          for (let index = 0; index < key.GroupTeachers.length; index++) {
+            const docente = key.GroupTeachers[index];
+            if(docente.status == false){
+              key.GroupTeachers.splice(index,1) 
+
+            }
+          }
+        }
+        if(key.GroupKnowledge_areas !== undefined && key.GroupKnowledge_areas?.length > 0) {
+          for (let index = 0; index < key.GroupKnowledge_areas.length; index++) {
+            const area = key.GroupKnowledge_areas[index];
+            if(area.status == false){
+              key.GroupKnowledge_areas.splice(index,1) 
+
+            }
+          }
+        }
+      }
       this.groups =rolesFromApi.groups
       console.log(this.groups)
       
