@@ -9,7 +9,9 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AnexosGroupI, GroupI, GroupKnowledge_areaI, GroupLineI, GroupTeacherI, Knowledge_areaI, RoleGroupTeacherI } from 'src/app/models/institution/group';
-import { GroupInvestigatorCollaboratorI, GroupStudentI } from 'src/app/models/institution/roles_investigation';
+import { GroupInvestigatorCollaboratorI, 
+  // GroupStudentI 
+} from 'src/app/models/institution/roles_investigation';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';

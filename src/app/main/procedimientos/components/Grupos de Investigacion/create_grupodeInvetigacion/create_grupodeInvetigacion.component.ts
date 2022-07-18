@@ -1143,25 +1143,25 @@ private vaciar(){
   });
   }
 
-  addStudent(e:Event){
-    e.preventDefault()
+  // addStudent(e:Event){
+  //   e.preventDefault()
 
-    this.ref = this.dialogService.open(CreateStudentComponent, {
-      width: '70%',
-      // height: '50%',
-      contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
-      baseZIndex: 10000,
-      data: {
-        id: '1'
-    },
-  });
+  //   this.ref = this.dialogService.open(CreateStudentComponent, {
+  //     width: '70%',
+  //     // height: '50%',
+  //     contentStyle:{'overflow-y': 'auto','padding':'20px'} ,closable:true, closeOnEscape:true, showHeader:false, 
+  //     baseZIndex: 10000,
+  //     data: {
+  //       id: '1'
+  //   },
+  // });
 
-  this.ref.onClose.subscribe((person: any) =>{
-      if (person) {
-          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
-          this.getRoleInvestigador()
+  // this.ref.onClose.subscribe((person: any) =>{
+  //     if (person) {
+  //         this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
+  //         this.getRoleInvestigador()
 
-        }
-  });
-  }
+  //       }
+  // });
+  // }
 }

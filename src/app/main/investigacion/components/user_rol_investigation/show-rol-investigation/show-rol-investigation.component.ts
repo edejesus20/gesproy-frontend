@@ -5,7 +5,6 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
 
-import { GroupInvestigatorCollaboratorI, GroupStudentI } from 'src/app/models/institution/roles_investigation';
 import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';

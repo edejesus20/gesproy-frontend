@@ -88,7 +88,7 @@ export class ShowStudentComponent implements OnInit {
               status_seedbed:key.status_seedbed,
               HeadquarterProgramStudents:key.HeadquarterProgramStudents,
               SeedbedStudents:key.SeedbedStudents,
-              GroupStudents:key.GroupStudents
+              // GroupStudents:key.GroupStudents
             }
           )
         }

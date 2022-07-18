@@ -3,7 +3,9 @@ import { AnexosI, TeacherI } from "../user/teacher";
 import { CategoryGroupI } from "./category";
 import { HeadquarterProgramI } from "./headquarter";
 import { LineProgramGroupI, ProgramI } from "./program";
-import { GroupInvestigatorCollaboratorI, GroupStudentI } from "./roles_investigation";
+import { GroupInvestigatorCollaboratorI, 
+    // GroupStudentI 
+} from "./roles_investigation";
 import { SeedbedI } from "./seedbed";
 
 
@@ -18,12 +20,9 @@ export interface GroupI {
     DetailGroupId?:string
     DetailGroup?:DetailGroupI
     CategoryGroup?:CategoryGroupI
-
     HeadquarterProgram?:HeadquarterProgramI
     Program?:ProgramI,
- 
     GroupLines?:GroupLineI[]
-    
     Anexos?:any[]
     AnexosGroups?:AnexosGroupI[]
     LineProgramGroups?:LineProgramGroupI[]
@@ -36,7 +35,7 @@ export interface GroupI {
 
     GroupTeachers?:GroupTeacherI[]
     GroupInvestigatorCollaborators?:GroupInvestigatorCollaboratorI[],
-    GroupStudents?:GroupStudentI[]
+    // GroupStudents?:GroupStudentI[]
 }
 
 

@@ -23,14 +23,14 @@ export interface GroupInvestigatorCollaboratorI {
     status?:boolean
 }
 
-export interface GroupStudentI {
-    id?: number
-    GroupId:number;
-    // RoleInvestigationId:number
-    StudentId:number;
-    Student?:StudentI
-    Group?:GroupI
-    status?:boolean
+// export interface GroupStudentI {
+//     id?: number
+//     GroupId:number;
+//     // RoleInvestigationId:number
+//     StudentId:number;
+//     Student?:StudentI
+//     Group?:GroupI
+//     status?:boolean
 
 
-}
+// }

@@ -9,7 +9,9 @@ import { UserService } from 'src/app/core/services/usuarios/user.service';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { AnexosGroupI, GroupI, GroupKnowledge_areaI, GroupLineI, GroupTeacherI, Knowledge_areaI, RoleGroupTeacherI } from 'src/app/models/institution/group';
-import { GroupInvestigatorCollaboratorI, GroupStudentI } from 'src/app/models/institution/roles_investigation';
+import { GroupInvestigatorCollaboratorI, 
+  // GroupStudentI
+ } from 'src/app/models/institution/roles_investigation';
 import { InvestigatorCollaboratorI } from 'src/app/models/user/investigator_colabolator';
 import { PersonI } from 'src/app/models/user/person';
 import { StudentI } from 'src/app/models/user/student';
@@ -353,55 +355,55 @@ AnexoAdjuntado:any | null = null
   }
   }
  
-  agregarEstudiantes(GroupStudents:GroupStudentI[]) {
-    if(GroupStudents.length){
-      let arrayEstudiante:any[]=[]
-      let RoleInvestigationId:any | null = null
-      for (const key of GroupStudents) {
-        if(
-          // key.RoleInvestigationId 
-          //  && 
-           key.status == true
-           ){
-          this.userService.getUserteacherinvestigatorstudent()
-          .subscribe(teachersA => {
-            if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
-              this.users=teachersA.estudiantes
-              }else{
-                this.users=[{todo:'No hay registros'}]
-              }
-              arrayEstudiante=[]
+  // agregarEstudiantes(GroupStudents:GroupStudentI[]) {
+  //   if(GroupStudents.length){
+  //     let arrayEstudiante:any[]=[]
+  //     let RoleInvestigationId:any | null = null
+  //     for (const key of GroupStudents) {
+  //       if(
+  //         // key.RoleInvestigationId 
+  //         //  && 
+  //          key.status == true
+  //          ){
+  //         this.userService.getUserteacherinvestigatorstudent()
+  //         .subscribe(teachersA => {
+  //           if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
+  //             this.users=teachersA.estudiantes
+  //             }else{
+  //               this.users=[{todo:'No hay registros'}]
+  //             }
+  //             arrayEstudiante=[]
              
-              // console.log(this.users)  
-              for (const clave of this.users) {
-                if(parseInt(clave.UserId) == key.Student?.UserId){
-                  // TeacherId=key1.TeacherId
-                  arrayEstudiante.push(clave)
-                  // RoleInvestigationId=clave.RoleInvestigationId
-                }
-              }
-              // for (const algo of this.roles) {
-              //   if(algo.id == RoleInvestigationId){
-              //     RoleInvestigationId=algo
-              //   }
-              // }
-            //  console.log(arrayEstudiante,'arrayEstudiante')
-               this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
-              let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
-              control1.push(this.formBuilder.group({
-                id:[key.id],
-                Usuarios:[arrayEstudiante, [Validators.required]],
-                // RoleInvestigadorId:[RoleInvestigationId],
-              }))
+  //             // console.log(this.users)  
+  //             for (const clave of this.users) {
+  //               if(parseInt(clave.UserId) == key.Student?.UserId){
+  //                 // TeacherId=key1.TeacherId
+  //                 arrayEstudiante.push(clave)
+  //                 // RoleInvestigationId=clave.RoleInvestigationId
+  //               }
+  //             }
+  //             // for (const algo of this.roles) {
+  //             //   if(algo.id == RoleInvestigationId){
+  //             //     RoleInvestigationId=algo
+  //             //   }
+  //             // }
+  //           //  console.log(arrayEstudiante,'arrayEstudiante')
+  //              this.form.controls['RoleInvestigador'].setValue(RoleInvestigationId)
+  //             let control1 = <FormArray>this.form.controls['InvestigatorCollaborators']
+  //             control1.push(this.formBuilder.group({
+  //               id:[key.id],
+  //               Usuarios:[arrayEstudiante, [Validators.required]],
+  //               // RoleInvestigadorId:[RoleInvestigationId],
+  //             }))
 
-              this.mostrarIntegrantes= true
-          })
-        }
-      }
-    this.mostrarI=true
-    }
+  //             this.mostrarIntegrantes= true
+  //         })
+  //       }
+  //     }
+  //   this.mostrarI=true
+  //   }
 
-  }
+  // }
   agregarColaboladores(GroupInvestigatorCollaborators: GroupInvestigatorCollaboratorI[]) {
     if(GroupInvestigatorCollaborators.length){
       let arrayI:any[]=[]
