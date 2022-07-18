@@ -188,6 +188,7 @@ thematics:any[] =[]
   }
 }
 private vaciar(){
+  this.AnexoAdjuntado=null
   this.lines=[]
   this.filteredCountries2=[]
   this.thematics=[]
@@ -207,6 +208,7 @@ private vaciar(){
   this.form.controls['estrategias'].setValue('')
   this.form.controls['HeadquarterProgramId'].setValue('')
   this.form.controls['GroupId'].setValue('')
+  this.form.controls['Anexo'].setValue('')
   let control = <FormArray>this.form.controls['Students']
   control.push(this.formBuilder.group({
       StudentId:['', [Validators.required]],
@@ -621,26 +623,30 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
     this.bandera=true
 
       this.seedbedService.createItem(formValue).subscribe(
-        () => {
-          var date = new Date('2020-01-01 00:00:03');
-            function padLeft(n:any){ 
-              return n ="00".substring(0, "00".length - n.length) + n;
-            }
-            var interval = setInterval(() => {
-            var minutes = padLeft(date.getMinutes() + "");
-            var seconds = padLeft(date.getSeconds() + "");
-            // console.log(minutes, seconds);
-            if( seconds == '03') {
-            this.messageService.add({severity:'success', summary: 'Success', 
-            detail: 'Registro de Semillero Creado con exito'});
-            }
-            date = new Date(date.getTime() - 1000);
-            if( minutes == '00' && seconds == '01' ) {
-              this.volver()
-              // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
-              clearInterval(interval); 
-            }
-      }, 1000);
+        (algo) => {
+          // let Bandera:boolean = false
+          if(algo.seedbed.id){
+            if(this.AnexoAdjuntado != null){
+              let data ={
+                SeedbedId:algo.seedbed.id,
+                url:'',
+                file:this.AnexoAdjuntado
+                }
+    
+                this.seedbedService.Anexo(data.SeedbedId.toString(),data.url.
+                toString(),data.file).subscribe(result=>{
+                  if(result){
+                    this.finalizar()
+                  }
+                }, error => console.error(error))
+          }else{
+            // Bandera=true
+            this.finalizar()
+          }
+          }else{
+
+          }
+   
         },async error => {
           if(error != undefined) {
     this.bandera=false
@@ -657,6 +663,28 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
         }
   }
   
+  finalizar(){
+    var date = new Date('2020-01-01 00:00:03');
+    function padLeft(n:any){ 
+      return n ="00".substring(0, "00".length - n.length) + n;
+    }
+    var interval = setInterval(() => {
+    var minutes = padLeft(date.getMinutes() + "");
+    var seconds = padLeft(date.getSeconds() + "");
+    // console.log(minutes, seconds);
+    if( seconds == '03') {
+    this.messageService.add({severity:'success', summary: 'Success', 
+    detail: 'Registro de Semillero Creado con exito'});
+    }
+    date = new Date(date.getTime() - 1000);
+    if( minutes == '00' && seconds == '01' ) {
+      this.volver()
+      // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+      clearInterval(interval); 
+    }
+}, 1000);
+  }
+
   get getStudents() {
     return this.form.get('Students') as FormArray;//obtener todos los formularios
   }
@@ -770,4 +798,14 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
         }
   });
   }
+
+  onFileChange1(event:any) {
+    event.preventDefault();
+    if(this.form.value.Anexo != ''){
+      if(event.target.files && event.target.files.length>0){
+        const file=event.target.files[0];
+        this.AnexoAdjuntado=file
+        }
+      }
+    }
 }

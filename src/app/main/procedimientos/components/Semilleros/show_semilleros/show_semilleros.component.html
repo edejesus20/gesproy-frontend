@@ -45,6 +45,8 @@
           <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           <th pSortableColumn="Teacher.User.fullName">DOCENTE<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
+          <th pSortableColumn="Anexo">ANEXO DE DETALLES<p-sortIcon field="Anexo"></p-sortIcon></th>
+          
           <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
             <th > ACCIONES </th>
           </ng-template>
@@ -75,6 +77,18 @@
               </span>
             </span>
           </td> -->
+          <td>
+            <ng-template [ngIf]="item.Anexo != null">
+              <div class="custom-input-file p-1" style="width: 100%;">
+                <a pInputText
+                class="input-file p-inputtext-lg mt-4" 
+                style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{item.Anexo}}">
+                {{item.name}}</a>
+              </div>
+            </ng-template>
+            
+            
+          </td>
        
           <ng-template [ngIf]="mostrar==1">
               

@@ -11,6 +11,7 @@ import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.ser
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 import { StudentI } from 'src/app/models/user/student';
 import { ProgramService } from 'src/app/core/services/program/program.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show_semilleros',
@@ -18,6 +19,9 @@ import { ProgramService } from 'src/app/core/services/program/program.service';
   styleUrls: ['./show_semilleros.component.css']
 })
 export class Show_semillerosComponent implements OnInit {
+  API_URI = environment.API_URI;
+
+  
  public seedbeds:SeedbedI[]=[]
   first = 0;
   loading: boolean = true;
