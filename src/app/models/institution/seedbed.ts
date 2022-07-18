@@ -1,3 +1,4 @@
+import { LineI, ThematicI } from "../projet/line";
 import { StudentI } from "../user/student";
 import { TeacherI } from "../user/teacher";
 import { GroupI, GroupLineSeedbedI } from "./group";
@@ -23,13 +24,31 @@ export interface SeedbedI {
     Program?:any
     SeedbedStudents?:SeedbedStudentI[]
 
-    GroupLineSeedbeds?:GroupLineSeedbedI[]
+    // GroupLineSeedbeds?:GroupLineSeedbedI[]
     lines?:any[]
     Students?:StudentI[];
+    SeedbedLines?:SeedbedLineI[]
+  
 
 }
 
-
+export interface SeedbedLineI {
+    id?: number;
+    LineId:number;
+    SeedbedId:number;
+    Seedbed?:SeedbedI
+    Line?: LineI,
+    SeedbedLineThematics?:SeedbedLineThematicI[]
+    status?:boolean
+}
+export interface SeedbedLineThematicI {
+    id?: number;
+    SeedbedLineId:number;
+    ThematicId:number;
+    Thematic?:ThematicI
+    SeedbedLine?:SeedbedLineI
+    status?:boolean
+}
 export interface DetailSeedbedI {
     id?: number;
     ObjetivoGeneral: string;
@@ -50,4 +69,6 @@ export interface SeedbedStudentI {
     hours:string
     Seedbed?:SeedbedI
     Student?:StudentI
+    status?:boolean
+
 }

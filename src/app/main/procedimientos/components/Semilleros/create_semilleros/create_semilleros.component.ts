@@ -188,6 +188,9 @@ thematics:any[] =[]
   }
 }
 private vaciar(){
+  this.lines=[]
+  this.filteredCountries2=[]
+  this.thematics=[]
   this.Grupo=null
   this.form.reset()
   this.getStudents.reset()

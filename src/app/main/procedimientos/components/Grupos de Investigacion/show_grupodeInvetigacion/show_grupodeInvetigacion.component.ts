@@ -59,7 +59,7 @@ export class Show_grupodeInvetigacionComponent implements OnInit {
       for (let key of rolesFromApi.groups) {
         if(key.GroupLines !== undefined && key.GroupLines?.length > 0) {
           for (let index = 0; index < key.GroupLines.length; index++) {
-            const linea = key.GroupLines[index];
+            let linea = key.GroupLines[index];
             if(linea.status == false){
               key.GroupLines.splice(index,1) 
 

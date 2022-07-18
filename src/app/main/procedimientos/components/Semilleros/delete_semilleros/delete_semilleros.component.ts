@@ -463,22 +463,22 @@ getstudents2() {
                       this.form.controls['GroupId'].setValue(key2.group)
 
                     }
-                    if(cnt_groupFromApi.seedbed.GroupLineSeedbeds?.length != undefined){
-                      //  console.log(this.form.value.GroupId)
+                    // if(cnt_groupFromApi.seedbed.GroupLineSeedbeds?.length != undefined){
+                    //   //  console.log(this.form.value.GroupId)
                       
-                       if(cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
-                        this.lines=[]
-                         for (let key of cnt_groupFromApi.seedbed.GroupLineSeedbeds) {
-                          if(key.GroupLine && key.status == true)
-                          this.lineService.getItem(key.GroupLine.LineId).subscribe((algo)=>{
-                            this.lines.push(algo.line)
-                          })
+                    //    if(cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
+                    //     this.lines=[]
+                    //      for (let key of cnt_groupFromApi.seedbed.GroupLineSeedbeds) {
+                    //       if(key.GroupLine && key.status == true)
+                    //       this.lineService.getItem(key.GroupLine.LineId).subscribe((algo)=>{
+                    //         this.lines.push(algo.line)
+                    //       })
                            
-                         }
-                         this.mostrarlineasProgram=true
+                    //      }
+                    //      this.mostrarlineasProgram=true
                          
-                       }
-                      }
+                    //    }
+                    //   }
                     if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
                       this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
             

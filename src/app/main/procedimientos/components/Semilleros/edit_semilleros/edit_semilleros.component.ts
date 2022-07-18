@@ -653,13 +653,13 @@ getstudents2() {
                       }
                       
                     }
-                    if(this.Grupo.GroupLines.length){
-                      if(cnt_groupFromApi.seedbed.GroupLineSeedbeds != undefined 
-                        && cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
-                        this.agregarLine(cnt_groupFromApi.seedbed.GroupLineSeedbeds)
+                    // if(this.Grupo.GroupLines.length){
+                    //   if(cnt_groupFromApi.seedbed.GroupLineSeedbeds != undefined 
+                    //     && cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
+                    //     this.agregarLine(cnt_groupFromApi.seedbed.GroupLineSeedbeds)
               
-                      }
-                    }
+                    //   }
+                    // }
           
                     if(this.form.value.GroupId != ''){
                       if(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId != undefined){

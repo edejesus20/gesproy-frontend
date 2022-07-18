@@ -160,7 +160,7 @@
           <tr>
           <td colspan="12">
             <div >
-                <p-table [value]="item.GroupLineSeedbeds"  dataKey="id" 
+                <p-table [value]="item.SeedbedLines"  dataKey="id" 
                 [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  responsiveLayout="scroll"
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
                 <ng-template pTemplate="caption">
@@ -173,15 +173,21 @@
                         <tr style="background: rgba(0, 255, 255, 0.849);">
                           <th pSortableColumn="name">Nombre de Linea<p-sortIcon field="name"></p-sortIcon></th>
                           <th pSortableColumn="identification">Resolucion<p-sortIcon field="identification"></p-sortIcon></th>
-                          
-                            
+                          <th pSortableColumn="thematics">Areas asociadas<p-sortIcon field="thematics"></p-sortIcon></th>
+
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-order let-expanded="expanded">
                       <tr *ngIf="order.status == true">
-                        <td>{{order.GroupLine.Line.name | titlecase}}</td> 
-                        <td>{{order.GroupLine.Line.resolution }} </td> 
-  
+                        <td>{{order.Line.name | titlecase}}</td> 
+                        <td>{{order.Line.resolution }} </td> 
+                        <td >
+                          <span *ngFor="let i of order.SeedbedLineThematics">
+                            <span style="display: flex;">
+                              * {{i.Thematic?.name}} 
+                            </span>
+                          </span>
+                        </td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="emptymessage">

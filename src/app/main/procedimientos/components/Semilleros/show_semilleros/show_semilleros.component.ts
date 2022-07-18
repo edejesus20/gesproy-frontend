@@ -61,7 +61,9 @@ export class Show_semillerosComponent implements OnInit {
   getUsrRoles() {
     this.seedbedService.getList().subscribe((rolesFromApi) => {
       this.seedbeds =rolesFromApi.seedbeds
-      this.seedbeds.forEach((newH:SeedbedI) => {
+      for (let index = 0; index < rolesFromApi.seedbeds.length; index++) {
+        let newH = rolesFromApi.seedbeds[index];
+
           if( newH.HeadquarterProgram?.ProgramId != undefined) {
             this.programService.getItem(newH.HeadquarterProgram?.ProgramId).subscribe((item) => {
               Object.defineProperty( newH, 'Program', {
@@ -69,9 +71,31 @@ export class Show_semillerosComponent implements OnInit {
                 });
             })
           }
+
+          if(newH.SeedbedLines !== undefined && newH.SeedbedLines?.length > 0) {
+            for (let index = 0; index < newH.SeedbedLines.length; index++) {
+              let linea = newH.SeedbedLines[index];
+              if(linea.status == false){
+                newH.SeedbedLines.splice(index,1) 
+  
+              }else{
+                if(linea.SeedbedLineThematics?.length != undefined && linea.SeedbedLineThematics.length >0){
+                  for (let a = 0; a < linea.SeedbedLineThematics.length; a++) {
+                    const element = linea.SeedbedLineThematics[a];
+                    if(element.status == false){
+                      linea.SeedbedLineThematics.splice(a,1) 
+                    }
+                    
+                  }
+                }
+               
+              }
+  
+            }
+          }
         
         
-      });
+      }
       console.log(this.seedbeds)
       this.rows2=[]
       if(rolesFromApi.seedbeds != undefined){
