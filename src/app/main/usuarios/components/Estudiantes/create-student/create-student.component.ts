@@ -59,10 +59,10 @@ export class CreateStudentComponent implements OnInit {
       post:[''],
       functions:[''],
   })]),
-    SeedbedId:[''],
-    Horas:[''],
-    date_firt:[''],
-    date_end:[''],
+    // SeedbedId:[''],
+    // Horas:[''],
+    // date_firt:[''],
+    // date_end:[''],
    });
 
    public headquarterProgram: any[]=[]
@@ -157,10 +157,10 @@ export class CreateStudentComponent implements OnInit {
     this.form.controls['identification'].setValue('')
     this.form.controls['email'].setValue('')
     this.form.controls['UserId'].setValue('')
-    this.form.controls['SeedbedId'].setValue('')
-    this.form.controls['Horas'].setValue('')
-    this.form.controls['date_firt'].setValue('')
-    this.form.controls['date_end'].setValue('')
+    // this.form.controls['SeedbedId'].setValue('')
+    // this.form.controls['Horas'].setValue('')
+    // this.form.controls['date_firt'].setValue('')
+    // this.form.controls['date_end'].setValue('')
     
     let control = <FormArray>this.form.controls['headquarterProgramStudent']
     control.push(this.formBuilder.group({
@@ -225,10 +225,10 @@ export class CreateStudentComponent implements OnInit {
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
       // nationality: this.form.value.nationality,
       // date_of_birth: this.form.value.date_of_birth,
-      SeedbedId:this.form.value.SeedbedId.id,
-      Horas: this.form.value.Horas,
-      date_firt:this.form.value.date_firt,
-      date_end:this.form.value.date_end,
+      // SeedbedId:this.form.value.SeedbedId.id,
+      // Horas: this.form.value.Horas,
+      // date_firt:this.form.value.date_firt,
+      // date_end:this.form.value.date_end,
       // current_semester: this.form.value.current_semester,
       // current_average: this.form.value.current_average,
       // experienciaInvestigativa: this.form.value.experienciaInvestigativa,

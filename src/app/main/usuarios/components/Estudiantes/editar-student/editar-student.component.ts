@@ -96,10 +96,10 @@ export class EditarStudentComponent implements OnInit {
         post:[''],
         functions:[''],
     })]),
-    SeedbedId:[''],
-    Horas:[''],
-    date_firt:[''],
-    date_end:[''],
+    // SeedbedId:[''],
+    // Horas:[''],
+    // date_firt:[''],
+    // date_end:[''],
     });
     // this.getAllgenders()
     // this.getAlldocumentTypes()
@@ -131,10 +131,10 @@ export class EditarStudentComponent implements OnInit {
       UserId: 0,
       headquarterProgramStudent: this.form.value.headquarterProgramStudent,
 
-      SeedbedId:this.form.value.SeedbedId.id,
-      Horas: this.form.value.Horas,
-      date_firt:this.form.value.date_firt,
-      date_end:this.form.value.date_end,
+      // SeedbedId:this.form.value.SeedbedId.id,
+      // Horas: this.form.value.Horas,
+      // date_firt:this.form.value.date_firt,
+      // date_end:this.form.value.date_end,
 
       StudentInternship:this.form.value.StudentInternship,
     };
@@ -271,29 +271,29 @@ private getAllheadquarters(selectId?: number) {
         //   this.form.controls['GenderId'].setValue(algo.gender)
         // })
         
-        if(cnt_groupFromApi.student.SeedbedStudents != undefined && cnt_groupFromApi.student.SeedbedStudents.length > 0){
-          let algo=cnt_groupFromApi.student?.SeedbedStudents?.[0]
-          let nuevo =algo?.hours
-          let date_firt=moment(algo?.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
-          let date_end=moment(algo?.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+        // if(cnt_groupFromApi.student.SeedbedStudents != undefined && cnt_groupFromApi.student.SeedbedStudents.length > 0){
+        //   let algo=cnt_groupFromApi.student?.SeedbedStudents?.[0]
+        //   let nuevo =algo?.hours
+        //   let date_firt=moment(algo?.date_firt,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
+        //   let date_end=moment(algo?.date_end,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
           
-          this.form.controls['Horas'].setValue(nuevo)
-          this.form.controls['date_firt'].setValue(date_firt)
-          this.form.controls['date_end'].setValue(date_end)
-            console.log(date_firt)
-            console.log(date_end)
+        //   this.form.controls['Horas'].setValue(nuevo)
+        //   this.form.controls['date_firt'].setValue(date_firt)
+        //   this.form.controls['date_end'].setValue(date_end)
+        //     console.log(date_firt)
+        //     console.log(date_end)
 
-          if(algo?.id != undefined)
-          for (const key of this.seedbeds) {
-            if(key.id != undefined && key.id == (algo?.Seedbed?.id)){
-              this.form.controls['SeedbedId'].setValue(key)
-            }
-          }
-          // this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
-          //   this.form.controls['SeedbedId'].setValue(algo1.seedbed)
-          //   // console.log(algo1.seedbed)
-          // })
-        }
+        //   if(algo?.id != undefined)
+        //   for (const key of this.seedbeds) {
+        //     if(key.id != undefined && key.id == (algo?.Seedbed?.id)){
+        //       this.form.controls['SeedbedId'].setValue(key)
+        //     }
+        //   }
+        //   // this.seedbedService.getItem(algo?.id).subscribe((algo1)=>{
+        //   //   this.form.controls['SeedbedId'].setValue(algo1.seedbed)
+        //   //   // console.log(algo1.seedbed)
+        //   // })
+        // }
         
         
         
