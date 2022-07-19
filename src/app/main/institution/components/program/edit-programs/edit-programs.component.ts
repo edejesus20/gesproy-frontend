@@ -155,12 +155,20 @@ constructor(
     let formValue: any = this.form.value;
     let control = <FormArray>this.form.controls['Lines']
     let array:LineProgramI[] =[]
-  for (let key of control.value) {
-    key.LineId=key.LineId.id
-    array.push({LineId:key.LineId,ProgramId:this.id})
+  // for (let key of control.value) {
+  //   key.LineId=key.LineId.id
+  //   array.push({LineId:key.LineId,ProgramId:this.id})
+  // }
+  // formValue.array=array
+  if(control.controls[0].value.LineId!= ""){
+    for (let key of control.value) {
+      key.LineId=key.LineId.id
+      array.push({LineId:key.LineId,ProgramId:this.id})
+    }
+    formValue.array=array
+  }else{
+    formValue.array=[]
   }
-  formValue.array=array
-
   
     if(this.CategoryId == 0){
       this.CategoryId =this.form.value.CategoryId.id

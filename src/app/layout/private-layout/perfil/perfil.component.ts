@@ -51,6 +51,9 @@ export class PerfilComponent implements OnInit {
   public docente:boolean=false
   public administrativo:boolean=false
   public mostrarDatos:boolean=true
+  public activeState: boolean[] = [true, false, false,false];
+
+  
   public form:FormGroup=this.formBuilder.group({
     id: [''],
     name:['', [Validators.required]],
@@ -149,7 +152,9 @@ public Dialog:boolean=false
     ChargeBondingId:['',[Validators.required]],
     deletetrainingTeachers:[''],
     deleteWorkexperiences:[''],
-    deleteheadquarterProgramTeachers:['']
+    deleteheadquarterProgramTeachers:[''],
+    Link_cvlac:[''],
+    Link_orcid:[''],
   });
   public charge_bondings:Charge_bondingI[]=[]
   public trainings: TrainingI[]=[]
@@ -479,7 +484,10 @@ public Dialog:boolean=false
             if(data.teacher.id != undefined){
               this.form4.controls['id'].setValue(data.teacher.UserId)
               console.log(data.teacher,'docente')
-  
+
+              this.form4.controls['Link_cvlac'].setValue(data.teacher.Link_cvlac)
+              this.form4.controls['Link_orcid'].setValue(data.teacher.Link_orcid)
+
               if(data.teacher.User?.Person?.GenderId != undefined){
                 for (const key of this.genders) {
                   if(parseInt(data.teacher.User.Person.GenderId) == key.id){
@@ -1325,7 +1333,7 @@ public Dialog:boolean=false
             date = new Date(date.getTime() - 1000);
             if( minutes == '00' && seconds == '01' ) {
               // this.ref.close(algo);
-              this.mostrarDatos=false
+              this.activeState=[false,false,false,false]
               clearInterval(interval); 
             }
       }, 1000);
@@ -1407,7 +1415,11 @@ public Dialog:boolean=false
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
                           // this.ref.close(algo);
-                          this.administrativo=false
+                          this.activeState=[false,false,false,false]
+
+                          // this.mostrarDatos=true
+             
+                          // this.administrativo=false
                           clearInterval(interval); 
                         }
                   }, 1000);
@@ -1486,8 +1498,10 @@ public Dialog:boolean=false
                       }
                     date = new Date(date.getTime() - 1000);
                     if( minutes == '00' && seconds == '01' ) {
-                      this.estudiante=false
+                      // this.estudiante=false
 
+                      this.activeState=[false,false,false,false]
+              
                       // this.ref.close(algo);
 
                       // this.router.navigateByUrl('/usuarios/Student');
@@ -1528,7 +1542,9 @@ public Dialog:boolean=false
           deletetrainingTeachers:this.deletetrainingTeachers,
           deleteWorkexperiences:this.deleteWorkexperiences,
           ArchivosEliminados:this.ArchivosEliminados,
-          deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers
+          deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers,
+          Link_cvlac:this.form4.value.Link_cvlac,
+          Link_orcid:this.form4.value.Link_orcid,
         };
         if(this.form4.value.ScaleId.id){
           formValue.ScaleId=this.form4.value.ScaleId.id
@@ -1849,8 +1865,10 @@ public Dialog:boolean=false
                               }
                              
                               if( minutes == '00' && seconds == '01' ) {
-                                this.docente=false
-
+                                this.activeState=[false,false,false,false]
+                                console.log(this.activeState,'this.activeState')
+                                // this.docente=false
+                            
                                 // this.ref.close(algo);
                                 clearInterval(interval); 
                               }
@@ -1858,7 +1876,6 @@ public Dialog:boolean=false
                       }
                       
                     }
-
 
               },async error => {
                   if(error != undefined) {
@@ -2013,11 +2030,7 @@ public Dialog:boolean=false
 
       // archivos eliminados
       removeArchivo(item:any,event:Event,pointIndex:number){
-      
         event.preventDefault()
-
-        
-
         this.ArchivosEliminados.push(item)
         console.log(this.ArchivosEliminados,'this.ArchivosEliminados');
         let control = <FormArray>this.form4.controls['trainingTeacher']

@@ -184,11 +184,18 @@ private vaciar(){
 
     let control = <FormArray>this.form.controls['Lines']
     let array:LineProgramI[] =[]
-  for (let key of control.value) {
-    key.LineId=key.LineId.id
-    array.push({LineId:key.LineId,ProgramId:0})
-  }
-  formValue.array=array
+    if(control.controls[0].value.LineId!= ""){
+      for (let key of control.value) {
+        key.LineId=key.LineId.id
+        array.push({LineId:key.LineId,ProgramId:0})
+      }
+      formValue.array=array
+    }else{
+      formValue.array=[]
+
+    }
+
+ 
 
     console.log(formValue,'formValue')
     if(formValue.name != '' &&

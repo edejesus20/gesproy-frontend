@@ -16,6 +16,10 @@ export interface TeacherI {
     UserId: number;
     ScaleId?: number;
     MincienciaCategoryId: string;
+
+    Link_cvlac?: string;
+    Link_orcid?: string;
+
     // hours_of_dedication:string;
     User?:UserI
     Scale?:ScaleI

@@ -29,7 +29,7 @@
       </div>
     <p-accordion>
 
-      <p-accordionTab header="Datos de Basicos" [selected]="mostrarDatos">
+      <p-accordionTab header="Datos de Basicos" [(selected)]="activeState[0]" (onClose)="activeState[0]=false" (onOpen)="activeState[0]=true">
 
           <form [formGroup]="form" novalidate >
           
@@ -257,7 +257,7 @@
           
       </p-accordionTab>
 
-      <p-accordionTab header="Datos como Docente" *ngIf="docente == true">
+      <p-accordionTab header="Datos como Docente" *ngIf="docente == true" [(selected)]="activeState[1]" (onClose)="activeState[1]=false" (onOpen)="activeState[1]=true">
         <form [formGroup]="form4" novalidate enctype="multipart/form-data">
           <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
             <div class="bordep">
@@ -427,6 +427,32 @@
                   </div>
               </ng-template>
                 </p-table>
+              </div>
+            </div>
+
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="field ">
+                  <label for="name"style="font-weight: bold;">LINK CVLAC</label>
+                <div class="p-inputgroup" >
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                  <input type="text" class="p-inputtext-lg" pInputText 
+                  name="Link_cvlac" formControlName="Link_cvlac" 
+                  placeholder="Link CVLAC"  title="LINK CVLAC" >          
+              </div>
+                </div>
+              </div>
+              
+              <div class="col-12 md:col-6 lg:col-6">
+                <div class="field ">
+                  <label for="name"style="font-weight: bold;">LINK ORCID</label>
+                <div class="p-inputgroup" >
+                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                  <input type="text" class="p-inputtext-lg" pInputText 
+                  name="Link_orcid" formControlName="Link_orcid" 
+                  placeholder="Link ORCID"  title="LINK ORCID" >          
+                </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1026,7 +1052,7 @@
       </p-accordionTab>
 
 
-      <p-accordionTab header="Datos como Administrativo" *ngIf="administrativo === true">
+      <p-accordionTab header="Datos como Administrativo" *ngIf="administrativo === true" [(selected)]="activeState[2]" (onClose)="activeState[2]=false" (onOpen)="activeState[2]=true">
         <form [formGroup]="form3" novalidate >
             <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
 
@@ -1164,7 +1190,7 @@
         </form>
       </p-accordionTab>
 
-      <p-accordionTab header="Datos como Estudiante" *ngIf="estudiante == true">
+      <p-accordionTab header="Datos como Estudiante" *ngIf="estudiante == true"[(selected)]="activeState[3]" (onClose)="activeState[3]=false" (onOpen)="activeState[3]=true">
         <form [formGroup]="form2" novalidate >
           <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
             <div class="bordep">

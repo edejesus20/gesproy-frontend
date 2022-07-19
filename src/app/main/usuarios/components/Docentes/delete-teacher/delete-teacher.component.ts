@@ -63,7 +63,9 @@ export class DeleteTeacherComponent implements OnInit {
       email:['', [Validators.required]],
       // ScaleId:['', [Validators.required]],
       MincienciaCategoryId:['', [Validators.required]],
-      ChargeBondingId:['', [Validators.required]]
+      ChargeBondingId:['', [Validators.required]],
+      Link_cvlac:[''],
+      Link_orcid:[''],
 
     });
     this.getAllgenders()
@@ -95,7 +97,9 @@ export class DeleteTeacherComponent implements OnInit {
       password:'',
       UserId: 0,
       // ScaleId: this.form.value.ScaleId.id,
-      MincienciaCategoryId: this.form.value.MincienciaCategoryId.id
+      MincienciaCategoryId: this.form.value.MincienciaCategoryId.id,
+      Link_cvlac:this.form.value.Link_cvlac,
+      Link_orcid:this.form.value.Link_orcid,
     };
     // console.log(formValue)
     if(
@@ -225,6 +229,9 @@ getOneCntAccount(id:number) {
           this.form.controls['identification'].setValue(cnt_groupFromApi.teacher.User.Person.identification)
           // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
+          this.form.controls['Link_cvlac'].setValue(cnt_groupFromApi.teacher.Link_cvlac)
+          this.form.controls['Link_orcid'].setValue(cnt_groupFromApi.teacher.Link_orcid)
+
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
           if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
             // console.log(cnt_groupFromApi.teacher.LinkType)

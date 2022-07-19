@@ -97,7 +97,9 @@ export class CreateTeacherComponent implements OnInit {
       final_date:[''],
       constancy:['']
   })]),
-    ChargeBondingId:['',[Validators.required]]
+    ChargeBondingId:['',[Validators.required]],
+    Link_cvlac:[''],
+    Link_orcid:[''],
    });
 
    public research_bondings:Research_bondingI[]=[]
@@ -262,7 +264,9 @@ export class CreateTeacherComponent implements OnInit {
     this.form.controls['UserId'].setValue('')
     this.form.controls['MincienciaCategoryId'].setValue('')
     this.form.controls['ChargeBondingId'].setValue('')
-
+    this.form.controls['Link_cvlac'].setValue('')
+    this.form.controls['Link_orcid'].setValue('')
+   
     let control = <FormArray>this.form.controls['headquarterProgramTeacher']
     control.push(this.formBuilder.group({
       TeacherId:0,
@@ -321,7 +325,9 @@ export class CreateTeacherComponent implements OnInit {
           // date_of_birth: this.form.value.date_of_birth,
           ChargeBondingId: this.form.value.ChargeBondingId.id,
           Workexperiences: this.form.value.Workexperiences,
-          trainingTeacher:this.form.value.trainingTeacher
+          trainingTeacher:this.form.value.trainingTeacher,
+          Link_cvlac:this.form.value.Link_cvlac,
+          Link_orcid:this.form.value.Link_orcid,
         };
        }
 
@@ -349,7 +355,9 @@ export class CreateTeacherComponent implements OnInit {
         // date_of_birth: this.form.value.date_of_birth,
         ChargeBondingId: this.form.value.ChargeBondingId.id,
         Workexperiences: this.form.value.Workexperiences,
-        trainingTeacher:this.form.value.trainingTeacher
+        trainingTeacher:this.form.value.trainingTeacher,
+        Link_cvlac:this.form.value.Link_cvlac,
+        Link_orcid:this.form.value.Link_orcid,
       };
      
     }

@@ -161,7 +161,9 @@ export class EditarTeacherComponent implements OnInit {
       deletetrainingTeachers:[''],
     deleteWorkexperiences:[''],
     ArchivosEliminados:[''],
-    deleteheadquarterProgramTeachers:['']
+    deleteheadquarterProgramTeachers:[''],
+    Link_cvlac:[''],
+    Link_orcid:[''],
 
     });
     // this.getAllgenders()
@@ -214,6 +216,8 @@ export class EditarTeacherComponent implements OnInit {
     this.ArchivosEliminados =[]
     this.deleteheadquarterProgramTeachers=[]
     this.FilesResolusiones =[]
+    this.form.controls['Link_cvlac'].setValue('')
+    this.form.controls['Link_orcid'].setValue('')
   
   }
   public onSubmit() {
@@ -246,7 +250,9 @@ export class EditarTeacherComponent implements OnInit {
       deletetrainingTeachers:this.deletetrainingTeachers,
       deleteWorkexperiences:this.deleteWorkexperiences,
       ArchivosEliminados:this.ArchivosEliminados,
-      deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers
+      deleteheadquarterProgramTeachers:this.deleteheadquarterProgramTeachers,
+      Link_cvlac:this.form.value.Link_cvlac,
+        Link_orcid:this.form.value.Link_orcid,
 
     };
     let boolean:boolean = false
@@ -742,7 +748,8 @@ getOneCntAccount(id:number) {
           // this.form.controls['address'].setValue(cnt_groupFromApi.teacher.User.Person.address)
           // this.form.controls['phone'].setValue(cnt_groupFromApi.teacher.User.Person.phone)
           this.form.controls['email'].setValue(cnt_groupFromApi.teacher.User.email)
-          
+          this.form.controls['Link_cvlac'].setValue(cnt_groupFromApi.teacher.Link_cvlac)
+          this.form.controls['Link_orcid'].setValue(cnt_groupFromApi.teacher.Link_orcid)
           // this.form.controls['hours_of_dedication'].setValue(cnt_groupFromApi.teacher.hours_of_dedication)
             if(cnt_groupFromApi.teacher.ChargeBondingId != undefined){
             for (const key of this.charge_bondings) {
