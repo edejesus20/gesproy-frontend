@@ -8,7 +8,7 @@ import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { FacultyI } from 'src/app/models/institution/faculty';
-import { ProgramI } from 'src/app/models/institution/program';
+import { LineProgramI, ProgramI } from 'src/app/models/institution/program';
 import { CategoryService } from 'src/app/core/services/institution/category.service';
 import { CategoryI } from 'src/app/models/institution/category';
 import { MessageService } from 'primeng/api';
@@ -16,6 +16,8 @@ import { HeadquarterI, HeadquarterProgramI } from 'src/app/models/institution/he
 import { AdministrativeI } from 'src/app/models/user/administrative';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
+import { LineI } from 'src/app/models/projet/line';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -79,6 +81,8 @@ private CategoryId:number=0
 private FacultyId:number=0
 public ref1:any;
 private Headquarters1:any[] = [];
+public lines:LineI[]=[]
+
 constructor(
   public dialogService: DialogService,
     private messageService:MessageService,
@@ -88,7 +92,9 @@ constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
-    private administrativeService:AdministrativeService
+    private administrativeService:AdministrativeService,
+    private lineService: LineService,
+
     // private snackBar: MatSnackBar,
   ) { }
 
@@ -105,12 +111,25 @@ constructor(
           HeadquarterId:['', [Validators.required]],
           AdministrativeId:['']
       })]),
+      Lines: this.formBuilder.array([this.formBuilder.group(
+        {
+          ProgramId:[''],
+          LineId:[''],
+      })]),
     });
 
     this.getAllFaculty();
     this.getAllCategorys();
 
     this.getAllheadquarters()
+    this.getAlllines();
+    
+  }
+  private getAlllines(selectId?: number) {
+    this.lineService.getList().subscribe(
+      (facultiesFromApi) => {
+        this.lines = facultiesFromApi.lines;
+      }, error => console.error(error));
   }
 
   private getAllFaculty(selectId?: number) {
@@ -133,13 +152,23 @@ constructor(
   }
 
   public onSubmit() {
+    let formValue: any = this.form.value;
+    let control = <FormArray>this.form.controls['Lines']
+    let array:LineProgramI[] =[]
+  for (let key of control.value) {
+    key.LineId=key.LineId.id
+    array.push({LineId:key.LineId,ProgramId:this.id})
+  }
+  formValue.array=array
+
+  
     if(this.CategoryId == 0){
       this.CategoryId =this.form.value.CategoryId.id
     }
     if(this.FacultyId == 0){
       this.FacultyId =this.form.value.FacultyId.id
     }
-    let formValue: ProgramI = this.form.value;
+   
     formValue.FacultyId=this.FacultyId
     formValue.CategoryId=this.CategoryId
 
@@ -157,7 +186,7 @@ constructor(
         this.Headquarters1.push({
           ProgramId:this.id,
         HeadquarterId:key.HeadquarterId,
-        AdministrativeId:key.    AdministrativeId,
+        AdministrativeId:key.AdministrativeId,
         })
       }
       this.Headquarters1 = this.form.value.Headquarters 
@@ -166,6 +195,7 @@ constructor(
     }else{
       formValue.Headquarters = this.Headquarters1
     }
+    console.log(formValue)
 
 
     if(formValue.name != '' &&
@@ -174,7 +204,6 @@ constructor(
     ){
     
       this.bandera=true
-    // console.log(formValue)
     this.programService.updateItem(this.id,formValue).subscribe(
       () => {
               var date = new Date('2020-01-01 00:00:03');
@@ -251,6 +280,20 @@ getOneCntAccount(id:number) {
       // this.facultyService.getItem(cnt_groupFromApi.program.FacultyId).subscribe((algo)=>{
       //   this.form.controls['FacultyId'].setValue(algo.faculty)
       // })
+
+      this.programService.OneProgram(id).subscribe((algo)=>{
+        // console.log(algo.program)
+        if(algo.program != null){
+          if(algo.program.LinePrograms != undefined &&
+            algo.program.LinePrograms.length > 0){
+        
+            this.agregarLines(algo.program.LinePrograms)
+            
+          }
+        }
+      
+      })
+
       for (const key of this.faculties) {
         if(key.id == cnt_groupFromApi.program.FacultyId){
           this.form.controls['FacultyId'].setValue(key)
@@ -356,6 +399,46 @@ getOneCntAccount(id:number) {
   }
 
 
+  agregarLines(LinePrograms: LineProgramI[]) {
+    if(LinePrograms.length){
+      console.log(LinePrograms,'  console.log(LinePrograms)')
+      let  LineId:any | null = null
+    for (let key of LinePrograms) {
+      if(key.Line?.id != undefined && key.status == true) {
+      
+        
+        let control = <FormArray>this.form.controls['Lines']
+ 
+        for (let key2 of this.lines) {
+          if(key2.id == key.Line?.id){
+            LineId=key2
+          }
+        }
+        if(LineId != null){
+          // console.log(LineId,'  key2')
+          control.push(this.formBuilder.group({
+            ProgramId:[this.id],
+            LineId:[LineId],
+          }))
+        }
+       
+
+          // this.lineService.getItem(LineId.id).subscribe((algo1)=>{
+          //   if(algo1.line.id != undefined){
+
+          //     control.push(this.formBuilder.group({
+          //       ProgramId:[this.id, [Validators.required]],
+          //       LineId:[algo1.line, [Validators.required]],
+          //     }))
+          //   }           
+          // })
+      }
+    }
+    this.mostrar2= true
+    let control = <FormArray>this.form.controls['Lines']
+    control.removeAt(0)
+  }
+  }
 
 public datos(position:number){
   const control = <FormArray>this.form.controls['Headquarters']
@@ -377,6 +460,43 @@ public datos(position:number){
   }
 }
 
+get getLineas() {
+  return this.form.get('Lines') as FormArray;//obtener todos los formularios
+}
+
+addLineas(event: Event){
+  event.preventDefault();
+  const control = <FormArray>this.form.controls['Lines']
+    if(control.length == 0 && this.mostrar2 == false){
+      control.push(this.formBuilder.group({
+        ProgramId:[this.id],
+        LineId:[''],
+      }))
+    }
+    if(control.length >= 1 && this.mostrar2 == true){
+      control.push(this.formBuilder.group({
+        ProgramId:[this.id],
+
+        LineId:[''],
+      }))
+
+    }
+    this.mostrar2=true
+}
+removeLineas(index: number,event: Event){
+  event.preventDefault();
+  let control = <FormArray>this.form.controls['Lines']//aceder al control
+  control.removeAt(index)
+    if(control.length <= 0){
+    this.mostrar2=false
+    control.push(this.formBuilder.group({
+      ProgramId:[this.id],
+
+      LineId:[''],
+    }))
+    }
+    // console.log(control)
+}
   get getRoles() {
     return this.form.get('Headquarters') as FormArray;//obtener todos los formularios
   }

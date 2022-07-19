@@ -92,9 +92,21 @@ Buscar(event: Event, dt1:any){
 
   getAllProgram() {
     this.programService.getList().subscribe((programsFromApi) => {
-      this.programs =programsFromApi.programs
+   
       this.rows2=[]
-      // console.log(programsFromApi.programs,'programs')
+      console.log(programsFromApi.programs,'programs')
+      for (const key of programsFromApi.programs) {
+        if(key.LinePrograms !== undefined && key.LinePrograms?.length > 0) {
+          for (let index = 0; index < key.LinePrograms.length; index++) {
+            const docente = key.LinePrograms[index];
+            if(docente.status == false){
+              key.LinePrograms.splice(index,1) 
+  
+            }
+          }
+        }
+      }
+      this.programs =programsFromApi.programs
 
       if(programsFromApi.programs != undefined){
         for (const key of programsFromApi.programs) {

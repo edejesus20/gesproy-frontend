@@ -62,7 +62,7 @@
                                     optionvalue="id" optionLabel="name"  filterBy="name"
                                     [required]="true" placeholder="SELECCIONE LINEA">
                                     <ng-template let-option pTemplate="item"  >
-                                      <span >{{option.name  | titlecase}} - {{option.resolution }}</span>
+                                      <span >{{option.name  | titlecase}} - {{option.LineDetail?.resolution }}</span>
                                   </ng-template>
                                   </p-dropdown>
                                 </div>

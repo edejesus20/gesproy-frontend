@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { FacultyI } from 'src/app/models/institution/faculty';
-import { ProgramI } from 'src/app/models/institution/program';
+import { LineProgramI, ProgramI } from 'src/app/models/institution/program';
 import { CategoryService } from 'src/app/core/services/institution/category.service';
 import { CategoryI } from 'src/app/models/institution/category';
 import { MessageService } from 'primeng/api';
@@ -16,6 +16,8 @@ import { HeadquarterI } from 'src/app/models/institution/headquarter';
 import { AdministrativeService } from 'src/app/core/services/usuer/Administrative.service';
 import { Create_CategoryComponent } from '../../CategoriaProgramas/create_Category/create_Category.component';
 import { CreateAdministrativeComponent } from 'src/app/main/usuarios/components/Administrativos/create-administrative/create-administrative.component';
+import { LineI } from 'src/app/models/projet/line';
+import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 const translate = require('translate');
 // TODO: Fix with spaces and move to own file
 export const REGEXP_ALPHANUMERIC = /^[a-zA-Z0-9\_\- ]*$/;
@@ -33,7 +35,7 @@ export class CreateProgramComponent implements OnInit {
   public categorys:CategoryI[] = []
   public administratives: AdministrativeI[]=[]
   public headquarters: HeadquarterI[]=[]
-
+  mostrar2:boolean = true
 
 
   public Dialog:boolean =false
@@ -45,10 +47,16 @@ export class CreateProgramComponent implements OnInit {
     Headquarters: this.formBuilder.array([this.formBuilder.group(
       {
         ProgramId:0,
-         HeadquarterId:['', [Validators.required]],
+        HeadquarterId:['', [Validators.required]],
         AdministrativeId:['']
     })]),
+    Lines: this.formBuilder.array([this.formBuilder.group(
+      {
+        ProgramId:[''],
+        LineId:[''],
+    })]),
   });
+  public lines:LineI[]=[]
 
 displayMaximizable2:boolean=true
 blockSpecial: RegExp = /^[^<>*!0123456789]+$/ 
@@ -65,7 +73,8 @@ constructor(
     private categoryService:CategoryService,
     private formBuilder: FormBuilder,
     private headquarterService: HeadquarterService,
-    private administrativeService:AdministrativeService
+    private administrativeService:AdministrativeService,
+    private lineService: LineService,
     
     // private snackBar: MatSnackBar,
   ) { }
@@ -86,6 +95,14 @@ constructor(
     //       AdministrativeId:['']
     //   })]),
     // });
+    this.getAlllines();
+    
+  }
+  private getAlllines(selectId?: number) {
+    this.lineService.getList().subscribe(
+      (facultiesFromApi) => {
+        this.lines = facultiesFromApi.lines;
+      }, error => console.error(error));
   }
 
   private getAllFaculty(selectId?: number) {
@@ -138,7 +155,7 @@ private vaciar(){
     if(this.FacultyId == 0){
       this.FacultyId =this.form.value.FacultyId.id
     }
-    let formValue: ProgramI = this.form.value;
+    let formValue: any = this.form.value;
     formValue.FacultyId=this.FacultyId
     formValue.CategoryId=this.CategoryId
 
@@ -164,7 +181,16 @@ private vaciar(){
     }else{
       formValue.Headquarters = this.Headquarters1
     }
-    // console.log(formValue)
+
+    let control = <FormArray>this.form.controls['Lines']
+    let array:LineProgramI[] =[]
+  for (let key of control.value) {
+    key.LineId=key.LineId.id
+    array.push({LineId:key.LineId,ProgramId:0})
+  }
+  formValue.array=array
+
+    console.log(formValue,'formValue')
     if(formValue.name != '' &&
     formValue.CategoryId != ( 0 )&&
     formValue.FacultyId != ( 0 )
@@ -336,5 +362,42 @@ public datos(position:number){
 
     }
   });
+  }
+
+
+  get getLineas() {
+    return this.form.get('Lines') as FormArray;//obtener todos los formularios
+  }
+
+  addLineas(event: Event){
+    event.preventDefault();
+    const control = <FormArray>this.form.controls['Lines']
+      if(control.length == 0 && this.mostrar2 == false){
+        control.push(this.formBuilder.group({
+          ProgramId:[''],
+          LineId:[''],
+        }))
+      }
+      if(control.length >= 1 && this.mostrar2 == true){
+        control.push(this.formBuilder.group({
+          ProgramId:[''],
+          LineId:[''],
+        }))
+
+      }
+      this.mostrar2=true
+  }
+  removeLineas(index: number,event: Event){
+    event.preventDefault();
+    let control = <FormArray>this.form.controls['Lines']//aceder al control
+    control.removeAt(index)
+      if(control.length <= 0){
+      this.mostrar2=false
+      control.push(this.formBuilder.group({
+        ProgramId:[''],
+        LineId:[''],
+      }))
+      }
+      // console.log(control)
   }
 }
