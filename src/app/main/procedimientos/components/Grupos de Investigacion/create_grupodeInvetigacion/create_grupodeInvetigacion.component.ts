@@ -106,7 +106,7 @@ public form:FormGroup= this.formBuilder.group({
   Vision: [''],
   Perfil: [''],
   Metas: [''],
-  Resultados: [''],
+  // Resultados: [''],
   Sector: [''],
   Anexo: [''],
 
@@ -490,7 +490,7 @@ thematics:any[] =[]
 
       if(control.controls[position].value.RoleGroupTeacherId.id != ''){
   
-        if(control.controls[position].value.RoleGroupTeacherId.id == 2){
+        if(control.controls[position].value.RoleGroupTeacherId.id == 2 || control.controls[position].value.RoleGroupTeacherId.id == 3){
           // console.log('2')
   
           this.userService.getUserteacherinvestigatorstudent()
@@ -533,47 +533,47 @@ thematics:any[] =[]
           })
         }
     
-        if(control.controls[position].value.RoleGroupTeacherId.id == 3){
-          console.log('3')
-          this.userService.getUserteacherinvestigatorstudent()
-          .subscribe(teachersA => {
+        // if(control.controls[position].value.RoleGroupTeacherId.id == 3){
+        //   console.log('3')
+        //   this.userService.getUserteacherinvestigatorstudent()
+        //   .subscribe(teachersA => {
     
-            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
-              this.users=teachersA.investigator_collaborators
-              if(filterValue != undefined){
-                let filtered : any[] = [];
-                let query = filterValue;
+        //     if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+        //       // for (let key of teachersA.users) {
+        //       //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        //       // }
+        //       this.users=teachersA.investigator_collaborators
+        //       if(filterValue != undefined){
+        //         let filtered : any[] = [];
+        //         let query = filterValue;
             
-                for(let i = 0; i < this.users.length; i++) {
-                    let country = this.users[i];
-                    if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                        filtered.push(country);
-                    }
-                }
-                this.filteredCountries = filtered;
-              }
-              }else{
-                this.users=[{todo:'No hay registros'}]
-                if(filterValue != undefined){
-                  let filtered : any[] = [];
-                  let query = filterValue;
+        //         for(let i = 0; i < this.users.length; i++) {
+        //             let country = this.users[i];
+        //             if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        //                 filtered.push(country);
+        //             }
+        //         }
+        //         this.filteredCountries = filtered;
+        //       }
+        //       }else{
+        //         this.users=[{todo:'No hay registros'}]
+        //         if(filterValue != undefined){
+        //           let filtered : any[] = [];
+        //           let query = filterValue;
               
-                  for(let i = 0; i < this.users.length; i++) {
-                      let country = this.users[i];
-                      if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                          filtered.push(country);
-                      }
-                  }
-                  this.filteredCountries = filtered;
-                }
-              }
-              // console.log(this.users)  
-              this.mostrarIntegrantes= true
-          })
-        }
+        //           for(let i = 0; i < this.users.length; i++) {
+        //               let country = this.users[i];
+        //               if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        //                   filtered.push(country);
+        //               }
+        //           }
+        //           this.filteredCountries = filtered;
+        //         }
+        //       }
+        //       // console.log(this.users)  
+        //       this.mostrarIntegrantes= true
+        //   })
+        // }
       
       }
     }else{
@@ -694,7 +694,7 @@ private vaciar(){
   this.form.controls['Vision'].setValue('')
   this.form.controls['Metas'].setValue('')
   this.form.controls['Perfil'].setValue('')
-  this.form.controls['Resultados'].setValue('')
+  // this.form.controls['Resultados'].setValue('')
   this.form.controls['TeacherId'].setValue('')
   // this.form.controls['Resultados'].setValue('')
   let control = <FormArray>this.form.controls['lines']

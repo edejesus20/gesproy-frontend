@@ -51,7 +51,7 @@ export interface DetailGroupI {
     Vision: string
     Perfil:string
     Metas:string
-    Resultados: string
+    Resultados?: string
     Sector: string
 }
 

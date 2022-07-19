@@ -200,7 +200,7 @@ public bandera:boolean=false
             this.form.controls['Mision'].setValue(cnt_groupFromApi.group.DetailGroup.Mision)
             this.form.controls['Vision'].setValue(cnt_groupFromApi.group.DetailGroup.Vision)
             this.form.controls['Metas'].setValue(cnt_groupFromApi.group.DetailGroup.Metas)
-            this.form.controls['Resultados'].setValue(cnt_groupFromApi.group.DetailGroup.Resultados)
+            // this.form.controls['Resultados'].setValue(cnt_groupFromApi.group.DetailGroup.Resultados)
             this.form.controls['Sector'].setValue(cnt_groupFromApi.group.DetailGroup.Sector)
             }
             if(cnt_groupFromApi.group.Anexo != undefined && cnt_groupFromApi.group.Anexo != null){
@@ -684,9 +684,9 @@ public bandera:boolean=false
       this.form.controls['Vision'].setValue('')
       this.form.controls['Metas'].setValue('')
       this.form.controls['Perfil'].setValue('')
-      this.form.controls['Resultados'].setValue('')
+      // this.form.controls['Resultados'].setValue('')
       this.form.controls['TeacherId'].setValue('')
-      this.form.controls['Resultados'].setValue('')
+      // this.form.controls['Resultados'].setValue('')
       let control = <FormArray>this.form.controls['lines']
       control.push(this.formBuilder.group({
         id:0,
@@ -750,7 +750,7 @@ public bandera:boolean=false
           control.controls[0].get('RoleGroupTeacherId')?.setValue(this.form.value.RoleInvestigador)
           this.mostrarI=true
         }
-        if(this.form.value.RoleInvestigador.id == 2){
+        if(this.form.value.RoleInvestigador.id == 2 || this.form.value.RoleInvestigador.id == 3){
           this.userService.getUserteacherinvestigatorstudent()
           .subscribe(teachersA => {
     
@@ -767,22 +767,22 @@ public bandera:boolean=false
           })
         }
     
-        if(this.form.value.RoleInvestigador.id == 3){
-          this.userService.getUserteacherinvestigatorstudent()
-          .subscribe(teachersA => {
+        // if(this.form.value.RoleInvestigador.id == 3){
+        //   this.userService.getUserteacherinvestigatorstudent()
+        //   .subscribe(teachersA => {
     
-            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
-              this.users=teachersA.investigator_collaborators
-              }else{
-                this.users=[{todo:'No hay registros'}]
-              }
-              // console.log(this.users)  
-              this.mostrarIntegrantes= true
-          })
-        }
+        //     if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+        //       // for (let key of teachersA.users) {
+        //       //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        //       // }
+        //       this.users=teachersA.investigator_collaborators
+        //       }else{
+        //         this.users=[{todo:'No hay registros'}]
+        //       }
+        //       // console.log(this.users)  
+        //       this.mostrarIntegrantes= true
+        //   })
+        // }
         // this.userService.getUserteacherinvestigatorstudent()
         // .subscribe(teachersA => {
   
@@ -816,7 +816,7 @@ public bandera:boolean=false
         Vision: [''],
         Perfil: [''],
         Metas: [''],
-        Resultados: [''],
+        // Resultados: [''],
         Sector: [''],
         Anexo: [''],
 
@@ -939,7 +939,7 @@ public bandera:boolean=false
 
       if(control.controls[position].value.RoleGroupTeacherId.id != ''){
   
-        if(control.controls[position].value.RoleGroupTeacherId.id == 2){
+        if(control.controls[position].value.RoleGroupTeacherId.id == 2 || control.controls[position].value.RoleGroupTeacherId.id == 3){
           // console.log('2')
   
           this.userService.getUserteacherinvestigatorstudent()
@@ -982,47 +982,47 @@ public bandera:boolean=false
           })
         }
     
-        if(control.controls[position].value.RoleGroupTeacherId.id == 3){
-          console.log('3')
-          this.userService.getUserteacherinvestigatorstudent()
-          .subscribe(teachersA => {
+        // if(control.controls[position].value.RoleGroupTeacherId.id == 3){
+        //   console.log('3')
+        //   this.userService.getUserteacherinvestigatorstudent()
+        //   .subscribe(teachersA => {
     
-            if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
-              this.users=teachersA.investigator_collaborators
-              if(filterValue != undefined){
-                let filtered : any[] = [];
-                let query = filterValue;
+        //     if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
+        //       // for (let key of teachersA.users) {
+        //       //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
+        //       // }
+        //       this.users=teachersA.investigator_collaborators
+        //       if(filterValue != undefined){
+        //         let filtered : any[] = [];
+        //         let query = filterValue;
             
-                for(let i = 0; i < this.users.length; i++) {
-                    let country = this.users[i];
-                    if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                        filtered.push(country);
-                    }
-                }
-                this.filteredCountries = filtered;
-              }
-              }else{
-                this.users=[{todo:'No hay registros'}]
-                if(filterValue != undefined){
-                  let filtered : any[] = [];
-                  let query = filterValue;
+        //         for(let i = 0; i < this.users.length; i++) {
+        //             let country = this.users[i];
+        //             if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        //                 filtered.push(country);
+        //             }
+        //         }
+        //         this.filteredCountries = filtered;
+        //       }
+        //       }else{
+        //         this.users=[{todo:'No hay registros'}]
+        //         if(filterValue != undefined){
+        //           let filtered : any[] = [];
+        //           let query = filterValue;
               
-                  for(let i = 0; i < this.users.length; i++) {
-                      let country = this.users[i];
-                      if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                          filtered.push(country);
-                      }
-                  }
-                  this.filteredCountries = filtered;
-                }
-              }
-              // console.log(this.users)  
-              this.mostrarIntegrantes= true
-          })
-        }
+        //           for(let i = 0; i < this.users.length; i++) {
+        //               let country = this.users[i];
+        //               if (country.todo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        //                   filtered.push(country);
+        //               }
+        //           }
+        //           this.filteredCountries = filtered;
+        //         }
+        //       }
+        //       // console.log(this.users)  
+        //       this.mostrarIntegrantes= true
+        //   })
+        // }
       
       }
     }else{
