@@ -159,17 +159,26 @@
     
              <div fxLayout="row" fxLayoutGap="20px">
                <div class="table-wrapper" >
-                <p-table [value]="lines" > 
+                <p-table [value]="getlines.value" > 
                   <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
-                        <th pSortableColumn="id">Resolución<p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="LineId">Areas Tematicas Asociadas<p-sortIcon field="LineId"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
                   <tr [pSelectableRow]="rowData">
-                      <td> {{item.name | titlecase}}</td>
-                      <td> {{item.resolution | titlecase}}</td>
+                      <td> {{item.LineId.name | titlecase}} - 
+                        {{item?.LineId?.LineDetail?.resolution | titlecase}}</td>
+                      <td >
+                        <span *ngFor="let i of item.ThematicId">
+                          <span style="display: flex;">
+                            * {{i.name | titlecase}} 
+                          </span>
+                        </span>
+                      </td>
+
+                      
                   </tr>
                 </ng-template>
                 </p-table>

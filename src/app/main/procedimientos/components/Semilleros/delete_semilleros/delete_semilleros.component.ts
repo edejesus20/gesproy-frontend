@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
-import { SeedbedI, SeedbedStudentI } from 'src/app/models/institution/seedbed';
+import { SeedbedI, SeedbedLineI, SeedbedStudentI } from 'src/app/models/institution/seedbed';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
@@ -19,6 +19,7 @@ import *as moment from 'moment';
 import { ProgramService } from 'src/app/core/services/program/program.service';
 import { LineProgramGroupI } from 'src/app/models/institution/program';
 import { StudentI } from 'src/app/models/user/student';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-delete_semilleros',
   templateUrl: './delete_semilleros.component.html',
@@ -71,6 +72,17 @@ private GroupId:number = 0
 public bandera:boolean=false
 public construccion:string='assets/construccion.jpg'
 public Valorconstruccion:boolean=false
+
+API_URI = environment.API_URI;
+BanderaAnexo:boolean=false
+mostrarAnexo:string | null = null
+items: MenuItem[]=[]
+    
+activeIndex: number = 0;
+AnexoAdjuntado:any | null = null
+filteredCountries2:any[] =[]
+thematics:any[] =[]
+
   constructor(
     private seedbedService:SeedbedService,
     private formBuilder: FormBuilder,
@@ -85,7 +97,7 @@ public Valorconstruccion:boolean=false
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.Valorconstruccion=false
 
     this.buildForm();
     this.getAllteachers()
@@ -143,7 +155,11 @@ getstudents2() {
       estrategias: [''],
       HeadquarterProgramId: [''],
       GroupId:[''],
-      lines: this.formBuilder.array([this.formBuilder.group({LineId:['']})]),
+      lines: this.formBuilder.array([this.formBuilder.group({
+        id:[0],
+        LineId:[''],
+        ThematicId:['']
+      })]),
       Students: this.formBuilder.array([this.formBuilder.group({
         date_firt:[''],
         date_end:[''],
@@ -248,8 +264,9 @@ getstudents2() {
     }))
     let control1 = <FormArray>this.form.controls['lines']
     control1.push(this.formBuilder.group({
-      id:0,
-      LineId:['', [Validators.required]]}))//nuevo input
+      id:[0],
+      LineId:[''],
+      ThematicId:['']}))//nuevo input
   
   }
   public onSubmit(): void {
@@ -305,11 +322,11 @@ getstudents2() {
     // formValue.approval_date != "" && 
     // formValue.resolution != "" && 
     // formValue.article != "" && 
-    formValue.ObjetivoGeneral != "" && 
-    formValue.ObjetivosEspecificos != "" && 
-    formValue.Mision != "" && 
-    formValue.Vision != "" && 
-    formValue.estrategias != "" && 
+    // formValue.ObjetivoGeneral != "" && 
+    // formValue.ObjetivosEspecificos != "" && 
+    // formValue.Mision != "" && 
+    // formValue.Vision != "" && 
+    // formValue.estrategias != "" && 
     formValue.HeadquarterProgramId != ( 0 || undefined)&&
     formValue.GroupId != ( 0 || undefined)
 
@@ -406,10 +423,18 @@ getstudents2() {
     //console.log(control)      
       //crear los controles del array
     if(control.length == 0 && this.mostrar2 == false){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({
+        id:[0],
+        LineId:[''],
+        ThematicId:['']
+      }))//nuevo input
     }
     if(control.length >= 1 && this.mostrar2 == true){
-      control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+      control.push(this.formBuilder.group({
+        id:[0],
+        LineId:[''],
+        ThematicId:['']
+      }))//nuevo input
 
     }
       this.mostrar2=true
@@ -420,7 +445,11 @@ getstudents2() {
     control.removeAt(index)
     if(control.length <= 0){
      this.mostrar2=false
-     control.push(this.formBuilder.group({LineId:['', [Validators.required]],Horas:['', [Validators.required]]}))//nuevo input
+     control.push(this.formBuilder.group({
+      id:[0],
+     LineId:[''],
+     ThematicId:['']
+    }))//nuevo input
 
     }
   }
@@ -435,11 +464,25 @@ getstudents2() {
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
 
         this.form.controls['creation_date'].setValue(creation_date)
-        // this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
-        // this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
-        // this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
-        // this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
-        // this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
+        if(cnt_groupFromApi.seedbed.DetailSeedbed != undefined){
+          this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.ObjetivoGeneral)
+          this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.ObjetivosEspecificos)
+          this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.Mision)
+          this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.Vision)
+          this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.estrategias)
+
+          }
+
+          if(cnt_groupFromApi.seedbed.Anexo != undefined && cnt_groupFromApi.seedbed.Anexo != null){
+            this.mostrarAnexo=cnt_groupFromApi.seedbed.Anexo
+            this.BanderaAnexo=false
+    
+          }else{
+            this.BanderaAnexo=true
+            this.mostrarAnexo=null
+          }
+       
+          
         if(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId != undefined){
           this.programService.getItem(cnt_groupFromApi.seedbed.HeadquarterProgram?.ProgramId).subscribe(algo=>{
             if(algo.program.id != undefined && algo.program.FacultyId != undefined){
@@ -466,23 +509,25 @@ getstudents2() {
                     // if(cnt_groupFromApi.seedbed.GroupLineSeedbeds?.length != undefined){
                     //   //  console.log(this.form.value.GroupId)
                       
-                    //    if(cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
-                    //     this.lines=[]
-                    //      for (let key of cnt_groupFromApi.seedbed.GroupLineSeedbeds) {
-                    //       if(key.GroupLine && key.status == true)
-                    //       this.lineService.getItem(key.GroupLine.LineId).subscribe((algo)=>{
-                    //         this.lines.push(algo.line)
-                    //       })
+                       if(cnt_groupFromApi.seedbed.SeedbedLines?.length != undefined 
+                        && cnt_groupFromApi.seedbed.SeedbedLines.length >0){
+                        this.lines=[]
+                         for (let key of cnt_groupFromApi.seedbed.SeedbedLines) {
+                          if(key.Line && key.status == true)
+                          this.lineService.getItem(key.LineId).subscribe((algo)=>{
+                            this.lines.push(algo.line)
+                            if(cnt_groupFromApi.seedbed.SeedbedLines != undefined && cnt_groupFromApi.seedbed.SeedbedLines.length >0){
+                              this.agregarLine(cnt_groupFromApi.seedbed.SeedbedLines)
+                    
+                            }
+                          })
                            
-                    //      }
-                    //      this.mostrarlineasProgram=true
+                         }
+                         this.mostrarlineasProgram=true
                          
-                    //    }
+                       }
                     //   }
-                    if(cnt_groupFromApi.seedbed.Group?.LineProgramGroups != undefined && cnt_groupFromApi.seedbed.Group?.LineProgramGroups.length >0){
-                      this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
-            
-                    }
+               
                     this.SelectFacultad()
                     this.getHeadquarterProgram()
                     
@@ -497,7 +542,7 @@ getstudents2() {
 
         }
         
-
+        
 
 
        if(cnt_groupFromApi.seedbed.Teacher != undefined)
@@ -549,23 +594,40 @@ getstudents2() {
       // console.log(this.lines,'lines')
     }
   }
-  agregarLine(LineProgramGroups: LineProgramGroupI[]) {
-    if(LineProgramGroups.length){
-      for (let key of LineProgramGroups) {
-        if(key.id != undefined && key.LineProgram?.LineId != undefined) {          
+  agregarLine(SeedbedLines: SeedbedLineI[]) {
+    if(SeedbedLines.length){
+      let LineId:any | null = null;
+
+      for (let key of SeedbedLines) {
+        if(key.Line?.id != undefined && key.status == true){
+          let ArrayThematicId: any[] = []
           let control = <FormArray>this.form.controls['lines']
-          this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-            control.push(this.formBuilder.group({
-              LineId:[algo.line, [Validators.required]],
-            }))
-          })
+          for (let key1 of this.lines) { 
+            if(key1.id == key.Line.id){
+              LineId=key1
+            }
+          }
+          if(key.SeedbedLineThematics?.length!= undefined && key.SeedbedLineThematics?.length > 0){
+            for (let clave of key.SeedbedLineThematics) {
+              if(clave.status == true){
+                ArrayThematicId.push(clave.Thematic)
+              }
+            }
+          }
+          // console.log(ArrayThematicId,'ArrayThematicId')
+          control.push(this.formBuilder.group({
+            id:[key.id],
+            LineId:[LineId],
+            ThematicId:[ArrayThematicId],
+          }))//nuevo input
         }
       }
       this.mostrar2= true
       let control = <FormArray>this.form.controls['lines']
+     
+
       control.removeAt(0)
-      // console.log(control,'control')
-      // console.log(this.lines,'lines')
+      console.log(control.value)
     }
   }
 
