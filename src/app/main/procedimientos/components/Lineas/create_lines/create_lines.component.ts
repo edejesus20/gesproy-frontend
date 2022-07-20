@@ -396,11 +396,22 @@ export class Create_linesComponent implements OnInit {
   this.ref.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Tematica Creada', detail: person.name,life: 2000});
-      this.thematic()
-
+      // this.thematic()
+        console.log(person)
+      this.thematicService.getItem(person.thematic.id).subscribe(list => {
+        // for (let key of list.) {
+          if(list.thematic !== undefined){
+            // for (let key of categoryGroups.categoryGroups) {
+              list.thematic.name =  list.thematic.name.charAt(0).toUpperCase() +  list.thematic.name.slice(1);
+            // }
+          this.thematics.push(list.thematic);
         }
-  });
-  }
+        // this.thematics=list.thematics
+      });
+    }
+
+  })
+}
 
   // removeAnexos(event: Event){
   //   event.preventDefault();

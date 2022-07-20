@@ -38,9 +38,9 @@ export class ThematicService {
 
 
  // Create a new item
- createItem(thematic: ThematicI): Observable<ThematicI> {
-   return this.http.post<ThematicI>(this.base_path_post, thematic).pipe(
-     tap((res: ThematicI) => {
+ createItem(thematic: ThematicI): Observable<{thematic:ThematicI}> {
+   return this.http.post<{thematic:ThematicI}>(this.base_path_post, thematic).pipe(
+     tap((res: {thematic:ThematicI}) => {
        if (res) {
          // Crear usuario
          // console.log('registro insertado');

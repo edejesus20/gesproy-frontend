@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
-import { SeedbedI, SeedbedStudentI } from 'src/app/models/institution/seedbed';
+import { SeedbedI, SeedbedLineI, SeedbedStudentI } from 'src/app/models/institution/seedbed';
 import { TeacherI } from 'src/app/models/user/teacher';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { FacultyI } from 'src/app/models/institution/faculty';
 import { FacultyService } from 'src/app/core/services/faculty/faculty.service';
@@ -22,6 +22,7 @@ import { StudentI } from 'src/app/models/user/student';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit_semilleros',
@@ -82,6 +83,16 @@ public Valorconstruccion:boolean=false
 public Grupo:any | null=null
 public deletelines:any[] =[]
 public  deleteStudents:any[] =[]
+
+API_URI = environment.API_URI;
+BanderaAnexo:boolean=false
+mostrarAnexo:string | null = null
+items: MenuItem[]=[]
+    
+activeIndex: number = 0;
+AnexoAdjuntado:any | null = null
+filteredCountries2:any[] =[]
+thematics:any[] =[]
 constructor(
   public dialogService: DialogService,
     private seedbedService:SeedbedService,
@@ -97,7 +108,21 @@ constructor(
     private programService:ProgramService
     ) { }
   ngOnInit(): void {
-    this.Valorconstruccion=true
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Registrar Mas Detalles',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+    ];
+    this.Valorconstruccion=false
 
     this.buildForm();
     this.getAllteachers()
@@ -183,17 +208,22 @@ getstudents2() {
       // article:['', [Validators.required]],
       name: ['', [Validators.required]],
       TeacherId: ['', [Validators.required]],
-      ObjetivoGeneral: ['', [Validators.required]],
-      ObjetivosEspecificos: ['', [Validators.required]],
-      Mision: ['', [Validators.required]],
-      Vision: ['', [Validators.required]],
+      ObjetivoGeneral: [''],
+      ObjetivosEspecificos: [''],
+      Mision: [''],
+      Vision: [''],
       Facultad: [''],
-      estrategias: ['', [Validators.required]],
+      estrategias: [''],
       HeadquarterProgramId: [''],
       GroupId:[''],
+
+      Anexo: [''],
       lines: this.formBuilder.array([this.formBuilder.group({
-      id:0,
-      LineId:['', [Validators.required]]})]),
+        id:0,
+        LineId:['', [Validators.required]], 
+        ThematicId:['', [Validators.required]],
+      })]),
+
       Students: this.formBuilder.array([this.formBuilder.group({
       id:0,
         date_firt:['',[Validators.required]],
@@ -239,38 +269,23 @@ getstudents2() {
     }
   }
   public getLineProgramGroup(){
-    // if(this.form.value.GroupId != ''){
-    // //  console.log(this.form.value.GroupId)
-    
-    //  if(this.form.value.GroupId.LineProgramGroups.length >0){
-    //   this.lines=[]
-    //    for (let key of this.form.value.GroupId.LineProgramGroups) {
-    //     this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-    //       this.lines.push(algo.line)
-    //     })
-         
-    //    }
-    //    this.mostrarlineasProgram=true
-       
-    //  }
-    // }
     if(this.form.value.GroupId != ''){
       console.log(this.form.value.GroupId,'GroupId')
       this.lines=[]
       if(this.form.value.GroupId.GroupLines.length >0){
         for (let key of this.form.value.GroupId.GroupLines) {
+          if(key.status == true){
          this.lineService.getItem(key.LineId).subscribe((algo)=>{
            // for (let key of facultiesFromApi.teachers) {
              algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
            // }
            this.lines.push(algo.line)
          })
-          
         }
-        this.mostrarlineasProgram=true
-       //  console.log(this.lines)
       }
-     }
+        this.mostrarlineasProgram=true
+    }
+    }
   }
   public SelectTeacher(){
     if(this.form.value.TeacherId != ''){
@@ -279,31 +294,29 @@ getstudents2() {
     }
   }
   getOneTeachers(id:number) {
-    // this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
-    //   if(cnt_groupFromApi.teacher.id != undefined){
-    //       this.form2=cnt_groupFromApi.teacher
-    //   }
-    // }, error => console.error(error));
     this.teacherService.getItem(id).subscribe((cnt_groupFromApi) => {
       if(cnt_groupFromApi.teacher.id != undefined){
+        console.log(cnt_groupFromApi.teacher)
           this.form2=cnt_groupFromApi.teacher
           let Group :any | null= null 
-          // if(cnt_groupFromApi.teacher.GroupLineTeachers?.length != undefined
-          //   && cnt_groupFromApi.teacher.GroupLineTeachers?.length > 0){
+          if(cnt_groupFromApi.teacher.GroupTeachers?.length != undefined
+            && cnt_groupFromApi.teacher.GroupTeachers?.length > 0){
 
-          //     for (const clave of cnt_groupFromApi.teacher.GroupLineTeachers) {
-          //       if(clave.GroupLine?.GroupId && clave.status == true){
-          //         Group=clave.GroupLine?.GroupId
-          //       }
-          //     }
+              for (const clave of cnt_groupFromApi.teacher.GroupTeachers) {
+                if(clave.Group?.id && clave.status == true){
+                  Group=clave.Group?.id
+                }
+              }
 
-          // }
+          }
+
+          
           for (const key of this.groups) {
 
             if(Group != null && parseInt(Group) == key.id){
               this.Grupo=key
               this.form.controls['GroupId'].setValue(key)
-              // this.getLineProgramGroup()
+              this.getLineProgramGroup()
 
             
               console.log(this.Grupo,'this.Grupo')
@@ -348,6 +361,10 @@ getstudents2() {
   }
 
   private vaciar(){
+    this.AnexoAdjuntado=null
+    this.lines=[]
+    this.filteredCountries2=[]
+    this.thematics=[]
     this.form.reset()
     this.getStudents.reset()
     this.getStudents.clear()
@@ -363,6 +380,8 @@ getstudents2() {
     this.form.controls['estrategias'].setValue('')
     this.form.controls['HeadquarterProgramId'].setValue('')
     this.form.controls['GroupId'].setValue('')
+  this.form.controls['Anexo'].setValue('')
+
     let control = <FormArray>this.form.controls['Students']
     control.push(this.formBuilder.group({
       id:0,
@@ -374,8 +393,119 @@ getstudents2() {
     let control1 = <FormArray>this.form.controls['lines']
     control1.push(this.formBuilder.group({
       id:0,
-      LineId:['', [Validators.required]]}))//nuevo input
+      LineId:['', [Validators.required]], 
+      ThematicId:['', [Validators.required]],
+    }))//nuevo input
   
+  }
+
+
+  AreaSeleccionada(pointIndex:number,event:Event){
+    event.preventDefault();
+    // console.log("AreaSeleccionada")
+    let control = <FormArray>this.form.controls['lines']
+    this.thematics=[]
+    if(control.controls[pointIndex].value.LineId != undefined && control.controls[pointIndex].value.LineId != ''){
+      this.groupService.getAreasLineasGrupos(this.Grupo.id,control.controls[pointIndex].value.LineId.id).subscribe(data=>{
+        if(data.groupLine !== undefined && data.groupLine.length > 0){
+          // console.log(data.groupLine,'data.groupLine')
+          for (const item of data.groupLine) {
+            if(item.GroupLineThematics.length > 0){
+              for (const areas of item.GroupLineThematics) {
+                  if(areas.Thematic != undefined && item.status == true){
+                    //   // for (let key of categoryGroups.categoryGroups) {
+                    //     key.Thematic.name =  key.Thematic.name.charAt(0).toUpperCase() +  key.Thematic.name.slice(1);
+                    //   // }
+                  this.thematics.push(areas.Thematic)
+                }
+              }
+  
+            }else{
+          this.thematics=[{name:'No hay registros'}]
+  
+            }
+          }
+        }else{
+          this.thematics=[{name:'No hay registros'}]
+        }
+      })
+  
+    }
+  }
+  
+  llenar2(position:number,event:Event){
+    let filterValue = (event.target as HTMLInputElement).value;
+    this.filterCountry2(event,position,filterValue)
+  
+  }
+  filterCountry2(event:Event,position?:number,filterValue?:string){
+    this.thematics=[]
+    let control = <FormArray>this.form.controls['lines']
+    if(position != undefined){
+    // console.log(control.controls[position].value.LineId)  
+  
+      if(control.controls[position].value.LineId.id != ''){
+        this.groupService.getAreasLineasGrupos(this.Grupo.id,control.controls[position].value.LineId.id).subscribe(data=>{
+          if(data.groupLine !== undefined && data.groupLine.length > 0){
+            // console.log(data.groupLine,'data.groupLine')
+            for (const item of data.groupLine) {
+              if(item.GroupLineThematics.length > 0){
+                for (const areas of item.GroupLineThematics) {
+                    if(areas.Thematic != undefined && item.status == true){
+                      //   // for (let key of categoryGroups.categoryGroups) {
+                      //     key.Thematic.name =  key.Thematic.name.charAt(0).toUpperCase() +  key.Thematic.name.slice(1);
+                      //   // }
+                    this.thematics.push(areas.Thematic)
+                  }
+                }
+                if(filterValue != undefined){
+                  let filtered : any[] = [];
+                  // let query = filterValue;
+              
+                  for(let i = 0; i < this.thematics.length; i++) {
+                      let country = this.thematics[i];
+                      if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                          filtered.push(country);
+                      }
+                  }
+                  this.filteredCountries2 = filtered;
+                }
+              }else{
+            this.thematics=[{name:'No hay registros'}]
+            if(filterValue != undefined){
+              let filtered : any[] = [];
+              // let query = filterValue;
+          
+              for(let i = 0; i < this.thematics.length; i++) {
+                  let country = this.thematics[i];
+                  if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                      filtered.push(country);
+                  }
+              }
+              this.filteredCountries2 = filtered;
+            }
+              }
+            }
+          }else{
+            this.thematics=[{name:'No hay registros'}]
+            if(filterValue != undefined){
+              let filtered : any[] = [];
+              // let query = filterValue;
+          
+              for(let i = 0; i < this.thematics.length; i++) {
+                  let country = this.thematics[i];
+                  if (country.name.toLowerCase().indexOf(filterValue.toLowerCase()) == 0) {
+                      filtered.push(country);
+                  }
+              }
+              this.filteredCountries2 = filtered;
+            }
+          }
+        })
+
+      }
+    }
+   
   }
 
   public onSubmit(): void {
@@ -401,10 +531,12 @@ getstudents2() {
       for (const key of control.value) {
         key.LineId=key.LineId.id 
         this.lines1.push({
+        id: key.id,
          LineId:key.LineId,
+         ThematicId:key.ThematicId
         })
       }
-      formValue.lines = this.form.value.lines
+      formValue.lines = this.lines1
       // console.log('aqui')
     }else{
       formValue.lines = this.lines1
@@ -445,11 +577,11 @@ getstudents2() {
     // formValue.approval_date != "" && 
     // formValue.resolution != "" && 
     // formValue.article != "" && 
-    formValue.ObjetivoGeneral != "" && 
-    formValue.ObjetivosEspecificos != "" && 
-    formValue.Mision != "" && 
-    formValue.Vision != "" && 
-    formValue.estrategias != "" && 
+    // formValue.ObjetivoGeneral != "" && 
+    // formValue.ObjetivosEspecificos != "" && 
+    // formValue.Mision != "" && 
+    // formValue.Vision != "" && 
+    // formValue.estrategias != "" && 
     formValue.HeadquarterProgramId != ( 0 || undefined)&&
     formValue.GroupId != ( 0 || undefined)
 
@@ -457,28 +589,30 @@ getstudents2() {
     this.bandera=true
 
       this.seedbedService.updateItem(formValue.id, formValue).subscribe(
-        () => {
-          var date = new Date('2020-01-01 00:00:03');
-            function padLeft(n:any){ 
-              return n ="00".substring(0, "00".length - n.length) + n;
-            }
-            var interval = setInterval(() => {
-            var minutes = padLeft(date.getMinutes() + "");
-            var seconds = padLeft(date.getSeconds() + "");
-            // console.log(minutes, seconds);
-            if( seconds == '03') {
-            this.messageService.add({severity:'success', summary: 'Success', 
-            detail: 'Semillero Actualizado con exito'});
-            }
-            date = new Date(date.getTime() - 1000);
-            if( minutes == '00' && seconds == '01' ) {
-              this.ngOnInit()
-              this.volver(new Event(''))
-             this.bandera=false
-              // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
-              clearInterval(interval); 
-            }
-      }, 1000);
+        (algo) => {
+
+          if(algo.seedbed.id){
+            if(this.AnexoAdjuntado != null){
+              let data ={
+                SeedbedId:algo.seedbed.id,
+                url:'',
+                file:this.AnexoAdjuntado
+                }
+    
+                this.seedbedService.Anexo(data.SeedbedId.toString(),data.url.
+                toString(),data.file).subscribe(result=>{
+                  if(result){
+                    this.finalizar()
+                  }
+                }, error => console.error(error))
+          }else{
+            // Bandera=true
+            this.finalizar()
+          }
+          }else{
+
+          }
+ 
         },async error => {
           if(error != undefined) {
         this.bandera=false
@@ -494,7 +628,30 @@ getstudents2() {
         this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
         }
   }
-  
+  finalizar(){
+    var date = new Date('2020-01-01 00:00:03');
+    function padLeft(n:any){ 
+      return n ="00".substring(0, "00".length - n.length) + n;
+    }
+    var interval = setInterval(() => {
+    var minutes = padLeft(date.getMinutes() + "");
+    var seconds = padLeft(date.getSeconds() + "");
+    // console.log(minutes, seconds);
+    if( seconds == '03') {
+    this.messageService.add({severity:'success', summary: 'Success', 
+    detail: 'Semillero Actualizado con exito'});
+    }
+    date = new Date(date.getTime() - 1000);
+    if( minutes == '00' && seconds == '01' ) {
+      this.ngOnInit()
+      this.volver(new Event(''))
+     this.bandera=false
+      // this.router.navigateByUrl('/Procedimientos/mostrar_seedbeds');
+      clearInterval(interval); 
+    }
+}, 1000);
+  }
+
   get getStudents() {
     return this.form.get('Students') as FormArray;//obtener todos los formularios
   }
@@ -554,12 +711,12 @@ getstudents2() {
     if(control.length == 0 && this.mostrar2 == false){
       control.push(this.formBuilder.group({
       id:0,
-      LineId:['', [Validators.required]]}))//nuevo input
+      LineId:['', [Validators.required]],ThematicId:['', [Validators.required]]}))//nuevo input
     }
     if(control.length >= 1 && this.mostrar2 == true){
       control.push(this.formBuilder.group({
       id:0,
-      LineId:['', [Validators.required]]}))//nuevo input
+      LineId:['', [Validators.required]],ThematicId:['', [Validators.required]]}))//nuevo input
 
     }
       this.mostrar2=true
@@ -573,7 +730,7 @@ getstudents2() {
      this.mostrar2=false
      control.push(this.formBuilder.group({
       id:0,
-      LineId:['', [Validators.required]]}))//nuevo input
+      LineId:['', [Validators.required]],ThematicId:['', [Validators.required]]}))//nuevo input
 
     }
   }
@@ -588,12 +745,25 @@ getstudents2() {
         let creation_date=moment(cnt_groupFromApi.seedbed.creation_date,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
 
         this.form.controls['creation_date'].setValue(creation_date)
-        // this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.ObjetivoGeneral)
-        // this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.ObjetivosEspecificos)
-        // this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.Mision)
-        // this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.Vision)
-        // this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.estrategias)
 
+        if(cnt_groupFromApi.seedbed.DetailSeedbed != undefined){
+          this.form.controls['ObjetivoGeneral'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.ObjetivoGeneral)
+          this.form.controls['ObjetivosEspecificos'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.ObjetivosEspecificos)
+          this.form.controls['Mision'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.Mision)
+          this.form.controls['Vision'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.Vision)
+          this.form.controls['estrategias'].setValue(cnt_groupFromApi.seedbed.DetailSeedbed.estrategias)
+
+          }
+
+
+        if(cnt_groupFromApi.seedbed.Anexo != undefined && cnt_groupFromApi.seedbed.Anexo != null){
+          this.mostrarAnexo=cnt_groupFromApi.seedbed.Anexo
+          this.BanderaAnexo=false
+  
+        }else{
+          this.BanderaAnexo=true
+          this.mostrarAnexo=null
+        }
 
         if(cnt_groupFromApi.seedbed.Teacher != undefined){
           this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
@@ -608,16 +778,17 @@ getstudents2() {
                     this.form2=Apiteacher.teacher
 
                     let Group :any | null= null 
-                    // if(Apiteacher.teacher.GroupLineTeachers?.length != undefined
-                    //   && Apiteacher.teacher.GroupLineTeachers?.length > 0){
+                    if(Apiteacher.teacher.GroupTeachers?.length != undefined
+                      && Apiteacher.teacher.GroupTeachers?.length > 0){
           
-                    //     for (const clave of Apiteacher.teacher.GroupLineTeachers) {
-                    //       if(clave.GroupLine?.GroupId && clave.status == true){
-                    //         Group=clave.GroupLine?.GroupId
-                    //       }
-                    //     }
+                        for (const clave of Apiteacher.teacher.GroupTeachers) {
+                          if(clave.Group?.id && clave.status == true){
+                            Group=clave.Group?.id
+                          }
+                        }
           
-                    // }
+                    }
+          
                     for (const key of this.groups) {
           
                       if(Group != null && parseInt(Group) == key.id){
@@ -653,13 +824,13 @@ getstudents2() {
                       }
                       
                     }
-                    // if(this.Grupo.GroupLines.length){
-                    //   if(cnt_groupFromApi.seedbed.GroupLineSeedbeds != undefined 
-                    //     && cnt_groupFromApi.seedbed.GroupLineSeedbeds.length >0){
-                    //     this.agregarLine(cnt_groupFromApi.seedbed.GroupLineSeedbeds)
+                    if(this.Grupo.GroupLines.length){
+                      if(cnt_groupFromApi.seedbed.SeedbedLines != undefined 
+                        && cnt_groupFromApi.seedbed.SeedbedLines.length >0){
+                        this.agregarLinea1(cnt_groupFromApi.seedbed.SeedbedLines)
               
-                    //   }
-                    // }
+                      }
+                    }
           
                     if(this.form.value.GroupId != ''){
                       if(this.form.value.GroupId.HeadquarterProgram.Program.FacultyId != undefined){
@@ -710,11 +881,6 @@ getstudents2() {
         //             //   this.agregarLine(cnt_groupFromApi.seedbed.Group?.LineProgramGroups)
             
         //             // }
-                   
-                    
-                   
-                    
-                  
         //           })
         //           }
                   
@@ -725,15 +891,6 @@ getstudents2() {
 
         // }
         
-
-        // this.SelectFacultad()
-        // this.getHeadquarterProgram()
-     
-       
-      
-     
-       
-   
         this.studentService.AddStudentsSemilleros().subscribe(
           (ApiSemillero) => {
             // console.log(ApiSemillero.students)
@@ -761,50 +918,50 @@ getstudents2() {
           
             
           }, error => console.error(error));
-        // this.getstudents(cnt_groupFromApi.seedbed?.id)
-        
-      
-       
-     
+
       }
-      // console.log(cnt_groupFromApi.seedbed,'seedbed')
-      // console.log(this.form.value,'formulario')
 
       this.displayMaximizable2=true
       this.tabla = false
       
     }, error => console.error(error));
   }
-  agregarLine(GroupLineSeedbeds:GroupLineSeedbedI[]) {
-    // console.log(this.lines,'this.lines')
-    if(GroupLineSeedbeds.length){
-      for (let key of GroupLineSeedbeds) {
-        if(key.id != undefined && key.GroupLine?.LineId != undefined && key.status == true) { 
-          // console.log( key.status,' key.status')         
+
+  agregarLinea1(SeedbedLines:SeedbedLineI[]) {
+    if(SeedbedLines.length){
+      let LineId:any | null = null;
+
+      for (let key of SeedbedLines) {
+        if(key.Line?.id != undefined && key.status == true){
+          let ArrayThematicId: any[] = []
           let control = <FormArray>this.form.controls['lines']
-         for (let key1 of this.lines) {
-          if( key1.id && key1.id == key.GroupLine?.LineId ){
-            // this.lineService.getItem(key.GroupLine?.LineId).subscribe((algo)=>{
-              // console.log(key1,'key1')
-              control.push(this.formBuilder.group({
-                id:key.id,
-                LineId:[key1, [Validators.required]],
-              }))
-              // console.log(control,'control')
-            // })
+          for (const key1 of this.lines) { 
+            if(key1.id == key.Line.id){
+              LineId=key1
+            }
           }
-         }
-         
+          if(key.SeedbedLineThematics?.length!= undefined && key.SeedbedLineThematics?.length > 0){
+            for (const clave of key.SeedbedLineThematics) {
+              if(clave.status == true){
+                ArrayThematicId.push(clave.Thematic)
+              }
+            }
+          }
+          // console.log(ArrayThematicId,'ArrayThematicId')
+          control.push(this.formBuilder.group({
+            id:[key.id],
+            LineId:[LineId, [Validators.required]],
+            ThematicId:[ArrayThematicId],
+          }))//nuevo input
         }
       }
+
       this.mostrar2= true
       let control = <FormArray>this.form.controls['lines']
       control.removeAt(0)
-      // console.log(control,'control')
-      // console.log(this.lines,'lines')
     }
   }
-  
+
   agregarEstudiantes(SeedbedStudents:SeedbedStudentI[]) {
     if(SeedbedStudents.length){
       for (let key of SeedbedStudents) {
@@ -943,4 +1100,17 @@ getstudents2() {
   });
   }
 
+  onFileChangeA(event:any) {
+    event.preventDefault();
+    // let control = <FormArray>this.form.controls['Anexos']
+    // console.log(control.value[pointIndex].resolution_convalidation)
+    if(this.form.value.Anexo != '' && this.BanderaAnexo == true){
+      // console.log('aquii')
+      if(event.target.files && event.target.files.length>0){//Identifica si hay archivos
+        const file=event.target.files[0];
+        this.AnexoAdjuntado=file
+            // console.log(this.AnexoAdjuntado,'this.Anexo')
+        }
+      }
+    }
 }

@@ -94,7 +94,7 @@ export class CreateStudentComponent implements OnInit {
     // this.getAlldocumentTypes()
     this.getAllheadquarters()
     this.getAllUser()
-    this.getSeedbed()
+    // this.getSeedbed()
     if(this.config.data){
       if(this.config.data.id == '1'){
         this.mostrarDialogo= true

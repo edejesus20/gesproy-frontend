@@ -79,9 +79,9 @@ getList(): Observable<{ seedbeds: SeedbedI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:SeedbedI): Observable<SeedbedI> {
+updateItem(id:number, item:SeedbedI): Observable<{seedbed:SeedbedI}> {
   return this.http
-    .patch<SeedbedI>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .patch<{seedbed:SeedbedI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)

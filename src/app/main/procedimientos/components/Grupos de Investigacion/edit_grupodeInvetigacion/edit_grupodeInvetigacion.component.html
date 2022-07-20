@@ -464,7 +464,7 @@ margin: 0;">
                             <p-table [value]="algo" *ngIf="mostrar4 == true"> 
                               <ng-template pTemplate="header">
                                 <tr>
-                                    <th pSortableColumn="id">Lineas<p-sortIcon field="id"></p-sortIcon></th>
+                                    <th pSortableColumn="id">Lineas y Areas Tematicas asociadas<p-sortIcon field="id"></p-sortIcon></th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
@@ -486,7 +486,7 @@ margin: 0;">
                                                   [style]="{'width':'100%','margin-bottom':'20px'}"
                                                   optionvalue="id" optionLabel="name" 
                                                   filterBy="name"
-                                                  [required]="true" placeholder="SELECCIONE LINEA" (click)="AreaSeleccionada(pointIndex,$event)" >
+                                                  [required]="true" placeholder="SELECCIONE LINEA" title="SELECCIONE LINEA"(click)="AreaSeleccionada(pointIndex,$event)" >
                                                   <ng-template let-option pTemplate="item"  >
                                                     <span >{{option.name  | titlecase}} - Resolución: {{option.LineDetail?.resolution  | titlecase}}
                                                       </span>
@@ -505,8 +505,8 @@ margin: 0;">
                                               <p-autoComplete 
                                               formControlName="ThematicId" name="ThematicId" class=" p-inputtext-lg" 
                                               [suggestions]="filteredCountries2"
-                                              title="SELECCIONE EJES TEMATICOS"
-                                               placeholder="SELECCIONE EJES TEMATICOS"
+                                              title="SELECCIONE AREAS TEMATICAS"
+                                               placeholder="SELECCIONE AREAS TEMATICAS"
                                                (input)="llenar2(pointIndex,$event)" 
                                                [dropdown]="true"
                                                (click)="llenar2(pointIndex,$event)" 

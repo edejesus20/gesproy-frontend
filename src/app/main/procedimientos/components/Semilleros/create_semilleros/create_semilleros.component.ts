@@ -530,12 +530,15 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
      this.lines=[]
      if(this.form.value.GroupId.GroupLines.length >0){
        for (let key of this.form.value.GroupId.GroupLines) {
-        this.lineService.getItem(key.LineId).subscribe((algo)=>{
-          // for (let key of facultiesFromApi.teachers) {
-            algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
-          // }
-          this.lines.push(algo.line)
-        })
+        if(key.status == true){
+          this.lineService.getItem(key.LineId).subscribe((algo)=>{
+            // for (let key of facultiesFromApi.teachers) {
+              algo.line.name =  algo.line.name.charAt(0).toUpperCase() +  algo.line.name.slice(1);
+            // }
+            this.lines.push(algo.line)
+          })
+        }
+
          
        }
        this.mostrarlineasProgram=true

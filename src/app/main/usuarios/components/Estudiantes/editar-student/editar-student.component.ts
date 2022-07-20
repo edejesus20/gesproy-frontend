@@ -105,7 +105,7 @@ export class EditarStudentComponent implements OnInit {
     // this.getAlldocumentTypes()
     // this.getAllheadquarters()
     this.getAllheadquarters()
-    this.getSeedbed()
+    // this.getSeedbed()
   }
   getSeedbed() {
     this.seedbedService.getList().subscribe(data => {
