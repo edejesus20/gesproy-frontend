@@ -28,6 +28,7 @@ export interface TeacherI {
     MincienciaCategory?:MincienciaCategoryI,
     TrainingTeacher?:TrainingTeacherI[]
     Seedbeds?:SeedbedI[]
+    Seedbed?:SeedbedI
     Lines?:LineI[]
     Trainings?:TrainingI[]
     headquarterProgramTeacher?:HeadquarterProgramTeacherI[]

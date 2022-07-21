@@ -51,69 +51,7 @@ export class ShowRolInvestigationComponent implements OnInit {
     getUsrRoles() {
       this.roleResearchService.getList().subscribe((rolesFromApi) => {
         this.roles =rolesFromApi.roleResearchs
-        // console.log(rolesFromApi.roleInvestigations)
-        // let arrayTeacher:any | null=null
-        // let arrayStudiante:any | null=null
-        // let arrayColabolador:any | null=null
-        // for (let key of this.roles) {
-        //   if(key.LineProgramGroupTeachers != undefined && key.LineProgramGroupTeachers.length > 0) {
-        //     key.LineProgramGroupTeachers.forEach((newH:LineProgramGroupTeacherI) => {
-        //       if( newH?.TeacherId != undefined) {
-        //         this.teacherService.getItem(newH.TeacherId).subscribe((item) => {
-        //           arrayTeacher=item.teacher.User
-        //           if(key.Users!= undefined) {
-        //             key.Users.push(arrayTeacher)
-      
-        //           }else{
-        //             Object.defineProperty( key, 'Users', {
-        //               value:[arrayTeacher]
-        //               });
-        //           }
-        //         })
-                
-        //       }
-        //   });
-        //   }
-
-        //   if(key.GroupStudents != undefined && key.GroupStudents.length > 0) {
-        //     key.GroupStudents.forEach((newH:GroupStudentI) => {
-        //       if( newH?.StudentId != undefined) {
-        //         this.studentService.getItem(newH.StudentId).subscribe((item) => {
-        //           arrayStudiante=item.student.User
-        //           if(key.Users!= undefined) {
-        //             key.Users.push(arrayStudiante)
-      
-        //           }else{
-        //           Object.defineProperty( key, 'Users', {
-        //             value:[arrayStudiante]
-        //             });
-        //           }
-        //         })
-                
-        //       }
-        //   });
-        //   }
-        //   if(key.GroupInvestigatorCollaborators != undefined && key.GroupInvestigatorCollaborators.length > 0) {
-        //     key.GroupInvestigatorCollaborators.forEach((newH:GroupInvestigatorCollaboratorI) => {
-        //       if( newH?.InvestigatorCollaboratorId != undefined) {
-        //         this.investigadorColaboladorService.getItem(newH.InvestigatorCollaboratorId).subscribe((item) => {
-        //           arrayColabolador=item.investigatorCollaborator.User
-        //           if(key.Users != undefined) {
-        //             key.Users.push(arrayColabolador)
-      
-        //           }else{
-        //           Object.defineProperty( key, 'Users', {
-        //             value:[arrayColabolador]
-        //             });
-        //           }
-        //         })
-               
-        //       }
-        //   });
-        //   }
-
-        // }
-        // console.log(this.roles)
+       
         this.rows2=[]
         if(rolesFromApi.roleResearchs != undefined){
           for (const key of rolesFromApi.roleResearchs) {
@@ -267,16 +205,7 @@ export class ShowRolInvestigationComponent implements OnInit {
               layout: 'headerLineOnly',
               margin: [ 15, 0, 0, 15 ]
           }, 
-        //   {
-        //     style: 'tableExample',
-        //     table: {
-        //       headerRows: 1,
-        //       widths: [ '3%', '15%', '15%', '15%', '10%', '12%', '10%', '10%'],
-        //         body: body2
-        //     },
-        //     layout: 'headerLineOnly',
-        //     margin: [ 15, 0, 0, 15 ]
-        // }, 
+
             
           ]
       

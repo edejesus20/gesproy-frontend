@@ -26,6 +26,16 @@ import { Show_one_Research_bondingComponent } from './components/VinculacionInve
 import { Create_Research_bondingComponent } from './components/VinculacionInvestigacion/create_Research_bonding/create_Research_bonding.component';
 import { Edit_Research_bondingComponent } from './components/VinculacionInvestigacion/edit_Research_bonding/edit_Research_bonding.component';
 import { Delete_Research_bondingComponent } from './components/VinculacionInvestigacion/delete_Research_bonding/delete_Research_bonding.component';
+import { Edit_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/edit_Kind_of_Investigation/edit_Kind_of_Investigation.component';
+import { Create_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/create_Kind_of_Investigation/create_Kind_of_Investigation.component';
+import { Show_one_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/show_one_Kind_of_Investigation/show_one_Kind_of_Investigation.component';
+import { Show_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/show_Kind_of_Investigation/show_Kind_of_Investigation.component';
+import { Delete_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/delete_Kind_of_Investigation/delete_Kind_of_Investigation.component';
+import { Show_ProjectModalityComponent } from './components/Modalidad Proyecto/show_ProjectModality/show_ProjectModality.component';
+import { Show_one_ProjectModalityComponent } from './components/Modalidad Proyecto/show_one_ProjectModality/show_one_ProjectModality.component';
+import { Create_ProjectModalityComponent } from './components/Modalidad Proyecto/create_ProjectModality/create_ProjectModality.component';
+import { Edit_ProjectModalityComponent } from './components/Modalidad Proyecto/edit_ProjectModality/edit_ProjectModality.component';
+import { Delete_ProjectModalityComponent } from './components/Modalidad Proyecto/delete_ProjectModality/delete_ProjectModality.component';
 
 const routes: Routes = [
     {
@@ -142,7 +152,54 @@ const routes: Routes = [
         {
         path: 'delete_Research_bonding/:id',
         component:Delete_Research_bondingComponent ,
-        }    
+        }  ,
+        
+        // tipo de investigacion
+        {
+          path: 'mostrar_Kind_of_Investigations',
+          component: Show_Kind_of_InvestigationComponent,
+          },
+          {
+          path: 'mostrar_Kind_of_Investigation/:id',
+          component:Show_one_Kind_of_InvestigationComponent ,
+          },
+          {
+          path: 'create_Kind_of_Investigation',
+          component:Create_Kind_of_InvestigationComponent ,
+          },   
+          {
+          path: 'edit_Kind_of_Investigation/:id',
+          component: Edit_Kind_of_InvestigationComponent,
+          },
+          {
+          path: 'delete_Kind_of_Investigation/:id',
+          component:Delete_Kind_of_InvestigationComponent ,
+          }  ,
+
+          // modalidad proyecto
+        {
+          path: 'mostrar_ProjectModalitys',
+          component: Show_ProjectModalityComponent,
+          },
+          {
+          path: 'mostrar_ProjectModality/:id',
+          component:Show_one_ProjectModalityComponent ,
+          },
+          {
+          path: 'create_ProjectModality',
+          component:Create_ProjectModalityComponent ,
+          },   
+          {
+          path: 'edit_ProjectModality/:id',
+          component: Edit_ProjectModalityComponent,
+          },
+          {
+          path: 'delete_ProjectModality/:id',
+          component:Delete_ProjectModalityComponent ,
+          }  ,
+
+
+
         ]
      } ,
      {

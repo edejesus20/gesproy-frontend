@@ -196,6 +196,9 @@ export class Show_semillerosComponent implements OnInit {
     detalle(id: number){
       this.modificar.emit(id)
     }
+    vincular(id: number){
+      this.modificar.emit(id)
+    }
 
     async gerenratePdf(){
       const DATA = <HTMLDivElement> document.getElementById('todo');

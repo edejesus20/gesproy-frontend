@@ -112,4 +112,5 @@ export class EditRolInvestigationComponent implements OnInit {
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
 }
+
 }

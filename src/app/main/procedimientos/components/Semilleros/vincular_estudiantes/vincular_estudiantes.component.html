@@ -1,0 +1,225 @@
+<ng-template [ngIf]="tabla == true">
+  <app-show_semilleros [mostrar]="mostrar" (modificar)="actualizar($event)"></app-show_semilleros>
+</ng-template>
+<ng-template [ngIf]="tabla == false">
+  <form [formGroup]="formulario" novalidate (ngSubmit)="onSubmit()">
+    <p-dialog [(visible)]="displayMaximizable2" [modal]="true" [style]="{'width': '80vw'}"  [showHeader]="false"
+    [closable]="false" [closeOnEscape]="false" [resizable]="false" zindex="10000">
+        
+        <div [style]="{'margin-top':'-1px'}" >
+
+          <div class="grid p-fluid" style="padding: 10px;">
+            <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
+              <img alt="logo" src="{{image}}" 
+              style="width: 60%"/>
+            </div>
+
+            <div style="border: 1px solid black;"class="col-8 md:col-8 lg:col-8">
+              <div fxLayout="row" class="titleCard">
+
+              <i class="pi  pi-link" style="font-size: 2rem;margin-right: 10px;margin-top: 20px;"></i>
+              <h2 style="text-align: center;">Vincular Estudiante al Semillero</h2>
+            </div>
+          </div>
+
+            <div style="border: 1px solid black;"class="col-2 md:col-2 lg:col-2 text-center">
+              <!-- <img alt="logo" src="{{image2}}" 
+              style="width: 100%"/> -->
+              <p-button (click)="volver($event)" icon="pi pi-times" 
+              [style]="{'border': '1px solid #F16257','border-radius':'5px','width':'auto'}"
+              styleClass="p-button-text ml-2 mt-3" label="Cancelar"></p-button>
+            </div>
+          </div>
+          <br>
+        <p-fieldset legend="Datos del Semillero">
+          <div class="flex" >
+            <div class="col-12 md:col-6 lg:col-6" style="margin-top:-20px">
+              <h3 class="fondebabutton">Nombre: {{ form?.name | titlecase }}</h3>            
+              <h3 class="fondebabutton">Facultad : {{ form?.HeadquarterProgram?.Program?.Faculty?.name | titlecase }}</h3>
+              <h3 class="fondebabutton">Grupo: {{ form?.Group?.name | titlecase }}</h3>            
+                <!-- <button pButton type="button" (click)="addStudents($event)" style="margin-top:20px"
+                  class="p-button-warning p-button-raised p-button-rounded" label="Add Estudiantes">
+                </button> -->
+              
+            </div>
+            <p-divider layout="vertical" ></p-divider>
+            <div class="col-12 md:col-6 lg:col-6"  style="margin-top:-20px">
+              <h3 class="fondebabutton">Docente Responsable : {{ form?.Teacher?.User?.fullName | titlecase }}</h3>
+              <h3 class="fondebabutton">Objetivo General : {{ form?.DetailSeedbed?.ObjetivoGeneral | titlecase }}</h3>
+              <h3 class="fondebabutton">Objetivos Especificos : {{ form?.DetailSeedbed?.ObjetivosEspecificos | titlecase }}</h3>
+              <!-- <h3 class="fondebabutton">Grupo de Investigacion : {{ form2.Group?.name | titlecase}}</h3> -->
+            </div>
+          </div>
+          </p-fieldset>
+        <br>
+
+        <div >
+          <h3 style="text-align:center;">IDENTIFICACIÓN DE LOS INTEGRANTES DEL SEMILLERO</h3>
+  
+          <div fxLayout="row" fxLayoutGap="20px" style="text-align:center" *ngIf="mostrar1 == false">
+          
+            <button pButton type="button" 
+            (click)="addStudents($event)" style="margin-right: 15px;" 
+          class="p-button-success p-button-raised p-button-rounded"
+            label="Add Estudiantes"></button> 
+        </div>
+
+        <br>
+
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div class="table-wrapper" >
+            <p-table [value]="algo1" *ngIf="mostrar1 == true"> 
+              <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Estudiantes<p-sortIcon field="id"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+              <tr [pSelectableRow]="rowData">
+                  <td>
+                    <div formArrayName="Students"> 
+                      <div *ngFor="let item of getStudents.controls; 
+                      let pointIndex=index" [formGroupName]="pointIndex">
+                        <!-- <div class="grupo">  -->
+                          <div class="grid">
+                            <div class="col-6">
+                              <div class="p-inputgroup"  >
+                                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
+                                  <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                  <input type="date" class="p-inputtext-lg" pInputText name="date_firt" 
+                                placeholder="FECHA DE INICIO" formControlName="date_firt" title="FECHA DE INICIO" required>         
+                                <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE INICIO</h3></label> -->
+                              </span> 
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="p-inputgroup"  >
+                                <span class="p-float-label" [style]="{'width':'100%','margin-bottom':'5px'}">
+                                  <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                  <input type="date" class="p-inputtext-lg" pInputText name="date_end" 
+                                placeholder="FECHA DE FINAL" formControlName="date_end" title="FECHA DE FINAL" required>         
+                                <!-- <label for="inputtext"> <h3 [style]="{'margin-top':'-5px'}">FECHA DE FINAL</h3></label> -->
+                              </span> 
+                              </div>
+                            </div>
+                          </div>
+                          <div class="grid">
+                          
+                            <div class="col-7">
+                              <div class="field">
+                                <!-- <label for="name"style="font-weight: bold;">TIPO DE DOCUMENTO</label> -->
+                                <div class="flex">
+
+                                  <ng-template [ngIf]="formulario.value.Students[pointIndex].id == 0  ">
+                                   
+                                    <span class="p-inputgroup-addon flex"  style="margin-top:-1px; 
+                                    color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                    <div style="width:100%">
+                                      
+                                        
+                                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                      [options]="students" [filter]="true"
+                                          formControlName="StudentId" name="StudentId"
+                                        label="SELECCIONE ESTUDIANTE" 
+                                        [style]="{'width':'100%','margin-bottom':'20px'}"
+                                        optionvalue="StudentId" optionLabel="fullName" 
+                                        filterBy="fullName"
+                                        [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
+                                        <ng-template let-option pTemplate="item"  >
+                                          <span >{{option.fullName  | titlecase}} -
+                                            cc: {{option.identification }} </span>
+                                      </ng-template>
+                                      </p-dropdown>
+                                    
+                                  </div>
+
+                                  </ng-template>
+                                  <ng-template [ngIf]="formulario.value.Students[pointIndex].id != 0 ">
+                                    <span class="p-inputgroup-addon"  style="margin-top:-1px; 
+                                    color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                    <div style="width:100%">
+                                      <span class="p-fluid">
+                                    <input type="text" pInputText 
+                                  class="p-inputtext-lg"  name="ESTUDIANTE SELECCIONADO"  
+                                  title="ESTUDIANTE SELECCIONADO"
+                                  [value]="formulario.value.Students[pointIndex].StudentId.fullName" 
+                                  [disabled]="true">      
+                                </span>
+                              </div>  
+                                </ng-template>
+
+                               
+                             
+                              </div>
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <div class="p-inputgroup"  >
+                                <span class="p-inputgroup-addon"  style="margin-top:-1px; color:#F16257"><i class="pi pi-bookmark-fill"></i></span>
+                                <input class="p-inputtext-lg" type="text" formControlName="Horas"
+                                pInputText  name="Horas" required
+                                placeholder="Horas dedicadas" title="Horas dedicadas" >         
+                            </div>
+                            </div>
+                            <div class="col-1">
+                              <span class="bottomdelete" style="margin-top: -35px;">
+                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeStudents(pointIndex,$event)"  
+                                class="p-button-rounded p-button-danger"></button>
+                              </span>
+                            </div>
+                    
+                        </div>
+  
+                      </div>
+                    </div> 
+                  </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" >
+              <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                <button pButton type="button" 
+                (click)="addStudents($event)" style="margin-right: 15px;" 
+              class="p-button-warning p-button-raised p-button-rounded"
+                label="Add Estudiantes"></button>
+                
+                   <span class="bottomdelete" style="margin-top: -35px;">
+                                  <button pButton pRipple type="button" icon="pi pi-plus" 
+                                  style="margin-top: 35px;" label="Crear Nuevo Estudiante"
+                                  class="p-button-rounded p-button-outlined" (click)="addStudent($event)" ></button>
+                                </span>
+
+              </div>
+            </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+
+        </div>
+        </div>
+              <br><br> <br> 
+            
+          <ng-template [ngIf]="bandera == false">
+
+              <br>
+                <div fxLayout="row" class="titleCard"style="margin-top: -20px;">
+                  <button pButton type="button" type="submit"  icon="pi pi-check"  [disabled]="!formulario.valid || mostrar1 == false"
+                  class="p-button-success p-button-raised p-button-rounded" label="Vincular Estudiante" styleClass="mr-2"></button>
+                <!-- <p-button (click)="volver($event)" icon="pi pi-times" styleClass="p-button-text" label="Cancelar"></p-button> -->
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="bandera == true">
+            <br>
+              <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
+          
+          </ng-template>
+   
+            
+                
+    </p-dialog>
+  </form>
+  <p-toast></p-toast>
+  
+  <p-confirmPopup></p-confirmPopup>
+</ng-template>

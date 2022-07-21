@@ -79,9 +79,18 @@ getList(): Observable<{ seedbeds: SeedbedI[] }> {
 }
 
 // Update item by id
-updateItem(id:number, item:SeedbedI): Observable<{seedbed:SeedbedI}> {
+updateItem(id:number, item:any): Observable<{seedbed:SeedbedI}> {
   return this.http
     .patch<{seedbed:SeedbedI}>(this.base_path_get + '/' + id, JSON.stringify(item), this.httpOptions)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
+
+VincularEstudiante(id:number, item:any): Observable<{seedbed:SeedbedI}> {
+  return this.http
+    .patch<{seedbed:SeedbedI}>(this.base_path_get + '/VincularEstudiante/' + id, JSON.stringify(item), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)

@@ -500,6 +500,66 @@
                </div>
              </div>
              <br>
+             <div >
+              <h4 style="text-align:left;">ANEXO DE DETALLES</h4>
+              <ng-template [ngIf]="mostrarAnexo != null && BanderaAnexo==false">
+                <div class="p-inputgroup" >
+                  <!-- <span class="p-inputgroup-addon"  style="margin-top:15px; height:45px"><i class="pi pi-bookmark-fill"></i></span> -->
+  
+                <div class="custom-input-file " style="width: 100%;">
+                  <input type="hidden" 
+                  class="input-file p-inputtext-lg" 
+                
+                  name="Anexo" 
+                  placeholder="Anexo" formControlName="Anexo"
+                  title="Anexo" >
+                  <a pInputText
+                  class="input-file p-inputtext-lg " 
+                  style="margin-top: -15px; "
+                  target="back" href="{{API_URI}}{{mostrarAnexo}}">
+                  Archivo de Semillero</a>
+                  <!-- <span class="bottomdelete"  
+                  style="margin-left: 20px;margin-top: 5px;">
+                    <button pButton pRipple type="button" icon="pi pi-sync"  title="Cambiar Archivo"
+                    (click)="BanderaAnexo=true"  
+                    class="p-button-rounded p-button-warning "></button>
+
+                  </span> -->
+                </div>
+              </div>
+         
+
+              </ng-template>
+
+              <ng-template [ngIf]="BanderaAnexo==true">
+                <div class="p-inputgroup" >
+                  <!-- <span class="p-inputgroup-addon"  style="margin-top:13px; height:45px"><i class="pi pi-bookmark-fill"></i></span> -->
+                    <div class="custom-input-file" style="width: 100%;">
+                      <input type="hidden" class="input-file p-inputtext-lg" 
+                      style="margin-bottom: 10px; width:80%" 
+                      name="Anexo" 
+                      placeholder="Anexo" 
+                      formControlName="Anexo" title="Anexo" >
+
+                      <a pInputText
+                      class="input-file p-inputtext-lg " 
+                      style="margin-top: -15px; "
+                      >
+                      No hay Archivo de Semillero</a>
+                      <!-- <span class="bottomdelete"  
+                      style="margin-left: 20px;">
+                        <button pButton pRipple type="button" icon="pi pi-sync"  *ngIf="mostrarAnexo!= null"
+                        title="Volver Archivo Anterior"
+                        (click)="BanderaAnexo=false"  
+                        class="p-button-rounded p-button-warning mb-3"></button>
+
+                      </span> -->
+                    </div>
+                    
+                  </div>
+
+              </ng-template>
+            </div>
             </div>
             
           

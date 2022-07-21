@@ -61,6 +61,39 @@ getUser(): Observable<{users: UserI[],rolesUsers:any[]}> {
     )
   }
 }
+
+
+
+UsersInvestigatorStudentTeacherProyecto(formValue:any): Observable<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}> {
+  let token : string | null=localStorage.getItem('token')
+  let user : string | null=localStorage.getItem('user')
+  if(token != null && user != null) {
+    let userObjeto:any = JSON.parse(user); 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-token':token,
+        'user':`${parseInt(userObjeto.id)}`
+      })
+    }
+    // console.log(httpOptions)
+    return this.http
+      .post<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}>(this.API_URI+'/api/UsersInvestigatorStudentTeacherProyecto/',formValue,httpOptions)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      )
+  }else{
+    return this.http
+    .post<{teachers: any[], estudiantes : any[],investigator_collaborators: any[]}>(this.API_URI+'/api/UsersInvestigatorStudentTeacherProyecto/',formValue)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+  }
+}
+
+
 getUserteacherinvestigatorstudent2(id:number): Observable<{users: any[]}> {
   let token : string | null=localStorage.getItem('token')
   let user : string | null=localStorage.getItem('user')

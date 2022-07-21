@@ -12,7 +12,7 @@ import { RoleResearchI } from 'src/app/models/projet/roles_research';
   styleUrls: ['./crear-rol-investigation.component.css']
 })
 export class CrearRolInvestigationComponent implements OnInit {
-
+ 
    public Dialog:boolean =false
    public bandera:boolean=false
   public form:FormGroup=this.formBuilder.group({

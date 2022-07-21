@@ -155,6 +155,7 @@ getstudents2() {
       estrategias: [''],
       HeadquarterProgramId: [''],
       GroupId:[''],
+      Anexo:[''],
       lines: this.formBuilder.array([this.formBuilder.group({
         id:[0],
         LineId:[''],

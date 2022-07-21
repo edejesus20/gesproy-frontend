@@ -4,8 +4,6 @@ const translate = require('translate');
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
-import { RolesService } from 'src/app/core/services/usuarios/roles.service';
-import { RoleI } from 'src/app/models/authorization/usr_roles';
 import { RoleGroupTeacherI } from 'src/app/models/institution/group';
 @Component({
   selector: 'app-edit_RoleGroupTeacher',

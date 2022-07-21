@@ -75,14 +75,14 @@ export class Create_grupodeInvetigacionComponent implements OnInit {
     ChargeBondingId:0,
     Charge_bonding:undefined
 }
-public investigatorCollaborators:InvestigatorCollaboratorI[] =[]
-public algoI:number[]=[0];
-public mostrarI:boolean=false;
+
 
 public students:StudentI[] =[]
 public algoS:number[]=[0];
 public mostrarS:boolean=false;
 
+public algoI:number[]=[0];
+public mostrarI:boolean=false;
 public users:any[]=[]
 public roles:RoleGroupTeacherI[] = []
 
@@ -155,7 +155,6 @@ ArchivosEliminados:any[] =[]
 thematics:any[] =[]
   constructor(
     private groupService:GroupService,
-    // private roleResearchService:RoleResearchService,
     private roleGroupTeacherService:RoleGroupTeacherService,
     private knowledge_areaService:Knowledge_areaService,
     private teacherService:TeacherService,

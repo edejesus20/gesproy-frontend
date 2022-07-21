@@ -70,8 +70,9 @@ export class Edit_semillerosComponent implements OnInit {
 public bandera:boolean=false
 
 public mostrarTeacher:boolean=false
-public students:any[] =[]
+
 public lines1:any[] =[]
+public students:any[] =[]
 public Students:any[] =[]
 private HeadquarterProgramId:number = 0
 private TeacherId:number = 0
@@ -567,21 +568,12 @@ getstudents2() {
       formValue.lines=[]
 
     }
-
-    
     // console.log(formValue)
     if(
       formValue.id !=undefined &&
       formValue.TeacherId != 0 && formValue.name != "" &&
     formValue.creation_date != "" && 
-    // formValue.approval_date != "" && 
-    // formValue.resolution != "" && 
-    // formValue.article != "" && 
-    // formValue.ObjetivoGeneral != "" && 
-    // formValue.ObjetivosEspecificos != "" && 
-    // formValue.Mision != "" && 
-    // formValue.Vision != "" && 
-    // formValue.estrategias != "" && 
+   
     formValue.HeadquarterProgramId != ( 0 || undefined)&&
     formValue.GroupId != ( 0 || undefined)
 
@@ -985,37 +977,12 @@ getstudents2() {
             }))
           } 
         }
-        // if(Studen==null && key.Seedbed?.id){
-        //   this.getstudents(key.Seedbed?.id)
-        //   for (const key1 of this.students) {
-        //     if(key.Student?.id ==key1.id){
-        //       Studen=key.Student
-        //     } 
-        //   }
-        // }
-       console.log(Studen,'Studen')
-        // if(key.Student != undefined && key.Student?.id != undefined) {          
-     
-          // this.lineService.getItem(key.LineProgram.LineId).subscribe((algo)=>{
-       
-          // this.studentService.OneAddStudentsSemilleros2(Studen.id).subscribe((student)=>{
-          //   control.push(this.formBuilder.group({
-          //     StudentId:[student.students[0], [Validators.required]],
-          //     date_firt:[date_firt,[Validators.required]],
-          //     date_end:[date_end,[Validators.required]],
-          //     Horas:[key.hours,[Validators.required]]
-
-          //   }))
-          // })
-          
-          // })
-        // }
+      //  console.log(Studen,'Studen')
       }
       this.mostrar1= true
       let control = <FormArray>this.form.controls['Students']
       control.removeAt(0)
-      // console.log(control,'control')
-      // console.log(this.lines,'lines')
+
     }
   }
   // agregarLine(LineProgramGroups: LineProgramGroupI[]) {
@@ -1091,10 +1058,15 @@ getstudents2() {
 
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
-          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
-      this.students=[]
-      this.getstudents(this.form.value.id)
-      this.getstudents2()
+        this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.student.fullName,life: 2000});
+        // console.log(person,'person');
+        this.studentService.OneAddStudentsSemilleros3(person.student.id).subscribe((student: any) =>{
+          // console.log(student,'student');
+          for (let key of student.students) {
+            key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+          this.students.push(key)
+         }
+        })
 
         }
   });

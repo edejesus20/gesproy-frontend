@@ -106,6 +106,11 @@ import { Create_RoleGroupTeacherComponent } from './components/Rol Grupo Docente
 import { Delete_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/delete_RoleGroupTeacher/delete_RoleGroupTeacher.component';
 import { Edit_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/edit_RoleGroupTeacher/edit_RoleGroupTeacher.component';
 import { Show_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/show_RoleGroupTeacher/show_RoleGroupTeacher.component';
+import { Create_TypeMemberComponent } from './components/Tipo miembro/create_TypeMember/create_TypeMember.component';
+import { Delete_TypeMemberComponent } from './components/Tipo miembro/delete_TypeMember/delete_TypeMember.component';
+import { Edit_TypeMemberComponent } from './components/Tipo miembro/edit_TypeMember/edit_TypeMember.component';
+import { Show_one_TypeMemberComponent } from './components/Tipo miembro/show_one_TypeMember/show_one_TypeMember.component';
+import { Show_TypeMemberComponent } from './components/Tipo miembro/show_TypeMember/show_TypeMember.component';
 
 @NgModule({
   declarations: [
@@ -184,7 +189,14 @@ Show_one_ChargeComponent,
    Create_RoleGroupTeacherComponent,
    Delete_RoleGroupTeacherComponent,
    Edit_RoleGroupTeacherComponent,
-   Show_RoleGroupTeacherComponent
+   Show_RoleGroupTeacherComponent,
+
+
+   Create_TypeMemberComponent,
+   Delete_TypeMemberComponent,
+   Edit_TypeMemberComponent,
+   Show_one_TypeMemberComponent,
+   Show_TypeMemberComponent
    
   ],
   imports: [

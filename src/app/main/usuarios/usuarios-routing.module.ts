@@ -74,6 +74,11 @@ import { Show_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/s
 import { Edit_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/edit_RoleGroupTeacher/edit_RoleGroupTeacher.component';
 import { Delete_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/delete_RoleGroupTeacher/delete_RoleGroupTeacher.component';
 import { Create_RoleGroupTeacherComponent } from './components/Rol Grupo Docente/create_RoleGroupTeacher/create_RoleGroupTeacher.component';
+import { Show_TypeMemberComponent } from './components/Tipo miembro/show_TypeMember/show_TypeMember.component';
+import { Show_one_TypeMemberComponent } from './components/Tipo miembro/show_one_TypeMember/show_one_TypeMember.component';
+import { Create_TypeMemberComponent } from './components/Tipo miembro/create_TypeMember/create_TypeMember.component';
+import { Edit_TypeMemberComponent } from './components/Tipo miembro/edit_TypeMember/edit_TypeMember.component';
+import { Delete_TypeMemberComponent } from './components/Tipo miembro/delete_TypeMember/delete_TypeMember.component';
 
 const routes: Routes = [
   {
@@ -387,6 +392,28 @@ const routes: Routes = [
           path:'create_RoleGroupTeacher',
           component:Create_RoleGroupTeacherComponent
         },
+
+            //tipo miembro
+            {
+              path: 'mostrar_TypeMembers',
+              component: Show_TypeMemberComponent,
+              },
+              {
+              path: 'mostrar_TypeMember/:id',
+              component:Show_one_TypeMemberComponent ,
+              },
+              {
+              path: 'create_TypeMember',
+              component:Create_TypeMemberComponent ,
+              },   
+              {
+              path: 'edit_TypeMember/:id',
+              component: Edit_TypeMemberComponent,
+              },
+              {
+              path: 'delete_TypeMember/:id',
+              component:Delete_TypeMemberComponent ,
+              }  ,
     ]
   },
   {

@@ -45,9 +45,11 @@
           <th pSortableColumn="facultad">FACULTAD<p-sortIcon field="facultad"></p-sortIcon></th>
           <th pSortableColumn="Teacher.User.fullName">DOCENTE<p-sortIcon field="Teacher.User.fullName"></p-sortIcon></th>
           <th pSortableColumn="Group.name">GRUPO<p-sortIcon field="Group.name"></p-sortIcon></th>
-          <th pSortableColumn="Anexo">ANEXO DE DETALLES<p-sortIcon field="Anexo"></p-sortIcon></th>
+          <ng-template [ngIf]="mostrar!=4">
+          <th pSortableColumn="Anexo">ANEXO DE DETALLES<p-sortIcon field="Anexo">
+          </p-sortIcon></th> </ng-template>
           
-          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3 ">
             <th > ACCIONES </th>
           </ng-template>
       </tr>
@@ -77,6 +79,7 @@
               </span>
             </span>
           </td> -->
+          <ng-template [ngIf]="mostrar!=4">
           <td>
             <ng-template [ngIf]="item.Anexo != null">
               <div class="custom-input-file p-1" style="width: 100%;">
@@ -89,6 +92,7 @@
             
             
           </td>
+        </ng-template>
        
           <ng-template [ngIf]="mostrar==1">
               
@@ -110,8 +114,9 @@
           <ng-template [ngIf]="mostrar==4">
             
             <td >
-              <button pButton pRipple  type="button" title="Asignar Formaciones" 
-                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" (click)="delet(item.id)"></button>
+              <button pButton pRipple  type="button" title="Vincular Estudiante" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" 
+                (click)="vincular(item.id)"></button>
             </td>
         
         </ng-template>

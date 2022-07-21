@@ -76,6 +76,7 @@ import { Edit_Thematic_axisComponent } from './components/Ejes tematicos/edit_Th
 import { Create_Thematic_axisComponent } from './components/Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
 import { Show_one_Thematic_axisComponent } from './components/Ejes tematicos/show_one_Thematic_axis/show_one_Thematic_axis.component';
 import { Show_Thematic_axisComponent } from './components/Ejes tematicos/show_Thematic_axis/show_Thematic_axis.component';
+import { Vincular_estudiantesComponent } from './components/Semilleros/vincular_estudiantes/vincular_estudiantes.component';
 const routes: Routes = [
   {
     path: '',
@@ -401,6 +402,12 @@ const routes: Routes = [
             {
               path: 'Thematic_axis_eliminar/:id',
               component: Delete_Thematic_axisComponent,
+            },
+            // Vincular_estudiantesComponent
+
+            {
+              path: 'Vincular_estudiante',
+              component: Vincular_estudiantesComponent,
             },
         
     ]

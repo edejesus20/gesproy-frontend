@@ -796,7 +796,15 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
   this.ref1.onClose.subscribe((person: any) =>{
       if (person) {
           this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.name,life: 2000});
-      this.getstudents()
+          this.messageService.add({severity:'info', summary: 'Estudiante Creado', detail: person.student.fullName,life: 2000});
+          // console.log(person,'person');
+          this.studentService.OneAddStudentsSemilleros3(person.student.id).subscribe((student: any) =>{
+            // console.log(student,'student');
+            for (let key of student.students) {
+              key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+            this.students.push(key)
+           }
+          })
 
         }
   });

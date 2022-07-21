@@ -63,6 +63,7 @@ export interface ProjectModalityI {
 }
 
 export interface Project_MembersI {
+    id?:number;
     ProjetId:number;
     UserId:number;
     TypeMemberId:number;
@@ -76,5 +77,6 @@ export interface Project_MembersI {
 }
 
 export interface TypeMemberI {
+    id?:number;
     name: string;
 }

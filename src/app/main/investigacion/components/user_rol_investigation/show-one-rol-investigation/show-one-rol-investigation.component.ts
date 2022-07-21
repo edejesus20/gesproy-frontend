@@ -27,7 +27,7 @@ export class ShowOneRolInvestigationComponent implements OnInit {
     this.displayMaximizable2 = false
     this.ngOnInit()
   }
-  
+   
   ngOnDestroy() {
     this.tabla = true
     this.displayMaximizable2 = false

@@ -1,0 +1,146 @@
+
+<p-table  #dt1 [value]="rows2" responsiveLayout="scroll" dataKey="id" id="todo"
+[paginator]="true" [rows]="5" [showCurrentPageReport]="true"  
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+   [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+    [filterDelay]="0" selectionMode="multiple" [(selection)]="selectedProducts" 
+    [globalFilterFields]="['id','name']"
+    [columns]="cols"
+   ><!-- styleClass="p-datatable-gridlines" -->
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <i class="pi pi-database mr-2" style="font-size: 2rem"></i><h2>Tipos Miembros de Proyectos</h2>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" style="border-bottom: 1px solid rgba(35, 35, 223, 0.534) ;" 
+            (input)="Buscar($event, dt1)" placeholder="Buscar la palabra clave.." />
+        </span> 
+        
+       
+          <div class="mb-3 ml-3 mt-3">
+
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="gerenratePdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
+
+          <!-- <p-button icon="pi pi-refresh"></p-button> -->
+      </div>
+
+      
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+        <ng-template [ngIf]="mostrar==3">
+          <th style="width: 3rem"></th>
+        </ng-template>
+          <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+          <ng-template [ngIf]="mostrar != 0 && mostrar != 3">
+            <th > ACCIONES </th>
+          </ng-template>
+      </tr>
+  </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+      <tr [pSelectableRow]="rowData">
+        <ng-template [ngIf]="mostrar==3">
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+        </ng-template> 
+       
+          <td>{{item.id}}</td>
+          <td>{{item.name | titlecase}}</td>
+          <ng-template [ngIf]="mostrar==1">
+              
+              <td >
+                <button pButton pRipple  type="button"class="editar" title="Editar" 
+                  icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editar(item.id)"></button>
+              </td>
+          
+          </ng-template>
+          <ng-template [ngIf]="mostrar==2">
+            
+              <td >
+                <button pButton pRipple  type="button" title="Eliminar" 
+                  icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delet(item.id)"></button>
+              </td>
+          
+          </ng-template>
+
+          <ng-template [ngIf]="mostrar==4">
+            
+            <td >
+              <button pButton pRipple  type="button" title="Asignar Formaciones" 
+                icon="pi pi-chevron-circle-right" class="p-button-rounded p-button-success" (click)="delet(item.id)"></button>
+            </td>
+        
+        </ng-template>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="6" style="text-align: center;">
+            <h3>No hay registros encontrados</h3>
+          </td>
+      </tr>
+  </ng-template>
+
+  
+    <!-- <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+          <td colspan="12">
+              <div >
+                  <p-table [value]="item.rolesUsers"  dataKey="id" responsiveLayout="scroll"
+                  [paginator]="true" [rows]="3" [showCurrentPageReport]="true"  
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                   >
+                      <ng-template pTemplate="header" >
+                          <tr style="background: rgba(0, 255, 255, 0.849);">
+
+                            <th pSortableColumn="name">NOMBRE<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="surname">APELLIDO<p-sortIcon field="surname"></p-sortIcon></th>
+                            <th pSortableColumn="identification">IDENTIFICACIÓN<p-sortIcon field="identification"></p-sortIcon></th>
+                            <th pSortableColumn="email">CORREO<p-sortIcon field="email"></p-sortIcon></th>
+                            <th pSortableColumn="phone">TELEFONO<p-sortIcon field="phone"></p-sortIcon></th>
+                            <th pSortableColumn="address">DIRECCION<p-sortIcon field="address"></p-sortIcon></th>
+                            <th pSortableColumn="Gender.name">GENERO<p-sortIcon field="Gender.name"></p-sortIcon></th>
+                              
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-order let-expanded="expanded">
+                        <tr>
+
+                          <td>{{order.User.Person?.name | titlecase}}</td>
+                          <td>{{order.User.Person?.surname | titlecase}}</td>
+                          <td>{{order.User.Person?.identification}}</td>
+                          <td>{{order.User.email | titlecase}}</td>
+                          <td>{{order.User.Person?.phone }}</td>
+                          <td>{{order.User.Person?.address | titlecase}}</td>
+                          <td>{{order.User.Person?.Gender?.name | titlecase}}</td>
+                              
+                          </tr>
+                      </ng-template>
+
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="6" style="text-align: center;">
+                            <h3>No hay registros encontrados</h3>
+                          </td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+  </ng-template> -->
+
+
+  <!-- <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total hay {{ universitys ? universitys.length : 0 }} universidades.
+    </div>
+</ng-template> -->
+</p-table>

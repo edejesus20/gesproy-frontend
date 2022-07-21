@@ -4,8 +4,6 @@ import { getBase64ImageFromURL } from 'src/app/models/helpers';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as pdfMake  from 'pdfMake/build/pdfmake';
 import {  PrimeNGConfig } from 'primeng/api';
-import { RolesService } from 'src/app/core/services/usuarios/roles.service';
-import { RoleI } from 'src/app/models/authorization/usr_roles';
 import { RoleGroupTeacherI } from 'src/app/models/institution/group';
 import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
 

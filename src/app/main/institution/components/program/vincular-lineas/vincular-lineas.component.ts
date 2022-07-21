@@ -148,9 +148,6 @@ actualizar(id: number){
 }
 
 getOneCntAccount(id:number) {
-
- 
-
   this.programService.getItem(id).subscribe((cnt_groupFromApi) => {
     console.log(cnt_groupFromApi.program)
     if(cnt_groupFromApi.program.id != undefined && cnt_groupFromApi.program.CategoryId != undefined
@@ -160,10 +157,7 @@ getOneCntAccount(id:number) {
       this.form.controls['id'].setValue(cnt_groupFromApi.program.id)
       this.form.controls['name'].setValue(cnt_groupFromApi.program.name)
       this.form.controls['FacultyId'].setValue(cnt_groupFromApi.program.Faculty?.name)
-      // this.facultyService.getItem(cnt_groupFromApi.program.FacultyId).subscribe((algo)=>{
-      //   this.form.controls['FacultyId'].setValue(algo.faculty)
-      // })
-      // this.categoryService.getItem(cnt_groupFromApi.program.CategoryId).subscribe((algo)=>{
+
       this.form.controls['CategoryId'].setValue(cnt_groupFromApi.program.Category?.name)
     // })
       this.form2=cnt_groupFromApi.program

@@ -38,9 +38,9 @@ export class StudentService {
 
 
  // Create a new item
- createItem(student: any): Observable<any> {
-   return this.http.post<any>(this.base_path_post, student).pipe(
-     tap((res: StudentI) => {
+ createItem(student: any): Observable<{student:StudentI}> {
+   return this.http.post<{student:StudentI}>(this.base_path_post, student).pipe(
+     tap((res: {student:StudentI}) => {
        if (res) {
          // Crear usuario
          // console.log('registro insertado');
@@ -74,7 +74,14 @@ OneAddStudentsSemilleros2(id: number): Observable<{ students: any[] }> {
       catchError(this.handleError)
     )
 }
-
+OneAddStudentsSemilleros3(id: number): Observable<{ students: any[] }> {
+  return this.http
+    .get<{ students: any[] }>(this.API_URI+'/api/OneAddStudentsSemilleros3/'+id)
+    .pipe(
+      retry(0),
+      catchError(this.handleError)
+    )
+}
 
  // Get students data
 

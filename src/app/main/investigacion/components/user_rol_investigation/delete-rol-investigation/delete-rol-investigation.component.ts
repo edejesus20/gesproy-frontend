@@ -113,4 +113,5 @@ export class DeleteRolInvestigationComponent implements OnInit {
     this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Faltan datos'});
   }
 }
+
 }

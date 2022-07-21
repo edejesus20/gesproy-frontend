@@ -4,7 +4,6 @@ const translate = require('translate');
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
-
 import { RoleGroupTeacherI } from 'src/app/models/institution/group';
 @Component({
   selector: 'app-delete_RoleGroupTeacher',

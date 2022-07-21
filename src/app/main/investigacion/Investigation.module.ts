@@ -62,6 +62,16 @@ import { Delete_Research_bondingComponent } from './components/VinculacionInvest
 import { Edit_Research_bondingComponent } from './components/VinculacionInvestigacion/edit_Research_bonding/edit_Research_bonding.component';
 import { Show_one_Research_bondingComponent } from './components/VinculacionInvestigacion/show_one_Research_bonding/show_one_Research_bonding.component';
 import { Show_Research_bondingComponent } from './components/VinculacionInvestigacion/show_Research_bonding/show_Research_bonding.component';
+import { Show_one_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/show_one_Kind_of_Investigation/show_one_Kind_of_Investigation.component';
+import { Show_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/show_Kind_of_Investigation/show_Kind_of_Investigation.component';
+import { Edit_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/edit_Kind_of_Investigation/edit_Kind_of_Investigation.component';
+import { Delete_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/delete_Kind_of_Investigation/delete_Kind_of_Investigation.component';
+import { Create_Kind_of_InvestigationComponent } from './components/Tipo de Investigacion/create_Kind_of_Investigation/create_Kind_of_Investigation.component';
+import { Show_ProjectModalityComponent } from './components/Modalidad Proyecto/show_ProjectModality/show_ProjectModality.component';
+import { Show_one_ProjectModalityComponent } from './components/Modalidad Proyecto/show_one_ProjectModality/show_one_ProjectModality.component';
+import { Edit_ProjectModalityComponent } from './components/Modalidad Proyecto/edit_ProjectModality/edit_ProjectModality.component';
+import { Delete_ProjectModalityComponent } from './components/Modalidad Proyecto/delete_ProjectModality/delete_ProjectModality.component';
+import { Create_ProjectModalityComponent } from './components/Modalidad Proyecto/create_ProjectModality/create_ProjectModality.component';
 
 @NgModule({
   imports: [
@@ -143,7 +153,19 @@ FileUploadModule
         Delete_Research_bondingComponent,
         Edit_Research_bondingComponent,
         Show_one_Research_bondingComponent,
-        Show_Research_bondingComponent
+        Show_Research_bondingComponent,
+        
+        Show_one_Kind_of_InvestigationComponent,
+        Show_Kind_of_InvestigationComponent,
+        Edit_Kind_of_InvestigationComponent,
+        Delete_Kind_of_InvestigationComponent,
+        Create_Kind_of_InvestigationComponent,
+
+        Show_ProjectModalityComponent,
+        Show_one_ProjectModalityComponent,
+        Edit_ProjectModalityComponent,
+        Delete_ProjectModalityComponent,
+        Create_ProjectModalityComponent
   ]
 })
 export class InvestigationModule { }

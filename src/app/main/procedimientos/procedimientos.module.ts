@@ -119,6 +119,7 @@ import { Delete_Thematic_axisComponent } from './components/Ejes tematicos/delet
 import { Create_Thematic_axisComponent } from './components/Ejes tematicos/create_Thematic_axis/create_Thematic_axis.component';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {StepsModule} from 'primeng/steps';
+import { Vincular_estudiantesComponent } from './components/Semilleros/vincular_estudiantes/vincular_estudiantes.component';
 
 @NgModule({
   declarations: [
@@ -211,7 +212,8 @@ import {StepsModule} from 'primeng/steps';
     Delete_Thematic_axisComponent,
     Edit_Thematic_axisComponent,
     Show_one_Thematic_axisComponent,
-    Show_Thematic_axisComponent
+    Show_Thematic_axisComponent,
+    Vincular_estudiantesComponent
 
     
   ],
