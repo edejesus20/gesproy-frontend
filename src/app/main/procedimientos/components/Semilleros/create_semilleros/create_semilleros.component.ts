@@ -17,6 +17,7 @@ import { StudentService } from 'src/app/core/services/usuer/Student.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CreateTeacherComponent } from 'src/app/main/usuarios/components/Docentes/create-teacher/create-teacher.component';
 import { CreateStudentComponent } from 'src/app/main/usuarios/components/Estudiantes/create-student/create-student.component';
+import { environment } from 'src/environments/environment';
 const translate = require('translate');
 
 @Component({
@@ -28,6 +29,7 @@ const translate = require('translate');
 export class Create_semillerosComponent implements OnInit {
 
   items: MenuItem[]=[]
+  API_URI = environment.API_URI;
     
   activeIndex: number = 0;
   AnexoAdjuntado:any | null = null
@@ -374,6 +376,17 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
       (facultiesFromApi) => {
         for (let key of facultiesFromApi.students) {
           key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+          if(key.avatar != undefined){
+            var avatar = key.avatar;
+            var n = avatar.search("assets");
+            if(n == -1){
+              key.avatar=this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+              key.avatar= key.avatar
+            }
+  
+          } 
         }
         // console.log(facultiesFromApi.students)
         this.students =  facultiesFromApi.students;
@@ -395,6 +408,17 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
         // }
         for (let key of facultiesFromApi.teachers) {
           key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+          if(key.avatar != undefined){
+            var avatar = key.avatar;
+            var n = avatar.search("assets");
+            if(n == -1){
+              key.avatar=this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+              key.avatar= key.avatar
+            }
+  
+          } 
         }
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
@@ -802,6 +826,17 @@ filterCountry2(event:Event,position?:number,filterValue?:string){
             // console.log(student,'student');
             for (let key of student.students) {
               key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+              if(key.avatar != undefined){
+                var avatar = key.avatar;
+                var n = avatar.search("assets");
+                if(n == -1){
+                  key.avatar=this.API_URI+key.avatar
+                  // console.log("avatar",key.avatar)
+                }else{
+                  key.avatar= key.avatar
+                }
+      
+              } 
             this.students.push(key)
            }
           })

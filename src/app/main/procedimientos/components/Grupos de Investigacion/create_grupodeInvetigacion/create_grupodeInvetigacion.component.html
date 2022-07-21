@@ -234,11 +234,32 @@
                           optionvalue="id"  optionLabel="User.fullName" filterBy="User.fullName"
                           [required]="true" placeholder="SELECCIONE EL LIDER INVESTIGADOR" (click)="SelectTeacher($event)"
                           title="SELECCIONE EL LIDER INVESTIGADOR">
-                          <ng-template let-option pTemplate="item" >
+                          <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                              <span style="display:flex">
+                                <img src="{{country.User.avatar}}" width="40px"
+                                [class]="'flag flag-'+ country.User.fullName.toLowerCase()" />
+                                <div style="margin-top:10px;margin-left: 15px;
+                                font-weight: 700;
+                                display:flex;
+                                flex-direction:row;
+                                flex-wrap:wrap;
+                                justify-content:flex-start;
+                                align-items:baseline;
+                                align-content:center;
+                                
+                                ">
+                                 <span >{{country.User.fullName  | titlecase}} -
+                                  cc: {{country.User.Person.identification }} </span></div>
+                              </span>
+                               
+                            </div>
+                        </ng-template>
+                          <!-- <ng-template let-option pTemplate="item" >
                             <span >{{option.User.fullName  | titlecase}} -
                             cc: {{option.User.Person.identification }} 
                             </span>
-                        </ng-template>
+                        </ng-template> -->
                         </p-dropdown>
                     </div>
                     <span class="bottomdelete" style="margin-top: 5px;">
@@ -373,6 +394,31 @@
                                           
                                           (completeMethod)="filterCountry($event)" 
                                           field="todo" [multiple]="false">
+
+                                          <ng-template let-country pTemplate="item">
+                                            <div class="country-item">
+                                              <span class="flex">
+
+                                                <img src="{{country.avatar}}" 
+                                                width="40px"
+                                                [class]="'flag flag-'+ country.todo.toLowerCase()" />
+                                                <div style="margin-top:10px;margin-left: 15px;
+                                                font-weight: 700;
+                                                display:flex;
+                                                flex-direction:row;
+                                                flex-wrap:wrap;
+                                                justify-content:flex-start;
+                                                align-items:baseline;
+                                                align-content:center;
+                                                
+                                                ">
+                                                 <span >
+                                                {{country.todo}}</span></div>
+                                              </span>
+                                               
+                                            </div>
+                                        </ng-template>
+
                                           </p-autoComplete>
                                       </span>
                                     </div>

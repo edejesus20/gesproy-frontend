@@ -28,6 +28,7 @@ import { LineService } from 'src/app/core/services/Procedimientos/Line.service';
 import { RoleResearchI } from 'src/app/models/projet/roles_research';
 import { RoleResearchService } from 'src/app/core/services/Procedimientos/RoleResearch.service';
 import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/RoleGroupTeacher.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create_grupodeInvetigacion',
@@ -36,6 +37,7 @@ import { RoleGroupTeacherService } from 'src/app/core/services/Procedimientos/Ro
   providers: [DialogService]
 })
 export class Create_grupodeInvetigacionComponent implements OnInit {
+  API_URI = environment.API_URI;
 
   items: MenuItem[]=[]
     
@@ -463,6 +465,18 @@ thematics:any[] =[]
             this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
              if(algo1.teacher.User?.Person)
               algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+              if(algo1.teacher.User?.avatar != undefined){
+                var avatar = algo1.teacher.User?.avatar
+                var n = avatar.search("assets");
+                if(n == -1){
+                  algo1.teacher.User.avatar=this.API_URI+algo1.teacher.User.avatar
+                  // console.log("avatar",key.avatar)
+                }else{
+                  algo1.teacher.User.avatar= algo1.teacher.User.avatar
+                }
+      
+              } 
+             
               this.teachers.push(algo1.teacher)
             })
            }
@@ -496,9 +510,20 @@ thematics:any[] =[]
           .subscribe(teachersA => {
     
             if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
+              for (let key of teachersA.teachers) {
+                key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+                if(key.avatar != undefined){
+                  var avatar = key.avatar;
+                  var n = avatar.search("assets");
+                  if(n == -1){
+                    key.avatar=this.API_URI+key.avatar
+                    // console.log("avatar",key.avatar)
+                  }else{
+                    key.avatar= key.avatar
+                  }
+        
+                } 
+              }
               this.users=teachersA.teachers
               if(filterValue != undefined){
                 let filtered : any[] = [];

@@ -141,7 +141,7 @@ this.items = [
   },
 ];
 
-    this.Valorconstruccion=false
+    this.Valorconstruccion=true
 
     this.buildForm();
     this.getAllProjetTypeId()
@@ -486,9 +486,19 @@ this.items = [
             .subscribe(teachersA => {
       
               if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-                // for (let key of teachersA.users) {
-                //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-                // }
+                for (const key of teachersA.investigator_collaborators) {
+                  if(key.avatar != undefined){
+                    var avatar = key.avatar;
+                    var n = avatar.search("assets");
+                    if(n == -1){
+                      key.avatar=this.API_URI+key.avatar
+                      // console.log("avatar",key.avatar)
+                    }else{
+                      key.avatar= key.avatar
+                    }
+          
+                  } 
+                 }
                 this.users=teachersA.investigator_collaborators
                 if(filterValue != undefined){
                   let filtered : any[] = [];
@@ -532,6 +542,19 @@ this.items = [
             .subscribe(teachersA => {
       
               if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
+                for (const key of teachersA.estudiantes) {
+                  if(key.avatar != undefined){
+                    var avatar = key.avatar;
+                    var n = avatar.search("assets");
+                    if(n == -1){
+                      key.avatar=this.API_URI+key.avatar
+                      // console.log("avatar",key.avatar)
+                    }else{
+                      key.avatar= key.avatar
+                    }
+          
+                  } 
+                 }
                 this.users=teachersA.estudiantes
                 if(filterValue != undefined){
                   let filtered : any[] = [];
@@ -970,7 +993,7 @@ this.items = [
          // }
          for (let key of facultiesFromApi.teachers) {
            key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
-           
+
           if(key.avatar != undefined){
             var avatar = key.avatar;
             var n = avatar.search("assets");

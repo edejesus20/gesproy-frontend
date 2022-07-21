@@ -146,6 +146,17 @@ constructor(
         // console.log(ApiEstudiante.students)
         for (let key of ApiEstudiante.students) {
             key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+            if(key.avatar != undefined){
+              var avatar = key.avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                key.avatar=this.API_URI+key.avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                key.avatar= key.avatar
+              }
+    
+            } 
           this.students.push(key)
          }
         // this.students =  facultiesFromApi.students;
@@ -196,6 +207,17 @@ getstudents2() {
         // }
         for (let key of facultiesFromApi.teachers) {
           key.fullName =  key.fullName.charAt(0).toUpperCase() +  key.fullName.slice(1);
+          if(key.avatar != undefined){
+            var avatar = key.avatar;
+            var n = avatar.search("assets");
+            if(n == -1){
+              key.avatar=this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+              key.avatar= key.avatar
+            }
+  
+          } 
         }
         this.teachers = facultiesFromApi.teachers;
       }, error => console.error(error));
@@ -760,6 +782,17 @@ getstudents2() {
         if(cnt_groupFromApi.seedbed.Teacher != undefined){
           this.teacherService.OneAddTeacherSemilleros(cnt_groupFromApi.seedbed.id).subscribe(item=>{
             // this.teachers=[]
+            if(item.teachers[0].avatar != undefined){
+              var avatar = item.teachers[0].avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                item.teachers[0].avatar=this.API_URI+item.teachers[0].avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                item.teachers[0].avatar= item.teachers[0].avatar
+              }
+    
+            } 
             this.teachers.push(item.teachers[0]) 
             // this.getAllteachers()
             this.form.controls['TeacherId'].setValue(item.teachers[0])
@@ -1034,6 +1067,17 @@ getstudents2() {
           this.messageService.add({severity:'info', summary: 'Docente Creado', detail: person.name,life: 2000});
           this.teacherService.OneAddTeacherSemilleros(this.form.value.id).subscribe(item=>{
             this.teachers=[]
+            if(item.teachers[0].avatar != undefined){
+              var avatar = item.teachers[0].avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                item.teachers[0].avatar=this.API_URI+item.teachers[0].avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                item.teachers[0].avatar= item.teachers[0].avatar
+              }
+    
+            } 
             this.teachers.push(item.teachers[0]) 
             this.getAllteachers()
             this.form.controls['TeacherId'].setValue(item.teachers[0])

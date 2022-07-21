@@ -90,10 +90,32 @@
                                         [style]="{'width':'100%'}" 
                                         optionvalue="id"  optionLabel="fullName" filterBy="fullName"
                                         placeholder="SELECCIONE DOCENTE" title="SELECCIONE DOCENTE" [required]="true" (onChange)="SelectTeacher()">
-                                        <ng-template let-option pTemplate="item">
+                                        <ng-template let-country pTemplate="item">
+                                          <div class="country-item">
+                                            <span style="display:flex">
+                                              <img src="{{country.avatar}}" width="40px"
+                                              [class]="'flag flag-'+ country.fullName.toLowerCase()" />
+                                              <div style="margin-top:10px;margin-left: 15px;
+                                              font-weight: 700;
+                                              display:flex;
+                                              flex-direction:row;
+                                              flex-wrap:wrap;
+                                              justify-content:flex-start;
+                                              align-items:baseline;
+                                              align-content:center;
+                                              
+                                              ">
+                                               <span >{{country.fullName  | titlecase}} -
+                                                cc: {{country.identification }} </span></div>
+                                            </span>
+                                             
+                                          </div>
+                                      </ng-template>
+                                        
+                                        <!-- <ng-template let-option pTemplate="item">
                                           <span >{{option.fullName  | titlecase}} -
                                             cc: {{option.identification }} </span>
-                                      </ng-template>
+                                      </ng-template> -->
                                       </p-dropdown>
                                     </div>
                                 
@@ -437,17 +459,38 @@
                                                   optionvalue="StudentId" optionLabel="fullName" 
                                                   filterBy="fullName"
                                                   [required]="true" placeholder="SELECCIONE ESTUDIANTE"  >
-                                                  <ng-template let-option pTemplate="item"  >
+                                                  <ng-template let-country pTemplate="item">
+                                                    <div class="country-item">
+                                                      <span style="display:flex">
+                                                        <img src="{{country.avatar}}" width="40px"
+                                                        [class]="'flag flag-'+ country.fullName.toLowerCase()" />
+                                                        <div style="margin-top:10px;margin-left: 15px;
+                                                        font-weight: 700;
+                                                        display:flex;
+                                                        flex-direction:row;
+                                                        flex-wrap:wrap;
+                                                        justify-content:flex-start;
+                                                        align-items:baseline;
+                                                        align-content:center;
+                                                        
+                                                        ">
+                                                         <span >{{country.fullName  | titlecase}} -
+                                                          cc: {{country.identification }} </span></div>
+                                                      </span>
+                                                       
+                                                    </div>
+                                                </ng-template>
+                                                  <!-- <ng-template let-option pTemplate="item"  >
                                                     <span >{{option.fullName  | titlecase}} -
                                                       cc: {{option.identification }} </span>
-                                                </ng-template>
+                                                </ng-template> -->
                                                 </p-dropdown>
                                               
                                             </div>
-                                            <span class="bottomdelete" style="margin-top: -35px;">
+                                            <!-- <span class="bottomdelete" style="margin-top: -35px;">
                                               <button pButton pRipple type="button" icon="pi pi-plus" style="margin-left: 7px;"
                                               class="p-button-rounded p-button-outlined" (click)="addStudent($event)" ></button>
-                                            </span>
+                                            </span> -->
                                           </div>
                                           </div>
                                         </div>
@@ -479,6 +522,11 @@
                             (click)="addStudents($event)" style="margin-right: 15px;" 
                           class="p-button-warning p-button-raised p-button-rounded"
                             label="Add Estudiantes"></button> 
+                            <span class="bottomdelete" style="margin-top: -35px;">
+                              <button pButton pRipple type="button" icon="pi pi-plus" 
+                              label="Crear Nuevo Estudiante"
+                              class="p-button-rounded p-button-outlined" (click)="addStudent($event)" ></button>
+                            </span>
                           </div>
                         </ng-template>
                         </p-table>

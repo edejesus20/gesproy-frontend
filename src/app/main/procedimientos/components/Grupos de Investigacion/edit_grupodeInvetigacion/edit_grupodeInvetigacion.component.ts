@@ -874,9 +874,20 @@ AnexoAdjuntado:any | null = null
           .subscribe(teachersA => {
     
             if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
+              for (let key of teachersA.teachers) {
+                key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+                if(key.avatar != undefined){
+                  var avatar = key.avatar;
+                  var n = avatar.search("assets");
+                  if(n == -1){
+                    key.avatar=this.API_URI+key.avatar
+                    // console.log("avatar",key.avatar)
+                  }else{
+                    key.avatar= key.avatar
+                  }
+        
+                } 
+              }
               this.users=teachersA.teachers
               }else{
                 this.users=[{todo:'No hay registros'}]
@@ -886,33 +897,7 @@ AnexoAdjuntado:any | null = null
           })
         }
     
-        // if(this.form.value.RoleInvestigador.id == 3){
-        //   this.userService.getUserteacherinvestigatorstudent()
-        //   .subscribe(teachersA => {
-    
-        //     if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-        //       // for (let key of teachersA.users) {
-        //       //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-        //       // }
-        //       this.users=teachersA.investigator_collaborators
-        //       }else{
-        //         this.users=[{todo:'No hay registros'}]
-        //       }
-        //       // console.log(this.users)  
-        //       this.mostrarIntegrantes= true
-        //   })
-        // }
-        // this.userService.getUserteacherinvestigatorstudent()
-        // .subscribe(teachersA => {
-  
-        //   if(teachersA.users !== undefined && teachersA.users.length > 0){
-        //     this.users=teachersA.users
-        //     }else{
-        //       this.users=[{todo:'No hay registros'}]
-        //     }
-        //     console.log(this.users)  
-        //     this.mostrarIntegrantes= true
-        // })
+       
             
       }
     }
@@ -1050,6 +1035,17 @@ AnexoAdjuntado:any | null = null
              this.teacherService.getItem(key.TeacherId).subscribe((algo1)=>{
               if(algo1.teacher.User?.Person)
                algo1.teacher.User.Person.name=  algo1.teacher.User?.Person?.name.charAt(0).toUpperCase() +  algo1.teacher.User?.Person?.name.slice(1);
+               if(algo1.teacher.User?.avatar != undefined){
+                var avatar = algo1.teacher.User?.avatar
+                var n = avatar.search("assets");
+                if(n == -1){
+                  algo1.teacher.User.avatar=this.API_URI+algo1.teacher.User.avatar
+                  // console.log("avatar",key.avatar)
+                }else{
+                  algo1.teacher.User.avatar= algo1.teacher.User.avatar
+                }
+      
+              } 
                this.teachers.push(algo1.teacher)
              })
             }
@@ -1084,9 +1080,20 @@ AnexoAdjuntado:any | null = null
           .subscribe(teachersA => {
     
             if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
-              // for (let key of teachersA.users) {
-              //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-              // }
+              for (let key of teachersA.teachers) {
+                key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+                if(key.avatar != undefined){
+                  var avatar = key.avatar;
+                  var n = avatar.search("assets");
+                  if(n == -1){
+                    key.avatar=this.API_URI+key.avatar
+                    // console.log("avatar",key.avatar)
+                  }else{
+                    key.avatar= key.avatar
+                  }
+        
+                } 
+              }
               this.users=teachersA.teachers
               if(filterValue != undefined){
                 let filtered : any[] = [];
