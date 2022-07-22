@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { HeadquarterService } from 'src/app/core/services/headquarter/headquarter.service';
 import { ScaleService } from 'src/app/core/services/institution/Scale.service';
 import { TrainingsService } from 'src/app/core/services/institution/trainings.service';
@@ -41,6 +41,10 @@ import { environment } from 'src/environments/environment';
 })
 export class EditarTeacherComponent implements OnInit {
   API_URI = environment.API_URI;
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+
+  
   public mostrar:number=1;
   public mostrar2:boolean=false;
   public mostrar1:boolean=true;
@@ -81,7 +85,7 @@ export class EditarTeacherComponent implements OnInit {
 
   private deletetrainingTeachers:any[]=[]
   private deleteWorkexperiences:any[] = []
-
+  public Avatar:string=''
   ArchivosEliminados:any[] =[]
   public deleteheadquarterProgramTeachers:any[]=[]
   FilesResolusiones:Archivo[] =[]
@@ -105,6 +109,32 @@ export class EditarTeacherComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      {
+        label: 'Formación Académica',
+        command: (event: any) => {
+            this.activeIndex = 2;
+          }
+      },
+      {
+        label: 'Experiencia Laboral',
+        command: (event: any) => {
+            this.activeIndex = 3;
+          }
+      },
+    ];
     this.primengConfig.ripple = true;
     this.form=this.formBuilder.group({
       id: [''],
@@ -199,8 +229,10 @@ export class EditarTeacherComponent implements OnInit {
   public volver(event: Event){
     event.preventDefault
     this.tabla = true
+    this.activeIndex = 0;
     this.displayMaximizable2 = false
     this.ngOnInit()
+
     this.mostrar2= false
     this.mostrar3= false
     this.bandera=false
@@ -218,8 +250,62 @@ export class EditarTeacherComponent implements OnInit {
     this.FilesResolusiones =[]
     this.form.controls['Link_cvlac'].setValue('')
     this.form.controls['Link_orcid'].setValue('')
-  
+    // this.vaciar()
   }
+
+  // private vaciar(){
+  //   this.activeIndex = 0;
+  //   this.form.reset()
+  //   this.getRoles.reset()
+  //   this.getRoles.clear()
+  //   this.getWorkexperiences.reset()
+  //   this.getWorkexperiences.clear()
+
+  //   this.gettrainingTeacher.reset()
+  //   this.gettrainingTeacher.clear()
+    
+  //   this.form.controls['name'].setValue('')
+  //   this.form.controls['surname'].setValue('')
+  //   this.form.controls['DocumentTypeId'].setValue(1)
+  //   this.form.controls['identification'].setValue('')
+  //   this.form.controls['email'].setValue('')
+  //   this.form.controls['ScaleId'].setValue('')
+  //   this.form.controls['UserId'].setValue('')
+  //   this.form.controls['MincienciaCategoryId'].setValue('')
+  //   this.form.controls['ChargeBondingId'].setValue('')
+  //   this.form.controls['Link_cvlac'].setValue('')
+  //   this.form.controls['Link_orcid'].setValue('')
+   
+  //   let control = <FormArray>this.form.controls['headquarterProgramTeacher']
+  //   control.push(this.formBuilder.group({
+  //     TeacherId:0,
+  //     HeadquarterProgramId:['', [Validators.required]],
+  //         ResearchBondingId:['', [Validators.required]],
+  //   }))
+  //   let control1 = <FormArray>this.form.controls['Workexperiences']
+  //   control1.push(this.formBuilder.group({
+  //     id:0,
+  //     TeacherId:0,
+  //     name_institution: [''],
+  //     position_type: [''],
+  //     functions:[''],
+  //     start_date:[''],
+  //     final_date:[''],
+  //     constancy:['']
+  //   }))
+  //   let control2 = <FormArray>this.form.controls['trainingTeacher']
+  //   control2.push(this.formBuilder.group({
+  //     id:0,
+  //     TeacherId:0,
+  //     name: [''],
+  //     date_graduation: [''],
+  //     name_institution: [''],
+  //     resolution_convalidation: [{value:'No'}],
+  //     degree_certificate: [''],
+  //     TrainingId:[''],
+  //     resolution_certificate:[''],
+  //   }))
+  // }
   public onSubmit() {
 
     let formValue={
@@ -738,6 +824,19 @@ getOneCntAccount(id:number) {
          
       
         this.form.controls['id'].setValue(cnt_groupFromApi.teacher.id)
+        if(cnt_groupFromApi.teacher.User?.avatar != undefined){
+          var avatar =cnt_groupFromApi.teacher.User.avatar ;
+          var n = avatar.search("assets");
+          if(n == -1){
+            cnt_groupFromApi.teacher.User.avatar =this.API_URI+cnt_groupFromApi.teacher.User.avatar
+            // console.log("avatar",key.avatar)
+          }else{
+            cnt_groupFromApi.teacher.User.avatar =cnt_groupFromApi.teacher.User.avatar 
+          }
+          this.Avatar=cnt_groupFromApi.teacher.User.avatar
+        } 
+       
+
         this.user=cnt_groupFromApi.teacher.UserId
         if(cnt_groupFromApi.teacher.User?.Person != undefined 
           // cnt_groupFromApi.teacher.User?.Person?.Gender != undefined
@@ -757,6 +856,8 @@ getOneCntAccount(id:number) {
                 this.form.controls['ChargeBondingId'].setValue(key)
               }
             }
+          
+
 
             if(this.form.value.ChargeBondingId != ''){
               this.scales=[]
@@ -772,13 +873,15 @@ getOneCntAccount(id:number) {
                     }
                     if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers?.length != undefined
                       && cnt_groupFromApi.teacher.ChargebondingScaleTeachers.length > 0){
-                        if(cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId != undefined){
-                          let algo=cnt_groupFromApi.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId
-                          for (const key of this.scales) {
-                            if(key.id != undefined && key.id == algo){
-                            this.form.controls['ScaleId'].setValue(key)
+                        for (let scalesTeacher of cnt_groupFromApi.teacher.ChargebondingScaleTeachers) {
+                          if( scalesTeacher.status == true && scalesTeacher.ChargebondingScale?.Scale != undefined){
+                            for (const key of this.scales) {
+                              if(key.id != undefined && key.id == scalesTeacher.ChargebondingScale.Scale.id){
+                              this.form.controls['ScaleId'].setValue(key)
+                              }
                             }
                           }
+                          
                         }
                     }
                   }
@@ -1082,6 +1185,7 @@ getOneCntAccount(id:number) {
               resolution_convalidation: [{value:'No'}],
               degree_certificate: [''],
               TrainingId:[''],
+              resolution_certificate:[''],
             }))
           }
           if(control.length >= 1 && this.mostrar2 == true){
@@ -1095,6 +1199,7 @@ getOneCntAccount(id:number) {
               resolution_convalidation: [{value:'No'}],
               degree_certificate: [''],
               TrainingId:[''],
+              resolution_certificate:[''],
             }))
     
           }

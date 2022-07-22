@@ -60,6 +60,12 @@
   justify-content:center;
   align-content: center;
   }
+  .titleCard2{
+    margin: 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    }
   .fondebabutton{
   color:#707070;
   }
