@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 const translate = require('translate');
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -34,6 +34,13 @@ import { environment } from 'src/environments/environment';
 export class CreateTeacherComponent implements OnInit {
   public mostrarDialogo:boolean=false;
   API_URI = environment.API_URI;
+
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+
+
+
+
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=true;
@@ -137,6 +144,7 @@ export class CreateTeacherComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.getAllcolcienciaCategorys()
     this.getAllheadquarters()
     this.getAllrelationships()
@@ -150,48 +158,32 @@ export class CreateTeacherComponent implements OnInit {
     }else{
       this.mostrarDialogo= false
     }
-    // this.form=this.formBuilder.group({
-    //   name:[''],
-    //   surname:[''],
-    //   DocumentTypeId:[1],
-    //   identification:[''],
-    //   email:[''],
-    //   ScaleId:[''],
-    //   UserId:[''],
-    //   MincienciaCategoryId:['', [Validators.required]],
-    //   headquarterProgramTeacher: this.formBuilder.array([this.formBuilder.group(
-    //     {
-    //       TeacherId:0,
-    //       HeadquarterProgramId:['', [Validators.required]],
-    //       ResearchBondingId:['', [Validators.required]],
-    //   })]),
-    //   trainingTeacher: this.formBuilder.array([this.formBuilder.group(
-    //     {
-    //       id:0,
-    //       TeacherId:0,
-    //       name: [''],
-    //       date_graduation: [''],
-    //       name_institution: [''],
-    //       resolution_convalidation: [{value:'No'}],
-    //       degree_certificate: [''],
-    //       TrainingId:[''],
-    //       resolution_certificate:[''],
-  
-    //     }
-    //   )]),
-    // Workexperiences:this.formBuilder.array([this.formBuilder.group(
-    //   {
-    //     id:0,
-    //     TeacherId:0,
-    //     name_institution: [''],
-    //     position_type: [''],
-    //     functions:[''],
-    //     start_date:[''],
-    //     final_date:[''],
-    //     constancy:['']
-    // })]),
-    //   ChargeBondingId:['',[Validators.required]]
-    //  });
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      {
+        label: 'Formación Académica',
+        command: (event: any) => {
+            this.activeIndex = 2;
+          }
+      },
+      {
+        label: 'Experiencia Laboral',
+        command: (event: any) => {
+            this.activeIndex = 3;
+          }
+      },
+    ];
   }
   public cancelar(){
     this.ref.close(undefined);
@@ -214,6 +206,19 @@ export class CreateTeacherComponent implements OnInit {
         this.trainings = AdministrativeFromApi.trainings;
       }, error => console.error(error));
   }
+  cambiarFormDatosBasico(){
+    if( this.mostrarUser==false){
+      this.mostrarUser=true
+      this.form.controls['UserId'].setValue('')
+    }else{
+      this.mostrarUser=false
+      this.form.controls['name'].setValue('')
+      this.form.controls['surname'].setValue('')
+      this.form.controls['email'].setValue('')
+      // this.form.controls['identification'].setValue('')
+
+    }
+  }
 
   getAllUser() {
     this.userService.userteacher().subscribe(
@@ -221,7 +226,22 @@ export class CreateTeacherComponent implements OnInit {
         for (let key of AdministrativeFromApi.users) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
           key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+          key.todo=key.name +'- '+  key.surname + 'CC : '+key.identification;
+          if(key.avatar != undefined){
+            var avatar =key.avatar ;
+            var n = avatar.search("assets");
+            if(n == -1){
+             key.avatar =this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+             key.avatar =key.avatar 
+            }
+  
+          } 
+
         }
+        console.log("AdministrativeFromApi.users",AdministrativeFromApi.users)
+
         this.users = AdministrativeFromApi.users;
       }, error => console.error(error));
   }
@@ -246,6 +266,7 @@ export class CreateTeacherComponent implements OnInit {
     this.vaciar()
   }
   private vaciar(){
+    this.activeIndex = 0;
     this.form.reset()
     this.getRoles.reset()
     this.getRoles.clear()
@@ -847,7 +868,7 @@ private getAllheadquarters(selectId?: number) {
         }
       }
       this.headquarterProgram = AdministrativeFromApi.headquarterProgram;
-      console.log(this.headquarterProgram)
+      // console.log(this.headquarterProgram)
     }, error => console.error(error));
 }
 

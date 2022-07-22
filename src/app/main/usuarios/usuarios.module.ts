@@ -111,6 +111,7 @@ import { Delete_TypeMemberComponent } from './components/Tipo miembro/delete_Typ
 import { Edit_TypeMemberComponent } from './components/Tipo miembro/edit_TypeMember/edit_TypeMember.component';
 import { Show_one_TypeMemberComponent } from './components/Tipo miembro/show_one_TypeMember/show_one_TypeMember.component';
 import { Show_TypeMemberComponent } from './components/Tipo miembro/show_TypeMember/show_TypeMember.component';
+import {StepsModule} from 'primeng/steps';
 
 @NgModule({
   declarations: [
@@ -205,7 +206,7 @@ Show_one_ChargeComponent,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    
+    StepsModule,
     DividerModule,
     ButtonModule,
     CheckboxModule,

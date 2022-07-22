@@ -326,9 +326,20 @@ thematics:any[] =[]
       .subscribe(teachersA => {
 
         if(teachersA.teachers !== undefined && teachersA.teachers.length > 0){
-          // for (let key of teachersA.users) {
-          //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-          // }
+          for (let key of teachersA.teachers) {
+            key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+            if(key.avatar != undefined){
+              var avatar = key.avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                key.avatar=this.API_URI+key.avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                key.avatar= key.avatar
+              }
+    
+            } 
+          }
           this.users=teachersA.teachers
           }else{
             this.users=[{todo:'No hay registros'}]
@@ -343,9 +354,20 @@ thematics:any[] =[]
       .subscribe(teachersA => {
 
         if(teachersA.investigator_collaborators !== undefined && teachersA.investigator_collaborators.length > 0){
-          // for (let key of teachersA.users) {
-          //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-          // }
+          for (let key of teachersA.investigator_collaborators) {
+            key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+            if(key.avatar != undefined){
+              var avatar = key.avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                key.avatar=this.API_URI+key.avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                key.avatar= key.avatar
+              }
+    
+            } 
+          }
           this.users=teachersA.investigator_collaborators
           }else{
             this.users=[{todo:'No hay registros'}]
@@ -361,9 +383,20 @@ thematics:any[] =[]
       .subscribe(teachersA => {
 
         if(teachersA.estudiantes !== undefined && teachersA.estudiantes.length > 0){
-          // for (let key of teachersA.users) {
-          //   key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
-          // }
+          for (let key of teachersA.estudiantes) {
+            key.todo =  key.todo.charAt(0).toUpperCase() +  key.todo.slice(1);
+            if(key.avatar != undefined){
+              var avatar = key.avatar;
+              var n = avatar.search("assets");
+              if(n == -1){
+                key.avatar=this.API_URI+key.avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                key.avatar= key.avatar
+              }
+    
+            } 
+          }
           this.users=teachersA.estudiantes
           }else{
             this.users=[{todo:'No hay registros'}]
