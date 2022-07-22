@@ -227,10 +227,10 @@ const routes: Routes = [
           component:DeleteStudentComponent ,
         }
         ,
-        {
-          path: 'AsignarTeacher/:id',
-          component:AsignarTeacherComponent ,
-        },
+        // {
+        //   path: 'AsignarTeacher/:id',
+        //   component:AsignarTeacherComponent ,
+        // },
         //genero
         {
           path: 'gender',

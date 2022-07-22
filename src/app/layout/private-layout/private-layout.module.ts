@@ -68,6 +68,8 @@ import { AnunciosComponent } from './Anuncios/Anuncios.component';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {TabViewModule} from 'primeng/tabview';
 import {ScrollTopModule} from 'primeng/scrolltop';
+import {StepsModule} from 'primeng/steps';
+
 @NgModule({
   declarations: [
     PrivateLayoutComponent, 
@@ -93,6 +95,7 @@ import {ScrollTopModule} from 'primeng/scrolltop';
     AccordionModule,
     HttpClientModule,
     FormsModule,
+    StepsModule,
     TabMenuModule,
     TabViewModule,
     ScrollTopModule,

@@ -7,7 +7,7 @@
       <div class="grid p-fluid mb-3" style="padding: 8px;">
         <div style="border: 1px solid black;  height:80px"class="col-2 md:col-2 lg:col-2 text-center">
           <img alt="logo" src="{{image}}" 
-          style="width: 60%;"/>
+          style="width: 50%;"/>
         </div>
 
         <div style="border: 1px solid black;  height:80px"class="col-7 md:col-7 lg:col-7">
@@ -253,296 +253,308 @@
 
       <p-accordionTab header="Datos como Docente" *ngIf="docente == true" [(selected)]="activeState[1]" (onClose)="activeState[1]=false" (onOpen)="activeState[1]=true">
         <form [formGroup]="form4" novalidate enctype="multipart/form-data">
-          <div style="border: 1px solid #F16257;padding: 10px;border-radius:5px;">
-            <div class="bordep">
-              <h3 style="text-align:center;">2. Datos Secundarios:</h3>
-          
-            <div class="grid p-fluid">
-              <div class="col-12 md:col-12 lg:col-6 xl:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">VINCULACION DE CARGO</label>
-                <div class="flex"> 
-                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                  <div style="width:100%">
-                  <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                  [options]="charge_bondings" [filter]="true"
-                    name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
-                    [style]="{'width':'100%','margin-bottom':'20px'}"  
-                    optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
-                     placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO" (click)="getAllscales($event)">
-                    <ng-template let-option pTemplate="item">
-                      <span >{{option.name  | titlecase}}
-                      </span>
-                  </ng-template>
-                  </p-dropdown>
-                  </div>
-                </div>
-                </div>
-              </div>
-  
-              <div class="col-12 md:col-12 lg:col-6 xl:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">CATEGORIA INVESTIGADOR</label>
-                <div class="flex"> 
-                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
 
-                  <div style="width:100%">
-                <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                [options]="mincienciaCategorys" [filter]="true"
-                  name="MincienciaCategoryId" formControlName="MincienciaCategoryId"  label="CATEGORIA INVESTIGADOR" 
-                  [style]="{'width':'100%','margin-bottom':'20px'}" 
-                  optionvalue="id"  optionLabel="name" filterBy="name"
-                  [required]="true" placeholder="CATEGORIA INVESTIGADOR" title="CATEGORIA INVESTIGADOR">
-                  <ng-template let-option pTemplate="item">
-                    <span >{{option.name }}</span>
-                </ng-template>
-                </p-dropdown>
-                  </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <ng-template [ngIf]="scales.length > 0">
-       
+          
+          <div style="border: 1px solid gray;border-radius:10px;"class="p-4 ">
+            <br>
+            <!-- <h3>Clickable</h3> -->
+          <p-steps [model]="itemsTeacher" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+
+          <br>
+          <div style="border: 1px solid #F16257;border-radius:10px"class="p-4 ">
+
+            <ng-template [ngIf]="activeIndex==0">
+                
+              <div class="stepsdemo-content">
+                <p-card>
+                  <ng-template pTemplate="subtitle">
+                    <div class="text-center">
+                      1. DATOS INSTITUCIONALES
+                    </div>
+                  </ng-template>
+
+                  <div >                
                   <div class="grid p-fluid">
-                    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                    <div class="col-12 md:col-12 lg:col-6 xl:col-6">
                       <div class="field ">
-                        <label for="name"style="font-weight: bold;">ESCALAFON</label>
+                        <label for="name"style="font-weight: bold;">VINCULACION DE CARGO</label>
                       <div class="flex"> 
                         <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
                         <div style="width:100%">
                         <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                        [options]="scales" [filter]="true"
-                          name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
-                          [style]="{'width':'100%'}"  
-                          optionvalue="id"  optionLabel="name" filterBy="name"
-                          placeholder="ESCALAFON" title="ESCALAFON">
+                        [options]="charge_bondings" [filter]="true"
+                          name="ChargeBondingId" formControlName="ChargeBondingId" label="VINCULACION DE CARGO" 
+                          [style]="{'width':'100%','margin-bottom':'20px'}"  
+                          optionvalue="id"  optionLabel="name" filterBy="name" [required]="true"
+                           placeholder="VINCULACION DE CARGO" title="VINCULACION DE CARGO" (click)="getAllscales($event)">
                           <ng-template let-option pTemplate="item">
-                            <span >{{option.name }}</span>
+                            <span >{{option.name  | titlecase}}
+                            </span>
                         </ng-template>
                         </p-dropdown>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+        
+                    <div class="col-12 md:col-12 lg:col-6 xl:col-6">
+                      <div class="field ">
+                        <label for="name"style="font-weight: bold;">CATEGORIA INVESTIGADOR</label>
+                      <div class="flex"> 
+                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+      
+                        <div style="width:100%">
+                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                      [options]="mincienciaCategorys" [filter]="true"
+                        name="MincienciaCategoryId" formControlName="MincienciaCategoryId"  label="CATEGORIA INVESTIGADOR" 
+                        [style]="{'width':'100%','margin-bottom':'20px'}" 
+                        optionvalue="id"  optionLabel="name" filterBy="name"
+                        [required]="true" placeholder="CATEGORIA INVESTIGADOR" title="CATEGORIA INVESTIGADOR">
+                        <ng-template let-option pTemplate="item">
+                          <span >{{option.name }}</span>
+                      </ng-template>
+                      </p-dropdown>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+                  <ng-template [ngIf]="scales.length > 0">
+             
+                        <div class="grid p-fluid">
+                          <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                            <div class="field ">
+                              <label for="name"style="font-weight: bold;">ESCALAFON</label>
+                            <div class="flex"> 
+                              <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                              <div style="width:100%">
+                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                              [options]="scales" [filter]="true"
+                                name="ScaleId" formControlName="ScaleId" label="ESCALAFON" 
+                                [style]="{'width':'100%'}"  
+                                optionvalue="id"  optionLabel="name" filterBy="name"
+                                placeholder="ESCALAFON" title="ESCALAFON">
+                                <ng-template let-option pTemplate="item">
+                                  <span >{{option.name }}</span>
+                              </ng-template>
+                              </p-dropdown>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            </ng-template>
-
-            <br>
-            <div *ngIf="mostrar4==false" class="flex align-items-center justify-content-between">
-              <div fxLayout="row" fxLayoutGap="20px" >
-                <button pButton type="button" (click)="addRoles1($event)" 
-                class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Sedes y Programa"></button>  
-              </div>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
-              <div class="table-wrapper" >
-                <p-table [value]="algo4" *ngIf="mostrar4 == true"> 
-                  <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="id">Sedes y Programas<p-sortIcon field="id"></p-sortIcon></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
-                  <tr [pSelectableRow]="rowData">
-                      <td>
-                        <div formArrayName="headquarterProgramTeacher"> 
-                          <div *ngFor="let item of getRoles1.controls; 
-                          let pointIndex=index" [formGroupName]="pointIndex">
-                            <div class="grid"> 
-                              <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 ">
-                                <div class="field ">
-                                  <label for="name"style="font-weight: bold;">SEDE Y PROGRAMA</label>
-                                    <div class="flex"> 
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                                      <div style="width:90%">
-                                        <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                        [options]="headquarterProgram" [filter]="true"
-                                            formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
-                                           label="SELECCIONE SEDE Y PROGRAMA" 
-                                          [style]="{'width':'90%','font-size':'12px'}"
-                                          optionvalue="id" optionLabel="name"  filterBy="name"
-                                          [required]="true" placeholder="SELECCIONE SEDE Y PROGRAMA"  title="SELECCIONE SEDE Y PROGRAMA" >
-                                          <ng-template let-option pTemplate="item">
-                                            <span >{{option.Sede  | titlecase}}-{{option.Programa  | titlecase}}</span>
-                                        </ng-template>
-                                        </p-dropdown>
-                                      </div>
-                                    </div>
-                                  </div>
-     
-                              </div>
-                              <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
-                                <div class="field ">
-                                  <label for="name"style="font-weight: bold;">VINCULACION INVESTIGATIVA</label>
-                                  <div class="flex">
-                                    <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                                    <div style="width:90%">
-                                      <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                      [options]="research_bondings" [filter]="true"
-                                          formControlName="ResearchBondingId" name="ResearchBondingId"
-                                        label="VINCULACION INVESTIGATIVA" 
-                                        [style]="{'width':'90%'}"
-                                        optionvalue="id" optionLabel="name"  filterBy="name" title="VINCULACION INVESTIGATIVA" 
-                                        [required]="true" placeholder="VINCULACION INVESTIGATIVA">
-                                        <ng-template let-option pTemplate="item">
-                                          <span >
-                                            {{option.name  | titlecase}}
-                                            </span>
-                                      </ng-template>
-                                      </p-dropdown>
-                                    </div>
-                                  </div>
-                                    
-                                  </div>
-                              </div>
-                              <div class="col-12 sm:col-1 md:col-1 mt-5">
-                                <span class="bottomdelete " style="margin-top: 50px;">
-                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles1(pointIndex,$event)"  
-                                  class="p-button-rounded p-button-danger"></button>
-                                </span>
-                              </div>
-                        
-                            
-                          </div>
-                          </div>
-                        </div> 
-                      </td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                  <div class="flex align-items-center justify-content-between">
+                  </ng-template>
+      
+                  <br>
+                  <div *ngIf="mostrar4==false" class="flex align-items-center justify-content-between">
                     <div fxLayout="row" fxLayoutGap="20px" >
                       <button pButton type="button" (click)="addRoles1($event)" 
                       class="p-button-warning p-button-raised p-button-rounded"
                        label="Add Sedes y Programa"></button>  
                     </div>
                   </div>
-              </ng-template>
-                </p-table>
-              </div>
-            </div>
-            <br>
-
-            <div class="grid p-fluid">
-              <div class="col-12 md:col-6 lg:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">LINK CVLAC</label>
-                <div class="p-inputgroup" >
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                  <input type="text" class="p-inputtext-lg" pInputText 
-                  name="Link_cvlac" formControlName="Link_cvlac" 
-                  placeholder="Link CVLAC"  title="LINK CVLAC" >          
-              </div>
-                </div>
-              </div>
-              
-              <div class="col-12 md:col-6 lg:col-6">
-                <div class="field ">
-                  <label for="name"style="font-weight: bold;">LINK ORCID</label>
-                <div class="p-inputgroup" >
-                  <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
-                  <input type="text" class="p-inputtext-lg" pInputText 
-                  name="Link_orcid" formControlName="Link_orcid" 
-                  placeholder="Link ORCID"  title="LINK ORCID" >          
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  <br>
-          <div  style="border: 1px solid #F16257;padding: 10px;border-radius: 5px;">
-            <h3 style="text-align:center;">3. Datos Adicionales</h3>
-            <div class="bordep">
-              <h4 style="text-align:center;">3.1. TÍTULOS ACADÉMICOS OBTENIDOS </h4>
-             <br>
-             <div *ngIf="mostrar5 == false" fxLayout="row" fxLayoutGap="20px" >
-              <button pButton type="button" (click)="addtrainingTeacher($event)" 
-              class="p-button-warning p-button-raised p-button-rounded"
-               label="Add Formaciones Academicas"></button>  
-            </div>
-                <div fxLayout="row" fxLayoutGap="20px">
-                  <div class="table-wrapper" >
-                    <p-table [value]="algo5" *ngIf="mostrar5 == true"> 
-                      <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="id">Formaciones Academicas<p-sortIcon field="id"></p-sortIcon></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
-                      <tr [pSelectableRow]="rowData">
-                          <td>
-                            <div formArrayName="trainingTeacher"> 
-                              <div *ngFor="let item of gettrainingTeacher.controls; 
-                              let pointIndex=index" [formGroupName]="pointIndex">
-                              <div class="grid">
-                                <div class="col-11">
-                                  <div class="grid ">
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <div class="table-wrapper" >
+                      <p-table [value]="algo4" *ngIf="mostrar4 == true"> 
+                        <ng-template pTemplate="header">
+                          <tr>
+                              <th pSortableColumn="id">Sedes y Programas<p-sortIcon field="id"></p-sortIcon></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                        <tr [pSelectableRow]="rowData">
+                            <td>
+                              <div formArrayName="headquarterProgramTeacher"> 
+                                <div *ngFor="let item of getRoles1.controls; 
+                                let pointIndex=index" [formGroupName]="pointIndex">
+                                  <div class="grid"> 
+                                    <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 ">
                                       <div class="field ">
-                                        <label for="name"style="font-weight: bold;">NOMBRE DE FORMACIÓN</label>
-                                         
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                        <label for="name"style="font-weight: bold;">SEDE Y PROGRAMA</label>
+                                          <div class="flex"> 
+                                            <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                            <div style="width:90%">
+                                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                              [options]="headquarterProgram" [filter]="true"
+                                                  formControlName="HeadquarterProgramId" name="HeadquarterProgramId"
+                                                 label="SELECCIONE SEDE Y PROGRAMA" 
+                                                [style]="{'width':'90%','font-size':'12px'}"
+                                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                                [required]="true" placeholder="SELECCIONE SEDE Y PROGRAMA"  title="SELECCIONE SEDE Y PROGRAMA" >
+                                                <ng-template let-option pTemplate="item">
+                                                  <span >{{option.Sede  | titlecase}}-{{option.Programa  | titlecase}}</span>
+                                              </ng-template>
+                                              </p-dropdown>
+                                            </div>
+                                          </div>
+                                        </div>
+           
+                                    </div>
+                                    <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
+                                      <div class="field ">
+                                        <label for="name"style="font-weight: bold;">VINCULACION INVESTIGATIVA</label>
+                                        <div class="flex">
+                                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                          <div style="width:90%">
+                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                            [options]="research_bondings" [filter]="true"
+                                                formControlName="ResearchBondingId" name="ResearchBondingId"
+                                              label="VINCULACION INVESTIGATIVA" 
+                                              [style]="{'width':'90%'}"
+                                              optionvalue="id" optionLabel="name"  filterBy="name" title="VINCULACION INVESTIGATIVA" 
+                                              [required]="true" placeholder="VINCULACION INVESTIGATIVA">
+                                              <ng-template let-option pTemplate="item">
+                                                <span >
+                                                  {{option.name  | titlecase}}
+                                                  </span>
+                                            </ng-template>
+                                            </p-dropdown>
+                                          </div>
+                                        </div>
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sm:col-1 md:col-1 mt-5">
+                                      <span class="bottomdelete " style="margin-top: 50px;">
+                                        <button pButton pRipple type="button" icon="pi pi-times" (click)="removeRoles1(pointIndex,$event)"  
+                                        class="p-button-rounded p-button-danger"></button>
+                                      </span>
+                                    </div>
+                              
+                                  
+                                </div>
+                                </div>
+                              </div> 
+                            </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="summary">
 
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-                                        <input type="text" class="p-inputtext-lg" title="NOMBRE DE FORMACIÓN" 
-                                         pInputText name="name" placeholder="NOMBRE DE FORMACIÓN"
-                                         formControlName="name" required>  
-                                        </span>       
-                                      </div>
-                                    </div>
-                                    </div>
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addRoles1($event)" 
+                          class="p-button-warning p-button-raised p-button-rounded"
+                          label="Añadir Sedes y Programa"></button>  
+                        </div>
+                    </ng-template>
+                      </p-table>
+                    </div>
+                  </div>
+                  <br>
+      
+                  <div class="grid p-fluid">
+                    <div class="col-12 md:col-6 lg:col-6">
+                      <div class="field ">
+                        <label for="name"style="font-weight: bold;">LINK CVLAC</label>
+                      <div class="p-inputgroup" >
+                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                        <input type="text" class="p-inputtext-lg" pInputText 
+                        name="Link_cvlac" formControlName="Link_cvlac" 
+                        placeholder="Link CVLAC"  title="LINK CVLAC" >          
+                    </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-12 md:col-6 lg:col-6">
+                      <div class="field ">
+                        <label for="name"style="font-weight: bold;">LINK ORCID</label>
+                      <div class="p-inputgroup" >
+                        <span class="p-inputgroup-addon"  style="margin-top:-1px;"><i class="pi pi-bookmark-fill"></i></span>
+                        <input type="text" class="p-inputtext-lg" pInputText 
+                        name="Link_orcid" formControlName="Link_orcid" 
+                        placeholder="Link ORCID"  title="LINK ORCID" >          
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                  <ng-template pTemplate="footer">
+                  <div class="grid grid-nogutter justify-content-end" style="margin-top:-35px">
+                      <p-button label="Siguiente" (click)="activeIndex = 1"
+                      [disabled]="(form4.value.ChargeBondingId == ''|| 
+                      form4.value.MincienciaCategoryId =='' || 
+                      form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length  - 1].HeadquarterProgramId =='' 
+                      || form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length - 1].ResearchBondingId =='') || (scales.length > 0 && form4.value.ScaleId == '')" 
+                       icon="pi pi-angle-right" iconPos="right"></p-button>
+                  </div>
+              </ng-template>
+            </p-card>
+          </div>
+    
+        </ng-template>
+
+
+        <ng-template [ngIf]="activeIndex==1">
+                
+          <div class="stepsdemo-content">
+            <p-card>
+              <ng-template pTemplate="subtitle">
+                <div class="text-center">
+                  2. TÍTULOS ACADÉMICOS OBTENIDOS 
+                </div>
+              </ng-template>
+              <div >
+               <div *ngIf="mostrar5 == false" fxLayout="row" fxLayoutGap="20px" >
+                <button pButton type="button" (click)="addtrainingTeacher($event)" 
+                class="p-button-warning p-button-raised p-button-rounded"
+                 label="Add Formaciones Academicas"></button>  
+              </div>
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <div class="table-wrapper" >
+                      <p-table [value]="algo5" *ngIf="mostrar5 == true"> 
+                        <ng-template pTemplate="header">
+                          <tr>
+                              <th pSortableColumn="id">Formaciones Academicas<p-sortIcon field="id"></p-sortIcon></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                        <tr [pSelectableRow]="rowData">
+                            <td>
+                              <div formArrayName="trainingTeacher"> 
+                                <div *ngFor="let item of gettrainingTeacher.controls; 
+                                let pointIndex=index" [formGroupName]="pointIndex">
+                                <div class="grid">
+                                  <div class="col-11">
+                                    <div class="grid ">
                                       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
                                         <div class="field ">
-                                          <label for="name"style="font-weight: bold;">FECHA DE GRADUACION</label>
+                                          <label for="name"style="font-weight: bold;">NOMBRE DE FORMACIÓN</label>
                                            
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-                                        <input type="date"class="p-inputtext-lg"  title="FECHA DE GRADUACION"
-                                         inputId="basic" name="date_graduation" pInputText
-                                         placeholder="FECHA DE GRADUACION"
-                                        formControlName="date_graduation" required />
-                                        
-                                        </span>       
-                                      </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-
-                                      <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
-
-                                      <div class="field ">
-                                        <label for="name"style="font-weight: bold;">NIVEL DE FORMACIÓN</label>
-                                         
-                                      <div class="flex">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                        <div style="width:100%">
-                                          <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                          [options]="trainings" [filter]="true"
-                                              formControlName="TrainingId" name="TrainingId"
-                                            label="NIVEL DE FORMACIÓN" 
-                                            [style]="{'width':'100%','margin-top':'10px'}"
-                                            optionvalue="id" optionLabel="name"  filterBy="name"
-                                            [disabled]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
-                                            <ng-template let-option pTemplate="item">
-                                              <span >
-                                                {{option.name  | titlecase}}
-                                                </span>
-                                          </ng-template>
-                                          </p-dropdown>
+                                        <div class="p-inputgroup"  style="margin-top: 10px;">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                          <span class="p-float-label" 
+                                          [style]="{'width':'100%'}">
+                                          <input type="text" class="p-inputtext-lg" title="NOMBRE DE FORMACIÓN" 
+                                           pInputText name="name" placeholder="NOMBRE DE FORMACIÓN"
+                                           formControlName="name" required>  
+                                          </span>       
                                         </div>
                                       </div>
-
                                       </div>
-                                      </ng-template>
-                                      <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
+                                        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+                                          <div class="field ">
+                                            <label for="name"style="font-weight: bold;">FECHA DE GRADUACION</label>
+                                             
+                                        <div class="p-inputgroup"  style="margin-top: 10px;">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                          <span class="p-float-label" 
+                                          [style]="{'width':'100%'}">
+                                          <input type="date"class="p-inputtext-lg"  title="FECHA DE GRADUACION"
+                                           inputId="basic" name="date_graduation" pInputText
+                                           placeholder="FECHA DE GRADUACION"
+                                          formControlName="date_graduation" required />
+                                          
+                                          </span>       
+                                        </div>
+                                      </div>
+                                      </div>
+                                      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+  
+                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
+  
                                         <div class="field ">
                                           <label for="name"style="font-weight: bold;">NIVEL DE FORMACIÓN</label>
                                            
@@ -553,10 +565,10 @@
                                             <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
                                             [options]="trainings" [filter]="true"
                                                 formControlName="TrainingId" name="TrainingId"
-                                              label="C" 
+                                              label="NIVEL DE FORMACIÓN" 
                                               [style]="{'width':'100%','margin-top':'10px'}"
                                               optionvalue="id" optionLabel="name"  filterBy="name"
-                                              [required]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
+                                              [disabled]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
                                               <ng-template let-option pTemplate="item">
                                                 <span >
                                                   {{option.name  | titlecase}}
@@ -567,155 +579,59 @@
                                         </div>
   
                                         </div>
-                                      </ng-template>
-                                    </div>
-                                  </div>
-                                  <div class="grid ">
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-6">
-                                      <div class="field ">
-                                        <label for="name"style="font-weight: bold;">INSTITUCIÓN</label>
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-         
-                                        <input type="text" class="p-inputtext-lg"
-                                         pInputText name="name_institution" placeholder="INSTITUCIÓN"
-                                         title="INSTITUCIÓN"
-                                         formControlName="name_institution" required>  
-                                        </span>       
-                                      </div>
-                                    </div>
-                                  </div>
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
-
-                                      <!-- certificado de grado -->
-                                      <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
-                                        <div class="p-inputgroup">
-                                          <span class="p-float-label" 
-                                          [style]="{'width':'100%'}">
-        
-                                          <div class="custom-input-file " style="width: 100%;">
-                                            <input type="hidden" 
-                                            class="input-file p-inputtext-lg" 
-                                            style="margin-bottom: 10px;" 
-                                            name="Anexos" 
-                                            placeholder="CERTIFICADO DE GRADO" 
-                                            formControlName="degree_certificate" 
-                                            title="CERTIFICADO DE GRADO" (click)="onFileChange($event,pointIndex)">
-                                            <a pInputText
-                                            class="input-file p-inputtext-lg mt-4" 
-                                            style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{form4.value.trainingTeacher[pointIndex].degree_certificate?.url}}">
-                                            {{form4.value.trainingTeacher[pointIndex].degree_certificate?.name}}</a>
-                                            <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
-                                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo(form4.value.trainingTeacher[pointIndex].degree_certificate,$event,pointIndex)"  
-                                              class="p-button-rounded p-button-danger"></button>
-            
-                                            </span>
-                                          </div>
-                                          </span>       
-                                        </div>
-                                      </div>
-                                      </ng-template>
-
-                                      <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
-                                        
-                                        <div class="p-inputgroup">
-                                    <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px;"><i class="pi pi-bookmark-fill"></i></span>
-
-                                          <span class="p-float-label" 
-                                          [style]="{'width':'100%'}">
-        
-                                          <div class="custom-input-file" style="width: 100%;">
-                                            <input type="file" 
-                                            class="input-file p-inputtext-lg" 
-                                            style="margin-bottom: 10px;width: 80%;" 
-                                            name="Anexos" 
-                                            placeholder="CERTIFICADO DE GRADO" 
-                                            formControlName="degree_certificate" required
-                                            title="CERTIFICADO DE GRADO" (change)="onFileChange($event,pointIndex)">
-                                            <span class="bottomdelete "  *ngIf="form4.value.trainingTeacher[pointIndex].degree_certificate != ''"
-                                            style="margin-left: 5px;padding-bottom:7px ;">
-                                              <button pButton pRipple type="button" icon="pi pi-check"   
-                                              class="p-button-rounded p-button-success"></button>
-            
-                                            </span>
-                                          </div>
-                                          </span>       
-                                        </div>
-                                      </div>
-                                      </ng-template>
-                                      
-                                  </div>
-                                
-                                  </div>
-                                  <div class="grid">
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-                                      <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
-                                        <div class="flex">
-                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                          <div style="width:100%">
-                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                            [options]="resolution_convalidations" [filter]="true"
-                                                formControlName="resolution_convalidation" name="resolution_convalidation"
-                                              label="RESOLUCION DE CONVALIDACION" 
-                                              [style]="{'width':'100%','margin-top':'10px'}"
-                                              optionvalue="value" optionLabel="value"  filterBy="value"
-                                              [disabled]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
-                                              (click)="resolucion($event,pointIndex)">
-                                              <ng-template let-option pTemplate="item">
-                                                <span >
-                                                  {{option.value  | titlecase}}
-                                                  </span>
-                                            </ng-template>
-                                            </p-dropdown>
-                                          </div>
-                                        </div>
-  
-                                        </div>
-                                      </ng-template>
-                                      <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
-                                        <div class="flex">
-                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                          <div style="width:100%">
-                                            <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
-                                            [options]="resolution_convalidations" [filter]="true"
-                                                formControlName="resolution_convalidation" name="resolution_convalidation"
-                                              label="RESOLUCION DE CONVALIDACION" 
-                                              [style]="{'width':'100%','margin-top':'10px'}"
-                                              optionvalue="value" optionLabel="value"  filterBy="value"
-                                              [required]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
-                                              (click)="resolucion($event,pointIndex)">
-                                              <ng-template let-option pTemplate="item">
-                                                <span >
-                                                  {{option.value  | titlecase}}
-                                                  </span>
-                                            </ng-template>
-                                            </p-dropdown>
-                                          </div>
-                                        </div>
-  
-                                        </div>
-                                      </ng-template>
-                                 
-
-                                    </div>
-                                    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-                                      <ng-template [ngIf]="validandoCertificado[pointIndex] === true">
-                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate?.name">
+                                        </ng-template>
+                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
                                           <div class="field ">
-                                            <label for="name"style="font-weight: bold;">CERTIFICADO DE RESOLUCIÓN</label>
+                                            <label for="name"style="font-weight: bold;">NIVEL DE FORMACIÓN</label>
+                                             
+                                          <div class="flex">
+                                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+    
+                                            <div style="width:100%">
+                                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                              [options]="trainings" [filter]="true"
+                                                  formControlName="TrainingId" name="TrainingId"
+                                                label="C" 
+                                                [style]="{'width':'100%','margin-top':'10px'}"
+                                                optionvalue="id" optionLabel="name"  filterBy="name"
+                                                [required]="true" placeholder="NIVEL DE FORMACIÓN"  title="NIVEL DE FORMACIÓN">
+                                                <ng-template let-option pTemplate="item">
+                                                  <span >
+                                                    {{option.name  | titlecase}}
+                                                    </span>
+                                              </ng-template>
+                                              </p-dropdown>
+                                            </div>
+                                          </div>
+    
+                                          </div>
+                                        </ng-template>
+                                      </div>
+                                    </div>
+                                    <div class="grid ">
+                                      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-6">
+                                        <div class="field ">
+                                          <label for="name"style="font-weight: bold;">INSTITUCIÓN</label>
+                                        <div class="p-inputgroup"  style="margin-top: 10px;">
+                                        <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                          <span class="p-float-label" 
+                                          [style]="{'width':'100%'}">
+           
+                                          <input type="text" class="p-inputtext-lg"
+                                           pInputText name="name_institution" placeholder="INSTITUCIÓN"
+                                           title="INSTITUCIÓN"
+                                           formControlName="name_institution" required>  
+                                          </span>       
+                                        </div>
+                                      </div>
+                                    </div>
+                                      <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
+  
+                                        <!-- certificado de grado -->
+                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
+                                          <div class="field ">
+                                            <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
                                           <div class="p-inputgroup">
                                             <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
@@ -725,15 +641,15 @@
                                               class="input-file p-inputtext-lg" 
                                               style="margin-bottom: 10px;" 
                                               name="Anexos" 
-                                              placeholder="CERTIFICADO DE RESOLUCIÓN" 
-                                              formControlName="resolution_certificate" 
-                                              title="CERTIFICADO DE RESOLUCIÓN" (click)="onFileChange2($event,pointIndex)">
+                                              placeholder="CERTIFICADO DE GRADO" 
+                                              formControlName="degree_certificate" 
+                                              title="CERTIFICADO DE GRADO" (click)="onFileChange($event,pointIndex)">
                                               <a pInputText
                                               class="input-file p-inputtext-lg mt-4" 
-                                              style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{form4.value.trainingTeacher[pointIndex].resolution_certificate?.url}}">
-                                              {{form4.value.trainingTeacher[pointIndex].resolution_certificate?.name}}</a>
+                                              style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{form4.value.trainingTeacher[pointIndex].degree_certificate?.url}}">
+                                              {{form4.value.trainingTeacher[pointIndex].degree_certificate?.name}}</a>
                                               <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
-                                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo2(form4.value.trainingTeacher[pointIndex].resolution_certificate,$event,pointIndex)"  
+                                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo(form4.value.trainingTeacher[pointIndex].degree_certificate,$event,pointIndex)"  
                                                 class="p-button-rounded p-button-danger"></button>
               
                                               </span>
@@ -742,14 +658,14 @@
                                           </div>
                                         </div>
                                         </ng-template>
-
-                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate?.name">
+  
+                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].degree_certificate?.name">
                                           <div class="field ">
-                                            <label for="name"style="font-weight: bold;">CERTIFICADO DE RESOLUCIÓN</label>
+                                            <label for="name"style="font-weight: bold;">CERTIFICADO DE GRADO</label>
                                           
                                           <div class="p-inputgroup">
                                       <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px;"><i class="pi pi-bookmark-fill"></i></span>
-
+  
                                             <span class="p-float-label" 
                                             [style]="{'width':'100%'}">
           
@@ -758,10 +674,10 @@
                                               class="input-file p-inputtext-lg" 
                                               style="margin-bottom: 10px;width: 80%;" 
                                               name="Anexos" 
-                                              placeholder="CERTIFICADO DE RESOLUCIÓN" 
-                                              formControlName="resolution_certificate" 
-                                              title="CERTIFICADO DE RESOLUCIÓN" (change)="onFileChange2($event,pointIndex)">
-                                              <span class="bottomdelete "  *ngIf="form4.value.trainingTeacher[pointIndex].resolution_certificate != ''"
+                                              placeholder="CERTIFICADO DE GRADO" 
+                                              formControlName="degree_certificate" required
+                                              title="CERTIFICADO DE GRADO" (change)="onFileChange($event,pointIndex)">
+                                              <span class="bottomdelete "  *ngIf="form4.value.trainingTeacher[pointIndex].degree_certificate != ''"
                                               style="margin-left: 5px;padding-bottom:7px ;">
                                                 <button pButton pRipple type="button" icon="pi pi-check"   
                                                 class="p-button-rounded p-button-success"></button>
@@ -773,217 +689,118 @@
                                         </div>
                                         </ng-template>
                                         
-                                    
-                                      </ng-template>
                                     </div>
-   
-                                  </div>
-                                  <hr>
-                                </div>
-                                <div class="col-1 mt-6">
-                                  <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
-                                    <button pButton pRipple type="button" icon="pi pi-times" (click)="removetrainingTeacher(pointIndex,$event)"  
-                                    class="p-button-rounded p-button-danger"></button>
-  
-                                  </span>
-                                </div>
-                              </div>
-
-                              </div>
-                               
-                              </div>
-                            
-                          </td>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="summary">
-                      <div fxLayout="row" fxLayoutGap="20px" >
-                        <button pButton type="button" (click)="addtrainingTeacher($event)" 
-                        class="p-button-warning p-button-raised p-button-rounded"
-                         label="Add Formaciones Academicas"></button>  
-                      </div>
-                  </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-                <br>
-            </div>
-           
-              <h4 style="text-align:center;">3.3. CARGOS DESEMPEÑADOS EN LOS ÚLTIMOS 5 AÑOS </h4>
-              <br>
-              <div *ngIf="mostrar6==false" fxLayout="row" fxLayoutGap="20px" >
-                <button pButton type="button" (click)="addWorkexperiences($event)" 
-                class="p-button-warning p-button-raised p-button-rounded"
-                 label="Add Experiencia laboral y/o académica"></button>  
-              </div>
-                <div fxLayout="row" fxLayoutGap="20px">
-                  <div class="table-wrapper" >
-                    <p-table [value]="algo6" *ngIf="mostrar6 == true"> 
-                      <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="id">Experiencia laboral y/o académica<p-sortIcon field="id"></p-sortIcon></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
-                      <tr [pSelectableRow]="rowData">
-                          <td>
-                            <div formArrayName="Workexperiences"> 
-                              <div *ngFor="let item of getWorkexperiences.controls; 
-                              let pointIndex=index" [formGroupName]="pointIndex">
-                              <div class="grid">
-                                <div class="col-11">
-                                  <div class="grid">
-                                    <div class="col-12 md:col-12 lg:col-6">
-                                      <div class="field ">
-                                        <label for="name"style="font-weight: bold;">NOMBRE DE INSTITUCIÓN</label>
-                                      
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-         
-                                        <input type="text" class="p-inputtext-lg"
-                                         pInputText name="name_institution" title="NOMBRE DE INSTITUCIÓN"
-                                         placeholder="NOMBRE DE INSTITUCIÓN"
-                                         formControlName="name_institution" required>  
-                                        </span>       
-                                      </div>
-                                    </div>
-                                    </div>
-                                      <div class="col-12 md:col-12 lg:col-6">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">CARGO</label>
-                                        
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                        <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-      
-                                        <input type="text" class="p-inputtext-lg"
-                                         pInputText name="position_type" 
-                                         placeholder="CARGO" title="CARGO"
-                                         formControlName="position_type" required>  
-                                        </span>       
-                                      </div>
-                                      </div>
-                                    </div>
+                                  
                                     </div>
                                     <div class="grid">
-                                      <div class="col-12 md:col-12 lg:col-12">
-                                        <div class="field ">
-                                          <label for="name"style="font-weight: bold;">FUNCIONES</label>
-                                        
-                                        <div class="p-inputgroup"  style="margin-top: 10px;">
-                                      <span class="p-inputgroup-addon"  style="color:#F16257;"><i class="pi pi-bookmark-fill"></i></span>
-
-                                          <span class="p-float-label" 
-                                          [style]="{'width':'100%'}">
-                                          <textarea rows="3" cols="200" 
-                                          [style]="{'border-radius':'10px'}" 
-                                          pInputTextarea [autoResize]="true"
-                                          class="p-inputtext-lg"
-                                           pInputText name="functions" 
-                                           placeholder="FUNCIONES" title="FUNCIONES"
-                                          formControlName="functions" required></textarea>
-                                          
-                                          </span>       
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="grid">
-                                    <div class="field col-12 sm:col-12 lg:col-6 xg:col-6">
-                                      <label for="name"style="font-weight: bold;">FECHA DE INICIO</label>
-                                    
-                                    <div class="p-inputgroup"  style="margin-top: 10px;">
-                                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                      <span class="p-float-label" 
-                                      [style]="{'width':'100%'}">
-                                      <input type="date" pInputText 
-                                      class="p-inputtext-lg" title="FECHA DE INICIO"
-                                      inputId="basic" name="start_date" 
-                                      placeholder="FECHA DE INICIO"
-                                      formControlName="start_date" required></span> 
-                                    </div>
-                                  </div>
-                                  <div class="field col-12 sm:col-12 lg:col-6 xg:col-6">
-                                    <label for="name"style="font-weight: bold;">FECHA DE TERMINO</label>
-                                  
-                                      <div class="p-inputgroup"  style="margin-top: 10px;">
-                                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
-                                  
-                                  <span class="p-float-label" 
-                                        [style]="{'width':'100%'}">
-                                        <input type="date" pInputText  class="p-inputtext-lg" 
-                                        title="FECHA DE TERMINO"
-                                        inputId="basic" name="final_date"
-                                          placeholder="FECHA DE TERMINO"
-                                        formControlName="final_date" required></span> 
-                                      </div>
-                                      </div>
-                                  </div>
-                                     
-                                    <div class="grid">
-                                      <div class="col-12 md:col-12 lg:col-12 xg:col-12">
-                                        <ng-template [ngIf]="form4.value.Workexperiences[pointIndex].constancy.name">
+                                      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+                                        <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
                                           <div class="field ">
-                                            <label for="name"style="font-weight: bold;">CONSTANCIA</label>
-                                          <div class="p-inputgroup">
-                                      <span class="p-inputgroup-addon mt-3"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
-
-                                            <span class="p-float-label" 
-                                            [style]="{'width':'100%'}">
-          
-                                            <div class="custom-input-file " style="width: 100%;">
-                                              <input type="hidden" 
-                                              class="input-file p-inputtext-lg" 
-                                              style="margin-bottom: 10px;"  
-                                              name="constancy" 
-                                              placeholder="CONSTANCIA" 
-                                              formControlName="constancy" 
-                                              title="CONSTANCIA" (click)="onFileChange1($event,pointIndex)">
-                                              <a pInputText
-                                              class="input-file p-inputtext-lg " 
-                                              style="margin-top: -10px;" target="back" href="{{API_URI}}{{form4.value.Workexperiences[pointIndex].constancy.url}}">
-                                              {{form4.value.Workexperiences[pointIndex].constancy.name}}</a>
-                                              <span class="bottomdelete mt-6"  
-                                              style="margin-left: 20px ;">
-                                                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivoC(form4.value.Workexperiences[pointIndex].constancy,$event,pointIndex)"  
-                                                class="p-button-rounded p-button-danger"></button>
-              
-                                              </span>
+                                            <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
+                                          <div class="flex">
+                                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                            <div style="width:100%">
+                                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                              [options]="resolution_convalidations" [filter]="true"
+                                                  formControlName="resolution_convalidation" name="resolution_convalidation"
+                                                label="RESOLUCION DE CONVALIDACION" 
+                                                [style]="{'width':'100%','margin-top':'10px'}"
+                                                optionvalue="value" optionLabel="value"  filterBy="value"
+                                                [disabled]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
+                                                (click)="resolucion($event,pointIndex)">
+                                                <ng-template let-option pTemplate="item">
+                                                  <span >
+                                                    {{option.value  | titlecase}}
+                                                    </span>
+                                              </ng-template>
+                                              </p-dropdown>
                                             </div>
-                                            </span>       
                                           </div>
-                                        </div>
+    
+                                          </div>
                                         </ng-template>
-
-                                        <ng-template [ngIf]="!form4.value.Workexperiences[pointIndex].constancy.name">
-                                              <div class="field ">
-                                                <label for="name"style="font-weight: bold;">CONSTANCIA</label>
-                                              
-                                            <div class="p-inputgroup" >
-                                      <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
-
+                                        <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate.name">
+                                          <div class="field ">
+                                            <label for="name"style="font-weight: bold;">RESOLUCION DE CONVALIDACION</label>
+                                          <div class="flex">
+                                          <span class="p-inputgroup-addon"  style="color:#F16257;height:47px;margin-top:10px"><i class="pi pi-bookmark-fill"></i></span>
+  
+                                            <div style="width:100%">
+                                              <p-dropdown class="visorg500-select-filter p-inputtext-lg" 
+                                              [options]="resolution_convalidations" [filter]="true"
+                                                  formControlName="resolution_convalidation" name="resolution_convalidation"
+                                                label="RESOLUCION DE CONVALIDACION" 
+                                                [style]="{'width':'100%','margin-top':'10px'}"
+                                                optionvalue="value" optionLabel="value"  filterBy="value"
+                                                [required]="true" placeholder="RESOLUCION DE CONVALIDACION" title="RESOLUCION DE CONVALIDACION"
+                                                (click)="resolucion($event,pointIndex)">
+                                                <ng-template let-option pTemplate="item">
+                                                  <span >
+                                                    {{option.value  | titlecase}}
+                                                    </span>
+                                              </ng-template>
+                                              </p-dropdown>
+                                            </div>
+                                          </div>
+    
+                                          </div>
+                                        </ng-template>
+                                   
+  
+                                      </div>
+                                      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+                                        <ng-template [ngIf]="validandoCertificado[pointIndex] === true">
+                                          <ng-template [ngIf]="form4.value.trainingTeacher[pointIndex].resolution_certificate?.name">
+                                            <div class="field ">
+                                              <label for="name"style="font-weight: bold;">CERTIFICADO DE RESOLUCIÓN</label>
+                                            <div class="p-inputgroup">
+                                              <span class="p-float-label" 
+                                              [style]="{'width':'100%'}">
+            
+                                              <div class="custom-input-file " style="width: 100%;">
+                                                <input type="hidden" 
+                                                class="input-file p-inputtext-lg" 
+                                                style="margin-bottom: 10px;" 
+                                                name="Anexos" 
+                                                placeholder="CERTIFICADO DE RESOLUCIÓN" 
+                                                formControlName="resolution_certificate" 
+                                                title="CERTIFICADO DE RESOLUCIÓN" (click)="onFileChange2($event,pointIndex)">
+                                                <a pInputText
+                                                class="input-file p-inputtext-lg mt-4" 
+                                                style="margin-bottom: 15px;" target="back" href="{{API_URI}}{{form4.value.trainingTeacher[pointIndex].resolution_certificate?.url}}">
+                                                {{form4.value.trainingTeacher[pointIndex].resolution_certificate?.name}}</a>
+                                                <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
+                                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivo2(form4.value.trainingTeacher[pointIndex].resolution_certificate,$event,pointIndex)"  
+                                                  class="p-button-rounded p-button-danger"></button>
+                
+                                                </span>
+                                              </div>
+                                              </span>       
+                                            </div>
+                                          </div>
+                                          </ng-template>
+  
+                                          <ng-template [ngIf]="!form4.value.trainingTeacher[pointIndex].resolution_certificate?.name">
+                                            <div class="field ">
+                                              <label for="name"style="font-weight: bold;">CERTIFICADO DE RESOLUCIÓN</label>
+                                            
+                                            <div class="p-inputgroup">
+                                        <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px;"><i class="pi pi-bookmark-fill"></i></span>
+  
                                               <span class="p-float-label" 
                                               [style]="{'width':'100%'}">
             
                                               <div class="custom-input-file" style="width: 100%;">
                                                 <input type="file" 
                                                 class="input-file p-inputtext-lg" 
-                                                style="margin-bottom: 10px;" 
-                                                name="constancy" 
-                                                placeholder="CONSTANCIA" 
-                                                style="width: 80%;"
-                                                formControlName="constancy" 
-                                                
-                                                title="CONSTANCIA" required (change)="onFileChange1($event,pointIndex)">
-                                                <span class="bottomdelete mt-7"  *ngIf="form4.value.Workexperiences[pointIndex].constancy != ''"
-                                                style="margin-left: 5px ;">
+                                                style="margin-bottom: 10px;width: 80%;" 
+                                                name="Anexos" 
+                                                placeholder="CERTIFICADO DE RESOLUCIÓN" 
+                                                formControlName="resolution_certificate" 
+                                                title="CERTIFICADO DE RESOLUCIÓN" (change)="onFileChange2($event,pointIndex)">
+                                                <span class="bottomdelete "  *ngIf="form4.value.trainingTeacher[pointIndex].resolution_certificate != ''"
+                                                style="margin-left: 5px;padding-bottom:7px ;">
                                                   <button pButton pRipple type="button" icon="pi pi-check"   
                                                   class="p-button-rounded p-button-success"></button>
                 
@@ -992,41 +809,311 @@
                                               </span>       
                                             </div>
                                           </div>
+                                          </ng-template>
+                                          
+                                      
                                         </ng-template>
                                       </div>
+     
                                     </div>
+                                    <hr>
+                                  </div>
+                                  <div class="col-1 mt-6">
+                                    <span class="bottomdelete mt-6"  style="margin-left: 20px ;">
+                                      <button pButton pRipple type="button" icon="pi pi-times" (click)="removetrainingTeacher(pointIndex,$event)"  
+                                      class="p-button-rounded p-button-danger"></button>
+    
+                                    </span>
+                                  </div>
                                 </div>
-                                <div class="col-1 mt-6">
-                                <span class="bottomdelete mt-6" style="margin-left: 20px ;margin-top: 5px;">
-                                  <button pButton pRipple type="button" icon="pi pi-times" (click)="removeWorkexperiences(pointIndex,$event)"  
-                                  class="p-button-rounded p-button-danger"></button>
+  
+                                </div>
+                                 
+                                </div>
+                              
+                            </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="summary">
+                        <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                          <button pButton type="button" (click)="addtrainingTeacher($event)" 
+                          class="p-button-warning p-button-raised p-button-rounded"
+                          label="Añadir Formaciones Academicas"></button>  
+                        </div>
+                    </ng-template>
+                      </p-table>
+                    </div>
+                  </div>
+                  <br>
+              </div>
 
-                                </span>
+              <ng-template pTemplate="footer">
+                <div class="grid grid-nogutter justify-content-between">
+                  <p-button label="Atras" 
+                  [disabled]="(form4.value.ChargeBondingId == ''|| 
+                      form4.value.MincienciaCategoryId =='' || 
+                      form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length  - 1].HeadquarterProgramId =='' 
+                      || form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length - 1].ResearchBondingId =='') || (scales.length > 0 && form4.value.ScaleId == '')" 
+                  (click)="activeIndex = 0" icon="pi pi-angle-left"></p-button>
+              </div>
+              <div class="grid grid-nogutter justify-content-end" style="margin-top:-35px">
+                  <p-button label="Siguiente" (click)="activeIndex = 3"
+                   icon="pi pi-angle-right" iconPos="right"></p-button>
+              </div>
+          </ng-template>
+            </p-card>
+          </div>
+    
+        </ng-template>
+
+        <ng-template [ngIf]="activeIndex==3">
+                
+          <div class="stepsdemo-content">
+            <p-card>
+              <ng-template pTemplate="subtitle">
+                <div class="text-center">
+                 3. CARGOS DESEMPEÑADOS EN LOS ÚLTIMOS 5 AÑOS
+                </div>
+              </ng-template>
+                        <div>
+                          <div *ngIf="mostrar6==false" fxLayout="row" fxLayoutGap="20px" >
+                            <button pButton type="button" (click)="addWorkexperiences($event)" 
+                            class="p-button-warning p-button-raised p-button-rounded"
+                             label="Add Experiencia laboral y/o académica"></button>  
+                          </div>
+                            <div fxLayout="row" fxLayoutGap="20px">
+                              <div class="table-wrapper" >
+                                <p-table [value]="algo6" *ngIf="mostrar6 == true"> 
+                                  <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="id">Experiencia laboral y/o académica<p-sortIcon field="id"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-item let-expanded="expanded">
+                                  <tr [pSelectableRow]="rowData">
+                                      <td>
+                                        <div formArrayName="Workexperiences"> 
+                                          <div *ngFor="let item of getWorkexperiences.controls; 
+                                          let pointIndex=index" [formGroupName]="pointIndex">
+                                          <div class="grid">
+                                            <div class="col-11">
+                                              <div class="grid">
+                                                <div class="col-12 md:col-12 lg:col-6">
+                                                  <div class="field ">
+                                                    <label for="name"style="font-weight: bold;">NOMBRE DE INSTITUCIÓN</label>
+                                                  
+                                                  <div class="p-inputgroup"  style="margin-top: 10px;">
+                                                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                    <span class="p-float-label" 
+                                                    [style]="{'width':'100%'}">
+                     
+                                                    <input type="text" class="p-inputtext-lg"
+                                                     pInputText name="name_institution" title="NOMBRE DE INSTITUCIÓN"
+                                                     placeholder="NOMBRE DE INSTITUCIÓN"
+                                                     formControlName="name_institution" required>  
+                                                    </span>       
+                                                  </div>
+                                                </div>
+                                                </div>
+                                                  <div class="col-12 md:col-12 lg:col-6">
+                                                    <div class="field ">
+                                                      <label for="name"style="font-weight: bold;">CARGO</label>
+                                                    
+                                                  <div class="p-inputgroup"  style="margin-top: 10px;">
+                                                  <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                    <span class="p-float-label" 
+                                                    [style]="{'width':'100%'}">
+                  
+                                                    <input type="text" class="p-inputtext-lg"
+                                                     pInputText name="position_type" 
+                                                     placeholder="CARGO" title="CARGO"
+                                                     formControlName="position_type" required>  
+                                                    </span>       
+                                                  </div>
+                                                  </div>
+                                                </div>
+                                                </div>
+                                                <div class="grid">
+                                                  <div class="col-12 md:col-12 lg:col-12">
+                                                    <div class="field ">
+                                                      <label for="name"style="font-weight: bold;">FUNCIONES</label>
+                                                    
+                                                    <div class="p-inputgroup"  style="margin-top: 10px;">
+                                                  <span class="p-inputgroup-addon"  style="color:#F16257;"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                      <span class="p-float-label" 
+                                                      [style]="{'width':'100%'}">
+                                                      <textarea rows="3" cols="200" 
+                                                      [style]="{'border-radius':'10px'}" 
+                                                      pInputTextarea [autoResize]="true"
+                                                      class="p-inputtext-lg"
+                                                       pInputText name="functions" 
+                                                       placeholder="FUNCIONES" title="FUNCIONES"
+                                                      formControlName="functions" required></textarea>
+                                                      
+                                                      </span>       
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+            
+                                              <div class="grid">
+                                                <div class="field col-12 sm:col-12 lg:col-6 xg:col-6">
+                                                  <label for="name"style="font-weight: bold;">FECHA DE INICIO</label>
+                                                
+                                                <div class="p-inputgroup"  style="margin-top: 10px;">
+                                              <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                  <span class="p-float-label" 
+                                                  [style]="{'width':'100%'}">
+                                                  <input type="date" pInputText 
+                                                  class="p-inputtext-lg" title="FECHA DE INICIO"
+                                                  inputId="basic" name="start_date" 
+                                                  placeholder="FECHA DE INICIO"
+                                                  formControlName="start_date" required></span> 
+                                                </div>
+                                              </div>
+                                              <div class="field col-12 sm:col-12 lg:col-6 xg:col-6">
+                                                <label for="name"style="font-weight: bold;">FECHA DE TERMINO</label>
+                                              
+                                                  <div class="p-inputgroup"  style="margin-top: 10px;">
+                                              <span class="p-inputgroup-addon"  style="color:#F16257;height:47px"><i class="pi pi-bookmark-fill"></i></span>
+                                              
+                                              <span class="p-float-label" 
+                                                    [style]="{'width':'100%'}">
+                                                    <input type="date" pInputText  class="p-inputtext-lg" 
+                                                    title="FECHA DE TERMINO"
+                                                    inputId="basic" name="final_date"
+                                                      placeholder="FECHA DE TERMINO"
+                                                    formControlName="final_date" required></span> 
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                                 
+                                                <div class="grid">
+                                                  <div class="col-12 md:col-12 lg:col-12 xg:col-12">
+                                                    <ng-template [ngIf]="form4.value.Workexperiences[pointIndex].constancy.name">
+                                                      <div class="field ">
+                                                        <label for="name"style="font-weight: bold;">CONSTANCIA</label>
+                                                      <div class="p-inputgroup">
+                                                  <span class="p-inputgroup-addon mt-3"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                        <span class="p-float-label" 
+                                                        [style]="{'width':'100%'}">
+                      
+                                                        <div class="custom-input-file " style="width: 100%;">
+                                                          <input type="hidden" 
+                                                          class="input-file p-inputtext-lg" 
+                                                          style="margin-bottom: 10px;"  
+                                                          name="constancy" 
+                                                          placeholder="CONSTANCIA" 
+                                                          formControlName="constancy" 
+                                                          title="CONSTANCIA" (click)="onFileChange1($event,pointIndex)">
+                                                          <a pInputText
+                                                          class="input-file p-inputtext-lg " 
+                                                          style="margin-top: -10px;" target="back" href="{{API_URI}}{{form4.value.Workexperiences[pointIndex].constancy.url}}">
+                                                          {{form4.value.Workexperiences[pointIndex].constancy.name}}</a>
+                                                          <span class="bottomdelete mt-6"  
+                                                          style="margin-left: 20px ;">
+                                                            <button pButton pRipple type="button" icon="pi pi-times" (click)="removeArchivoC(form4.value.Workexperiences[pointIndex].constancy,$event,pointIndex)"  
+                                                            class="p-button-rounded p-button-danger"></button>
+                          
+                                                          </span>
+                                                        </div>
+                                                        </span>       
+                                                      </div>
+                                                    </div>
+                                                    </ng-template>
+            
+                                                    <ng-template [ngIf]="!form4.value.Workexperiences[pointIndex].constancy.name">
+                                                          <div class="field ">
+                                                            <label for="name"style="font-weight: bold;">CONSTANCIA</label>
+                                                          
+                                                        <div class="p-inputgroup" >
+                                                  <span class="p-inputgroup-addon mt-2"  style="color:#F16257;height:40px"><i class="pi pi-bookmark-fill"></i></span>
+            
+                                                          <span class="p-float-label" 
+                                                          [style]="{'width':'100%'}">
+                        
+                                                          <div class="custom-input-file" style="width: 100%;">
+                                                            <input type="file" 
+                                                            class="input-file p-inputtext-lg" 
+                                                            style="margin-bottom: 10px;" 
+                                                            name="constancy" 
+                                                            placeholder="CONSTANCIA" 
+                                                            style="width: 80%;"
+                                                            formControlName="constancy" 
+                                                            
+                                                            title="CONSTANCIA" required (change)="onFileChange1($event,pointIndex)">
+                                                            <span class="bottomdelete mt-7"  *ngIf="form4.value.Workexperiences[pointIndex].constancy != ''"
+                                                            style="margin-left: 5px ;">
+                                                              <button pButton pRipple type="button" icon="pi pi-check"   
+                                                              class="p-button-rounded p-button-success"></button>
+                            
+                                                            </span>
+                                                          </div>
+                                                          </span>       
+                                                        </div>
+                                                      </div>
+                                                    </ng-template>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-1 mt-6">
+                                            <span class="bottomdelete mt-6" style="margin-left: 20px ;margin-top: 5px;">
+                                              <button pButton pRipple type="button" icon="pi pi-times" (click)="removeWorkexperiences(pointIndex,$event)"  
+                                              class="p-button-rounded p-button-danger"></button>
+            
+                                            </span>
+                                          </div>
+                                        </div>
+                                            <hr>
+                                          </div>
+                                        </div> 
+                                      </td>
+                                  </tr>
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+
+                                  <div fxLayout="row" fxLayoutGap="20px" style="display: flex;justify-content:center;align-items:center" >
+                                    <button pButton type="button" (click)="addWorkexperiences($event)" 
+                                    class="p-button-warning p-button-raised p-button-rounded"
+                                    label="Añadir Experiencia laboral y/o académica"></button>  
+                                  </div>
+                                  <!-- <div fxLayout="row" fxLayoutGap="20px" >
+                                    <button pButton type="button" (click)="addWorkexperiences($event)" 
+                                    class="p-button-warning p-button-raised p-button-rounded"
+                                     label="Add Experiencia laboral y/o académica"></button>  
+                                  </div> -->
+                              </ng-template>
+                                </p-table>
                               </div>
                             </div>
-                                <hr>
-                              </div>
-                            </div> 
-                          </td>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="summary">
-                      <div fxLayout="row" fxLayoutGap="20px" >
-                        <button pButton type="button" (click)="addWorkexperiences($event)" 
-                        class="p-button-warning p-button-raised p-button-rounded"
-                         label="Add Experiencia laboral y/o académica"></button>  
-                      </div>
-                  </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-               <br>
-            </div>
+                        </div>
+              <ng-template pTemplate="footer">
+                <div class="grid grid-nogutter justify-content-between">
+                  <p-button label="Atras" 
+                  [disabled]="(form4.value.ChargeBondingId == ''|| 
+                  form4.value.MincienciaCategoryId =='' || 
+                  form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length  - 1].HeadquarterProgramId =='' 
+                  || form4.value.headquarterProgramTeacher[form4.value.headquarterProgramTeacher.length - 1].ResearchBondingId =='') || (scales.length > 0 && form4.value.ScaleId == '')" 
+                  (click)="activeIndex = 1" icon="pi pi-angle-left"></p-button>
+              </div>
+              <!-- <div class="grid grid-nogutter justify-content-end" style="margin-top:-35px">
+                  <p-button label="Siguiente" (click)="activeIndex = 3"
+                   icon="pi pi-angle-right" iconPos="right"></p-button>
+              </div> -->
+          </ng-template>
+            </p-card>
           </div>
+    
+        </ng-template>
 
-            <br>
-            <ng-template [ngIf]="bandera4 == false">
-            <div fxLayout="row" class="titleCard" >
+          </div>
+          <ng-template [ngIf]="bandera4 == false">
+            <div fxLayout="row" class="titleCard2" style="margin-top:10px">
               <button pButton type="button"(click)="onSubmit4($event)" 
               icon="pi pi-check" [disabled]="!form4.valid"style="background-color:#F16257"
             class="p-button-raised p-button-rounded" 
@@ -1036,13 +1123,10 @@
             </ng-template>
           <ng-template [ngIf]="bandera4 == true">
             <br>
-            <!-- <p-progressBar [value]="cargando"></p-progressBar> -->
-            <!-- <div fxLayout="row" class="titleCard"style="margin-top: 20px;"> -->
               <p-progressBar mode="indeterminate"  [style]="{'height': '6px'}"></p-progressBar>
-      
-            <!-- </div> -->
-          
           </ng-template>
+        </div>
+     
         </form>
       </p-accordionTab>
 

@@ -24,7 +24,7 @@ import { TrainingsService } from 'src/app/core/services/institution/trainings.se
 import { ScaleI } from 'src/app/models/institution/scale';
 import { MincienciaCategoryI } from 'src/app/models/institution/colciencias_category';
 import { PerfilService } from 'src/app/core/services/usuer/Perfil.service';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TeacherService } from 'src/app/core/services/usuer/Teacher.service';
 import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
@@ -46,6 +46,10 @@ export interface Archivo{
 })
 export class PerfilComponent implements OnInit {
   API_URI = environment.API_URI;
+
+  itemsTeacher: MenuItem[]=[]
+  activeIndex: number = 0;
+
   public UserRoles:UserRoleI[] = []
   public estudiante:boolean=false
   public docente:boolean=false
@@ -228,6 +232,32 @@ public Dialog:boolean=false
   ) { }
 
   ngOnInit() {
+    this.itemsTeacher = [
+      // {
+      // label: 'Datos Basicos',
+      // command: (event: any) => {
+      //     this.activeIndex = 0;
+      //    }
+      // },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 0;
+            }
+      },
+      {
+        label: 'Formación Académica',
+        command: (event: any) => {
+            this.activeIndex = 1;
+          }
+      },
+      {
+        label: 'Experiencia Laboral',
+        command: (event: any) => {
+            this.activeIndex = 2;
+          }
+      },
+    ];
     this.verificar()
      this.getAllgenders()
       this.getAlldocumentTypes()
@@ -534,13 +564,15 @@ public Dialog:boolean=false
                         }
                         if(data.teacher.ChargebondingScaleTeachers?.length != undefined
                           && data.teacher.ChargebondingScaleTeachers.length > 0){
-                            if(data.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId != undefined){
-                              let algo=data.teacher.ChargebondingScaleTeachers[0].ChargebondingScale?.ScaleId
-                              for (const key of this.scales) {
-                                if(key.id != undefined && key.id == algo){
-                                this.form4.controls['ScaleId'].setValue(key)
+                            for (let scalesTeacher of data.teacher.ChargebondingScaleTeachers) {
+                              if( scalesTeacher.status == true && scalesTeacher.ChargebondingScale?.Scale != undefined){
+                                for (const key of this.scales) {
+                                  if(key.id != undefined && key.id == scalesTeacher.ChargebondingScale.Scale.id){
+                                  this.form4.controls['ScaleId'].setValue(key)
+                                  }
                                 }
                               }
+                              
                             }
                         }
                       }
