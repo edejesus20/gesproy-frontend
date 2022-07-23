@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -11,6 +11,7 @@ import { Create_documentTypeComponent } from '../../TipoDocumento/create_documen
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-edit_InvestigatorCollaborator',
   templateUrl: './edit_InvestigatorCollaborator.component.html',
@@ -28,7 +29,10 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
   public documentTypes:DocumentTypeI[]=[]
   public genders:GenderI[] =[]
   public image:string='assets/images/images.jpg'
-
+  API_URI = environment.API_URI;
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+  public Avatar:string=''
 
   public ref:any;
   constructor(
@@ -42,6 +46,15 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+    ];
     this.form=this.formBuilder.group({
       id:[''],
       name:['', [Validators.required]],
@@ -73,7 +86,17 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
             // this.form.controls['nationality'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.nationality)
             // this.form.controls['date_of_birth'].setValue(cnt_groupFromApi.investigatorCollaborator.User.Person.date_of_birth)
           
-
+            if(cnt_groupFromApi.investigatorCollaborator.User?.avatar != undefined){
+              var avatar =cnt_groupFromApi.investigatorCollaborator.User.avatar ;
+              var n = avatar.search("assets");
+              if(n == -1){
+                cnt_groupFromApi.investigatorCollaborator.User.avatar =this.API_URI+cnt_groupFromApi.investigatorCollaborator.User.avatar
+                // console.log("avatar",key.avatar)
+              }else{
+                cnt_groupFromApi.investigatorCollaborator.User.avatar =cnt_groupFromApi.investigatorCollaborator.User.avatar 
+              }
+              this.Avatar=cnt_groupFromApi.investigatorCollaborator.User.avatar
+            } 
         // if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId != undefined){
         // this.genderService.getItem(parseInt(cnt_groupFromApi.investigatorCollaborator.User?.Person?.GenderId)).subscribe((algo1)=>{
         //     if(cnt_groupFromApi.investigatorCollaborator.User?.Person?.DocumentTypeId != undefined){
@@ -99,7 +122,9 @@ export class Edit_InvestigatorCollaboratorComponent implements OnInit {
   }
 
   public volver(event: Event){
+
     event.preventDefault
+    this.activeIndex = 0;
     this.tabla = true
     this.displayMaximizable2 = false
     //console.log(event)

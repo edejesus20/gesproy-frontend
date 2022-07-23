@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -14,6 +14,7 @@ import { Create_genderComponent } from '../../Genero/create_gender/create_gender
 import { DialogService } from 'primeng/dynamicdialog';
 import { InvestigadorColaboladorService } from 'src/app/core/services/usuer/InvestigadorColabolador.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create_InvestigatorCollaborator',
@@ -22,6 +23,10 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   providers: [DialogService]
 })
 export class Create_InvestigatorCollaboratorComponent implements OnInit {
+  API_URI = environment.API_URI;
+
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrarDialogo:boolean=false;
@@ -49,6 +54,14 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
     private userService:UserService,
   ) { }
   ngOnInit() {
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+    ];
     // this.getAllgenders()
     this.getAllUser()
     // this.getAlldocumentTypes()
@@ -75,7 +88,7 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   }
  private volver(){
   this.bandera= false
-
+  this.activeIndex = 0;
     this.mostrarUser= false
 
     this.ngOnInit()
@@ -84,12 +97,38 @@ export class Create_InvestigatorCollaboratorComponent implements OnInit {
   public cancelar(){
     this.ref.close(undefined);
   }
+  cambiarFormDatosBasico(){
+    if( this.mostrarUser==false){
+      this.mostrarUser=true
+      this.form.controls['UserId'].setValue('')
+    }else{
+      this.mostrarUser=false
+      this.form.controls['name'].setValue('')
+      this.form.controls['surname'].setValue('')
+      this.form.controls['email'].setValue('')
+      // this.form.controls['identification'].setValue('')
+
+    }
+  }
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
-        for (let key of AdministrativeFromApi.usersestudiente) {
+        for (let key of AdministrativeFromApi.usersInvestigador) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
           key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+          key.todo=key.name +'- '+  key.surname + 'CC : '+key.identification;
+
+          if(key.avatar != undefined){
+            var avatar =key.avatar ;
+            var n = avatar.search("assets");
+            if(n == -1){
+             key.avatar =this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+             key.avatar =key.avatar 
+            }
+  
+          } 
         }
         this.users = AdministrativeFromApi.usersInvestigador;
         // console.log(this.users)
