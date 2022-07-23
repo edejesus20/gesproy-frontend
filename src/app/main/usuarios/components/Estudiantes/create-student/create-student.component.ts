@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 const translate = require('translate');
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
@@ -17,6 +17,7 @@ import { Create_genderComponent } from '../../Genero/create_gender/create_gender
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
@@ -24,6 +25,11 @@ import { SeedbedI } from 'src/app/models/institution/seedbed';
   providers: [DialogService]
 })
 export class CreateStudentComponent implements OnInit {
+  API_URI = environment.API_URI;
+
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+  
   public mostrarDialogo:boolean=false;
 
   displayMaximizable2:boolean=true
@@ -90,6 +96,27 @@ export class CreateStudentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      {
+        label: 'Practicas o Pasantías',
+        command: (event: any) => {
+            this.activeIndex = 2;
+          }
+      },
+    ];
     // this.getAllgenders()
     // this.getAlldocumentTypes()
     this.getAllheadquarters()
@@ -133,9 +160,11 @@ export class CreateStudentComponent implements OnInit {
   }
 
   cerrar(){
+    this.activeIndex = 0;
     this.router.navigateByUrl('/usuarios/Student');
   }
  private volver(){
+  this.activeIndex = 0;
     this.mostrarUser= false
     this.mostrar=true;
     this.mostrar2=false;

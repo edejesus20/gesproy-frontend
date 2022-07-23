@@ -395,7 +395,7 @@ const routes: Routes = [
 
             //tipo miembro
             {
-              path: 'mostrar_TypeMembers',
+              path: 'TypeMember',
               component: Show_TypeMemberComponent,
               },
               {

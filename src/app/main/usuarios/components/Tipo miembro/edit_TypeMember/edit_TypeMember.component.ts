@@ -97,7 +97,7 @@ export class Edit_TypeMemberComponent implements OnInit {
                   this.ngOnInit()
                   this.volver(new Event(''))
                  this.bandera=false
-                  // this.router.navigateByUrl('/usuarios/roles');
+                  // this.router.navigateByUrl('/usuarios/TypeMember');
                   clearInterval(interval); 
                  }
           }, 1000);

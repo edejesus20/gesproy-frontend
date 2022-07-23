@@ -49,8 +49,10 @@ export class PerfilComponent implements OnInit {
 
   itemsTeacher: MenuItem[]=[]
   itemsAdministrative: MenuItem[]=[]
+  itemsEstudiante: MenuItem[]=[]
   activeIndex: number = 0;
   activeIndexA: number = 0;
+  activeIndexE: number = 0;
 
   public UserRoles:UserRoleI[] = []
   public estudiante:boolean=false
@@ -265,6 +267,15 @@ public Dialog:boolean=false
           label: 'Datos Institucionales',
           command: (event: any) => {
               this.activeIndexA = 0;
+            }
+      },
+    ];
+
+    this.itemsEstudiante = [
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndexE = 0;
             }
       },
     ];
@@ -1460,7 +1471,7 @@ public Dialog:boolean=false
                         if( minutes == '00' && seconds == '01' ) {
                           // this.ref.close(algo);
                           this.activeState=[false,false,false,false]
-
+                          this.activeIndexA = 0;
                           // this.mostrarDatos=true
              
                           // this.administrativo=false
@@ -1545,7 +1556,7 @@ public Dialog:boolean=false
                       // this.estudiante=false
 
                       this.activeState=[false,false,false,false]
-              
+                      this.activeIndexE = 0;
                       // this.ref.close(algo);
 
                       // this.router.navigateByUrl('/usuarios/Student');
@@ -1910,7 +1921,8 @@ public Dialog:boolean=false
                              
                               if( minutes == '00' && seconds == '01' ) {
                                 this.activeState=[false,false,false,false]
-                                console.log(this.activeState,'this.activeState')
+                                this.activeIndex = 0;
+                                // console.log(this.activeState,'this.activeState')
                                 // this.docente=false
                             
                                 // this.ref.close(algo);

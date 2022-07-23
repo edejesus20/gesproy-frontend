@@ -49,7 +49,7 @@ export class Create_TypeMemberComponent implements OnInit {
     this.ref.close(undefined);
   }
   cerrar(){
-    this.router.navigateByUrl('/usuarios/mostrar_TypeMembers');
+    this.router.navigateByUrl('/usuarios/TypeMember');
   }
  private volver(){
     this.bandera=false

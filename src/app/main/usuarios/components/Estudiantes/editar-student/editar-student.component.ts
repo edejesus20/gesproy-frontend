@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import *as moment from 'moment';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
@@ -18,6 +18,7 @@ import { Create_documentTypeComponent } from '../../TipoDocumento/create_documen
 import { Create_genderComponent } from '../../Genero/create_gender/create_gender.component';
 import { SeedbedI } from 'src/app/models/institution/seedbed';
 import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-editar-student',
   templateUrl: './editar-student.component.html',
@@ -25,9 +26,15 @@ import { SeedbedService } from 'src/app/core/services/Procedimientos/Seedbed.ser
   providers: [DialogService]
 })
 export class EditarStudentComponent implements OnInit {
+  API_URI = environment.API_URI;
+
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+  public Avatar:string=''
+
   public mostrar:number=1;
   public mostrar2:boolean=true;
-  public mostrar3:boolean=true;
+  public mostrar3:boolean=false;
   public image:string='assets/images/images.jpg'
   public image2:string='assets/images/uniguajira_iso.jpg'
   public algo:number[]=[0];
@@ -59,6 +66,26 @@ export class EditarStudentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      {
+        label: 'Practicas o Pasantías',
+        command: (event: any) => {
+            this.activeIndex = 2;
+          }
+      },
+    ];
     this.primengConfig.ripple = true;
 
     this.form=this.formBuilder.group({
@@ -183,7 +210,8 @@ export class EditarStudentComponent implements OnInit {
                   }
                   date = new Date(date.getTime() - 1000);
                   if( minutes == '00' && seconds == '01' ) {
-                    this.router.navigateByUrl('/usuarios/Student');
+                    // this.router.navigateByUrl('/usuarios/Student');
+                    this.volver(new Event(''))
                     clearInterval(interval); 
                    }
             }, 1000);
@@ -224,13 +252,14 @@ private getAllheadquarters(selectId?: number) {
 
 
   public volver(event: Event){
+    this.activeIndex = 0;
     event.preventDefault
     this.tabla = true
     this.displayMaximizable2 = false
     this.ngOnInit()
   this.bandera=false
   this.headquarterProgramStudent1=[]
-  this.mostrar3=true
+  this.mostrar3=false
 
   }
 
@@ -264,7 +293,17 @@ private getAllheadquarters(selectId?: number) {
             this.form.controls['DocumentTypeId'].setValue(cnt_groupFromApi.student.User?.Person?.DocumentType)
           // })
 
-      
+          if(cnt_groupFromApi.student.User?.avatar != undefined){
+            var avatar =cnt_groupFromApi.student.User.avatar ;
+            var n = avatar.search("assets");
+            if(n == -1){
+              cnt_groupFromApi.student.User.avatar =this.API_URI+cnt_groupFromApi.student.User.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+              cnt_groupFromApi.student.User.avatar =cnt_groupFromApi.student.User.avatar 
+            }
+            this.Avatar=cnt_groupFromApi.student.User.avatar
+          } 
 
         // if(cnt_groupFromApi.student.User?.Person?.GenderId != undefined)
         // this.genderService.getItem(parseInt(cnt_groupFromApi.student.User?.Person?.GenderId)).subscribe((algo)=>{
