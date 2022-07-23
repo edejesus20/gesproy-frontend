@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { GenderService } from 'src/app/core/services/usuer/Gender.service';
 import { DocumentTypeService } from 'src/app/core/services/usuer/DocumentType.service';
 import { DocumentTypeI } from 'src/app/models/user/document_types';
@@ -17,6 +17,7 @@ import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.
 import { ChargeService } from 'src/app/core/services/investigacion/Charge.service';
 import { ChargeI } from 'src/app/models/user/charge';
 import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-editar-administrative',
   templateUrl: './editar-administrative.component.html',
@@ -24,7 +25,9 @@ import { ChargeAdministrativeI } from 'src/app/models/user/administrative';
   providers: [DialogService]
 })
 export class EditarAdministrativeComponent implements OnInit {
-
+  API_URI = environment.API_URI;
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
   public mostrar:number=1;
   public bandera:boolean=false
 
@@ -44,6 +47,7 @@ export class EditarAdministrativeComponent implements OnInit {
 
   public ref:any;
   private deleteCharges:any[]=[]
+  public Avatar:string=''
 
   constructor(
     public dialogService: DialogService,
@@ -58,6 +62,34 @@ export class EditarAdministrativeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      // {
+      //   label: 'Formación Académica',
+      //   command: (event: any) => {
+      //       this.activeIndex = 2;
+      //     }
+      // },
+      // {
+      //   label: 'Experiencia Laboral',
+      //   command: (event: any) => {
+      //       this.activeIndex = 3;
+      //     }
+      // },
+    ];
+
     this.form=this.formBuilder.group({
       id:[''],
       name:['', [Validators.required]],
@@ -105,6 +137,7 @@ export class EditarAdministrativeComponent implements OnInit {
         }, error => console.error(error));
     }
   getOneCntAccount(id:number) {
+    this.activeIndex = 0;
     this.administrativeService.getItem(id).subscribe((cnt_groupFromApi) => {
        if(cnt_groupFromApi.administrative.id != undefined
       ){
@@ -124,7 +157,18 @@ export class EditarAdministrativeComponent implements OnInit {
 
         // if(cnt_groupFromApi.administrative.User?.Person?.GenderId != undefined)
         // this.genderService.getItem(parseInt(cnt_groupFromApi.administrative.User?.Person?.GenderId)).subscribe((algo1)=>{
-          for (const key of this.headquarters) {
+          if(cnt_groupFromApi.administrative.User?.avatar != undefined){
+            var avatar =cnt_groupFromApi.administrative.User.avatar ;
+            var n = avatar.search("assets");
+            if(n == -1){
+              cnt_groupFromApi.administrative.User.avatar =this.API_URI+cnt_groupFromApi.administrative.User.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+              cnt_groupFromApi.administrative.User.avatar =cnt_groupFromApi.administrative.User.avatar 
+            }
+            this.Avatar=cnt_groupFromApi.administrative.User.avatar
+          } 
+        for (const key of this.headquarters) {
             if(key.id != undefined && key.id == parseInt(cnt_groupFromApi.administrative.HeadquarterId)){
               this.form.controls['HeadquarterId'].setValue(key)
             }
@@ -210,6 +254,7 @@ export class EditarAdministrativeComponent implements OnInit {
     this.bandera=false
     this.Charges1=[]
     this.ngOnInit()
+    this.activeIndex = 0;
     //console.log(event)
   }
 
@@ -311,6 +356,7 @@ export class EditarAdministrativeComponent implements OnInit {
                           this.ngOnInit()
                           this.volver(new Event(''))
                           this.bandera=false
+                          this.activeIndex = 0;
                           // this.router.navigateByUrl('/usuarios/Administrative');
                           clearInterval(interval); 
                         }

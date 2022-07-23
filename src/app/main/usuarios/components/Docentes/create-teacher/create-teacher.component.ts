@@ -740,6 +740,8 @@ export class CreateTeacherComponent implements OnInit {
                           if( minutes == '00' && seconds == '01' ) {
                             // this.ngOnInit()
                             this.volver()
+                            this.activeIndex = 0;
+
                             // this.mostrarUser= false
                             // this.router.navigateByUrl('/usuarios/Teacher');
                             clearInterval(interval); 

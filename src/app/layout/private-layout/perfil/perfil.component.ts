@@ -48,7 +48,9 @@ export class PerfilComponent implements OnInit {
   API_URI = environment.API_URI;
 
   itemsTeacher: MenuItem[]=[]
+  itemsAdministrative: MenuItem[]=[]
   activeIndex: number = 0;
+  activeIndexA: number = 0;
 
   public UserRoles:UserRoleI[] = []
   public estudiante:boolean=false
@@ -258,6 +260,16 @@ public Dialog:boolean=false
           }
       },
     ];
+    this.itemsAdministrative = [
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndexA = 0;
+            }
+      },
+    ];
+
+
     this.verificar()
      this.getAllgenders()
       this.getAlldocumentTypes()

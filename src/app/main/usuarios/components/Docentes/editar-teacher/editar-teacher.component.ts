@@ -232,7 +232,7 @@ export class EditarTeacherComponent implements OnInit {
     this.activeIndex = 0;
     this.displayMaximizable2 = false
     this.ngOnInit()
-
+    this.activeIndex = 0;
     this.mostrar2= false
     this.mostrar3= false
     this.bandera=false
@@ -253,59 +253,6 @@ export class EditarTeacherComponent implements OnInit {
     // this.vaciar()
   }
 
-  // private vaciar(){
-  //   this.activeIndex = 0;
-  //   this.form.reset()
-  //   this.getRoles.reset()
-  //   this.getRoles.clear()
-  //   this.getWorkexperiences.reset()
-  //   this.getWorkexperiences.clear()
-
-  //   this.gettrainingTeacher.reset()
-  //   this.gettrainingTeacher.clear()
-    
-  //   this.form.controls['name'].setValue('')
-  //   this.form.controls['surname'].setValue('')
-  //   this.form.controls['DocumentTypeId'].setValue(1)
-  //   this.form.controls['identification'].setValue('')
-  //   this.form.controls['email'].setValue('')
-  //   this.form.controls['ScaleId'].setValue('')
-  //   this.form.controls['UserId'].setValue('')
-  //   this.form.controls['MincienciaCategoryId'].setValue('')
-  //   this.form.controls['ChargeBondingId'].setValue('')
-  //   this.form.controls['Link_cvlac'].setValue('')
-  //   this.form.controls['Link_orcid'].setValue('')
-   
-  //   let control = <FormArray>this.form.controls['headquarterProgramTeacher']
-  //   control.push(this.formBuilder.group({
-  //     TeacherId:0,
-  //     HeadquarterProgramId:['', [Validators.required]],
-  //         ResearchBondingId:['', [Validators.required]],
-  //   }))
-  //   let control1 = <FormArray>this.form.controls['Workexperiences']
-  //   control1.push(this.formBuilder.group({
-  //     id:0,
-  //     TeacherId:0,
-  //     name_institution: [''],
-  //     position_type: [''],
-  //     functions:[''],
-  //     start_date:[''],
-  //     final_date:[''],
-  //     constancy:['']
-  //   }))
-  //   let control2 = <FormArray>this.form.controls['trainingTeacher']
-  //   control2.push(this.formBuilder.group({
-  //     id:0,
-  //     TeacherId:0,
-  //     name: [''],
-  //     date_graduation: [''],
-  //     name_institution: [''],
-  //     resolution_convalidation: [{value:'No'}],
-  //     degree_certificate: [''],
-  //     TrainingId:[''],
-  //     resolution_certificate:[''],
-  //   }))
-  // }
   public onSubmit() {
 
     let formValue={
@@ -662,6 +609,7 @@ export class EditarTeacherComponent implements OnInit {
                           if( minutes == '00' && seconds == '01' ) {
                             this.ngOnInit()
                             this.volver(new Event(''))
+                            this.activeIndex = 0;
                             this.bandera=false
                             clearInterval(interval); 
                           }
@@ -669,9 +617,10 @@ export class EditarTeacherComponent implements OnInit {
               }
               
             }
+            
         },async error => {
           if(error != undefined) {
-  this.bandera=false
+           this.bandera=false
 
             let text = await translate(error.error.message, "es");
             if(error.error.dataErros){

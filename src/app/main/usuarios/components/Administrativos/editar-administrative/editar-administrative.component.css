@@ -4,7 +4,13 @@
     font-size: 30px;
     background-color:707070
   }
-  
+  .titleCard2{
+    margin: 0;
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    margin-top: 4px;
+    }
   .titleCard{
   margin: 0 0 10px 0;
   display:flex;

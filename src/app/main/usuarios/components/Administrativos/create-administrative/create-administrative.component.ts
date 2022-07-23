@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 import { DocumentTypeI } from 'src/app/models/user/document_types';
 import { GenderI } from 'src/app/models/user/gender';
@@ -17,6 +17,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Create_ChargeComponent } from '../../Cargo/create_Charge/create_Charge.component';
 import { ChargeService } from 'src/app/core/services/investigacion/Charge.service';
+import { environment } from 'src/environments/environment';
 
 let uploadefiles:Array<File>
 @Component({
@@ -27,6 +28,11 @@ let uploadefiles:Array<File>
 
 })
 export class CreateAdministrativeComponent implements OnInit {
+
+  API_URI = environment.API_URI;
+  items: MenuItem[]=[]
+  activeIndex: number = 0;
+  
   displayMaximizable2:boolean=true
   blockSpecial: RegExp = /^[^<>*!]+$/ 
   public mostrar:boolean=true;
@@ -76,6 +82,34 @@ export class CreateAdministrativeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.items = [
+      {
+      label: 'Datos Basicos',
+      command: (event: any) => {
+          this.activeIndex = 0;
+         }
+      },
+      {
+          label: 'Datos Institucionales',
+          command: (event: any) => {
+              this.activeIndex = 1;
+            }
+      },
+      // {
+      //   label: 'Formación Académica',
+      //   command: (event: any) => {
+      //       this.activeIndex = 2;
+      //     }
+      // },
+      // {
+      //   label: 'Experiencia Laboral',
+      //   command: (event: any) => {
+      //       this.activeIndex = 3;
+      //     }
+      // },
+    ];
+
     // this.getAllgenders()
     // this.getAlldocumentTypes()
     this.getAllheadquarters()
@@ -108,13 +142,40 @@ export class CreateAdministrativeComponent implements OnInit {
   getAllUser() {
     this.userService.userteacher().subscribe(
       (AdministrativeFromApi) => {
-        for (let key of AdministrativeFromApi.users) {
+        for (let key of AdministrativeFromApi.userseadministrative) {
           key.name =  key.name.charAt(0).toUpperCase() +  key.name.slice(1);
           key.surname =  key.surname.charAt(0).toUpperCase() +  key.surname.slice(1);
+          key.todo=key.name +'- '+  key.surname + ' CC : '+key.identification;
+
+          if(key.avatar != undefined){
+            var avatar =key.avatar ;
+            var n = avatar.search("assets");
+            if(n == -1){
+             key.avatar =this.API_URI+key.avatar
+              // console.log("avatar",key.avatar)
+            }else{
+             key.avatar =key.avatar 
+            }
+  
+          } 
         }
         this.users = AdministrativeFromApi.userseadministrative;
-        // console.log(this.users)
+        console.log(this.users)
       }, error => console.error(error));
+  }
+
+  cambiarFormDatosBasico(){
+    if( this.mostrarUser==false){
+      this.mostrarUser=true
+      this.form.controls['UserId'].setValue('')
+    }else{
+      this.mostrarUser=false
+      this.form.controls['name'].setValue('')
+      this.form.controls['surname'].setValue('')
+      this.form.controls['email'].setValue('')
+      // this.form.controls['identification'].setValue('')
+
+    }
   }
 
   private getAllheadquarters(selectId?: number) {
@@ -151,6 +212,7 @@ export class CreateAdministrativeComponent implements OnInit {
     this.vaciar()
   }
   private vaciar(){
+    this.activeIndex = 0;
     this.form.reset()
     this.getRoles.reset()
     this.getRoles.clear()
@@ -235,6 +297,7 @@ export class CreateAdministrativeComponent implements OnInit {
             this.administrativeService.createItem(formValue).subscribe(
               (algo) => {
                 if(this.mostrarDialogo== true){
+                  this.activeIndex = 0;
                   this.ref.close(algo);
                 }else{
                       var date = new Date('2020-01-01 00:00:03');
@@ -251,7 +314,9 @@ export class CreateAdministrativeComponent implements OnInit {
                         }
                         date = new Date(date.getTime() - 1000);
                         if( minutes == '00' && seconds == '01' ) {
+
                           this.volver()
+                          this.activeIndex = 0;
                           // this.router.navigateByUrl('/usuarios/Administrative');
                           clearInterval(interval); 
                         }
